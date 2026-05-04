@@ -1,0 +1,43 @@
+---
+import type { LandingContent } from '../content/index';
+
+interface Props {
+  content: LandingContent['footer'];
+}
+
+const { content } = Astro.props;
+---
+
+<footer
+  class="w-full border-t border-[var(--color-border)] bg-[var(--color-surface)]"
+>
+  <div
+    class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4"
+  >
+    <!-- Left -->
+    <div class="flex items-center gap-2">
+      <span
+        class="w-6 h-6 rounded-md bg-[var(--color-primary)] flex items-center justify-center text-white text-xs font-bold"
+        >P</span
+      >
+      <span class="text-xs text-[var(--color-muted)]">{content.tagline}</span>
+    </div>
+
+    <!-- Links -->
+    <div class="flex items-center gap-5">
+      {
+        content.links.map((link) => (
+          <a
+            href={link.href}
+            class="text-xs text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- Legal -->
+    <p class="text-xs text-[var(--color-muted)]">{content.legal}</p>
+  </div>
+</footer>

@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import EngineDiagram from '../../components/EngineDiagram.astro';
+import StartupsSection from '../../components/StartupsSection.astro';
+import TalentSection from '../../components/TalentSection.astro';
+import WhyItWorks from '../../components/WhyItWorks.astro';
+import SocialProof from '../../components/SocialProof.astro';
+import CTASection from '../../components/CTASection.astro';
+import Footer from '../../components/Footer.astro';
+import CompanyCarousel from '../../components/CompanyCarousel.astro';
+import { getContent, type Lang } from '../../content/index';
+
+const lang = (Astro.currentLocale ?? 'es') as Lang;
+const c = getContent(lang);
+---
+
+<Layout
+  title="Purrfect Hire — El motor de contratación de ciclo cerrado para startups"
+  description="Extraemos señales reales de contratación, entrenamos talento contra esas señales y colocamos ingenieros que ya conocen tu stack."
+  lang={lang}
+>
+  <Nav content={c.nav} lang={lang} />
+  <main>
+    <HeroSection content={c.hero} />
+    <CompanyCarousel label="De confianza para los mejores equipos de ingeniería" />
+    <EngineDiagram content={c.engine} />
+    <StartupsSection content={c.startups} />
+    <TalentSection content={c.talent} />
+    <WhyItWorks content={c.whyItWorks} />
+    <SocialProof content={c.socialProof} />
+    <CTASection content={c.cta} />
+  </main>
+  <Footer content={c.footer} />
+</Layout>

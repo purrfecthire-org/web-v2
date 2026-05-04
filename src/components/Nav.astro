@@ -1,0 +1,132 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { LandingContent } from '../content/index';
+
+interface Props {
+  content: LandingContent['nav'];
+  lang: string;
+}
+
+const { content, lang } = Astro.props;
+const otherLang = lang === 'en' ? 'es' : 'en';
+const otherLangLabel = lang === 'en' ? 'ES' : 'EN';
+const otherLangHref = getRelativeLocaleUrl(otherLang, '/');
+---
+
+<header
+  id="nav"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <img src="/logos/logo-desktop.png" class="w-40" alt="logo">
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-8">
+        {
+          content.links.map((link) => (
+            <a
+              href={link.href}
+              class="text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors duration-150 font-medium"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Right side -->
+      <div class="flex items-center gap-3">
+        <a
+          href={otherLangHref}
+          class="text-xs font-medium text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors px-2 py-1 rounded border border-[var(--color-border)] hover:border-[var(--color-primary)]"
+        >
+          {otherLangLabel}
+        </a>
+        <a
+          href="#cta"
+          class="hidden sm:inline-flex items-center px-4 py-2 rounded-lg bg-[var(--color-primary)] text-white text-sm font-medium hover:bg-[var(--color-primary-hover)] transition-all duration-150 hover:shadow-md"
+        >
+          {content.cta}
+        </a>
+        <!-- Mobile hamburger -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden p-2 rounded-lg hover:bg-[var(--color-surface-2)] transition-colors"
+          aria-label="Toggle menu"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            class="text-[var(--color-text)]"
+          >
+            <path
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              d="M3 5h14M3 10h14M3 15h14"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden bg-[var(--color-surface)] border-b border-[var(--color-border)]"
+  >
+    <div class="max-w-[1280px] mx-auto px-4 py-4 flex flex-col gap-3">
+      {
+        content.links.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] py-2 font-medium transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href="#cta"
+        class="mt-2 inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-[var(--color-primary)] text-white text-sm font-medium"
+      >
+        {content.cta}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('nav');
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav?.classList.add('scrolled');
+    } else {
+      nav?.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  btn?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>
+
+<style>
+  header {
+    background: transparent;
+    transition: background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  header.scrolled {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+  }
+</style>

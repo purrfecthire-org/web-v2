@@ -1,0 +1,39 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon?: string;
+  variant?: 'default' | 'dark';
+}
+
+const { title, description, icon, variant = 'default' } = Astro.props;
+
+const base =
+  variant === 'dark'
+    ? 'bg-white/5 border-white/10 hover:bg-white/10'
+    : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-secondary)] hover:shadow-md';
+---
+
+<div
+  class={`group rounded-xl p-6 border transition-all duration-200 cursor-default ${base}`}
+>
+  {
+    icon && (
+      <div
+        class={`w-10 h-10 rounded-lg flex items-center justify-center text-lg mb-4 ${variant === 'dark' ? 'bg-white/10 text-white' : 'bg-[var(--color-surface-2)] text-[var(--color-primary)]'}`}
+      >
+        {icon}
+      </div>
+    )
+  }
+  <h3
+    class={`text-sm font-semibold mb-2 ${variant === 'dark' ? 'text-white' : 'text-[var(--color-text)]'}`}
+  >
+    {title}
+  </h3>
+  <p
+    class={`text-sm leading-relaxed ${variant === 'dark' ? 'text-white/50' : 'text-[var(--color-muted)]'}`}
+  >
+    {description}
+  </p>
+</div>

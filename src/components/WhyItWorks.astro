@@ -1,0 +1,39 @@
+---
+import type { LandingContent } from '../content/index';
+import SectionWrapper from './SectionWrapper.astro';
+import FeatureCard from './FeatureCard.astro';
+
+interface Props {
+  content: LandingContent['whyItWorks'];
+}
+
+const { content } = Astro.props;
+---
+
+<SectionWrapper id="why">
+  <!-- Header -->
+  <div class="text-center mb-14">
+    <span
+      class="inline-flex items-center px-3 py-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-xs font-medium text-[var(--color-muted)] mb-4"
+    >
+      {content.badge}
+    </span>
+    <h2
+      class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--color-text)] mb-4"
+    >
+      {content.headline}
+    </h2>
+    <p class="text-base text-[var(--color-muted)] max-w-lg mx-auto">
+      {content.subheadline}
+    </p>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    {
+      content.principles.map((p) => (
+        <FeatureCard title={p.title} description={p.description} icon={p.icon} />
+      ))
+    }
+  </div>
+</SectionWrapper>

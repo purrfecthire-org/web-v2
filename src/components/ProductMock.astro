@@ -1,0 +1,161 @@
+---
+import type { LandingContent } from '../content/index';
+
+interface Props {
+  content: LandingContent['hero'];
+}
+
+const { content } = Astro.props;
+
+const matchColors: Record<number, string> = {
+  97: 'text-emerald-600 bg-emerald-50',
+  94: 'text-blue-600 bg-blue-50',
+  91: 'text-violet-600 bg-violet-50',
+};
+---
+
+<div
+  class="relative w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl overflow-hidden"
+  style="box-shadow: 0 32px 64px -12px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);"
+>
+  <!-- Window chrome -->
+  <div
+    class="flex items-center gap-2 px-4 py-3 border-b border-[var(--color-border)] bg-[var(--color-surface-2)]"
+  >
+    <span class="w-3 h-3 rounded-full bg-red-400 opacity-70"></span>
+    <span class="w-3 h-3 rounded-full bg-yellow-400 opacity-70"></span>
+    <span class="w-3 h-3 rounded-full bg-green-400 opacity-70"></span>
+    <div class="flex-1 mx-4">
+      <div
+        class="h-6 rounded-md bg-[var(--color-border)] flex items-center px-3"
+      >
+        <span class="text-xs text-[var(--color-muted)] font-mono"
+          >app.purrfecthire.com/candidates</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- App header -->
+  <div
+    class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-[var(--color-border)]"
+  >
+    <div class="flex items-center gap-3">
+      <span class="text-sm font-semibold text-[var(--color-text)]"
+        >Candidates</span
+      >
+      <span
+        class="px-2 py-0.5 rounded-full bg-[var(--color-primary)] text-white text-xs font-medium"
+        >{content.candidates.length}</span
+      >
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-xs text-[var(--color-muted)]">Signal match</span>
+      <span
+        class="w-2 h-2 rounded-full bg-[var(--color-success)] animate-pulse"
+      ></span>
+    </div>
+  </div>
+
+  <!-- Search bar -->
+  <div class="px-4 sm:px-6 py-3 border-b border-[var(--color-border)]">
+    <div
+      class="flex items-center gap-3 px-3 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-2)] focus-within:border-[var(--color-secondary)] focus-within:ring-1 focus-within:ring-[var(--color-secondary)] transition-all"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        class="text-[var(--color-muted)] flex-shrink-0"
+      >
+        <circle
+          cx="7"
+          cy="7"
+          r="4.5"
+          stroke="currentColor"
+          stroke-width="1.3"></circle>
+        <path
+          d="M10.5 10.5L13.5 13.5"
+          stroke="currentColor"
+          stroke-width="1.3"
+          stroke-linecap="round"></path>
+      </svg>
+      <input
+        type="text"
+        placeholder={content.searchPlaceholder}
+        class="flex-1 bg-transparent text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none min-w-0"
+        readonly
+      />
+    </div>
+  </div>
+
+  <!-- Candidate cards -->
+  <div class="divide-y divide-[var(--color-border)]">
+    {
+      content.candidates.map((candidate, i) => {
+        const colorClass =
+          matchColors[candidate.match] ?? 'text-gray-600 bg-gray-50';
+        return (
+          <div
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4 hover:bg-[var(--color-surface-2)] transition-colors duration-150 group cursor-pointer"
+            style={`animation-delay: ${i * 80}ms`}
+          >
+            <div class="flex items-center gap-3 min-w-0">
+              <div
+                class="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-semibold text-white"
+                style={`background: hsl(${220 + i * 40}, 60%, 50%)`}
+              >
+                {candidate.name
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')}
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-sm font-medium text-[var(--color-text)] truncate">
+                    {candidate.name}
+                  </span>
+                  <span
+                    class={`inline-flex items-center px-1.5 py-0.5 rounded text-xs font-semibold ${colorClass}`}
+                  >
+                    {candidate.match}% {content.matchLabel}
+                  </span>
+                </div>
+                <p class="text-xs text-[var(--color-muted)] mt-0.5">
+                  {candidate.role}
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 pl-12 sm:pl-0">
+              {candidate.skills.map((skill) => (
+                <span class="px-2 py-0.5 rounded-md bg-[var(--color-surface-2)] border border-[var(--color-border)] text-xs text-[var(--color-muted)] font-medium">
+                  {skill}
+                </span>
+              ))}
+              <button class="ml-auto sm:ml-0 px-3 py-1.5 rounded-lg bg-[var(--color-primary)] text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-all duration-150 hover:bg-[var(--color-primary-hover)]">
+                {content.reviewLabel}
+              </button>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+
+  <!-- Status bar -->
+  <div
+    class="flex items-center justify-between px-4 sm:px-6 py-3 bg-[var(--color-surface-2)] border-t border-[var(--color-border)]"
+  >
+    <span class="text-xs text-[var(--color-muted)]"
+      >{content.candidates.length} signal-matched candidates</span
+    >
+    <div class="flex items-center gap-1.5">
+      <div
+        class="w-1.5 h-1.5 rounded-full bg-[var(--color-success)] animate-pulse"
+      >
+      </div>
+      <span class="text-xs text-[var(--color-success)] font-medium">Live</span>
+    </div>
+  </div>
+</div>

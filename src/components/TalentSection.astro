@@ -1,0 +1,105 @@
+---
+import type { LandingContent } from '../content/index';
+import SectionWrapper from './SectionWrapper.astro';
+
+interface Props {
+  content: LandingContent['talent'];
+}
+
+const { content } = Astro.props;
+---
+
+<SectionWrapper id="talent" class="bg-[var(--color-surface-2)]">
+  <div class="text-center mb-12">
+    <span
+      class="inline-flex items-center px-3 py-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-xs font-medium text-[var(--color-muted)] mb-4"
+    >
+      {content.badge}
+    </span>
+    <h2
+      class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--color-text)] mb-4"
+    >
+      {content.headline}
+    </h2>
+    <p
+      class="text-base text-[var(--color-muted)] max-w-xl mx-auto leading-relaxed"
+    >
+      {content.subheadline}
+    </p>
+  </div>
+
+  <!-- Before / After -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-10">
+    <!-- Before -->
+    <div
+      class="rounded-2xl border border-red-200 bg-red-50/50 p-6 flex flex-col gap-4"
+    >
+      <div class="flex items-center gap-2">
+        <span
+          class="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center"
+        >
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path
+              d="M2 2l6 6M8 2l-6 6"
+              stroke="#ef4444"
+              stroke-width="1.4"
+              stroke-linecap="round"></path>
+          </svg>
+        </span>
+        <span class="text-sm font-semibold text-red-700">{content.before.label}</span>
+      </div>
+      <ul class="flex flex-col gap-3">
+        {
+          content.before.items.map((item) => (
+            <li class="flex items-start gap-2.5">
+              <span class="flex-shrink-0 mt-1 w-1.5 h-1.5 rounded-full bg-red-300" />
+              <span class="text-sm text-red-800/70 leading-relaxed">{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- After -->
+    <div
+      class="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-6 flex flex-col gap-4"
+    >
+      <div class="flex items-center gap-2">
+        <span
+          class="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center"
+        >
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path
+              d="M1.5 5l2.5 2.5 4.5-4.5"
+              stroke="#10b981"
+              stroke-width="1.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <span class="text-sm font-semibold text-emerald-700">{content.after.label}</span>
+      </div>
+      <ul class="flex flex-col gap-3">
+        {
+          content.after.items.map((item) => (
+            <li class="flex items-start gap-2.5">
+              <span class="flex-shrink-0 mt-1 w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span class="text-sm text-emerald-900/70 leading-relaxed">{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="text-center flex flex-col items-center gap-3">
+    <a
+      href="#cta"
+      class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--color-primary)] text-white font-semibold text-sm hover:bg-[var(--color-primary-hover)] transition-all duration-150 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+    >
+      {content.cta}
+    </a>
+    <p class="text-xs text-[var(--color-muted)]">{content.ctaSub}</p>
+  </div>
+</SectionWrapper>

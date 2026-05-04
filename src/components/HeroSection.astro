@@ -1,0 +1,84 @@
+---
+import type { LandingContent } from "../content/index";
+import ProductMock from "./ProductMock.astro";
+
+interface Props {
+  content: LandingContent["hero"];
+}
+
+const { content } = Astro.props;
+---
+
+<section
+  class="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-12 md:pt-28 md:pb-20"
+>
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="flex flex-col gap-6 justify-center items-center">
+      <!-- Headline -->
+      <h1
+        class="opacity-0-init animate-fade-up animate-delay-100 text-center headline1 text-[var(--color-text)]"
+      >
+        {content.headline}
+        <br />
+        <span
+          class="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] bg-clip-text text-transparent"
+        >
+          {content.headlineAccent}
+        </span>
+      </h1>
+
+      <!-- Subheadline -->
+      <p
+        class="opacity-0-init animate-fade-up animate-delay-200 text-base sm:text-lg text-[var(--color-muted)] text-center leading-relaxed max-w-5xl"
+      >
+        {content.subheadline}
+      </p>
+
+      <!-- CTAs -->
+      <div
+        class="opacity-0-init animate-fade-up animate-delay-300 flex flex-col sm:flex-row items-start sm:items-center gap-3"
+      >
+        <a
+          href="#cta"
+          class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--color-primary)] text-white font-semibold text-sm hover:bg-[var(--color-primary-hover)] transition-all duration-150 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+        >
+          {content.ctaPrimary}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <a
+          href="#engine"
+          class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] font-medium text-sm hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-all duration-150"
+        >
+          {content.ctaSecondary}
+        </a>
+      </div>
+
+      <!-- Social proof micro -->
+      <div
+        class="opacity-0-init animate-fade-up animate-delay-400 flex items-center gap-3 pt-2"
+      >
+        <div class="flex -space-x-2">
+          {
+            ["#6366f1", "#10b981", "#f59e0b"].map((color) => (
+              <div
+                class="w-7 h-7 rounded-full border-2 border-[var(--color-surface)]"
+                style={`background: ${color}`}
+              />
+            ))
+          }
+        </div>
+        <p class="text-xs text-[var(--color-muted)]">
+          <strong class="text-[var(--color-text)]">40+ startups</strong> hired through
+          Purrfect Hire
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

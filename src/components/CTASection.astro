@@ -1,0 +1,58 @@
+---
+import type { LandingContent } from '../content/index';
+import SectionWrapper from './SectionWrapper.astro';
+
+interface Props {
+  content: LandingContent['cta'];
+}
+
+const { content } = Astro.props;
+---
+
+<SectionWrapper id="cta" class="bg-[var(--color-text)]">
+  <div class="max-w-2xl mx-auto text-center flex flex-col items-center gap-6">
+    <!-- Headline -->
+    <h2
+      class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight"
+    >
+      {content.headline}
+      <br />
+      <span
+        class="bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-secondary)] bg-clip-text text-transparent"
+      >
+        {content.headlineAccent}
+      </span>
+    </h2>
+
+    <p class="text-base text-white/50 max-w-md leading-relaxed">
+      {content.subheadline}
+    </p>
+
+    <!-- Buttons -->
+    <div class="flex flex-col sm:flex-row items-center gap-3 mt-2">
+      <a
+        href="#"
+        class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-[var(--color-primary)] font-semibold text-sm hover:bg-white/90 transition-all duration-150 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+      >
+        {content.ctaPrimary}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path
+            d="M3 8h10M9 4l4 4-4 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </a>
+      <a
+        href="#"
+        class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-white/20 text-white/80 font-medium text-sm hover:border-white/40 hover:text-white transition-all duration-150"
+      >
+        {content.ctaSecondary}
+      </a>
+    </div>
+
+    <!-- Note -->
+    <p class="text-xs text-white/30 mt-1">{content.note}</p>
+  </div>
+</SectionWrapper>

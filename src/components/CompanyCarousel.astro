@@ -1,0 +1,89 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = 'Trusted by the best engineering teams' } = Astro.props;
+
+const companies = [
+  { name: 'Stripe',    logo: 'https://logo.clearbit.com/stripe.com' },
+  { name: 'Vercel',    logo: 'https://logo.clearbit.com/vercel.com' },
+  { name: 'Notion',    logo: 'https://logo.clearbit.com/notion.so' },
+  { name: 'Figma',     logo: 'https://logo.clearbit.com/figma.com' },
+  { name: 'Linear',    logo: 'https://logo.clearbit.com/linear.app' },
+  { name: 'OpenAI',    logo: 'https://logo.clearbit.com/openai.com' },
+  { name: 'Shopify',   logo: 'https://logo.clearbit.com/shopify.com' },
+  { name: 'Airbnb',    logo: 'https://logo.clearbit.com/airbnb.com' },
+  { name: 'Spotify',   logo: 'https://logo.clearbit.com/spotify.com' },
+  { name: 'GitHub',    logo: 'https://logo.clearbit.com/github.com' },
+  { name: 'Slack',     logo: 'https://logo.clearbit.com/slack.com' },
+  { name: 'Datadog',   logo: 'https://logo.clearbit.com/datadoghq.com' },
+  { name: 'Twilio',    logo: 'https://logo.clearbit.com/twilio.com' },
+  { name: 'Retool',    logo: 'https://logo.clearbit.com/retool.com' },
+  { name: 'Atlassian', logo: 'https://logo.clearbit.com/atlassian.com' },
+];
+
+const doubled = [...companies, ...companies];
+---
+
+<section
+  class="bg-[var(--color-surface)] py-10 border-y border-[var(--color-border)]"
+  aria-label="Partner companies"
+>
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 mb-7 text-center">
+    <p class="text-[var(--color-muted)] text-xs font-medium uppercase tracking-widest">
+      {label}
+    </p>
+  </div>
+
+  <div
+    class="relative overflow-hidden"
+    style="mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);"
+    aria-hidden="true"
+  >
+    <div
+      class="flex items-center gap-12"
+      style="animation: marquee 35s linear infinite; width: max-content;"
+    >
+      {doubled.map((company) => (
+        <div class="flex-shrink-0 flex flex-col items-center justify-center gap-2 w-28 transition-all duration-300 opacity-60 hover:opacity-100 group">
+          <div class="h-10 flex items-center justify-center">
+            <img
+              src={company.logo}
+              alt={company.name}
+              width="100"
+              height="40"
+              loading="lazy"
+              class="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+            />
+            <span
+              class="hidden text-xs font-semibold text-[var(--color-muted)]"
+            >
+              {company.name}
+            </span>
+          </div>
+          <span class="text-[11px] text-[var(--color-muted)] font-medium text-center leading-tight">
+            {company.name}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [style*="animation: marquee"] {
+      animation: none !important;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: auto !important;
+    }
+  }
+</style>
