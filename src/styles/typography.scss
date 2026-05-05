@@ -1,53 +1,69 @@
+@use './breakpoints' as *;
+
 :root {
-    /* Font families */
     --font-primary: 'Inter', Arial, sans-serif;
     --font-secondary: 'Inter', Arial, sans-serif;
     --font-display: 'Inter', Arial, sans-serif;
     --font-mono: 'Space Mono', monospace;
 
-    /* Sizes */
-    --text-xs: 0.75rem;    /* 12px */
-    --text-sm: 0.875rem;   /* 14px */
-    --text-md: 1rem;       /* 16px */
-    --text-lg: 1.125rem;   /* 18px */
-    --text-xl: 1.5rem;     /* 24px */
-    --text-2xl: 2.75rem;   /* 60px — display secondary */
-    --text-3xl: 4rem;      /* 80px — display hero */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-md: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.5rem;
+    --text-2xl: 2.75rem;
+    --text-3xl: 4rem;
 
-    /* Line heights */
     --lh-tight: 1.00;
     --lh-normal: 1.50;
     --lh-loose: 1.60;
 }
 
-/* Display Hero — 80px ─────────────────────────────────────────────────── */
 .headline1 {
     font-family: var(--font-display);
     font-size: var(--text-3xl);
     line-height: 1.00;
     letter-spacing: -1px;
     font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
+
+    @include max-md {
+        font-size: 3rem;
+        letter-spacing: -0.75px;
+    }
+
+    @include max-sm {
+        font-size: 2.25rem;
+        letter-spacing: -0.5px;
+    }
 }
 
-/* Display Secondary — 60px ───────────────────────────────────────────── */
 .headline2 {
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     line-height: 1.00;
     letter-spacing: -2.4px;
     font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
+
+    @include max-md {
+        font-size: 2rem;
+        letter-spacing: -1.6px;
+    }
+
+    @include max-sm {
+        font-size: 1.75rem;
+        letter-spacing: -1.2px;
+    }
 }
 
-/* Section Heading — 44px ─────────────────────────────────────────────── */
-.headline {
+.headline3 {
     font-family: var(--font-display);
-    font-size: 2.75rem;
+    font-size: var(--text-xl);
     line-height: 1.10;
     letter-spacing: -1.1px;
     font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
 }
 
-/* Feature Title — 20px weight 600 ───────────────────────────────────── */
+
 .subhead1a {
     font-family: var(--font-primary);
     font-size: 1.25rem;
@@ -55,9 +71,13 @@
     line-height: 1.40;
     letter-spacing: -0.4px;
     font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
+
+    @include max-sm {
+        font-size: 1.125rem;
+        letter-spacing: -0.3px;
+    }
 }
 
-/* Body Medium — 16px weight 500 ─────────────────────────────────────── */
 .subhead2a {
     font-family: var(--font-primary);
     font-size: var(--text-md);
@@ -65,9 +85,13 @@
     line-height: 1.50;
     letter-spacing: -0.16px;
     font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+
+    @include max-sm {
+        font-size: var(--text-sm);
+        letter-spacing: -0.14px;
+    }
 }
 
-/* Sub-heading B — 16px weight 500, warm charcoal ────────────────────── */
 .subhead1b {
     font-family: var(--font-primary);
     font-size: var(--text-md);
@@ -75,10 +99,14 @@
     line-height: 1.50;
     letter-spacing: -0.16px;
     font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-    color: #55534e;
+    color: var(--color-warm-charcoal);
+
+    @include max-sm {
+        font-size: var(--text-sm);
+        letter-spacing: -0.14px;
+    }
 }
 
-/* Small sub — 14px weight 500, muted ────────────────────────────────── */
 .subhead2b {
     font-family: var(--font-primary);
     font-size: var(--text-sm);
@@ -86,10 +114,9 @@
     line-height: 1.50;
     letter-spacing: -0.14px;
     font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-    color: #9f9b93;
+    color: var(--color-warm-silver);
 }
 
-/* Caption — 14px ────────────────────────────────────────────────────── */
 .caption {
     font-family: var(--font-primary);
     font-size: var(--text-sm);
@@ -97,10 +124,9 @@
     line-height: 1.55;
     letter-spacing: -0.14px;
     font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-    color: #9f9b93;
+    color: var(--color-warm-silver);
 }
 
-/* Link ───────────────────────────────────────────────────────────────── */
 .link {
     font-family: var(--font-primary);
     font-size: var(--text-sm);

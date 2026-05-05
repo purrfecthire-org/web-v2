@@ -10,6 +10,7 @@ import CultureSection from '../../components/CultureSection.astro';
 import TestimonialsSection from '../../components/TestimonialsSection.astro';
 import CTASection from '../../components/CTASection.astro';
 import { getContent, type Lang } from '../../content/index';
+import RolesSection from '../../components/RolesSection.astro';
 
 const lang = (Astro.currentLocale ?? 'es') as Lang;
 const c = getContent(lang);
@@ -27,6 +28,7 @@ const c = getContent(lang);
     <AudienceSplit content={c.audienceSplit} />
     <EngineSection content={c.engine} />
     <CultureSection content={c.culture} />
+    <RolesSection>
     <TestimonialsSection content={c.testimonials} clientLabel="Cliente" candidateLabel="Candidato" />
     <CTASection content={c.cta} />
   </main>

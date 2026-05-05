@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  /* Base */
+  --color-bg: #faf9f7;
+  --color-surface: #ffffff;
+  --color-surface-2: #f5f3ef;
+
+  /* Brand */
+  --color-primary: #0d0857;
+  --color-primary-hover: #32037d;
+  --color-secondary: #00bfa5;
+  --color-accent: #3bd3fd;
+
+  /* Text */
+  --color-text: #0f0f0f;
+  --color-muted: #5c5c5c;
+
+  /* Border */
+  --color-border: #e5e5e1;
+
+  /* Feedback */
+  --color-success: #078a52;
+
+  --btn-primary: #0f0f0f;
+  --btn-primary-hover: #3c2bdc;
+
+  /* Swatch palette */
+  --color-matcha-300: #84e7a5;
+  --color-matcha-600: #078a52;
+  --color-matcha-800: #02492a;
+  --color-slushie-500: #3bd3fd;
+  --color-slushie-800: #0089ad;
+  --color-lemon-400: #f8cc65;
+  --color-lemon-500: #fbbd41;
+  --color-lemon-700: #d08a11;
+  --color-lemon-800: #9d6a09;
+  --color-ube-300: #c1b0ff;
+  --color-ube-800: #43089f;
+  --color-ube-900: #32037d;
+  --color-pomegranate-400: #fc7981;
+  --color-blueberry-800: #01418d;
+
+  /* Neutral warm */
+  --color-warm-silver: #9f9b93;
+  --color-warm-charcoal: #55534e;
+  --color-dark-charcoal: #333333;
+  --color-oat-border: #dad4c8;
+  --color-oat-light: #eee9df;
+
+  --font-sans: "Roobert", "Space Grotesk", Arial, sans-serif;
+  --font-mono: "Space Mono", monospace;
+}
