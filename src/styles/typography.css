@@ -11,8 +11,8 @@
     --text-md: 1rem;       /* 16px */
     --text-lg: 1.125rem;   /* 18px */
     --text-xl: 1.5rem;     /* 24px */
-    --text-2xl: 3.75rem;   /* 60px — display secondary */
-    --text-3xl: 5rem;      /* 80px — display hero */
+    --text-2xl: 2.75rem;   /* 60px — display secondary */
+    --text-3xl: 4rem;      /* 80px — display hero */
 
     /* Line heights */
     --lh-tight: 1.00;
@@ -42,7 +42,6 @@
 .headline {
     font-family: var(--font-display);
     font-size: 2.75rem;
-    font-weight: 600;
     line-height: 1.10;
     letter-spacing: -1.1px;
     font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";

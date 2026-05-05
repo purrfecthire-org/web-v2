@@ -8,80 +8,110 @@ interface Props {
 const { content } = Astro.props;
 ---
 
-<section
-  class="py-20 md:py-28"
-  style="background: var(--color-ube-800);"
->
-  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-
-    <!-- Section header -->
-    <div class="flex flex-col gap-6 max-w-3xl mb-12 md:mb-16">
-
-      <!-- Badge -->
-      <span
-        class="label-uppercase"
-        style="color: var(--color-ube-300); display: inline-block; width: fit-content;"
-      >
-        {content.badge}
-      </span>
-
-      <!-- Headline -->
-      <h2
-        class="headline2"
-        style="color: #ffffff;"
-      >
-        {content.headline}
-      </h2>
-    </div>
-
-    <!-- Body + Quotes — two column on desktop -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-
-      <!-- Body text -->
-      <div class="flex flex-col gap-6">
-        <p
-          style="font-family: var(--font-primary); font-size: 1.125rem; font-weight: 400; line-height: 1.7; letter-spacing: -0.36px; color: var(--color-ube-300); font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
-        >
-          {content.body1}
-        </p>
-        <p
-          style="font-family: var(--font-primary); font-size: 1.125rem; font-weight: 400; line-height: 1.7; letter-spacing: -0.36px; color: var(--color-ube-300); font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
-        >
-          {content.body2}
-        </p>
+<section class="culture">
+  <div class="culture__container">
+    <div class="culture__content">
+      <div class="culture__header">
+        <h2 class="headline culture__headline">
+          {content.headline}
+        </h2>
       </div>
-
-      <!-- Quotes -->
-      <div class="flex flex-col gap-5">
-        {content.quotes.map((quote) => (
-          <blockquote
-            class="flex flex-col gap-4 p-7"
-            style="background: rgba(255,255,255,0.06); border: 1px dashed var(--color-ube-300); border-radius: 24px;"
-          >
-            <!-- Open-quote glyph -->
-            <span
-              aria-hidden="true"
-              style="font-family: var(--font-display); font-size: 3rem; line-height: 1; color: var(--color-ube-300); opacity: 0.5; margin-bottom: -8px; font-feature-settings: 'ss01', 'ss03', 'ss10', 'ss11', 'ss12';"
-            >"</span>
-
-            <p
-              style="font-family: var(--font-primary); font-size: 1rem; font-weight: 400; line-height: 1.65; letter-spacing: -0.16px; color: #ffffff; font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12'; font-style: italic;"
-            >
-              {quote.text}
-            </p>
-
-            <footer>
-              <span
-                class="label-uppercase"
-                style="color: var(--color-ube-300); opacity: 0.8;"
-              >
-                {quote.author}
-              </span>
-            </footer>
-          </blockquote>
-        ))}
+      <div class="culture__body-wrapper">
+        <div class="culture__body">
+          <p class="culture__text">{content.body1}</p>
+          <p class="culture__text">{content.body2}</p>
+        </div>
       </div>
-
     </div>
+    <img
+      src="https://img.freepik.com/foto-gratis/sonriente-mujer-bonita-pone-punos-cara-aislada-pared-naranja_141793-66278.jpg?semt=ais_hybrid&w=740&q=80"
+      class="culture__image"
+    />
   </div>
 </section>
+
+<style lang="scss">
+  @use '../styles/breakpoints' as *;
+
+  .culture {
+    padding: 7rem 2.5rem;
+    background: var(--color-bg);
+
+    @include max-md {
+      padding: 5rem 2.5rem;
+    }
+
+    &__container {
+      display: flex;
+      max-width: 80rem;
+      margin-inline: auto;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__header {
+      max-width: 36rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+
+      @include max-md {
+        margin-bottom: 3rem;
+      }
+    }
+
+    &__headline {
+      color: var(--color-text);
+
+      @include max-lg {
+        text-align: center;
+      }
+    }
+
+    &__body-wrapper {
+      display: flex;
+      max-width: 36rem;
+      align-items: flex-start;
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &__text {
+      font-family: var(--font-primary);
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 1.7;
+      letter-spacing: -0.36px;
+      color: var(--color-muted);
+      font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';
+
+      @include max-lg {
+        text-align: center;
+      }
+    }
+
+    &__image {
+      height: 30rem;
+      width: 21.25rem;
+      object-fit: cover;
+      border-radius: 2rem;
+      background-color: #4b5563;
+      margin-inline: auto;
+
+      @include max-lg {
+        display: none;
+      }
+    }
+  }
+</style>

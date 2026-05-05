@@ -3,8 +3,6 @@ interface Props {
   label?: string;
 }
 
-const { label = 'Trusted by the best teams' } = Astro.props;
-
 const companies = [
   // Tecnología y DevTools (CDNs muy fiables)
   { 
@@ -58,39 +56,9 @@ const companies = [
     logo: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg' 
   },
   { 
-    name: 'Visa', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg' 
-  },
-  { 
     name: 'Mastercard', 
     logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg' 
   },
-
-  // Marcas de Consumo (CDNs estables)
-  { 
-    name: 'Coca-Cola', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg' 
-  },
-  { 
-    name: 'Nike', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg' 
-  },
-  { 
-    name: 'Samsung', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg' 
-  },
-  { 
-    name: 'Toyota', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Toyota_car_logo.svg' 
-  },
-  { 
-    name: 'Mercedes-Benz', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Benz_logo%2C_integrated.svg' 
-  },
-  { 
-    name: 'Adobe', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/Adobe_Corporate_Logo.svg' 
-  }
 ];
 const doubled = [...companies, ...companies];
 ---
