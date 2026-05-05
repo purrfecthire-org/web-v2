@@ -1,0 +1,117 @@
+---
+import type { LandingContent } from "../content/index";
+
+interface Props {
+  content: LandingContent["engine"];
+}
+
+const { content } = Astro.props;
+
+const stepColors: Record<string, { bg: string; text: string }> = {
+  '--color-matcha-300':     { bg: '#84e7a5', text: '#02492a' },
+  '--color-slushie-800':    { bg: '#0089ad', text: '#ffffff' },
+  '--color-ube-300':        { bg: '#c1b0ff', text: '#32037d' },
+  '--color-pomegranate-400':{ bg: '#fc7981', text: '#ffffff' },
+};
+---
+
+<section id="howItsWork" class="py-20 md:py-28" style="background: var(--color-surface);">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section header -->
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-14">
+      <div class="flex flex-col gap-5 max-w-2xl">
+        <!-- Badge -->
+        <span class="label-uppercase" style="color: var(--color-warm-charcoal);">
+          {content.badge}
+        </span>
+
+        <!-- Headline -->
+        <h2 class="headline2" style="color: var(--color-text);">
+          {content.headline}
+        </h2>
+
+        <!-- Subheadline -->
+        <p
+          style="font-family: var(--font-primary); font-size: 1.125rem; font-weight: 400; line-height: 1.6; letter-spacing: -0.36px; color: var(--color-muted); font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
+        >
+          {content.subheadline}
+        </p>
+      </div>
+
+      <!-- Join the network CTA -->
+      <div class="shrink-0">
+        <a
+          href="#audience"
+          class="btn-ghost"
+          style="padding: 10px 20px; border-radius: 1584px; white-space: nowrap;"
+        >
+          {content.joinNetworkCta}
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Steps — vertical numbered list -->
+    <div class="flex flex-col gap-4">
+      {content.steps.map((step) => {
+        const palette = stepColors[step.color] ?? { bg: '', text: '#000000' };
+        return (
+          <div
+            class="step-card flex flex-col sm:flex-row gap-6 sm:gap-8 p-7 md:p-8"
+            style={`border-bottom: 1px solid #D4D4D0;`}
+          >
+            <!-- Number badge -->
+            <div class="shrink-0 flex sm:flex-col items-center sm:items-start gap-4 sm:gap-3">
+              <span
+                class="step-num"
+                style={`font-family: var(--font-mono); font-size: 0.875rem; font-weight: 700; letter-spacing: 0.08em; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px; background: ${palette.bg}; color: ${palette.text}; flex-shrink: 0;`}
+              >
+                {step.id}
+              </span>
+            </div>
+
+            <!-- Content -->
+            <div class="flex flex-col gap-3 flex-1">
+              <h3
+                style="font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; line-height: 1.40; letter-spacing: -0.4px; color: var(--color-text); font-feature-settings: 'ss01', 'ss03', 'ss10', 'ss11', 'ss12';"
+              >
+                {step.title}
+              </h3>
+
+              <p
+                style="font-family: var(--font-primary); font-size: 1rem; font-weight: 400; line-height: 1.6; color: var(--color-muted); font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
+              >
+                {step.description}
+              </p>
+
+              {step.callout && (
+                <div class="mt-1">
+                  <span
+                    class="inline-flex items-center gap-2 px-3 py-1.5"
+                    style=" border-radius: 1584px; font-family: var(--font-primary); font-size: 0.875rem; line-height: 1.4; letter-spacing: -0.14px; font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M7 1v6l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    {step.callout}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .step-card:hover {
+    
+  }
+</style>

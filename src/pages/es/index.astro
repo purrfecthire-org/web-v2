@@ -2,14 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import HeroSection from '../../components/HeroSection.astro';
-import EngineDiagram from '../../components/EngineDiagram.astro';
-import StartupsSection from '../../components/StartupsSection.astro';
-import TalentSection from '../../components/TalentSection.astro';
-import WhyItWorks from '../../components/WhyItWorks.astro';
-import SocialProof from '../../components/SocialProof.astro';
-import CTASection from '../../components/CTASection.astro';
+import AudienceSplit from '../../components/AudienceSplit.astro';
+import EngineSection from '../../components/EngineSection.astro';
 import Footer from '../../components/Footer.astro';
 import CompanyCarousel from '../../components/CompanyCarousel.astro';
+import CultureSection from '../../components/CultureSection.astro';
+import TestimonialsSection from '../../components/TestimonialsSection.astro';
+import CTASection from '../../components/CTASection.astro';
 import { getContent, type Lang } from '../../content/index';
 
 const lang = (Astro.currentLocale ?? 'es') as Lang;
@@ -25,11 +24,10 @@ const c = getContent(lang);
   <main>
     <HeroSection content={c.hero} />
     <CompanyCarousel label="De confianza para los mejores equipos de ingeniería" />
-    <EngineDiagram content={c.engine} />
-    <StartupsSection content={c.startups} />
-    <TalentSection content={c.talent} />
-    <WhyItWorks content={c.whyItWorks} />
-    <SocialProof content={c.socialProof} />
+    <AudienceSplit content={c.audienceSplit} />
+    <EngineSection content={c.engine} />
+    <CultureSection content={c.culture} />
+    <TestimonialsSection content={c.testimonials} clientLabel="Cliente" candidateLabel="Candidato" />
     <CTASection content={c.cta} />
   </main>
   <Footer content={c.footer} />

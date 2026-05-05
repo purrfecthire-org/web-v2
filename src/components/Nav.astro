@@ -13,61 +13,51 @@ const otherLangLabel = lang === 'en' ? 'ES' : 'EN';
 const otherLangHref = getRelativeLocaleUrl(otherLang, '/');
 ---
 
-<header
-  id="nav"
-  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
->
+<header id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
     <nav class="flex items-center justify-between h-16">
+
       <!-- Logo -->
-      <img src="/logos/logo-desktop.png" class="w-40" alt="logo">
+      <img src="/logos/logo-desktop.png" class="w-40" alt="logo" />
 
       <!-- Desktop links -->
-      <div class="hidden md:flex items-center gap-8">
-        {
-          content.links.map((link) => (
-            <a
-              href={link.href}
-              class="text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors duration-150 font-medium"
-            >
+      <div class="hidden md:flex items-center gap-1">
+        {content.links.map((link, i) => (
+          <>
+            {i > 0 && <span class="nav-sep" aria-hidden="true">·</span>}
+            <a href={link.href} class="nav-link px-3">
               {link.label}
             </a>
-          ))
-        }
+          </>
+        ))}
       </div>
 
       <!-- Right side -->
       <div class="flex items-center gap-3">
-        <a
-          href={otherLangHref}
-          class="text-xs font-medium text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors px-2 py-1 rounded border border-[var(--color-border)] hover:border-[var(--color-primary)]"
-        >
+        <!-- Lang switcher -->
+        <a href={otherLangHref} class="lang-switch">
           {otherLangLabel}
         </a>
-        <a
-          href="#cta"
-          class="hidden sm:inline-flex items-center px-4 py-2 rounded-lg bg-[var(--color-primary)] text-white text-sm font-medium hover:bg-[var(--color-primary-hover)] transition-all duration-150 hover:shadow-md"
-        >
+
+        <!-- CTA pill -->
+        <a href="#cta" class="btn nav-cta hidden sm:inline-flex">
           {content.cta}
         </a>
+
         <!-- Mobile hamburger -->
         <button
           id="mobile-menu-btn"
-          class="md:hidden p-2 rounded-lg hover:bg-[var(--color-surface-2)] transition-colors"
+          class="md:hidden p-2 rounded-lg transition-colors"
+          style="color: var(--color-text);"
           aria-label="Toggle menu"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            class="text-[var(--color-text)]"
-          >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path
               stroke="currentColor"
               stroke-width="1.5"
               stroke-linecap="round"
-              d="M3 5h14M3 10h14M3 15h14"></path>
+              d="M3 5h14M3 10h14M3 15h14"
+            ></path>
           </svg>
         </button>
       </div>
@@ -77,22 +67,19 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, '/');
   <!-- Mobile menu -->
   <div
     id="mobile-menu"
-    class="md:hidden hidden bg-[var(--color-surface)] border-b border-[var(--color-border)]"
+    class="md:hidden hidden border-b"
+    style="background: var(--color-surface); border-color: var(--color-border);"
   >
-    <div class="max-w-[1280px] mx-auto px-4 py-4 flex flex-col gap-3">
-      {
-        content.links.map((link) => (
-          <a
-            href={link.href}
-            class="text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] py-2 font-medium transition-colors"
-          >
-            {link.label}
-          </a>
-        ))
-      }
+    <div class="max-w-[1280px] mx-auto px-4 py-4 flex flex-col gap-1">
+      {content.links.map((link) => (
+        <a href={link.href} class="nav-link py-2">
+          {link.label}
+        </a>
+      ))}
       <a
         href="#cta"
-        class="mt-2 inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-[var(--color-primary)] text-white text-sm font-medium"
+        class="btn nav-cta mt-3 justify-center"
+        style="border-radius: 12px;"
       >
         {content.cta}
       </a>
@@ -125,8 +112,62 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, '/');
   }
 
   header.scrolled {
-    background: var(--color-surface);
+    background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-base);
+  }
+
+  /* Nav link — 15px weight 500, 4 stylistic sets */
+  .nav-link {
+    font-family: 'Roobert', 'Space Grotesk', Arial, sans-serif;
+    font-size: 0.9375rem; /* 15px */
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: normal;
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+  }
+
+  .nav-sep {
+    font-family: 'Roobert', 'Space Grotesk', Arial, sans-serif;
+    font-size: 0.9375rem;
+    color: var(--color-oat-border);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* CTA — pill radius override */
+  .nav-cta {
+    border-radius: 1584px;
+    padding: 6px 16px;
+    font-size: 0.9375rem;
+  }
+
+  /* Lang switcher */
+  .lang-switch {
+    font-family: 'Roobert', 'Space Grotesk', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 1.08px;
+    text-transform: uppercase;
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+    color: var(--color-muted);
+    text-decoration: none;
+    padding: 4px 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .lang-switch:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
   }
 </style>

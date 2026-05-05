@@ -1,0 +1,232 @@
+---
+import type { LandingContent } from "../content/index";
+
+interface Props {
+  content: LandingContent["testimonials"];
+  clientLabel?: string;
+  candidateLabel?: string;
+  timeLabel?: string;
+}
+
+const {
+  content,
+  clientLabel    = 'Client',
+  candidateLabel = 'Candidate',
+} = Astro.props;
+
+// Order: Micaela (featured top) → 3 middle → Diana (featured bottom)
+const featured    = content.items[0];
+const middle      = content.items.slice(1, -1);
+const featuredEnd = content.items[content.items.length - 1];
+---
+
+<section class="py-20 md:py-28" style="background: var(--color-surface);">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header -->
+    <div class="flex flex-col gap-5 items-center text-center mb-14 max-w-3xl mx-auto">
+      <span class="label-uppercase" style="color: var(--color-warm-charcoal);">
+        {content.badge}
+      </span>
+      <h2 class="headline" style="color: var(--color-text);">
+        {content.headline}
+      </h2>
+    </div>
+
+    <!-- Featured top — Micaela -->
+    <div class="t-card t-featured mb-5">
+      <span class="t-quote-mark" aria-hidden="true">"</span>
+      <p class="t-quote t-quote-lg">{featured.quote}</p>
+      <div class="t-footer">
+        <div class="t-author">
+          <span class="t-name">{featured.flag} {featured.name}</span>
+          <span class="t-meta">{featured.role}, {featured.company}</span>
+        </div>
+        <div class="t-pills">
+          <span class={`t-pill ${featured.type === 'client' ? 't-pill-client' : 't-pill-candidate'}`}>
+            {featured.type === 'client' ? clientLabel : candidateLabel}
+          </span>
+          {featured.timeToHire && (
+            <span class="t-pill t-pill-time">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M7 1v6l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+              {featured.timeToHire}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle grid — 3 cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
+      {middle.map((item) => (
+        <div class="t-card">
+          <span class="t-quote-mark" aria-hidden="true">"</span>
+          <p class="t-quote">{item.quote}</p>
+          <div class="t-footer">
+            <div class="t-author">
+              <span class="t-name">{item.flag} {item.name}</span>
+              <span class="t-meta">{item.role}, {item.company}</span>
+            </div>
+            <div class="t-pills">
+              <span class={`t-pill ${item.type === 'client' ? 't-pill-client' : 't-pill-candidate'}`}>
+                {item.type === 'client' ? clientLabel : candidateLabel}
+              </span>
+              {item.timeToHire && (
+                <span class="t-pill t-pill-time">
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M7 1v6l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                  {item.timeToHire}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Featured bottom — Diana -->
+    <div class="t-card t-featured">
+      <span class="t-quote-mark" aria-hidden="true">"</span>
+      <p class="t-quote t-quote-lg">{featuredEnd.quote}</p>
+      <div class="t-footer">
+        <div class="t-author">
+          <span class="t-name">{featuredEnd.flag} {featuredEnd.name}</span>
+          <span class="t-meta">{featuredEnd.role}, {featuredEnd.company}</span>
+        </div>
+        <div class="t-pills">
+          <span class={`t-pill ${featuredEnd.type === 'client' ? 't-pill-client' : 't-pill-candidate'}`}>
+            {featuredEnd.type === 'client' ? clientLabel : candidateLabel}
+          </span>
+          {featuredEnd.timeToHire && (
+            <span class="t-pill t-pill-time">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M7 1v6l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+              {featuredEnd.timeToHire}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .t-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-oat-border);
+    border-radius: 24px;
+    box-shadow: var(--shadow-base);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .t-card:hover {
+    box-shadow: var(--shadow-hard);
+    transform: translateY(-2px);
+  }
+  .t-featured {
+    background: var(--color-surface);
+  }
+
+  .t-quote-mark {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-oat-border);
+    margin-bottom: -16px;
+    font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
+    display: block;
+  }
+
+  .t-quote {
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: -0.16px;
+    color: var(--color-text);
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+    font-style: italic;
+    flex: 1;
+  }
+  .t-quote-lg {
+    font-size: 1.125rem;
+  }
+
+  .t-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--color-oat-border);
+    margin-top: auto;
+  }
+
+  .t-author {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .t-name {
+    font-family: var(--font-primary);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.16px;
+    color: var(--color-text);
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+  }
+  .t-meta {
+    font-family: var(--font-primary);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-muted);
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+  }
+
+  .t-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .t-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 1584px;
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+    white-space: nowrap;
+  }
+  .t-pill-client {
+    background: var(--color-matcha-300);
+    color: var(--color-matcha-800);
+  }
+  .t-pill-candidate {
+    background: var(--color-ube-300);
+    color: var(--color-ube-900);
+  }
+  .t-pill-time {
+    background: var(--color-lemon-400);
+    color: var(--color-lemon-800);
+  }
+</style>

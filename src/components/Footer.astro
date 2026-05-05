@@ -8,36 +8,79 @@ interface Props {
 const { content } = Astro.props;
 ---
 
-<footer
-  class="w-full border-t border-[var(--color-border)] bg-[var(--color-surface)]"
->
-  <div
-    class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4"
-  >
-    <!-- Left -->
-    <div class="flex items-center gap-2">
-      <span
-        class="w-6 h-6 rounded-md bg-[var(--color-primary)] flex items-center justify-center text-white text-xs font-bold"
-        >P</span
-      >
-      <span class="text-xs text-[var(--color-muted)]">{content.tagline}</span>
-    </div>
+<footer style="background: var(--color-bg); border-top: 1px solid var(--color-oat-border);">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-7">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
 
-    <!-- Links -->
-    <div class="flex items-center gap-5">
-      {
-        content.links.map((link) => (
-          <a
-            href={link.href}
-            class="text-xs text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
-          >
-            {link.label}
-          </a>
-        ))
-      }
-    </div>
+      <!-- Logo -->
+      <a href="/" aria-label="Purrfect Hire home">
+        <img
+          src="/logos/logo-desktop.png"
+          alt="Purrfect Hire"
+          class="footer-logo"
+        />
+      </a>
 
-    <!-- Legal -->
-    <p class="text-xs text-[var(--color-muted)]">{content.legal}</p>
+      <!-- Links + legal -->
+      <div class="flex flex-wrap items-center justify-center sm:justify-end gap-x-1 gap-y-2">
+        {content.links.map((link, i) => (
+          <>
+            {i > 0 && <span class="footer-sep" aria-hidden="true">·</span>}
+            <a
+              href={link.href}
+              class="footer-link"
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            >
+              {link.label}
+            </a>
+          </>
+        ))}
+        <span class="footer-sep" aria-hidden="true">·</span>
+        <span class="footer-legal">{content.legal}</span>
+      </div>
+
+    </div>
   </div>
 </footer>
+
+<style>
+  .footer-logo {
+    width: 40px;
+    opacity: 0.85;
+    transition: opacity 0.15s ease;
+  }
+  .footer-logo:hover {
+    opacity: 1;
+  }
+
+  .footer-link {
+    font-family: var(--font-primary);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-muted);
+    text-decoration: none;
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+    transition: color 0.15s ease;
+    padding: 2px 4px;
+  }
+  .footer-link:hover {
+    color: var(--color-text);
+  }
+
+  .footer-sep {
+    font-size: 0.875rem;
+    color: var(--color-oat-border);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .footer-legal {
+    font-family: var(--font-primary);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--color-oat-border);
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+  }
+</style>

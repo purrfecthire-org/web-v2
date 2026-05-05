@@ -3,38 +3,103 @@ interface Props {
   label?: string;
 }
 
-const { label = 'Trusted by the best engineering teams' } = Astro.props;
+const { label = 'Trusted by the best teams' } = Astro.props;
 
 const companies = [
-  { name: 'Stripe',    logo: 'https://logo.clearbit.com/stripe.com' },
-  { name: 'Vercel',    logo: 'https://logo.clearbit.com/vercel.com' },
-  { name: 'Notion',    logo: 'https://logo.clearbit.com/notion.so' },
-  { name: 'Figma',     logo: 'https://logo.clearbit.com/figma.com' },
-  { name: 'Linear',    logo: 'https://logo.clearbit.com/linear.app' },
-  { name: 'OpenAI',    logo: 'https://logo.clearbit.com/openai.com' },
-  { name: 'Shopify',   logo: 'https://logo.clearbit.com/shopify.com' },
-  { name: 'Airbnb',    logo: 'https://logo.clearbit.com/airbnb.com' },
-  { name: 'Spotify',   logo: 'https://logo.clearbit.com/spotify.com' },
-  { name: 'GitHub',    logo: 'https://logo.clearbit.com/github.com' },
-  { name: 'Slack',     logo: 'https://logo.clearbit.com/slack.com' },
-  { name: 'Datadog',   logo: 'https://logo.clearbit.com/datadoghq.com' },
-  { name: 'Twilio',    logo: 'https://logo.clearbit.com/twilio.com' },
-  { name: 'Retool',    logo: 'https://logo.clearbit.com/retool.com' },
-  { name: 'Atlassian', logo: 'https://logo.clearbit.com/atlassian.com' },
-];
+  // Tecnología y DevTools (CDNs muy fiables)
+  { 
+    name: 'GitHub', 
+    logo: 'https://cdn.simpleicons.org/github/000000/000000?viewbox=0,0,120,40' 
+  },
+  { 
+    name: 'Microsoft', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg' 
+  },
+  { 
+    name: 'Google', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' 
+  },
+  { 
+    name: 'Amazon', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg' 
+  },
+  { 
+    name: 'Netflix', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg' 
+  },
+  { 
+    name: 'Airbnb', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_Bélo.svg' 
+  },
+  { 
+    name: 'Spotify', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg' 
+  },
+  { 
+    name: 'Slack', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg' // Incluye icono + texto en formato apilado, pero muy legible
+  },
+  { 
+    name: 'Tesla', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg' 
+  },
+  { 
+    name: 'Figma', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg' 
+  },
+  
+  // FinTech y Pagos
+  { 
+    name: 'PayPal', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg' 
+  },
+  { 
+    name: 'Stripe', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg' 
+  },
+  { 
+    name: 'Visa', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg' 
+  },
+  { 
+    name: 'Mastercard', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg' 
+  },
 
+  // Marcas de Consumo (CDNs estables)
+  { 
+    name: 'Coca-Cola', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg' 
+  },
+  { 
+    name: 'Nike', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg' 
+  },
+  { 
+    name: 'Samsung', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg' 
+  },
+  { 
+    name: 'Toyota', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Toyota_car_logo.svg' 
+  },
+  { 
+    name: 'Mercedes-Benz', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Benz_logo%2C_integrated.svg' 
+  },
+  { 
+    name: 'Adobe', 
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/Adobe_Corporate_Logo.svg' 
+  }
+];
 const doubled = [...companies, ...companies];
 ---
 
 <section
-  class="bg-[var(--color-surface)] py-10 border-y border-[var(--color-border)]"
+  class="py-10"
+  style="background: var(--color-surface);"
   aria-label="Partner companies"
 >
-  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 mb-7 text-center">
-    <p class="text-[var(--color-muted)] text-xs font-medium uppercase tracking-widest">
-      {label}
-    </p>
-  </div>
 
   <div
     class="relative overflow-hidden"
@@ -46,7 +111,7 @@ const doubled = [...companies, ...companies];
       style="animation: marquee 35s linear infinite; width: max-content;"
     >
       {doubled.map((company) => (
-        <div class="flex-shrink-0 flex flex-col items-center justify-center gap-2 w-28 transition-all duration-300 opacity-60 hover:opacity-100 group">
+        <div class="flex-shrink-0 flex flex-col items-center justify-center gap-2 w-28 transition-all duration-300 group">
           <div class="h-10 flex items-center justify-center">
             <img
               src={company.logo}
@@ -54,18 +119,10 @@ const doubled = [...companies, ...companies];
               width="100"
               height="40"
               loading="lazy"
-              class="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+              class="max-w-full max-h-full object-contain"
               onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
             />
-            <span
-              class="hidden text-xs font-semibold text-[var(--color-muted)]"
-            >
-              {company.name}
-            </span>
           </div>
-          <span class="text-[11px] text-[var(--color-muted)] font-medium text-center leading-tight">
-            {company.name}
-          </span>
         </div>
       ))}
     </div>

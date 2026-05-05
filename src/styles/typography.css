@@ -1,86 +1,112 @@
 :root {
     /* Font families */
-    --font-primary: 'Inter', sans-serif;
-    --font-secondary: 'Playfair Display', serif;
-    --font-display: 'Lobster', cursive;
+    --font-primary: 'Inter', Arial, sans-serif;
+    --font-secondary: 'Inter', Arial, sans-serif;
+    --font-display: 'Inter', Arial, sans-serif;
+    --font-mono: 'Space Mono', monospace;
 
     /* Sizes */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-md: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.5rem;
-    --text-2xl: 2rem;
-    --text-3xl: 4.5rem;
+    --text-xs: 0.75rem;    /* 12px */
+    --text-sm: 0.875rem;   /* 14px */
+    --text-md: 1rem;       /* 16px */
+    --text-lg: 1.125rem;   /* 18px */
+    --text-xl: 1.5rem;     /* 24px */
+    --text-2xl: 3.75rem;   /* 60px — display secondary */
+    --text-3xl: 5rem;      /* 80px — display hero */
 
     /* Line heights */
-    --lh-tight: 1.2;
-    --lh-normal: 1.5;
-    --lh-loose: 1.7;
+    --lh-tight: 1.00;
+    --lh-normal: 1.50;
+    --lh-loose: 1.60;
 }
 
-/* Headlines */
+/* Display Hero — 80px ─────────────────────────────────────────────────── */
 .headline1 {
     font-family: var(--font-display);
     font-size: var(--text-3xl);
-    font-weight: 400;
-    line-height: var(--lh-tight);
+    line-height: 1.00;
+    letter-spacing: -1px;
+    font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
 }
 
+/* Display Secondary — 60px ───────────────────────────────────────────── */
 .headline2 {
     font-family: var(--font-display);
     font-size: var(--text-2xl);
-    font-weight: 400;
-    line-height: var(--lh-tight);
+    line-height: 1.00;
+    letter-spacing: -2.4px;
+    font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
 }
 
+/* Section Heading — 44px ─────────────────────────────────────────────── */
 .headline {
     font-family: var(--font-display);
-    font-size: var(--text-xl);
-    font-weight: 400;
+    font-size: 2.75rem;
+    font-weight: 600;
+    line-height: 1.10;
+    letter-spacing: -1.1px;
+    font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
 }
 
-/* Subheads A (más importantes) */
+/* Feature Title — 20px weight 600 ───────────────────────────────────── */
 .subhead1a {
     font-family: var(--font-primary);
-    font-size: var(--text-lg);
+    font-size: 1.25rem;
     font-weight: 600;
+    line-height: 1.40;
+    letter-spacing: -0.4px;
+    font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
 }
 
+/* Body Medium — 16px weight 500 ─────────────────────────────────────── */
 .subhead2a {
     font-family: var(--font-primary);
     font-size: var(--text-md);
     font-weight: 500;
+    line-height: 1.50;
+    letter-spacing: -0.16px;
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
 }
 
-/* Subheads B (menos importantes) */
+/* Sub-heading B — 16px weight 500, warm charcoal ────────────────────── */
 .subhead1b {
     font-family: var(--font-primary);
     font-size: var(--text-md);
     font-weight: 500;
-    opacity: 0.9;
+    line-height: 1.50;
+    letter-spacing: -0.16px;
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+    color: #55534e;
 }
 
+/* Small sub — 14px weight 500, muted ────────────────────────────────── */
 .subhead2b {
     font-family: var(--font-primary);
     font-size: var(--text-sm);
     font-weight: 500;
-    opacity: 0.8;
+    line-height: 1.50;
+    letter-spacing: -0.14px;
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+    color: #9f9b93;
 }
 
-/* Caption */
+/* Caption — 14px ────────────────────────────────────────────────────── */
 .caption {
     font-family: var(--font-primary);
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     font-weight: 400;
-    opacity: 0.7;
+    line-height: 1.55;
+    letter-spacing: -0.14px;
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+    color: #9f9b93;
 }
 
-/* Link */
+/* Link ───────────────────────────────────────────────────────────────── */
 .link {
     font-family: var(--font-primary);
     font-size: var(--text-sm);
     font-weight: 500;
     text-decoration: underline;
     cursor: pointer;
+    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
 }

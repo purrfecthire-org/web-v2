@@ -2,37 +2,65 @@
 @import "./typography.css";
 
 @theme {
-  --color-bg: #f8f8f6;
+  /* Base */
+  --color-bg: #FAF9F7;
   --color-surface: #ffffff;
-  --color-surface-2: #f2f2ef;
-  --color-primary: #3730a3;
-  --color-primary-hover: #312e81;
-  --color-secondary: #6366f1;
-  --color-accent: #818cf8;
-  --color-text: #0f0f0f;
-  --color-muted: #6b7280;
-  --color-border: #e5e5e3;
-  --color-success: #10b981;
+  --color-surface-2: #f5f3ef;
 
-  --font-sans: 'Inter', 'system-ui', sans-serif;
+  /* Brand */
+  --color-primary: #0D0857;
+  --color-primary-hover: #32037d;
+  --color-secondary: #00bfa5;
+  --color-accent: #3bd3fd;
+
+  /* Text */
+  --color-text: #0F0F0F;
+  --color-muted: #5C5C5C;
+
+  /* Border */
+  --color-border: #E5E5E1;
+
+  /* Feedback */
+  --color-success: #078a52;
+
+  --btn-primary:       #0F0F0F;
+  --btn-primary-hover: #3C2BDC;
+
+  /* Swatch palette */
+  --color-matcha-300: #84e7a5;
+  --color-matcha-600: #078a52;
+  --color-matcha-800: #02492a;
+  --color-slushie-500: #3bd3fd;
+  --color-slushie-800: #0089ad;
+  --color-lemon-400: #f8cc65;
+  --color-lemon-500: #fbbd41;
+  --color-lemon-700: #d08a11;
+  --color-lemon-800: #9d6a09;
+  --color-ube-300: #c1b0ff;
+  --color-ube-800: #43089f;
+  --color-ube-900: #32037d;
+  --color-pomegranate-400: #fc7981;
+  --color-blueberry-800: #01418d;
+
+  /* Neutral warm */
+  --color-warm-silver: #9f9b93;
+  --color-warm-charcoal: #55534e;
+  --color-dark-charcoal: #333333;
+  --color-oat-border: #dad4c8;
+  --color-oat-light: #eee9df;
+
+  --font-sans: 'Roobert', 'Space Grotesk', Arial, sans-serif;
+  --font-mono: 'Space Mono', monospace;
 }
 
 :root {
-  --color-bg: #f8f8f6;
-  --color-surface: #ffffff;
-  --color-surface-2: #f2f2ef;
-  --color-primary: #3730a3;
-  --color-primary-hover: #312e81;
-  --color-secondary: #6366f1;
-  --color-accent: #818cf8;
-  --color-text: #0f0f0f;
-  --color-muted: #6b7280;
-  --color-border: #e5e5e3;
-  --color-success: #10b981;
+  /* Shadows — no son utilidades de Tailwind, se usan via var() */
+  --shadow-base: rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px 1px inset, rgba(0,0,0,0.05) 0px -0.5px 1px;
+  --shadow-hard: rgb(0,0,0) -7px 7px;
 }
 
 html {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
   scroll-behavior: smooth;
@@ -49,6 +77,74 @@ body {
   box-sizing: border-box;
 }
 
+/* ─── Button — white solid + playful hover ───────────────────────────── */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6.4px 12.8px;
+  font-family: 'Roobert', 'Space Grotesk', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.16px;
+  font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+  color: #ffffff;
+  background: #0F0F0F;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: var(--shadow-base);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: #000000;
+  box-shadow: var(--shadow-hard);
+}
+
+/* ─── Button ghost — outlined + playful hover ────────────────────────── */
+.btn-ghost {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12.8px;
+  font-family: 'Roobert', 'Space Grotesk', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.16px;
+  font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+  color: #0F0F0F;
+  background: transparent;
+  border: 1px solid #E5E5E1;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-ghost:hover {
+  background: white;
+  color: black;
+  border-color: white;
+  box-shadow: var(--shadow-hard);
+}
+
+/* ─── Uppercase label ─────────────────────────────────────────────────── */
+.label-uppercase {
+  font-family: 'Roobert', 'Space Grotesk', Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 1.08px;
+  text-transform: uppercase;
+  font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -58,11 +154,6 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.2); }
-  50% { box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
 }
 
 .animate-fade-up {

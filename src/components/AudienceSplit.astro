@@ -1,0 +1,174 @@
+---
+import type { LandingContent } from "../content/index";
+
+interface Props {
+  content: LandingContent["audienceSplit"];
+}
+
+const { content } = Astro.props;
+---
+
+<section id="audience" class="py-20 md:py-28" style="background: var(--color-bg);" >
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section header -->
+    <div class="flex flex-col items-center gap-4 text-center mb-14">
+      <h2 class="headline2 max-w-2xl" style="color: var(--color-text);">
+        {content.headline}
+      </h2>
+      <p
+        class="max-w-2xl"
+        style="font-family: var(--font-primary); font-size: 1.125rem; font-weight: 400; line-height: 1.6; letter-spacing: -0.36px; color: var(--color-muted); font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
+      >
+        {content.subheadline}
+      </p>
+    </div>
+
+    <!-- Two cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Startups card — Matcha 800 -->
+      <div
+        class="flex flex-col gap-8 p-8 md:p-10"
+        style="border:solid 1px var(--color-border); border-radius: 24px; background: var(--color-surface);"
+      >
+        <!-- Badge -->
+        <span
+          class="label-uppercase self-start px-3 py-1.5"
+          style="color: var(--color-text); background: rgba(132,231,165,0.15); border: 1px solid rgba(132,231,165,0.3); border-radius: 11px;"
+        >
+          {content.startups.badge}
+        </span>
+
+        <!-- Headline -->
+        <h3
+          style="font-family: var(--font-display); font-size: 2rem; line-height: 1.10; letter-spacing: -0.64px; font-feature-settings: 'ss01', 'ss03', 'ss10', 'ss11', 'ss12';"
+        >
+          {content.startups.headline}
+        </h3>
+
+        <!-- Description -->
+        <p
+          style="font-family: var(--font-primary); font-size: 1.125rem; font-weight: 400; line-height: 1.6; letter-spacing: -0.36px; color: var(--color-text); font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
+        >
+          {content.startups.description}
+        </p>
+
+        <!-- Problem / Fix / Result -->
+        <div
+          class="flex flex-col gap-0"
+          style="border: 1px dashed rgba(132,231,165,0.3); border-radius: 12px; overflow: hidden;"
+        >
+          {[
+            { label: content.startups.problemLabel, text: content.startups.problem },
+            { label: content.startups.fixLabel,     text: content.startups.fix     },
+            { label: content.startups.resultLabel,  text: content.startups.result  },
+          ].map((item, i) => (
+            <div
+              class="flex flex-col gap-1 px-5 py-4"
+              style={i < 2 ? 'border-bottom: 1px dashed rgba(132,231,165,0.3);' : ''}
+            >
+              <span
+                class="label-uppercase"
+                style="color: var(--color-text);"
+              >
+                {item.label}
+              </span>
+              <p
+                style="font-family: var(--font-primary); font-size: 1rem; font-weight: 400; line-height: 1.5; font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
+              >
+                {item.text}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <!-- CTA -->
+        <div>
+          <a
+            href="#audience"
+            class="btn"
+            style="border-radius: 1584px; padding: 10px 20px;"
+          >
+            {content.startups.cta}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Talent card — Ube 800 -->
+      <div
+        class="flex flex-col gap-8 p-8 md:p-10"
+        style="border:solid 1px var(--color-border); border-radius: 24px; background: var(--color-surface);"
+      >
+        <!-- Badge -->
+        <span
+          class="label-uppercase self-start px-3 py-1.5"
+          style="color: var(--color-text); background: rgba(193,176,255,0.15); border: 1px solid rgba(193,176,255,0.3); border-radius: 11px;"
+        >
+          {content.talent.badge}
+        </span>
+
+        <!-- Headline -->
+        <h3
+          style="font-family: var(--font-display); font-size: 2rem; line-height: 1.10; letter-spacing: -0.64px; font-feature-settings: 'ss01', 'ss03', 'ss10', 'ss11', 'ss12';"
+        >
+          {content.talent.headline}
+        </h3>
+
+        <!-- Description -->
+        <p
+          style="font-family: var(--font-primary); font-size: 1.125rem; font-weight: 400; line-height: 1.6; letter-spacing: -0.36px; color: var(--color-text); font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
+        >
+          {content.talent.description}
+        </p>
+
+        <!-- Problem / Fix / Result -->
+        <div
+          class="flex flex-col gap-0"
+          style="border: 1px dashed rgba(193,176,255,0.3); border-radius: 12px; overflow: hidden;"
+        >
+          {[
+            { label: content.talent.problemLabel, text: content.talent.problem },
+            { label: content.talent.fixLabel,     text: content.talent.fix     },
+            { label: content.talent.resultLabel,  text: content.talent.result  },
+          ].map((item, i) => (
+            <div
+              class="flex flex-col gap-1 px-5 py-4"
+              style={i < 2 ? 'border-bottom: 1px dashed rgba(193,176,255,0.3);' : ''}
+            >
+              <span
+                class="label-uppercase"
+                style="color: var(--color-text);"
+              >
+                {item.label}
+              </span>
+              <p
+                style="font-family: var(--font-primary); font-size: 1rem; font-weight: 400; line-height: 1.5; font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
+              >
+                {item.text}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <!-- CTA -->
+        <div>
+          <a
+            href="#audience"
+            class="btn"
+            style="border-radius: 1584px; padding: 10px 20px;"
+          >
+            {content.talent.cta}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

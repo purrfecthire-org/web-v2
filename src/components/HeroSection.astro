@@ -1,6 +1,5 @@
 ---
 import type { LandingContent } from "../content/index";
-import ProductMock from "./ProductMock.astro";
 
 interface Props {
   content: LandingContent["hero"];
@@ -10,75 +9,179 @@ const { content } = Astro.props;
 ---
 
 <section
-  class="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-12 md:pt-28 md:pb-20"
+  class="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24"
 >
-  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="flex flex-col gap-6 justify-center items-center">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+    <div class="flex flex-col gap-10 justify-center items-center">
+
       <!-- Headline -->
       <h1
-        class="opacity-0-init animate-fade-up animate-delay-100 text-center headline1 text-[var(--color-text)]"
+        class="opacity-0-init animate-fade-up animate-delay-100 text-center headline1 max-w-5xl"
+        style="color: var(--color-text);"
       >
         {content.headline}
         <br />
-        <span
-          class="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] bg-clip-text text-transparent"
-        >
+        <span style="color: var(--color-primary);">
           {content.headlineAccent}
         </span>
       </h1>
 
       <!-- Subheadline -->
       <p
-        class="opacity-0-init animate-fade-up animate-delay-200 text-base sm:text-lg text-[var(--color-muted)] text-center leading-relaxed max-w-5xl"
+        class="opacity-0-init animate-fade-up animate-delay-200 text-center max-w-2xl"
+        style="font-family: var(--font-primary); font-size: 1.125rem; font-weight: 400; line-height: 1.6; letter-spacing: -0.36px; color: var(--color-muted); font-feature-settings: 'ss03', 'ss10', 'ss11', 'ss12';"
       >
         {content.subheadline}
       </p>
 
-      <!-- CTAs -->
+      <!-- Animated Stats -->
       <div
-        class="opacity-0-init animate-fade-up animate-delay-300 flex flex-col sm:flex-row items-start sm:items-center gap-3"
+        class="opacity-0-init animate-fade-up animate-delay-300 w-full max-w-3xl"
+        id="hero-stats"
       >
-        <a
-          href="#cta"
-          class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--color-primary)] text-white font-semibold text-sm hover:bg-[var(--color-primary-hover)] transition-all duration-150 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+        <div
+          class="grid grid-cols-1 sm:grid-cols-3 gap-0"
+          style=" border-radius: 24px; overflow: hidden;"
         >
-          {content.ctaPrimary}
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M3 8h10M9 4l4 4-4 4"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-          </svg>
-        </a>
-        <a
-          href="#engine"
-          class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] font-medium text-sm hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-all duration-150"
-        >
-          {content.ctaSecondary}
-        </a>
+          {content.stats.map((stat, i) => (
+            <div
+              class="stat-item flex flex-col items-center justify-center gap-1 py-8 px-6 text-center"
+              style={`${i < content.stats.length - 1 ? 'border-bottom: 1px solid var(--color-oat-border);' : ''}`}
+              data-value={stat.value}
+              data-suffix={stat.suffix}
+            >
+              <div
+                class="headline2 stat-number"
+                style="color: var(--color-text); line-height: 1.0;"
+              >
+                {stat.suffixLeft}<span class="count">0</span>{stat.suffix}
+              </div>
+              <p
+                class="caption text-center"
+                style="color: var(--color-muted); max-width: 160px;"
+              >
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <!-- Social proof micro -->
-      <div
-        class="opacity-0-init animate-fade-up animate-delay-400 flex items-center gap-3 pt-2"
-      >
-        <div class="flex -space-x-2">
-          {
-            ["#6366f1", "#10b981", "#f59e0b"].map((color) => (
-              <div
-                class="w-7 h-7 rounded-full border-2 border-[var(--color-surface)]"
-                style={`background: ${color}`}
+      <!-- Audience Split CTAs -->
+      <div class="opacity-0-init animate-fade-up animate-delay-400 flex flex-col items-center gap-5 w-full">
+        <p
+          class="label-uppercase"
+          style="color: var(--color-warm-charcoal);"
+        >
+          {content.ctaAudienceLabel}
+        </p>
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+          <a
+            href="#audience"
+            class="btn w-full sm:w-auto justify-center"
+            style="padding: 12px 28px; border-radius: 1584px; font-size: 1rem;"
+          >
+            {content.ctaHire}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M3 8h10M9 4l4 4-4 4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               />
-            ))
-          }
+            </svg>
+          </a>
+          <a
+            href="#audience"
+            class="btn-ghost w-full sm:w-auto justify-center"
+            style="padding: 12px 28px; border-radius: 1584px; font-size: 1rem;"
+          >
+            {content.ctaTalent}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M3 8h10M9 4l4 4-4 4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
         </div>
-        <p class="text-xs text-[var(--color-muted)]">
-          <strong class="text-[var(--color-text)]">40+ startups</strong> hired through
-          Purrfect Hire
+        <p
+          class="caption text-center"
+          style="color: var(--color-muted); max-width: 380px;"
+        >
+          {content.socialProofLabel}
         </p>
       </div>
+
     </div>
   </div>
 </section>
+
+<style>
+  /* Responsive stat dividers */
+  @media (min-width: 640px) {
+    .stat-item {
+      border-bottom: none !important;
+      border-right: 1px solid var(--color-oat-border);
+    }
+    .stat-item:last-child {
+      border-right: none;
+    }
+  }
+</style>
+
+<script>
+  function animateCount(el: Element, target: number, duration: number = 1200) {
+    const countEl = el.querySelector('.count');
+    if (!countEl) return;
+
+    const start = performance.now();
+    const from = 0;
+
+    function easeOut(t: number): number {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function tick(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const current = Math.round(from + (target - from) * easeOut(progress));
+      if (countEl) {
+        countEl.textContent = current.toString();
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          countEl.textContent = target.toString();
+        }
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  const statsSection = document.getElementById('hero-stats');
+  if (statsSection) {
+    const items = statsSection.querySelectorAll('.stat-item');
+    let triggered = false;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !triggered) {
+          triggered = true;
+          items.forEach((item) => {
+            const target = parseInt(item.getAttribute('data-value') || '0', 10);
+            animateCount(item, target, 1400);
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(statsSection);
+  }
+</script>
