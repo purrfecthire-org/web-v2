@@ -10,22 +10,20 @@ const { content } = Astro.props;
 
 <section id="audience" class="audience">
   <div class="audience__container">
-
     <!-- Section header -->
-    <div class="audience__header">
+    <div class="audience__header reveal">
       <h2 class="audience__headline headline2">
         {content.headline}
       </h2>
-      <p class="audience__subheadline">
+      <p class="audience__subheadline body1">
         {content.subheadline}
       </p>
     </div>
 
     <!-- Two cards -->
     <div class="audience__grid">
-
       <!-- Startups card -->
-      <div class="audience__card audience__card--matcha">
+      <div class="audience__card audience__card--matcha reveal reveal-delay-1">
         <span class="audience__badge audience__badge--matcha label-uppercase">
           {content.startups.badge}
         </span>
@@ -34,35 +32,52 @@ const { content } = Astro.props;
           {content.startups.headline}
         </h3>
 
-        <p class="audience__card-description">
+        <p class="audience__card-description body1">
           {content.startups.description}
         </p>
 
         <div class="audience__pfr audience__pfr--matcha">
-          {[
-            { label: content.startups.problemLabel, text: content.startups.problem },
-            { label: content.startups.fixLabel,     text: content.startups.fix     },
-            { label: content.startups.resultLabel,  text: content.startups.result  },
-          ].map((item, i) => (
-            <div class={`audience__pfr-row${i < 2 ? ' audience__pfr-row--bordered-matcha' : ''}`}>
-              <span class="audience__pfr-label label-uppercase">{item.label}</span>
-              <p class="audience__pfr-text">{item.text}</p>
-            </div>
-          ))}
+          {
+            [
+              {
+                label: content.startups.problemLabel,
+                text: content.startups.problem,
+              },
+              { label: content.startups.fixLabel, text: content.startups.fix },
+              {
+                label: content.startups.resultLabel,
+                text: content.startups.result,
+              },
+            ].map((item, i) => (
+              <div
+                class={`audience__pfr-row${i < 2 ? " audience__pfr-row--bordered-matcha" : ""}`}
+              >
+                <span class="audience__pfr-label label-uppercase">
+                  {item.label}
+                </span>
+                <p class="audience__pfr-text body2">{item.text}</p>
+              </div>
+            ))
+          }
         </div>
 
         <div class="audience__cta">
           <a href="#audience" class="btn audience__btn">
             {content.startups.cta}
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path
+                d="M3 8h10M9 4l4 4-4 4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
             </svg>
           </a>
         </div>
       </div>
 
       <!-- Talent card -->
-      <div class="audience__card audience__card--ube">
+      <div class="audience__card audience__card--ube reveal reveal-delay-2">
         <span class="audience__badge audience__badge--ube label-uppercase">
           {content.talent.badge}
         </span>
@@ -71,45 +86,89 @@ const { content } = Astro.props;
           {content.talent.headline}
         </h3>
 
-        <p class="audience__card-description">
+        <p class="audience__card-description body1">
           {content.talent.description}
         </p>
 
         <div class="audience__pfr audience__pfr--ube">
-          {[
-            { label: content.talent.problemLabel, text: content.talent.problem },
-            { label: content.talent.fixLabel,     text: content.talent.fix     },
-            { label: content.talent.resultLabel,  text: content.talent.result  },
-          ].map((item, i) => (
-            <div class={`audience__pfr-row${i < 2 ? ' audience__pfr-row--bordered-ube' : ''}`}>
-              <span class="audience__pfr-label label-uppercase">{item.label}</span>
-              <p class="audience__pfr-text">{item.text}</p>
-            </div>
-          ))}
+          {
+            [
+              {
+                label: content.talent.problemLabel,
+                text: content.talent.problem,
+              },
+              { label: content.talent.fixLabel, text: content.talent.fix },
+              {
+                label: content.talent.resultLabel,
+                text: content.talent.result,
+              },
+            ].map((item, i) => (
+              <div
+                class={`audience__pfr-row${i < 2 ? " audience__pfr-row--bordered-ube" : ""}`}
+              >
+                <span class="audience__pfr-label label-uppercase">
+                  {item.label}
+                </span>
+                <p class="audience__pfr-text body2">{item.text}</p>
+              </div>
+            ))
+          }
         </div>
 
         <div class="audience__cta">
           <a href="#audience" class="btn audience__btn">
             {content.talent.cta}
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path
+                d="M3 8h10M9 4l4 4-4 4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
             </svg>
           </a>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
 <style lang="scss">
-  @use '../styles/breakpoints' as *;
+  @use "../styles/breakpoints" as *;
+
+  // ── Reveal animation ─────────────────────────────
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s ease;
+    will-change: opacity, transform;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  // delays
+  .reveal-delay-1 {
+    transition-delay: 0.15s;
+  }
+  .reveal-delay-2 {
+    transition-delay: 0.3s;
+  }
+  .reveal-delay-3 {
+    transition-delay: 0.45s;
+  }
 
   .audience {
     background: var(--color-bg);
     padding-block: 7rem;
 
-    @include max-md { padding-block: 5rem; }
+    @include max-md {
+      padding-block: 5rem;
+    }
 
     // ── Container ────────────────────────────────────────────
     &__container {
@@ -117,8 +176,12 @@ const { content } = Astro.props;
       margin-inline: auto;
       padding-inline: 2rem;
 
-      @include max-lg { padding-inline: 1.5rem; }
-      @include max-sm { padding-inline: 1rem; }
+      @include max-lg {
+        padding-inline: 1.5rem;
+      }
+      @include max-sm {
+        padding-inline: 1rem;
+      }
     }
 
     // ── Header ───────────────────────────────────────────────
@@ -138,15 +201,6 @@ const { content } = Astro.props;
 
     &__subheadline {
       max-width: 42rem;
-      font-family: var(--font-primary);
-      font-size: 1.125rem;
-      font-weight: 400;
-      line-height: 1.6;
-      letter-spacing: -0.36px;
-      color: var(--color-muted);
-      font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-
-      @include max-sm { font-size: 1rem; }
     }
 
     // ── Grid ─────────────────────────────────────────────────
@@ -155,7 +209,9 @@ const { content } = Astro.props;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
 
-      @include max-md { grid-template-columns: 1fr; }
+      @include max-md {
+        grid-template-columns: 1fr;
+      }
     }
 
     // ── Card ─────────────────────────────────────────────────
@@ -168,8 +224,12 @@ const { content } = Astro.props;
       border-radius: 24px;
       background: var(--color-surface);
 
-      @include max-md { padding: 2rem; }
-      @include max-sm { padding: 1.5rem; }
+      @include max-md {
+        padding: 2rem;
+      }
+      @include max-sm {
+        padding: 1.5rem;
+      }
     }
 
     // ── Badge ────────────────────────────────────────────────
@@ -192,15 +252,6 @@ const { content } = Astro.props;
 
     // ── Card description ─────────────────────────────────────
     &__card-description {
-      font-family: var(--font-primary);
-      font-size: 1.125rem;
-      font-weight: 400;
-      line-height: 1.6;
-      letter-spacing: -0.36px;
-      color: var(--color-text);
-      font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-
-      @include max-sm { font-size: 1rem; }
     }
 
     // ── Problem / Fix / Result ───────────────────────────────
@@ -210,8 +261,12 @@ const { content } = Astro.props;
       border-radius: 12px;
       overflow: hidden;
 
-      &--matcha { border: 1px dashed rgba(132, 231, 165, 0.3); }
-      &--ube    { border: 1px dashed rgba(193, 176, 255, 0.3); }
+      &--matcha {
+        border: 1px dashed rgba(132, 231, 165, 0.3);
+      }
+      &--ube {
+        border: 1px dashed rgba(193, 176, 255, 0.3);
+      }
     }
 
     &__pfr-row {
@@ -220,8 +275,12 @@ const { content } = Astro.props;
       gap: 0.25rem;
       padding: 1rem 1.25rem;
 
-      &--bordered-matcha { border-bottom: 1px dashed rgba(132, 231, 165, 0.3); }
-      &--bordered-ube    { border-bottom: 1px dashed rgba(193, 176, 255, 0.3); }
+      &--bordered-matcha {
+        border-bottom: 1px dashed rgba(132, 231, 165, 0.3);
+      }
+      &--bordered-ube {
+        border-bottom: 1px dashed rgba(193, 176, 255, 0.3);
+      }
     }
 
     &__pfr-label {
@@ -229,11 +288,6 @@ const { content } = Astro.props;
     }
 
     &__pfr-text {
-      font-family: var(--font-primary);
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5;
-      font-feature-settings: "ss03", "ss10", "ss11", "ss12";
     }
 
     // ── CTA ──────────────────────────────────────────────────
@@ -243,3 +297,20 @@ const { content } = Astro.props;
     }
   }
 </style>
+
+<script>
+  const elements = document.querySelectorAll('.reveal');
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target); // se anima solo una vez
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  elements.forEach(el => observer.observe(el));
+</script>

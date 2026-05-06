@@ -10,7 +10,7 @@
     --text-sm: 0.875rem;
     --text-md: 1rem;
     --text-lg: 1.125rem;
-    --text-xl: 1.5rem;
+    --text-xl: 1.3rem;
     --text-2xl: 2.75rem;
     --text-3xl: 4rem;
 
@@ -63,58 +63,35 @@
     font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
 }
 
-
-.subhead1a {
+.subhead {
     font-family: var(--font-primary);
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.40;
-    letter-spacing: -0.4px;
-    font-feature-settings: "ss01", "ss03", "ss10", "ss11", "ss12";
-
-    @include max-sm {
-        font-size: 1.125rem;
-        letter-spacing: -0.3px;
-    }
+    font-size: var(--text-xl);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.36px;
+    color: var(--color-muted);
 }
 
-.subhead2a {
+// body1 → párrafos principales, artículos, descripciones largas.
+// body2 → texto secundario, notas, sidebars, contenido auxiliar.
+// body-mono → snippets de código inline, datos técnicos, métricas.
+
+.body1 {
+    font-family: var(--font-primary);
+    font-size: var(--text-lg);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.36px;
+    color: var(--color-muted);
+}
+
+.body2 {
     font-family: var(--font-primary);
     font-size: var(--text-md);
-    font-weight: 500;
-    line-height: 1.50;
-    letter-spacing: -0.16px;
-    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-
-    @include max-sm {
-        font-size: var(--text-sm);
-        letter-spacing: -0.14px;
-    }
-}
-
-.subhead1b {
-    font-family: var(--font-primary);
-    font-size: var(--text-md);
-    font-weight: 500;
-    line-height: 1.50;
-    letter-spacing: -0.16px;
-    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-    color: var(--color-warm-charcoal);
-
-    @include max-sm {
-        font-size: var(--text-sm);
-        letter-spacing: -0.14px;
-    }
-}
-
-.subhead2b {
-    font-family: var(--font-primary);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    line-height: 1.50;
-    letter-spacing: -0.14px;
-    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-    color: var(--color-warm-silver);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.36px;
+    color: var(--color-muted);
 }
 
 .caption {

@@ -14,11 +14,7 @@ const { content } = Astro.props;
 
       <!-- Logo -->
       <a href="/" aria-label="Purrfect Hire home">
-        <img
-          src="/logos/logo-desktop.png"
-          alt="Purrfect Hire"
-          class="footer-logo"
-        />
+        <img src="/logos/logo-desktop.png" class="logo" alt="logo" />
       </a>
 
       <!-- Links + legal -->
@@ -37,6 +33,15 @@ const { content } = Astro.props;
           </>
         ))}
         <span class="footer-sep" aria-hidden="true">·</span>
+        <a
+          href="https://jhonatanberrios.com/"
+          class="caption"
+          target="_blank"
+          rel="noopener noreferrer"
+          >
+          Developed by <span class="footer__credit-name">jhonatanB</span>
+        </a>
+        <span class="footer__sep" aria-hidden="true">·</span>
         <span class="footer-legal">{content.legal}</span>
       </div>
 
@@ -80,7 +85,10 @@ const { content } = Astro.props;
     font-family: var(--font-primary);
     font-size: 0.875rem;
     font-weight: 400;
-    color: var(--color-oat-border);
     font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+  }
+
+  .logo {
+    width: 8rem;
   }
 </style>

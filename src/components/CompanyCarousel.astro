@@ -4,63 +4,14 @@ interface Props {
 }
 
 const companies = [
-  // Tecnología y DevTools (CDNs muy fiables)
-  { 
-    name: 'GitHub', 
-    logo: 'https://cdn.simpleicons.org/github/000000/000000?viewbox=0,0,120,40' 
-  },
-  { 
-    name: 'Microsoft', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg' 
-  },
-  { 
-    name: 'Google', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' 
-  },
-  { 
-    name: 'Amazon', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg' 
-  },
-  { 
-    name: 'Netflix', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg' 
-  },
-  { 
-    name: 'Airbnb', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_Bélo.svg' 
-  },
-  { 
-    name: 'Spotify', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg' 
-  },
-  { 
-    name: 'Slack', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg' // Incluye icono + texto en formato apilado, pero muy legible
-  },
-  { 
-    name: 'Tesla', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg' 
-  },
-  { 
-    name: 'Figma', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg' 
-  },
-  
-  // FinTech y Pagos
-  { 
-    name: 'PayPal', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg' 
-  },
-  { 
-    name: 'Stripe', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg' 
-  },
-  { 
-    name: 'Mastercard', 
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg' 
-  },
+  { name: 'Addi',    logo: '/carrousel/addi.svg' },
+  { name: 'Bolsiyo', logo: '/carrousel/bolsiyo.png' },
+  { name: 'Cometa',  logo: '/carrousel/cometa.png' },
+  { name: 'Optery',  logo: '/carrousel/optery.svg' },
+  { name: 'PayJoy',  logo: '/carrousel/payjoy.svg' },
+  { name: 'Rutter',  logo: '/carrousel/rutter.svg' },
 ];
-const doubled = [...companies, ...companies];
+const doubled = [...companies, ...companies, ...companies];
 ---
 
 <section
