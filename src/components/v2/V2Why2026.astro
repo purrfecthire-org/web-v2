@@ -1,0 +1,115 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['why2026'];
+}
+
+const { content } = Astro.props;
+---
+
+<section class="v2-why" id="why2026">
+  <div class="v2-why__container">
+    <div class="v2-why__header">
+      <p class="v2-why__eyebrow">{content.eyebrow}</p>
+      <h2 class="v2-why__headline">{content.headline}</h2>
+    </div>
+
+    <div class="v2-why__body">
+      {content.body.map((paragraph, i) => (
+        <p class="v2-why__para" style={`animation-delay: ${0.1 + i * 0.12}s`}>
+          {paragraph}
+        </p>
+      ))}
+    </div>
+
+    <p class="v2-why__closing">"{content.closing}"</p>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  @keyframes v2SlideIn {
+    from { opacity: 0; transform: translateX(-16px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .v2-why {
+    background: var(--v2-warm);
+    padding-block: 120px;
+
+    @include max-md { padding-block: 80px; }
+    @include max-sm { padding-block: 60px; }
+
+    &__container {
+      max-width: 48rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__header {
+      text-align: center;
+      margin-bottom: 4rem;
+
+      @include max-md { margin-bottom: 3rem; }
+    }
+
+    &__eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--v2-accent);
+      margin: 0 0 1rem;
+    }
+
+    &__headline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(1.875rem, 3.5vw, 2.5rem);
+      line-height: 1.2;
+      color: var(--v2-navy);
+      max-width: 640px;
+      margin-inline: auto;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      margin-bottom: 3.5rem;
+      padding-left: 1rem;
+
+      @include max-sm { padding-left: 0; }
+    }
+
+    &__para {
+      font-size: 1.0625rem;
+      line-height: 1.72;
+      color: var(--v2-text);
+      margin: 0;
+      border-left: 3px solid var(--v2-accent);
+      padding-left: 1.5rem;
+      margin-left: 1.5rem;
+
+      @include max-sm {
+        margin-left: 0;
+        padding-left: 1.25rem;
+      }
+    }
+
+    &__closing {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--v2-muted);
+      text-align: center;
+      line-height: 1.5;
+      margin: 0;
+    }
+  }
+</style>

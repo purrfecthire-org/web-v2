@@ -1,11 +1,5 @@
 @use './typography.scss' as *;
 
-:root {
-  /* Shadows — no son utilidades de Tailwind, se usan via var() */
-  --shadow-base: rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px 1px inset, rgba(0,0,0,0.05) 0px -0.5px 1px;
-  --shadow-hard: rgb(0,0,0) -7px 7px;
-}
-
 html {
   font-family: 'Inter', Arial, sans-serif;
   background-color: var(--color-bg);
@@ -24,74 +18,65 @@ body {
   box-sizing: border-box;
 }
 
-/* ─── Button — white solid + playful hover ───────────────────────────── */
+/* ─── Button primary — black pill ────────────────────────────────────── */
 .btn {
-  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6.4px 12.8px;
-  font-family: 'Roobert', 'Space Grotesk', Arial, sans-serif;
-  font-size: 1rem;
+  padding: 12px 24px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.5;
-  letter-spacing: -0.16px;
-  font-feature-settings: "ss03", "ss10", "ss11", "ss12";
   color: #ffffff;
-  background: #0F0F0F;
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
+  background-color: #0F0F0F;
+  border: none;
+  border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: var(--shadow-base);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.2s ease;
 }
 
 .btn:hover {
-  border-color: #000000;
-  box-shadow: var(--shadow-hard);
+  background-color: #3C2BDC;
 }
 
-/* ─── Button ghost — outlined + playful hover ────────────────────────── */
-.btn-ghost {
-  position: relative;
+/* ─── Button secondary — outlined pill ───────────────────────────────── */
+.btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12.8px;
-  font-family: 'Roobert', 'Space Grotesk', Arial, sans-serif;
-  font-size: 1rem;
+  padding: 12px 24px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.5;
-  letter-spacing: -0.16px;
-  font-feature-settings: "ss03", "ss10", "ss11", "ss12";
   color: #0F0F0F;
   background: transparent;
-  border: 1px solid #E5E5E1;
-  border-radius: 4px;
+  border: 1.5px solid #0F0F0F;
+  border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
-.btn-ghost:hover {
-  background: white;
-  color: black;
-  border-color: white;
-  box-shadow: var(--shadow-hard);
+.btn-secondary:hover {
+  background-color: #0F0F0F;
+  color: #ffffff;
 }
 
-/* ─── Uppercase label ─────────────────────────────────────────────────── */
+/* ─── Uppercase label ────────────────────────────────────────────────── */
 .label-uppercase {
-  font-family: 'Roobert', 'Space Grotesk', Arial, sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
   line-height: 1.2;
-  letter-spacing: 1.08px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  font-feature-settings: "ss03", "ss10", "ss11", "ss12";
+  color: var(--color-tertiary);
 }
 
+/* ─── Animations ─────────────────────────────────────────────────────── */
 @keyframes fadeUp {
   from {
     opacity: 0;

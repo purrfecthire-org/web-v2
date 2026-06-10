@@ -1,0 +1,246 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['audienceSplit'];
+}
+
+const { content } = Astro.props;
+---
+
+<section class="v2-audience" id="audience">
+  <div class="v2-audience__container">
+    <div class="v2-audience__header">
+      <h2 class="v2-audience__headline">{content.headline}</h2>
+      <p class="v2-audience__subheadline">{content.subheadline}</p>
+    </div>
+
+    <div class="v2-audience__grid">
+      <!-- Founders card -->
+      <div class="v2-audience__card v2-audience__card--founders">
+        <div class="v2-audience__card-eyebrow">{content.founders.eyebrow}</div>
+        <h3 class="v2-audience__card-headline">{content.founders.headline}</h3>
+        <p class="v2-audience__card-body">{content.founders.body}</p>
+        <ul class="v2-audience__bullets">
+          {content.founders.bullets.map((bullet) => (
+            <li class="v2-audience__bullet">
+              <span class="v2-audience__bullet-dot" aria-hidden="true"></span>
+              <div>
+                <span class="v2-audience__bullet-label">{bullet.label}</span>
+                <span class="v2-audience__bullet-text">{bullet.text}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <a href="#cta" class="v2-audience__card-cta v2-audience__card-cta--founders">
+          {content.founders.cta}
+        </a>
+      </div>
+
+      <!-- Talent card -->
+      <div class="v2-audience__card v2-audience__card--talent">
+        <div class="v2-audience__card-eyebrow v2-audience__card-eyebrow--talent">{content.talent.eyebrow}</div>
+        <h3 class="v2-audience__card-headline">{content.talent.headline}</h3>
+        <p class="v2-audience__card-body">{content.talent.body}</p>
+        <ul class="v2-audience__bullets">
+          {content.talent.bullets.map((bullet) => (
+            <li class="v2-audience__bullet v2-audience__bullet--talent">
+              <span class="v2-audience__bullet-dot v2-audience__bullet-dot--talent" aria-hidden="true"></span>
+              <div>
+                <span class="v2-audience__bullet-label v2-audience__bullet-label--talent">{bullet.label}</span>
+                <span class="v2-audience__bullet-text">{bullet.text}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <a href="#cta" class="v2-audience__card-cta v2-audience__card-cta--talent">
+          {content.talent.cta}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .v2-audience {
+    background: var(--v2-bg);
+    padding-block: 100px;
+
+    @include max-md { padding-block: 72px; }
+    @include max-sm { padding-block: 56px; }
+
+    &__container {
+      max-width: 80rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__header {
+      text-align: center;
+      max-width: 640px;
+      margin-inline: auto;
+      margin-bottom: 4rem;
+
+      @include max-md { margin-bottom: 2.5rem; }
+    }
+
+    &__headline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      line-height: 1.15;
+      color: var(--v2-navy);
+      margin: 0 0 1rem;
+    }
+
+    &__subheadline {
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      color: var(--v2-muted);
+      max-width: 600px;
+      margin-inline: auto;
+      margin-bottom: 0;
+    }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+
+      @include max-md {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    &__card {
+      position: relative;
+      background: var(--v2-surface);
+      border: 1.5px solid var(--v2-border);
+      border-radius: 16px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      overflow: hidden;
+
+      @include max-sm {
+        padding: 24px;
+      }
+
+      &--founders {
+        border-left: 4px solid var(--v2-navy);
+      }
+
+      &--talent {
+        border-left: 4px solid var(--v2-accent);
+      }
+    }
+
+    &__card-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--v2-navy);
+      margin: 0;
+
+      &--talent {
+        color: var(--v2-accent);
+      }
+    }
+
+    &__card-headline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.5rem;
+      line-height: 1.25;
+      color: var(--v2-navy);
+      margin: 0;
+    }
+
+    &__card-body {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--v2-muted);
+      margin: 0;
+    }
+
+    &__bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    &__bullet {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+
+      &--talent {
+        // same layout, talent overrides on sub-elements
+      }
+    }
+
+    &__bullet-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--v2-navy);
+      flex-shrink: 0;
+      margin-top: 0.45rem;
+
+      &--talent {
+        background: var(--v2-accent);
+      }
+    }
+
+    &__bullet-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--v2-accent);
+      margin-bottom: 0.2rem;
+
+      &--talent {
+        color: var(--v2-accent);
+      }
+    }
+
+    &__bullet-text {
+      display: block;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--v2-text);
+    }
+
+    &__card-cta {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      margin-top: 0.5rem;
+      transition: opacity 0.15s ease;
+
+      &:hover { opacity: 0.7; }
+
+      &--founders {
+        color: var(--v2-navy);
+      }
+
+      &--talent {
+        color: var(--v2-accent);
+      }
+    }
+  }
+</style>

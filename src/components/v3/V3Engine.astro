@@ -1,0 +1,195 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['engine'];
+}
+
+const { content } = Astro.props;
+---
+
+<section id="engine" class="v3-engine">
+  <div class="v3-engine__container">
+
+    <div class="v3-engine__header">
+      <span class="v3-engine__eyebrow">{content.eyebrow}</span>
+      <h2 class="v3-engine__headline">{content.headline}</h2>
+      <p class="v3-engine__subheadline">{content.subheadline}</p>
+    </div>
+
+    <div class="v3-engine__grid">
+      {content.steps.map((step, i) => (
+        <div class="v3-engine__step">
+          <!-- Connecting line (between steps) -->
+          {i < content.steps.length - 1 && (
+            <div class="v3-engine__connector" aria-hidden="true"></div>
+          )}
+
+          <div class="v3-engine__step-num">{step.id}</div>
+          <h3 class="v3-engine__step-title">{step.title}</h3>
+          <p class="v3-engine__step-desc">{step.description}</p>
+          {step.badge && (
+            <span class="v3-engine__badge">{step.badge}</span>
+          )}
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .v3-engine {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem;
+
+    @include max-sm {
+      padding: 4rem 1.25rem;
+    }
+
+    &__container {
+      max-width: 72rem;
+      margin-inline: auto;
+    }
+
+    &__header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    &__eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #4F46E5 0%, #0891B2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    &__headline {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #111827;
+      margin: 0 0 0.875rem;
+      line-height: 1.2;
+    }
+
+    &__subheadline {
+      font-size: 1.0625rem;
+      color: #6B7280;
+      margin: 0;
+    }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      position: relative;
+
+      @include max-md {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    &__step {
+      position: relative;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1.5px solid rgba(79, 70, 229, 0.12);
+      border-radius: 20px;
+      padding: 36px 32px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      overflow: hidden;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(79, 70, 229, 0.12);
+        border-color: rgba(79, 70, 229, 0.25);
+      }
+
+      // Subtle inner glow on hover
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(79, 70, 229, 0.06) 0%, transparent 70%);
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        opacity: 0;
+      }
+
+      &:hover::before {
+        opacity: 1;
+      }
+
+      @include max-sm {
+        padding: 28px 24px;
+      }
+    }
+
+    &__connector {
+      display: none; // decorative only, hidden by default
+    }
+
+    &__step-num {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      font-size: 3.25rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #4F46E5 0%, #0891B2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.25rem;
+
+      @include max-sm {
+        font-size: 2.5rem;
+      }
+    }
+
+    &__step-title {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 0.75rem;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    &__step-desc {
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: #6B7280;
+      margin: 0 0 1rem;
+    }
+
+    &__badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(8, 145, 178, 0.12) 100%);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      color: #4F46E5;
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+  }
+</style>

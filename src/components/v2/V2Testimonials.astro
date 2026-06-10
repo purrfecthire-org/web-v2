@@ -1,0 +1,292 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['testimonials'];
+}
+
+const { content } = Astro.props;
+
+function initials(name: string) {
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+}
+---
+
+<section class="v2-testimonials" id="testimonials">
+  <div class="v2-testimonials__container">
+    <div class="v2-testimonials__header">
+      <p class="v2-testimonials__eyebrow">{content.eyebrow}</p>
+      <h2 class="v2-testimonials__headline">{content.headline}</h2>
+    </div>
+
+    <!-- Featured testimonial -->
+    <div class="v2-testimonials__featured">
+      <div class="v2-testimonials__featured-quote-mark" aria-hidden="true">&ldquo;</div>
+      <p class="v2-testimonials__featured-text">{content.featured.quote}</p>
+      <div class="v2-testimonials__featured-footer">
+        <div class="v2-testimonials__avatar">{initials(content.featured.name)}</div>
+        <div>
+          <div class="v2-testimonials__name">{content.featured.name}</div>
+          <div class="v2-testimonials__role">{content.featured.role}</div>
+        </div>
+        <span class="v2-testimonials__badge">{content.featured.badge}</span>
+      </div>
+    </div>
+
+    <!-- Grid of 3 -->
+    <div class="v2-testimonials__grid">
+      {content.grid.map((item) => (
+        <div class="v2-testimonials__card">
+          <div class="v2-testimonials__card-quote-mark" aria-hidden="true">&ldquo;</div>
+          <p class="v2-testimonials__card-text">{item.quote}</p>
+          <div class="v2-testimonials__card-footer">
+            <div class="v2-testimonials__avatar v2-testimonials__avatar--sm">{initials(item.name)}</div>
+            <div>
+              <div class="v2-testimonials__name">{item.name}</div>
+              <div class="v2-testimonials__role">{item.role}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Candidate testimonial -->
+    <div class="v2-testimonials__candidate">
+      <div class="v2-testimonials__candidate-inner">
+        <p class="v2-testimonials__candidate-eyebrow">From a candidate</p>
+        <p class="v2-testimonials__candidate-text">"{content.candidateTestimonial.quote}"</p>
+        <div class="v2-testimonials__candidate-footer">
+          <div class="v2-testimonials__avatar v2-testimonials__avatar--sm">{initials(content.candidateTestimonial.name)}</div>
+          <div>
+            <div class="v2-testimonials__name">{content.candidateTestimonial.name}</div>
+            <div class="v2-testimonials__role">{content.candidateTestimonial.role}</div>
+          </div>
+          <span class="v2-testimonials__badge v2-testimonials__badge--candidate">{content.candidateTestimonial.badge}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .v2-testimonials {
+    background: var(--v2-bg);
+    padding-block: 100px;
+
+    @include max-md { padding-block: 72px; }
+    @include max-sm { padding-block: 56px; }
+
+    &__container {
+      max-width: 80rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__header {
+      text-align: center;
+      max-width: 640px;
+      margin-inline: auto;
+      margin-bottom: 3.5rem;
+
+      @include max-md { margin-bottom: 2.5rem; }
+    }
+
+    &__eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--v2-accent);
+      margin: 0 0 1rem;
+    }
+
+    &__headline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      line-height: 1.25;
+      color: var(--v2-navy);
+      margin: 0;
+    }
+
+    // ── Featured ─────────────────────────────────────────────
+    &__featured {
+      background: var(--v2-surface);
+      border: 1.5px solid var(--v2-border);
+      border-radius: 20px;
+      padding: 48px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      @include max-md { padding: 32px; }
+      @include max-sm { padding: 24px; gap: 1.25rem; }
+    }
+
+    &__featured-quote-mark {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 4rem;
+      color: var(--v2-accent);
+      opacity: 0.3;
+      line-height: 0.7;
+      user-select: none;
+    }
+
+    &__featured-text {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(1.125rem, 2vw, 1.375rem);
+      line-height: 1.55;
+      color: var(--v2-navy);
+      margin: 0;
+    }
+
+    &__featured-footer {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    // ── Grid ─────────────────────────────────────────────────
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+
+      @include max-lg { grid-template-columns: 1fr; }
+    }
+
+    &__card {
+      background: var(--v2-surface);
+      border: 1.5px solid var(--v2-border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      @include max-sm { padding: 20px; }
+    }
+
+    &__card-quote-mark {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 2.5rem;
+      color: var(--v2-accent);
+      opacity: 0.25;
+      line-height: 0.7;
+      user-select: none;
+    }
+
+    &__card-text {
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: var(--v2-text);
+      margin: 0;
+      flex: 1;
+    }
+
+    &__card-footer {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    // ── Shared ───────────────────────────────────────────────
+    &__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--v2-accent);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      &--sm {
+        width: 36px;
+        height: 36px;
+        font-size: 0.75rem;
+      }
+    }
+
+    &__name {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--v2-navy);
+      line-height: 1.2;
+    }
+
+    &__role {
+      font-size: 0.8125rem;
+      color: var(--v2-muted);
+      line-height: 1.3;
+    }
+
+    &__badge {
+      margin-left: auto;
+      background: var(--v2-warm);
+      border: 1px solid var(--v2-border);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--v2-muted);
+
+      &--candidate {
+        color: var(--v2-accent);
+        border-color: var(--v2-accent-light);
+        background: rgba(254, 215, 170, 0.3);
+      }
+    }
+
+    // ── Candidate ────────────────────────────────────────────
+    &__candidate {
+      background: var(--v2-warm);
+      border-radius: 16px;
+      border-left: 4px solid var(--v2-accent);
+    }
+
+    &__candidate-inner {
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+
+      @include max-sm { padding: 24px; }
+    }
+
+    &__candidate-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--v2-accent);
+      margin: 0;
+    }
+
+    &__candidate-text {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.125rem;
+      line-height: 1.55;
+      color: var(--v2-navy);
+      margin: 0;
+    }
+
+    &__candidate-footer {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+  }
+</style>

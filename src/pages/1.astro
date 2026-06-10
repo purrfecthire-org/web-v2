@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import V1Nav from '../components/v1/V1Nav.astro';
+import V1Hero from '../components/v1/V1Hero.astro';
+import V1Why2026 from '../components/v1/V1Why2026.astro';
+import V1AudienceSplit from '../components/v1/V1AudienceSplit.astro';
+import V1OfferAcceleration from '../components/v1/V1OfferAcceleration.astro';
+import V1Engine from '../components/v1/V1Engine.astro';
+import V1Culture from '../components/v1/V1Culture.astro';
+import V1Testimonials from '../components/v1/V1Testimonials.astro';
+import V1Roles from '../components/v1/V1Roles.astro';
+import V1CTASection from '../components/v1/V1CTASection.astro';
+import V1Footer from '../components/v1/V1Footer.astro';
+import { getContent } from '../content/index';
+
+const c = getContent('en');
+---
+
+<Layout title={c.meta.title} description={c.meta.description} lang="en">
+  <style is:global>
+    body {
+      background-color: #09090b;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <V1Nav content={c.nav} lang="en" />
+  <main>
+    <V1Hero content={c.hero} />
+    <V1Why2026 content={c.why2026} />
+    <V1AudienceSplit content={c.audienceSplit} />
+    <V1OfferAcceleration content={c.offerAcceleration} />
+    <V1Engine content={c.engine} />
+    <V1Culture content={c.culture} />
+    <V1Testimonials content={c.testimonials} />
+    <V1Roles content={c.roles} />
+    <V1CTASection content={c.cta} />
+  </main>
+  <V1Footer content={c.footer} />
+</Layout>

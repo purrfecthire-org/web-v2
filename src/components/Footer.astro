@@ -8,23 +8,23 @@ interface Props {
 const { content } = Astro.props;
 ---
 
-<footer style="background: var(--color-bg); border-top: 1px solid var(--color-oat-border);">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
+<footer class="footer">
+  <div class="footer__container">
+    <div class="footer__inner">
 
       <!-- Logo -->
       <a href="/" aria-label="Purrfect Hire home">
-        <img src="/logos/logo-desktop.png" class="logo" alt="logo" />
+        <img src="/logos/logo-desktop.png" class="footer__logo" alt="Purrfect Hire" />
       </a>
 
       <!-- Links + legal -->
-      <div class="flex flex-wrap items-center justify-center sm:justify-end gap-x-1 gap-y-2">
+      <div class="footer__links">
         {content.links.map((link, i) => (
           <>
-            {i > 0 && <span class="footer-sep" aria-hidden="true">·</span>}
+            {i > 0 && <span class="footer__sep" aria-hidden="true">·</span>}
             <a
               href={link.href}
-              class="footer-link"
+              class="footer__link"
               target={link.href.startsWith('http') ? '_blank' : undefined}
               rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
             >
@@ -32,63 +32,67 @@ const { content } = Astro.props;
             </a>
           </>
         ))}
-        <span class="footer-sep" aria-hidden="true">·</span>
-        <a
-          href="https://jhonatanberrios.com/"
-          class="caption"
-          target="_blank"
-          rel="noopener noreferrer"
-          >
-          Developed by <span class="footer__credit-name">jhonatanB</span>
-        </a>
         <span class="footer__sep" aria-hidden="true">·</span>
-        <span class="footer-legal">{content.legal}</span>
+        <span class="footer__legal">{content.legal}</span>
       </div>
 
     </div>
   </div>
 </footer>
 
-<style>
-  .footer-logo {
-    width: 40px;
-    opacity: 0.85;
-    transition: opacity 0.15s ease;
-  }
-  .footer-logo:hover {
-    opacity: 1;
-  }
+<style lang="scss">
+  .footer {
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
 
-  .footer-link {
-    font-family: var(--font-primary);
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--color-muted);
-    text-decoration: none;
-    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-    transition: color 0.15s ease;
-    padding: 2px 4px;
-  }
-  .footer-link:hover {
-    color: var(--color-text);
-  }
+    &__container {
+      max-width: 80rem;
+      margin-inline: auto;
+      padding: 1.75rem 2rem;
+    }
 
-  .footer-sep {
-    font-size: 0.875rem;
-    color: var(--color-oat-border);
-    user-select: none;
-    pointer-events: none;
-  }
+    &__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
 
-  .footer-legal {
-    font-family: var(--font-primary);
-    font-size: 0.875rem;
-    font-weight: 400;
-    font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-  }
+    &__logo {
+      width: 8rem;
+    }
 
-  .logo {
-    width: 8rem;
+    &__links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    &__link {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--color-muted);
+      text-decoration: none;
+      padding: 2px 4px;
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: var(--color-text);
+      }
+    }
+
+    &__sep {
+      font-size: 0.875rem;
+      color: var(--color-border);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    &__legal {
+      font-size: 0.875rem;
+      color: var(--color-tertiary);
+    }
   }
 </style>

@@ -1,0 +1,78 @@
+---
+import type { LandingContent } from "../content/index";
+
+interface Props {
+  content: LandingContent["why2026"];
+}
+
+const { content } = Astro.props;
+---
+
+<section class="why2026">
+  <div class="why2026__container">
+
+    <span class="why2026__eyebrow eyebrow">
+      {content.eyebrow}
+    </span>
+
+    <h2 class="why2026__headline headline2">
+      {content.headline}
+    </h2>
+
+    <div class="why2026__body">
+      {content.body.map((paragraph) => (
+        <p class="why2026__text body1">{paragraph}</p>
+      ))}
+    </div>
+
+    <p class="why2026__closing">
+      {content.closing}
+    </p>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../styles/breakpoints' as *;
+
+  .why2026 {
+    padding: 7rem 0;
+    background: var(--color-bg);
+
+    @include max-md { padding: 5rem 0; }
+
+    &__container {
+      max-width: 42rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__eyebrow {
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    &__headline {
+      color: var(--color-text);
+      margin-bottom: 2rem;
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    &__text {}
+
+    &__closing {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+  }
+</style>

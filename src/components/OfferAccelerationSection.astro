@@ -1,0 +1,158 @@
+---
+import type { LandingContent } from "../content/index";
+
+interface Props {
+  content: LandingContent["offerAcceleration"];
+}
+
+const { content } = Astro.props;
+---
+
+<section class="offer">
+  <div class="offer__container">
+
+    <span class="offer__eyebrow eyebrow">
+      {content.eyebrow}
+    </span>
+
+    <h2 class="offer__headline headline2">
+      {content.headline}
+    </h2>
+
+    <p class="offer__subheadline body1">
+      {content.subheadline}
+    </p>
+
+    <!-- Content blocks -->
+    <div class="offer__blocks">
+      {content.blocks.map((block) => (
+        <div class="offer__block">
+          <h3 class="offer__block-title">{block.title}</h3>
+          <ul class="offer__block-list">
+            {block.items.map((item) => (
+              <li class="offer__block-item">{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <!-- Closing -->
+    <p class="offer__closing">
+      {content.closing}
+    </p>
+
+    <!-- CTA -->
+    <div class="offer__cta-wrapper">
+      <a href="mailto:hiring@purrfecthire.com?subject=Offer%20Acceleration%20Application" class="btn offer__cta-btn">
+        {content.cta}
+      </a>
+      <p class="offer__cta-subline caption">
+        {content.ctaSubline}
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../styles/breakpoints' as *;
+
+  .offer {
+    padding: 7rem 0;
+    background: var(--color-bg);
+
+    @include max-md { padding: 5rem 0; }
+
+    &__container {
+      max-width: 48rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__eyebrow {
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    &__headline {
+      color: var(--color-text);
+      margin-bottom: 1.5rem;
+    }
+
+    &__subheadline {
+      margin-bottom: 3rem;
+    }
+
+    &__blocks {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    &__block {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+
+    &__block-title {
+      font-weight: 500;
+      color: var(--color-text);
+      font-size: 1.125rem;
+      margin-bottom: 1rem;
+    }
+
+    &__block-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    &__block-item {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--color-muted);
+      padding-left: 1.25rem;
+      position: relative;
+
+      &::before {
+        content: '·';
+        position: absolute;
+        left: 0;
+        color: var(--color-tertiary);
+        font-weight: 700;
+      }
+    }
+
+    &__closing {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-text);
+      line-height: 1.5;
+      margin-bottom: 2.5rem;
+    }
+
+    &__cta-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    &__cta-btn {
+      padding: 14px 28px;
+    }
+
+    &__cta-subline {
+      color: var(--color-muted);
+    }
+  }
+</style>

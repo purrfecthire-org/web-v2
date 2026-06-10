@@ -22,110 +22,62 @@ const { content } = Astro.props;
 
     <!-- Two cards -->
     <div class="audience__grid">
-      <!-- Startups card -->
-      <div class="audience__card audience__card--matcha reveal reveal-delay-1">
-        <span class="audience__badge audience__badge--matcha label-uppercase">
-          {content.startups.badge}
+      <!-- Founders card -->
+      <div class="audience__card reveal reveal-delay-1">
+        <span class="audience__eyebrow eyebrow">
+          {content.founders.eyebrow}
         </span>
 
         <h3 class="headline3">
-          {content.startups.headline}
+          {content.founders.headline}
         </h3>
 
-        <p class="audience__card-description body1">
-          {content.startups.description}
+        <p class="audience__card-body body1">
+          {content.founders.body}
         </p>
 
-        <div class="audience__pfr audience__pfr--matcha">
-          {
-            [
-              {
-                label: content.startups.problemLabel,
-                text: content.startups.problem,
-              },
-              { label: content.startups.fixLabel, text: content.startups.fix },
-              {
-                label: content.startups.resultLabel,
-                text: content.startups.result,
-              },
-            ].map((item, i) => (
-              <div
-                class={`audience__pfr-row${i < 2 ? " audience__pfr-row--bordered-matcha" : ""}`}
-              >
-                <span class="audience__pfr-label label-uppercase">
-                  {item.label}
-                </span>
-                <p class="audience__pfr-text body2">{item.text}</p>
-              </div>
-            ))
-          }
+        <div class="audience__bullets">
+          {content.founders.bullets.map((bullet) => (
+            <div class="audience__bullet">
+              <span class="audience__bullet-label">{bullet.label}:</span>
+              <span class="audience__bullet-text">{bullet.text}</span>
+            </div>
+          ))}
         </div>
 
         <div class="audience__cta">
-          <a href="#audience" class="btn audience__btn">
-            {content.startups.cta}
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M3 8h10M9 4l4 4-4 4"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"></path>
-            </svg>
+          <a href="#cta" class="btn">
+            {content.founders.cta}
           </a>
         </div>
       </div>
 
       <!-- Talent card -->
-      <div class="audience__card audience__card--ube reveal reveal-delay-2">
-        <span class="audience__badge audience__badge--ube label-uppercase">
-          {content.talent.badge}
+      <div class="audience__card reveal reveal-delay-2">
+        <span class="audience__eyebrow eyebrow">
+          {content.talent.eyebrow}
         </span>
 
         <h3 class="headline3">
           {content.talent.headline}
         </h3>
 
-        <p class="audience__card-description body1">
-          {content.talent.description}
+        <p class="audience__card-body body1">
+          {content.talent.body}
         </p>
 
-        <div class="audience__pfr audience__pfr--ube">
-          {
-            [
-              {
-                label: content.talent.problemLabel,
-                text: content.talent.problem,
-              },
-              { label: content.talent.fixLabel, text: content.talent.fix },
-              {
-                label: content.talent.resultLabel,
-                text: content.talent.result,
-              },
-            ].map((item, i) => (
-              <div
-                class={`audience__pfr-row${i < 2 ? " audience__pfr-row--bordered-ube" : ""}`}
-              >
-                <span class="audience__pfr-label label-uppercase">
-                  {item.label}
-                </span>
-                <p class="audience__pfr-text body2">{item.text}</p>
-              </div>
-            ))
-          }
+        <div class="audience__bullets">
+          {content.talent.bullets.map((bullet) => (
+            <div class="audience__bullet">
+              <span class="audience__bullet-label">{bullet.label}:</span>
+              <span class="audience__bullet-text">{bullet.text}</span>
+            </div>
+          ))}
         </div>
 
         <div class="audience__cta">
-          <a href="#audience" class="btn audience__btn">
+          <a href="#cta" class="btn">
             {content.talent.cta}
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M3 8h10M9 4l4 4-4 4"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"></path>
-            </svg>
           </a>
         </div>
       </div>
@@ -136,7 +88,6 @@ const { content } = Astro.props;
 <style lang="scss">
   @use "../styles/breakpoints" as *;
 
-  // ── Reveal animation ─────────────────────────────
   .reveal {
     opacity: 0;
     transform: translateY(40px);
@@ -151,40 +102,24 @@ const { content } = Astro.props;
     transform: translateY(0);
   }
 
-  // delays
-  .reveal-delay-1 {
-    transition-delay: 0.15s;
-  }
-  .reveal-delay-2 {
-    transition-delay: 0.3s;
-  }
-  .reveal-delay-3 {
-    transition-delay: 0.45s;
-  }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
 
   .audience {
     background: var(--color-bg);
     padding-block: 7rem;
 
-    @include max-md {
-      padding-block: 5rem;
-    }
+    @include max-md { padding-block: 5rem; }
 
-    // ── Container ────────────────────────────────────────────
     &__container {
       max-width: 80rem;
       margin-inline: auto;
       padding-inline: 2rem;
 
-      @include max-lg {
-        padding-inline: 1.5rem;
-      }
-      @include max-sm {
-        padding-inline: 1rem;
-      }
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
     }
 
-    // ── Header ───────────────────────────────────────────────
     &__header {
       display: flex;
       flex-direction: column;
@@ -203,97 +138,53 @@ const { content } = Astro.props;
       max-width: 42rem;
     }
 
-    // ── Grid ─────────────────────────────────────────────────
     &__grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
 
-      @include max-md {
-        grid-template-columns: 1fr;
-      }
+      @include max-md { grid-template-columns: 1fr; }
     }
 
-    // ── Card ─────────────────────────────────────────────────
     &__card {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
-      padding: 2.5rem;
+      gap: 1.5rem;
+      padding: 2rem;
       border: 1px solid var(--color-border);
-      border-radius: 24px;
+      border-radius: 12px;
       background: var(--color-surface);
 
-      @include max-md {
-        padding: 2rem;
-      }
-      @include max-sm {
-        padding: 1.5rem;
-      }
+      @include max-sm { padding: 1.5rem; }
     }
 
-    // ── Badge ────────────────────────────────────────────────
-    &__badge {
+    &__eyebrow {
       align-self: flex-start;
-      padding: 0.375rem 0.75rem;
-      border-radius: 11px;
-      color: var(--color-text);
-
-      &--matcha {
-        background: rgba(132, 231, 165, 0.15);
-        border: 1px solid rgba(132, 231, 165, 0.3);
-      }
-
-      &--ube {
-        background: rgba(193, 176, 255, 0.15);
-        border: 1px solid rgba(193, 176, 255, 0.3);
-      }
     }
 
-    // ── Card description ─────────────────────────────────────
-    &__card-description {
-    }
+    &__card-body {}
 
-    // ── Problem / Fix / Result ───────────────────────────────
-    &__pfr {
+    &__bullets {
       display: flex;
       flex-direction: column;
-      border-radius: 12px;
-      overflow: hidden;
-
-      &--matcha {
-        border: 1px dashed rgba(132, 231, 165, 0.3);
-      }
-      &--ube {
-        border: 1px dashed rgba(193, 176, 255, 0.3);
-      }
+      gap: 0.75rem;
     }
 
-    &__pfr-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      padding: 1rem 1.25rem;
-
-      &--bordered-matcha {
-        border-bottom: 1px dashed rgba(132, 231, 165, 0.3);
-      }
-      &--bordered-ube {
-        border-bottom: 1px dashed rgba(193, 176, 255, 0.3);
-      }
+    &__bullet {
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--color-muted);
     }
 
-    &__pfr-label {
+    &__bullet-label {
+      font-weight: 500;
       color: var(--color-text);
     }
 
-    &__pfr-text {
-    }
+    &__bullet-text {}
 
-    // ── CTA ──────────────────────────────────────────────────
-    &__btn {
-      border-radius: 1584px;
-      padding: 10px 20px;
+    &__cta {
+      margin-top: auto;
     }
   }
 </style>
@@ -305,12 +196,10 @@ const { content } = Astro.props;
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        obs.unobserve(entry.target); // se anima solo una vez
+        obs.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.2
-  });
+  }, { threshold: 0.2 });
 
   elements.forEach(el => observer.observe(el));
 </script>
