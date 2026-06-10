@@ -1,0 +1,262 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['culture'];
+}
+
+const { content } = Astro.props;
+
+// Parse out the big stats from the body text
+const bodyLines = content.body;
+---
+
+<section class="v3-culture">
+  <div class="v3-culture__bg" aria-hidden="true"></div>
+
+  <div class="v3-culture__container">
+
+    <h2 class="v3-culture__headline">{content.headline}</h2>
+
+    <!-- Big stats treatment -->
+    <div class="v3-culture__stats-row">
+      <div class="v3-culture__stat-card">
+        <div class="v3-culture__stat-num v3-culture__stat-num--indigo">46%</div>
+        <p class="v3-culture__stat-text">of new hires fail within 18 months</p>
+      </div>
+      <div class="v3-culture__stat-divider" aria-hidden="true"></div>
+      <div class="v3-culture__stat-card">
+        <div class="v3-culture__stat-num v3-culture__stat-num--teal">89%</div>
+        <p class="v3-culture__stat-text">of failures are due to culture &amp; attitude misalignment — not skills</p>
+      </div>
+    </div>
+
+    <!-- Body text -->
+    <div class="v3-culture__body">
+      {bodyLines.map((para) => (
+        <p class="v3-culture__para">{para}</p>
+      ))}
+    </div>
+
+    <!-- Quotes -->
+    <div class="v3-culture__quotes">
+      {content.quotes.map((q) => (
+        <blockquote class="v3-culture__quote-card">
+          <span class="v3-culture__quote-mark" aria-hidden="true">"</span>
+          <p class="v3-culture__quote-text">{q.text}</p>
+          <cite class="v3-culture__attribution">{q.attribution}</cite>
+        </blockquote>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .v3-culture {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem;
+    overflow: hidden;
+
+    @include max-sm {
+      padding: 4rem 1.25rem;
+    }
+
+    &__bg {
+      position: absolute;
+      inset: 0;
+      background: rgba(248, 247, 255, 0.72);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      pointer-events: none;
+    }
+
+    &__container {
+      position: relative;
+      z-index: 1;
+      max-width: 72rem;
+      margin-inline: auto;
+    }
+
+    &__headline {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #111827;
+      text-align: center;
+      margin: 0 0 3.5rem;
+      line-height: 1.2;
+      max-width: 52rem;
+      margin-inline: auto;
+      margin-bottom: 3.5rem;
+    }
+
+    &__stats-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 3rem;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid rgba(79, 70, 229, 0.1);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      @include max-md {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2.5rem 2rem;
+      }
+
+      @include max-sm {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    &__stat-card {
+      flex: 1;
+      text-align: center;
+      padding-inline: 2rem;
+
+      @include max-md {
+        padding-inline: 0;
+      }
+    }
+
+    &__stat-divider {
+      width: 1px;
+      height: 100px;
+      background: linear-gradient(to bottom, transparent, rgba(79, 70, 229, 0.2), transparent);
+      flex-shrink: 0;
+
+      @include max-md {
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(to right, transparent, rgba(79, 70, 229, 0.2), transparent);
+      }
+    }
+
+    &__stat-num {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      font-size: clamp(3.5rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.75rem;
+
+      &--indigo {
+        background: linear-gradient(135deg, #4F46E5 0%, #818CF8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      &--teal {
+        background: linear-gradient(135deg, #0891B2 0%, #06B6D4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+
+    &__stat-text {
+      font-size: 1rem;
+      color: #6B7280;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 220px;
+      margin-inline: auto;
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      max-width: 56rem;
+      margin-inline: auto;
+      margin-bottom: 3rem;
+    }
+
+    &__para {
+      font-size: 1.0625rem;
+      color: #4B5563;
+      line-height: 1.7;
+      margin: 0;
+      text-align: center;
+    }
+
+    &__quotes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+
+      @include max-md {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+        margin-inline: auto;
+      }
+    }
+
+    &__quote-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 20px;
+      padding: 36px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(79, 70, 229, 0.12);
+      border-left: 4px solid #4F46E5;
+      margin: 0;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 32px rgba(79, 70, 229, 0.1);
+      }
+
+      @include max-sm {
+        padding: 28px 24px;
+      }
+    }
+
+    &__quote-mark {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-family: Georgia, serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(79, 70, 229, 0.1);
+      font-style: normal;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    &__quote-text {
+      font-size: 1.0625rem;
+      font-style: italic;
+      color: #111827;
+      line-height: 1.65;
+      margin: 0 0 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    &__attribution {
+      font-style: normal;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4F46E5;
+    }
+  }
+</style>

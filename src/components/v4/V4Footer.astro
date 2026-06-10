@@ -1,0 +1,157 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['footer'];
+}
+
+const { content } = Astro.props;
+---
+
+<footer class="v4-footer">
+  <div class="v4-footer__container">
+    <div class="v4-footer__inner">
+
+      <!-- Logo -->
+      <div class="v4-footer__logo-wrap">
+        <a href="#" class="v4-footer__logo" aria-label="Purrfect Hire">
+          <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <circle cx="14" cy="14" r="14" fill="url(#v4-footer-grad)" opacity="0.18"/>
+            <circle cx="14" cy="14" r="5" fill="url(#v4-footer-grad)"/>
+            <defs>
+              <linearGradient id="v4-footer-grad" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#9F8FFF"/>
+                <stop offset="100%" stop-color="#A78BFA"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>Purrfect Hire</span>
+        </a>
+        <p class="v4-footer__tagline">Culture-first hiring for YC & a16z founders.</p>
+      </div>
+
+      <!-- Links -->
+      <nav class="v4-footer__links" aria-label="Footer navigation">
+        {content.links.map((link) => (
+          <a href={link.href} class="v4-footer__link">
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+    </div>
+
+    <div class="v4-footer__bottom">
+      <p class="v4-footer__legal">{content.legal}</p>
+      <p class="v4-footer__legal">
+        <a href="mailto:hiring@purrfecthire.com" class="v4-footer__email-link">hiring@purrfecthire.com</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .v4-footer {
+    position: relative;
+    z-index: 1;
+    background: #0D0857;
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, rgba(60, 43, 220, 0.4), transparent) 1;
+
+    &__container {
+      max-width: 72rem;
+      margin-inline: auto;
+      padding: 3rem 2rem 2rem;
+
+      @include max-sm {
+        padding: 2.5rem 1.25rem 1.75rem;
+      }
+    }
+
+    &__inner {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+      @include max-md {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+
+    &__logo-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    &__logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+
+      span {
+        font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+      }
+    }
+
+    &__tagline {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.35);
+      margin: 0;
+      padding-left: 30px;
+    }
+
+    &__links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    &__link {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.85);
+      }
+    }
+
+    &__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    &__legal {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.28);
+      margin: 0;
+    }
+
+    &__email-link {
+      color: rgba(159, 143, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.15s;
+
+      &:hover {
+        color: rgba(159, 143, 255, 0.8);
+      }
+    }
+  }
+</style>

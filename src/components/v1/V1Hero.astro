@@ -1,0 +1,394 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['hero'];
+}
+
+const { content } = Astro.props;
+---
+
+<section class="v1-hero">
+  <!-- Background orbs -->
+  <div class="v1-hero__orb v1-hero__orb--1" aria-hidden="true"></div>
+  <div class="v1-hero__orb v1-hero__orb--2" aria-hidden="true"></div>
+  <!-- Grid overlay -->
+  <div class="v1-hero__grid" aria-hidden="true"></div>
+
+  <div class="v1-hero__container">
+    <!-- Eyebrow badge -->
+    <div class="v1-hero__eyebrow">
+      <span class="v1-hero__badge">The culture-first hiring engine</span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="v1-hero__headline">
+      <span class="v1-hero__headline-line">{content.headline}</span>
+      <span class="v1-hero__headline-accent">{content.headlineAccent}</span>
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="v1-hero__subheadline">{content.subheadline}</p>
+
+    <!-- Stats -->
+    <div class="v1-hero__stats">
+      {content.stats.map((stat, i) => (
+        <>
+          {i > 0 && <div class="v1-hero__stat-divider" aria-hidden="true"></div>}
+          <div class="v1-hero__stat">
+            <div class="v1-hero__stat-value">
+              {stat.suffixLeft && <span class="v1-hero__stat-suffix-left">{stat.suffixLeft}</span>}
+              {stat.value}
+              <span class="v1-hero__stat-suffix">{stat.suffix}</span>
+            </div>
+            <div class="v1-hero__stat-label">{stat.label}</div>
+          </div>
+        </>
+      ))}
+    </div>
+
+    <!-- CTAs -->
+    <div class="v1-hero__ctas">
+      <a href="#cta" class="v1-hero__btn v1-hero__btn--primary">
+        {content.ctaPrimary}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#engine" class="v1-hero__btn v1-hero__btn--secondary">
+        {content.ctaSecondary}
+      </a>
+    </div>
+
+    <!-- Trust logos line -->
+    <div class="v1-hero__trust">
+      <span class="v1-hero__trust-label">{content.trustLabel}</span>
+      <div class="v1-hero__trust-logos">
+        <span class="v1-hero__trust-badge">YC</span>
+        <span class="v1-hero__trust-badge">a16z</span>
+        <span class="v1-hero__trust-badge">Sequoia</span>
+        <span class="v1-hero__trust-badge">Founder-led</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .v1-hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    background: #09090b;
+    overflow: hidden;
+
+    &__orb {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+
+      &--1 {
+        top: -100px;
+        right: -100px;
+        width: 800px;
+        height: 600px;
+        background: radial-gradient(
+          ellipse at top right,
+          rgba(124, 58, 237, 0.25) 0%,
+          transparent 60%
+        );
+        animation: fadeIn 1.5s ease forwards;
+      }
+
+      &--2 {
+        bottom: -80px;
+        left: -80px;
+        width: 600px;
+        height: 500px;
+        background: radial-gradient(
+          ellipse at bottom left,
+          rgba(29, 78, 216, 0.15) 0%,
+          transparent 60%
+        );
+        animation: fadeIn 1.5s ease 0.3s forwards;
+        opacity: 0;
+      }
+    }
+
+    &__grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    &__container {
+      position: relative;
+      z-index: 1;
+      max-width: 80rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      padding-block: 8rem 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2rem;
+
+      @include max-lg {
+        padding-inline: 1.25rem;
+        padding-block: 7rem 3rem;
+      }
+
+      @include max-sm {
+        padding-block: 6rem 2.5rem;
+        gap: 1.5rem;
+      }
+    }
+
+    &__eyebrow {
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    &__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      color: #a78bfa;
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+
+      &::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        background: #7c3aed;
+        border-radius: 50%;
+        box-shadow: 0 0 6px rgba(124, 58, 237, 0.8);
+      }
+    }
+
+    &__headline {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1em;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    &__headline-line {
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: #fafafa;
+
+      @include max-sm {
+        font-size: 2.5rem;
+      }
+    }
+
+    &__headline-accent {
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+
+      @include max-sm {
+        font-size: 2.5rem;
+      }
+    }
+
+    &__subheadline {
+      max-width: 600px;
+      margin: 0;
+      color: #a1a1aa;
+      font-size: 1.1rem;
+      line-height: 1.65;
+      animation: fadeUp 0.6s ease 0.3s both;
+
+      @include max-sm {
+        font-size: 1rem;
+      }
+    }
+
+    &__stats {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      animation: fadeUp 0.6s ease 0.4s both;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.25rem 2rem;
+
+      @include max-sm {
+        gap: 0;
+        padding: 1rem 1.25rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+
+    &__stat-divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      margin-inline: 2rem;
+
+      @include max-sm {
+        display: none;
+      }
+    }
+
+    &__stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    &__stat-value {
+      font-size: 2.5rem;
+      font-weight: 500;
+      color: #fafafa;
+      letter-spacing: -0.03em;
+      line-height: 1;
+
+      @include max-sm {
+        font-size: 2rem;
+      }
+    }
+
+    &__stat-suffix {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #7c3aed;
+      letter-spacing: -0.02em;
+    }
+
+    &__stat-suffix-left {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #a1a1aa;
+    }
+
+    &__stat-label {
+      font-size: 0.8125rem;
+      color: #a1a1aa;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    &__ctas {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: fadeUp 0.6s ease 0.5s both;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    &__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      letter-spacing: -0.01em;
+
+      &--primary {
+        background: #7c3aed;
+        color: #ffffff;
+        padding: 14px 28px;
+
+        &:hover {
+          background: #6d28d9;
+          box-shadow: 0 0 30px rgba(124, 58, 237, 0.4);
+          transform: translateY(-1px);
+        }
+      }
+
+      &--secondary {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fafafa;
+        padding: 14px 28px;
+
+        &:hover {
+          border-color: rgba(255, 255, 255, 0.35);
+          background: rgba(255, 255, 255, 0.04);
+          transform: translateY(-1px);
+        }
+      }
+    }
+
+    &__trust {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      animation: fadeUp 0.6s ease 0.6s both;
+    }
+
+    &__trust-label {
+      font-size: 0.8125rem;
+      color: #52525b;
+      letter-spacing: 0.04em;
+    }
+
+    &__trust-logos {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    &__trust-badge {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #52525b;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 6px;
+      padding: 4px 10px;
+      letter-spacing: 0.04em;
+    }
+  }
+</style>

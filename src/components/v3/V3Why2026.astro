@@ -1,0 +1,161 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['why2026'];
+}
+
+const { content } = Astro.props;
+---
+
+<section class="v3-why">
+  <div class="v3-why__container">
+
+    <div class="v3-why__header">
+      <span class="v3-why__eyebrow">{content.eyebrow}</span>
+      <h2 class="v3-why__headline">{content.headline}</h2>
+    </div>
+
+    <div class="v3-why__body">
+      {content.body.map((paragraph, i) => (
+        <div class={`v3-why__card v3-why__card--${i}`}>
+          <div class="v3-why__card-indicator" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>
+          <p class="v3-why__card-text">{paragraph}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="v3-why__closing">
+      <em>{content.closing}</em>
+    </p>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .v3-why {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem;
+    background: rgba(248, 247, 255, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    @include max-sm {
+      padding: 4rem 1.25rem;
+    }
+
+    &__container {
+      max-width: 56rem;
+      margin-inline: auto;
+    }
+
+    &__header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    &__eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #4F46E5 0%, #0891B2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    &__headline {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      color: #111827;
+      margin: 0;
+      max-width: 42rem;
+      margin-inline: auto;
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    &__card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(79, 70, 229, 0.1);
+      border-left: 3px solid #4F46E5;
+      border-radius: 12px;
+      padding: 22px 28px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 20px rgba(79, 70, 229, 0.08);
+      }
+
+      &--1 {
+        border-left-color: #0891B2;
+      }
+
+      &--2 {
+        border-left-color: #059669;
+      }
+
+      @include max-sm {
+        padding: 16px 20px;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+    }
+
+    &__card-indicator {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #4F46E5;
+      opacity: 0.5;
+      flex-shrink: 0;
+      padding-top: 2px;
+      min-width: 2rem;
+
+      .v3-why__card--1 & {
+        color: #0891B2;
+      }
+
+      .v3-why__card--2 & {
+        color: #059669;
+      }
+    }
+
+    &__card-text {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: #374151;
+      margin: 0;
+    }
+
+    &__closing {
+      text-align: center;
+      font-size: 1.0625rem;
+      color: #6B7280;
+      font-style: italic;
+      line-height: 1.6;
+      margin: 0;
+      padding-top: 0.5rem;
+    }
+  }
+</style>

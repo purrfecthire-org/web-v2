@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RoleDetailV3 from '../../components/roles-v3/RoleDetailV3.astro';
+import { roleSample } from '../../content/roleSample';
+
+const role = roleSample;
+---
+
+<Layout title={`${role.title} — Purrfect Hire`} description={role.company.description} lang="en">
+  <style is:global>
+    body {
+      background-color: #F6F8FF;
+    }
+  </style>
+
+  <RoleDetailV3 role={role} />
+</Layout>
+
+<style is:global>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

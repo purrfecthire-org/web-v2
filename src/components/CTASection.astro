@@ -15,42 +15,26 @@ const { content } = Astro.props;
       <!-- Headline -->
       <h2 class="cta__headline headline2">
         {content.headline}
-        <br />
-        <span class="cta__headline-accent">{content.headlineAccent}</span>
       </h2>
 
       <!-- Subheadline -->
-      <p class="cta__subheadline">
+      <p class="cta__subheadline body1">
         {content.subheadline}
       </p>
 
       <!-- CTAs -->
       <div class="cta__buttons">
-        <a href="#audience" class="btn cta__btn">
+        <a href="mailto:hiring@purrfecthire.com" class="btn">
           {content.ctaHire}
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </a>
-        <a href="#audience" class="btn-ghost cta__btn">
+        <a href="mailto:hiring@purrfecthire.com" class="btn-secondary">
           {content.ctaTalent}
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </a>
       </div>
 
-      <!-- Contact emails -->
-      <p class="cta__contact">
-        <span class="cta__contact-label">{content.contactCompaniesLabel}:</span>
-        <a href={`mailto:${content.contactCompaniesEmail}`} class="cta__contact-email">
-          {content.contactCompaniesEmail}
-        </a>
-        <span class="cta__contact-sep" aria-hidden="true">·</span>
-        <span class="cta__contact-label">{content.contactCandidatesLabel}:</span>
-        <a href={`mailto:${content.contactCandidatesEmail}`} class="cta__contact-email">
-          {content.contactCandidatesEmail}
-        </a>
+      <!-- Contact line -->
+      <p class="cta__contact caption">
+        {content.contactLine}
       </p>
 
     </div>
@@ -62,12 +46,11 @@ const { content } = Astro.props;
 
   .cta {
     background: var(--color-bg);
-    border-top: 1px solid var(--color-oat-border);
+    border-top: 1px solid var(--color-border);
     padding-block: 9rem;
 
     @include max-md { padding-block: 6rem; }
 
-    // ── Container ──────────────────────────────────────────
     &__container {
       max-width: 80rem;
       margin-inline: auto;
@@ -77,44 +60,24 @@ const { content } = Astro.props;
       @include max-sm { padding-inline: 1rem; }
     }
 
-    // ── Inner ───────────────────────────────────────────────
     &__inner {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 2.5rem;
-      max-width: 48rem;
+      gap: 2rem;
+      max-width: 36rem;
       margin-inline: auto;
     }
 
-    // ── Headline ────────────────────────────────────────────
     &__headline {
       color: var(--color-text);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
     }
 
-    &__headline-accent {
-      color: var(--color-primary);
-    }
-
-    // ── Subheadline ─────────────────────────────────────────
     &__subheadline {
-      font-family: var(--font-primary);
-      font-size: 1.125rem;
-      font-weight: 400;
-      line-height: 1.6;
-      letter-spacing: -0.36px;
-      color: var(--color-muted);
-      font-feature-settings: "ss03", "ss10", "ss11", "ss12";
       max-width: 520px;
-
-      @include max-sm { font-size: 1rem; }
     }
 
-    // ── Buttons ─────────────────────────────────────────────
     &__buttons {
       display: flex;
       align-items: center;
@@ -126,50 +89,8 @@ const { content } = Astro.props;
       }
     }
 
-    &__btn {
-      padding: 14px 32px;
-      border-radius: 1584px;
-      font-size: 1rem;
-      justify-content: center;
-
-      @include max-sm { width: 100%; }
-    }
-
-    // ── Contact line ────────────────────────────────────────
     &__contact {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-family: var(--font-primary);
-      font-size: 0.875rem;
-      font-weight: 400;
-      line-height: 1.5;
       color: var(--color-muted);
-      font-feature-settings: "ss03", "ss10", "ss11", "ss12";
-    }
-
-    &__contact-label {
-      font-weight: 500;
-      color: var(--color-warm-charcoal);
-    }
-
-    &__contact-email {
-      color: var(--color-text);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: var(--color-oat-border);
-      transition: text-decoration-color 0.15s ease, color 0.15s ease;
-
-      &:hover {
-        color: var(--color-ube-800);
-        text-decoration-color: var(--color-ube-800);
-      }
-    }
-
-    &__contact-sep {
-      color: var(--color-oat-border);
     }
   }
 </style>

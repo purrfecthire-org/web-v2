@@ -1,0 +1,337 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['hero'];
+}
+
+const { content } = Astro.props;
+---
+
+<section class="v3-hero">
+  <div class="v3-hero__container">
+
+    <!-- Eyebrow pill -->
+    <div class="v3-hero__eyebrow-wrap">
+      <span class="v3-hero__eyebrow">
+        <span class="v3-hero__eyebrow-dot" aria-hidden="true"></span>
+        Culture-First · LATAM → YC &amp; a16z
+      </span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="v3-hero__headline">
+      <span class="v3-hero__headline-line">{content.headline}</span>
+      <br />
+      <span class="v3-hero__headline-accent">{content.headlineAccent}</span>
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="v3-hero__sub">{content.subheadline}</p>
+
+    <!-- Stats -->
+    <div class="v3-hero__stats">
+      {content.stats.map((stat) => (
+        <div class="v3-hero__stat">
+          <div class="v3-hero__stat-value">
+            {stat.suffixLeft && <span class="v3-hero__stat-suffix-left">{stat.suffixLeft}</span>}
+            {stat.value}
+            <span class="v3-hero__stat-suffix">{stat.suffix}</span>
+          </div>
+          <div class="v3-hero__stat-label">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTAs -->
+    <div class="v3-hero__ctas">
+      <a href="#cta" class="v3-hero__cta-primary">
+        {content.ctaPrimary}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#engine" class="v3-hero__cta-secondary">
+        {content.ctaSecondary}
+      </a>
+    </div>
+
+    <!-- Trust -->
+    <p class="v3-hero__trust">{content.trustLabel} YC · a16z · Seed-stage US startups</p>
+
+    <!-- Floating glow accent -->
+    <div class="v3-hero__glow" aria-hidden="true"></div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  @keyframes v3-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes v3-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .v3-hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 6rem;
+    padding-bottom: 5rem;
+
+    &__container {
+      max-width: 72rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1.25rem; }
+    }
+
+    &__eyebrow-wrap {
+      animation: v3-fade-up 0.6s ease both;
+      margin-bottom: 2rem;
+    }
+
+    &__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(8, 145, 178, 0.1) 100%);
+      border: 1px solid rgba(79, 70, 229, 0.22);
+      color: #4F46E5;
+      border-radius: 999px;
+      padding: 7px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    &__eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4F46E5, #0891B2);
+      flex-shrink: 0;
+      animation: v3-float 3s ease-in-out infinite;
+    }
+
+    &__headline {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      font-size: clamp(2.6rem, 6vw, 5.25rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: #111827;
+      margin: 0 0 1.75rem;
+      animation: v3-fade-up 0.6s 0.1s ease both;
+    }
+
+    &__headline-line {
+      display: block;
+    }
+
+    &__headline-accent {
+      display: block;
+      background: linear-gradient(135deg, #4F46E5 0%, #0891B2 50%, #059669 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    &__sub {
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: #6B7280;
+      max-width: 580px;
+      margin: 0 auto 3rem;
+      animation: v3-fade-up 0.6s 0.2s ease both;
+
+      @include max-sm {
+        font-size: 1rem;
+      }
+    }
+
+    &__stats {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 3rem;
+      animation: v3-fade-up 0.6s 0.3s ease both;
+
+      @include max-sm {
+        gap: 12px;
+      }
+    }
+
+    &__stat {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(79, 70, 229, 0.15);
+      border-radius: 16px;
+      padding: 22px 34px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      min-width: 120px;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 32px rgba(79, 70, 229, 0.12);
+      }
+
+      @include max-sm {
+        padding: 16px 24px;
+        min-width: 100px;
+      }
+    }
+
+    &__stat-value {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #4F46E5;
+      line-height: 1;
+      letter-spacing: -0.02em;
+
+      @include max-sm {
+        font-size: 2rem;
+      }
+    }
+
+    &__stat-suffix {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    &__stat-suffix-left {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    &__stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #9CA3AF;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 6px;
+    }
+
+    &__ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 2rem;
+      animation: v3-fade-up 0.6s 0.4s ease both;
+
+      @include max-sm {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        width: 100%;
+        max-width: 320px;
+      }
+    }
+
+    &__cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #4F46E5 0%, #0891B2 100%);
+      color: white;
+      border-radius: 999px;
+      padding: 15px 30px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 20px rgba(79, 70, 229, 0.35);
+
+      &:hover {
+        opacity: 0.92;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(79, 70, 229, 0.4);
+      }
+
+      svg {
+        transition: transform 0.2s ease;
+      }
+
+      &:hover svg {
+        transform: translateX(3px);
+      }
+
+      @include max-sm {
+        justify-content: center;
+      }
+    }
+
+    &__cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1.5px solid rgba(79, 70, 229, 0.25);
+      color: #4F46E5;
+      border-radius: 999px;
+      padding: 15px 30px;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.95);
+        border-color: rgba(79, 70, 229, 0.45);
+        transform: translateY(-2px);
+      }
+
+      @include max-sm {
+        justify-content: center;
+      }
+    }
+
+    &__trust {
+      font-size: 13px;
+      color: #9CA3AF;
+      letter-spacing: 0.02em;
+      margin: 0;
+      animation: v3-fade-up 0.6s 0.5s ease both;
+    }
+
+    &__glow {
+      position: absolute;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 200px;
+      background: radial-gradient(ellipse, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+  }
+</style>

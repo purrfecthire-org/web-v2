@@ -26,49 +26,41 @@ const { content } = Astro.props;
         {content.subheadline}
       </p>
 
-      <!-- Animated Stats -->
-      <div class="hero__stats opacity-0-init animate-fade-up animate-delay-300" id="hero-stats">
-        <div class="hero__stats-grid">
-          {content.stats.map((stat, i) => (
+      <!-- Metrics -->
+      <div class="hero__metrics opacity-0-init animate-fade-up animate-delay-300" id="hero-stats">
+        {content.stats.map((stat, i) => (
+          <>
+            {i > 0 && <div class="hero__metric-divider" />}
             <div
-              class={`hero__stat-item stat-item${i < content.stats.length - 1 ? ' hero__stat-item--divided' : ''}`}
+              class="hero__metric"
               data-value={stat.value}
               data-suffix={stat.suffix}
             >
-              <div class="hero__stat-number headline2">
+              <div class="hero__metric-value">
                 {stat.suffixLeft}<span class="count">0</span>{stat.suffix}
               </div>
-              <p class="hero__stat-label caption">
+              <p class="hero__metric-label">
                 {stat.label}
               </p>
             </div>
-          ))}
-        </div>
+          </>
+        ))}
       </div>
 
-      <!-- Audience Split CTAs -->
+      <!-- CTAs -->
       <div class="hero__ctas opacity-0-init animate-fade-up animate-delay-400">
-        <p class="hero__cta-label label-uppercase">
-          {content.ctaAudienceLabel}
-        </p>
-        <div class="hero__cta-buttons">
-          <a href="#audience" class="btn hero__btn">
-            {content.ctaHire}
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-          <a href="#audience" class="btn-ghost hero__btn">
-            {content.ctaTalent}
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
-        <p class="hero__social-proof caption">
-          {content.socialProofLabel}
-        </p>
+        <a href="#cta" class="btn">
+          {content.ctaPrimary}
+        </a>
+        <a href="#engine" class="btn-secondary">
+          {content.ctaSecondary}
+        </a>
       </div>
+
+      <!-- Trust line -->
+      <p class="hero__trust opacity-0-init animate-fade-up animate-delay-400">
+        {content.trustLabel}
+      </p>
 
     </div>
   </div>
@@ -92,20 +84,16 @@ const { content } = Astro.props;
       padding-bottom: 4rem;
     }
 
-    // ── Container ──────────────────────────────────────────
     &__container {
       max-width: 80rem;
       margin-inline: auto;
       padding-inline: 2rem;
-      position: relative;
-      z-index: 10;
       width: 100%;
 
       @include max-lg { padding-inline: 1.5rem; }
       @include max-sm { padding-inline: 1rem; }
     }
 
-    // ── Content stack ───────────────────────────────────────
     &__content {
       display: flex;
       flex-direction: column;
@@ -114,88 +102,68 @@ const { content } = Astro.props;
       gap: 2.5rem;
     }
 
-    // ── Headline ────────────────────────────────────────────
     &__headline {
       text-align: center;
       max-width: 64rem;
       color: var(--color-text);
-
       display: flex;
       flex-direction: column;
       gap: 10px;
+    }
+
+    &__headline-accent {
+      color: var(--color-accent);
     }
 
     &__subheadline {
       text-align: center;
     }
 
-    &__headline-accent {
-      color: var(--color-primary);
+    // ── Metrics ─────────────────────────────────────────────
+    &__metrics {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+
+      @include max-sm {
+        gap: 1.5rem;
+      }
     }
 
-    // ── Stats ───────────────────────────────────────────────
-    &__stats {
-      width: 100%;
-      max-width: 48rem;
-    }
-
-    &__stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-radius: 24px;
-      overflow: hidden;
-    }
-
-    &__stat-item {
+    &__metric {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       gap: 0.25rem;
-      padding: 2rem 1.5rem;
       text-align: center;
+    }
+
+    &__metric-value {
+      font-size: 2.25rem;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--color-text);
 
       @include max-sm {
-        padding: 1rem 0.5rem;
-      }
-
-
-
-      // desktop: vertical divider between items
-      &--divided {
-        border-right: 1px solid var(--color-oat-border);
-
-        @include max-sm {
-          border-right: none;
-        }
+        font-size: 1.75rem;
       }
     }
 
-    &__stat-number {
-      color: var(--color-text);
-      line-height: 1.0;
-    }
-
-    &__stat-label {
+    &__metric-label {
+      font-size: 0.875rem;
       color: var(--color-muted);
-      max-width: 160px;
-      text-align: center;
+      max-width: 120px;
+    }
+
+    &__metric-divider {
+      width: 1px;
+      height: 40px;
+      background-color: var(--color-border);
     }
 
     // ── CTAs ────────────────────────────────────────────────
     &__ctas {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.25rem;
-      width: 100%;
-    }
-
-    &__cta-label {
-      color: var(--color-warm-charcoal);
-    }
-
-    &__cta-buttons {
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -206,19 +174,10 @@ const { content } = Astro.props;
       }
     }
 
-    &__btn {
-      padding: 12px 28px;
-      border-radius: 1584px;
-      font-size: 1rem;
-      justify-content: center;
-
-      @include max-sm { width: 100%; }
-    }
-
-    &__social-proof {
-      text-align: center;
+    &__trust {
+      font-size: 0.875rem;
       color: var(--color-muted);
-      max-width: 380px;
+      text-align: center;
     }
   }
 </style>
@@ -250,7 +209,7 @@ const { content } = Astro.props;
 
   const statsSection = document.getElementById('hero-stats');
   if (statsSection) {
-    const items = statsSection.querySelectorAll('.stat-item');
+    const items = statsSection.querySelectorAll('.hero__metric');
     let triggered = false;
 
     const observer = new IntersectionObserver(

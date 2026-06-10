@@ -6,80 +6,52 @@ interface Props {
 }
 
 const { content } = Astro.props;
-
-const stepColors: Record<string, { bg: string; text: string }> = {
-  '--color-matcha-300':     { bg: '#84e7a5', text: '#02492a' },
-  '--color-slushie-800':    { bg: '#0089ad', text: '#ffffff' },
-  '--color-ube-300':        { bg: '#c1b0ff', text: '#32037d' },
-  '--color-pomegranate-400':{ bg: '#fc7981', text: '#ffffff' },
-};
 ---
 
-<section id="howItsWork" class="engine">
+<section id="engine" class="engine">
   <div class="engine__wrapper">
 
     <!-- Section header -->
     <div class="engine__header">
-      <div class="engine__header-content">
-        <span class="engine__badge label-uppercase">
-          {content.badge}
-        </span>
-        <h2 class="engine__headline headline2">
-          {content.headline}
-        </h2>
-        <p class="engine__subheadline body1">
-          {content.subheadline}
-        </p>
-      </div>
-
-      <div class="engine__header-cta">
-        <a href="#audience" class="engine__cta btn-ghost">
-          {content.joinNetworkCta}
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
+      <span class="engine__eyebrow eyebrow">
+        {content.eyebrow}
+      </span>
+      <h2 class="engine__headline headline2">
+        {content.headline}
+      </h2>
+      <p class="engine__subheadline body1">
+        {content.subheadline}
+      </p>
     </div>
 
     <!-- Steps -->
     <div class="engine__steps">
-      {content.steps.map((step) => {
-        const palette = stepColors[step.color] ?? { bg: '', text: '#000000' };
-        return (
-          <div class="engine__step">
-            <div class="engine__step-badge-wrapper">
-              <span
-                class="engine__step-badge"
-                style={`background: ${palette.bg}; color: ${palette.text};`}
-              >
-                {step.id}
-              </span>
-            </div>
-
-            <div class="engine__step-content">
-              <h3 class="engine__step-title headline3">
-                {step.title}
-              </h3>
-              <p class="engine__step-description body2">
-                {step.description}
-              </p>
-
-              {step.callout && (
-                <div class="engine__step-callout-wrapper">
-                  <span class="engine__step-callout">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                      <path d="M7 1v6l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
-                    </svg>
-                    {step.callout}
-                  </span>
-                </div>
-              )}
-            </div>
+      {content.steps.map((step) => (
+        <div class="engine__step">
+          <div class="engine__step-number-wrapper">
+            <span class="engine__step-number">
+              {step.id}
+            </span>
           </div>
-        );
-      })}
+
+          <div class="engine__step-content">
+            <h3 class="engine__step-title headline3">
+              {step.title}
+            </h3>
+            <p class="engine__step-description body2">
+              {step.description}
+            </p>
+
+            {step.badge && (
+              <div class="engine__step-badge-wrapper">
+                <span class="engine__step-badge">
+                  {step.badge}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
 
   </div>
@@ -90,124 +62,102 @@ const stepColors: Record<string, { bg: string; text: string }> = {
 
   .engine {
     padding: 7rem 0;
-    background: var(--color-surface);
+    background: var(--color-bg);
 
-    @include max-md {
-      padding: 5rem 0;
-    }
+    @include max-md { padding: 5rem 0; }
 
     &__wrapper {
       max-width: 80rem;
       margin-inline: auto;
-      padding-inline: 1rem;
+      padding-inline: 2rem;
 
-      @include max-sm {
-        padding-inline: 1.5rem;
-      }
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
     }
 
     &__header {
       display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1.5rem;
-      margin-bottom: 3.5rem;
-
-      @include max-sm {
-        flex-direction: column;
-      }
-    }
-
-    &__header-content {
-      display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
       max-width: 42rem;
+      margin-inline: auto;
     }
 
-    &__badge {
-      color: var(--color-warm-charcoal);
-    }
+    &__eyebrow {}
 
     &__headline {
       color: var(--color-text);
     }
 
-    &__subheadline {
-  
-    }
-
-    &__header-cta {
-      flex-shrink: 0;
-    }
-
-    &__cta {
-      padding: 10px 20px;
-      border-radius: 1584px;
-      white-space: nowrap;
-    }
+    &__subheadline {}
 
     &__steps {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
     }
 
     &__step {
       display: flex;
       flex-direction: row;
       gap: 2rem;
-      padding: 2rem;
-      border-bottom: 1px solid #D4D4D0;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--color-border);
+
+      &:first-child {
+        border-top: 1px solid var(--color-border);
+      }
 
       @include max-sm {
         flex-direction: column;
-        gap: 1.5rem;
-        padding: 1.75rem;
+        gap: 1rem;
+        padding: 1.5rem 0;
       }
     }
 
-    &__step-badge-wrapper {
+    &__step-number-wrapper {
       flex-shrink: 0;
-      display: flex;
-      align-items: flex-start;
     }
 
-    &__step-badge {
+    &__step-number {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      flex-shrink: 0;
+      padding: 4px 8px;
+      background-color: #E8E6F8;
+      color: #3C2BDC;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.6875rem;
     }
 
     &__step-content {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.5rem;
       flex: 1;
     }
 
-    &__step-title {
+    &__step-title {}
 
+    &__step-description {}
+
+    &__step-badge-wrapper {
+      margin-top: 0.5rem;
     }
 
-    &__step-description {
-    }
-
-    &__step-callout-wrapper {
-      margin-top: 0.25rem;
-    }
-
-    &__step-callout {
+    &__step-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.375rem 0.75rem;
-      border-radius: 1584px;
+      padding: 4px 12px;
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-muted);
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 500;
     }
   }
 </style>

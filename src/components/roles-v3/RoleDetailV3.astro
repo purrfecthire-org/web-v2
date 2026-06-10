@@ -1,0 +1,701 @@
+---
+import type { Role } from '../../content/roleSample';
+
+interface Props {
+  role: Role;
+}
+
+const { role } = Astro.props;
+const c = role.company;
+
+const location = [...role.countries, ...(role.states ?? [])];
+const internalStages = role.interviewProcess?.filter((s) => s.group === 'internal') ?? [];
+const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') ?? [];
+const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
+
+const factTiles = [
+  c.size && { label: 'Team size', value: c.size },
+  c.founded && { label: 'Founded', value: c.founded },
+  c.funding && { label: 'Funding', value: c.funding },
+  c.industry && { label: 'Industry', value: c.industry },
+].filter(Boolean) as { label: string; value: string }[];
+---
+
+<div class="rv3">
+  <!-- Aurora canvas -->
+  <div class="rv3__canvas" aria-hidden="true">
+    <span class="rv3__blob rv3__blob--1"></span>
+    <span class="rv3__blob rv3__blob--2"></span>
+  </div>
+
+  <!-- Slim top bar -->
+  <header class="rv3__bar">
+    <a href="/" class="rv3__brand">Purrfect&nbsp;Hire</a>
+    <nav class="rv3__bar-nav">
+      <a href="/#roles" class="rv3__bar-link">All roles</a>
+      <a href={applyHref} class="rv3__bar-cta">Apply</a>
+    </nav>
+  </header>
+
+  <main class="rv3__main">
+    <!-- ── Header ───────────────────────────────────────────────────── -->
+    <section class="rv3__header">
+      <div class="rv3__header-text">
+        <span class="rv3__company">{role.companyLabel}</span>
+        <h1 class="rv3__title">{role.title}</h1>
+        <div class="rv3__chips">
+          <span class="rv3__chip">{location.join(' · ')}</span>
+          <span class="rv3__chip">{role.modality}</span>
+          <span class="rv3__chip">{role.employmentType}</span>
+          {role.englishLevel && <span class="rv3__chip rv3__chip--accent">English {role.englishLevel}</span>}
+        </div>
+      </div>
+      <a href={applyHref} class="rv3__apply">
+        Apply
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </section>
+
+    <!-- ── Company bento ────────────────────────────────────────────── -->
+    <span class="rv3__section-label">The Company</span>
+    <div class="rv3__bento">
+      <!-- Story tile (wide) -->
+      <article class="rv3__tile rv3__tile--story">
+        <p class="rv3__lede">{c.description}</p>
+        {c.strengths && c.strengths.length > 0 && (
+          <div class="rv3__strengths">
+            {c.strengths.map((s) => (
+              <span class="rv3__strength">
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M11.5 4 6 9.5 3 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {s}
+              </span>
+            ))}
+          </div>
+        )}
+      </article>
+
+      <!-- YC tile (only if present) -->
+      {c.ycBatch && (
+        <article class="rv3__tile rv3__tile--yc">
+          <span class="rv3__yc-mark" aria-hidden="true">Y</span>
+          <div>
+            <span class="rv3__yc-top">Backed by</span>
+            <span class="rv3__yc-name">Y Combinator</span>
+            <span class="rv3__yc-batch">Batch {c.ycBatch}</span>
+          </div>
+        </article>
+      )}
+
+      <!-- Fact tiles -->
+      {factTiles.map((f) => (
+        <article class="rv3__tile rv3__tile--fact">
+          <span class="rv3__fact-value">{f.value}</span>
+          <span class="rv3__fact-label">{f.label}</span>
+        </article>
+      ))}
+
+      <!-- Awards tile (only if present) -->
+      {c.awards && c.awards.length > 0 && (
+        <article class="rv3__tile rv3__tile--awards">
+          <span class="rv3__tile-label">Recognition</span>
+          <ul class="rv3__awards">
+            {c.awards.map((a) => (
+              <li class="rv3__award">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M7 1.5 8.7 5l3.8.5-2.8 2.7.7 3.8L7 10.2 3.6 12l.7-3.8L1.5 5.5 5.3 5 7 1.5Z" fill="currentColor"/>
+                </svg>
+                <span>{a.label}{a.year ? ` ${a.year}` : ''}{a.source ? ` · ${a.source}` : ''}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      )}
+    </div>
+
+    <!-- ── Role bento ───────────────────────────────────────────────── -->
+    <span class="rv3__section-label rv3__section-label--role">The Role</span>
+    <div class="rv3__bento rv3__bento--role">
+      <!-- Role story + skills -->
+      <article class="rv3__tile rv3__tile--story rv3__tile--role">
+        <p class="rv3__lede">{role.roleDescription}</p>
+        {role.skills && role.skills.length > 0 && (
+          <div class="rv3__skills">
+            {role.skills.map((s) => <span class="rv3__skill">{s}</span>)}
+          </div>
+        )}
+        {role.englishLevel && (
+          <div class="rv3__english">
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M1.5 7h11M7 1.5c1.6 1.6 1.6 9.4 0 11M7 1.5c-1.6 1.6-1.6 9.4 0 11" stroke="currentColor" stroke-width="1.1"/>
+            </svg>
+            Minimum English: <strong>{role.englishLevel}</strong>
+          </div>
+        )}
+      </article>
+
+      <!-- Must have -->
+      <article class="rv3__tile rv3__tile--req">
+        <span class="rv3__tile-label rv3__tile-label--must">Must have</span>
+        <ul class="rv3__req-list">
+          {role.requirements.mandatory.map((r) => (
+            <li class="rv3__req rv3__req--must">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="8" fill="currentColor" opacity="0.12"/>
+                <path d="M11.5 5.5 7 10 5 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>{r}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      <!-- Nice to have (only if present) -->
+      {role.requirements.niceToHave && role.requirements.niceToHave.length > 0 && (
+        <article class="rv3__tile rv3__tile--req">
+          <span class="rv3__tile-label rv3__tile-label--nice">Nice to have</span>
+          <ul class="rv3__req-list">
+            {role.requirements.niceToHave.map((r) => (
+              <li class="rv3__req rv3__req--nice">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 8h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <span>{r}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      )}
+    </div>
+
+    <!-- ── Interview process (optional) ─────────────────────────────── -->
+    {role.interviewProcess && role.interviewProcess.length > 0 && (
+      <>
+        <span class="rv3__section-label">Interview Process</span>
+        <div class="rv3__bento rv3__bento--process">
+          {internalStages.length > 0 && (
+            <article class="rv3__tile rv3__tile--process">
+              <span class="rv3__tile-label">Internal process</span>
+              <ol class="rv3__timeline">
+                {internalStages.map((s) => (
+                  <li class="rv3__step">
+                    <span class="rv3__step-dot" aria-hidden="true"></span>
+                    <div>
+                      <div class="rv3__step-head">
+                        <span class="rv3__step-name">{s.name}</span>
+                        {s.duration && <span class="rv3__step-time">{s.duration}</span>}
+                      </div>
+                      {s.detail && <p class="rv3__step-detail">{s.detail}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </article>
+          )}
+          {clientStages.length > 0 && (
+            <article class="rv3__tile rv3__tile--process">
+              <span class="rv3__tile-label rv3__tile-label--client">Client stage</span>
+              <ol class="rv3__timeline">
+                {clientStages.map((s) => (
+                  <li class="rv3__step rv3__step--client">
+                    <span class="rv3__step-dot" aria-hidden="true"></span>
+                    <div>
+                      <div class="rv3__step-head">
+                        <span class="rv3__step-name">{s.name}</span>
+                        {s.duration && <span class="rv3__step-time">{s.duration}</span>}
+                      </div>
+                      {s.detail && <p class="rv3__step-detail">{s.detail}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </article>
+          )}
+        </div>
+      </>
+    )}
+
+    <!-- ── Final CTA ────────────────────────────────────────────────── -->
+    <section class="rv3__cta" id="apply">
+      <h2 class="rv3__cta-title">Think this is you?</h2>
+      <p class="rv3__cta-sub">Apply once. We match you with the roles where you fit best.</p>
+      <a href={applyHref} class="rv3__apply rv3__apply--lg">
+        Apply for this role
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <p class="rv3__cta-note">Company details are shared after your intro call.</p>
+    </section>
+  </main>
+</div>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  $indigo: #4F46E5;
+  $cyan: #0891B2;
+  $emerald: #059669;
+  $ink: #111827;
+  $muted: #6B7280;
+  $subtle: #9CA3AF;
+  $border: rgba(229, 231, 235, 0.9);
+  $grad: linear-gradient(135deg, #{$indigo} 0%, #{$cyan} 100%);
+
+  .rv3 {
+    position: relative;
+    font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+    color: $ink;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  // ── Aurora canvas ────────────────────────────────────────────────
+  .rv3__canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .rv3__blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(130px);
+  }
+
+  .rv3__blob--1 {
+    width: 640px;
+    height: 640px;
+    top: -180px;
+    right: -160px;
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.18) 0%, transparent 70%);
+  }
+
+  .rv3__blob--2 {
+    width: 560px;
+    height: 560px;
+    bottom: 5%;
+    left: -180px;
+    background: radial-gradient(circle, rgba(8, 145, 178, 0.15) 0%, transparent 70%);
+  }
+
+  // ── Top bar ──────────────────────────────────────────────────────
+  .rv3__bar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px clamp(1.25rem, 4vw, 2.5rem);
+    background: rgba(246, 248, 255, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+  }
+
+  .rv3__brand {
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    color: $ink;
+    text-decoration: none;
+  }
+
+  .rv3__bar-nav { display: flex; align-items: center; gap: 1.25rem; }
+
+  .rv3__bar-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: $muted;
+    text-decoration: none;
+    transition: color 0.15s ease;
+    &:hover { color: $indigo; }
+    @include max-sm { display: none; }
+  }
+
+  .rv3__bar-cta {
+    display: inline-flex;
+    align-items: center;
+    background: $grad;
+    color: #fff;
+    border-radius: 999px;
+    padding: 9px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+    transition: transform 0.15s ease;
+    &:hover { transform: translateY(-1px); }
+  }
+
+  // ── Main ─────────────────────────────────────────────────────────
+  .rv3__main {
+    position: relative;
+    z-index: 1;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  // ── Header ───────────────────────────────────────────────────────
+  .rv3__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .rv3__company {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: $subtle;
+  }
+
+  .rv3__title {
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin: 0.5rem 0 1rem;
+    background: linear-gradient(135deg, #{$indigo} 0%, #{$cyan} 50%, #{$emerald} 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .rv3__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .rv3__chip {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(79, 70, 229, 0.14);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    &--accent { color: $indigo; font-weight: 600; border-color: rgba(79, 70, 229, 0.3); }
+  }
+
+  .rv3__apply {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: $grad;
+    color: #fff;
+    border-radius: 999px;
+    padding: 13px 26px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    svg { transition: transform 0.2s ease; }
+    &:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79, 70, 229, 0.45); opacity: 0.96; }
+    &:hover svg { transform: translateX(3px); }
+    &--lg { padding: 15px 30px; }
+  }
+
+  // ── Section labels ───────────────────────────────────────────────
+  .rv3__section-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: $grad;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 2.5rem 0 1.1rem;
+
+    &--role {
+      background: linear-gradient(135deg, #{$cyan} 0%, #{$emerald} 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  // ── Bento grid ───────────────────────────────────────────────────
+  .rv3__bento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    grid-auto-flow: dense;
+
+    @include max-md { grid-template-columns: repeat(2, 1fr); }
+    @include max-sm { grid-template-columns: 1fr; }
+  }
+
+  .rv3__tile {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1.5px solid $border;
+    border-radius: 18px;
+    padding: 22px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 28px rgba(79, 70, 229, 0.05);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(79, 70, 229, 0.1);
+      border-color: rgba(79, 70, 229, 0.22);
+    }
+
+    &--story {
+      grid-column: span 2;
+      grid-row: span 2;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      @include max-sm { grid-column: span 1; }
+    }
+
+    &--fact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    &--awards { grid-column: span 2; @include max-sm { grid-column: span 1; } }
+
+    &--req {
+      grid-column: span 2;
+      @include max-md { grid-column: span 1; }
+      @include max-sm { grid-column: span 1; }
+    }
+
+    &--process {
+      grid-column: span 2;
+      @include max-sm { grid-column: span 1; }
+    }
+  }
+
+  .rv3__bento--role .rv3__tile--story,
+  .rv3__bento--role .rv3__tile--role { grid-row: span 1; }
+
+  // Story tile spans full height on role grid
+  .rv3__tile--role { grid-column: span 4; @include max-md { grid-column: span 2; } @include max-sm { grid-column: span 1; } }
+
+  .rv3__lede {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #374151;
+    margin: 0;
+  }
+
+  // ── Strengths ────────────────────────────────────────────────────
+  .rv3__strengths { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; }
+
+  .rv3__strength {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(5, 150, 105, 0.07);
+    border: 1px solid rgba(5, 150, 105, 0.18);
+    color: #047857;
+    border-radius: 999px;
+    padding: 5px 11px;
+    font-size: 12px;
+    font-weight: 500;
+    svg { color: $emerald; }
+  }
+
+  // ── YC tile ──────────────────────────────────────────────────────
+  .rv3__tile--yc {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8A3D 100%);
+    border-color: transparent;
+    color: #fff;
+    &:hover { border-color: transparent; box-shadow: 0 14px 40px rgba(255, 107, 0, 0.28); }
+  }
+
+  .rv3__yc-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+    background: #fff;
+    color: #FF6B00;
+    font-weight: 800;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  .rv3__yc-top { display: block; font-size: 11px; font-weight: 600; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.06em; }
+  .rv3__yc-name { display: block; font-size: 1.05rem; font-weight: 800; line-height: 1.2; }
+  .rv3__yc-batch { display: block; font-size: 12.5px; font-weight: 600; opacity: 0.9; }
+
+  // ── Fact tiles ───────────────────────────────────────────────────
+  .rv3__fact-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: $ink;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .rv3__fact-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: $subtle;
+  }
+
+  // ── Awards tile ──────────────────────────────────────────────────
+  .rv3__tile-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $indigo;
+    margin-bottom: 0.9rem;
+    &--must { color: $indigo; }
+    &--nice { color: $subtle; }
+    &--client { color: $emerald; }
+  }
+
+  .rv3__awards { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .rv3__award {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #374151;
+    svg { color: #F59E0B; flex-shrink: 0; }
+  }
+
+  // ── Skills ───────────────────────────────────────────────────────
+  .rv3__skills { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  .rv3__skill {
+    background: rgba(79, 70, 229, 0.08);
+    color: $indigo;
+    border: 1px solid rgba(79, 70, 229, 0.16);
+    border-radius: 7px;
+    padding: 5px 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  .rv3__english {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    background: rgba(79, 70, 229, 0.06);
+    border: 1px solid rgba(79, 70, 229, 0.16);
+    border-radius: 11px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    color: #374151;
+    svg { color: $indigo; flex-shrink: 0; }
+    strong { color: $indigo; font-weight: 700; }
+  }
+
+  // ── Requirements ─────────────────────────────────────────────────
+  .rv3__req-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .rv3__req {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    svg { flex-shrink: 0; margin-top: 2px; }
+    &--must { color: #1F2937; font-weight: 500; svg { color: $indigo; } }
+    &--nice { color: $muted; svg { color: $subtle; } }
+  }
+
+  // ── Timeline ─────────────────────────────────────────────────────
+  .rv3__timeline { list-style: none; margin: 0; padding: 0; }
+
+  .rv3__step {
+    position: relative;
+    padding-left: 26px;
+    padding-bottom: 1.25rem;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 15px;
+      bottom: -2px;
+      width: 2px;
+      background: rgba(79, 70, 229, 0.14);
+    }
+    &:last-child { padding-bottom: 0; }
+    &:last-child::before { display: none; }
+    &--client::before { background: rgba(5, 150, 105, 0.18); }
+  }
+
+  .rv3__step-dot {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid $indigo;
+    .rv3__step--client & { border-color: $emerald; }
+  }
+
+  .rv3__step-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 9px; }
+  .rv3__step-name { font-size: 0.95rem; font-weight: 700; color: $ink; }
+
+  .rv3__step-time {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: $muted;
+    background: rgba(17, 24, 39, 0.05);
+    border-radius: 999px;
+    padding: 2px 9px;
+  }
+
+  .rv3__step-detail { margin: 4px 0 0; font-size: 0.85rem; line-height: 1.5; color: $muted; }
+
+  // ── Final CTA ────────────────────────────────────────────────────
+  .rv3__cta {
+    text-align: center;
+    padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
+    margin-top: 2.5rem;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(8, 145, 178, 0.08) 100%);
+    border: 1.5px solid rgba(79, 70, 229, 0.16);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .rv3__cta-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+  .rv3__cta-sub { font-size: 1rem; color: $muted; margin: 0 0 0.75rem; max-width: 420px; }
+  .rv3__cta-note { font-size: 12.5px; color: $subtle; margin: 0.5rem 0 0; }
+</style>

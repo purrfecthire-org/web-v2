@@ -1,0 +1,288 @@
+---
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['roles'];
+}
+
+const { content } = Astro.props;
+---
+
+<section class="v1-roles" id="roles">
+  <div class="v1-roles__container">
+
+    <div class="v1-roles__header">
+      <span class="v1-roles__eyebrow">{content.eyebrow}</span>
+      <h2 class="v1-roles__headline">{content.headline}</h2>
+      <p class="v1-roles__subheadline">{content.subheadline}</p>
+      <p class="v1-roles__context">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M7 5v2.5l1.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        {content.contextLine}
+      </p>
+    </div>
+
+    <div class="v1-roles__grid">
+      {content.cards.map((card) => (
+        <div class="v1-roles__card">
+          <div class="v1-roles__card-header">
+            <span class="v1-roles__card-tag">{card.tag}</span>
+            <div class="v1-roles__card-status">
+              <span class="v1-roles__status-dot" aria-hidden="true"></span>
+              Active
+            </div>
+          </div>
+
+          <h3 class="v1-roles__card-title">{card.title}</h3>
+
+          <div class="v1-roles__card-meta">
+            <div class="v1-roles__meta-row">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="v1-roles__meta-icon">
+                <path d="M7 1.5C4.51 1.5 2.5 3.51 2.5 6c0 3.75 4.5 6.5 4.5 6.5S11.5 9.75 11.5 6c0-2.49-2.01-4.5-4.5-4.5Zm0 6.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z" fill="currentColor"/>
+              </svg>
+              {card.stage}
+            </div>
+            <div class="v1-roles__meta-row">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="v1-roles__meta-icon">
+                <path d="M7 1C3.69 1 1 3.69 1 7s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6Zm.5 9H6.5V6.5h1V10Zm0-4.5H6.5v-1h1v1Z" fill="currentColor"/>
+              </svg>
+              {card.comp}
+            </div>
+          </div>
+
+          <div class="v1-roles__stack">
+            {card.stack.map((tech) => (
+              <span class="v1-roles__pill">{tech}</span>
+            ))}
+          </div>
+
+          <a href="#cta" class="v1-roles__cta">{card.cta}</a>
+        </div>
+      ))}
+    </div>
+
+    <div class="v1-roles__closing">
+      <p class="v1-roles__closing-text">{content.closingText}</p>
+      <a href={`mailto:${content.closingEmail}`} class="v1-roles__closing-email">
+        {content.closingEmail}
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .v1-roles {
+    background: #09090b;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-block: 6rem;
+
+    @include max-md {
+      padding-block: 4rem;
+    }
+
+    &__container {
+      max-width: 80rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+
+      @include max-lg {
+        padding-inline: 1.25rem;
+      }
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.875rem;
+      text-align: center;
+    }
+
+    &__eyebrow {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #7c3aed;
+    }
+
+    &__headline {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      color: #fafafa;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    &__subheadline {
+      color: #a1a1aa;
+      font-size: 1.0625rem;
+      margin: 0;
+    }
+
+    &__context {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8125rem;
+      color: #52525b;
+      margin: 0;
+    }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+
+      @include max-lg {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin-inline: auto;
+        width: 100%;
+      }
+    }
+
+    &__card {
+      background: #18181b;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+
+      &:hover {
+        border-color: rgba(124, 58, 237, 0.25);
+        transform: translateY(-2px);
+      }
+    }
+
+    &__card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    &__card-tag {
+      font-size: 0.75rem;
+      color: #a1a1aa;
+      letter-spacing: 0.01em;
+    }
+
+    &__card-status {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      color: #52525b;
+      letter-spacing: 0.04em;
+    }
+
+    &__status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+    }
+
+    &__card-title {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #fafafa;
+      margin: 0;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+    }
+
+    &__card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    &__meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: #a1a1aa;
+    }
+
+    &__meta-icon {
+      color: #52525b;
+      flex-shrink: 0;
+    }
+
+    &__stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    &__pill {
+      background: rgba(124, 58, 237, 0.1);
+      color: #a78bfa;
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    &__cta {
+      display: inline-flex;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #7c3aed;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: color 0.15s ease;
+      margin-top: auto;
+
+      &:hover {
+        color: #a78bfa;
+      }
+    }
+
+    &__closing {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+      padding-top: 1rem;
+    }
+
+    &__closing-text {
+      margin: 0;
+      color: #a1a1aa;
+      font-size: 1rem;
+    }
+
+    &__closing-email {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #7c3aed;
+      text-decoration: none;
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: #a78bfa;
+        text-decoration: underline;
+      }
+    }
+  }
+</style>

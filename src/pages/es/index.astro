@@ -2,34 +2,38 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import HeroSection from '../../components/HeroSection.astro';
-import AudienceSplit from '../../components/AudienceSplit.astro';
-import EngineSection from '../../components/EngineSection.astro';
-import Footer from '../../components/Footer.astro';
 import CompanyCarousel from '../../components/CompanyCarousel.astro';
+import Why2026Section from '../../components/Why2026Section.astro';
+import AudienceSplit from '../../components/AudienceSplit.astro';
+import OfferAccelerationSection from '../../components/OfferAccelerationSection.astro';
+import EngineSection from '../../components/EngineSection.astro';
 import CultureSection from '../../components/CultureSection.astro';
 import TestimonialsSection from '../../components/TestimonialsSection.astro';
-import CTASection from '../../components/CTASection.astro';
-import { getContent, type Lang } from '../../content/index';
 import RolesSection from '../../components/RolesSection.astro';
+import CTASection from '../../components/CTASection.astro';
+import Footer from '../../components/Footer.astro';
+import { getContent, type Lang } from '../../content/index';
 
 const lang = (Astro.currentLocale ?? 'es') as Lang;
 const c = getContent(lang);
 ---
 
 <Layout
-  title="Purrfect Hire — El motor de contratación de ciclo cerrado para startups"
-  description="Extraemos señales reales de contratación, entrenamos talento contra esas señales y colocamos ingenieros que ya conocen tu stack."
+  title={c.meta.title}
+  description={c.meta.description}
   lang={lang}
 >
   <Nav content={c.nav} lang={lang} />
   <main>
     <HeroSection content={c.hero} />
-    <CompanyCarousel label="De confianza para los mejores equipos de ingeniería" />
+    <CompanyCarousel />
+    <Why2026Section content={c.why2026} />
     <AudienceSplit content={c.audienceSplit} />
+    <OfferAccelerationSection content={c.offerAcceleration} />
     <EngineSection content={c.engine} />
     <CultureSection content={c.culture} />
-    <RolesSection>
-    <TestimonialsSection content={c.testimonials} clientLabel="Cliente" candidateLabel="Candidato" />
+    <TestimonialsSection content={c.testimonials} />
+    <RolesSection content={c.roles} />
     <CTASection content={c.cta} />
   </main>
   <Footer content={c.footer} />
