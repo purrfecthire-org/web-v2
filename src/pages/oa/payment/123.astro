@@ -1,0 +1,800 @@
+---
+// ── Offer Acceleration — payment page (MVP, fake checkout) ───────────────
+// "Personalized" payment link sent after the sales call. Everything here
+// is simulated for testing: in production the /oa/payment/:id route gets
+// real IDs, real customer data and a real payment provider.
+import Layout from '../../../layouts/Layout.astro';
+import { oaContent as c } from '../../../content/offerAcceleration';
+
+const p = c.payment;
+---
+
+<Layout title="Reserva tu cupo — Offer Acceleration" description={c.meta.description} lang="es" noindex>
+  <main class="pay">
+    <div class="pay-glow" aria-hidden="true"></div>
+
+    <header class="pay-header">
+      <img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="pay-header__logo" />
+      <span class="pay-header__secure">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.8" />
+          <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.8" />
+        </svg>
+        Pago seguro
+      </span>
+    </header>
+
+    <div class="pay-wrap" id="pay-wrap">
+
+      <!-- ── Left: checkout ─────────────────────────────────────────── -->
+      <section class="pay-main">
+        <p class="label-uppercase pay-eyebrow">{p.eyebrow}</p>
+        <h1 class="pay-title">{p.title}, <span class="pay-title__name">{p.customer.name.split(' ')[0]}</span></h1>
+
+        <div class="pay-customer">
+          <div class="pay-customer__row">
+            <span>Nombre</span>
+            <strong>{p.customer.name}</strong>
+          </div>
+          <div class="pay-customer__row">
+            <span>Email</span>
+            <strong>{p.customer.email}</strong>
+          </div>
+          <p class="pay-customer__note">{p.emailNote}</p>
+        </div>
+
+        <!-- Payment methods -->
+        <h2 class="pay-subtitle">{p.methods.title}</h2>
+        <div class="pay-methods" role="radiogroup" aria-label={p.methods.title}>
+          <label class="pay-method is-selected" data-method="stripe">
+            <input type="radio" name="method" value="stripe" checked />
+            <span class="pay-method__name">Tarjeta</span>
+            <span class="pay-method__via">vía Stripe</span>
+          </label>
+          <label class="pay-method" data-method="paypal">
+            <input type="radio" name="method" value="paypal" />
+            <span class="pay-method__name">PayPal</span>
+            <span class="pay-method__via">cuenta PayPal</span>
+          </label>
+          <label class="pay-method" data-method="payoneer">
+            <input type="radio" name="method" value="payoneer" />
+            <span class="pay-method__name">Payoneer</span>
+            <span class="pay-method__via">cuenta Payoneer</span>
+          </label>
+        </div>
+
+        <!-- Stripe card form -->
+        <div class="pay-panel is-active" data-panel="stripe">
+          <div class="pay-field">
+            <label for="pay-card">{p.methods.stripe.cardNumber}</label>
+            <div class="pay-card-input">
+              <input type="text" id="pay-card" placeholder="1234 5678 9012 3456" inputmode="numeric" maxlength="19" autocomplete="cc-number" />
+              <svg width="26" height="18" viewBox="0 0 26 18" fill="none" aria-hidden="true">
+                <rect x="0.5" y="0.5" width="25" height="17" rx="2.5" stroke="#A3A3A3" />
+                <rect x="3" y="4" width="6" height="4" rx="1" fill="#A3A3A3" />
+              </svg>
+            </div>
+            <span class="pay-error"></span>
+          </div>
+          <div class="pay-row">
+            <div class="pay-field">
+              <label for="pay-exp">{p.methods.stripe.expiry}</label>
+              <input type="text" id="pay-exp" placeholder="MM/AA" inputmode="numeric" maxlength="5" autocomplete="cc-exp" />
+              <span class="pay-error"></span>
+            </div>
+            <div class="pay-field">
+              <label for="pay-cvc">{p.methods.stripe.cvc}</label>
+              <input type="text" id="pay-cvc" placeholder="123" inputmode="numeric" maxlength="4" autocomplete="cc-csc" />
+              <span class="pay-error"></span>
+            </div>
+          </div>
+          <div class="pay-field">
+            <label for="pay-name">{p.methods.stripe.cardName}</label>
+            <input type="text" id="pay-name" placeholder={p.methods.stripe.cardNamePlaceholder} autocomplete="cc-name" />
+            <span class="pay-error"></span>
+          </div>
+        </div>
+
+        <!-- PayPal panel -->
+        <div class="pay-panel" data-panel="paypal">
+          <p class="pay-panel__note">{p.methods.paypal.note}</p>
+          <div class="pay-field">
+            <label for="pay-paypal-email">{p.methods.paypal.emailLabel}</label>
+            <input type="email" id="pay-paypal-email" placeholder="tu@email.com" />
+            <span class="pay-error"></span>
+          </div>
+        </div>
+
+        <!-- Payoneer panel -->
+        <div class="pay-panel" data-panel="payoneer">
+          <p class="pay-panel__note">{p.methods.payoneer.note}</p>
+          <div class="pay-field">
+            <label for="pay-payoneer-email">{p.methods.payoneer.emailLabel}</label>
+            <input type="email" id="pay-payoneer-email" placeholder="tu@email.com" />
+            <span class="pay-error"></span>
+          </div>
+        </div>
+
+        <!-- Checks -->
+        <div class="pay-checks">
+          <label class="pay-check">
+            <input type="checkbox" id="pay-terms" />
+            <span>{p.checks.terms}</span>
+          </label>
+          <label class="pay-check">
+            <input type="checkbox" id="pay-sessions" />
+            <span>{p.checks.sessions}</span>
+          </label>
+        </div>
+
+        <button class="pay-confirm" id="pay-confirm" disabled>
+          {p.confirm} · {p.summary.total}
+        </button>
+        <p class="pay-onetime">{p.summary.note}</p>
+      </section>
+
+      <!-- ── Right: order summary ───────────────────────────────────── -->
+      <aside class="pay-summary">
+        <p class="pay-summary__title">{p.summary.title}</p>
+        {p.summary.items.map((item) => (
+          <div class="pay-summary__row">
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+          </div>
+        ))}
+        <div class="pay-summary__total">
+          <span>{p.summary.totalLabel}</span>
+          <strong>{p.summary.total}</strong>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ── Processing overlay ───────────────────────────────────────── -->
+    <div class="pay-processing" id="pay-processing" aria-hidden="true">
+      <div class="pay-processing__spinner" aria-hidden="true"></div>
+      <p>{p.processing}</p>
+    </div>
+
+    <!-- ── Success ──────────────────────────────────────────────────── -->
+    <div class="pay-success" id="pay-success" aria-hidden="true">
+      <div class="pay-success__card">
+        <div class="pay-success__badge" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12.5 10 17.5 19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <h2>{p.success.title}</h2>
+        <p>{p.success.body}</p>
+        <p class="pay-success__detail">{p.success.detail} <strong>{p.customer.email}</strong></p>
+      </div>
+    </div>
+
+    <canvas class="pay-confetti" id="pay-confetti" aria-hidden="true"></canvas>
+  </main>
+</Layout>
+
+<script>
+  // ── Method switching ────────────────────────────────────────────────
+  const methods = [...document.querySelectorAll('.pay-method')] as HTMLElement[];
+  const panels = [...document.querySelectorAll('.pay-panel')] as HTMLElement[];
+  let active = 'stripe';
+
+  methods.forEach((m) => {
+    m.addEventListener('click', () => {
+      active = m.dataset.method!;
+      methods.forEach((x) => x.classList.toggle('is-selected', x === m));
+      panels.forEach((pn) => pn.classList.toggle('is-active', pn.dataset.panel === active));
+      refresh();
+    });
+  });
+
+  // ── Input formatting (fake Stripe behavior) ─────────────────────────
+  const cardEl = document.getElementById('pay-card') as HTMLInputElement;
+  const expEl = document.getElementById('pay-exp') as HTMLInputElement;
+  const cvcEl = document.getElementById('pay-cvc') as HTMLInputElement;
+  const nameEl = document.getElementById('pay-name') as HTMLInputElement;
+  const paypalEl = document.getElementById('pay-paypal-email') as HTMLInputElement;
+  const payoneerEl = document.getElementById('pay-payoneer-email') as HTMLInputElement;
+  const termsEl = document.getElementById('pay-terms') as HTMLInputElement;
+  const sessionsEl = document.getElementById('pay-sessions') as HTMLInputElement;
+  const confirmBtn = document.getElementById('pay-confirm') as HTMLButtonElement;
+
+  cardEl.addEventListener('input', () => {
+    const digits = cardEl.value.replace(/\D/g, '').slice(0, 16);
+    cardEl.value = digits.replace(/(.{4})/g, '$1 ').trim();
+    refresh();
+  });
+
+  expEl.addEventListener('input', () => {
+    let d = expEl.value.replace(/\D/g, '').slice(0, 4);
+    if (d.length >= 3) d = d.slice(0, 2) + '/' + d.slice(2);
+    expEl.value = d;
+    refresh();
+  });
+
+  cvcEl.addEventListener('input', () => {
+    cvcEl.value = cvcEl.value.replace(/\D/g, '').slice(0, 4);
+    refresh();
+  });
+
+  [nameEl, paypalEl, payoneerEl, termsEl, sessionsEl].forEach((el) =>
+    el.addEventListener('input', refresh)
+  );
+
+  function methodValid(): boolean {
+    if (active === 'stripe') {
+      const cardOk = cardEl.value.replace(/\s/g, '').length === 16;
+      const exp = expEl.value;
+      const expOk = /^(0[1-9]|1[0-2])\/\d{2}$/.test(exp);
+      const cvcOk = cvcEl.value.length >= 3;
+      const nameOk = nameEl.value.trim().length >= 3;
+      return cardOk && expOk && cvcOk && nameOk;
+    }
+    const email = active === 'paypal' ? paypalEl.value : payoneerEl.value;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  }
+
+  function refresh() {
+    confirmBtn.disabled = !(methodValid() && termsEl.checked && sessionsEl.checked);
+  }
+
+  // ── Confirm → processing (3s) → confetti + success ──────────────────
+  const PROCESS_MS = 3000;
+  const processing = document.getElementById('pay-processing')!;
+  const success = document.getElementById('pay-success')!;
+
+  confirmBtn.addEventListener('click', () => {
+    processing.classList.add('is-on');
+    processing.setAttribute('aria-hidden', 'false');
+
+    setTimeout(() => {
+      processing.classList.remove('is-on');
+      success.classList.add('is-on');
+      success.setAttribute('aria-hidden', 'false');
+      launchConfetti();
+    }, PROCESS_MS);
+  });
+
+  // ── Confetti (no deps) ──────────────────────────────────────────────
+  function launchConfetti() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const canvas = document.getElementById('pay-confetti') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d')!;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvas.style.display = 'block';
+
+    const COLORS = ['#3C2BDC', '#6354E8', '#0D0857', '#FFD166', '#FF6EC7', '#41D1FF', '#FAF9F7'];
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+
+    type P = {
+      x: number; y: number; vx: number; vy: number;
+      w: number; h: number; rot: number; vr: number;
+      color: string; life: number;
+    };
+
+    const parts: P[] = [];
+    // Two launch bursts from the bottom corners + center
+    const origins = [0.12, 0.5, 0.88];
+    origins.forEach((ox) => {
+      for (let i = 0; i < 70; i++) {
+        const angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.1;
+        const speed = 11 + Math.random() * 13;
+        parts.push({
+          x: W * ox,
+          y: H + 10,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          w: 6 + Math.random() * 7,
+          h: 8 + Math.random() * 10,
+          rot: Math.random() * Math.PI,
+          vr: (Math.random() - 0.5) * 0.3,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          life: 1,
+        });
+      }
+    });
+
+    const GRAVITY = 0.22;
+    const DRAG = 0.992;
+    let frames = 0;
+
+    function tick() {
+      frames++;
+      ctx.clearRect(0, 0, W, H);
+      let alive = 0;
+
+      for (const pt of parts) {
+        pt.vy += GRAVITY;
+        pt.vx *= DRAG;
+        pt.vy *= DRAG;
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.rot += pt.vr;
+        if (frames > 140) pt.life -= 0.02;
+        if (pt.life <= 0 || pt.y > H + 40) continue;
+        alive++;
+
+        ctx.save();
+        ctx.translate(pt.x, pt.y);
+        ctx.rotate(pt.rot);
+        ctx.globalAlpha = Math.max(0, pt.life);
+        ctx.fillStyle = pt.color;
+        ctx.fillRect(-pt.w / 2, -pt.h / 2, pt.w, pt.h * (0.6 + 0.4 * Math.sin(frames / 6 + pt.rot)));
+        ctx.restore();
+      }
+
+      if (alive > 0) {
+        requestAnimationFrame(tick);
+      } else {
+        ctx.clearRect(0, 0, W, H);
+        canvas.style.display = 'none';
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+</script>
+
+<style lang="scss">
+  $ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  .pay {
+    position: relative;
+    min-height: 100svh;
+    background: var(--color-bg);
+    overflow-x: hidden;
+    padding-bottom: 5rem;
+  }
+
+  .pay-glow {
+    position: absolute;
+    width: 55vw;
+    height: 55vw;
+    top: -30vw;
+    left: -15vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(60, 43, 220, 0.1) 0%, rgba(60, 43, 220, 0) 65%);
+    pointer-events: none;
+  }
+
+  .pay-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+
+    &__logo { width: 10rem; }
+
+    &__secure {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-muted);
+    }
+  }
+
+  .pay-wrap {
+    position: relative;
+    max-width: 66rem;
+    margin: 2rem auto 0;
+    padding: 0 2.5rem;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    animation: pay-in 0.8s $ease-expo both;
+  }
+
+  // ── Main column ───────────────────────────────────────────
+  .pay-main {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 2.75rem 3rem;
+    box-shadow: 0 24px 70px rgba(15, 15, 15, 0.06);
+  }
+
+  .pay-eyebrow { color: var(--color-accent); }
+
+  .pay-title {
+    font-size: 1.875rem;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    line-height: 1.15;
+    margin: 0.625rem 0 1.5rem;
+
+    &__name { color: var(--color-accent); }
+  }
+
+  .pay-customer {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.25rem;
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.5rem 0;
+
+      span { font-size: 0.8125rem; color: var(--color-tertiary); }
+      strong { font-size: 0.9375rem; font-weight: 500; }
+    }
+
+    &__note {
+      margin: 0.5rem 0 0;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.8125rem;
+      color: var(--color-muted);
+    }
+  }
+
+  .pay-subtitle {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    margin: 0 0 1rem;
+  }
+
+  // ── Methods ───────────────────────────────────────────────
+  .pay-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pay-method {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1rem 1.125rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+
+    input { position: absolute; opacity: 0; pointer-events: none; }
+
+    &:hover { border-color: var(--color-tertiary); }
+
+    &.is-selected {
+      border-color: var(--color-accent);
+      background: rgba(60, 43, 220, 0.04);
+    }
+
+    &__name { font-size: 0.9375rem; font-weight: 500; }
+    &__via { font-size: 0.75rem; color: var(--color-tertiary); }
+  }
+
+  // ── Panels ────────────────────────────────────────────────
+  .pay-panel {
+    display: none;
+
+    &.is-active {
+      display: flex;
+      flex-direction: column;
+      gap: 1.125rem;
+      animation: pay-step 0.4s $ease-expo both;
+    }
+
+    &__note {
+      font-size: 0.875rem;
+      color: var(--color-muted);
+      background: var(--color-accent-light);
+      border-radius: 10px;
+      padding: 0.875rem 1.125rem;
+      margin: 0;
+    }
+  }
+
+  .pay-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.125rem;
+  }
+
+  .pay-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+
+    label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    input {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      width: 100%;
+      font-variant-numeric: tabular-nums;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      &::placeholder { color: var(--color-tertiary); }
+
+      &:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(60, 43, 220, 0.12);
+      }
+    }
+  }
+
+  .pay-card-input {
+    position: relative;
+
+    input { padding-right: 3.25rem; }
+
+    svg {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+  }
+
+  .pay-error {
+    font-size: 0.8125rem;
+    color: #d14343;
+    min-height: 0;
+  }
+
+  // ── Checks + confirm ──────────────────────────────────────
+  .pay-checks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin: 2rem 0 1.75rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pay-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+
+    input {
+      flex-shrink: 0;
+      width: 1.125rem;
+      height: 1.125rem;
+      margin-top: 0.125rem;
+      accent-color: var(--color-accent);
+      cursor: pointer;
+    }
+  }
+
+  .pay-confirm {
+    width: 100%;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #fff;
+    background: var(--color-accent);
+    border: none;
+    border-radius: 999px;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: #5847e8;
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      background: var(--color-tertiary);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  .pay-onetime {
+    margin: 1rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-tertiary);
+    text-align: center;
+  }
+
+  // ── Summary ───────────────────────────────────────────────
+  .pay-summary {
+    position: sticky;
+    top: 2rem;
+    background: var(--color-navy);
+    border-radius: 16px;
+    padding: 2.25rem 2.25rem 2rem;
+    color: #fff;
+
+    &__title {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+      margin: 0 0 1.25rem;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+      span { font-size: 0.8125rem; color: rgba(255, 255, 255, 0.55); }
+      strong { font-size: 0.875rem; font-weight: 500; text-align: right; }
+    }
+
+    &__total {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-top: 1.5rem;
+
+      span { font-size: 0.875rem; color: rgba(255, 255, 255, 0.7); }
+
+      strong {
+        font-size: 1.75rem;
+        font-weight: 500;
+        letter-spacing: -0.3px;
+        font-variant-numeric: tabular-nums;
+      }
+    }
+  }
+
+  // ── Processing overlay ────────────────────────────────────
+  .pay-processing {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background: rgba(250, 249, 247, 0.96);
+    backdrop-filter: blur(8px);
+
+    &.is-on {
+      display: flex;
+      animation: pay-fade 0.35s ease both;
+    }
+
+    p {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    &__spinner {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      animation: pay-spin 0.9s linear infinite;
+    }
+  }
+
+  // ── Success ───────────────────────────────────────────────
+  .pay-success {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(13, 8, 87, 0.5);
+    backdrop-filter: blur(6px);
+
+    &.is-on {
+      display: flex;
+      animation: pay-fade 0.4s ease both;
+    }
+
+    &__card {
+      max-width: 30rem;
+      background: var(--color-surface);
+      border-radius: 20px;
+      padding: 3.25rem 3rem;
+      text-align: center;
+      box-shadow: 0 40px 120px rgba(13, 8, 87, 0.35);
+      animation: pay-celebrate 0.7s $ease-expo 0.1s both;
+
+      h2 {
+        font-size: 1.75rem;
+        font-weight: 500;
+        letter-spacing: -0.3px;
+        margin: 0 0 0.875rem;
+      }
+
+      p {
+        font-size: 0.9375rem;
+        line-height: 1.65;
+        color: var(--color-muted);
+        margin: 0 0 0.75rem;
+      }
+    }
+
+    &__badge {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--color-accent), #6354e8);
+      box-shadow: 0 12px 32px rgba(60, 43, 220, 0.35);
+    }
+
+    &__detail {
+      font-size: 0.8125rem !important;
+      color: var(--color-tertiary) !important;
+
+      strong { color: var(--color-text); font-weight: 500; }
+    }
+  }
+
+  .pay-confetti {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: none;
+  }
+
+  // ── Keyframes ─────────────────────────────────────────────
+  @keyframes pay-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pay-step {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pay-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pay-spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes pay-celebrate {
+    from { opacity: 0; transform: scale(0.92) translateY(16px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pay-wrap,
+    .pay-panel.is-active,
+    .pay-success__card { animation: none; }
+  }
+</style>

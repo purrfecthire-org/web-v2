@@ -1,0 +1,728 @@
+---
+// ── Offer Acceleration — application form (MVP) ──────────────────────────
+// Multi-step application: contact info → situación → perfil → salario →
+// visión. On submit, a fake 2s "AI analysis" runs and branches on current
+// salary: < $3,000 USD → LinkedIn follow (Kate), ≥ $3,000 → Calendly card.
+// No backend yet — everything is client-side for the MVP.
+import Layout from '../../layouts/Layout.astro';
+import { oaContent as c } from '../../content/offerAcceleration';
+
+const f = c.form;
+const TOTAL = f.steps.length;
+---
+
+<Layout title={`${f.title} — Purrfect Hire`} description={c.meta.description} lang="es" noindex>
+  <main class="apl">
+    <div class="apl-glow" aria-hidden="true"></div>
+
+    <header class="apl-header">
+      <a href="/offer-acceleration"><img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="apl-header__logo" /></a>
+    </header>
+
+    <!-- ── Form card ────────────────────────────────────────────────── -->
+    <section class="apl-card" id="apl-card">
+      <div class="apl-intro">
+        <p class="label-uppercase">{c.hero.eyebrow}</p>
+        <h1 class="apl-title">{f.title}</h1>
+        <p class="apl-subtitle">{f.subtitle}</p>
+      </div>
+
+      <!-- Progress -->
+      <div class="apl-progress" aria-hidden="false">
+        <div class="apl-progress__meta">
+          <span class="apl-progress__step">
+            {f.stepLabel} <span id="apl-step-now">1</span> {f.of} {TOTAL}
+          </span>
+          <span class="apl-progress__name" id="apl-step-name">{f.steps[0].title}</span>
+        </div>
+        <div class="apl-progress__track">
+          <div class="apl-progress__fill" id="apl-progress-fill" style={`width: ${100 / TOTAL}%`}></div>
+        </div>
+      </div>
+
+      <form id="apl-form" novalidate>
+
+        <!-- Step 1 — Sobre ti -->
+        <fieldset class="apl-step is-active" data-step="0">
+          <p class="apl-step__desc">{f.steps[0].desc}</p>
+
+          <div class="apl-grid">
+            <div class="apl-field">
+              <label for="apl-name">{f.fields.name.label} *</label>
+              <input type="text" id="apl-name" name="name" placeholder={f.fields.name.placeholder} autocomplete="name" required />
+              <span class="apl-error"></span>
+            </div>
+            <div class="apl-field">
+              <label for="apl-email">{f.fields.email.label} *</label>
+              <input type="email" id="apl-email" name="email" placeholder={f.fields.email.placeholder} autocomplete="email" required />
+              <span class="apl-error"></span>
+            </div>
+            <div class="apl-field">
+              <label for="apl-phone">{f.fields.phone.label} *</label>
+              <input type="tel" id="apl-phone" name="phone" placeholder={f.fields.phone.placeholder} autocomplete="tel" required />
+              <span class="apl-error"></span>
+            </div>
+            <div class="apl-field">
+              <label for="apl-linkedin">{f.fields.linkedin.label} *</label>
+              <input type="text" id="apl-linkedin" name="linkedin" placeholder={f.fields.linkedin.placeholder} required />
+              <span class="apl-error"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Step 2 — Tu situación -->
+        <fieldset class="apl-step" data-step="1">
+          <p class="apl-step__desc">{f.steps[1].desc}</p>
+          <div class="apl-field">
+            <label for="apl-blockers">{f.fields.blockers.label} *</label>
+            <textarea id="apl-blockers" name="blockers" rows="6" placeholder={f.fields.blockers.placeholder} data-min="10" required></textarea>
+            <div class="apl-field__foot">
+              <span class="apl-error"></span>
+              <span class="apl-hint" data-count-for="apl-blockers">{f.minCharsHint}</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Step 3 — Tu perfil -->
+        <fieldset class="apl-step" data-step="2">
+          <p class="apl-step__desc">{f.steps[2].desc}</p>
+          <div class="apl-grid">
+            <div class="apl-field">
+              <label for="apl-role">{f.fields.role.label} *</label>
+              <input type="text" id="apl-role" name="role" placeholder={f.fields.role.placeholder} required />
+              <span class="apl-error"></span>
+            </div>
+            <div class="apl-field">
+              <label for="apl-english">{f.fields.english.label} *</label>
+              <select id="apl-english" name="english" required>
+                <option value="" disabled selected>{f.fields.english.placeholder}</option>
+                {f.fields.english.options.map((o) => <option value={o}>{o}</option>)}
+              </select>
+              <span class="apl-error"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Step 4 — Tu salario -->
+        <fieldset class="apl-step" data-step="3">
+          <p class="apl-step__desc">{f.steps[3].desc}</p>
+          <div class="apl-grid">
+            <div class="apl-field">
+              <label for="apl-salary-now">{f.fields.currentSalary.label} *</label>
+              <div class="apl-money">
+                <span>$</span>
+                <input type="number" id="apl-salary-now" name="currentSalary" min="0" step="50" placeholder={f.fields.currentSalary.placeholder} inputmode="numeric" required />
+                <span class="apl-money__unit">USD/mes</span>
+              </div>
+              <span class="apl-error"></span>
+            </div>
+            <div class="apl-field">
+              <label for="apl-salary-want">{f.fields.expectedSalary.label} *</label>
+              <div class="apl-money">
+                <span>$</span>
+                <input type="number" id="apl-salary-want" name="expectedSalary" min="0" step="50" placeholder={f.fields.expectedSalary.placeholder} inputmode="numeric" required />
+                <span class="apl-money__unit">USD/mes</span>
+              </div>
+              <span class="apl-error"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Step 5 — Tu visión -->
+        <fieldset class="apl-step" data-step="4">
+          <p class="apl-step__desc">{f.steps[4].desc}</p>
+          <div class="apl-field">
+            <label for="apl-vision">{f.fields.vision.label} *</label>
+            <textarea id="apl-vision" name="vision" rows="7" placeholder={f.fields.vision.placeholder} data-min="10" required></textarea>
+            <div class="apl-field__foot">
+              <span class="apl-error"></span>
+              <span class="apl-hint" data-count-for="apl-vision">{f.minCharsHint}</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Controls -->
+        <div class="apl-controls">
+          <button type="button" class="apl-back" id="apl-back" disabled>{f.back}</button>
+          <button type="button" class="btn apl-next" id="apl-next">{f.next}</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ── Analyzing overlay ────────────────────────────────────────── -->
+    <div class="apl-analyzing" id="apl-analyzing" aria-hidden="true">
+      <div class="apl-analyzing__orb" aria-hidden="true">
+        <div class="apl-analyzing__orb-core"></div>
+      </div>
+      <p class="apl-analyzing__title">{f.analyzing.title}</p>
+      <p class="apl-analyzing__msg" id="apl-analyzing-msg">{f.analyzing.messages[0]}</p>
+    </div>
+
+    <!-- ── Result: accepted (≥ $3,000) ──────────────────────────────── -->
+    <section class="apl-result" id="apl-accepted" hidden>
+      <p class="label-uppercase apl-result__eyebrow">{f.accepted.eyebrow}</p>
+      <h2 class="apl-result__title">{f.accepted.title}</h2>
+      <p class="apl-result__body">{f.accepted.body}</p>
+
+      <div class="apl-person-card">
+        <img src="https://i.pravatar.cc/160?img=12" alt="" class="apl-person-card__photo" loading="lazy" />
+        <div class="apl-person-card__info">
+          <strong>{f.accepted.calendlyName}</strong>
+          <span>{f.accepted.calendlyRole}</span>
+        </div>
+        <a href={c.contact.calendly} class="btn apl-person-card__cta" target="_blank" rel="noopener">
+          {f.accepted.calendlyCta}
+        </a>
+      </div>
+
+      <div class="apl-mvp">
+        <span>{f.accepted.mvpNote}</span>
+        <a href="/oa/payment/123">{f.accepted.mvpCta}</a>
+      </div>
+    </section>
+
+    <!-- ── Result: not a fit (< $3,000) ─────────────────────────────── -->
+    <section class="apl-result" id="apl-rejected" hidden>
+      <p class="label-uppercase apl-result__eyebrow">{f.rejected.eyebrow}</p>
+      <h2 class="apl-result__title">{f.rejected.title}</h2>
+      <p class="apl-result__body">{f.rejected.body}</p>
+
+      <div class="apl-person-card">
+        <div class="apl-person-card__avatar" aria-hidden="true">KF</div>
+        <div class="apl-person-card__info">
+          <strong>{f.rejected.linkedinName}</strong>
+          <span>{f.rejected.linkedinRole}</span>
+        </div>
+        <a href={c.contact.kateLinkedIn} class="btn apl-person-card__cta" target="_blank" rel="noopener">
+          {f.rejected.linkedinCta}
+        </a>
+      </div>
+    </section>
+
+  </main>
+</Layout>
+
+<script define:vars={{ stepTitles: f.steps.map((s) => s.title), analyzingMessages: [...f.analyzing.messages], errors: f.errors, submitLabel: f.submit, nextLabel: f.next }}>
+  const TOTAL = stepTitles.length;
+  const SALARY_THRESHOLD = 3000;
+  const ANALYZE_MS = 2000;
+
+  const card = document.getElementById('apl-card');
+  const steps = [...document.querySelectorAll('.apl-step')];
+  const backBtn = document.getElementById('apl-back');
+  const nextBtn = document.getElementById('apl-next');
+  const fill = document.getElementById('apl-progress-fill');
+  const stepNow = document.getElementById('apl-step-now');
+  const stepName = document.getElementById('apl-step-name');
+  const analyzing = document.getElementById('apl-analyzing');
+  const analyzingMsg = document.getElementById('apl-analyzing-msg');
+
+  let current = 0;
+
+  function setError(field, msg) {
+    const err = field.closest('.apl-field').querySelector('.apl-error');
+    err.textContent = msg || '';
+    field.classList.toggle('is-invalid', !!msg);
+  }
+
+  function validateField(el) {
+    const v = el.value.trim();
+    if (!v) return errors.required;
+    if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return errors.email;
+    if (el.type === 'number' && (isNaN(parseFloat(v)) || parseFloat(v) < 0)) return errors.number;
+    const min = parseInt(el.dataset.min || '0', 10);
+    if (min && v.length < min) return errors.minChars;
+    return '';
+  }
+
+  function validateStep(i) {
+    let ok = true;
+    let firstBad = null;
+    steps[i].querySelectorAll('input, textarea, select').forEach((el) => {
+      const msg = validateField(el);
+      setError(el, msg);
+      if (msg && !firstBad) firstBad = el;
+      if (msg) ok = false;
+    });
+    if (firstBad) firstBad.focus();
+    return ok;
+  }
+
+  function show(i) {
+    steps.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+    current = i;
+    stepNow.textContent = String(i + 1);
+    stepName.textContent = stepTitles[i];
+    fill.style.width = ((i + 1) / TOTAL) * 100 + '%';
+    backBtn.disabled = i === 0;
+    nextBtn.textContent = i === TOTAL - 1 ? submitLabel : nextLabel;
+    nextBtn.classList.toggle('apl-next--submit', i === TOTAL - 1);
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  backBtn.addEventListener('click', () => { if (current > 0) show(current - 1); });
+
+  nextBtn.addEventListener('click', () => {
+    if (!validateStep(current)) return;
+    if (current < TOTAL - 1) {
+      show(current + 1);
+    } else {
+      submit();
+    }
+  });
+
+  // Clear errors while typing + live char hint on textareas
+  document.querySelectorAll('#apl-form input, #apl-form textarea, #apl-form select').forEach((el) => {
+    el.addEventListener('input', () => setError(el, ''));
+  });
+  document.querySelectorAll('.apl-hint[data-count-for]').forEach((hint) => {
+    const ta = document.getElementById(hint.dataset.countFor);
+    const base = hint.textContent;
+    ta.addEventListener('input', () => {
+      const n = ta.value.trim().length;
+      hint.textContent = n >= 10 ? n + ' caracteres' : base + ' · ' + n + '/10';
+      hint.classList.toggle('is-ok', n >= 10);
+    });
+  });
+
+  function submit() {
+    const salary = parseFloat(document.getElementById('apl-salary-now').value) || 0;
+
+    // Analyzing overlay (fake AI evaluation — MVP)
+    card.style.display = 'none';
+    analyzing.classList.add('is-on');
+    analyzing.setAttribute('aria-hidden', 'false');
+
+    let msgIdx = 0;
+    const cycle = setInterval(() => {
+      msgIdx = (msgIdx + 1) % analyzingMessages.length;
+      analyzingMsg.textContent = analyzingMessages[msgIdx];
+    }, 550);
+
+    setTimeout(() => {
+      clearInterval(cycle);
+      analyzing.classList.remove('is-on');
+      analyzing.setAttribute('aria-hidden', 'true');
+      const result = document.getElementById(salary >= SALARY_THRESHOLD ? 'apl-accepted' : 'apl-rejected');
+      result.hidden = false;
+      result.classList.add('is-on');
+      result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, ANALYZE_MS);
+  }
+</script>
+
+<style lang="scss">
+  $ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  .apl {
+    position: relative;
+    min-height: 100svh;
+    background: var(--color-bg);
+    overflow-x: hidden;
+    padding-bottom: 6rem;
+  }
+
+  .apl-glow {
+    position: absolute;
+    width: 60vw;
+    height: 60vw;
+    top: -32vw;
+    right: -18vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(60, 43, 220, 0.12) 0%, rgba(60, 43, 220, 0) 65%);
+    pointer-events: none;
+  }
+
+  .apl-header {
+    position: relative;
+    padding: 1.25rem 2.5rem;
+
+    &__logo { width: 10rem; }
+  }
+
+  // ── Card ──────────────────────────────────────────────────
+  .apl-card {
+    position: relative;
+    max-width: 44rem;
+    margin: 2.5rem auto 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 3rem 3.25rem 2.5rem;
+    box-shadow: 0 24px 70px rgba(15, 15, 15, 0.06);
+    animation: apl-in 0.8s $ease-expo both;
+  }
+
+  .apl-intro { margin-bottom: 2rem; }
+
+  .apl-title {
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    line-height: 1.15;
+    margin: 0.625rem 0 0.5rem;
+  }
+
+  .apl-subtitle {
+    font-size: 1rem;
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  // ── Progress ──────────────────────────────────────────────
+  .apl-progress {
+    margin-bottom: 2.25rem;
+
+    &__meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.625rem;
+    }
+
+    &__step {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-tertiary);
+    }
+
+    &__name {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-accent);
+    }
+
+    &__track {
+      height: 4px;
+      border-radius: 999px;
+      background: var(--color-border);
+      overflow: hidden;
+    }
+
+    &__fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--color-accent), #6354e8);
+      transition: width 0.6s $ease-expo;
+    }
+  }
+
+  // ── Steps ─────────────────────────────────────────────────
+  .apl-step {
+    display: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    &.is-active {
+      display: block;
+      animation: apl-step-in 0.5s $ease-expo both;
+    }
+
+    &__desc {
+      font-size: 0.9375rem;
+      color: var(--color-muted);
+      margin: 0 0 1.5rem;
+    }
+  }
+
+  .apl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  // ── Fields ────────────────────────────────────────────────
+  .apl-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    input,
+    textarea,
+    select {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 0.8125rem 1rem;
+      width: 100%;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      &::placeholder { color: var(--color-tertiary); }
+
+      &:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(60, 43, 220, 0.12);
+      }
+
+      &.is-invalid {
+        border-color: #d14343;
+        box-shadow: 0 0 0 3px rgba(209, 67, 67, 0.1);
+      }
+    }
+
+    textarea { resize: vertical; line-height: 1.6; }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath stroke='%235C5C5C' stroke-width='1.5' stroke-linecap='round' d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      cursor: pointer;
+    }
+
+    &__foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+  }
+
+  .apl-error {
+    font-size: 0.8125rem;
+    color: #d14343;
+    min-height: 1em;
+  }
+
+  .apl-hint {
+    font-size: 0.8125rem;
+    color: var(--color-tertiary);
+    white-space: nowrap;
+
+    &.is-ok { color: #2f9e6e; }
+  }
+
+  .apl-money {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    > span:first-child {
+      position: absolute;
+      left: 1rem;
+      font-size: 0.9375rem;
+      color: var(--color-tertiary);
+      pointer-events: none;
+    }
+
+    input { padding-left: 1.75rem; padding-right: 5.25rem; }
+
+    &__unit {
+      position: absolute;
+      right: 1rem;
+      font-size: 0.8125rem;
+      color: var(--color-tertiary);
+      pointer-events: none;
+    }
+  }
+
+  // ── Controls ──────────────────────────────────────────────
+  .apl-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.25rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .apl-back {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    transition: color 0.15s ease;
+
+    &:hover:not(:disabled) { color: var(--color-text); }
+    &:disabled { opacity: 0.35; cursor: default; }
+  }
+
+  :global(.apl-next--submit) {
+    background-color: var(--color-accent) !important;
+
+    &:hover { background-color: #5847e8 !important; }
+  }
+
+  // ── Analyzing overlay ─────────────────────────────────────
+  .apl-analyzing {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: rgba(250, 249, 247, 0.96);
+    backdrop-filter: blur(8px);
+
+    &.is-on {
+      display: flex;
+      animation: apl-fade 0.4s ease both;
+    }
+
+    &__orb {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      padding: 3px;
+      background: conic-gradient(from 0deg, #3c2bdc, #8b7bff, #ff6ec7, #41d1ff, #3c2bdc);
+      animation: apl-spin 1.6s linear infinite;
+      filter: drop-shadow(0 0 28px rgba(60, 43, 220, 0.35));
+      margin-bottom: 1rem;
+    }
+
+    &__orb-core {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--color-bg);
+    }
+
+    &__title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    &__msg {
+      font-size: 0.9375rem;
+      color: var(--color-muted);
+      margin: 0;
+      min-height: 1.5em;
+    }
+  }
+
+  // ── Results ───────────────────────────────────────────────
+  .apl-result {
+    position: relative;
+    max-width: 40rem;
+    margin: 4.5rem auto 0;
+    text-align: center;
+    padding: 0 2rem;
+
+    &.is-on { animation: apl-in 0.8s $ease-expo both; }
+
+    &__eyebrow { color: var(--color-accent); }
+
+    &__title {
+      font-size: 2rem;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+      margin: 0.875rem 0 1rem;
+    }
+
+    &__body {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--color-muted);
+      margin: 0 auto 2.5rem;
+      max-width: 34rem;
+    }
+  }
+
+  .apl-person-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    text-align: left;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1.75rem 2rem;
+    box-shadow: 0 18px 50px rgba(15, 15, 15, 0.06);
+
+    &__photo,
+    &__avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    &__photo { object-fit: cover; }
+
+    &__avatar {
+      display: grid;
+      place-items: center;
+      background: var(--color-accent);
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-right: auto;
+
+      strong { font-size: 1.0625rem; font-weight: 500; }
+      span { font-size: 0.875rem; color: var(--color-muted); }
+    }
+
+    &__cta { flex-shrink: 0; }
+  }
+
+  .apl-mvp {
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--color-tertiary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+
+    a {
+      color: var(--color-accent);
+      font-weight: 500;
+      text-decoration: none;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+
+  // ── Keyframes ─────────────────────────────────────────────
+  @keyframes apl-in {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes apl-step-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes apl-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes apl-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .apl-card,
+    .apl-step.is-active,
+    .apl-result.is-on { animation: none; }
+    .apl-analyzing__orb { animation-duration: 4s; }
+  }
+</style>

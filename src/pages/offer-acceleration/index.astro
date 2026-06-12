@@ -1,0 +1,112 @@
+---
+// ── Offer Acceleration — temporary design-test hub ────────────────────────
+// /oa redirects here. Lists the four design candidates. Once a final
+// design is chosen, this file becomes the official program page and the
+// numbered versions get deleted.
+import Layout from '../../layouts/Layout.astro';
+import { oaContent as c } from '../../content/offerAcceleration';
+
+const versions = [
+  {
+    n: 1,
+    name: 'Trayectoria',
+    desc: 'Linaje V6: fondo animado de trayectoria salarial, headline letra a letra, cream + purple de marca.',
+  },
+  {
+    n: 2,
+    name: 'Cinema',
+    desc: 'Oscuro y cinematográfico: tipografía display masiva, capítulos numerados, atmósfera purple.',
+  },
+  {
+    n: 3,
+    name: 'Editorial',
+    desc: 'Revista impresa: serif Fraunces, layout asimétrico, pull quotes, papel cálido.',
+  },
+  {
+    n: 4,
+    name: 'Bento',
+    desc: 'Grid bento de conversión sobre el design system actual: cards blancas, métricas, tabla, CTA fuerte.',
+  },
+  {
+    n: 5,
+    name: 'Cinema (light)',
+    desc: 'Variante 2 en modo claro: misma tipografía display, gradientes y grid de fondo, sobre papel cálido con texto oscuro legible.',
+  },
+];
+---
+
+<Layout title={c.meta.title} description={c.meta.description} lang="es" noindex>
+  <main class="oa-hub">
+    <img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="oa-hub__logo" />
+    <p class="label-uppercase">Offer Acceleration · Test de diseños</p>
+    <h1 class="headline2">Elige una versión para revisar</h1>
+    <div class="oa-hub__grid">
+      {versions.map((v) => (
+        <a href={`/offer-acceleration/${v.n}`} class="oa-hub__card">
+          <span class="oa-hub__num">{String(v.n).padStart(2, '0')}</span>
+          <h2 class="headline3">{v.name}</h2>
+          <p class="body2">{v.desc}</p>
+          <span class="oa-hub__go">Ver versión →</span>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  .oa-hub {
+    min-height: 100svh;
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: 5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+
+    &__logo { width: 11rem; margin-bottom: 1.5rem; }
+
+    &__grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      width: 100%;
+      text-align: left;
+    }
+
+    &__card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 40px rgba(15, 15, 15, 0.07);
+        border-color: var(--color-accent);
+      }
+    }
+
+    &__num {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--color-accent);
+    }
+
+    &__go {
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-accent);
+    }
+  }
+</style>

@@ -1,0 +1,272 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['nav'];
+  lang: string;
+}
+
+const { content, lang } = Astro.props;
+const otherLang = lang === 'en' ? 'es' : 'en';
+const otherLangHref = getRelativeLocaleUrl(otherLang, '/');
+---
+
+<header id="nav" class="v6-nav">
+  <div class="v6-nav__container">
+    <nav class="v6-nav__inner">
+
+      <!-- Logo (always visible) -->
+      <img src="/logos/logo-desktop.png" class="v6-nav__logo" alt="Purrfect Hire" />
+
+      <!-- Desktop links (hidden while hero is in view) -->
+      <div class="v6-nav__links v6-nav__collapsible">
+        {content.links.map((link, i) => (
+          <>
+            {i > 0 && <span class="v6-nav__sep" aria-hidden="true">·</span>}
+            <a href={link.href} class="v6-nav__link">
+              {link.label}
+            </a>
+          </>
+        ))}
+      </div>
+
+      <!-- Right side: language toggle only (hidden while hero is in view) -->
+      <div class="v6-nav__actions v6-nav__collapsible">
+        <div class="v6-nav__lang-toggle">
+          {lang === 'en' ? (
+            <>
+              <span class="v6-nav__lang v6-nav__lang--active">EN</span>
+              <span class="v6-nav__lang-divider">|</span>
+              <a href={otherLangHref} class="v6-nav__lang v6-nav__lang--inactive">ES</a>
+            </>
+          ) : (
+            <>
+              <a href={otherLangHref} class="v6-nav__lang v6-nav__lang--inactive">EN</a>
+              <span class="v6-nav__lang-divider">|</span>
+              <span class="v6-nav__lang v6-nav__lang--active">ES</span>
+            </>
+          )}
+        </div>
+
+        <button
+          id="mobile-menu-btn"
+          class="v6-nav__hamburger"
+          aria-label="Toggle menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              d="M3 5h14M3 10h14M3 15h14"
+            />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="v6-nav__mobile-menu">
+    <div class="v6-nav__mobile-inner">
+      {content.links.map((link) => (
+        <a href={link.href} class="v6-nav__link v6-nav__link--mobile">
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('nav');
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const hero = document.querySelector('[data-section="hero"]') || document.querySelector('.v6-hero');
+
+  if (hero) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          nav?.classList.remove('v6-nav--expanded');
+        } else {
+          nav?.classList.add('v6-nav--expanded');
+        }
+      },
+      // Trigger when less than 50% of the hero is visible
+      { threshold: 0.5 }
+    );
+    observer.observe(hero);
+  } else {
+    nav?.classList.add('v6-nav--expanded');
+  }
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav?.classList.add('v6-nav--scrolled');
+    } else {
+      nav?.classList.remove('v6-nav--scrolled');
+    }
+  }, { passive: true });
+
+  btn?.addEventListener('click', () => {
+    menu?.classList.toggle('v6-nav__mobile-menu--open');
+  });
+</script>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .v6-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: transparent;
+    transition:
+      background 200ms ease,
+      border-color 200ms ease;
+
+    &--scrolled {
+      background: rgba(250, 249, 247, 0.72);
+      backdrop-filter: blur(14px) saturate(1.4);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      border-bottom: 1px solid rgba(229, 229, 225, 0.6);
+    }
+
+    &__container {
+      max-width: 80rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      @include max-lg { padding-inline: 1rem; }
+    }
+
+    &__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4rem;
+    }
+
+    &__logo {
+      width: 10rem;
+    }
+
+    // Collapsible elements: hidden by default, revealed when hero is out of view
+    &__collapsible {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-4px);
+      transition:
+        opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    &--expanded &__collapsible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    &__links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      @include max-lg { display: none; }
+    }
+
+    &__sep {
+      font-size: 0.9375rem;
+      color: var(--color-border);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    &__link {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-muted);
+      text-decoration: none;
+      padding-inline: 0.75rem;
+      transition: color 0.15s ease;
+
+      &:hover { color: var(--color-text); }
+
+      &--mobile {
+        padding-inline: 0;
+        padding-block: 0.5rem;
+      }
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    &__lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+
+    &__lang {
+      font-size: 0.875rem;
+      text-decoration: none;
+
+      &--active {
+        font-weight: 500;
+        color: var(--color-text);
+      }
+
+      &--inactive {
+        font-weight: 400;
+        color: var(--color-tertiary);
+        transition: color 0.15s ease;
+
+        &:hover {
+          color: var(--color-text);
+        }
+      }
+    }
+
+    &__lang-divider {
+      font-size: 0.875rem;
+      color: var(--color-tertiary);
+      user-select: none;
+    }
+
+    &__hamburger {
+      display: none;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      color: var(--color-text);
+      background: none;
+      border: none;
+      cursor: pointer;
+
+      @include max-lg { display: flex; }
+    }
+
+    &__mobile-menu {
+      display: none;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-surface);
+
+      &--open {
+        @include max-lg { display: block; }
+      }
+    }
+
+    &__mobile-inner {
+      max-width: 1280px;
+      margin-inline: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+</style>

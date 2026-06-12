@@ -62,9 +62,19 @@ See `DESIGN.md` for the complete design specification. Key points:
 10. **Final CTA** — Dual buttons: hire / get placed
 11. **Footer** — Logo, links, copyright
 
+## Performance
+
+- **Animations must use `client:visible`** — never load animation libraries (GSAP, Lottie, Framer Motion) eagerly. Wrap them in Astro islands with `client:visible` so they only load when the section scrolls into view. This keeps LCP fast, especially on mobile.
+- **Test every screen on all breakpoints before reporting it done** — mobile (375px), tablet (768px), desktop (1280px), and wide/2K (1920px+). Verify that animations, gradients, and layout all render correctly and perform smoothly on each.
+- **Prefer CSS animations over JS animations** — CSS transforms and transitions are GPU-accelerated and don't block the main thread. Only reach for JS-based animation libraries when CSS can't achieve the effect.
+- **Lazy-load heavy assets** — images below the fold should use `loading="lazy"`. SVGs in carousels should be inlined only if small; otherwise use `<img>`.
+
 ## Conventions
 
 - BEM CSS naming inside component `<style>` tags
 - SCSS mixins for responsive breakpoints (`@include max-sm`, `@include max-md`, etc.)
 - CSS custom properties for design tokens
 - Intersection Observer for scroll animations
+
+## Considerations
+- When a new page is created, always update the sitemap and OpenA Graph (OA)

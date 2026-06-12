@@ -6,13 +6,24 @@ interface Props {
   title?: string;
   description?: string;
   lang?: string;
+  canonicalUrl?: string;
+  /** Design-test pages: keep out of search results */
+  noindex?: boolean;
 }
 
 const {
   title = 'Purrfect Hire — Senior hires for YC and a16z founders',
   description = 'We place senior LATAM talent at YC and a16z startups where getting the hire wrong costs months of runway. 160+ placements. 80% retention at 24 months.',
   lang = 'en',
+  canonicalUrl,
+  noindex = false,
 } = Astro.props;
+
+const siteUrl = 'https://purrfecthire.com';
+const currentUrl = canonicalUrl ?? `${siteUrl}${Astro.url.pathname}`;
+const ogImage = `${siteUrl}/logos/ph_imagotipo.png`;
+const alternateLang = lang === 'en' ? 'es' : 'en';
+const alternateUrl = lang === 'en' ? `${siteUrl}/es/` : siteUrl;
 ---
 
 <!doctype html>
@@ -21,6 +32,29 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Canonical & hreflang (prevents EN/ES duplicate content penalty) -->
+    <link rel="canonical" href={currentUrl} />
+    <link rel="alternate" hreflang={lang} href={currentUrl} />
+    <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
+    <link rel="alternate" hreflang="x-default" href={siteUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'es_ES'} />
+    <meta property="og:site_name" content="Purrfect Hire" />
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,6 +63,7 @@ const {
       rel="stylesheet"
     />
     <title>{title}</title>
+    <slot name="head" />
   </head>
   <body>
     <slot />

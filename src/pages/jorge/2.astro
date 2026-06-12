@@ -1,0 +1,390 @@
+---
+// ── Jorge Donado — Roadmap MVP v2: "Ruta Constructor" ────────────────────
+// Standalone test page: NO shared Layout, NO global styles, fully isolated.
+// Horizontal journey (vertical wheel scrolls the track). Desktop-only MVP.
+// Light theme with brand colors. DELETE when a version is chosen.
+// Route: /jorge/2
+
+const stops = [
+  {
+    n: '0',
+    km: 'KM 0',
+    done: true,
+    title: 'Diagnóstico',
+    goal: 'Tu historia completa sobre la mesa: el ingeniero que se volvió financiero, el financiero que se volvió operador, el operador que quiere construir lo suyo.',
+    deliver: 'Completada',
+  },
+  {
+    n: '1',
+    km: 'KM 10',
+    title: 'Tesis del Constructor',
+    goal: 'Tu tesis a 3 años con una decisión explícita: el próximo empleo es el PUENTE hacia tu propia compañía. Definimos qué tiene que darte ese puente y qué dices que no.',
+    deliver: 'Tesis puente + 3 NOs + historias CIAR',
+  },
+  {
+    n: '2',
+    km: 'KM 20',
+    title: 'Posicionamiento Público',
+    goal: 'LinkedIn como dossier y CV de una página, contados desde el constructor: el operador que crea áreas, automatiza con IA y ya maneja sus propias empresas.',
+    deliver: 'LinkedIn publicado + CV de 1 página',
+  },
+  {
+    n: '3',
+    km: 'KM 35',
+    title: 'Autoridad que genera deal flow',
+    goal: 'Publicas sobre IA en producción y sobre construir negocio real (tus empresas de cartón incluidas). La audiencia correcta: founders, inversionistas y futuros clientes, no recruiters.',
+    deliver: '4 piezas + 10 cuentas objetivo',
+  },
+  {
+    n: '4',
+    km: 'KM 50',
+    title: 'Red de capital y operadores',
+    goal: 'El mapa de 50 cambia de mezcla: founders ex-Rappi, inversionistas ángeles, operadores que podrían ser socios o primeros clientes. La red que hoy te contrata es la misma que mañana te invierte.',
+    deliver: 'Mapa de 50 + 5 referencias activadas',
+  },
+  {
+    n: '5',
+    km: 'KM 70',
+    title: 'El Rol Puente',
+    goal: 'Elegir y ganar el rol que financia y enseña: alcance de GM con ciclo completo (ingresos, operación, finanzas, equipo) en una tech global. Pagado bien, con espacio para tus empresas.',
+    deliver: 'Simulacros + criterios de selección del puente',
+  },
+  {
+    n: '6',
+    km: 'KM 90',
+    title: 'Negociación & Transición',
+    goal: 'Negocias la estructura completa con calma de dueño, sales de Rappi sin quemar tu red, y dejas escrito el plan: hitos a 12, 24 y 36 meses para saltar a lo tuyo con base financiera sólida.',
+    deliver: 'Oferta firmada + plan de transición a 3 años',
+  },
+];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Jorge · Ruta Constructor — Offer Accelerator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="jr2">
+      <!-- Fixed chrome -->
+      <header class="jr2-bar">
+        <span class="jr2-bar__brand">Offer Accelerator</span>
+        <div class="jr2-bar__progress" aria-hidden="true"><div class="jr2-bar__fill" id="jr2-fill"></div></div>
+        <span class="jr2-bar__pill">Propuesta de ruta · 2 de 2</span>
+      </header>
+      <div class="jr2-hint" id="jr2-hint">
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true">
+          <path d="M1 7h16M12 1l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Desplázate para avanzar en la ruta</span>
+      </div>
+
+      <!-- Horizontal track -->
+      <main class="jr2-track" id="jr2-track">
+        <!-- Panel: hero -->
+        <section class="jr2-panel jr2-panel--hero">
+          <p class="jr2-hero__eyebrow jr2-in" style="--d: 0s">Jorge Mario Donado · Cohorte 3</p>
+          <h1 class="jr2-hero__title">
+            <span class="jr2-in" style="--d: .1s">La Ruta</span>
+            <span class="jr2-hero__big jr2-in" style="--d: .22s">Constructor</span>
+          </h1>
+          <p class="jr2-hero__sub jr2-in" style="--d: .36s">
+            Dijiste que en 3 años quieres la capacidad de decidir en qué te metes, desde una
+            posición financiera sólida. Esta ruta toma esa frase en serio: el próximo rol no es
+            el destino, es el puente. Se elige, se negocia y se usa para aprender a liderar una
+            compañía entera, la tuya incluida.
+          </p>
+          <div class="jr2-hero__badges jr2-in" style="--d: .5s">
+            <span class="jr2-badge">7 sesiones</span>
+            <span class="jr2-badge">1 decisión de fondo</span>
+            <span class="jr2-badge">Horizonte: 3 años</span>
+          </div>
+        </section>
+
+        <!-- Panels: stops -->
+        {stops.map((s) => (
+          <section class={`jr2-panel jr2-panel--stop ${s.done ? 'jr2-panel--done' : ''}`}>
+            <div class="jr2-stop">
+              <div class="jr2-stop__head">
+                <span class="jr2-stop__km">{s.km}</span>
+                <div class={`jr2-stop__node ${s.done ? 'jr2-stop__node--done' : ''}`}>
+                  {s.done ? (
+                    <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M4 11.5l5 5L18 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  ) : (
+                    s.n
+                  )}
+                </div>
+              </div>
+              <h2 class="jr2-stop__title">Sesión {s.n}<br />{s.title}</h2>
+              <p class="jr2-stop__goal">{s.goal}</p>
+              <p class="jr2-stop__deliver">{s.deliver}</p>
+            </div>
+          </section>
+        ))}
+
+        <!-- Panel: horizon -->
+        <section class="jr2-panel jr2-panel--horizon">
+          <div class="jr2-horizon">
+            <p class="jr2-horizon__eyebrow">KM 100 · El horizonte</p>
+            <h2 class="jr2-horizon__title">Tu propia compañía</h2>
+            <p class="jr2-horizon__text">
+              No como un salto al vacío: como la consecuencia de un plan. Un rol puente que pagó
+              bien y enseñó el ciclo completo, una red que ya te conoce como constructor, y una
+              base financiera que te deja elegir. La meta nunca fue el cargo. Era la libertad de
+              no depender de él.
+            </p>
+            <p class="jr2-horizon__note">Purrfect Hire · Offer Accelerator · MVP de visualización · versión 2 · solo escritorio</p>
+          </div>
+        </section>
+
+        <!-- The road line -->
+        <div class="jr2-road" aria-hidden="true">
+          <svg viewBox="0 0 100 10" preserveAspectRatio="none">
+            <path d="M0 5 H100" stroke="#E5E5E1" stroke-width="1.1" stroke-dasharray="0.4 1.6" stroke-linecap="round" />
+          </svg>
+        </div>
+      </main>
+    </div>
+
+    <style>
+      :global(html), :global(body) { margin: 0; padding: 0; overflow: hidden; height: 100%; }
+      :where(.jr2, .jr2 *) { box-sizing: border-box; margin: 0; padding: 0; }
+
+      .jr2 {
+        --bg: #FAF9F7;
+        --ink: #0F0F0F;
+        --muted: #5C5C5C;
+        --accent: #3C2BDC;
+        --accent-soft: #E8E6F8;
+        --navy: #0D0857;
+        --card: #FFFFFF;
+        --line: #E5E5E1;
+        font-family: 'Inter', system-ui, sans-serif;
+        background:
+          radial-gradient(1000px 520px at 15% 0%, #EFEDF8 0%, transparent 55%),
+          radial-gradient(800px 520px at 95% 100%, #F2F0FA 0%, transparent 50%),
+          var(--bg);
+        color: var(--ink);
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* ── Fixed chrome ───────────────────────────────────────────────── */
+      .jr2-bar {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+        display: flex; align-items: center; gap: 28px;
+        padding: 18px 44px;
+      }
+      .jr2-bar__brand { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .01em; }
+      .jr2-bar__progress {
+        flex: 1; height: 4px; border-radius: 999px;
+        background: color-mix(in srgb, var(--line) 80%, transparent);
+        overflow: hidden;
+      }
+      .jr2-bar__fill {
+        height: 100%; width: 0%;
+        background: linear-gradient(90deg, var(--accent), #6B5CE7);
+        border-radius: 999px;
+        transition: width .15s linear;
+      }
+      .jr2-bar__pill {
+        font-size: 12.5px; font-weight: 700; color: var(--accent);
+        background: var(--accent-soft);
+        border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+        padding: 6px 14px; border-radius: 999px;
+        white-space: nowrap;
+      }
+      .jr2-hint {
+        position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%);
+        z-index: 60;
+        display: flex; align-items: center; gap: 10px;
+        font-size: 12.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+        color: var(--muted);
+        transition: opacity .5s;
+      }
+      .jr2-hint svg { color: var(--accent); animation: jr2-nudge 1.6s ease-in-out infinite; }
+      @keyframes jr2-nudge { 0%,100% { transform: translateX(0) } 50% { transform: translateX(7px) } }
+      .jr2-hint--hidden { opacity: 0; }
+
+      /* ── Track ──────────────────────────────────────────────────────── */
+      .jr2-track {
+        display: flex;
+        height: 100vh;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: auto;
+        position: relative;
+        scrollbar-width: none;
+      }
+      .jr2-track::-webkit-scrollbar { display: none; }
+
+      .jr2-road {
+        position: absolute;
+        left: 0; right: 0;
+        top: 58%;
+        height: 10px;
+        width: 5400px;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .jr2-road svg { width: 100%; height: 100%; }
+
+      .jr2-panel {
+        flex: 0 0 auto;
+        height: 100vh;
+        display: flex; flex-direction: column; justify-content: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* hero panel */
+      .jr2-panel--hero { width: 880px; padding: 0 90px; }
+      .jr2-hero__eyebrow {
+        font-size: 13px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+        color: var(--navy); margin-bottom: 20px;
+      }
+      .jr2-hero__title {
+        font-family: 'Inter', sans-serif;
+        font-size: 44px; font-weight: 500; line-height: 1.05;
+        display: flex; flex-direction: column;
+      }
+      .jr2-hero__big {
+        font-size: 96px; font-weight: 800; letter-spacing: -.02em;
+        color: var(--accent);
+      }
+      .jr2-hero__sub { max-width: 620px; margin-top: 26px; font-size: 17.5px; line-height: 1.7; color: var(--muted); }
+      .jr2-hero__badges { display: flex; gap: 12px; margin-top: 36px; }
+      .jr2-badge {
+        font-size: 13px; font-weight: 700;
+        background: var(--card);
+        border: 1px solid var(--line);
+        padding: 9px 18px; border-radius: 999px;
+        box-shadow: 0 4px 14px -6px rgba(15, 15, 15, .10);
+      }
+      .jr2-in { opacity: 0; transform: translateX(-26px); animation: jr2-slide .8s cubic-bezier(.2,.7,.2,1) var(--d, 0s) forwards; }
+      @keyframes jr2-slide { to { opacity: 1; transform: translateX(0); } }
+
+      /* stop panels */
+      .jr2-panel--stop { width: 560px; padding: 0 50px; }
+      .jr2-stop {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 36px 38px 32px;
+        box-shadow: 0 24px 54px -26px rgba(15, 15, 15, .18);
+        opacity: 0;
+        transform: translateX(70px) rotate(.6deg);
+        transition: opacity .75s cubic-bezier(.2,.7,.2,1), transform .75s cubic-bezier(.2,.7,.2,1), box-shadow .4s;
+        margin-top: -50px;
+      }
+      .jr2-panel--stop:nth-child(odd) .jr2-stop { margin-top: 60px; transform: translateX(70px) rotate(-.6deg); }
+      .jr2-stop.jr2-visible { opacity: 1; transform: translateX(0) rotate(0); }
+      .jr2-stop:hover { box-shadow: 0 30px 64px -26px rgba(60, 43, 220, .30); }
+
+      .jr2-stop__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+      .jr2-stop__km {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px; font-weight: 700; letter-spacing: .12em;
+        color: var(--accent);
+        background: var(--accent-soft);
+        padding: 5px 12px; border-radius: 8px;
+      }
+      .jr2-stop__node {
+        width: 50px; height: 50px; border-radius: 14px;
+        background: var(--navy); color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 22px; font-weight: 700;
+        box-shadow: 0 10px 22px -8px color-mix(in srgb, var(--navy) 60%, transparent);
+        transform: rotate(-4deg);
+        transition: transform .45s cubic-bezier(.34,1.56,.64,1);
+      }
+      .jr2-stop:hover .jr2-stop__node { transform: rotate(4deg) scale(1.1); }
+      .jr2-stop__node--done { background: var(--accent); }
+
+      .jr2-stop__title {
+        font-family: 'Inter', sans-serif;
+        font-size: 27px; font-weight: 700; line-height: 1.18;
+        margin-bottom: 14px;
+      }
+      .jr2-stop__goal { font-size: 15px; line-height: 1.65; color: var(--ink); margin-bottom: 18px; }
+      .jr2-stop__deliver {
+        font-size: 13px; font-weight: 800; color: var(--navy);
+        border-top: 1px dashed var(--line);
+        padding-top: 14px;
+      }
+      .jr2-stop__deliver::before { content: '⟶ '; color: var(--accent); }
+
+      /* horizon panel */
+      .jr2-panel--horizon { width: 980px; padding: 0 120px 0 80px; }
+      .jr2-horizon {
+        background: linear-gradient(150deg, #0D0857, #1A1066);
+        color: #f2f0ff;
+        border-radius: 26px;
+        padding: 64px 70px;
+        box-shadow: 0 36px 90px -32px rgba(13, 8, 87, .55);
+        opacity: 0; transform: translateX(80px);
+        transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+      }
+      .jr2-horizon.jr2-visible { opacity: 1; transform: translateX(0); }
+      .jr2-horizon__eyebrow {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+        color: #B8B0FF; margin-bottom: 16px;
+      }
+      .jr2-horizon__title { font-family: 'Inter', sans-serif; font-size: 52px; font-weight: 800; margin-bottom: 22px; }
+      .jr2-horizon__text { font-size: 17.5px; line-height: 1.75; margin-bottom: 30px; max-width: 640px; }
+      .jr2-horizon__note { font-size: 12.5px; color: #9E96D4; border-top: 1px solid rgba(255,255,255,.16); padding-top: 20px; }
+    </style>
+
+    <script>
+      const track = document.getElementById('jr2-track');
+      const fill = document.getElementById('jr2-fill');
+      const hint = document.getElementById('jr2-hint');
+
+      if (track) {
+        // Vertical wheel drives horizontal travel
+        track.addEventListener(
+          'wheel',
+          (e) => {
+            e.preventDefault();
+            track.scrollLeft += (e.deltaY + e.deltaX) * 1.6;
+          },
+          { passive: false }
+        );
+
+        const update = () => {
+          const max = track.scrollWidth - track.clientWidth;
+          const p = max > 0 ? track.scrollLeft / max : 0;
+          if (fill) fill.style.width = `${p * 100}%`;
+          if (hint) hint.classList.toggle('jr2-hint--hidden', p > 0.04);
+        };
+        track.addEventListener('scroll', update, { passive: true });
+        update();
+
+        // Reveal cards as they enter the viewport (horizontal root)
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((en) => en.isIntersecting && en.target.classList.add('jr2-visible')),
+          { root: track, threshold: 0.35 }
+        );
+        document.querySelectorAll('.jr2-stop, .jr2-horizon').forEach((el) => io.observe(el));
+
+        // Keyboard support
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') track.scrollBy({ left: 560, behavior: 'smooth' });
+          if (e.key === 'ArrowLeft') track.scrollBy({ left: -560, behavior: 'smooth' });
+        });
+      }
+    </script>
+  </body>
+</html>

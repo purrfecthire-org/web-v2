@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
+import V6Nav from '../components/v6/V6Nav.astro';
 import V6HeroSection from '../components/v6/V6HeroSection.astro';
 import CompanyCarousel from '../components/CompanyCarousel.astro';
 import Why2026Section from '../components/Why2026Section.astro';
@@ -22,7 +22,7 @@ const c = getContent('en');
   description={c.meta.description}
   lang="en"
 >
-  <Nav content={c.nav} lang="en" />
+  <V6Nav content={c.nav} lang="en" />
   <main>
     <V6HeroSection content={c.hero} />
     <CompanyCarousel />
@@ -39,8 +39,12 @@ const c = getContent('en');
 </Layout>
 
 <style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
+
   /* Intro choreography: nav joins in phase 4, with the rest of the page chrome */
-  .nav {
+  .v6-nav {
     opacity: 0;
     animation: v6-nav-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 4.5s forwards;
   }
@@ -50,7 +54,7 @@ const c = getContent('en');
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .nav {
+    .v6-nav {
       animation: none;
       opacity: 1;
     }

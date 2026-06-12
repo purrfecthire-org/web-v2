@@ -18,6 +18,9 @@ export interface LandingContent {
     stats: { value: string; suffix: string; suffixLeft?: string; label: string }[];
     ctaPrimary: string;
     ctaSecondary: string;
+    ctaShowMore: string;
+    ctaFounders: string;
+    ctaTalent: string;
     trustLabel: string;
     chart: {
       skillsLabel: string;
@@ -158,6 +161,9 @@ export const content_en: LandingContent = {
     ],
     ctaPrimary: 'Get your first match',
     ctaSecondary: 'See how it works',
+    ctaShowMore: 'Show me more',
+    ctaFounders: 'For founders',
+    ctaTalent: 'For talent',
     trustLabel: 'Trusted by founders at',
     chart: {
       skillsLabel: 'Skills alone',
@@ -411,6 +417,9 @@ export const content_es: LandingContent = {
     ],
     ctaPrimary: 'Empieza tu búsqueda',
     ctaSecondary: 'Ver cómo funciona',
+    ctaShowMore: 'Muéstrame más',
+    ctaFounders: 'Para founders',
+    ctaTalent: 'Para talento',
     trustLabel: 'Confían en nosotros founders de',
     chart: {
       skillsLabel: 'Solo skills',
