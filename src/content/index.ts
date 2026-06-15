@@ -420,6 +420,7 @@ export const content_en: LandingContent = {
 
   footer: {
     links: [
+      { label: 'Privacy', href: '/privacy-policy' },
       { label: 'Terms', href: '#' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire' },
       { label: 'Open roles', href: '#roles' },
@@ -768,6 +769,7 @@ export const content_es: LandingContent = {
 
   footer: {
     links: [
+      { label: 'Privacidad', href: '/es/privacy-policy' },
       { label: 'Términos', href: '#' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire' },
       { label: 'Roles abiertos', href: '#roles' },

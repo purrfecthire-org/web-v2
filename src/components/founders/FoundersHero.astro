@@ -8,26 +8,39 @@
 // from the main site are busy operators. So the hero leads with two real
 // placement outcomes rendered as oversized "proof" cards.
 //
-// NOTE: company logos are placeholders pulled from the existing carousel set.
-// Swap `logo` for the real companies once confirmed.
 const BOOKING_URL = 'https://calendly.com/alison-ph/oa';
+
+// How many logos to show before collapsing the rest into a (non-clickable)
+// "+N more" pill. The pill is a teaser, not a link — it signals depth of
+// roster without claiming a destination.
+const MAX_LOGOS = 3;
 
 const proof = [
   {
     big: '2+ years',
     headline: 'Placed once. Still building today.',
     body:
-      'A senior hire we placed is still in seat and shipping more than two years later — past the window where most startup hires quietly break.',
-    logo: '/carrousel/payjoy.svg',
-    logoAlt: 'Company logo (placeholder)',
+      'A senior hire we placed is still in seat and shipping more than two years later.',
+    companies: [
+      { name: 'Cometa', logo: '/clients/cometa.png' },
+      { name: 'Infolaft', logo: '/clients/infolaft.png' },
+      { name: 'Konta', logo: '/clients/konta.png' },
+      { name: 'PayJoy', logo: '/clients/payjoy.png' },
+      { name: 'Ponte', logo: '/clients/ponte.png' },
+      { name: 'Trébol', logo: '/clients/trebol.png' },
+    ],
   },
   {
-    big: 'Senior → CEO',
-    headline: 'Joined as an engineer. Now runs the company.',
+    big: 'Senior → Head',
+    headline: 'Hired as a senior. Now a decision maker.',
     body:
-      'One placement walked in as a senior developer. The fit was so right that today they lead the company as its CEO.',
-    logo: '/carrousel/rutter.svg',
-    logoAlt: 'Company logo (placeholder)',
+      'Several placements walked in as senior individual contributors. The fit was so right that today they run teams as heads and decision makers.',
+    companies: [
+      { name: 'Optery', logo: '/clients/optery.png' },
+      { name: 'Mercai', logo: '/clients/mercai.png' },
+      { name: 'Cheaf', logo: '/clients/cheaf.png' },
+      { name: 'Cometa', logo: '/clients/cometa.png' },
+    ],
   },
 ];
 ---
@@ -36,15 +49,11 @@ const proof = [
   <div class="ff-hero__container">
 
     <header class="ff-hero__head">
-      <span class="ff-hero__tag">For founders</span>
       <h1 class="ff-hero__headline">
-        You don't need more résumés.
-        <span class="ff-hero__headline-accent">You need hires that stay.</span>
+        You need hires that stay.
       </h1>
       <p class="ff-hero__sub body1">
-        Purrfect Hire places senior LATAM talent at YC- and a16z-backed startups —
-        where the wrong hire costs months of runway you can't recover. Here's what
-        "right fit" actually looks like.
+        Senior LATAM talent at YC and a16z backed startups.
       </p>
     </header>
 
@@ -56,8 +65,16 @@ const proof = [
           <h2 class="ff-hero__card-headline">{p.headline}</h2>
           <p class="ff-hero__card-body">{p.body}</p>
           <div class="ff-hero__card-foot">
-            <img src={p.logo} alt={p.logoAlt} class="ff-hero__card-logo" loading="eager" />
-            <span class="ff-hero__card-note">Verified placement</span>
+            <div class="ff-hero__logos">
+              {p.companies.slice(0, MAX_LOGOS).map((c) => (
+                <img src={c.logo} alt={c.name} class="ff-hero__card-logo" loading="eager" />
+              ))}
+              {p.companies.length > MAX_LOGOS && (
+                <span class="ff-hero__logos-more" aria-label={`and ${p.companies.length - MAX_LOGOS} more ${p.companies.length - MAX_LOGOS === 1 ? 'company' : 'companies'}`}>
+                  +{p.companies.length - MAX_LOGOS} more
+                </span>
+              )}
+            </div>
           </div>
         </article>
       ))}
@@ -216,12 +233,34 @@ const proof = [
       border-top: 1px solid var(--color-border);
     }
 
+    &__logos {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem 1.25rem;
+    }
+
     &__card-logo {
       height: 24px;
       width: auto;
       max-width: 96px;
       object-fit: contain;
       opacity: 0.75;
+    }
+
+    // Non-clickable teaser — signals a deeper roster without claiming a link
+    &__logos-more {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--color-muted);
+      background: rgba(60, 43, 220, 0.08);
+      border: 1px solid rgba(60, 43, 220, 0.16);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
     }
 
     &__card-note {

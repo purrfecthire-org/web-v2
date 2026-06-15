@@ -13,9 +13,12 @@ interface Props {
 const { content } = Astro.props;
 const { roles, offerAcceleration, testimonials } = content;
 
-const OA_LEARN_MORE = '/offer-acceleration/4';
+const OA_LEARN_MORE = '/offer-acceleration';
 const OA_APPLY = '/offer-acceleration/apply';
 const ROLES_URL = '/roles';
+
+// Open-roles enquiries route to recruitment@ (distinct from the general hiring@).
+const ROLES_EMAIL = 'recruitment@purrfecthire.com';
 
 const oaFit = offerAcceleration.blocks[0];      // "You're the right fit if:"
 const oaSessions = offerAcceleration.blocks[1]; // "Across 8 sessions:"
@@ -57,7 +60,7 @@ const candidate = testimonials.candidateTestimonial;
       <a href={ROLES_URL} class="btn ft-roles__foot-btn">Browse all roles →</a>
       <p class="ft-roles__foot-note caption">
         {roles.closingText}{' '}
-        <a href={`mailto:${roles.closingEmail}`} class="ft-roles__foot-link">{roles.closingEmail}</a>
+        <a href={`mailto:${ROLES_EMAIL}`} class="ft-roles__foot-link">{ROLES_EMAIL}</a>
       </p>
     </div>
   </div>

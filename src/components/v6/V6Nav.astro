@@ -16,8 +16,10 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, '/');
   <div class="v6-nav__container">
     <nav class="v6-nav__inner">
 
-      <!-- Logo (always visible) -->
-      <img src="/logos/logo-desktop.png" class="v6-nav__logo" alt="Purrfect Hire" />
+      <!-- Logo (always visible) — links home -->
+      <a href="/" class="v6-nav__logo-link" aria-label="Purrfect Hire — home">
+        <img src="/logos/logo-desktop.png" class="v6-nav__logo" alt="Purrfect Hire" />
+      </a>
 
       <!-- Desktop links (hidden while hero is in view) -->
       <div class="v6-nav__links v6-nav__collapsible">

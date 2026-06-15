@@ -1,0 +1,157 @@
+---
+// ── /privacy-policy (EN) ─────────────────────────────────────────────────────
+// Single canonical privacy policy covering every data flow: founders (B2B),
+// talent (B2C), the Offer Acceleration program, role applications, and
+// WhatsApp/Meta messaging. This is the URL to register in Meta's WhatsApp
+// Business onboarding. Spanish counterpart: /es/privacy-policy.
+import LegalLayout from '../layouts/LegalLayout.astro';
+
+const siteUrl = 'https://purrfecthire.com';
+const pageUrl = `${siteUrl}/privacy-policy`;
+const contactEmail = 'privacy@purrfecthire.com';
+
+const meta = {
+  title: 'Privacy Policy | Purrfect Hire',
+  description:
+    'How Purrfect Hire collects, uses, and protects personal data across our hiring services, the Offer Acceleration program, role applications, and WhatsApp messaging.',
+};
+---
+
+<LegalLayout
+  title={meta.title}
+  description={meta.description}
+  lang="en"
+  pageUrl={pageUrl}
+  heading="Privacy Policy"
+  lastUpdated="June 15, 2026"
+  lastUpdatedLabel="Last updated"
+>
+  <p class="legal-intro">
+    This Privacy Policy explains how <strong>Purrfect Hire OÜ</strong> ("Purrfect Hire,"
+    "we," "us," or "our") collects, uses, shares, and protects your personal information
+    when you visit our website, communicate with us, apply to a role, join the Offer
+    Acceleration program, or interact with us on social media and messaging platforms,
+    including WhatsApp. By using our services you agree to the practices described here.
+  </p>
+
+  <h2>1. Who we are</h2>
+  <p>
+    Purrfect Hire is a closed-loop recruiting service that connects senior professionals
+    in Latin America with startups in the United States and beyond. We operate on both
+    sides of the hiring relationship: with companies that are hiring ("Founders") and with
+    individuals seeking roles or career growth ("Talent"). Purrfect Hire OÜ is the data
+    controller responsible for your personal information.
+  </p>
+
+  <h2>2. Information we collect</h2>
+  <p>We collect information that you provide directly, information collected automatically, and information from third parties.</p>
+
+  <h3>Information you provide</h3>
+  <ul>
+    <li><strong>Contact details</strong> — name, email address, phone number, and country or city.</li>
+    <li><strong>Professional information</strong> — resume/CV, work history, skills, portfolio or profile links (e.g. LinkedIn, GitHub), and compensation expectations.</li>
+    <li><strong>Application and program data</strong> — answers you submit when applying to a role or enrolling in the Offer Acceleration program, including interview notes and progress.</li>
+    <li><strong>Company and hiring details</strong> — for Founders, information about your company, open roles, and hiring requirements.</li>
+    <li><strong>Communications</strong> — messages you send us by email, web form, social media, or WhatsApp, and any files you share.</li>
+  </ul>
+
+  <h3>Information collected automatically</h3>
+  <ul>
+    <li>Basic device and usage data such as IP address, browser type, pages visited, and referring URLs, collected through cookies and similar technologies to operate and improve the site.</li>
+  </ul>
+
+  <h3>Information from third parties</h3>
+  <ul>
+    <li>Publicly available professional information, referrals, and data from partners or platforms (such as Meta/WhatsApp, LinkedIn, or hiring partners) used to evaluate fit and facilitate introductions.</li>
+  </ul>
+
+  <h2>3. How we use your information</h2>
+  <ul>
+    <li>To match Talent with relevant roles and to introduce qualified candidates to Founders.</li>
+    <li>To deliver the Offer Acceleration program, including coaching, interview preparation, and feedback.</li>
+    <li>To evaluate applications, conduct assessments, and coordinate interviews and offers.</li>
+    <li>To communicate with you about our services, your application, scheduling, and support requests.</li>
+    <li>To operate, secure, analyze, and improve our website and services.</li>
+    <li>To comply with legal obligations and enforce our agreements.</li>
+  </ul>
+
+  <h2>4. Messaging and WhatsApp</h2>
+  <p>
+    We use messaging channels, including WhatsApp (a Meta Platforms service), to
+    communicate with candidates, program participants, and Founders. When you message us,
+    we collect your phone number, profile name, and the content of your messages to respond
+    to you, coordinate next steps, and provide updates about roles or the program.
+  </p>
+  <p>
+    We use these channels only to communicate with people who have contacted us or agreed
+    to be contacted. We do not sell your phone number. Your use of WhatsApp is also governed
+    by Meta's own terms and privacy policy, which you should review separately.
+  </p>
+
+  <h2>5. How we share information</h2>
+  <p>We share personal information only as needed to provide our services:</p>
+  <ul>
+    <li><strong>With Founders / hiring companies</strong> — we share relevant candidate profiles and application materials with companies considering you for a role, with your awareness.</li>
+    <li><strong>With service providers</strong> — vendors that help us run our business (e.g. hosting, scheduling, email, analytics, and messaging providers such as Meta), bound by confidentiality obligations.</li>
+    <li><strong>For legal reasons</strong> — when required by law, to protect our rights, or to prevent fraud or abuse.</li>
+    <li><strong>In a business transfer</strong> — in connection with a merger, acquisition, or sale of assets.</li>
+  </ul>
+  <p>We do not sell your personal information.</p>
+
+  <h2>6. Legal bases for processing</h2>
+  <p>
+    Where applicable (for example, under the GDPR), we process personal data on the basis
+    of your consent, the performance of a contract or steps taken at your request, our
+    legitimate interests in operating a recruiting service, and compliance with legal
+    obligations.
+  </p>
+
+  <h2>7. Data retention</h2>
+  <p>
+    We keep personal information for as long as needed to provide our services, maintain
+    candidate and client relationships, and meet legal or business requirements. When data
+    is no longer needed, we delete or anonymize it. You may ask us to delete your
+    information at any time (see "Your rights" below).
+  </p>
+
+  <h2>8. Your rights</h2>
+  <p>
+    Depending on where you live, you may have the right to access, correct, update, or
+    delete your personal information; to object to or restrict certain processing; to
+    withdraw consent; and to request a copy of your data. To exercise any of these rights,
+    contact us at <a href={`mailto:${contactEmail}`}>{contactEmail}</a>. We will respond in
+    accordance with applicable law.
+  </p>
+
+  <h2>9. Data security</h2>
+  <p>
+    We use reasonable technical and organizational measures to protect personal information
+    against loss, misuse, and unauthorized access. No method of transmission or storage is
+    completely secure, so we cannot guarantee absolute security.
+  </p>
+
+  <h2>10. International transfers</h2>
+  <p>
+    We operate internationally, and your information may be processed in countries other
+    than your own, including the United States and the European Union. Where required, we
+    use appropriate safeguards to protect your data when it is transferred across borders.
+  </p>
+
+  <h2>11. Children's privacy</h2>
+  <p>
+    Our services are intended for working professionals and are not directed to individuals
+    under 18. We do not knowingly collect personal information from children.
+  </p>
+
+  <h2>12. Changes to this policy</h2>
+  <p>
+    We may update this Privacy Policy from time to time. When we do, we will revise the
+    "Last updated" date above. Material changes will be communicated where appropriate.
+  </p>
+
+  <h2>13. Contact us</h2>
+  <p>
+    If you have questions about this Privacy Policy or how we handle your data, contact us at
+    <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+  </p>
+</LegalLayout>
