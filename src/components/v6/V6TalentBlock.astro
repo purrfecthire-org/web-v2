@@ -1,0 +1,342 @@
+---
+import type { LandingContent } from '../../content/index';
+import V6FaqAccordion from './V6FaqAccordion.astro';
+
+interface Props {
+  content: LandingContent;
+  faqs: { q: string; a: string }[];
+}
+
+const { content, faqs } = Astro.props;
+const { roles, offerAcceleration } = content;
+const tb = content.v6.talentBlock;
+
+// Links to the dedicated pages that explain each path in full depth.
+const OA_LEARN_MORE = '/offer-acceleration/4';
+const OA_APPLY = '/offer-acceleration/apply';
+const ROLES_URL = '/roles';
+
+// "Right fit" + "across 8 sessions" detail, reused from shared content.
+const oaFit = offerAcceleration.blocks[0]; // "You're the right fit if:"
+const oaSessions = offerAcceleration.blocks[1]; // "Across 8 sessions:"
+
+// Show every active role (not a fixed slice) so the scroller scales as more
+// searches are added over time.
+const activeRoles = roles.cards;
+---
+
+<section id="v6-talent" class="v6-talent">
+  <div class="v6-talent__container">
+
+    <header class="v6-talent__header reveal">
+      <span class="v6-talent__tag">{tb.tag}</span>
+      <h2 class="v6-talent__headline headline2">{tb.headline}</h2>
+      <p class="v6-talent__sub body1">{tb.sub}</p>
+    </header>
+
+    <!-- 1 ─ Offer Acceleration (full-width detail box) -->
+    <article class="v6-talent__oa reveal reveal-delay-1">
+      <div class="v6-talent__oa-head">
+        <span class="v6-talent__card-eyebrow eyebrow">{tb.oaEyebrow}</span>
+        <h3 class="v6-talent__oa-title headline3">{tb.oaTitle}</h3>
+        <p class="v6-talent__oa-body body1">{tb.oaBody}</p>
+      </div>
+
+      <div class="v6-talent__oa-cols">
+        <div class="v6-talent__sub-block">
+          <h4 class="v6-talent__sub-title">{oaFit.title}</h4>
+          <ul class="v6-talent__list">
+            {oaFit.items.map((item) => <li class="v6-talent__list-item">{item}</li>)}
+          </ul>
+        </div>
+        <div class="v6-talent__sub-block">
+          <h4 class="v6-talent__sub-title">{oaSessions.title}</h4>
+          <ul class="v6-talent__list">
+            {oaSessions.items.map((item) => <li class="v6-talent__list-item">{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="v6-talent__oa-actions">
+        <a href={OA_LEARN_MORE} class="btn v6-talent__btn--navy">{tb.oaLearnMore}</a>
+        <a href={OA_APPLY} class="v6-talent__link">{tb.oaApply}</a>
+      </div>
+    </article>
+
+    <!-- Offer Acceleration questions -->
+    <div class="v6-talent__faq reveal reveal-delay-1">
+      <V6FaqAccordion faqs={faqs} heading={tb.oaFaqHeading} accent="talent" />
+    </div>
+
+    <!-- 2 ─ Open roles (horizontal scroller — scales as roles grow) -->
+    <div class="v6-talent__roles-block reveal reveal-delay-2">
+      <div class="v6-talent__roles-head">
+        <div>
+          <span class="v6-talent__card-eyebrow eyebrow">{tb.rolesEyebrow}</span>
+          <h3 class="v6-talent__roles-title headline3">{tb.rolesTitle}</h3>
+          <p class="v6-talent__roles-desc body2">{tb.rolesDesc}</p>
+        </div>
+        <a href={ROLES_URL} class="btn v6-talent__btn--navy v6-talent__roles-cta">{tb.rolesBrowseAll}</a>
+      </div>
+
+      <div class="v6-talent__scroller">
+        {activeRoles.map((role) => (
+          <a href={ROLES_URL} class="v6-talent__role" aria-label={`${role.title} — ${role.cta}`}>
+            <div class="v6-talent__role-top">
+              <span class="v6-talent__role-tag eyebrow">{role.tag}</span>
+              <span class="v6-talent__role-comp">{role.comp}</span>
+            </div>
+            <h4 class="v6-talent__role-title">{role.title}</h4>
+            <p class="v6-talent__role-stage caption">{role.stage}</p>
+            <div class="v6-talent__role-stack">
+              {role.stack.map((s) => <span class="v6-talent__skill">{s}</span>)}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  // Talent lane theme — navy
+  $talent: #0D0857;
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+
+  .v6-talent {
+    padding-block: 7rem;
+    scroll-margin-top: 5rem;
+    background: linear-gradient(180deg, rgba(13, 8, 87, 0.05) 0%, rgba(13, 8, 87, 0.015) 100%);
+    border-bottom: 1px solid rgba(13, 8, 87, 0.12);
+
+    @include max-md { padding-block: 5rem; }
+
+    &__container {
+      max-width: 60rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    &__tag {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: $talent;
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+
+    &__headline { color: var(--color-text); }
+    &__sub { max-width: 42rem; }
+
+    &__card-eyebrow { color: $talent; font-weight: 600; }
+
+    // ── Offer Acceleration box ──────────────────────────────
+    &__oa {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      padding: 2.5rem;
+      border: 1px solid var(--color-border);
+      border-top: 4px solid $talent;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      @include max-sm { padding: 1.75rem; }
+    }
+
+    &__oa-head { display: flex; flex-direction: column; gap: 0.625rem; }
+    &__oa-title { color: var(--color-text); }
+    &__oa-body { color: var(--color-muted); max-width: 46rem; }
+
+    &__oa-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+
+      @include max-sm { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+
+    &__sub-block { display: flex; flex-direction: column; gap: 0.625rem; }
+    &__sub-title { font-size: 0.9375rem; font-weight: 600; color: var(--color-text); margin: 0; }
+    &__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    &__list-item {
+      position: relative;
+      padding-left: 1.5rem;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--color-muted);
+      &::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: $talent;
+        font-weight: 700;
+      }
+    }
+
+    &__oa-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    // ── shared button / link styles ─────────────────────────
+    &__btn--navy {
+      padding: 12px 24px;
+      background-color: $talent;
+      &:hover { background-color: #3C2BDC; }
+    }
+    &__link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--color-border);
+      transition: color 0.15s ease;
+      &:hover { color: $talent; }
+    }
+
+    // ── FAQ wrapper ─────────────────────────────────────────
+    &__faq { width: 100%; }
+
+    // ── Open roles ──────────────────────────────────────────
+    // A hairline divider + generous top padding separates the roles list from
+    // the Offer Acceleration questions above it (they were too cramped before).
+    &__roles-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      margin-top: 1.5rem;
+      padding-top: 3.25rem;
+      border-top: 1px solid rgba(13, 8, 87, 0.14);
+    }
+
+    &__roles-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+
+      @include max-sm { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+    &__roles-title { color: var(--color-text); margin-top: 0.375rem; }
+    &__roles-desc { color: var(--color-muted); max-width: 38rem; margin-top: 0.5rem; }
+    &__roles-cta { flex-shrink: 0; white-space: nowrap; }
+
+    // Horizontal scroller — fixed-width cards, snap, scales to any count
+    &__scroller {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.875rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(13, 8, 87, 0.3) transparent;
+
+      &::-webkit-scrollbar { height: 6px; }
+      &::-webkit-scrollbar-thumb { background: rgba(13, 8, 87, 0.25); border-radius: 999px; }
+      &::-webkit-scrollbar-track { background: transparent; }
+    }
+
+    // Compact, clickable role card — 4 rows instead of 6 (tag+comp share a row,
+    // then title, stage, stack). The whole card is the link, so no extra
+    // "Apply now" line is needed.
+    &__role {
+      flex: 0 0 22rem;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      text-decoration: none;
+      transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+
+      &:hover {
+        border-color: $talent;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(13, 8, 87, 0.12);
+      }
+
+      @include max-sm { flex-basis: 17rem; }
+    }
+
+    &__role-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    &__role-tag { color: $talent; }
+    &__role-comp { font-size: 0.9375rem; font-weight: 600; color: $talent; white-space: nowrap; }
+    &__role-title { font-size: 1.0625rem; font-weight: 600; color: var(--color-text); margin: 0; line-height: 1.3; }
+    &__role-stage { color: var(--color-muted); margin: 0; }
+    &__role-stack { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-top: 0.125rem; }
+    &__skill {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-muted);
+      background: rgba(13, 8, 87, 0.05);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 2px 8px;
+    }
+  }
+</style>
+
+<script>
+  const els = document.querySelectorAll('#v6-talent .reveal');
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  els.forEach((el) => obs.observe(el));
+</script>

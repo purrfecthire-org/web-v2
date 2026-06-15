@@ -16,7 +16,11 @@ export default defineConfig({
         !/\/offer-acceleration\/\d+\/?$/.test(page) &&
         !/\/jorge\/\d+\/?$/.test(page) &&
         !/\/offer-acceleration\/apply\/?$/.test(page) &&
-        !page.includes('/oa/payment/'),
+        !page.includes('/oa/payment/') &&
+        // Legacy numbered home tests (/1…/6 and /es/6) — V6 is the default home now
+        !/^https?:\/\/[^/]+\/(?:es\/)?\d+\/?$/.test(page) &&
+        // Role-detail design variants (/roles/1,2,3) — only the /roles index is canonical
+        !/\/roles\/\d+\/?$/.test(page),
     }),
   ],
   i18n: {

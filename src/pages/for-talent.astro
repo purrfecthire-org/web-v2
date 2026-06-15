@@ -1,0 +1,164 @@
+---
+// ── /for-talent ──────────────────────────────────────────────────────────
+// Dedicated landing destination for senior LATAM talent who click "For talent"
+// from the main site. Single-audience: leads with the skill-vs-offers gap,
+// then the two real ways in (live open roles + the Offer Acceleration
+// program), a placed-candidate testimonial, and a talent-side FAQ.
+//
+// Design is an ISOLATED replica of the V6 visual language (aurora background,
+// V6 nav, warm-cream canvas) with a navy accent for the talent lane. It does
+// NOT share the final design system — self-contained until a direction lands.
+import Layout from '../layouts/Layout.astro';
+import V6Nav from '../components/v6/V6Nav.astro';
+import TalentHero from '../components/talent/TalentHero.astro';
+import TalentBody from '../components/talent/TalentBody.astro';
+import V6FaqAccordion from '../components/v6/V6FaqAccordion.astro';
+import Footer from '../components/Footer.astro';
+import { getContent } from '../content/index';
+
+const c = getContent('en');
+const siteUrl = 'https://purrfecthire.com';
+const pageUrl = `${siteUrl}/for-talent`;
+
+const meta = {
+  title: 'For Talent — Land an offer at a US startup that matters | Purrfect Hire',
+  description:
+    'Senior LATAM professional getting filtered out of US roles? Two ways in: the 8-session Offer Acceleration program and live, calibrated open roles at YC and a16z startups.',
+};
+
+// Talent-only nav: in-page anchors + a cross-link to the founders page.
+const talentNav = {
+  ...c.nav,
+  links: [
+    { label: 'Open roles', href: '#roles' },
+    { label: 'Offer Acceleration', href: '#oa' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'For founders', href: '/for-founders' },
+  ],
+};
+
+// Talent-facing FAQ — facts already stated on the site (no fabrication).
+const faqs = [
+  {
+    q: 'What is the Offer Acceleration program?',
+    a: 'Offer Acceleration is an 8-session coaching program for senior LATAM professionals who already have the skills but keep getting filtered out or under-leveled. You get 1:1 coaching, real signal from active US searches, interview calibration, and direct intros when there is a fit.',
+  },
+  {
+    q: 'Who is Offer Acceleration for?',
+    a: 'Senior professionals with 5+ years of experience and consistent results who have applied to US roles and either get filtered out or receive offers below their level. If the technical bar is not your problem — getting in front of the right founders is — it is built for you.',
+  },
+  {
+    q: 'How do the open roles work?',
+    a: 'They are senior roles at YC- and a16z-backed startups, curated and active right now. Company names stay confidential until we make the intro. You apply once, get evaluated against the real bar, and get introduced to the founder when there is a genuine fit.',
+  },
+  {
+    q: 'Where is your talent based, and what do roles pay?',
+    a: 'We work with senior professionals across Latin America (LATAM), placing them at US startups — primarily remote or hybrid. Roles span engineering, AI/ML, and founding go-to-market positions, with compensation set at US market rates plus equity.',
+  },
+];
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Purrfect Hire',
+  url: siteUrl,
+  logo: `${siteUrl}/logos/ph_imagotipo.png`,
+  description: meta.description,
+  sameAs: ['https://www.linkedin.com/company/purrfect-hire'],
+  areaServed: 'Latin America',
+  knowsAbout: ['Career coaching', 'Technical interviews', 'US startup hiring', 'LATAM senior talent'],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout title={meta.title} description={meta.description} lang="en" canonicalUrl={pageUrl}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <!-- Fixed gradient aurora (ported from /6), navy-leaning — behind everything -->
+  <div class="ft-aurora" aria-hidden="true">
+    <div class="ft-aurora__blob ft-aurora__blob--1"></div>
+    <div class="ft-aurora__blob ft-aurora__blob--2"></div>
+    <div class="ft-aurora__blob ft-aurora__blob--3"></div>
+  </div>
+
+  <V6Nav content={talentNav} lang="en" />
+  <main style="position: relative; z-index: 1;">
+    <TalentHero />
+    <TalentBody content={c} />
+    <section id="faq" class="ft-faq">
+      <div class="ft-faq__container">
+        <V6FaqAccordion faqs={faqs} heading="Common questions" accent="talent" />
+      </div>
+    </section>
+  </main>
+  <Footer content={c.footer} />
+</Layout>
+
+<style is:global>
+  html { scroll-behavior: smooth; }
+
+  .v6-nav { opacity: 1; }
+
+  /* FAQ section wrapper around the shared accordion */
+  .ft-faq { position: relative; z-index: 1; padding-block: 6rem; }
+  .ft-faq__container { max-width: 52rem; margin-inline: auto; padding-inline: 2rem; }
+  @media (max-width: 640px) { .ft-faq { padding-block: 4rem; } .ft-faq__container { padding-inline: 1rem; } }
+
+  /* ── Fixed gradient aurora, pinned behind all content ── */
+  .ft-aurora {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .ft-aurora__blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+  }
+  .ft-aurora__blob--1 {
+    width: 700px; height: 700px; top: -200px; right: -200px;
+    background: radial-gradient(circle, rgba(13, 8, 87, 0.22) 0%, transparent 70%);
+    animation: ft-aurora-drift-1 20s ease-in-out infinite alternate;
+  }
+  .ft-aurora__blob--2 {
+    width: 600px; height: 600px; bottom: 20%; left: -200px;
+    background: radial-gradient(circle, rgba(60, 43, 220, 0.18) 0%, transparent 70%);
+    animation: ft-aurora-drift-2 25s ease-in-out infinite alternate;
+  }
+  .ft-aurora__blob--3 {
+    width: 500px; height: 500px; top: 50%; right: 10%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
+    animation: ft-aurora-drift-3 18s ease-in-out infinite alternate;
+  }
+
+  @keyframes ft-aurora-drift-1 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-60px, 80px) scale(1.1); }
+  }
+  @keyframes ft-aurora-drift-2 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(80px, -60px) scale(1.08); }
+  }
+  @keyframes ft-aurora-drift-3 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-40px, 60px) scale(0.92); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ft-aurora__blob { animation: none; }
+  }
+</style>

@@ -1,0 +1,182 @@
+---
+// ── V6 home (the default landing) ────────────────────────────────────────
+// Shared by `/` (en) and `/es/` (es). The two-lane structure: hero → path
+// chooser → founders lane → talent lane. All copy is content-driven through
+// content.v6 + the shared sections, so the page renders bilingually.
+import Layout from '../../layouts/Layout.astro';
+import V6Nav from './V6Nav.astro';
+import V6HeroSection from './V6HeroSection.astro';
+import V6PathChooser from './V6PathChooser.astro';
+import V6FoundersBlock from './V6FoundersBlock.astro';
+import V6TalentBlock from './V6TalentBlock.astro';
+import Footer from '../Footer.astro';
+import { getContent, type Lang } from '../../content/index';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const c = getContent(lang);
+const siteUrl = 'https://purrfecthire.com';
+
+// /  has its own two-lane structure, so the nav links point at the dedicated
+// destinations instead of the shared section ids. Labels are localized.
+const v6Nav = {
+  ...c.nav,
+  links: [
+    { label: c.v6.foundersBlock.tag, href: '/for-founders' },
+    { label: c.v6.talentBlock.tag, href: '/for-talent' },
+    { label: c.v6.talentBlock.rolesTitle, href: '/roles' },
+  ],
+};
+
+// FAQ sets live inside each lane as collapsible accordions; the two are merged
+// below to drive a single FAQPage JSON-LD block.
+const founderFaqs = c.v6.founderFaqs;
+const talentFaqs = c.v6.talentFaqs;
+const faqs = [...founderFaqs, ...talentFaqs];
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Purrfect Hire',
+  url: siteUrl,
+  logo: `${siteUrl}/logos/ph_imagotipo.png`,
+  description: c.meta.description,
+  sameAs: ['https://www.linkedin.com/company/purrfect-hire'],
+  areaServed: 'Latin America',
+  knowsAbout: ['Technical recruiting', 'Startup hiring', 'Culture-fit assessment', 'YC and a16z startups'],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Purrfect Hire',
+  url: siteUrl,
+  publisher: { '@type': 'Organization', name: 'Purrfect Hire' },
+};
+---
+
+<Layout
+  title={c.meta.title}
+  description={c.meta.description}
+  lang={lang}
+>
+  <!-- Structured data for search + AI engines (entity, site, and FAQ) -->
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <!-- Fixed gradient background (ported from /4) — sits behind everything -->
+  <div class="v6-aurora" aria-hidden="true">
+    <div class="v6-aurora__blob v6-aurora__blob--1"></div>
+    <div class="v6-aurora__blob v6-aurora__blob--2"></div>
+    <div class="v6-aurora__blob v6-aurora__blob--3"></div>
+  </div>
+
+  <V6Nav content={v6Nav} lang={lang} />
+  <main style="position: relative; z-index: 1;">
+    <V6HeroSection content={c.hero} />
+    <V6PathChooser content={c.v6.pathChooser} />
+    <V6FoundersBlock content={c} faqs={founderFaqs} />
+    <V6TalentBlock content={c} faqs={talentFaqs} />
+  </main>
+  <Footer content={c.footer} />
+</Layout>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* ── Fixed gradient aurora (ported from /4), pinned behind all content ── */
+  .v6-aurora {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .v6-aurora__blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+  }
+
+  .v6-aurora__blob--1 {
+    width: 700px;
+    height: 700px;
+    top: -200px;
+    right: -200px;
+    background: radial-gradient(circle, rgba(60, 43, 220, 0.26) 0%, transparent 70%);
+    animation: v6-aurora-drift-1 20s ease-in-out infinite alternate;
+  }
+
+  .v6-aurora__blob--2 {
+    width: 600px;
+    height: 600px;
+    bottom: 20%;
+    left: -200px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.20) 0%, transparent 70%);
+    animation: v6-aurora-drift-2 25s ease-in-out infinite alternate;
+  }
+
+  .v6-aurora__blob--3 {
+    width: 500px;
+    height: 500px;
+    top: 50%;
+    right: 10%;
+    background: radial-gradient(circle, rgba(13, 8, 87, 0.12) 0%, transparent 70%);
+    animation: v6-aurora-drift-3 18s ease-in-out infinite alternate;
+  }
+
+  @keyframes v6-aurora-drift-1 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-60px, 80px) scale(1.1); }
+  }
+
+  @keyframes v6-aurora-drift-2 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(80px, -60px) scale(1.08); }
+  }
+
+  @keyframes v6-aurora-drift-3 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-40px, 60px) scale(0.92); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v6-aurora__blob { animation: none; }
+  }
+
+  /* Intro choreography: nav joins in phase 4 (3.2s), with the rest of the content */
+  .v6-nav {
+    opacity: 0;
+    animation: v6-nav-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 3.2s forwards;
+  }
+
+  @keyframes v6-nav-in {
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v6-nav {
+      animation: none;
+      opacity: 1;
+    }
+  }
+</style>

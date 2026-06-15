@@ -253,9 +253,9 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
 <style lang="scss">
   @use '../../styles/breakpoints' as *;
 
-  $indigo: #4F46E5;
-  $cyan: #0891B2;
-  $emerald: #059669;
+  $indigo: #3C2BDC;
+  $cyan: #7C3AED;
+  $emerald: #0D0857;
   $ink: #111827;
   $muted: #6B7280;
   $subtle: #9CA3AF;
@@ -264,7 +264,7 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
   .rv1 {
     position: relative;
     z-index: 1;
-    font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+    font-family: Inter, sans-serif;
     color: $ink;
     min-height: 100vh;
     display: flex;
@@ -280,10 +280,10 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
     align-items: center;
     justify-content: space-between;
     padding: 14px clamp(1.25rem, 4vw, 2.5rem);
-    background: rgba(248, 247, 255, 0.78);
+    background: rgba(250, 249, 247, 0.78);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+    border-bottom: 1px solid rgba(60, 43, 220, 0.08);
   }
 
   .rv1__brand {
@@ -321,9 +321,9 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
-    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 4px 16px rgba(60, 43, 220, 0.3);
     transition: transform 0.15s ease, box-shadow 0.2s ease;
-    &:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(79, 70, 229, 0.4); }
+    &:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(60, 43, 220, 0.4); }
   }
 
   // ── Layout ───────────────────────────────────────────────────────
@@ -405,10 +405,10 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
     font-size: 15px;
     font-weight: 600;
     text-decoration: none;
-    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.35);
+    box-shadow: 0 4px 20px rgba(60, 43, 220, 0.35);
     transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     svg { transition: transform 0.2s ease; }
-    &:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79, 70, 229, 0.45); opacity: 0.96; }
+    &:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(60, 43, 220, 0.45); opacity: 0.96; }
     &:hover svg { transform: translateX(3px); }
   }
 
@@ -420,12 +420,12 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
     padding: clamp(1.5rem, 4vw, 2.5rem);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 36px rgba(79, 70, 229, 0.06);
+    box-shadow: 0 8px 36px rgba(60, 43, 220, 0.06);
 
     &--role {
-      border-color: rgba(8, 145, 178, 0.22);
+      border-color: rgba(124, 58, 237, 0.22);
       background:
-        linear-gradient(180deg, rgba(8, 145, 178, 0.04) 0%, rgba(255, 255, 255, 0) 140px),
+        linear-gradient(180deg, rgba(124, 58, 237, 0.04) 0%, rgba(255, 255, 255, 0) 140px),
         rgba(255, 255, 255, 0.85);
     }
   }
@@ -501,8 +501,8 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
   .rv1__award {
     display: inline-flex;
     align-items: center;
-    background: rgba(79, 70, 229, 0.07);
-    border: 1px solid rgba(79, 70, 229, 0.16);
+    background: rgba(60, 43, 220, 0.07);
+    border: 1px solid rgba(60, 43, 220, 0.16);
     color: $indigo;
     border-radius: 999px;
     padding: 6px 14px;
@@ -521,7 +521,7 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
   .rv1__stat {
     flex: 1 1 130px;
     background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(79, 70, 229, 0.12);
+    border: 1px solid rgba(60, 43, 220, 0.12);
     border-radius: 14px;
     padding: 16px 18px;
   }
@@ -556,9 +556,9 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(5, 150, 105, 0.07);
-    border: 1px solid rgba(5, 150, 105, 0.18);
-    color: #047857;
+    background: rgba(13, 8, 87, 0.07);
+    border: 1px solid rgba(13, 8, 87, 0.18);
+    color: #0D0857;
     border-radius: 999px;
     padding: 7px 14px;
     font-size: 13px;
@@ -575,9 +575,9 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
   }
 
   .rv1__skill {
-    background: rgba(79, 70, 229, 0.08);
+    background: rgba(60, 43, 220, 0.08);
     color: $indigo;
-    border: 1px solid rgba(79, 70, 229, 0.16);
+    border: 1px solid rgba(60, 43, 220, 0.16);
     border-radius: 7px;
     padding: 5px 12px;
     font-size: 13px;
@@ -633,8 +633,8 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
     align-items: center;
     gap: 8px;
     margin-top: 2rem;
-    background: rgba(79, 70, 229, 0.06);
-    border: 1px solid rgba(79, 70, 229, 0.16);
+    background: rgba(60, 43, 220, 0.06);
+    border: 1px solid rgba(60, 43, 220, 0.16);
     border-radius: 12px;
     padding: 12px 16px;
     font-size: 14px;
@@ -677,10 +677,10 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
       top: 16px;
       bottom: -2px;
       width: 2px;
-      background: rgba(79, 70, 229, 0.14);
+      background: rgba(60, 43, 220, 0.14);
     }
     &:last-child::before { display: none; }
-    &--client::before { background: rgba(5, 150, 105, 0.18); }
+    &--client::before { background: rgba(13, 8, 87, 0.18); }
   }
 
   .rv1__step-dot {
@@ -729,8 +729,8 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
   .rv1__cta {
     text-align: center;
     padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(8, 145, 178, 0.08) 100%);
-    border: 1.5px solid rgba(79, 70, 229, 0.16);
+    background: linear-gradient(135deg, rgba(60, 43, 220, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+    border: 1.5px solid rgba(60, 43, 220, 0.16);
     border-radius: 24px;
     display: flex;
     flex-direction: column;
@@ -764,7 +764,7 @@ const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') 
     margin-inline: auto;
     width: 100%;
     padding: 2rem clamp(1.25rem, 4vw, 2rem);
-    border-top: 1px solid rgba(79, 70, 229, 0.08);
+    border-top: 1px solid rgba(60, 43, 220, 0.08);
     font-size: 13px;
     font-weight: 600;
     color: $muted;

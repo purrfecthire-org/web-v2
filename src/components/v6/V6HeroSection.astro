@@ -19,11 +19,18 @@ const exitX = 864; // ~60% of the 1440 viewBox
 const month12X = CHART_RIGHT;
 const ticks = [month1X, exitX, month12X];
 
-// Bundle origins align (in height) with the two headline phrases as they now sit
-// (~45% / ~51% from the top): gray starts level with "Skills get people hired.",
-// purple a touch lower at "Culture fit makes them stay.".
-const SKILLS_START = 330;
-const CULTURE_START = 418;
+// ── Line-bundle vertical origins (TUNE THESE to line up with the headline) ──
+// These two numbers are the ONLY knobs for change-3 alignment. They are y
+// values in the SVG viewBox (0–800 tall), and because the chart is stretched
+// with preserveAspectRatio="none", a value of Y lands at (Y / 800) of the
+// section height on screen.
+//   • SKILLS_START  → height where the GRAY/RED (downward) lines begin.
+//     Set it level with the FIRST phrase "Skills get people hired."
+//   • CULTURE_START → height where the PURPLE (upward) lines begin.
+//     Set it level with the SECOND phrase "Culture fit makes them stay."
+// Increase a value to push that origin DOWN, decrease to move it UP.
+const SKILLS_START = 348;
+const CULTURE_START = 465;
 const CULTURE_TOP = 150;
 
 // Skills bundle: starts at the first phrase's height, decays and funnels into
@@ -50,20 +57,6 @@ const culturePaths = Array.from({ length: 10 }, (_, i) => ({
   flowDelay: 5.0 + i * 0.25,
 }));
 
-// Headline phrases split into words/letters for the staggered reveal
-const splitPhrase = (phrase: string) =>
-  phrase.split(" ").map((word) => word.split(""));
-
-const LETTER_STAGGER = 0.045;
-const WORD_STAGGER = 0.12;
-const PHASE_1 = 0.3;
-const PHASE_2 = 2.0;
-
-const letterDelay = (base: number, wi: number, li: number) =>
-  base + wi * WORD_STAGGER + li * LETTER_STAGGER;
-
-const skillsWords = splitPhrase(content.headline);
-const cultureWords = splitPhrase(content.headlineAccent);
 ---
 
 <section class="v6-hero">
@@ -190,35 +183,10 @@ const cultureWords = splitPhrase(content.headlineAccent);
   <div class="v6-hero__container">
     <div class="v6-hero__content">
 
-      <!-- Headline: each phrase reveals letter by letter, synced with its line -->
-      <h1
-        class="v6-hero__headline headline1"
-        aria-label={`${content.headline} ${content.headlineAccent}`}
-      >
-        <span class="v6-hero__phrase v6-hero__phrase--skills" aria-hidden="true">
-          {skillsWords.map((word, wi) => (
-            <span class="v6-hero__word">
-              {word.map((letter, li) => (
-                <span
-                  class="v6-hero__letter"
-                  style={`animation-delay: ${letterDelay(PHASE_1, wi, li)}s;`}
-                >{letter}</span>
-              ))}
-            </span>
-          ))}
-        </span>
-        <span class="v6-hero__phrase v6-hero__phrase--culture" aria-hidden="true">
-          {cultureWords.map((word, wi) => (
-            <span class="v6-hero__word">
-              {word.map((letter, li) => (
-                <span
-                  class="v6-hero__letter"
-                  style={`animation-delay: ${letterDelay(PHASE_2, wi, li)}s;`}
-                >{letter}</span>
-              ))}
-            </span>
-          ))}
-        </span>
+      <!-- Headline: each phrase fades in as a whole (ease-in), synced with its line -->
+      <h1 class="v6-hero__headline headline1">
+        <span class="v6-hero__phrase v6-hero__phrase--skills">{content.headline}</span>
+        <span class="v6-hero__phrase v6-hero__phrase--culture">{content.headlineAccent}</span>
       </h1>
 
       <!-- Metrics — phase 3 -->
@@ -244,10 +212,10 @@ const cultureWords = splitPhrase(content.headlineAccent);
 
       <!-- CTAs — phase 4: dual buttons, each proximity-reactive on desktop -->
       <div class="v6-hero__ctas v6-phase-4">
-        <a href="#audience" id="v6-cta-founders" class="v6-hero__cta v6-hero__cta--founders">
+        <a href="/for-founders" id="v6-cta-founders" class="v6-hero__cta v6-hero__cta--founders">
           {content.ctaFounders}
         </a>
-        <a href="#audience" id="v6-cta-talent" class="v6-hero__cta v6-hero__cta--talent">
+        <a href="/for-talent" id="v6-cta-talent" class="v6-hero__cta v6-hero__cta--talent">
           {content.ctaTalent}
         </a>
       </div>
@@ -259,16 +227,16 @@ const cultureWords = splitPhrase(content.headlineAccent);
 <style lang="scss">
   @use '../../styles/breakpoints' as *;
 
-  // ── Intro choreography timeline (slower, ~5s total) ────────
-  // 0.3s  phase 1: "Skills get people hired." letters + axis + skills bundle
-  // 2.0s  phase 2: "Culture fit makes them stay." letters + culture bundle
-  // 3.6s  phase 3: metrics fade in (counts run alongside)
-  // 4.5s  phase 4: CTAs (nav fades from the page)
-  // 5.0s+ ambient: continuous line flow, pulses, float
-  $t-phase-1: 0.3s;
-  $t-phase-2: 2.0s;
-  $t-phase-3: 3.6s;
-  $t-phase-4: 4.5s;
+  // ── Intro choreography timeline ────────────────────────────
+  // 0.0s → 0.8s  phase 1: "Skills get people hired." fades in + axis + skills bundle
+  // 1.5s → 2.2s  phase 2: "Culture fit makes them stay." fades in + culture bundle
+  // 2.5s         phase 3: metrics / KPIs fade in (counts run alongside)
+  // 3.2s         phase 4: the rest of the content (CTAs + nav)
+  // 5.0s+        ambient: continuous line flow, pulses, float
+  $t-phase-1: 0s;
+  $t-phase-2: 1.5s;
+  $t-phase-3: 2.5s;
+  $t-phase-4: 3.2s;
   $t-ambient: 5.0s;
 
   $ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -348,7 +316,7 @@ const cultureWords = splitPhrase(content.headlineAccent);
 
     &__headline {
       text-align: left;
-      max-width: 64rem;
+      max-width: 96rem;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -358,45 +326,27 @@ const cultureWords = splitPhrase(content.headlineAccent);
       }
     }
 
+    // Phrase typography mirrors V4's hero headline (size + weight).
     &__phrase {
       display: block;
-    }
-
-    &__word {
-      display: inline-block;
-      white-space: nowrap;
-      margin-right: 0.28em;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-
-    // Each letter springs up individually; gradient text like the reference
-    &__letter {
-      display: inline-block;
+      font-size: clamp(2.6rem, 6vw, 5.25rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      // Fade the whole phrase in (ease-in) — no per-letter stagger.
       opacity: 0;
-      transform: translateY(0.7em);
-      animation: v6-letter-in 0.8s $ease-spring forwards;
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
     }
 
-    &__phrase--skills .v6-hero__letter {
-      background-image: linear-gradient(
-        90deg,
-        var(--color-text) 0%,
-        rgba(15, 15, 15, 0.72) 100%
-      );
+    // First phrase: solid black (matches V4's headline color). 0s → 0.8s.
+    &__phrase--skills {
+      color: #111827;
+      animation: v6-fade-in 0.8s ease-in $t-phase-1 forwards;
     }
 
-    &__phrase--culture .v6-hero__letter {
-      background-image: linear-gradient(
-        90deg,
-        var(--color-accent) 0%,
-        rgba(60, 43, 220, 0.65) 100%
-      );
+    // Second phrase: solid secondary purple — no gradient. 1.5s → 2.2s.
+    &__phrase--culture {
+      color: var(--color-accent);
+      animation: v6-fade-in 0.7s ease-in $t-phase-2 forwards;
     }
 
     // ── Metrics ─────────────────────────────────────────────
@@ -565,11 +515,11 @@ const cultureWords = splitPhrase(content.headlineAccent);
       clip-path: inset(-5% 105% -5% -2%);
 
       &--skills {
-        animation: v6-draw 1.7s $ease-quart $t-phase-1 forwards;
+        animation: v6-draw 0.8s $ease-quart $t-phase-1 forwards;
       }
 
       &--culture {
-        animation: v6-draw 1.8s $ease-expo $t-phase-2 forwards;
+        animation: v6-draw 0.7s $ease-expo $t-phase-2 forwards;
       }
     }
 
@@ -613,13 +563,6 @@ const cultureWords = splitPhrase(content.headlineAccent);
       transform-origin: center;
       animation: v6-pulse 2.6s $ease-expo $t-ambient infinite;
       opacity: 0;
-    }
-  }
-
-  @keyframes v6-letter-in {
-    to {
-      opacity: 1;
-      transform: translateY(0);
     }
   }
 
@@ -675,10 +618,9 @@ const cultureWords = splitPhrase(content.headlineAccent);
       animation: none;
     }
 
-    .v6-hero__letter {
+    .v6-hero__phrase {
       animation: none;
       opacity: 1;
-      transform: none;
     }
 
     .v6-phase-3,
@@ -714,8 +656,8 @@ const cultureWords = splitPhrase(content.headlineAccent);
 </style>
 
 <script>
-  // Metric count-up, synced to phase 3 of the intro choreography
-  const PHASE_3_DELAY = 3600;
+  // Metric count-up, synced to phase 3 of the intro choreography (2.5s)
+  const PHASE_3_DELAY = 2500;
 
   function animateCount(el: Element, target: number, duration: number = 1200) {
     const countEl = el.querySelector('.count');

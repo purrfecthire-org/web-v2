@@ -237,9 +237,9 @@ const factTiles = [
 <style lang="scss">
   @use '../../styles/breakpoints' as *;
 
-  $indigo: #4F46E5;
-  $cyan: #0891B2;
-  $emerald: #059669;
+  $indigo: #3C2BDC;
+  $cyan: #7C3AED;
+  $emerald: #0D0857;
   $ink: #111827;
   $muted: #6B7280;
   $subtle: #9CA3AF;
@@ -248,7 +248,7 @@ const factTiles = [
 
   .rv3 {
     position: relative;
-    font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+    font-family: Inter, sans-serif;
     color: $ink;
     min-height: 100vh;
     overflow: hidden;
@@ -274,7 +274,7 @@ const factTiles = [
     height: 640px;
     top: -180px;
     right: -160px;
-    background: radial-gradient(circle, rgba(79, 70, 229, 0.18) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(60, 43, 220, 0.18) 0%, transparent 70%);
   }
 
   .rv3__blob--2 {
@@ -282,7 +282,7 @@ const factTiles = [
     height: 560px;
     bottom: 5%;
     left: -180px;
-    background: radial-gradient(circle, rgba(8, 145, 178, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
   }
 
   // ── Top bar ──────────────────────────────────────────────────────
@@ -294,10 +294,10 @@ const factTiles = [
     align-items: center;
     justify-content: space-between;
     padding: 14px clamp(1.25rem, 4vw, 2.5rem);
-    background: rgba(246, 248, 255, 0.78);
+    background: rgba(250, 249, 247, 0.78);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+    border-bottom: 1px solid rgba(60, 43, 220, 0.08);
   }
 
   .rv3__brand {
@@ -330,7 +330,7 @@ const factTiles = [
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
-    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 4px 16px rgba(60, 43, 220, 0.3);
     transition: transform 0.15s ease;
     &:hover { transform: translateY(-1px); }
   }
@@ -382,7 +382,7 @@ const factTiles = [
 
   .rv3__chip {
     background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(79, 70, 229, 0.14);
+    border: 1px solid rgba(60, 43, 220, 0.14);
     border-radius: 999px;
     padding: 6px 14px;
     font-size: 13px;
@@ -390,7 +390,7 @@ const factTiles = [
     color: #374151;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    &--accent { color: $indigo; font-weight: 600; border-color: rgba(79, 70, 229, 0.3); }
+    &--accent { color: $indigo; font-weight: 600; border-color: rgba(60, 43, 220, 0.3); }
   }
 
   .rv3__apply {
@@ -404,10 +404,10 @@ const factTiles = [
     font-size: 15px;
     font-weight: 600;
     text-decoration: none;
-    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.35);
+    box-shadow: 0 4px 20px rgba(60, 43, 220, 0.35);
     transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     svg { transition: transform 0.2s ease; }
-    &:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79, 70, 229, 0.45); opacity: 0.96; }
+    &:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(60, 43, 220, 0.45); opacity: 0.96; }
     &:hover svg { transform: translateX(3px); }
     &--lg { padding: 15px 30px; }
   }
@@ -451,13 +451,13 @@ const factTiles = [
     padding: 22px;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 6px 28px rgba(79, 70, 229, 0.05);
+    box-shadow: 0 6px 28px rgba(60, 43, 220, 0.05);
     transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 
     &:hover {
       transform: translateY(-3px);
-      box-shadow: 0 14px 40px rgba(79, 70, 229, 0.1);
-      border-color: rgba(79, 70, 229, 0.22);
+      box-shadow: 0 14px 40px rgba(60, 43, 220, 0.1);
+      border-color: rgba(60, 43, 220, 0.22);
     }
 
     &--story {
@@ -510,9 +510,9 @@ const factTiles = [
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: rgba(5, 150, 105, 0.07);
-    border: 1px solid rgba(5, 150, 105, 0.18);
-    color: #047857;
+    background: rgba(13, 8, 87, 0.07);
+    border: 1px solid rgba(13, 8, 87, 0.18);
+    color: #0D0857;
     border-radius: 999px;
     padding: 5px 11px;
     font-size: 12px;
@@ -596,9 +596,9 @@ const factTiles = [
   .rv3__skills { display: flex; flex-wrap: wrap; gap: 7px; }
 
   .rv3__skill {
-    background: rgba(79, 70, 229, 0.08);
+    background: rgba(60, 43, 220, 0.08);
     color: $indigo;
-    border: 1px solid rgba(79, 70, 229, 0.16);
+    border: 1px solid rgba(60, 43, 220, 0.16);
     border-radius: 7px;
     padding: 5px 12px;
     font-size: 12.5px;
@@ -610,8 +610,8 @@ const factTiles = [
     align-items: center;
     gap: 8px;
     align-self: flex-start;
-    background: rgba(79, 70, 229, 0.06);
-    border: 1px solid rgba(79, 70, 229, 0.16);
+    background: rgba(60, 43, 220, 0.06);
+    border: 1px solid rgba(60, 43, 220, 0.16);
     border-radius: 11px;
     padding: 10px 14px;
     font-size: 13.5px;
@@ -648,11 +648,11 @@ const factTiles = [
       top: 15px;
       bottom: -2px;
       width: 2px;
-      background: rgba(79, 70, 229, 0.14);
+      background: rgba(60, 43, 220, 0.14);
     }
     &:last-child { padding-bottom: 0; }
     &:last-child::before { display: none; }
-    &--client::before { background: rgba(5, 150, 105, 0.18); }
+    &--client::before { background: rgba(13, 8, 87, 0.18); }
   }
 
   .rv3__step-dot {
@@ -686,8 +686,8 @@ const factTiles = [
     text-align: center;
     padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
     margin-top: 2.5rem;
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(8, 145, 178, 0.08) 100%);
-    border: 1.5px solid rgba(79, 70, 229, 0.16);
+    background: linear-gradient(135deg, rgba(60, 43, 220, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+    border: 1.5px solid rgba(60, 43, 220, 0.16);
     border-radius: 24px;
     display: flex;
     flex-direction: column;

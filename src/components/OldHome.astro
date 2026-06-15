@@ -1,0 +1,48 @@
+---
+// ── Legacy home (pre-V6 design) ──────────────────────────────────────────
+// The original multi-section landing, kept reachable at /6 (en) and /es/6 (es)
+// after V6 became the default home. Parameterized by lang so both routes share
+// one source.
+import Layout from '../layouts/Layout.astro';
+import Nav from './Nav.astro';
+import HeroSection from './HeroSection.astro';
+import CompanyCarousel from './CompanyCarousel.astro';
+import Why2026Section from './Why2026Section.astro';
+import AudienceSplit from './AudienceSplit.astro';
+import OfferAccelerationSection from './OfferAccelerationSection.astro';
+import EngineSection from './EngineSection.astro';
+import CultureSection from './CultureSection.astro';
+import TestimonialsSection from './TestimonialsSection.astro';
+import RolesSection from './RolesSection.astro';
+import CTASection from './CTASection.astro';
+import Footer from './Footer.astro';
+import { getContent, type Lang } from '../content/index';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const c = getContent(lang);
+---
+
+<Layout
+  title={c.meta.title}
+  description={c.meta.description}
+  lang={lang}
+>
+  <Nav content={c.nav} lang={lang} />
+  <main>
+    <HeroSection content={c.hero} />
+    <CompanyCarousel />
+    <Why2026Section content={c.why2026} />
+    <AudienceSplit content={c.audienceSplit} />
+    <OfferAccelerationSection content={c.offerAcceleration} />
+    <EngineSection content={c.engine} />
+    <CultureSection content={c.culture} />
+    <TestimonialsSection content={c.testimonials} />
+    <RolesSection content={c.roles} />
+    <CTASection content={c.cta} />
+  </main>
+  <Footer content={c.footer} />
+</Layout>

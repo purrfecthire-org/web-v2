@@ -1,0 +1,333 @@
+---
+import type { LandingContent } from '../../content/index';
+import V6FaqAccordion from './V6FaqAccordion.astro';
+
+interface Props {
+  content: LandingContent;
+  faqs: { q: string; a: string }[];
+}
+
+const { content, faqs } = Astro.props;
+const { hero, testimonials, engine } = content;
+const fb = content.v6.foundersBlock;
+
+// Single founder CTA → sales booking link.
+const BOOKING_URL = 'https://calendly.com/alison-ph/oa';
+
+// Compact client strip (same set as the shared carousel).
+const clients = [
+  { name: 'Addi', logo: '/carrousel/addi.svg' },
+  { name: 'Bolsiyo', logo: '/carrousel/bolsiyo.png' },
+  { name: 'Cometa', logo: '/carrousel/cometa.png' },
+  { name: 'Optery', logo: '/carrousel/optery.svg' },
+  { name: 'PayJoy', logo: '/carrousel/payjoy.svg' },
+  { name: 'Rutter', logo: '/carrousel/rutter.svg' },
+];
+
+// Two founder testimonials — the proof, kept short.
+const quotes = [testimonials.featured, testimonials.grid[0]];
+
+// Culture-fit research quotes (a16z / YC) — named entities for AI citation.
+const cultureQuotes = content.culture.quotes;
+---
+
+<section id="v6-founders" class="v6-founders">
+  <div class="v6-founders__container">
+
+    <header class="v6-founders__header reveal">
+      <span class="v6-founders__tag">{fb.tag}</span>
+      <h2 class="v6-founders__headline headline2">{fb.headline}</h2>
+      <p class="v6-founders__sub body1">{fb.sub}</p>
+    </header>
+
+    <!-- Metrics -->
+    <div class="v6-founders__metrics reveal reveal-delay-1">
+      {hero.stats.map((stat) => (
+        <div class="v6-founders__metric">
+          <div class="v6-founders__metric-value">{stat.suffixLeft}{stat.value}{stat.suffix}</div>
+          <p class="v6-founders__metric-label">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Answer block: culture fit -->
+    <div class="v6-founders__answer reveal reveal-delay-1">
+      <h3 class="v6-founders__q headline3">{fb.cultureQ}</h3>
+      <p class="v6-founders__a body1">{fb.cultureA}</p>
+      <div class="v6-founders__quote-row">
+        {cultureQuotes.map((q) => (
+          <figure class="v6-founders__research">
+            <blockquote class="body2">"{q.text}"</blockquote>
+            <figcaption class="eyebrow">{q.attribution}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+
+    <!-- Answer block: how it works -->
+    <div class="v6-founders__answer reveal reveal-delay-1">
+      <h3 class="v6-founders__q headline3">{fb.engineQ}</h3>
+      <p class="v6-founders__a body1">{fb.engineA}</p>
+      <ol class="v6-founders__steps">
+        {engine.steps.map((step) => (
+          <li class="v6-founders__step">
+            <span class="v6-founders__step-id">{step.id}</span>
+            <div class="v6-founders__step-text">
+              <strong class="v6-founders__step-title">{step.title}</strong>
+              <span class="v6-founders__step-desc">{step.description}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <!-- Client strip -->
+    <div class="v6-founders__clients reveal reveal-delay-2">
+      <p class="v6-founders__clients-label eyebrow">{hero.trustLabel}</p>
+      <div class="v6-founders__clients-row">
+        {clients.map((c) => (
+          <img src={c.logo} alt={c.name} class="v6-founders__client-logo" loading="lazy" />
+        ))}
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="v6-founders__quotes reveal reveal-delay-2">
+      {quotes.map((q) => (
+        <figure class="v6-founders__quote-card">
+          <blockquote class="v6-founders__quote-text body2">"{q.quote}"</blockquote>
+          <figcaption class="v6-founders__quote-meta">
+            <span class="v6-founders__quote-name">{q.name}</span>
+            <span class="v6-founders__quote-role caption">{q.role}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <!-- Single CTA -->
+    <div class="v6-founders__cta reveal reveal-delay-3">
+      <a href={BOOKING_URL} target="_blank" rel="noopener" class="btn v6-founders__cta-btn">
+        {fb.ctaBtn}
+      </a>
+      <p class="v6-founders__cta-sub caption">{fb.ctaSub}</p>
+    </div>
+
+    <!-- Founder FAQ — collapsible, closed by default -->
+    <div class="v6-founders__faq reveal reveal-delay-3">
+      <V6FaqAccordion faqs={faqs} heading={fb.faqHeading} accent="founders" />
+    </div>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  // Founders lane theme — purple
+  $founders: #3C2BDC;
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  .v6-founders {
+    padding-block: 7rem;
+    scroll-margin-top: 5rem;
+    // Faint purple wash — translucent so the page aurora still reads through.
+    background: linear-gradient(180deg, rgba(60, 43, 220, 0.05) 0%, rgba(60, 43, 220, 0.015) 100%);
+    border-top: 1px solid rgba(60, 43, 220, 0.12);
+    border-bottom: 1px solid rgba(60, 43, 220, 0.12);
+
+    @include max-md { padding-block: 5rem; }
+
+    &__container {
+      max-width: 60rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.75rem;
+
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    &__tag {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: $founders;
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+
+    &__headline { color: var(--color-text); max-width: 38rem; }
+    &__sub { max-width: 40rem; }
+
+    &__metrics {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+
+      @include max-sm { gap: 1.75rem; }
+    }
+
+    &__metric { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-align: center; }
+    &__metric-value {
+      font-size: 2.5rem;
+      font-weight: 600;
+      line-height: 1;
+      color: $founders;
+      @include max-sm { font-size: 1.875rem; }
+    }
+    &__metric-label { font-size: 0.875rem; color: var(--color-muted); }
+
+    // Answer blocks
+    &__answer {
+      width: 100%;
+      max-width: 46rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    &__q {
+      color: var(--color-text);
+      padding-left: 0.875rem;
+      border-left: 3px solid $founders;
+    }
+    &__a { color: var(--color-muted); }
+
+    &__quote-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      @include max-sm { grid-template-columns: 1fr; }
+    }
+    &__research {
+      margin: 0;
+      padding: 1.25rem;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      blockquote { margin: 0; color: var(--color-text); font-style: italic; }
+      figcaption { color: $founders; }
+    }
+
+    // Steps
+    &__steps {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      counter-reset: none;
+    }
+    &__step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    &__step-id {
+      flex-shrink: 0;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: $founders;
+      background: rgba(60, 43, 220, 0.1);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &__step-text { display: flex; flex-direction: column; gap: 0.25rem; }
+    &__step-title { color: var(--color-text); font-weight: 500; line-height: 1.4; }
+    &__step-desc { font-size: 0.9375rem; line-height: 1.55; color: var(--color-muted); }
+
+    // Clients
+    &__clients {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    &__clients-label { color: var(--color-tertiary); }
+    &__clients-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      @include max-sm { gap: 1.5rem; }
+    }
+    &__client-logo { height: 28px; width: auto; max-width: 110px; object-fit: contain; opacity: 0.7; }
+
+    // Testimonials
+    &__quotes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      width: 100%;
+      @include max-md { grid-template-columns: 1fr; }
+    }
+    &__quote-card {
+      margin: 0;
+      padding: 1.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    &__quote-text { color: var(--color-text); font-style: italic; }
+    &__quote-meta { display: flex; flex-direction: column; gap: 0.125rem; }
+    &__quote-name { font-size: 0.875rem; font-weight: 500; color: var(--color-text); }
+    &__quote-role { color: var(--color-tertiary); }
+
+    // CTA
+    &__cta { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+    &__cta-btn { padding: 14px 28px; }
+    &__cta-sub { color: var(--color-muted); }
+
+    // FAQ
+    &__faq { width: 100%; max-width: 46rem; margin-top: 0.5rem; }
+  }
+</style>
+
+<script>
+  const els = document.querySelectorAll('#v6-founders .reveal');
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach((el) => obs.observe(el));
+</script>

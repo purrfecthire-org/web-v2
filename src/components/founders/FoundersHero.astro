@@ -1,0 +1,286 @@
+---
+// ── For Founders — Hero ──────────────────────────────────────────────────
+// Isolated design test. Mirrors the V6 visual language (warm-cream canvas,
+// purple accent, glass cards, pill CTAs) but is self-contained under the
+// `ff-` (for-founders) prefix so nothing here leaks into the shared system.
+//
+// The first second has to land the proof, not the pitch: founders arriving
+// from the main site are busy operators. So the hero leads with two real
+// placement outcomes rendered as oversized "proof" cards.
+//
+// NOTE: company logos are placeholders pulled from the existing carousel set.
+// Swap `logo` for the real companies once confirmed.
+const BOOKING_URL = 'https://calendly.com/alison-ph/oa';
+
+const proof = [
+  {
+    big: '2+ years',
+    headline: 'Placed once. Still building today.',
+    body:
+      'A senior hire we placed is still in seat and shipping more than two years later — past the window where most startup hires quietly break.',
+    logo: '/carrousel/payjoy.svg',
+    logoAlt: 'Company logo (placeholder)',
+  },
+  {
+    big: 'Senior → CEO',
+    headline: 'Joined as an engineer. Now runs the company.',
+    body:
+      'One placement walked in as a senior developer. The fit was so right that today they lead the company as its CEO.',
+    logo: '/carrousel/rutter.svg',
+    logoAlt: 'Company logo (placeholder)',
+  },
+];
+---
+
+<section id="hero" data-section="hero" class="ff-hero">
+  <div class="ff-hero__container">
+
+    <header class="ff-hero__head">
+      <span class="ff-hero__tag">For founders</span>
+      <h1 class="ff-hero__headline">
+        You don't need more résumés.
+        <span class="ff-hero__headline-accent">You need hires that stay.</span>
+      </h1>
+      <p class="ff-hero__sub body1">
+        Purrfect Hire places senior LATAM talent at YC- and a16z-backed startups —
+        where the wrong hire costs months of runway you can't recover. Here's what
+        "right fit" actually looks like.
+      </p>
+    </header>
+
+    <!-- Two real outcomes, sized to read in under a second -->
+    <div class="ff-hero__proof">
+      {proof.map((p) => (
+        <article class="ff-hero__card">
+          <div class="ff-hero__card-big">{p.big}</div>
+          <h2 class="ff-hero__card-headline">{p.headline}</h2>
+          <p class="ff-hero__card-body">{p.body}</p>
+          <div class="ff-hero__card-foot">
+            <img src={p.logo} alt={p.logoAlt} class="ff-hero__card-logo" loading="eager" />
+            <span class="ff-hero__card-note">Verified placement</span>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="ff-hero__ctas">
+      <a href={BOOKING_URL} target="_blank" rel="noopener" class="ff-hero__cta ff-hero__cta--primary">
+        Talk to our team →
+      </a>
+      <a href="#metrics" class="ff-hero__cta ff-hero__cta--ghost">See the numbers</a>
+    </div>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  $accent: #3C2BDC;
+
+  .ff-fade {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: ff-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .ff-hero {
+    position: relative;
+    z-index: 1;
+    padding-top: 9rem;
+    padding-bottom: 5rem;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+
+    @include max-md {
+      padding-top: 7rem;
+      padding-bottom: 3.5rem;
+      min-height: auto;
+    }
+
+    &__container {
+      width: 100%;
+      max-width: 68rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; gap: 2.25rem; }
+    }
+
+    &__head {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      max-width: 46rem;
+
+      // Phase 1 — header settles in first
+      opacity: 0;
+      animation: ff-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    &__tag {
+      align-self: flex-start;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: $accent;
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+
+    &__headline {
+      font-size: clamp(2.4rem, 5.5vw, 4.25rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      color: #111827;
+      margin: 0;
+    }
+
+    &__headline-accent {
+      display: block;
+      color: $accent;
+    }
+
+    &__sub {
+      max-width: 40rem;
+    }
+
+    // ── Proof cards ──────────────────────────────────────────
+    &__proof {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+
+      @include max-md { grid-template-columns: 1fr; }
+    }
+
+    &__card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      padding: 2.25rem;
+      border: 1px solid var(--color-border);
+      border-top: 4px solid $accent;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.74);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      // Phase 2 — proof cards rise after the header
+      opacity: 0;
+      animation: ff-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+      &:nth-child(1) { animation-delay: 0.35s; }
+      &:nth-child(2) { animation-delay: 0.5s; }
+
+      @include max-sm { padding: 1.75rem; }
+    }
+
+    &__card-big {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: $accent;
+    }
+
+    &__card-headline {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    &__card-body {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--color-muted);
+      margin: 0;
+    }
+
+    &__card-foot {
+      margin-top: auto;
+      padding-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    &__card-logo {
+      height: 24px;
+      width: auto;
+      max-width: 96px;
+      object-fit: contain;
+      opacity: 0.75;
+    }
+
+    &__card-note {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--color-tertiary);
+    }
+
+    // ── CTAs ─────────────────────────────────────────────────
+    &__ctas {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: ff-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+
+      @include max-sm { flex-direction: column; align-items: stretch; }
+    }
+
+    &__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+      &--primary {
+        background: #0F0F0F;
+        color: #fff;
+        &:hover { background: $accent; }
+      }
+
+      &--ghost {
+        background: transparent;
+        color: #0F0F0F;
+        border: 1.5px solid #0F0F0F;
+        &:hover { background: #0F0F0F; color: #fff; }
+      }
+    }
+  }
+
+  @keyframes ff-fade-up {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ff-hero__head,
+    .ff-hero__card,
+    .ff-hero__ctas {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,175 @@
+---
+// "Which side are you on?" — the fork. Kept fast to decide, but now carries a
+// fact-dense lead paragraph (extractable by AI engines) and 3 proof bullets per
+// route so search/AI crawlers and skim-readers both get real signal here.
+// Copy is content-driven (EN/ES) via content.v6.pathChooser.
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent['v6']['pathChooser'];
+}
+
+const { content } = Astro.props;
+const { eyebrow, lead, founders, talent } = content;
+---
+
+<section id="who" class="v6-who">
+  <div class="v6-who__container">
+    <div class="v6-who__header reveal">
+      <span class="eyebrow">{eyebrow}</span>
+      <p class="v6-who__lead body1">{lead}</p>
+    </div>
+
+    <div class="v6-who__grid">
+      <!-- Founder route (purple theme) -->
+      <a href="/for-founders" class="v6-who__card v6-who__card--founders reveal reveal-delay-1">
+        <span class="v6-who__card-eyebrow eyebrow">{founders.eyebrow}</span>
+        <h3 class="v6-who__card-title headline3">{founders.title}</h3>
+        <p class="v6-who__card-body body2">{founders.body}</p>
+        <ul class="v6-who__bullets">
+          {founders.bullets.map((b) => <li class="v6-who__bullet">{b}</li>)}
+        </ul>
+        <span class="v6-who__card-link">{founders.link}</span>
+      </a>
+
+      <!-- Talent route (navy theme) -->
+      <a href="/for-talent" class="v6-who__card v6-who__card--talent reveal reveal-delay-2">
+        <span class="v6-who__card-eyebrow eyebrow">{talent.eyebrow}</span>
+        <h3 class="v6-who__card-title headline3">{talent.title}</h3>
+        <p class="v6-who__card-body body2">{talent.body}</p>
+        <ul class="v6-who__bullets">
+          {talent.bullets.map((b) => <li class="v6-who__bullet">{b}</li>)}
+        </ul>
+        <span class="v6-who__card-link">{talent.link}</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+
+  .v6-who {
+    padding-block: 7rem;
+
+    @include max-md { padding-block: 5rem; }
+
+    &__container {
+      max-width: 64rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    &__headline { color: var(--color-text); }
+    &__lead { max-width: 44rem; }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+
+      @include max-md { grid-template-columns: 1fr; }
+    }
+
+    &__card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 2.25rem;
+      border: 1px solid var(--color-border);
+      border-top-width: 4px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+      @include max-sm { padding: 1.75rem; }
+
+      // Founders → purple accent
+      &--founders {
+        border-top-color: #3C2BDC;
+        &:hover { box-shadow: 0 12px 36px rgba(60, 43, 220, 0.14); border-color: #3C2BDC; }
+        .v6-who__card-eyebrow { color: #3C2BDC; font-weight: 600;}
+        .v6-who__bullet::before { color: #3C2BDC; }
+      }
+
+      // Talent → navy accent
+      &--talent {
+        border-top-color: #0D0857;
+        &:hover { box-shadow: 0 12px 36px rgba(13, 8, 87, 0.16); border-color: #0D0857; }
+        .v6-who__card-eyebrow { color: #0D0857; font-weight: 600;}
+        .v6-who__bullet::before { color: #0D0857; }
+      }
+
+      &:hover { transform: translateY(-4px); }
+    }
+
+    &__card-title { color: var(--color-text); font-size: x-large; }
+    &__card-body { color: var(--color-muted); }
+
+    &__bullets {
+      list-style: none;
+      margin: 0.25rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    &__bullet {
+      position: relative;
+      padding-left: 1.4rem;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--color-muted);
+
+      &::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        font-weight: 600;
+      }
+    }
+
+    &__card-link {
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+  }
+</style>
+
+<script>
+  const els = document.querySelectorAll('#who .reveal');
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  els.forEach((el) => obs.observe(el));
+</script>

@@ -1,0 +1,395 @@
+---
+// ── For Talent — Body ────────────────────────────────────────────────────
+// Below the hero: the two things talent actually wants to see — live open
+// roles (proof there's real demand) and the Offer Acceleration program in
+// full — plus a placed-candidate testimonial and a closing CTA. Content comes
+// from the shared content object. Isolated under the `ft-` prefix.
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent;
+}
+
+const { content } = Astro.props;
+const { roles, offerAcceleration, testimonials } = content;
+
+const OA_LEARN_MORE = '/offer-acceleration/4';
+const OA_APPLY = '/offer-acceleration/apply';
+const ROLES_URL = '/roles';
+
+const oaFit = offerAcceleration.blocks[0];      // "You're the right fit if:"
+const oaSessions = offerAcceleration.blocks[1]; // "Across 8 sessions:"
+const oaEnd = offerAcceleration.blocks[2];      // "By the end:"
+
+const candidate = testimonials.candidateTestimonial;
+---
+
+<!-- ── Open roles ──────────────────────────────────────────────────────── -->
+<section id="roles" class="ft-roles">
+  <div class="ft-roles__container">
+    <header class="ft-roles__header reveal">
+      <span class="ft-roles__tag">Active searches</span>
+      <h2 class="ft-roles__headline headline2">Open roles, hiring now.</h2>
+      <p class="ft-roles__sub body1">
+        Senior roles at YC- and a16z-backed startups — curated, calibrated, and active right
+        now. Company names stay confidential until we make the intro. Apply and you get
+        evaluated against the real bar, then introduced when there's a fit.
+      </p>
+    </header>
+
+    <div class="ft-roles__grid">
+      {roles.cards.map((role) => (
+        <article class="ft-roles__card reveal reveal-delay-1">
+          <div class="ft-roles__card-head">
+            <span class="ft-roles__card-title">{role.title}</span>
+            <span class="ft-roles__card-comp">{role.comp}</span>
+          </div>
+          <span class="ft-roles__card-meta caption">{role.tag} · {role.stage}</span>
+          <div class="ft-roles__card-stack">
+            {role.stack.map((s) => <span class="ft-roles__skill">{s}</span>)}
+          </div>
+          <a href={ROLES_URL} class="ft-roles__card-cta">{role.cta}</a>
+        </article>
+      ))}
+    </div>
+
+    <div class="ft-roles__foot reveal reveal-delay-1">
+      <a href={ROLES_URL} class="btn ft-roles__foot-btn">Browse all roles →</a>
+      <p class="ft-roles__foot-note caption">
+        {roles.closingText}{' '}
+        <a href={`mailto:${roles.closingEmail}`} class="ft-roles__foot-link">{roles.closingEmail}</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Offer Acceleration ──────────────────────────────────────────────── -->
+<section id="oa" class="ft-oa">
+  <div class="ft-oa__container">
+    <header class="ft-oa__header reveal">
+      <span class="ft-oa__tag">Coaching program</span>
+      <h2 class="ft-oa__headline headline2">Offer Acceleration</h2>
+      <p class="ft-oa__sub body1">{offerAcceleration.subheadline}</p>
+    </header>
+
+    <div class="ft-oa__grid">
+      <div class="ft-oa__block reveal reveal-delay-1">
+        <h3 class="ft-oa__block-title">{oaFit.title}</h3>
+        <ul class="ft-oa__list">
+          {oaFit.items.map((item) => <li class="ft-oa__list-item">{item}</li>)}
+        </ul>
+      </div>
+
+      <div class="ft-oa__block reveal reveal-delay-1">
+        <h3 class="ft-oa__block-title">{oaSessions.title}</h3>
+        <ul class="ft-oa__list">
+          {oaSessions.items.map((item) => <li class="ft-oa__list-item">{item}</li>)}
+        </ul>
+      </div>
+
+      <div class="ft-oa__block reveal reveal-delay-2">
+        <h3 class="ft-oa__block-title">{oaEnd.title}</h3>
+        <ul class="ft-oa__list">
+          {oaEnd.items.map((item) => <li class="ft-oa__list-item">{item}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <p class="ft-oa__closing body1 reveal reveal-delay-2">{offerAcceleration.closing}</p>
+
+    <div class="ft-oa__actions reveal reveal-delay-2">
+      <a href={OA_APPLY} class="btn ft-oa__btn">{offerAcceleration.cta}</a>
+      <a href={OA_LEARN_MORE} class="ft-oa__link">Learn more</a>
+      <span class="ft-oa__subline caption">{offerAcceleration.ctaSubline}</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Candidate testimonial ───────────────────────────────────────────── -->
+<section class="ft-quote">
+  <figure class="ft-quote__container reveal">
+    <blockquote class="ft-quote__text">"{candidate.quote}"</blockquote>
+    <figcaption class="ft-quote__meta">
+      <span class="ft-quote__name">{candidate.name}</span>
+      <span class="ft-quote__role caption">{candidate.role}</span>
+      <span class="ft-quote__badge">{candidate.badge}</span>
+    </figcaption>
+  </figure>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  $talent: #0D0857;
+  $accent: #3C2BDC;
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+
+  // ── Roles ──────────────────────────────────────────────────
+  .ft-roles {
+    position: relative;
+    z-index: 1;
+    padding-block: 6rem;
+    background: linear-gradient(180deg, rgba(13, 8, 87, 0.05) 0%, rgba(13, 8, 87, 0.015) 100%);
+    border-top: 1px solid rgba(13, 8, 87, 0.12);
+    border-bottom: 1px solid rgba(13, 8, 87, 0.12);
+
+    @include max-md { padding-block: 4rem; }
+
+    &__container {
+      max-width: 64rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    &__tag {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: $talent;
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+    &__headline { color: var(--color-text); }
+    &__sub { max-width: 42rem; }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      @include max-md { grid-template-columns: 1fr; }
+    }
+
+    &__card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    &__card-head { display: flex; flex-direction: column; gap: 0.25rem; }
+    &__card-title { font-size: 1.0625rem; font-weight: 600; color: var(--color-text); }
+    &__card-comp { font-size: 0.8125rem; font-weight: 500; color: $accent; }
+    &__card-meta { color: var(--color-muted); }
+    &__card-stack { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: 0.5rem 0 0.75rem; }
+    &__skill {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-muted);
+      background: rgba(13, 8, 87, 0.05);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 2px 8px;
+    }
+    &__card-cta {
+      margin-top: auto;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: $talent;
+      text-decoration: none;
+      &:hover { color: $accent; }
+    }
+
+    &__foot {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.875rem;
+      text-align: center;
+    }
+    &__foot-btn {
+      background: $talent;
+      padding: 14px 28px;
+      &:hover { background: $accent; }
+    }
+    &__foot-note { color: var(--color-muted); }
+    &__foot-link { color: $accent; text-decoration: underline; text-underline-offset: 2px; }
+  }
+
+  // ── Offer Acceleration ─────────────────────────────────────
+  .ft-oa {
+    position: relative;
+    z-index: 1;
+    padding-block: 6rem;
+
+    @include max-md { padding-block: 4rem; }
+
+    &__container {
+      max-width: 60rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    &__tag {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: $accent;
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+    &__headline { color: var(--color-text); }
+    &__sub { max-width: 44rem; }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      @include max-md { grid-template-columns: 1fr; }
+    }
+
+    &__block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      padding: 1.75rem;
+      border: 1px solid var(--color-border);
+      border-top: 4px solid $accent;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.74);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    &__block-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin: 0;
+    }
+    &__list {
+      list-style: none; margin: 0; padding: 0;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    &__list-item {
+      position: relative;
+      padding-left: 1.25rem;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--color-muted);
+      &::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: $accent;
+        font-weight: 600;
+      }
+    }
+
+    &__closing {
+      max-width: 44rem;
+      margin: 2.5rem auto 0;
+      text-align: center;
+      color: var(--color-text);
+    }
+
+    &__actions {
+      margin-top: 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    &__btn { padding: 14px 28px; }
+    &__link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--color-border);
+      &:hover { color: $accent; }
+    }
+    &__subline { color: var(--color-tertiary); width: 100%; text-align: center; }
+  }
+
+  // ── Candidate quote ────────────────────────────────────────
+  .ft-quote {
+    position: relative;
+    z-index: 1;
+    padding-block: 5rem 6rem;
+
+    &__container {
+      max-width: 44rem;
+      margin-inline: auto;
+      padding: 2.5rem;
+      border: 1px solid var(--color-border);
+      border-left: 4px solid $talent;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      text-align: center;
+
+      @include max-sm { padding: 1.75rem; }
+    }
+    &__text {
+      font-size: 1.25rem;
+      line-height: 1.5;
+      font-style: italic;
+      color: var(--color-text);
+      margin: 0 0 1.25rem;
+    }
+    &__meta { display: flex; flex-direction: column; gap: 0.25rem; align-items: center; }
+    &__name { font-weight: 600; color: var(--color-text); }
+    &__role { color: var(--color-tertiary); }
+    &__badge {
+      margin-top: 0.25rem;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: $talent;
+      background: rgba(13, 8, 87, 0.07);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+  }
+</style>
+
+<script>
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.ft-roles .reveal, .ft-oa .reveal, .ft-quote .reveal')
+    .forEach((el) => obs.observe(el));
+</script>

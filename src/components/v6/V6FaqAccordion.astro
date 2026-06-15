@@ -1,0 +1,121 @@
+---
+// Reusable click-to-expand FAQ accordion. Uses native <details>/<summary> so it
+// works without JS, stays accessible, and keeps every answer in the server-
+// rendered HTML (so AI/search crawlers still read them even while collapsed).
+interface FAQ {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  faqs: FAQ[];
+  heading?: string;
+  accent?: 'founders' | 'talent';
+}
+
+const { faqs, heading, accent = 'founders' } = Astro.props;
+---
+
+<div class={`v6-acc v6-acc--${accent}`}>
+  {heading && <h3 class="v6-acc__heading">{heading}</h3>}
+  <div class="v6-acc__list">
+    {faqs.map((f) => (
+      <details class="v6-acc__item">
+        <summary class="v6-acc__q">
+          <span class="v6-acc__q-text">{f.q}</span>
+          <svg class="v6-acc__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </summary>
+        <div class="v6-acc__a">
+          <p class="body2">{f.a}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</div>
+
+<style lang="scss">
+  .v6-acc {
+    width: 100%;
+
+    &--founders { --acc-accent: #3C2BDC; }
+    &--talent { --acc-accent: #0D0857; }
+
+    &__heading {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin: 0 0 1rem;
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    &__item {
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      overflow: hidden;
+      transition: border-color 0.18s ease, background 0.18s ease;
+
+      &[open] {
+        border-color: var(--acc-accent);
+        background: rgba(255, 255, 255, 0.92);
+      }
+    }
+
+    // The clickable question row
+    &__q {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text);
+      user-select: none;
+
+      // Hide the native disclosure marker (Safari/Chrome/Firefox)
+      &::-webkit-details-marker { display: none; }
+      &::marker { content: ''; }
+
+      &:hover { color: var(--acc-accent); }
+    }
+
+    &__chevron {
+      flex-shrink: 0;
+      color: var(--acc-accent);
+      transition: transform 0.22s ease;
+    }
+
+    &__item[open] &__chevron { transform: rotate(180deg); }
+
+    // The answer panel — fades in when the item opens
+    &__a {
+      padding: 0 1.25rem 1.125rem;
+
+      p { margin: 0; color: var(--color-muted); }
+    }
+
+    &__item[open] &__a {
+      animation: v6-acc-fade 0.25s ease;
+    }
+  }
+
+  @keyframes v6-acc-fade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v6-acc__chevron,
+    .v6-acc__item[open] .v6-acc__a { transition: none; animation: none; }
+  }
+</style>
