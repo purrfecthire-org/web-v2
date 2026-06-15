@@ -26,7 +26,14 @@ const { noindex = true } = Astro.props;
   <main class="oa5">
 
     <header class="oa5-nav">
-      <img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="oa5-nav__logo" />
+      <a href="/" class="oa5-nav__logo-link" aria-label="Purrfect Hire — inicio">
+        <img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="oa5-nav__logo" />
+      </a>
+      <nav class="oa5-nav__links">
+        <a href="/for-talent" class="oa5-nav__link">Para talento</a>
+        <a href="/roles" class="oa5-nav__link">Vacantes abiertas</a>
+        <a href="/offer-acceleration" class="oa5-nav__link oa5-nav__link--active">Offer Acceleration</a>
+      </nav>
       <a href={c.apply.url} id="oa5-apply-btn" class="oa5-btn oa5-btn--solid">
         Test gratis
       </a>
@@ -274,8 +281,32 @@ const { noindex = true } = Astro.props;
     padding: 1rem 3rem;
     background: linear-gradient(rgba(247, 245, 240, 0.9), rgba(247, 245, 240, 0));
 
+    &__logo-link {
+      display: inline-flex;
+      align-items: center;
+    }
+
     &__logo {
       width: 10rem;
+    }
+
+    &__links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+
+      @media (max-width: 767px) { display: none; }
+    }
+
+    &__link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--oa5-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover { color: var(--oa5-accent); }
+      &--active { color: var(--oa5-text); }
     }
   }
 

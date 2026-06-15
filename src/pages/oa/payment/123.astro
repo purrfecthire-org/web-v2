@@ -14,7 +14,9 @@ const p = c.payment;
     <div class="pay-glow" aria-hidden="true"></div>
 
     <header class="pay-header">
-      <img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="pay-header__logo" />
+      <a href="/" class="pay-header__logo-link" aria-label="Purrfect Hire — inicio">
+        <img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="pay-header__logo" />
+      </a>
       <span class="pay-header__secure">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.8" />
@@ -369,6 +371,7 @@ const p = c.payment;
     justify-content: space-between;
     padding: 1.25rem 2.5rem;
 
+    &__logo-link { display: inline-flex; align-items: center; }
     &__logo { width: 10rem; }
 
     &__secure {
