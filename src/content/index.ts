@@ -129,7 +129,7 @@ export interface LandingContent {
     links: { label: string; href: string }[];
     legal: string;
   };
-  // V6 home — copy for the two-lane default landing (/, /es/). Data-driven
+  // V6 home. Copy for the two-lane default landing (/, /es/). Data-driven
   // blocks (stats, engine steps, roles, OA blocks) still come from the
   // sections above; this holds the strings that used to be hardcoded in the
   // V6 components so the home can be served bilingually.
@@ -176,8 +176,8 @@ export const content_en: LandingContent = {
   lang: 'en',
 
   meta: {
-    title: 'Purrfect Hire — Senior hires for YC and a16z founders',
-    description: 'We place senior LATAM talent at YC and a16z startups where getting the hire wrong costs months of runway. 160+ placements. 80% retention at 24 months.',
+    title: 'Purrfect Hire. Senior hires for YC, a16z and Sequoia founders',
+    description: 'We place senior LATAM talent at YC, a16z and Sequoia startups where getting the hire wrong costs months of runway. 160+ placements. 80% retention at 24 months.',
   },
 
   nav: {
@@ -194,7 +194,7 @@ export const content_en: LandingContent = {
   hero: {
     headline: 'Skills get people hired.',
     headlineAccent: 'Culture fit makes them stay.',
-    subheadline: 'We place senior LATAM talent at YC and a16z startups where getting the hire wrong costs months of runway you can\'t recover.',
+    subheadline: 'We place senior LATAM talent at YC, a16z and Sequoia startups where getting the hire wrong costs months of runway you can\'t recover.',
     stats: [
       { value: '160', suffix: '+', label: 'placements' },
       { value: '80', suffix: '%', label: 'stay 2+ years' },
@@ -222,14 +222,14 @@ export const content_en: LandingContent = {
     body: [
       'Prism finds profiles. Contra fills contracts. Metaview transcribes interviews.',
       'None of them have been inside 160+ startups, learning where hires actually break.',
-      'We have. And we train the talent we place against that signal — before they ever meet you.',
+      'We have. And we train the talent we place against that signal, before they ever meet you.',
     ],
     closing: 'That\'s not a keyword filter. That\'s a conversation.',
   },
 
   audienceSplit: {
     headline: 'Two sides. One engine.',
-    subheadline: 'Most recruiting works on one side. We work on both — and that\'s where the signal compounds.',
+    subheadline: 'Most recruiting works on one side. We work on both, and that\'s where the signal compounds.',
     founders: {
       eyebrow: 'FOR FOUNDERS',
       headline: 'Your real bar isn\'t in the JD.',
@@ -257,24 +257,24 @@ export const content_en: LandingContent = {
   offerAcceleration: {
     eyebrow: 'FOR TALENT · COACHING PROGRAM',
     headline: 'Senior in skills. Stuck in offers.',
-    subheadline: 'Offer Acceleration is an 8-session program for senior LATAM professionals who already have the skills — but need the strategy, the network, and the criteria to land an offer at a US startup that actually matters.',
+    subheadline: 'Offer Acceleration is a 1:1 program for senior LATAM professionals who already have the skills, but need the strategy, the network, and the criteria to land an offer at a US startup that actually matters.',
     blocks: [
       {
         title: 'You\'re the right fit if:',
         items: [
           'You have 5+ years of experience and consistent results',
           'You\'ve applied to US roles and either get filtered out or get offers below your level',
-          'You know the technical bar isn\'t your problem — getting in front of the right founders is',
+          'You know the technical bar isn\'t your problem. Getting in front of the right founders is',
           'You\'re ready to build career strategy, not just send more applications',
         ],
       },
       {
-        title: 'Across 8 sessions:',
+        title: 'In the program:',
         items: [
-          '1:1 coaching with senior recruiters who place at YC and a16z portfolios',
+          '1:1 coaching with senior recruiters who place at YC, a16z and Sequoia portfolios',
           'Real signal from active searches: how US founders actually evaluate',
           'Positioning, narrative, and interview calibration against real startup bars',
-          'Direct intros when there\'s a fit — not generic referrals',
+          'Direct intros when there\'s a fit, not generic referrals',
         ],
       },
       {
@@ -286,7 +286,7 @@ export const content_en: LandingContent = {
         ],
       },
     ],
-    closing: 'Built by recruiters who\'ve placed 160+ senior hires at YC and a16z portfolios. We know exactly where the bar is. Now we share it with you.',
+    closing: 'Built by recruiters who\'ve placed 160+ senior hires at YC, a16z and Sequoia portfolios. We know exactly where the bar is. Now we share it with you.',
     cta: 'Apply for Offer Acceleration →',
     ctaSubline: 'Limited cohorts. Application required.',
   },
@@ -299,7 +299,7 @@ export const content_en: LandingContent = {
       {
         id: '01',
         title: 'We go deep into how startups actually operate.',
-        description: 'Not the JD. The real bar — what they reward, what breaks in week three, why the last hire didn\'t work.',
+        description: 'Not the JD. The real bar, what they reward, what breaks in week three, why the last hire didn\'t work.',
       },
       {
         id: '02',
@@ -315,7 +315,7 @@ export const content_en: LandingContent = {
       {
         id: '04',
         title: 'Every outcome sharpens the model.',
-        description: 'Hire, pass, early churn — all of it feeds back. The system gets more precise with every cycle.',
+        description: 'Hire, pass, early churn, all of it feeds back. The system gets more precise with every cycle.',
       },
     ],
   },
@@ -323,17 +323,17 @@ export const content_en: LandingContent = {
   culture: {
     headline: 'The interview isn\'t where hires fail. Week four is.',
     body: [
-      '46% of new hires fail within 18 months. 89% of those failures are due to culture and attitude misalignment — not skills.',
+      '46% of new hires fail within 18 months. 89% of those failures are due to culture and attitude misalignment, not skills.',
       'In a team of 10, one wrong person doesn\'t just underperform. They slow everyone else down, erode trust, and force your best people to absorb the gap.',
     ],
     quotes: [
       {
-        text: 'Founders attribute exits to performance. The real cause is a process that never captured the actual culture.',
-        attribution: 'ANDREESSEN HOROWITZ',
+        text: 'Founders blame exits on performance. The real cause is usually a process that never read the culture.',
+        attribution: 'OUR PRINCIPLE',
       },
       {
-        text: 'Your first 10 hires write the culture. They define how decisions get made when you\'re not in the room.',
-        attribution: 'Y COMBINATOR',
+        text: 'Your first hires write the culture. They define how decisions get made when you\'re not in the room.',
+        attribution: 'OUR PRINCIPLE',
       },
     ],
   },
@@ -342,7 +342,7 @@ export const content_en: LandingContent = {
     eyebrow: 'WHAT FOUNDERS SAY',
     headline: 'What happens when culture fit is the starting point, not the final check.',
     featured: {
-      quote: 'The people we\'ve hired through Purrfect Hire didn\'t just continue working — they were promoted to roles of greater responsibility because of how well they adapted to our culture.',
+      quote: 'The people we\'ve hired through Purrfect Hire didn\'t just continue working. They were promoted to roles of greater responsibility because of how well they adapted to our culture.',
       name: 'Micaela Crosta',
       role: 'Head of Customer Operations, OutDo (US)',
       badge: 'Client',
@@ -355,7 +355,7 @@ export const content_en: LandingContent = {
         badge: 'Client',
       },
       {
-        quote: 'Purrfect Hire adapted to our processes and to each specific role. They\'re a real search partner — not just a pipeline.',
+        quote: 'Purrfect Hire adapted to our processes and to each specific role. They\'re a real search partner, not just a pipeline.',
         name: 'Fabián Torres',
         role: 'CEO, Trébol (CO)',
         badge: 'Client',
@@ -421,9 +421,8 @@ export const content_en: LandingContent = {
   footer: {
     links: [
       { label: 'Privacy', href: '/privacy-policy' },
-      { label: 'Terms', href: '#' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire' },
-      { label: 'Open roles', href: '#roles' },
+      { label: 'Open roles', href: '/roles' },
     ],
     legal: '© 2026 Purrfect Hire',
   },
@@ -431,11 +430,11 @@ export const content_en: LandingContent = {
   v6: {
     pathChooser: {
       eyebrow: 'Start here',
-      lead: 'Purrfect Hire is a closed-loop recruiting engine that places senior LATAM professionals at YC- and a16z-backed startups. We work both sides of the table: Founders who are hiring and talent who want to grow.',
+      lead: 'Purrfect Hire is a closed-loop recruiting engine that places senior LATAM professionals at YC-, a16z- and Sequoia-backed startups. We work both sides of the table: Founders who are hiring and talent who want to grow.',
       founders: {
         eyebrow: 'For founders',
         title: "I'm hiring.",
-        body: 'Find senior people who clear your real bar — and stay past week four.',
+        body: 'Find senior people who clear your real bar. And stay past week four.',
         bullets: [
           'We map how you actually evaluate before we open the pipeline.',
           'Calibrated candidates in front of you in under 4 weeks.',
@@ -449,7 +448,7 @@ export const content_en: LandingContent = {
         body: 'Land an offer at a US startup that actually matters. Two clear paths.',
         bullets: [
           'Train against real signal from active US startup searches.',
-          'Get introduced to founders — not filtered out by a keyword screen.',
+          'Get introduced to founders, not filtered out by a keyword screen.',
           'Two ways in: the Offer Acceleration program or open roles.',
         ],
         link: 'See your options →',
@@ -457,10 +456,10 @@ export const content_en: LandingContent = {
     },
     foundersBlock: {
       tag: 'For founders',
-      headline: 'Senior hires who clear your bar — and stay past week four.',
-      sub: 'Purrfect Hire places senior LATAM engineers, operators, and go-to-market hires at YC- and a16z-backed startups. We map how your team actually evaluates, then put candidates already calibrated to that bar in front of you — typically in under four weeks. Less noise, faster decisions, and people who are still there two years later.',
+      headline: 'Senior hires who clear your bar. And stay past week four.',
+      sub: 'Purrfect Hire places senior LATAM engineers, operators, and go-to-market hires at YC-, a16z- and Sequoia-backed startups. We map how your team actually evaluates, then put candidates already calibrated to that bar in front of you, typically in under four weeks. Less noise, faster decisions, and people who are still there two years later.',
       cultureQ: 'Why hire for culture fit, not just skills?',
-      cultureA: "Because the interview isn't where hires fail — week four is. 46% of new hires fail within 18 months, and 89% of those failures come down to culture and attitude misalignment, not a skills gap. In a team of ten, one wrong hire doesn't just underperform: they slow everyone down, erode trust, and force your best people to cover the gap. We start with fit, so it's the foundation rather than the final check.",
+      cultureA: "Because the interview isn't where hires fail. Week four is. 46% of new hires fail within 18 months, and 89% of those failures come down to culture and attitude misalignment, not a skills gap. In a team of ten, one wrong hire doesn't just underperform: they slow everyone down, erode trust, and force your best people to cover the gap. We start with fit, so it's the foundation rather than the final check.",
       engineQ: 'How the engine works',
       engineA: "It's a closed loop. We go deep on how a startup really operates, that signal trains the talent we place, candidates arrive already aligned, and every outcome feeds back to sharpen the model. Four steps:",
       ctaBtn: 'Talk to our team →',
@@ -470,52 +469,52 @@ export const content_en: LandingContent = {
     talentBlock: {
       tag: 'For talent',
       headline: 'Two ways in.',
-      sub: "You already have the skills. What's missing is the strategy, the network, and the criteria to get in front of the right founders. We train senior LATAM professionals against the real bar of YC- and a16z-backed startups — so you stop getting filtered and start getting introduced.",
+      sub: "You already have the skills. What's missing is the strategy, the network, and the criteria to get in front of the right founders. We train senior LATAM professionals against the real bar of YC-, a16z- and Sequoia-backed startups, so you stop getting filtered and start getting introduced.",
       oaEyebrow: 'Coaching program',
       oaTitle: 'Offer Acceleration',
-      oaBody: 'Offer Acceleration is an 8-session program for senior LATAM professionals who already have the skills but keep getting filtered out — or land offers below their level. By the end, you stop applying and start being introduced to the companies you actually want to join.',
+      oaBody: 'Offer Acceleration is a 1:1 program for senior LATAM professionals who already have the skills but keep getting filtered out, or land offers below their level. By the end, you stop applying and start being introduced to the companies you actually want to join.',
       oaLearnMore: 'Learn more →',
       oaApply: 'Apply',
       oaFaqHeading: 'Questions about Offer Acceleration',
       rolesEyebrow: 'Active searches',
       rolesTitle: 'Open roles',
-      rolesDesc: 'Senior roles at YC- and a16z-backed startups — curated, calibrated, and active right now. Company names stay confidential until we make the intro.',
+      rolesDesc: 'Senior roles at YC-, a16z- and Sequoia-backed startups, curated, calibrated, and active right now. Company names stay confidential until we make the intro.',
       rolesBrowseAll: 'Browse all roles →',
     },
     founderFaqs: [
       {
         q: 'How fast can you make a hire?',
-        a: 'Typically under four weeks to a first placement. Because we map how your team actually evaluates before opening the pipeline, candidates arrive already calibrated to your bar — so you spend less time screening and more time deciding.',
+        a: 'Typically under four weeks to a first placement. Because we map how your team actually evaluates before opening the pipeline, candidates arrive already calibrated to your bar, so you spend less time screening and more time deciding.',
       },
       {
         q: 'What roles and seniority do you place?',
-        a: 'Senior LATAM professionals across engineering, AI/ML, and founding go-to-market roles, placed at Seed to Series A startups backed by Y Combinator and Andreessen Horowitz (a16z). Roles are typically remote or hybrid at US market compensation plus equity.',
+        a: 'Senior LATAM professionals across engineering, AI/ML, and founding go-to-market roles, placed at Seed to Series A startups backed by Y Combinator, Andreessen Horowitz (a16z), and Sequoia. Roles are typically remote or hybrid at US market compensation plus equity.',
       },
       {
         q: 'How are you different from a typical recruiter?',
-        a: 'We run a closed loop, not a pipeline. We map your real bar — what you reward and what breaks in week three — train the talent we place against it before they ever meet you, and feed every outcome back so the model gets sharper with each search.',
+        a: 'We run a closed loop, not a pipeline. We map your real bar, what you reward and what breaks in week three, train the talent we place against it before they ever meet you, and feed every outcome back so the model gets sharper with each search.',
       },
       {
         q: 'What does it cost to work with you?',
-        a: 'We focus on roles where a wrong hire costs months of runway. The fastest way to get exact terms is a short call — we will walk you through how we would run your search and what it involves before you commit to anything.',
+        a: 'We focus on roles where a wrong hire costs months of runway. The fastest way to get exact terms is a short call, we will walk you through how we would run your search and what it involves before you commit to anything.',
       },
     ],
     talentFaqs: [
       {
         q: 'How long is the Offer Acceleration program?',
-        a: 'It runs across 8 sessions of 1:1 coaching with senior recruiters who place at YC and a16z portfolios. Together you build positioning, narrative, and interview calibration against the real bar of the companies you want to join.',
+        a: 'It is a 1:1 coaching program with senior recruiters who place at YC, a16z and Sequoia portfolios. The number of sessions flexes to your execution speed. Together you build positioning, narrative, and interview calibration against the real bar of the companies you want to join.',
       },
       {
         q: 'Is Offer Acceleration right for me?',
-        a: 'It is built for senior professionals with 5+ years of experience and consistent results who keep getting filtered out of US roles or receive offers below their level. If the technical bar is not your problem — getting in front of the right founders is — it fits.',
+        a: 'It is built for senior professionals with 5+ years of experience and consistent results who keep getting filtered out of US roles or receive offers below their level. If the technical bar is not your problem, getting in front of the right founders is, it fits.',
       },
       {
         q: 'Do you guarantee a job offer?',
-        a: 'No. It is coaching plus direct introductions when there is a genuine fit — not a job board and not a guarantee. We share exactly where the bar is and put you in front of the right founders; landing the offer is the work we prepare you to win.',
+        a: 'No. It is coaching plus direct introductions when there is a genuine fit, not a job board and not a guarantee. We share exactly where the bar is and put you in front of the right founders; landing the offer is the work we prepare you to win.',
       },
       {
         q: 'How do I join a cohort?',
-        a: 'Cohorts are limited and require an application. Read the full program details, then apply — we review each application to confirm fit before inviting you into a cohort.',
+        a: 'Cohorts are limited and require an application. Read the full program details, then apply, we review each application to confirm fit before inviting you into a cohort.',
       },
     ],
   },
@@ -525,8 +524,8 @@ export const content_es: LandingContent = {
   lang: 'es',
 
   meta: {
-    title: 'Purrfect Hire — Hires senior para founders de YC y a16z',
-    description: 'Conectamos talento senior de LATAM con startups de YC y a16z donde equivocarse en el hire cuesta meses de runway. 160+ contrataciones. 80% retención a 24 meses.',
+    title: 'Purrfect Hire. Hires senior para founders de YC, a16z y Sequoia',
+    description: 'Conectamos talento senior de LATAM con startups de YC, a16z y Sequoia donde equivocarse en el hire cuesta meses de runway. 160+ contrataciones. 80% retención a 24 meses.',
   },
 
   nav: {
@@ -543,7 +542,7 @@ export const content_es: LandingContent = {
   hero: {
     headline: 'Las skills te contratan.',
     headlineAccent: 'El fit cultural te hace quedarte.',
-    subheadline: 'Conectamos talento senior de LATAM con startups de YC y a16z donde equivocarse en el hire cuesta meses de runway que no se recuperan.',
+    subheadline: 'Conectamos talento senior de LATAM con startups de YC, a16z y Sequoia donde equivocarse en el hire cuesta meses de runway que no se recuperan.',
     stats: [
       { value: '160', suffix: '+', label: 'contrataciones' },
       { value: '80', suffix: '%', label: 'se quedan 2+ años' },
@@ -571,14 +570,14 @@ export const content_es: LandingContent = {
     body: [
       'Prism encuentra perfiles. Contra llena contratos. Metaview transcribe entrevistas.',
       'Ninguna ha estado dentro de 160+ startups aprendiendo dónde se rompen los hires de verdad.',
-      'Nosotros sí. Y entrenamos al talento que colocamos contra esa señal — antes de que te conozca.',
+      'Nosotros sí. Y entrenamos al talento que colocamos contra esa señal, antes de que te conozca.',
     ],
     closing: 'Eso no es un filtro de keywords. Es una conversación.',
   },
 
   audienceSplit: {
     headline: 'Dos lados. Un solo engine.',
-    subheadline: 'La mayoría del recruiting opera de un solo lado. Nosotros operamos de los dos — y ahí es donde la señal compone.',
+    subheadline: 'La mayoría del recruiting opera de un solo lado. Nosotros operamos de los dos, y ahí es donde la señal compone.',
     founders: {
       eyebrow: 'PARA FOUNDERS',
       headline: 'Tu vara real no está en el JD.',
@@ -606,24 +605,24 @@ export const content_es: LandingContent = {
   offerAcceleration: {
     eyebrow: 'PARA TALENTO · PROGRAMA DE COACHING',
     headline: 'Senior en skills. Atascado en ofertas.',
-    subheadline: 'Offer Acceleration es un programa de 8 sesiones para profesionales senior de LATAM que ya tienen las skills — pero necesitan la estrategia, la red y el criterio para conseguir una oferta en una startup de US que valga la pena.',
+    subheadline: 'Offer Acceleration es un programa 1:1 para profesionales senior de LATAM que ya tienen las skills, pero necesitan la estrategia, la red y el criterio para conseguir una oferta en una startup de US que valga la pena.',
     blocks: [
       {
         title: 'Eres el fit correcto si:',
         items: [
           'Tienes 5+ años de experiencia y resultados consistentes',
           'Has aplicado a roles en US y te filtran o te ofrecen menos de tu nivel',
-          'Sabes que la vara técnica no es tu problema — llegar frente a los founders correctos sí lo es',
+          'Sabes que la vara técnica no es tu problema. Llegar frente a los founders correctos sí lo es',
           'Estás listo para construir estrategia de carrera, no solo enviar más aplicaciones',
         ],
       },
       {
-        title: 'En 8 sesiones:',
+        title: 'En el programa:',
         items: [
-          'Coaching 1:1 con recruiters senior que colocan en portfolios de YC y a16z',
+          'Coaching 1:1 con recruiters senior que colocan en portfolios de YC, a16z y Sequoia',
           'Señal real de búsquedas activas: cómo evalúan los founders de US de verdad',
           'Posicionamiento, narrativa y calibración de entrevistas contra varas reales de startups',
-          'Intros directas cuando hay fit — no referrals genéricos',
+          'Intros directas cuando hay fit, no referrals genéricos',
         ],
       },
       {
@@ -635,7 +634,7 @@ export const content_es: LandingContent = {
         ],
       },
     ],
-    closing: 'Construido por recruiters que han colocado 160+ hires senior en portfolios de YC y a16z. Sabemos exactamente dónde está la vara. Ahora la compartimos contigo.',
+    closing: 'Construido por recruiters que han colocado 160+ hires senior en portfolios de YC, a16z y Sequoia. Sabemos exactamente dónde está la vara. Ahora la compartimos contigo.',
     cta: 'Aplica a Offer Acceleration →',
     ctaSubline: 'Cohortes limitadas. Aplicación requerida.',
   },
@@ -648,7 +647,7 @@ export const content_es: LandingContent = {
       {
         id: '01',
         title: 'Entramos a fondo en cómo opera la startup.',
-        description: 'No el JD. La vara real — qué premian, qué se rompe en la semana tres, por qué el último hire no funcionó.',
+        description: 'No el JD. La vara real, qué premian, qué se rompe en la semana tres, por qué el último hire no funcionó.',
       },
       {
         id: '02',
@@ -664,7 +663,7 @@ export const content_es: LandingContent = {
       {
         id: '04',
         title: 'Cada resultado afina el modelo.',
-        description: 'Hire, no-hire, churn temprano — todo alimenta el sistema. Cada ciclo lo hace más preciso.',
+        description: 'Hire, no-hire, churn temprano, todo alimenta el sistema. Cada ciclo lo hace más preciso.',
       },
     ],
   },
@@ -672,17 +671,17 @@ export const content_es: LandingContent = {
   culture: {
     headline: 'La entrevista no es donde fallan los hires. La semana cuatro sí.',
     body: [
-      '46% de los nuevos hires fallan en los primeros 18 meses. 89% de esas fallas son por desajuste cultural y de actitud — no por skills.',
+      '46% de los nuevos hires fallan en los primeros 18 meses. 89% de esas fallas son por desajuste cultural y de actitud, no por skills.',
       'En un equipo de 10, una persona equivocada no solo rinde menos. Frena al resto, erosiona la confianza, y obliga a tus mejores a cubrir el hueco.',
     ],
     quotes: [
       {
-        text: 'Los founders atribuyen las salidas a performance. La causa real es un proceso que nunca capturó la cultura real.',
-        attribution: 'ANDREESSEN HOROWITZ',
+        text: 'Los founders culpan del churn al performance. La causa real suele ser un proceso que nunca leyó la cultura.',
+        attribution: 'NUESTRO PRINCIPIO',
       },
       {
-        text: 'Tus primeros 10 hires escriben la cultura. Definen cómo se toman las decisiones cuando no estás en la sala.',
-        attribution: 'Y COMBINATOR',
+        text: 'Tus primeros hires escriben la cultura. Definen cómo se toman las decisiones cuando no estás en la sala.',
+        attribution: 'NUESTRO PRINCIPIO',
       },
     ],
   },
@@ -691,7 +690,7 @@ export const content_es: LandingContent = {
     eyebrow: 'LO QUE DICEN LOS FOUNDERS',
     headline: 'Lo que pasa cuando el fit cultural es el punto de partida, no el último check.',
     featured: {
-      quote: 'Las personas que hemos contratado a través de Purrfect Hire no solo siguen trabajando — han sido promovidas a roles de mayor responsabilidad por cómo se adaptaron a nuestra cultura.',
+      quote: 'Las personas que hemos contratado a través de Purrfect Hire no solo siguen trabajando. Han sido promovidas a roles de mayor responsabilidad por cómo se adaptaron a nuestra cultura.',
       name: 'Micaela Crosta',
       role: 'Head of Customer Operations, OutDo (US)',
       badge: 'Cliente',
@@ -704,7 +703,7 @@ export const content_es: LandingContent = {
         badge: 'Cliente',
       },
       {
-        quote: 'Purrfect Hire se adaptó a nuestros procesos y a cada rol específico. Son un partner de búsqueda real — no solo un pipeline.',
+        quote: 'Purrfect Hire se adaptó a nuestros procesos y a cada rol específico. Son un partner de búsqueda real, no solo un pipeline.',
         name: 'Fabián Torres',
         role: 'CEO, Trébol (CO)',
         badge: 'Cliente',
@@ -770,9 +769,8 @@ export const content_es: LandingContent = {
   footer: {
     links: [
       { label: 'Privacidad', href: '/es/privacy-policy' },
-      { label: 'Términos', href: '#' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire' },
-      { label: 'Roles abiertos', href: '#roles' },
+      { label: 'Roles abiertos', href: '/roles' },
     ],
     legal: '© 2026 Purrfect Hire',
   },
@@ -780,11 +778,11 @@ export const content_es: LandingContent = {
   v6: {
     pathChooser: {
       eyebrow: 'Empieza aquí',
-      lead: 'Purrfect Hire es un motor de reclutamiento de ciclo cerrado que coloca a profesionales senior de LATAM en startups respaldadas por YC y a16z. Trabajamos en ambos lados de la mesa: founders que están contratando y talento que quiere crecer.',
+      lead: 'Purrfect Hire es un motor de reclutamiento de ciclo cerrado que coloca a profesionales senior de LATAM en startups respaldadas por YC, a16z y Sequoia. Trabajamos en ambos lados de la mesa: founders que están contratando y talento que quiere crecer.',
       founders: {
         eyebrow: 'Para founders',
         title: 'Estoy contratando.',
-        body: 'Encuentra gente senior que cumple tu verdadero estándar — y que sigue ahí después de la semana cuatro.',
+        body: 'Encuentra gente senior que cumple tu verdadero estándar. Y que sigue ahí después de la semana cuatro.',
         bullets: [
           'Mapeamos cómo evalúas en realidad antes de abrir el pipeline.',
           'Candidatos calibrados frente a ti en menos de 4 semanas.',
@@ -798,7 +796,7 @@ export const content_es: LandingContent = {
         body: 'Consigue una oferta en una startup de EE. UU. que de verdad importa. Dos caminos claros.',
         bullets: [
           'Entrena con señales reales de búsquedas activas en startups de EE. UU.',
-          'Llega a los founders por presentación — no te filtra un screening de keywords.',
+          'Llega a los founders por presentación, no te filtra un screening de keywords.',
           'Dos formas de entrar: el programa Offer Acceleration o las vacantes abiertas.',
         ],
         link: 'Mira tus opciones →',
@@ -806,10 +804,10 @@ export const content_es: LandingContent = {
     },
     foundersBlock: {
       tag: 'Para founders',
-      headline: 'Contrataciones senior que cumplen tu estándar — y se quedan más allá de la semana cuatro.',
-      sub: 'Purrfect Hire coloca ingenieros, operadores y perfiles de go-to-market senior de LATAM en startups respaldadas por YC y a16z. Mapeamos cómo evalúa tu equipo en realidad y ponemos frente a ti candidatos ya calibrados a ese estándar — normalmente en menos de cuatro semanas. Menos ruido, decisiones más rápidas y gente que sigue ahí dos años después.',
+      headline: 'Contrataciones senior que cumplen tu estándar. Y se quedan más allá de la semana cuatro.',
+      sub: 'Purrfect Hire coloca ingenieros, operadores y perfiles de go-to-market senior de LATAM en startups respaldadas por YC, a16z y Sequoia. Mapeamos cómo evalúa tu equipo en realidad y ponemos frente a ti candidatos ya calibrados a ese estándar, normalmente en menos de cuatro semanas. Menos ruido, decisiones más rápidas y gente que sigue ahí dos años después.',
       cultureQ: '¿Por qué contratar por culture fit y no solo por habilidades?',
-      cultureA: 'Porque la entrevista no es donde fallan las contrataciones — la semana cuatro sí. El 46% de las nuevas contrataciones fracasa en 18 meses, y el 89% de esos fracasos se debe a un desajuste de cultura y actitud, no a una brecha de habilidades. En un equipo de diez, una mala contratación no solo rinde por debajo: frena a todos, erosiona la confianza y obliga a tus mejores personas a cubrir el hueco. Empezamos por el fit, para que sea la base y no la última verificación.',
+      cultureA: 'Porque la entrevista no es donde fallan las contrataciones. La semana cuatro sí. El 46% de las nuevas contrataciones fracasa en 18 meses, y el 89% de esos fracasos se debe a un desajuste de cultura y actitud, no a una brecha de habilidades. En un equipo de diez, una mala contratación no solo rinde por debajo: frena a todos, erosiona la confianza y obliga a tus mejores personas a cubrir el hueco. Empezamos por el fit, para que sea la base y no la última verificación.',
       engineQ: 'Cómo funciona el motor',
       engineA: 'Es un ciclo cerrado. Profundizamos en cómo opera de verdad una startup, esa señal entrena al talento que colocamos, los candidatos llegan ya alineados y cada resultado retroalimenta y afina el modelo. Cuatro pasos:',
       ctaBtn: 'Habla con nuestro equipo →',
@@ -819,52 +817,52 @@ export const content_es: LandingContent = {
     talentBlock: {
       tag: 'Para talento',
       headline: 'Dos formas de entrar.',
-      sub: 'Ya tienes las habilidades. Lo que falta es la estrategia, la red y los criterios para llegar a los founders correctos. Entrenamos a profesionales senior de LATAM frente al estándar real de las startups respaldadas por YC y a16z — para que dejes de ser filtrado y empieces a ser presentado.',
+      sub: 'Ya tienes las habilidades. Lo que falta es la estrategia, la red y los criterios para llegar a los founders correctos. Entrenamos a profesionales senior de LATAM frente al estándar real de las startups respaldadas por YC, a16z y Sequoia, para que dejes de ser filtrado y empieces a ser presentado.',
       oaEyebrow: 'Programa de coaching',
       oaTitle: 'Offer Acceleration',
-      oaBody: 'Offer Acceleration es un programa de 8 sesiones para profesionales senior de LATAM que ya tienen las habilidades pero siguen siendo filtrados — o reciben ofertas por debajo de su nivel. Al terminar, dejas de aplicar y empiezas a ser presentado a las empresas a las que de verdad quieres entrar.',
+      oaBody: 'Offer Acceleration es un programa 1:1 para profesionales senior de LATAM que ya tienen las habilidades pero siguen siendo filtrados, o reciben ofertas por debajo de su nivel. Al terminar, dejas de aplicar y empiezas a ser presentado a las empresas a las que de verdad quieres entrar.',
       oaLearnMore: 'Conoce más →',
       oaApply: 'Aplicar',
       oaFaqHeading: 'Preguntas sobre Offer Acceleration',
       rolesEyebrow: 'Búsquedas activas',
       rolesTitle: 'Vacantes abiertas',
-      rolesDesc: 'Roles senior en startups respaldadas por YC y a16z — seleccionados, calibrados y activos ahora mismo. Los nombres de las empresas se mantienen confidenciales hasta que hacemos la presentación.',
+      rolesDesc: 'Roles senior en startups respaldadas por YC, a16z y Sequoia, seleccionados, calibrados y activos ahora mismo. Los nombres de las empresas se mantienen confidenciales hasta que hacemos la presentación.',
       rolesBrowseAll: 'Ver todas las vacantes →',
     },
     founderFaqs: [
       {
         q: '¿Qué tan rápido pueden cerrar una contratación?',
-        a: 'Normalmente en menos de cuatro semanas hasta la primera colocación. Como mapeamos cómo evalúa tu equipo en realidad antes de abrir el pipeline, los candidatos llegan ya calibrados a tu estándar — así inviertes menos tiempo filtrando y más tiempo decidiendo.',
+        a: 'Normalmente en menos de cuatro semanas hasta la primera colocación. Como mapeamos cómo evalúa tu equipo en realidad antes de abrir el pipeline, los candidatos llegan ya calibrados a tu estándar, así inviertes menos tiempo filtrando y más tiempo decidiendo.',
       },
       {
         q: '¿Qué roles y seniority colocan?',
-        a: 'Profesionales senior de LATAM en ingeniería, IA/ML y roles fundacionales de go-to-market, colocados en startups de Seed a Serie A respaldadas por Y Combinator y Andreessen Horowitz (a16z). Los roles suelen ser remotos o híbridos, con compensación de mercado de EE. UU. más equity.',
+        a: 'Profesionales senior de LATAM en ingeniería, IA/ML y roles fundacionales de go-to-market, colocados en startups de Seed a Serie A respaldadas por Y Combinator, Andreessen Horowitz (a16z) y Sequoia. Los roles suelen ser remotos o híbridos, con compensación de mercado de EE. UU. más equity.',
       },
       {
         q: '¿En qué se diferencian de un reclutador típico?',
-        a: 'Operamos un ciclo cerrado, no un pipeline. Mapeamos tu estándar real — qué premias y qué se rompe en la semana tres —, entrenamos al talento que colocamos frente a ese estándar antes de que te conozcan, y retroalimentamos cada resultado para que el modelo sea más preciso en cada búsqueda.',
+        a: 'Operamos un ciclo cerrado, no un pipeline. Mapeamos tu estándar real, qué premias y qué se rompe en la semana tres, entrenamos al talento que colocamos frente a ese estándar antes de que te conozcan, y retroalimentamos cada resultado para que el modelo sea más preciso en cada búsqueda.',
       },
       {
         q: '¿Cuánto cuesta trabajar con ustedes?',
-        a: 'Nos enfocamos en roles donde una mala contratación cuesta meses de runway. La forma más rápida de conocer los términos exactos es una llamada corta — te explicamos cómo correríamos tu búsqueda y qué implica antes de que te comprometas a nada.',
+        a: 'Nos enfocamos en roles donde una mala contratación cuesta meses de runway. La forma más rápida de conocer los términos exactos es una llamada corta, te explicamos cómo correríamos tu búsqueda y qué implica antes de que te comprometas a nada.',
       },
     ],
     talentFaqs: [
       {
         q: '¿Cuánto dura el programa Offer Acceleration?',
-        a: 'Se desarrolla a lo largo de 8 sesiones de coaching 1:1 con reclutadores senior que colocan en portafolios de YC y a16z. Juntos construyes posicionamiento, narrativa y calibración de entrevistas frente al estándar real de las empresas a las que quieres entrar.',
+        a: 'Es un programa 1:1 de coaching con reclutadores senior que colocan en portafolios de YC, a16z y Sequoia. El número de sesiones se ajusta a tu velocidad de ejecución. Juntos construyes posicionamiento, narrativa y calibración de entrevistas frente al estándar real de las empresas a las que quieres entrar.',
       },
       {
         q: '¿Offer Acceleration es para mí?',
-        a: 'Está hecho para profesionales senior con 5+ años de experiencia y resultados consistentes que siguen siendo filtrados de roles en EE. UU. o reciben ofertas por debajo de su nivel. Si el estándar técnico no es tu problema — sino llegar a los founders correctos —, encaja.',
+        a: 'Está hecho para profesionales senior con 5+ años de experiencia y resultados consistentes que siguen siendo filtrados de roles en EE. UU. o reciben ofertas por debajo de su nivel. Si el estándar técnico no es tu problema, sino llegar a los founders correctos, encaja.',
       },
       {
         q: '¿Garantizan una oferta de trabajo?',
-        a: 'No. Es coaching más presentaciones directas cuando hay un fit genuino — no es una bolsa de empleo ni una garantía. Te decimos exactamente dónde está el estándar y te ponemos frente a los founders correctos; conseguir la oferta es el trabajo para el que te preparamos.',
+        a: 'No. Es coaching más presentaciones directas cuando hay un fit genuino, no es una bolsa de empleo ni una garantía. Te decimos exactamente dónde está el estándar y te ponemos frente a los founders correctos; conseguir la oferta es el trabajo para el que te preparamos.',
       },
       {
         q: '¿Cómo entro a una cohorte?',
-        a: 'Las cohortes son limitadas y requieren aplicación. Lee los detalles completos del programa y luego aplica — revisamos cada aplicación para confirmar el fit antes de invitarte a una cohorte.',
+        a: 'Las cohortes son limitadas y requieren aplicación. Lee los detalles completos del programa y luego aplica, revisamos cada aplicación para confirmar el fit antes de invitarte a una cohorte.',
       },
     ],
   },

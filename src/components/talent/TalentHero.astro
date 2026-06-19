@@ -12,7 +12,7 @@ const routes = [
     eyebrow: 'Coaching program',
     title: 'Offer Acceleration',
     body:
-      'An 8-session program that gives you the strategy, network, and real startup criteria to stop getting filtered — and start being introduced.',
+      'A 1:1 program that gives you the strategy, network, and real startup criteria to stop getting filtered, and start being introduced.',
     href: OA_DETAILS,
     cta: 'See more details →',
     target: OA_DETAILS,
@@ -21,7 +21,7 @@ const routes = [
     eyebrow: 'Active searches',
     title: 'Open roles',
     body:
-      'Senior roles at YC- and a16z-backed startups, curated and active right now. Apply once, get evaluated against the real bar, and introduced when there is a fit.',
+      'Senior roles at YC-, a16z- and Sequoia-backed startups, curated and active right now. Apply once, get evaluated against the real bar, and introduced when there is a fit.',
     href: ROLES_URL,
     cta: 'Browse roles →',
     target: '#roles',
@@ -39,8 +39,8 @@ const routes = [
         <span class="ft-hero__headline-accent">missing offers?</span>
       </h1>
       <p class="ft-hero__sub body1">
-        If you're a senior LATAM professional getting filtered out of US roles — or landing
-        offers below your level — the problem usually isn't your skill. It's strategy,
+        If you're a senior LATAM professional getting filtered out of US roles, or landing
+        offers below your level, the problem usually isn't your skill. It's strategy,
         positioning, and getting in front of the right founders. That's exactly what we fix.
       </p>
     </header>
@@ -63,8 +63,8 @@ const routes = [
 <style lang="scss">
   @use '../../styles/breakpoints' as *;
 
-  $talent: #0D0857;
-  $accent: #3C2BDC;
+  $talent: #29285F;
+  $accent: #29285F;
 
   .ft-hero {
     position: relative;
@@ -112,7 +112,7 @@ const routes = [
       color: #fff;
       background: $talent;
       padding: 5px 14px;
-      border-radius: 999px;
+      border-radius: var(--radius);
     }
 
     &__headline {
@@ -120,7 +120,7 @@ const routes = [
       font-weight: 800;
       line-height: 1.04;
       letter-spacing: -0.03em;
-      color: #111827;
+      color: var(--ink);
       margin: 0;
     }
     &__headline-accent { display: block; color: $accent; }
@@ -141,12 +141,10 @@ const routes = [
       padding: 2.25rem;
       border: 1px solid var(--color-border);
       border-top: 4px solid $talent;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.74);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      background: var(--bg-soft);
       text-decoration: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease;
 
       opacity: 0;
       animation: ft-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -155,7 +153,6 @@ const routes = [
 
       &:hover {
         transform: translateY(-4px);
-        box-shadow: 0 12px 36px rgba(13, 8, 87, 0.16);
         border-color: $talent;
       }
 

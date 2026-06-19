@@ -1,7 +1,21 @@
 @use './typography.scss' as *;
 
+/* Kate's bare-name token aliases (mirror the @theme tokens in tailwind.css) so
+   her CSS snippets that reference var(--ink), var(--radius), etc. resolve. */
+:root {
+  --ink: #29285F;          /* navy de marca: tinta */
+  --text: #1C1C1C;         /* cuerpo */
+  --muted: #6B6B6B;        /* secundario */
+  --bg: #FFFFFF;           /* fondo */
+  --bg-soft: #FCFCFB;      /* secciones alternas */
+  --line: rgba(0, 0, 0, 0.08); /* bordes finos */
+  --dark: #29285F;         /* fondo de la única sección oscura */
+  --on-dark: #F3EFE6;      /* texto sobre la sección oscura */
+  --radius: 12px;
+}
+
 html {
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
   scroll-behavior: smooth;
@@ -18,56 +32,57 @@ body {
   box-sizing: border-box;
 }
 
-/* ─── Button primary — black pill ────────────────────────────────────── */
+/* ─── Button primary — navy, 12px radius ─────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 0.875rem;
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1;
   color: #ffffff;
-  background-color: #0F0F0F;
+  background-color: var(--ink);
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius);
   cursor: pointer;
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
 
 .btn:hover {
-  background-color: #3C2BDC;
+  background-color: #1E1D47;
 }
 
-/* ─── Button secondary — outlined pill ───────────────────────────────── */
+/* ─── Button secondary — outlined, 12px radius ───────────────────────── */
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 0.875rem;
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 500;
-  line-height: 1.5;
-  color: #0F0F0F;
+  line-height: 1;
+  color: var(--ink);
   background: transparent;
-  border: 1.5px solid #0F0F0F;
-  border-radius: 999px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   cursor: pointer;
   text-decoration: none;
   transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .btn-secondary:hover {
-  background-color: #0F0F0F;
+  background-color: var(--ink);
+  border-color: var(--ink);
   color: #ffffff;
 }
 
 /* ─── Uppercase label ────────────────────────────────────────────────── */
 .label-uppercase {
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif;
   font-size: 0.6875rem;
   font-weight: 500;
   line-height: 1.2;
@@ -99,4 +114,31 @@ body {
 
 .opacity-0-init {
   opacity: 0;
+}
+
+/* ─── Scroll reveal ──────────────────────────────────────────────────────
+   One shared system used across every section. A single IntersectionObserver
+   in Layout.astro toggles `.visible` on each `.reveal` element as it scrolls
+   into view — this replaces the per-component observers that used to repeat
+   this same logic in every section file. */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

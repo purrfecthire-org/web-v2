@@ -1,10 +1,8 @@
 ---
 // ── Offer Acceleration — v5 (the default program page) ───────────────────
-// Direction: v2 "Cinema" converted to LIGHT mode. Same structure, type
-// scale, gradients, glows and background grid as v2 — only the palette is
-// inverted: warm-paper canvas, white surfaces, dark readable text, brand
-// purple (#3C2BDC) kept for accent words. Desktop-first (design test).
-// DELETE when a final version is chosen.
+// Direction: flat navy/white 2026 system. No gradients, no glows, no
+// box-shadow, no purple accent — flat surfaces, navy ink (#29285F),
+// border-based elevation, Schibsted Grotesk (loaded globally).
 import Layout from '../../layouts/Layout.astro';
 import { oaContent as c } from '../../content/offerAcceleration';
 
@@ -17,11 +15,6 @@ const { noindex = true } = Astro.props;
 ---
 
 <Layout title={c.meta.title} description={c.meta.description} lang="es" noindex={noindex}>
-  <link
-    slot="head"
-    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700&display=swap"
-    rel="stylesheet"
-  />
 
   <main class="oa5">
 
@@ -35,84 +28,91 @@ const { noindex = true } = Astro.props;
         <a href="/offer-acceleration" class="oa5-nav__link oa5-nav__link--active">Offer Acceleration</a>
       </nav>
       <a href={c.apply.url} id="oa5-apply-btn" class="oa5-btn oa5-btn--solid">
-        Test gratis
+        {c.apply.label}
       </a>
     </header>
 
-    <!-- Idle guide arrow → fades in pointing at the "Test gratis" button -->
-    <canvas class="oa5-guide" id="oa5-guide" aria-hidden="true"></canvas>
-
     <!-- ── Hero ─────────────────────────────────────────────────────── -->
     <section class="oa5-hero">
-      <div class="oa5-hero__glow" aria-hidden="true"></div>
-      <div class="oa5-hero__grid" aria-hidden="true"></div>
-
       <p class="oa5-eyebrow oa5-hero__eyebrow">{c.hero.eyebrow}</p>
-
-      <h1 class="oa5-hero__headline">
-        <span class="oa5-hero__line"><span>Tu perfil tiene</span></span>
-        <span class="oa5-hero__line"><span>techo más alto que</span></span>
-        <span class="oa5-hero__line oa5-hero__line--accent"><span>tu salario actual.</span></span>
-      </h1>
-
-      <p class="oa5-hero__subhead">{c.hero.subhead}</p>
-
-      <div class="oa5-hero__stats">
+      <h1 class="oa5-hero__headline">{c.hero.headline}</h1>
+      <div class="oa5-hero__body">
+        <p>{c.hero.para1}</p>
+        <p>{c.hero.para2}</p>
+      </div>
+      <ul class="oa5-hero__stats">
         {c.hero.stats.map((s) => (
-          <div class="oa5-hero__stat">
-            <span class="oa5-hero__stat-value">{s.value}</span>
-            <span class="oa5-hero__stat-label">{s.label}</span>
-          </div>
+          <li class="oa5-hero__stat">{s}</li>
         ))}
-      </div>
-
-      <div class="oa5-hero__scroll" aria-hidden="true">
-        <span></span>
-      </div>
+      </ul>
     </section>
 
-    <!-- ── Ch. 01 — Cost ────────────────────────────────────────────── -->
+    <!-- ── Cost ─────────────────────────────────────────────────────── -->
     <section class="oa5-chapter">
       <div class="oa5-chapter__head oa5-reveal">
-        <span class="oa5-chapter__num">01</span>
         <h2 class="oa5-chapter__title">{c.cost.title}</h2>
       </div>
-
-      <div class="oa5-cost">
-        <p class="oa5-cost__setup oa5-reveal">{c.cost.body}</p>
-        <p class="oa5-cost__big oa5-reveal">
-          <span class="oa5-cost__amount">−$12,000</span>
-          <span class="oa5-cost__usd">USD que ya no vas a recuperar</span>
-        </p>
-        <p class="oa5-cost__note oa5-reveal">{c.cost.note}</p>
-        <blockquote class="oa5-quote oa5-reveal">{c.cost.quote}</blockquote>
+      <div class="oa5-cost oa5-reveal">
+        <p class="oa5-cost__lead">{c.cost.body1}</p>
+        <p class="oa5-cost__body">{c.cost.body2}</p>
+        <p class="oa5-cost__note">{c.cost.body3}</p>
       </div>
     </section>
 
-    <!-- ── Ch. 02 — Cases ───────────────────────────────────────────── -->
+    <!-- ── Cases ────────────────────────────────────────────────────── -->
     <section class="oa5-chapter" id="casos">
       <div class="oa5-chapter__head oa5-reveal">
-        <span class="oa5-chapter__num">02</span>
         <h2 class="oa5-chapter__title">{c.cases.title}</h2>
       </div>
+      <p class="oa5-chapter__subhead oa5-reveal">{c.cases.intro}</p>
 
       <div class="oa5-cases">
-        {c.cases.items.map((item, i) => (
-          <article class={`oa5-case oa5-reveal ${i % 2 === 1 ? 'oa5-case--offset' : ''}`}>
-            <div class="oa5-case__metric">{item.metric}</div>
-            <div class="oa5-case__unit">{item.unit}</div>
-            <h3 class="oa5-case__role">{item.role}</h3>
-            <p class="oa5-case__story">{item.story}</p>
-            <p class="oa5-case__result">{item.result}</p>
+        {c.cases.items.map((item) => (
+          <article class="oa5-case oa5-reveal">
+            <h3 class="oa5-case__title">{item.title}</h3>
+            <p class="oa5-case__body">{item.body}</p>
           </article>
         ))}
       </div>
     </section>
 
-    <!-- ── Ch. 03 — Investment ──────────────────────────────────────── -->
+    <!-- ── How we work ──────────────────────────────────────────────── -->
     <section class="oa5-chapter">
       <div class="oa5-chapter__head oa5-reveal">
-        <span class="oa5-chapter__num">03</span>
+        <h2 class="oa5-chapter__title">{c.how.title}</h2>
+      </div>
+      <p class="oa5-chapter__subhead oa5-reveal">{c.how.intro}</p>
+
+      <ol class="oa5-how">
+        {c.how.bullets.map((b, i) => (
+          <li class="oa5-how__item oa5-reveal">
+            <span class="oa5-how__num">{String(i + 1).padStart(2, '0')}</span>
+            <div class="oa5-how__text">
+              <h3>{b.title}</h3>
+              <p>{b.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <p class="oa5-statement oa5-reveal">{c.how.close}</p>
+    </section>
+
+    <!-- ── The half we don't do ─────────────────────────────────────── -->
+    <section class="oa5-chapter oa5-chapter--narrow">
+      <div class="oa5-chapter__head oa5-reveal">
+        <h2 class="oa5-chapter__title">{c.split.title}</h2>
+      </div>
+      <div class="oa5-split oa5-reveal">
+        <p>{c.split.body1}</p>
+        <p>{c.split.body2}</p>
+        <p>{c.split.body3}</p>
+      </div>
+    </section>
+
+    <!-- ── Investment ───────────────────────────────────────────────── -->
+    <section class="oa5-chapter">
+      <div class="oa5-chapter__head oa5-reveal">
         <h2 class="oa5-chapter__title">{c.investment.title}</h2>
       </div>
 
@@ -138,56 +138,20 @@ const { noindex = true } = Astro.props;
             <span>{t.payback}</span>
           </div>
         ))}
-        <p class="oa5-tiers__note">{c.investment.tableNote} · {c.investment.payments}</p>
       </div>
-
-      <p class="oa5-statement oa5-reveal">{c.investment.proof}</p>
+      <p class="oa5-tiers__note oa5-reveal">{c.investment.tableNote}</p>
     </section>
 
-    <!-- ── Ch. 04 — Deliverables ────────────────────────────────────── -->
-    <section class="oa5-chapter">
+    <!-- ── Who's behind (dark section) ──────────────────────────────── -->
+    <section class="oa5-chapter oa5-chapter--dark">
       <div class="oa5-chapter__head oa5-reveal">
-        <span class="oa5-chapter__num">04</span>
-        <h2 class="oa5-chapter__title">{c.deliverables.title}</h2>
+        <h2 class="oa5-chapter__title">{c.who.title}</h2>
       </div>
-      <p class="oa5-chapter__subhead oa5-reveal">{c.deliverables.subhead}</p>
-
-      <ol class="oa5-deliverables">
-        {c.deliverables.items.map((d, i) => (
-          <li class="oa5-deliverable oa5-reveal">
-            <span class="oa5-deliverable__num">{String(i + 1).padStart(2, '0')}</span>
-            <div class="oa5-deliverable__text">
-              <h3>{d.title}</h3>
-              <p>{d.body}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </section>
-
-    <!-- ── Ch. 05 — How + Who ───────────────────────────────────────── -->
-    <section class="oa5-chapter">
-      <div class="oa5-chapter__head oa5-reveal">
-        <span class="oa5-chapter__num">05</span>
-        <h2 class="oa5-chapter__title">{c.how.title}</h2>
-      </div>
-
-      <div class="oa5-how oa5-reveal">
-        {c.how.facts.map((f) => (
-          <div class="oa5-how__fact">
-            <span class="oa5-eyebrow">{f.label}</span>
-            <span class="oa5-how__value">{f.value}</span>
-            <p>{f.detail}</p>
-          </div>
-        ))}
-      </div>
-
-      <p class="oa5-statement oa5-reveal">{c.how.quote}</p>
 
       <div class="oa5-who oa5-reveal">
         <div class="oa5-who__kate">
           <h3>{c.who.kate.name}</h3>
-          <span class="oa5-eyebrow">{c.who.kate.role}</span>
+          <p class="oa5-who__role">{c.who.kate.role}</p>
           <p>{c.who.kate.bio}</p>
           <p class="oa5-who__quote">“{c.who.kate.quote}”</p>
         </div>
@@ -198,10 +162,17 @@ const { noindex = true } = Astro.props;
       </div>
     </section>
 
-    <!-- ── Ch. 06 — FAQ ─────────────────────────────────────────────── -->
+    <!-- ── Format ───────────────────────────────────────────────────── -->
     <section class="oa5-chapter oa5-chapter--narrow">
       <div class="oa5-chapter__head oa5-reveal">
-        <span class="oa5-chapter__num">06</span>
+        <h2 class="oa5-chapter__title">{c.format.title}</h2>
+      </div>
+      <p class="oa5-format oa5-reveal">{c.format.body}</p>
+    </section>
+
+    <!-- ── FAQ ──────────────────────────────────────────────────────── -->
+    <section class="oa5-chapter oa5-chapter--narrow">
+      <div class="oa5-chapter__head oa5-reveal">
         <h2 class="oa5-chapter__title">{c.faq.title}</h2>
       </div>
 
@@ -217,15 +188,11 @@ const { noindex = true } = Astro.props;
 
     <!-- ── Final ────────────────────────────────────────────────────── -->
     <section class="oa5-final">
-      <div class="oa5-final__glow" aria-hidden="true"></div>
-      <h2 class="oa5-final__title oa5-reveal">
-        La diferencia no es talento.<br />
-        <em>Es velocidad de decisión.</em>
-      </h2>
-      <p class="oa5-final__note oa5-reveal">{c.start.note} Tres pasos: completas tu aplicación, agendas con nuestro equipo, reservas tu cupo y arrancamos.</p>
+      <h2 class="oa5-final__title oa5-reveal">{c.final.title}</h2>
+      <p class="oa5-final__note oa5-reveal">{c.final.body}</p>
       <div class="oa5-final__ctas oa5-reveal">
         <a href={c.apply.url} class="oa5-btn oa5-btn--solid oa5-btn--lg">
-          {c.apply.labelFinal}
+          {c.final.button}
         </a>
       </div>
       <p class="oa5-final__footer">© {new Date().getFullYear()} Purrfect Hire · Offer Acceleration</p>
@@ -235,27 +202,27 @@ const { noindex = true } = Astro.props;
 
 <style lang="scss">
   $ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  $ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   .oa5 {
-    // ── Light palette (mirror of v2's dark tokens) ──
-    --oa5-bg: #f7f5f0;          // warm paper
-    --oa5-surface: #ffffff;     // white cards
-    --oa5-text: #14121b;        // near-black ink
-    --oa5-muted: rgba(20, 18, 27, 0.62);
-    --oa5-faint: rgba(20, 18, 27, 0.42);
-    --oa5-border: rgba(20, 18, 27, 0.12);
-    --oa5-accent: #3c2bdc;      // brand purple — readable on light
-    --oa5-accent-soft: #6354e8; // lighter purple for gradient end
-    --oa5-accent-deep: #3c2bdc;
+    // ── Flat navy/white 2026 tokens ──
+    --oa5-bg: var(--bg, #ffffff);
+    --oa5-bg-soft: var(--bg-soft, #fcfcfb);
+    --oa5-surface: var(--bg, #ffffff);
+    --oa5-text: var(--text, #1c1c1c);
+    --oa5-ink: var(--ink, #29285f);
+    --oa5-muted: var(--muted, #6b6b6b);
+    --oa5-border: var(--line, rgba(0, 0, 0, 0.08));
+    --oa5-dark: var(--dark, #29285f);
+    --oa5-on-dark: var(--on-dark, #f3efe6);
+    --oa5-radius: var(--radius, 12px);
 
     background: var(--oa5-bg);
     color: var(--oa5-text);
-    font-family: 'Inter', Arial, sans-serif;
+    font-family: 'Schibsted Grotesk', Arial, sans-serif;
     overflow-x: hidden;
 
     ::selection {
-      background: var(--oa5-accent-deep);
+      background: var(--oa5-ink);
       color: #fff;
     }
   }
@@ -265,21 +232,20 @@ const { noindex = true } = Astro.props;
     font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--oa5-accent);
+    color: var(--oa5-ink);
   }
 
   // ── Nav ───────────────────────────────────────────────────
   .oa5-nav {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 50;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 3rem;
-    background: linear-gradient(rgba(247, 245, 240, 0.9), rgba(247, 245, 240, 0));
+    padding: 1rem clamp(1.5rem, 5vw, 3rem);
+    background: var(--oa5-bg);
+    border-bottom: 1px solid var(--oa5-border);
 
     &__logo-link {
       display: inline-flex;
@@ -305,21 +271,9 @@ const { noindex = true } = Astro.props;
       text-decoration: none;
       transition: color 0.2s ease;
 
-      &:hover { color: var(--oa5-accent); }
+      &:hover { color: var(--oa5-ink); }
       &--active { color: var(--oa5-text); }
     }
-  }
-
-  // ── Idle guide arrow → "Test gratis" button ───────────────
-  .oa5-guide {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 60;
-
-    @media (max-width: 767px) { display: none; }
   }
 
   // ── Buttons ───────────────────────────────────────────────
@@ -330,26 +284,26 @@ const { noindex = true } = Astro.props;
     padding: 12px 26px;
     font-size: 0.875rem;
     font-weight: 500;
-    border-radius: 999px;
+    border-radius: var(--oa5-radius);
     text-decoration: none;
     color: var(--oa5-text);
-    border: 1px solid rgba(20, 18, 27, 0.25);
-    transition: background 0.25s $ease-quart, border-color 0.25s $ease-quart, color 0.25s $ease-quart, transform 0.25s $ease-quart;
+    border: 1px solid var(--oa5-border);
+    background: var(--oa5-bg);
+    transition: background 0.25s $ease-expo, border-color 0.25s $ease-expo, color 0.25s $ease-expo;
 
     &:hover {
-      border-color: var(--oa5-accent);
-      color: var(--oa5-accent);
-      transform: translateY(-1px);
+      border-color: var(--oa5-ink);
+      color: var(--oa5-ink);
     }
 
     &--solid {
-      background: var(--oa5-accent-deep);
-      border-color: var(--oa5-accent-deep);
+      background: var(--oa5-ink);
+      border-color: var(--oa5-ink);
       color: #fff;
 
       &:hover {
-        background: var(--oa5-accent-soft);
-        border-color: var(--oa5-accent-soft);
+        background: var(--oa5-text);
+        border-color: var(--oa5-text);
         color: #fff;
       }
     }
@@ -360,133 +314,61 @@ const { noindex = true } = Astro.props;
   // ── Hero ──────────────────────────────────────────────────
   .oa5-hero {
     position: relative;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 7vw;
-    overflow: hidden;
-
-    &__glow {
-      position: absolute;
-      width: 70vw;
-      height: 70vw;
-      top: -30vw;
-      right: -22vw;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(60, 43, 220, 0.20) 0%, rgba(60, 43, 220, 0) 65%);
-      animation: oa5-pulse 9s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-
-    &__grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(20, 18, 27, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(20, 18, 27, 0.05) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 100%);
-      pointer-events: none;
-    }
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(64px, 9vw, 120px) clamp(1.5rem, 5vw, 2rem) 80px;
 
     &__eyebrow {
-      position: relative;
-      opacity: 0;
-      animation: oa5-up 0.9s $ease-expo 0.2s forwards;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
     }
 
     &__headline {
-      position: relative;
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: clamp(3.5rem, 7.8vw, 8rem);
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.75rem);
       font-weight: 700;
-      line-height: 0.98;
-      letter-spacing: -0.03em;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
       margin: 0;
+      max-width: 18ch;
+      color: var(--oa5-ink);
     }
 
-    &__line {
-      display: block;
-      overflow: hidden;
+    &__body {
+      max-width: 44rem;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
 
-      span {
-        display: block;
-        transform: translateY(110%);
-        animation: oa5-line 1.1s $ease-expo forwards;
+      p {
+        margin: 0;
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        color: var(--oa5-muted);
       }
-
-      &:nth-child(1) span { animation-delay: 0.35s; }
-      &:nth-child(2) span { animation-delay: 0.47s; }
-      &:nth-child(3) span { animation-delay: 0.59s; }
-
-      &--accent span {
-        color: transparent;
-        background: linear-gradient(92deg, var(--oa5-accent) 0%, var(--oa5-accent-soft) 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-      }
-    }
-
-    &__subhead {
-      position: relative;
-      max-width: 32rem;
-      margin-top: 2.5rem;
-      font-size: 1.0625rem;
-      line-height: 1.65;
-      color: var(--oa5-muted);
-      opacity: 0;
-      animation: oa5-up 0.9s $ease-expo 1.1s forwards;
     }
 
     &__stats {
-      position: relative;
-      display: flex;
-      gap: 3.5rem;
-      margin-top: 3.5rem;
-      padding-top: 2rem;
+      list-style: none;
+      margin: 3rem 0 0;
+      padding: 2rem 0 0;
       border-top: 1px solid var(--oa5-border);
-      opacity: 0;
-      animation: oa5-up 0.9s $ease-expo 1.35s forwards;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2.5rem;
     }
 
     &__stat {
-      display: flex;
-      flex-direction: column;
-      gap: 0.375rem;
-    }
-
-    &__stat-value {
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: 2rem;
+      position: relative;
+      font-size: 0.9375rem;
       font-weight: 500;
-      line-height: 1;
-    }
+      color: var(--oa5-text);
 
-    &__stat-label {
-      font-size: 0.8125rem;
-      color: var(--oa5-faint);
-      max-width: 150px;
-    }
-
-    &__scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      width: 1px;
-      height: 56px;
-      background: var(--oa5-border);
-      overflow: hidden;
-
-      span {
+      &:not(:last-child)::after {
+        content: '·';
         position: absolute;
-        top: -40%;
-        left: 0;
-        width: 100%;
-        height: 40%;
-        background: var(--oa5-accent);
-        animation: oa5-scrollhint 2.2s $ease-quart 2s infinite;
+        right: -1.4rem;
+        color: var(--oa5-muted);
       }
     }
   }
@@ -494,266 +376,164 @@ const { noindex = true } = Astro.props;
   // ── Chapters ──────────────────────────────────────────────
   .oa5-chapter {
     position: relative;
-    padding: 9rem 7vw;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(48px, 7vw, 80px) clamp(1.5rem, 5vw, 2rem);
     border-top: 1px solid var(--oa5-border);
 
-    &--narrow { max-width: 60rem; }
+    &--narrow { max-width: 760px; }
 
-    &__head {
-      display: flex;
-      align-items: baseline;
-      gap: 2rem;
-      margin-bottom: 4rem;
+    &--dark {
+      max-width: none;
+      background: var(--oa5-dark);
+      color: var(--oa5-on-dark);
+      border-top: none;
+
+      .oa5-chapter__title { color: var(--oa5-on-dark); }
     }
 
-    &__num {
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: var(--oa5-accent);
-      letter-spacing: 0.1em;
+    &__head {
+      margin-bottom: 2.5rem;
     }
 
     &__title {
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: clamp(2.25rem, 4vw, 3.75rem);
-      font-weight: 500;
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: clamp(1.875rem, 3.4vw, 3rem);
+      font-weight: 700;
       letter-spacing: -0.02em;
-      line-height: 1.05;
+      line-height: 1.1;
       margin: 0;
+      color: var(--oa5-ink);
+      max-width: 22ch;
     }
 
     &__subhead {
-      max-width: 36rem;
+      max-width: 46rem;
       color: var(--oa5-muted);
-      margin: -2.5rem 0 4rem;
+      margin: -1rem 0 3rem;
       font-size: 1.0625rem;
       line-height: 1.65;
     }
   }
 
+  // dark section inner content needs a centered max-width wrapper
+  .oa5-chapter--dark > .oa5-chapter__head,
+  .oa5-chapter--dark > .oa5-who {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   // ── Cost ──────────────────────────────────────────────────
   .oa5-cost {
-    max-width: 60rem;
+    max-width: 46rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-    &__setup {
-      font-size: 1.25rem;
-      line-height: 1.6;
-      color: var(--oa5-muted);
-      max-width: 38rem;
-    }
-
-    &__big {
-      margin: 3.5rem 0 0;
-      display: flex;
-      flex-direction: column;
-    }
-
-    &__amount {
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: clamp(5rem, 12vw, 12rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      color: transparent;
-      background: linear-gradient(180deg, var(--oa5-text) 30%, rgba(20, 18, 27, 0.28) 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      font-variant-numeric: tabular-nums;
-    }
-
-    &__usd {
-      font-size: 1.125rem;
-      color: var(--oa5-accent);
-      margin-top: 1rem;
+    &__lead {
+      margin: 0;
+      font-size: 1.375rem;
+      line-height: 1.5;
       font-weight: 500;
+      color: var(--oa5-text);
+    }
+
+    &__body {
+      margin: 0;
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--oa5-muted);
     }
 
     &__note {
-      margin-top: 2rem;
-      font-size: 0.8125rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--oa5-faint);
+      margin: 0;
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      font-weight: 500;
+      color: var(--oa5-ink);
     }
   }
 
-  .oa5-quote {
-    margin: 4rem 0 0;
-    max-width: 40rem;
-    padding-left: 1.75rem;
-    border-left: 2px solid var(--oa5-accent);
-    font-size: 1.375rem;
-    line-height: 1.5;
-    font-weight: 400;
-    color: var(--oa5-text);
-  }
-
   .oa5-statement {
-    margin: 5rem auto 0;
-    max-width: 52rem;
-    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-    font-size: clamp(1.625rem, 2.6vw, 2.5rem);
+    margin: 3.5rem 0 0;
+    max-width: 40rem;
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-size: clamp(1.375rem, 2.4vw, 2rem);
     font-weight: 500;
-    line-height: 1.25;
+    line-height: 1.3;
     letter-spacing: -0.01em;
-    text-align: center;
-
-    em { color: var(--oa5-accent); font-style: normal; }
+    color: var(--oa5-ink);
   }
 
   // ── Cases ─────────────────────────────────────────────────
   .oa5-cases {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem 2.5rem;
+    gap: 1.5rem;
+
+    @media (max-width: 767px) { grid-template-columns: 1fr; }
   }
 
   .oa5-case {
     background: var(--oa5-surface);
     border: 1px solid var(--oa5-border);
-    border-radius: 4px;
-    padding: 2.5rem;
+    border-radius: var(--oa5-radius);
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.625rem;
-    box-shadow: 0 1px 2px rgba(20, 18, 27, 0.04);
-    transition: border-color 0.3s $ease-quart, box-shadow 0.3s $ease-quart, transform 0.45s $ease-expo;
+    gap: 0.875rem;
+    transition: border-color 0.25s $ease-expo;
 
-    &:hover {
-      border-color: rgba(60, 43, 220, 0.45);
-      box-shadow: 0 18px 44px rgba(20, 18, 27, 0.08);
-      transform: translateY(-4px);
-    }
+    &:hover { border-color: var(--oa5-ink); }
 
-    &--offset { transform: translateY(2.5rem); }
-    &--offset:hover { transform: translateY(calc(2.5rem - 4px)); }
-
-    &__metric {
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: 2.75rem;
+    &__title {
+      margin: 0;
+      font-size: 1.0625rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1;
-      color: var(--oa5-accent);
-      font-variant-numeric: tabular-nums;
+      line-height: 1.4;
+      color: var(--oa5-ink);
     }
 
-    &__unit {
-      font-size: 0.8125rem;
-      color: var(--oa5-faint);
-      letter-spacing: 0.04em;
-    }
-
-    &__role {
-      margin: 1rem 0 0;
-      font-size: 1.125rem;
-      font-weight: 500;
-    }
-
-    &__story {
+    &__body {
+      margin: 0;
       font-size: 0.9375rem;
       line-height: 1.65;
       color: var(--oa5-muted);
     }
-
-    &__result {
-      margin-top: auto;
-      padding-top: 1rem;
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: var(--oa5-text);
-    }
   }
 
-  // ── Investment ────────────────────────────────────────────
-  .oa5-invest {
-    margin-bottom: 4rem;
-
-    &__price {
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin: 0;
-    }
-
-    &__note {
-      margin-top: 1.25rem;
-      color: var(--oa5-muted);
-      font-size: 1.0625rem;
-    }
-  }
-
-  .oa5-tiers {
-    border-top: 1px solid var(--oa5-border);
-
-    &__row {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
-      gap: 1.5rem;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--oa5-border);
-      font-size: 0.9375rem;
-      color: var(--oa5-muted);
-      font-variant-numeric: tabular-nums;
-      transition: background 0.2s $ease-quart;
-
-      &:not(&--head):hover { background: rgba(20, 18, 27, 0.025); }
-
-      &--head {
-        font-size: 0.6875rem;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: var(--oa5-faint);
-        padding: 1rem 0;
-      }
-    }
-
-    &__seniority { color: var(--oa5-text); font-weight: 500; }
-    &__jump { color: var(--oa5-accent); font-weight: 500; }
-
-    &__note {
-      padding-top: 1.25rem;
-      font-size: 0.8125rem;
-      color: var(--oa5-faint);
-    }
-  }
-
-  // ── Deliverables ──────────────────────────────────────────
-  .oa5-deliverables {
+  // ── How ───────────────────────────────────────────────────
+  .oa5-how {
     list-style: none;
     margin: 0;
     padding: 0;
     max-width: 56rem;
   }
 
-  .oa5-deliverable {
+  .oa5-how__item {
     display: grid;
-    grid-template-columns: 5rem 1fr;
-    gap: 2rem;
-    padding: 2.25rem 0;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1.75rem;
+    padding: 1.75rem 0;
     border-bottom: 1px solid var(--oa5-border);
 
     &:first-child { border-top: 1px solid var(--oa5-border); }
 
-    &__num {
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: 1.75rem;
-      font-weight: 300;
-      color: var(--oa5-faint);
-      line-height: 1.2;
-      transition: color 0.3s $ease-quart;
+    .oa5-how__num {
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--oa5-ink);
+      line-height: 1.4;
     }
 
-    &:hover &__num { color: var(--oa5-accent); }
-
-    &__text {
+    .oa5-how__text {
       h3 {
         margin: 0 0 0.5rem;
-        font-size: 1.25rem;
-        font-weight: 500;
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--oa5-text);
       }
 
       p {
@@ -761,73 +541,151 @@ const { noindex = true } = Astro.props;
         font-size: 0.9375rem;
         line-height: 1.65;
         color: var(--oa5-muted);
-        max-width: 38rem;
+        max-width: 42rem;
       }
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
   }
 
-  // ── How / Who ─────────────────────────────────────────────
-  .oa5-how {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
+  // ── Split ─────────────────────────────────────────────────
+  .oa5-split {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-    &__fact {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--oa5-border);
+    p {
+      margin: 0;
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: var(--oa5-muted);
 
-      p {
-        margin: 0;
-        font-size: 0.9375rem;
-        line-height: 1.65;
+      &:first-child { color: var(--oa5-text); font-weight: 500; }
+    }
+  }
+
+  // ── Investment ────────────────────────────────────────────
+  .oa5-invest {
+    margin-bottom: 3rem;
+
+    &__price {
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: 0;
+      color: var(--oa5-ink);
+    }
+
+    &__note {
+      margin-top: 1rem;
+      color: var(--oa5-muted);
+      font-size: 1.0625rem;
+    }
+  }
+
+  .oa5-tiers {
+    border: 1px solid var(--oa5-border);
+    border-radius: var(--oa5-radius);
+    overflow: hidden;
+
+    &__row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr;
+      gap: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--oa5-border);
+      font-size: 0.9375rem;
+      color: var(--oa5-muted);
+      font-variant-numeric: tabular-nums;
+
+      &:last-child { border-bottom: none; }
+
+      &--head {
+        font-size: 0.6875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
         color: var(--oa5-muted);
+        background: var(--oa5-bg-soft);
       }
     }
 
-    &__value {
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: 1.625rem;
-      font-weight: 500;
+    &__seniority { color: var(--oa5-text); font-weight: 500; }
+    &__jump { color: var(--oa5-ink); font-weight: 500; }
+
+    &__note {
+      margin: 1.25rem 0 0;
+      font-size: 0.8125rem;
+      color: var(--oa5-muted);
+    }
+
+    @media (max-width: 767px) {
+      &__row {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem 1rem;
+      }
+      &__row--head { display: none; }
+      &__seniority { grid-column: 1 / -1; font-size: 1rem; }
     }
   }
 
+  // ── Who (dark) ────────────────────────────────────────────
   .oa5-who {
-    margin-top: 6rem;
     display: grid;
     grid-template-columns: 3fr 2fr;
-    gap: 2.5rem;
+    gap: 1.5rem;
+
+    @media (max-width: 767px) { grid-template-columns: 1fr; }
 
     h3 {
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: 1.625rem;
-      font-weight: 500;
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: 1.375rem;
+      font-weight: 700;
       margin: 0 0 0.375rem;
+      color: var(--oa5-on-dark);
     }
 
     p {
       margin: 1rem 0 0;
       font-size: 0.9375rem;
       line-height: 1.7;
-      color: var(--oa5-muted);
+      color: rgba(243, 239, 230, 0.78);
+    }
+
+    &__role {
+      margin-top: 0 !important;
+      font-size: 0.8125rem !important;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(243, 239, 230, 0.6) !important;
     }
 
     &__kate,
     &__team {
-      background: var(--oa5-surface);
-      border: 1px solid var(--oa5-border);
-      border-radius: 4px;
-      padding: 2.5rem;
-      box-shadow: 0 1px 2px rgba(20, 18, 27, 0.04);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(243, 239, 230, 0.16);
+      border-radius: var(--oa5-radius);
+      padding: 2rem;
     }
 
     &__quote {
-      color: var(--oa5-accent) !important;
+      color: var(--oa5-on-dark) !important;
       font-weight: 500;
       font-size: 1.0625rem !important;
     }
+  }
+
+  // ── Format ────────────────────────────────────────────────
+  .oa5-format {
+    margin: 0;
+    max-width: 46rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--oa5-muted);
   }
 
   // ── FAQ ───────────────────────────────────────────────────
@@ -843,6 +701,7 @@ const { noindex = true } = Astro.props;
         padding: 1.5rem 2.5rem 1.5rem 0;
         font-size: 1.0625rem;
         font-weight: 500;
+        color: var(--oa5-text);
         cursor: pointer;
         list-style: none;
         position: relative;
@@ -855,9 +714,9 @@ const { noindex = true } = Astro.props;
           right: 0.25rem;
           top: 50%;
           transform: translateY(-50%);
-          color: var(--oa5-accent);
+          color: var(--oa5-ink);
           font-size: 1.375rem;
-          font-weight: 300;
+          font-weight: 400;
           transition: transform 0.25s $ease-expo;
         }
       }
@@ -869,7 +728,7 @@ const { noindex = true } = Astro.props;
         font-size: 0.9375rem;
         line-height: 1.7;
         color: var(--oa5-muted);
-        max-width: 40rem;
+        max-width: 42rem;
       }
     }
   }
@@ -877,71 +736,50 @@ const { noindex = true } = Astro.props;
   // ── Final ─────────────────────────────────────────────────
   .oa5-final {
     position: relative;
-    padding: 11rem 7vw 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(64px, 9vw, 110px) clamp(1.5rem, 5vw, 2rem) 3rem;
     text-align: center;
     border-top: 1px solid var(--oa5-border);
-    overflow: hidden;
-
-    &__glow {
-      position: absolute;
-      width: 60vw;
-      height: 60vw;
-      bottom: -40vw;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(60, 43, 220, 0.22) 0%, rgba(60, 43, 220, 0) 65%);
-      pointer-events: none;
-    }
 
     &__title {
-      position: relative;
-      font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
-      font-size: clamp(2.75rem, 5.5vw, 5rem);
+      font-family: 'Schibsted Grotesk', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
       font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin: 0;
-
-      em {
-        font-style: normal;
-        color: transparent;
-        background: linear-gradient(92deg, var(--oa5-accent) 0%, var(--oa5-accent-soft) 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-      }
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 auto;
+      max-width: 18ch;
+      color: var(--oa5-ink);
     }
 
     &__note {
-      position: relative;
       max-width: 34rem;
-      margin: 2rem auto 0;
+      margin: 1.5rem auto 0;
       color: var(--oa5-muted);
       font-size: 1rem;
       line-height: 1.65;
     }
 
     &__ctas {
-      position: relative;
       display: flex;
       justify-content: center;
       gap: 1rem;
-      margin-top: 3rem;
+      margin-top: 2.5rem;
     }
 
     &__footer {
-      position: relative;
-      margin-top: 7rem;
+      margin-top: 5rem;
       font-size: 0.8125rem;
-      color: var(--oa5-faint);
+      color: var(--oa5-muted);
     }
   }
 
   // ── Scroll reveals ────────────────────────────────────────
   .oa5-reveal {
     opacity: 0;
-    transform: translateY(36px);
-    transition: opacity 1s $ease-expo, transform 1s $ease-expo;
+    transform: translateY(28px);
+    transition: opacity 0.8s $ease-expo, transform 0.8s $ease-expo;
 
     &.is-visible {
       opacity: 1;
@@ -949,38 +787,8 @@ const { noindex = true } = Astro.props;
     }
   }
 
-  .oa5-case--offset.is-visible { transform: translateY(2.5rem); }
-
-  // ── Keyframes ─────────────────────────────────────────────
-  @keyframes oa5-line {
-    to { transform: translateY(0); }
-  }
-  @keyframes oa5-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes oa5-pulse {
-    from { opacity: 0.7; transform: scale(1); }
-    to { opacity: 1; transform: scale(1.08); }
-  }
-  @keyframes oa5-scrollhint {
-    0% { top: -40%; }
-    100% { top: 110%; }
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .oa5-hero__line span,
-    .oa5-hero__eyebrow,
-    .oa5-hero__subhead,
-    .oa5-hero__stats {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
-    .oa5-hero__glow,
-    .oa5-hero__scroll span { animation: none; }
     .oa5-reveal { transition: none; opacity: 1; transform: none; }
-    .oa5-case--offset { transform: none; }
   }
 </style>
 
@@ -998,137 +806,4 @@ const { noindex = true } = Astro.props;
     { threshold: 0.12 }
   );
   reveals.forEach((el) => io.observe(el));
-</script>
-
-<script>
-  // ── "Test gratis" idle guide arrow ──────────────────────────────────
-  // Same fading dashed-line design as the v6 hero guide. Fades in pointing
-  // at the header button once the user has fully left the hero AND stayed
-  // still for 4s. Any scroll fades it out and restarts the 4s count.
-  const guideCanvas = document.getElementById('oa5-guide') as HTMLCanvasElement | null;
-  const guideBtn = document.getElementById('oa5-apply-btn');
-  const guideHero = document.querySelector('.oa5-hero');
-  const finePointer = window.matchMedia('(pointer: fine)').matches;
-  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (guideCanvas && guideBtn && guideHero && finePointer && !noMotion && window.innerWidth >= 768) {
-    const ctx = guideCanvas.getContext('2d')!;
-    const IDLE_MS = 4000;
-
-    let heroOut = false;
-    let idleTimer: number | undefined;
-    let alpha = 0;        // current opacity (eased)
-    let targetAlpha = 0;  // desired opacity
-    let dash = 0;         // marching-ants offset
-    const mouse: { x: number | null; y: number | null } = { x: null, y: null };
-
-    // Origin of the line follows the cursor
-    window.addEventListener(
-      'mousemove',
-      (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-      },
-      { passive: true }
-    );
-
-    function resize() {
-      const dpr = window.devicePixelRatio || 1;
-      guideCanvas!.width = window.innerWidth * dpr;
-      guideCanvas!.height = window.innerHeight * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    function scheduleShow() {
-      window.clearTimeout(idleTimer);
-      idleTimer = window.setTimeout(() => {
-        if (heroOut) targetAlpha = 1;
-      }, IDLE_MS);
-    }
-
-    // Detect leaving the hero completely (0% visible)
-    new IntersectionObserver(
-      ([e]) => {
-        heroOut = !e.isIntersecting;
-        if (!heroOut) {
-          targetAlpha = 0;
-          window.clearTimeout(idleTimer);
-        } else {
-          scheduleShow();
-        }
-      },
-      { threshold: 0 }
-    ).observe(guideHero);
-
-    // Any scroll hides the arrow and restarts the idle count
-    window.addEventListener(
-      'scroll',
-      () => {
-        targetAlpha = 0;
-        scheduleShow();
-      },
-      { passive: true }
-    );
-
-    function drawArrow() {
-      const r = guideBtn!.getBoundingClientRect();
-      const tx = r.left + r.width / 2;
-      const ty = r.bottom + 10;      // target point just under the button
-
-      // Line starts at the cursor (fallback below the button before any move)
-      const x0 = mouse.x != null ? mouse.x : tx - 34;
-      const y0 = mouse.y != null ? mouse.y : ty + 200;
-
-      // Skip a degenerate arrow when the cursor sits on the button
-      const dist = Math.hypot(tx - x0, ty - y0);
-      if (dist < 48) return;
-
-      // Pull the arrowhead back a touch from the exact target
-      const ang = Math.atan2(ty - y0, tx - x0);
-      const x1 = tx - Math.cos(ang) * 4;
-      const y1 = ty - Math.sin(ang) * 4;
-
-      // Curved control point — bows the dashed line for a natural sweep
-      const midX = (x0 + x1) / 2;
-      const midY = (y0 + y1) / 2;
-      const offset = Math.min(160, dist * 0.4);
-      const t = Math.max(-1, Math.min(1, (y0 - y1) / 200));
-      const ctrlX = midX;
-      const ctrlY = midY + offset * t;
-      const a = 0.8 * alpha;
-
-      ctx.save();
-      ctx.strokeStyle = `rgba(60, 43, 220, ${a})`;
-      ctx.lineWidth = 2;
-      ctx.setLineDash([9, 6]);
-      ctx.lineDashOffset = dash;
-      ctx.beginPath();
-      ctx.moveTo(x0, y0);
-      ctx.quadraticCurveTo(ctrlX, ctrlY, x1, y1);
-      ctx.stroke();
-
-      // Arrowhead pointing at the button
-      const headAng = Math.atan2(y1 - ctrlY, x1 - ctrlX);
-      const hl = 12;
-      ctx.setLineDash([]);
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x1 - hl * Math.cos(headAng - Math.PI / 6), y1 - hl * Math.sin(headAng - Math.PI / 6));
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x1 - hl * Math.cos(headAng + Math.PI / 6), y1 - hl * Math.sin(headAng + Math.PI / 6));
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    function frame() {
-      alpha += (targetAlpha - alpha) * 0.08;
-      dash -= 0.4;
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      if (alpha > 0.01) drawArrow();
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
 </script>

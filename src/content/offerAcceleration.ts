@@ -1,250 +1,194 @@
 // ─────────────────────────────────────────────────────────────────────────
 // Offer Acceleration program — shared content (ES).
-// Used by the /offer-acceleration design test versions (1–4).
-// Once a final design is chosen, the surviving page keeps importing this.
+// Single source of copy for /offer-acceleration (OfferAccelerationV5.astro).
+// Copy is Kate's final Spanish version — verbatim, do not paraphrase.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const oaContent = {
   meta: {
     title: 'Offer Acceleration — Purrfect Hire',
     description:
-      'El programa 1:1 que convierte tu perfil en ofertas reales. 7 de cada 10 personas saltan de 1.5x a 3x su salario en máximo 4 meses.',
+      'No estás estancado por talento. Estás en el canal equivocado. Offer Acceleration te pone dentro de las redes donde los seniors se contratan y te entrena para ganar la conversación. En dólares, en semanas.',
   },
 
   hero: {
-    eyebrow: 'Offer Acceleration · Programa 1:1',
-    headline: 'Tu perfil tiene techo más alto',
-    headlineAccent: 'que tu salario actual.',
-    subhead:
-      'Ya hiciste el diagnóstico. Esta página existe para una sola cosa: que tomes la decisión hoy, no la próxima semana.',
+    eyebrow: 'Offer Acceleration',
+    headline: 'No estás estancado por talento. Estás en el canal equivocado.',
+    para1:
+      'Los roles senior en empresas de producto VC-backed se llenan antes de publicarse, a través de redes que no incluyen a quien aplica desde afuera. Por eso el mejor operador de LatAm puede ser invisible para la empresa que más pagaría por él.',
+    para2:
+      'Offer Acceleration te pone dentro de esas redes y te entrena para ganar la conversación. En dólares, en semanas.',
     stats: [
-      { value: '7/10', label: 'cierran en mejores condiciones' },
-      { value: '1.5–3x', label: 'salto salarial típico' },
-      { value: '4 meses', label: 'máximo para cerrar' },
-      { value: '150+', label: 'placements en US, EU y LATAM' },
+      '7 de cada 10 cierran en mejores condiciones',
+      'salto típico de 1.5x a 3x',
+      '160+ placements en US, Europa y LATAM',
     ],
-    ctaPrimary: 'Aplica al programa',
-    ctaSecondary: 'Ver casos reales',
   },
 
   apply: {
     url: '/offer-acceleration/apply',
-    label: 'Aplica al programa',
+    label: 'Empieza tu aplicación',
     labelFinal: 'Empieza tu aplicación',
   },
 
   cost: {
-    title: 'El costo real de no decidir hoy',
-    body: 'Si tu salto realista es de $4,000 USD/mes adicionales y postergas la decisión 3 meses, no perdiste $2,000 USD del programa.',
-    highlight: 'Perdiste $12,000 USD que ya no vas a recuperar.',
-    note: 'Esto no es urgencia inventada. Es aritmética.',
-    quote:
-      'El programa no es un gasto. Es la palanca que recupera su costo en 2 a 4 semanas y te paga el resto del año en dólares.',
-  },
-
-  investment: {
-    title: 'Inversión',
-    price: 'Desde $2,000 USD',
-    priceNote: 'Pago único. Sin pagos recurrentes. Sin costos escondidos. Sin letra chica.',
-    tableTitle: 'Lo que recuperas según tu seniority',
-    tiers: [
-      {
-        seniority: 'Mid',
-        current: '$1,500 – $2,500',
-        jump: '$3,500 – $5,000',
-        annual: '+$18K a +$36K',
-        payback: '2–4 semanas',
-      },
-      {
-        seniority: 'Senior',
-        current: '$3,000 – $5,000',
-        jump: '$6,000 – $8,500',
-        annual: '+$24K a +$54K',
-        payback: '2–3 semanas',
-      },
-      {
-        seniority: 'Staff / Lead',
-        current: '$6,000 – $8,000',
-        jump: '$9,500 – $13,000',
-        annual: '+$30K a +$72K',
-        payback: '2–3 semanas',
-      },
-      {
-        seniority: 'Principal / C-Level',
-        current: '$9,000+',
-        jump: '$14,000 – $18,000+',
-        annual: '+$48K a +$96K+',
-        payback: '1–2 semanas',
-      },
-    ],
-    tableNote: 'Cifras en USD/mes. Salto realista en máximo 4 meses.',
-    proof: '7 de cada 10 personas que pasan por el programa saltan de 1.5x a 3x su salario en máximo 4 meses.',
-    payments: 'Tarjeta · Transferencia US · Transferencia Europa · PayPal',
+    title: 'El costo de esperar',
+    body1:
+      'La pregunta no es cuánto cuesta el programa. Es cuánto cuesta cada mes que sigues cobrando lo que cobras hoy.',
+    body2:
+      'Con un salto realista de $4,000 USD/mes, tres meses de espera son $12,000 USD que no vuelven. El programa se recupera en las primeras semanas. El resto del año lo cobras en dólares.',
+    body3: 'No es urgencia inventada. Es aritmética que ya sabes hacer.',
   },
 
   cases: {
-    title: 'No son promesas. Son casos cerrados.',
+    title: 'El patrón se repite: no cambia el talento, cambia el canal',
+    intro:
+      'Cada caso es la misma mecánica. Salir del intermediario y de la cola de aplicaciones, y entrar directo a donde los seniors realmente se contratan.',
     items: [
       {
-        metric: '$1,750 → $4,500',
-        unit: 'USD/mes en 5 semanas',
-        role: 'UX/UI Senior',
-        story:
-          'Más de un año en staff augmentation con un intermediario quedándose con la mitad. Reposicionamos perfil y mapeamos startups US contratando directo.',
-        result: '+$33,000 USD adicionales al año.',
+        title: 'UX/UI Designer · de $1,750 a $4,500 sacándolo del intermediario.',
+        body: 'Llevaba más de un año en staff augmentation, con un intermediario quedándose con la otra mitad de su tarifa: cobraba la mitad de lo que ya valía. Lo pusimos directo frente a startups US contratando sin intermediario. +$33,000 al año. Mismo talento, otro canal.',
       },
       {
-        metric: '2x salario',
-        unit: 'en 4 semanas',
-        role: 'Frontend Lead',
-        story:
-          'Estaba en empresa local sin saber que su perfil ya estaba listo para startup US Series B. Mapeamos 12 empresas específicas y cerró oferta directa.',
-        result: 'De Senior IC a Lead, más cambio de geografía salarial.',
+        title: 'Frontend Lead · duplicó su ingreso entrando directo al fundador.',
+        body: 'Estancado en una empresa local sin saber que su perfil ya calificaba para una Series B en US. Mapeamos 12 empresas y entró por la puerta directa al fundador, no por la cola de aplicaciones. De Senior IC a Lead, con cambio de geografía salarial.',
       },
       {
-        metric: '$9,000',
-        unit: 'USD/mes, un solo contrato',
-        role: 'De dos trabajos a una oferta senior',
-        story:
-          'Mantenía full-time más freelance pesado para sostener $6,500 USD/mes. Reposicionamos para que un solo rol senior cubriera la suma.',
-        result: 'Recuperó sus noches y fines de semana.',
+        title: 'De dos trabajos a una sola oferta senior de $9,000.',
+        body: 'Sostenía un full-time más freelance pesado para juntar $6,500 al mes. Lo reposicionamos para que un solo rol senior cubriera la suma. Cerró en $9,000 en un contrato y recuperó sus noches y sus fines de semana.',
       },
       {
-        metric: '6 semanas',
-        unit: 'hasta rol ejecutivo',
-        role: 'Founder → Head of Product',
-        story:
-          'Cerró su startup y no sabía cómo volver al mercado sin que se leyera como fracaso. Construimos narrativa estratégica de founder en transición.',
-        result: 'De founder sin claridad a rol ejecutivo.',
-      },
-    ],
-  },
-
-  deliverables: {
-    title: 'Lo que te llevas',
-    subhead:
-      'Específico, escrito, ejecutable. Construido pieza por pieza para ti, no descargado de un módulo genérico.',
-    items: [
-      {
-        title: 'Estrategia de carrera escrita',
-        body: 'A qué tier apuntas, qué empresas, en qué timeline, con qué narrativa. Construida sobre tus cicatrices y tus medallas.',
-      },
-      {
-        title: 'Mapa de mercado real',
-        body: 'Empresas con nombre y apellido contratando hoy donde tu perfil encaja, con stage, geografía y rangos salariales.',
-      },
-      {
-        title: 'LinkedIn y narrativa reconstruidos',
-        body: 'Reescritos sobre tu historia real. Para que las oportunidades te lleguen a ti, no al revés.',
-      },
-      {
-        title: 'Posicionamiento al tier que apuntas',
-        body: 'La versión que comunica el rol que quieres, no el que tienes.',
-      },
-      {
-        title: 'Role play 1:1 con Kate',
-        body: 'Kate simula al founder, al hiring manager, al panel ejecutivo. Te entrena en la conversación real antes de que la tengas. Ahí es donde se gana el proceso.',
-      },
-      {
-        title: 'Estrategia de negociación',
-        body: 'Calibrada para tu caso, tu seniority y la empresa al frente. Cómo manejar contraofertas. Cuándo decir sí. Cuándo aguantar.',
-      },
-      {
-        title: 'Una nueva forma de leer el mercado',
-        body: 'La próxima movida ya no la haces a ciegas. Nunca más.',
+        title: 'Founder → Head of Product, sin leerse como fracaso.',
+        body: 'Cerró su startup y no sabía cómo volver al mercado. Construimos la narrativa de founder en transición y lo posicionamos a nivel ejecutivo. Cerró un Head of Product.',
       },
     ],
   },
 
   how: {
     title: 'Cómo trabajamos',
-    facts: [
+    intro:
+      'Esto no es un curso ni una comunidad. Es una operación 1:1 con dirección de primer nivel, construida sobre tu caso, no descargada de un módulo.',
+    bullets: [
       {
-        label: 'Duración',
-        value: '3 a 6 semanas',
-        detail: 'Según tu velocidad de ejecución. Tú marcas el ritmo, nosotros la dirección.',
+        title: 'Estrategia de carrera escrita.',
+        body: 'A qué tier apuntas, qué empresas, en qué timeline, con qué narrativa. Sobre tus cicatrices y tus medallas, no sobre un template.',
       },
       {
-        label: 'Sesiones',
-        value: '6 sesiones 1:1 + 2 especiales',
-        detail:
-          '6 sesiones 1:1 con Kate con role play en vivo, 1 de mentalidad con invitado especial, 1 con advisor US/startups. Soporte continuo por WhatsApp y email.',
+        title: 'Mapa de mercado y la puerta de entrada.',
+        body: 'Empresas con nombre y apellido contratando hoy, con stage, geografía y rango. Y el canal por donde se entra: redes de talento de fondos, warm intros y founder-direct. No una lista para aplicar. Una vía para que te contraten.',
       },
       {
-        label: 'Equipo',
-        value: 'Kate + 5 personas',
-        detail:
-          'Kate Forero lidera cada sesión. 5 personas trabajando en paralelo en posicionamiento, mapeo de oportunidades y soporte estratégico.',
+        title: 'Posicionamiento al tier que apuntas.',
+        body: 'LinkedIn y narrativa reescritos para el comprador que decide. De operador con resultados, no de mano de obra barata.',
+      },
+      {
+        title: 'Role play 1:1 con Kate.',
+        body: 'Kate simula al founder, al hiring manager, al panel. Te entrena en la conversación real antes de tenerla, en el idioma y bajo la presión en que va a pasar. Ahí se gana el proceso.',
+      },
+      {
+        title: 'Estrategia de negociación.',
+        body: 'Calibrada a tu caso, tu seniority y la empresa al frente. Cuándo decir sí, cuándo aguantar, cómo mover una contraoferta.',
       },
     ],
-    rhythm: {
-      title: 'El ritmo importa',
-      body: 'Las primeras 3 semanas armamos estrategia y posicionamiento sin aplicar a nada. Arreglamos el funnel antes de prender el volumen.',
-    },
-    quote: 'La meta no son 200 aplicaciones. Son 10 a 15 procesos con estrategia que cierran.',
+    close: 'La meta no son 200 aplicaciones. Son de 10 a 15 procesos con estrategia que cierran.',
+  },
+
+  split: {
+    title: 'La mitad que no hacemos por ti',
+    body1:
+      'Este programa no te consigue el trabajo. Te mete al canal donde los seniors se contratan y te entrena para ganar la conversación. Esa mitad es nuestra: dirección, estándar, mapa, narrativa, role play.',
+    body2:
+      'La otra mitad es tuya. Ejecutar el outreach, tomar las conversaciones, mover los procesos cada semana, desde la semana 1. El programa avanza por entregas, no por calendario.',
+    body3:
+      'Trabajamos con quien ejecuta. Si buscas que alguien aplique por ti mientras esperas, somos el programa equivocado. Si estás listo para ejecutar con dirección de primer nivel, cierras en semanas.',
+  },
+
+  investment: {
+    title: 'Inversión',
+    price: 'Desde $2,000 USD.',
+    priceNote: 'Pago único. Sin recurrencias, sin costos escondidos, sin letra chica.',
+    tiers: [
+      {
+        seniority: 'Mid',
+        current: '$1,500 a $2,500',
+        jump: '$3,500 a $5,000',
+        annual: '+$18K a +$36K',
+        payback: '2 a 4 semanas',
+      },
+      {
+        seniority: 'Senior',
+        current: '$3,000 a $5,000',
+        jump: '$6,000 a $8,500',
+        annual: '+$24K a +$54K',
+        payback: '2 a 3 semanas',
+      },
+      {
+        seniority: 'Staff / Lead',
+        current: '$6,000 a $8,000',
+        jump: '$9,500 a $13,000',
+        annual: '+$30K a +$72K',
+        payback: '2 a 3 semanas',
+      },
+      {
+        seniority: 'Principal / C-Level',
+        current: '$9,000+',
+        jump: '$14,000 a $18,000+',
+        annual: '+$48K a +$96K+',
+        payback: '1 a 2 semanas',
+      },
+    ],
+    tableNote: 'Cifras en USD/mes. Salto realista en máximo 4 meses.',
   },
 
   who: {
-    title: 'Quién te acompaña',
+    title: 'Quién está detrás',
     kate: {
-      name: 'Katerine Forero',
-      role: 'Founder & CEO, Purrfect Hire',
-      bio: '10+ años en talento y recruiting. En ADDI entró cuando eran 5 personas y lideró la operación de talento mientras escalaron a 500. Vive en Suiza. Opera entre LATAM, US y Europa todos los días.',
+      name: 'Katerine Forero.',
+      role: 'Founder & CEO, Purrfect Hire.',
+      bio: '10+ años en talento y recruiting. Entró a ADDI cuando eran 5 personas y lideró la operación de talento mientras escalaron a 500. Vive en Suiza y opera entre LATAM, US y Europa todos los días.',
       quote: 'No optimizo para caer bien. Optimizo para que las cosas funcionen.',
     },
     team: {
-      name: 'Purrfect Hire',
-      bio: '5 personas trabajando detrás de cada caso. 150+ placements entre startups en US, Europa y LATAM. Trabajamos con founders de YC, Sequoia y a16z. Cohortes pequeñas. Atención real. Cero diluida.',
+      name: 'Purrfect Hire.',
+      bio: '160+ placements entre startups de US, Europa y LATAM. Trabajamos con founders de YC, Sequoia y a16z, y esos founders no reciben aplicantes: reciben operadores que ya validamos. Cohortes pequeñas, atención real, cero diluida.',
     },
   },
 
+  format: {
+    title: 'Formato',
+    body: '3 a 6 sesiones 1:1 con Kate según tu velocidad de ejecución, con role play en vivo. Dos sesiones especiales: una de mentalidad con invitado, una con advisor de US y startups. Soporte directo por WhatsApp y email: validamos oportunidades antes de aplicar, revisamos drafts, damos feedback después de cada entrevista. El pipeline arranca la primera semana.',
+  },
+
   faq: {
-    title: 'Lo que probablemente estás pensando',
+    title: 'Preguntas directas',
     items: [
       {
-        q: '"Quiero esperar a ver qué pasa con el proceso en el que estoy."',
-        a: 'Esperar a un solo proceso es exactamente el patrón que mantiene a la gente atrapada en su tier actual. La gente que cruza al otro lado arma 10 a 15 procesos en paralelo con estrategia.',
+        q: '¿Ustedes me consiguen el trabajo?',
+        a: 'No. Te metemos al canal correcto, construimos los activos y te entrenamos para la conversación. Tú ejecutas el outreach y tomas las entrevistas. Esa división es lo que hace que funcione, y es lo que la mayoría de programas no te dice.',
       },
       {
-        q: '"No estoy seguro de que esto funcione en mi caso."',
-        a: 'Ya pasaste por el diagnóstico. Si no encajaras, te lo habríamos dicho en esa llamada. 7 de cada 10 personas aterrizan en mejores condiciones — y los casos están arriba con cifras.',
+        q: 'Estoy en un proceso y prefiero esperar a ver qué pasa.',
+        a: 'Un solo proceso vivo no da leverage y te deja a merced de una decisión que no controlas. El programa te abre de 10 a 15. Esperar a uno es la apuesta más cara.',
       },
       {
-        q: '"¿Puedo hacerlo trabajando full-time?"',
-        a: 'Sí. La mayoría está exactamente así. Sesiones de 1 hora, fuera de horario laboral si lo necesitas. El formato 1:1 está hecho para gente ocupada.',
+        q: '¿Funciona si estoy full-time?',
+        a: 'Sí, es el caso de la mayoría. Sesiones de una hora, fuera de horario si hace falta. El formato 1:1 está hecho para gente ocupada.',
       },
       {
-        q: '"¿Y si no he cerrado oferta dentro del programa?"',
-        a: 'Seguimos contigo. No te dejamos a mitad de camino si los procesos están activos. La meta no es "terminar el programa", es que cierres bien.',
+        q: 'Quiero renegociar donde estoy, no irme.',
+        a: 'Mismo enfoque, distinto destino. Una parte real de los casos son personas subiendo rol y salario internamente con otra estrategia.',
       },
       {
-        q: '"Quiero renegociar donde estoy, no irme."',
-        a: 'Funciona igual. Una parte real de los casos son personas subiendo salario y rol internamente con otra estrategia. Mismo enfoque, distinto destino.',
-      },
-      {
-        q: '"Soy C-level o ejecutivo, ¿aplica para mí?"',
-        a: 'Sí. Tenemos casos C-level (CTO, CIO, Chief AI). Para esos perfiles el foco cambia a posicionamiento estratégico, narrativa de liderazgo y mapeo de oportunidades C-level.',
-      },
-      {
-        q: '"¿Cómo es el soporte entre sesiones?"',
-        a: 'WhatsApp y email directo con Kate y el equipo. Validamos oportunidades antes de aplicar, revisamos drafts y damos feedback rápido después de entrevistas. No estás solo. Nunca.',
-      },
-      {
-        q: '"¿Qué los hace diferentes de una comunidad u otros programas?"',
-        a: 'Cada material sale construido sobre tus cicatrices y medallas específicas, no descargado de un módulo. Kate hace role play 1:1 contigo antes de la conversación real. Ese nivel de personalización no escala en cohortes grupales.',
+        q: 'Soy C-level.',
+        a: 'Aplica. Tenemos casos CTO, CIO y Chief AI. El foco cambia a posicionamiento estratégico, narrativa de liderazgo y mapeo de oportunidades a ese nivel.',
       },
     ],
   },
 
-  start: {
-    title: 'Cómo arrancamos',
-    note: '48 a 72 horas entre tu aplicación y la primera sesión.',
-    steps: [
-      { title: 'Completa tu aplicación', body: '5 pasos, menos de 5 minutos.' },
-      { title: 'Agenda con nuestro equipo', body: 'Una llamada para alinear expectativas.' },
-      { title: 'Reserva tu cupo y arrancamos', body: 'Sesión de mentalidad + primeras 1:1s.' },
-    ],
-    quote: 'La diferencia entre quien cruza y quien se queda no es talento. Es velocidad de decisión.',
+  final: {
+    title: 'La diferencia no es talento. Es velocidad de decisión.',
+    body: '48 a 72 horas entre tu aplicación y la primera sesión. Completas tu aplicación, agendas con el equipo, reservas tu cupo, y arrancamos.',
+    button: 'Empieza tu aplicación',
   },
 
   contact: {
@@ -364,7 +308,7 @@ export const oaContent = {
       title: 'Resumen de tu programa',
       items: [
         { label: 'Programa', value: 'Offer Acceleration 1:1' },
-        { label: 'Sesiones', value: '6 sesiones 1:1 + 2 especiales' },
+        { label: 'Sesiones', value: '3 a 6 sesiones 1:1 + 2 especiales' },
         { label: 'Duración', value: '3 a 6 semanas' },
         { label: 'Soporte', value: 'WhatsApp y email continuo' },
       ],
@@ -392,7 +336,7 @@ export const oaContent = {
     },
     checks: {
       terms: 'Acepto los términos y condiciones del programa.',
-      sessions: 'Entiendo y acepto el número de sesiones incluidas (6 sesiones 1:1 + 2 sesiones especiales).',
+      sessions: 'Entiendo y acepto el número de sesiones incluidas (3 a 6 sesiones 1:1 + 2 sesiones especiales).',
     },
     confirm: 'Confirmar pago y reservar mi cupo',
     processing: 'Procesando tu pago de forma segura…',

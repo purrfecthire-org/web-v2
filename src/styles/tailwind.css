@@ -1,28 +1,43 @@
 @import "tailwindcss";
 
+/*
+  Design tokens — Kate's 2026 system (single navy ink, white canvas, no accent).
+  One brand color (navy) acting as ink; everything else is white/gray. The old
+  electric-blue accent (#3C2BDC) is gone. Kate's bare-name aliases (--ink, --bg-soft,
+  --line, --dark, --on-dark, --radius) are mirrored in global.scss :root.
+*/
 @theme {
   /* Backgrounds */
-  --color-bg: #FAF9F7;
+  --color-bg: #FFFFFF;
+  --color-bg-soft: #FCFCFB;
   --color-surface: #FFFFFF;
 
-  /* Brand */
-  --color-primary: #3C2BDC;
-  --color-navy: #0D0857;
-  --color-accent: #3C2BDC;
-  --color-accent-light: #E8E6F8;
+  /* Brand — single navy ink, no electric-blue accent */
+  --color-ink: #29285F;
+  --color-primary: #29285F;
+  --color-navy: #29285F;
+  --color-accent: #29285F;
+  --color-accent-light: #ECECF3; /* light navy tint for subtle fills */
+
+  /* Single dark section */
+  --color-dark: #29285F;
+  --color-on-dark: #F3EFE6;
 
   /* Text */
-  --color-text: #0F0F0F;
-  --color-muted: #5C5C5C;
-  --color-tertiary: #A3A3A3;
+  --color-text: #1C1C1C;
+  --color-muted: #6B6B6B;
+  --color-tertiary: #9A9A9A;
 
-  /* Border */
-  --color-border: #E5E5E1;
+  /* Border / hairline */
+  --color-border: rgba(0, 0, 0, 0.08);
 
   /* Buttons */
-  --btn-primary: #0F0F0F;
-  --btn-primary-hover: #3C2BDC;
+  --btn-primary: #29285F;
+  --btn-primary-hover: #1E1D47;
+
+  /* Radius */
+  --radius: 12px;
 
   /* Font */
-  --font-sans: 'Inter', Arial, sans-serif;
+  --font-sans: 'Schibsted Grotesk', system-ui, sans-serif;
 }

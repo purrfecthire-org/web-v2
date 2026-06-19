@@ -21,9 +21,9 @@ const siteUrl = 'https://purrfecthire.com';
 const pageUrl = `${siteUrl}/for-talent`;
 
 const meta = {
-  title: 'For Talent — Land an offer at a US startup that matters | Purrfect Hire',
+  title: 'For Talent. Land an offer at a US startup that matters | Purrfect Hire',
   description:
-    'Senior LATAM professional getting filtered out of US roles? Two ways in: the 8-session Offer Acceleration program and live, calibrated open roles at YC and a16z startups.',
+    'Senior LATAM professional getting filtered out of US roles? Two ways in: the 1:1 Offer Acceleration program and live, calibrated open roles at YC, a16z and Sequoia startups.',
 };
 
 // Talent-only nav: in-page anchors + a cross-link to the founders page.
@@ -41,19 +41,19 @@ const talentNav = {
 const faqs = [
   {
     q: 'What is the Offer Acceleration program?',
-    a: 'Offer Acceleration is an 8-session coaching program for senior LATAM professionals who already have the skills but keep getting filtered out or under-leveled. You get 1:1 coaching, real signal from active US searches, interview calibration, and direct intros when there is a fit.',
+    a: 'Offer Acceleration is a 1:1 coaching program for senior LATAM professionals who already have the skills but keep getting filtered out or under-leveled. You get 1:1 coaching, real signal from active US searches, interview calibration, and direct intros when there is a fit.',
   },
   {
     q: 'Who is Offer Acceleration for?',
-    a: 'Senior professionals with 5+ years of experience and consistent results who have applied to US roles and either get filtered out or receive offers below their level. If the technical bar is not your problem — getting in front of the right founders is — it is built for you.',
+    a: 'Senior professionals with 5+ years of experience and consistent results who have applied to US roles and either get filtered out or receive offers below their level. If the technical bar is not your problem, getting in front of the right founders is, it is built for you.',
   },
   {
     q: 'How do the open roles work?',
-    a: 'They are senior roles at YC- and a16z-backed startups, curated and active right now. Company names stay confidential until we make the intro. You apply once, get evaluated against the real bar, and get introduced to the founder when there is a genuine fit.',
+    a: 'They are senior roles at YC-, a16z- and Sequoia-backed startups, curated and active right now. Company names stay confidential until we make the intro. You apply once, get evaluated against the real bar, and get introduced to the founder when there is a genuine fit.',
   },
   {
     q: 'Where is your talent based, and what do roles pay?',
-    a: 'We work with senior professionals across Latin America (LATAM), placing them at US startups — primarily remote or hybrid. Roles span engineering, AI/ML, and founding go-to-market positions, with compensation set at US market rates plus equity.',
+    a: 'We work with senior professionals across Latin America (LATAM), placing them at US startups, primarily remote or hybrid. Roles span engineering, AI/ML, and founding go-to-market positions, with compensation set at US market rates plus equity.',
   },
 ];
 
@@ -86,13 +86,6 @@ const faqSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 
-  <!-- Fixed gradient aurora (ported from /6), navy-leaning — behind everything -->
-  <div class="ft-aurora" aria-hidden="true">
-    <div class="ft-aurora__blob ft-aurora__blob--1"></div>
-    <div class="ft-aurora__blob ft-aurora__blob--2"></div>
-    <div class="ft-aurora__blob ft-aurora__blob--3"></div>
-  </div>
-
   <V6Nav content={talentNav} lang="en" />
   <main style="position: relative; z-index: 1;">
     <TalentHero />
@@ -111,54 +104,11 @@ const faqSchema = {
 
   .v6-nav { opacity: 1; }
 
+  /* Flat white page background */
+  body { background: var(--bg); }
+
   /* FAQ section wrapper around the shared accordion */
   .ft-faq { position: relative; z-index: 1; padding-block: 6rem; }
   .ft-faq__container { max-width: 52rem; margin-inline: auto; padding-inline: 2rem; }
   @media (max-width: 640px) { .ft-faq { padding-block: 4rem; } .ft-faq__container { padding-inline: 1rem; } }
-
-  /* ── Fixed gradient aurora, pinned behind all content ── */
-  .ft-aurora {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-  .ft-aurora__blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-  }
-  .ft-aurora__blob--1 {
-    width: 700px; height: 700px; top: -200px; right: -200px;
-    background: radial-gradient(circle, rgba(13, 8, 87, 0.22) 0%, transparent 70%);
-    animation: ft-aurora-drift-1 20s ease-in-out infinite alternate;
-  }
-  .ft-aurora__blob--2 {
-    width: 600px; height: 600px; bottom: 20%; left: -200px;
-    background: radial-gradient(circle, rgba(60, 43, 220, 0.18) 0%, transparent 70%);
-    animation: ft-aurora-drift-2 25s ease-in-out infinite alternate;
-  }
-  .ft-aurora__blob--3 {
-    width: 500px; height: 500px; top: 50%; right: 10%;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
-    animation: ft-aurora-drift-3 18s ease-in-out infinite alternate;
-  }
-
-  @keyframes ft-aurora-drift-1 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-60px, 80px) scale(1.1); }
-  }
-  @keyframes ft-aurora-drift-2 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(80px, -60px) scale(1.08); }
-  }
-  @keyframes ft-aurora-drift-3 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-40px, 60px) scale(0.92); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ft-aurora__blob { animation: none; }
-  }
 </style>

@@ -11,16 +11,15 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      // Design-test versions stay out of the sitemap until one is chosen
+      // The short-link redirect and the views that aren't public yet stay out
+      // of the sitemap. Public pages (home, for-founders, for-talent,
+      // offer-acceleration, privacy-policy) are included by default.
       filter: (page) =>
-        !/\/offer-acceleration\/\d+\/?$/.test(page) &&
-        !/\/jorge\/\d+\/?$/.test(page) &&
-        !/\/offer-acceleration\/apply\/?$/.test(page) &&
-        !page.includes('/oa/payment/') &&
-        // Legacy numbered home tests (/1…/6 and /es/6) — V6 is the default home now
-        !/^https?:\/\/[^/]+\/(?:es\/)?\d+\/?$/.test(page) &&
-        // Role-detail design variants (/roles/1,2,3) — only the /roles index is canonical
-        !/\/roles\/\d+\/?$/.test(page),
+        !/\/oa\/?$/.test(page) &&                         // /oa short-link redirect
+        !page.includes('/oa/payment/') &&                 // payment view (not enabled yet)
+        !/\/offer-acceleration\/apply\/?$/.test(page) &&  // OA application (not enabled yet)
+        !/\/roles\/?$/.test(page) &&                      // open-roles index (not enabled yet)
+        !/\/roles\/\d+\/?$/.test(page),                   // role detail (not enabled yet)
     }),
   ],
   i18n: {

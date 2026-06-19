@@ -41,12 +41,14 @@ All text lives in `src/content/index.ts`. Components receive content via props �
 
 ## Design System
 
-See `DESIGN.md` for the complete design specification. Key points:
-- Font: Inter (not Roobert)
-- Background: `#FAF9F7` (warm cream) for all sections
-- Cards: white `#FFFFFF` with `#E5E5E1` border, 12px radius
-- Buttons: pill shape (999px radius), black bg with purple hover (`#3C2BDC`)
-- Accent color: `#3C2BDC` (purple-blue)
+See `DESIGN.md` for the complete design specification. Key points (Kate's 2026 system — single navy ink, white canvas, no accent):
+- Font: Schibsted Grotesk (weights 400/500 only; sentence case)
+- Background: `#FFFFFF` flat white for all sections (no gradients, no auroras); `#FCFCFB` for optional alternating sections
+- Cards: white with `rgba(0,0,0,0.08)` hairline border, 12px radius, **no shadows** (use borders for elevation)
+- Buttons: 12px radius (not pills), navy bg `#29285F` with darker-navy hover `#1E1D47`
+- Brand ink: `#29285F` navy — the single brand color, used sparingly. The old electric-blue accent `#3C2BDC` is removed.
+- One dark section max per page: navy bg `#29285F` with cream text `#F3EFE6`
+- Tokens live in `src/styles/tailwind.css` (`@theme`) + `src/styles/global.scss` (`:root` bare-name aliases: `--ink`, `--bg`, `--bg-soft`, `--line`, `--dark`, `--on-dark`, `--radius`)
 
 ## Page Sections (in order)
 
@@ -74,7 +76,7 @@ See `DESIGN.md` for the complete design specification. Key points:
 - BEM CSS naming inside component `<style>` tags
 - SCSS mixins for responsive breakpoints (`@include max-sm`, `@include max-md`, etc.)
 - CSS custom properties for design tokens
-- Intersection Observer for scroll animations
+- Scroll-reveal animations use the shared `.reveal` class (+ optional `.reveal-delay-1/2/3`) defined in `src/styles/global.scss`, toggled by a **single** IntersectionObserver in `Layout.astro`. Do not add per-component observers — just add the `.reveal` class to the element.
 
 ## Considerations
 - When a new page is created, always update the sitemap and OpenA Graph (OA)

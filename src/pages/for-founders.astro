@@ -21,9 +21,9 @@ const siteUrl = 'https://purrfecthire.com';
 const pageUrl = `${siteUrl}/for-founders`;
 
 const meta = {
-  title: 'For Founders — Senior hires who clear your bar and stay | Purrfect Hire',
+  title: 'For Founders. Senior hires who clear your bar and stay | Purrfect Hire',
   description:
-    'Purrfect Hire places senior LATAM talent at YC and a16z startups. 160+ placements, 80% still in seat at 2+ years, first hire in under 4 weeks. Real proof, not promises.',
+    'Purrfect Hire places senior LATAM talent at YC, a16z and Sequoia startups. 160+ placements, 80% still in seat at 2+ years, first hire in under 4 weeks. Real proof, not promises.',
 };
 
 // Founders-only nav: in-page anchors + a cross-link to the talent page.
@@ -41,15 +41,15 @@ const founderNav = {
 const faqs = [
   {
     q: 'How fast can Purrfect Hire make a hire?',
-    a: 'Typically under four weeks to a first placement. Because we map how your team actually evaluates before opening the pipeline, candidates arrive already calibrated to your bar — so you spend less time screening and more time deciding.',
+    a: 'Typically under four weeks to a first placement. Because we map how your team actually evaluates before opening the pipeline, candidates arrive already calibrated to your bar, so you spend less time screening and more time deciding.',
   },
   {
     q: 'Why hire for culture fit instead of just skills?',
-    a: '46% of new hires fail within 18 months, and 89% of those failures come from culture and attitude misalignment — not a skills gap. Starting with fit, rather than treating it as a final check, is what keeps 80% of our placements in seat past two years.',
+    a: '46% of new hires fail within 18 months, and 89% of those failures come from culture and attitude misalignment, not a skills gap. Starting with fit, rather than treating it as a final check, is what keeps 80% of our placements in seat past two years.',
   },
   {
     q: 'What kind of companies do you place talent at?',
-    a: 'Seed to Series A startups backed by Y Combinator and Andreessen Horowitz (a16z), where a wrong hire costs months of runway. We have completed 160+ placements across engineering, AI/ML, and go-to-market roles.',
+    a: 'Seed to Series A startups backed by Y Combinator, Andreessen Horowitz (a16z), and Sequoia, where a wrong hire costs months of runway. We have completed 160+ placements across engineering, AI/ML, and go-to-market roles.',
   },
   {
     q: 'How is this different from a sourcing tool or an agency?',
@@ -66,7 +66,7 @@ const orgSchema = {
   description: meta.description,
   sameAs: ['https://www.linkedin.com/company/purrfect-hire'],
   areaServed: 'Latin America',
-  knowsAbout: ['Technical recruiting', 'Startup hiring', 'Culture-fit assessment', 'YC and a16z startups'],
+  knowsAbout: ['Technical recruiting', 'Startup hiring', 'Culture-fit assessment', 'YC, a16z and Sequoia startups'],
 };
 
 const faqSchema = {
@@ -85,13 +85,6 @@ const faqSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
-
-  <!-- Fixed gradient aurora (ported from /6) — sits behind everything -->
-  <div class="ff-aurora" aria-hidden="true">
-    <div class="ff-aurora__blob ff-aurora__blob--1"></div>
-    <div class="ff-aurora__blob ff-aurora__blob--2"></div>
-    <div class="ff-aurora__blob ff-aurora__blob--3"></div>
-  </div>
 
   <V6Nav content={founderNav} lang="en" />
   <main style="position: relative; z-index: 1;">
@@ -112,54 +105,11 @@ const faqSchema = {
   /* Nav is visible from the start on this page (no 5s hero choreography). */
   .v6-nav { opacity: 1; }
 
+  /* Flat white page background */
+  body { background: var(--bg); }
+
   /* FAQ section wrapper around the shared accordion */
   .ff-faq { position: relative; z-index: 1; padding-block: 6rem; }
   .ff-faq__container { max-width: 52rem; margin-inline: auto; padding-inline: 2rem; }
   @media (max-width: 640px) { .ff-faq { padding-block: 4rem; } .ff-faq__container { padding-inline: 1rem; } }
-
-  /* ── Fixed gradient aurora, pinned behind all content ── */
-  .ff-aurora {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-  .ff-aurora__blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-  }
-  .ff-aurora__blob--1 {
-    width: 700px; height: 700px; top: -200px; right: -200px;
-    background: radial-gradient(circle, rgba(60, 43, 220, 0.26) 0%, transparent 70%);
-    animation: ff-aurora-drift-1 20s ease-in-out infinite alternate;
-  }
-  .ff-aurora__blob--2 {
-    width: 600px; height: 600px; bottom: 20%; left: -200px;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.20) 0%, transparent 70%);
-    animation: ff-aurora-drift-2 25s ease-in-out infinite alternate;
-  }
-  .ff-aurora__blob--3 {
-    width: 500px; height: 500px; top: 50%; right: 10%;
-    background: radial-gradient(circle, rgba(13, 8, 87, 0.12) 0%, transparent 70%);
-    animation: ff-aurora-drift-3 18s ease-in-out infinite alternate;
-  }
-
-  @keyframes ff-aurora-drift-1 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-60px, 80px) scale(1.1); }
-  }
-  @keyframes ff-aurora-drift-2 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(80px, -60px) scale(1.08); }
-  }
-  @keyframes ff-aurora-drift-3 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-40px, 60px) scale(0.92); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ff-aurora__blob { animation: none; }
-  }
 </style>

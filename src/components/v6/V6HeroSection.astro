@@ -72,9 +72,9 @@ const culturePaths = Array.from({ length: 10 }, (_, i) => ({
     >
       <defs>
         <linearGradient id="v6-area" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#3C2BDC" stop-opacity="0.10" />
-          <stop offset="60%" stop-color="#3C2BDC" stop-opacity="0.04" />
-          <stop offset="100%" stop-color="#3C2BDC" stop-opacity="0" />
+          <stop offset="0%" stop-color="#29285F" stop-opacity="0.10" />
+          <stop offset="60%" stop-color="#29285F" stop-opacity="0.04" />
+          <stop offset="100%" stop-color="#29285F" stop-opacity="0" />
         </linearGradient>
         <!-- Skills lines fade from gray into alarm red as they reach the exit -->
         <linearGradient
@@ -158,7 +158,7 @@ const culturePaths = Array.from({ length: 10 }, (_, i) => ({
             class="v6-chart__flow-line"
             d={p.d}
             pathLength="100"
-            stroke="#3C2BDC"
+            stroke="#29285F"
             stroke-width={p.width}
             stroke-opacity={p.opacity}
             stroke-linecap="round"
@@ -283,12 +283,7 @@ const culturePaths = Array.from({ length: 10 }, (_, i) => ({
     &__chart-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(
-        ellipse 62% 55% at 50% 46%,
-        rgba(250, 249, 247, 0.92) 0%,
-        rgba(250, 249, 247, 0.55) 55%,
-        rgba(250, 249, 247, 0) 100%
-      );
+      background: rgba(255, 255, 255, 0.55);
     }
 
     &__container {
@@ -343,7 +338,7 @@ const culturePaths = Array.from({ length: 10 }, (_, i) => ({
       animation: v6-fade-in 0.8s ease-in $t-phase-1 forwards;
     }
 
-    // Second phrase: solid secondary purple — no gradient. 1.5s → 2.2s.
+    // Second phrase: solid navy accent, no gradient. 1.5s to 2.2s.
     &__phrase--culture {
       color: var(--color-accent);
       animation: v6-fade-in 0.7s ease-in $t-phase-2 forwards;
@@ -409,12 +404,12 @@ const culturePaths = Array.from({ length: 10 }, (_, i) => ({
       align-items: center;
       gap: 8px;
       padding: 12px 24px;
-      font-family: 'Inter', Arial, sans-serif;
+      font-family: 'Schibsted Grotesk', system-ui, sans-serif;
       font-size: 0.875rem;
       font-weight: 500;
       line-height: 1.5;
       border: 1.5px solid #0F0F0F;
-      border-radius: 999px;
+      border-radius: var(--radius);
       cursor: pointer;
       text-decoration: none;
       background-color: transparent;
@@ -431,9 +426,9 @@ const culturePaths = Array.from({ length: 10 }, (_, i) => ({
       &--talent {
         &:hover,
         &:focus-visible {
-          background-color: #3C2BDC !important;
+          background-color: #29285F !important;
           color: #ffffff !important;
-          border-color: #3C2BDC !important;
+          border-color: #29285F !important;
         }
       }
     }
@@ -824,7 +819,7 @@ const culturePaths = Array.from({ length: 10 }, (_, i) => ({
           const dT = edgeDist(ctaTalent!, mouse.x, mouse.y);
           if (dF < PROX_THRESHOLD) setActive(ctaFounders!, '#0F0F0F');
           else resetProximity(ctaFounders!);
-          if (dT < PROX_THRESHOLD) setActive(ctaTalent!, '#3C2BDC');
+          if (dT < PROX_THRESHOLD) setActive(ctaTalent!, '#29285F');
           else resetProximity(ctaTalent!);
         }
 

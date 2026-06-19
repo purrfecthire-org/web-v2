@@ -53,7 +53,7 @@ const proof = [
         You need hires that stay.
       </h1>
       <p class="ff-hero__sub body1">
-        Senior LATAM talent at YC and a16z backed startups.
+        Senior LATAM talent at YC, a16z and Sequoia backed startups.
       </p>
     </header>
 
@@ -93,7 +93,7 @@ const proof = [
 <style lang="scss">
   @use '../../styles/breakpoints' as *;
 
-  $accent: #3C2BDC;
+  $accent: #29285F;
 
   .ff-fade {
     opacity: 0;
@@ -149,7 +149,7 @@ const proof = [
       color: #fff;
       background: $accent;
       padding: 5px 14px;
-      border-radius: 999px;
+      border-radius: var(--radius);
     }
 
     &__headline {
@@ -157,7 +157,7 @@ const proof = [
       font-weight: 800;
       line-height: 1.04;
       letter-spacing: -0.03em;
-      color: #111827;
+      color: var(--ink);
       margin: 0;
     }
 
@@ -184,12 +184,10 @@ const proof = [
       flex-direction: column;
       gap: 0.875rem;
       padding: 2.25rem;
-      border: 1px solid var(--color-border);
+      border: 1px solid var(--line);
       border-top: 4px solid $accent;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.74);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      background: var(--bg-soft);
 
       // Phase 2 — proof cards rise after the header
       opacity: 0;
@@ -245,7 +243,10 @@ const proof = [
       width: auto;
       max-width: 96px;
       object-fit: contain;
-      opacity: 0.75;
+      filter: grayscale(1);
+      opacity: 0.55;
+      transition: opacity .2s;
+      &:hover { opacity: 1; }
     }
 
     // Non-clickable teaser — signals a deeper roster without claiming a link
@@ -256,10 +257,10 @@ const proof = [
       font-weight: 600;
       letter-spacing: 0.01em;
       color: var(--color-muted);
-      background: rgba(60, 43, 220, 0.08);
-      border: 1px solid rgba(60, 43, 220, 0.16);
+      background: rgba(41, 40, 95, 0.08);
+      border: 1px solid rgba(41, 40, 95, 0.16);
       padding: 4px 10px;
-      border-radius: 999px;
+      border-radius: var(--radius);
       white-space: nowrap;
     }
 
@@ -290,21 +291,21 @@ const proof = [
       padding: 14px 28px;
       font-size: 0.9375rem;
       font-weight: 500;
-      border-radius: 999px;
+      border-radius: var(--radius);
       text-decoration: none;
       transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 
       &--primary {
-        background: #0F0F0F;
+        background: $accent;
         color: #fff;
-        &:hover { background: $accent; }
+        &:hover { background: #1E1D47; }
       }
 
       &--ghost {
         background: transparent;
-        color: #0F0F0F;
-        border: 1.5px solid #0F0F0F;
-        &:hover { background: #0F0F0F; color: #fff; }
+        color: var(--color-text);
+        border: 1.5px solid var(--line);
+        &:hover { background: $accent; color: #fff; border-color: $accent; }
       }
     }
   }

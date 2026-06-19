@@ -49,16 +49,6 @@ const { eyebrow, lead, founders, talent } = content;
 <style lang="scss">
   @use '../../styles/breakpoints' as *;
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    will-change: opacity, transform;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-
   .v6-who {
     padding-block: 7rem;
 
@@ -100,29 +90,27 @@ const { eyebrow, lead, founders, talent } = content;
       padding: 2.25rem;
       border: 1px solid var(--color-border);
       border-top-width: 4px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      background: var(--bg);
       text-decoration: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease;
 
       @include max-sm { padding: 1.75rem; }
 
-      // Founders → purple accent
+      // Founders → navy accent
       &--founders {
-        border-top-color: #3C2BDC;
-        &:hover { box-shadow: 0 12px 36px rgba(60, 43, 220, 0.14); border-color: #3C2BDC; }
-        .v6-who__card-eyebrow { color: #3C2BDC; font-weight: 600;}
-        .v6-who__bullet::before { color: #3C2BDC; }
+        border-top-color: #29285F;
+        &:hover { border-color: #29285F; }
+        .v6-who__card-eyebrow { color: #29285F; font-weight: 600;}
+        .v6-who__bullet::before { color: #29285F; }
       }
 
       // Talent → navy accent
       &--talent {
-        border-top-color: #0D0857;
-        &:hover { box-shadow: 0 12px 36px rgba(13, 8, 87, 0.16); border-color: #0D0857; }
-        .v6-who__card-eyebrow { color: #0D0857; font-weight: 600;}
-        .v6-who__bullet::before { color: #0D0857; }
+        border-top-color: #29285F;
+        &:hover { border-color: #29285F; }
+        .v6-who__card-eyebrow { color: #29285F; font-weight: 600;}
+        .v6-who__bullet::before { color: #29285F; }
       }
 
       &:hover { transform: translateY(-4px); }
@@ -163,13 +151,3 @@ const { eyebrow, lead, founders, talent } = content;
     }
   }
 </style>
-
-<script>
-  const els = document.querySelectorAll('#who .reveal');
-  const obs = new IntersectionObserver((entries, o) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); }
-    });
-  }, { threshold: 0.15 });
-  els.forEach((el) => obs.observe(el));
-</script>

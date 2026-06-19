@@ -46,7 +46,7 @@ const orgSchema = {
   description: c.meta.description,
   sameAs: ['https://www.linkedin.com/company/purrfect-hire'],
   areaServed: 'Latin America',
-  knowsAbout: ['Technical recruiting', 'Startup hiring', 'Culture-fit assessment', 'YC and a16z startups'],
+  knowsAbout: ['Technical recruiting', 'Startup hiring', 'Culture-fit assessment', 'YC, a16z and Sequoia startups'],
 };
 
 const faqSchema = {
@@ -80,13 +80,6 @@ const websiteSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 
-  <!-- Fixed gradient background (ported from /4) — sits behind everything -->
-  <div class="v6-aurora" aria-hidden="true">
-    <div class="v6-aurora__blob v6-aurora__blob--1"></div>
-    <div class="v6-aurora__blob v6-aurora__blob--2"></div>
-    <div class="v6-aurora__blob v6-aurora__blob--3"></div>
-  </div>
-
   <V6Nav content={v6Nav} lang={lang} />
   <main style="position: relative; z-index: 1;">
     <V6HeroSection content={c.hero} />
@@ -100,67 +93,7 @@ const websiteSchema = {
 <style is:global>
   html {
     scroll-behavior: smooth;
-  }
-
-  /* ── Fixed gradient aurora (ported from /4), pinned behind all content ── */
-  .v6-aurora {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  .v6-aurora__blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-  }
-
-  .v6-aurora__blob--1 {
-    width: 700px;
-    height: 700px;
-    top: -200px;
-    right: -200px;
-    background: radial-gradient(circle, rgba(60, 43, 220, 0.26) 0%, transparent 70%);
-    animation: v6-aurora-drift-1 20s ease-in-out infinite alternate;
-  }
-
-  .v6-aurora__blob--2 {
-    width: 600px;
-    height: 600px;
-    bottom: 20%;
-    left: -200px;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.20) 0%, transparent 70%);
-    animation: v6-aurora-drift-2 25s ease-in-out infinite alternate;
-  }
-
-  .v6-aurora__blob--3 {
-    width: 500px;
-    height: 500px;
-    top: 50%;
-    right: 10%;
-    background: radial-gradient(circle, rgba(13, 8, 87, 0.12) 0%, transparent 70%);
-    animation: v6-aurora-drift-3 18s ease-in-out infinite alternate;
-  }
-
-  @keyframes v6-aurora-drift-1 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-60px, 80px) scale(1.1); }
-  }
-
-  @keyframes v6-aurora-drift-2 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(80px, -60px) scale(1.08); }
-  }
-
-  @keyframes v6-aurora-drift-3 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-40px, 60px) scale(0.92); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .v6-aurora__blob { animation: none; }
+    background: var(--bg);
   }
 
   /* Intro choreography: nav joins in phase 4 (3.2s), with the rest of the content */

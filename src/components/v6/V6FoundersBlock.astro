@@ -19,7 +19,6 @@ const clients = [
   { name: 'Trébol', logo: '/clients/trebol.png' },
   { name: 'Cheaf', logo: '/clients/cheaf.png' },
   { name: 'Mavi', logo: '/clients/mavi.png' },
-  { name: 'Nue', logo: '/clients/nue.svg' },
   { name: 'Hera', logo: '/clients/hera.png' },
   { name: 'Heron', logo: '/clients/heron.png' },
   { name: 'Optery', logo: '/clients/optery.png' },
@@ -28,7 +27,7 @@ const clients = [
 // Two founder testimonials — the proof, kept short.
 const quotes = [testimonials.featured, testimonials.grid[0]];
 
-// Culture-fit research quotes (a16z / YC) — named entities for AI citation.
+// Culture-fit principles (de-attributed: stated as our own, no firm source).
 const cultureQuotes = content.culture.quotes;
 ---
 
@@ -124,27 +123,15 @@ const cultureQuotes = content.culture.quotes;
 <style lang="scss">
   @use '../../styles/breakpoints' as *;
 
-  // Founders lane theme — purple
-  $founders: #3C2BDC;
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    will-change: opacity, transform;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
+  // Founders lane theme — navy
+  $founders: #29285F;
 
   .v6-founders {
     padding-block: 7rem;
     scroll-margin-top: 5rem;
-    // Faint purple wash — translucent so the page aurora still reads through.
-    background: linear-gradient(180deg, rgba(60, 43, 220, 0.05) 0%, rgba(60, 43, 220, 0.015) 100%);
-    border-top: 1px solid rgba(60, 43, 220, 0.12);
-    border-bottom: 1px solid rgba(60, 43, 220, 0.12);
+    background: var(--bg-soft);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
 
     @include max-md { padding-block: 5rem; }
 
@@ -178,7 +165,7 @@ const cultureQuotes = content.culture.quotes;
       color: #fff;
       background: $founders;
       padding: 5px 14px;
-      border-radius: 999px;
+      border-radius: var(--radius);
     }
 
     &__headline { color: var(--color-text); max-width: 38rem; }
@@ -257,7 +244,7 @@ const cultureQuotes = content.culture.quotes;
       font-size: 0.875rem;
       font-weight: 600;
       color: $founders;
-      background: rgba(60, 43, 220, 0.1);
+      background: rgba(41, 40, 95, 0.1);
       width: 2rem;
       height: 2rem;
       border-radius: 8px;
@@ -286,7 +273,17 @@ const cultureQuotes = content.culture.quotes;
       gap: 2.5rem;
       @include max-sm { gap: 1.5rem; }
     }
-    &__client-logo { height: 28px; width: auto; max-width: 110px; object-fit: contain; opacity: 0.7; }
+    &__client-logo {
+      height: 28px;
+      width: auto;
+      max-width: 110px;
+      object-fit: contain;
+      filter: grayscale(1);
+      opacity: 0.55;
+      transition: opacity .2s;
+
+      &:hover { opacity: 1; }
+    }
 
     // Testimonials
     &__quotes {
@@ -322,13 +319,3 @@ const cultureQuotes = content.culture.quotes;
     &__faq { width: 100%; max-width: 46rem; margin-top: 0.5rem; }
   }
 </style>
-
-<script>
-  const els = document.querySelectorAll('#v6-founders .reveal');
-  const obs = new IntersectionObserver((entries, o) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  els.forEach((el) => obs.observe(el));
-</script>
