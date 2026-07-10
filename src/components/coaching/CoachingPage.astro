@@ -1,0 +1,642 @@
+---
+// ── Coaching landing pages (career-sessions / career-momentum) ───────────
+// Shared renderer for the individual-coaching offerings. Same flat
+// navy/white 2026 system as the OA page: no gradients, no shadows,
+// border-based elevation, Schibsted Grotesk, one dark section max (none
+// here). Scroll reveals use the shared `.reveal` class from global.scss,
+// driven by the single IntersectionObserver in Layout.astro.
+import Layout from '../../layouts/Layout.astro';
+import type { CoachingContent } from '../../content/coaching';
+import { coachingContact } from '../../content/coaching';
+
+interface Props {
+  c: CoachingContent;
+}
+
+const { c } = Astro.props;
+
+const siteUrl = 'https://purrfecthire.com';
+
+// Service + Offer + FAQPage structured data so search engines and AI
+// answer engines can extract the offering, its price, and the Q&A directly.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Service',
+      '@id': `${siteUrl}${c.path}#service`,
+      name: c.jsonLd.serviceName,
+      description: c.jsonLd.serviceDescription,
+      serviceType: 'Career coaching',
+      url: `${siteUrl}${c.path}`,
+      inLanguage: ['es', 'en'],
+      provider: {
+        '@type': 'Organization',
+        name: 'Purrfect Hire',
+        url: siteUrl,
+        email: coachingContact.email,
+        sameAs: ['https://www.linkedin.com/company/purrfect-hire'],
+      },
+      areaServed: ['Latin America', 'United States', 'Europe'],
+      offers: {
+        '@type': 'Offer',
+        price: c.jsonLd.price,
+        priceCurrency: 'USD',
+        description: `$${c.jsonLd.price} USD ${c.jsonLd.priceUnit}`,
+        availability: 'https://schema.org/InStock',
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${siteUrl}${c.path}#faq`,
+      mainEntity: c.faq.items.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ],
+};
+---
+
+<Layout title={c.meta.title} description={c.meta.description} lang="es">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <main class="cx">
+    <header class="cx-nav">
+      <a href="/" class="cx-nav__logo-link" aria-label="Purrfect Hire — inicio">
+        <img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="cx-nav__logo" />
+      </a>
+      <nav class="cx-nav__links">
+        <a href="/for-talent" class="cx-nav__link">Para talento</a>
+        <a href="/offer-acceleration" class="cx-nav__link">Offer Acceleration</a>
+        <a
+          href="/career-sessions"
+          class:list={['cx-nav__link', { 'cx-nav__link--active': c.path === '/career-sessions' }]}
+        >Sesiones 1:1</a>
+        <a
+          href="/career-momentum"
+          class:list={['cx-nav__link', { 'cx-nav__link--active': c.path === '/career-momentum' }]}
+        >Momentum</a>
+      </nav>
+      <a href={c.whatsappUrl} class="cx-btn cx-btn--solid" target="_blank" rel="noopener">
+        {c.navCta}
+      </a>
+    </header>
+
+    <!-- ── Hero ─────────────────────────────────────────────────────── -->
+    <section class="cx-hero">
+      <p class="cx-eyebrow cx-hero__eyebrow">{c.hero.eyebrow}</p>
+      <h1 class="cx-hero__headline">{c.hero.headline}</h1>
+      <div class="cx-hero__body">
+        <p>{c.hero.para1}</p>
+        <p>{c.hero.para2}</p>
+      </div>
+      <ul class="cx-hero__stats">
+        {c.hero.stats.map((s) => <li class="cx-hero__stat">{s}</li>)}
+      </ul>
+    </section>
+
+    <!-- ── For who ──────────────────────────────────────────────────── -->
+    <section class="cx-chapter cx-chapter--narrow">
+      <div class="cx-chapter__head reveal">
+        <h2 class="cx-chapter__title">{c.forWho.title}</h2>
+      </div>
+      <p class="cx-chapter__subhead reveal">{c.forWho.intro}</p>
+      <ul class="cx-forwho reveal">
+        {c.forWho.items.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <!-- ── Cards (session types / what's included) ──────────────────── -->
+    <section class="cx-chapter">
+      <div class="cx-chapter__head reveal">
+        <h2 class="cx-chapter__title">{c.cards.title}</h2>
+      </div>
+      <p class="cx-chapter__subhead reveal">{c.cards.intro}</p>
+      <div class="cx-cards">
+        {c.cards.items.map((item) => (
+          <article class="cx-card reveal">
+            <h3 class="cx-card__title">{item.title}</h3>
+            <p class="cx-card__body">{item.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── How it works ─────────────────────────────────────────────── -->
+    <section class="cx-chapter">
+      <div class="cx-chapter__head reveal">
+        <h2 class="cx-chapter__title">{c.how.title}</h2>
+      </div>
+      <p class="cx-chapter__subhead reveal">{c.how.intro}</p>
+      <ol class="cx-how">
+        {c.how.steps.map((s, i) => (
+          <li class="cx-how__item reveal">
+            <span class="cx-how__num">{String(i + 1).padStart(2, '0')}</span>
+            <div class="cx-how__text">
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="cx-statement reveal">{c.how.close}</p>
+    </section>
+
+    <!-- ── Price ────────────────────────────────────────────────────── -->
+    <section class="cx-chapter">
+      <div class="cx-chapter__head reveal">
+        <h2 class="cx-chapter__title">{c.price.title}</h2>
+      </div>
+      <div class="cx-price reveal">
+        <p class="cx-price__amount">{c.price.amount}</p>
+        <p class="cx-price__note">{c.price.note}</p>
+        <ul class="cx-price__bullets">
+          {c.price.bullets.map((b) => <li>{b}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── FAQ ──────────────────────────────────────────────────────── -->
+    <section class="cx-chapter cx-chapter--narrow">
+      <div class="cx-chapter__head reveal">
+        <h2 class="cx-chapter__title">{c.faq.title}</h2>
+      </div>
+      <div class="cx-faq reveal">
+        {c.faq.items.map((f) => (
+          <details class="cx-faq__item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── Final CTA ────────────────────────────────────────────────── -->
+    <section class="cx-final">
+      <h2 class="cx-final__title reveal">{c.final.title}</h2>
+      <p class="cx-final__note reveal">{c.final.body}</p>
+      <div class="cx-final__ctas reveal">
+        <a href={c.whatsappUrl} class="cx-btn cx-btn--solid cx-btn--lg" target="_blank" rel="noopener">
+          {c.final.buttonWhatsapp}
+        </a>
+        <a href={coachingContact.emailUrl} class="cx-btn cx-btn--lg">
+          {c.final.buttonEmail}
+        </a>
+      </div>
+      <p class="cx-final__footer">© {new Date().getFullYear()} Purrfect Hire</p>
+    </section>
+  </main>
+</Layout>
+
+<style lang="scss">
+  $ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  .cx {
+    --cx-bg: var(--bg, #ffffff);
+    --cx-bg-soft: var(--bg-soft, #fcfcfb);
+    --cx-text: var(--text, #1c1c1c);
+    --cx-ink: var(--ink, #29285f);
+    --cx-muted: var(--muted, #6b6b6b);
+    --cx-border: var(--line, rgba(0, 0, 0, 0.08));
+    --cx-radius: var(--radius, 12px);
+
+    background: var(--cx-bg);
+    color: var(--cx-text);
+    font-family: 'Schibsted Grotesk', Arial, sans-serif;
+    overflow-x: hidden;
+
+    ::selection {
+      background: var(--cx-ink);
+      color: #fff;
+    }
+  }
+
+  .cx-eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cx-ink);
+  }
+
+  // ── Nav ───────────────────────────────────────────────────
+  .cx-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem clamp(1.5rem, 5vw, 3rem);
+    background: var(--cx-bg);
+    border-bottom: 1px solid var(--cx-border);
+
+    &__logo-link {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &__logo {
+      width: 10rem;
+    }
+
+    &__links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+
+      @media (max-width: 767px) { display: none; }
+    }
+
+    &__link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--cx-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover { color: var(--cx-ink); }
+      &--active { color: var(--cx-text); }
+    }
+  }
+
+  // ── Buttons ───────────────────────────────────────────────
+  .cx-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: var(--cx-radius);
+    text-decoration: none;
+    color: var(--cx-text);
+    border: 1px solid var(--cx-border);
+    background: var(--cx-bg);
+    transition: background 0.25s $ease-expo, border-color 0.25s $ease-expo, color 0.25s $ease-expo;
+
+    &:hover {
+      border-color: var(--cx-ink);
+      color: var(--cx-ink);
+    }
+
+    &--solid {
+      background: var(--cx-ink);
+      border-color: var(--cx-ink);
+      color: #fff;
+
+      &:hover {
+        background: var(--cx-text);
+        border-color: var(--cx-text);
+        color: #fff;
+      }
+    }
+
+    &--lg { padding: 16px 34px; font-size: 0.9375rem; }
+  }
+
+  // ── Hero ──────────────────────────────────────────────────
+  .cx-hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(64px, 9vw, 120px) clamp(1.5rem, 5vw, 2rem) 80px;
+
+    &__eyebrow { margin-bottom: 1.75rem; }
+
+    &__headline {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      margin: 0;
+      max-width: 20ch;
+      color: var(--cx-ink);
+    }
+
+    &__body {
+      max-width: 44rem;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+
+      p {
+        margin: 0;
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        color: var(--cx-muted);
+      }
+    }
+
+    &__stats {
+      list-style: none;
+      margin: 3rem 0 0;
+      padding: 2rem 0 0;
+      border-top: 1px solid var(--cx-border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2.5rem;
+    }
+
+    &__stat {
+      position: relative;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--cx-text);
+
+      &:not(:last-child)::after {
+        content: '·';
+        position: absolute;
+        right: -1.4rem;
+        color: var(--cx-muted);
+      }
+    }
+  }
+
+  // ── Chapters ──────────────────────────────────────────────
+  .cx-chapter {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(48px, 7vw, 80px) clamp(1.5rem, 5vw, 2rem);
+    border-top: 1px solid var(--cx-border);
+
+    &--narrow { max-width: 760px; }
+
+    &__head { margin-bottom: 2.5rem; }
+
+    &__title {
+      font-size: clamp(1.875rem, 3.4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0;
+      color: var(--cx-ink);
+      max-width: 22ch;
+    }
+
+    &__subhead {
+      max-width: 46rem;
+      color: var(--cx-muted);
+      margin: -1rem 0 3rem;
+      font-size: 1.0625rem;
+      line-height: 1.65;
+    }
+  }
+
+  // ── For who ───────────────────────────────────────────────
+  .cx-forwho {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      position: relative;
+      padding: 1.25rem 0 1.25rem 2rem;
+      border-bottom: 1px solid var(--cx-border);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      color: var(--cx-text);
+
+      &:first-child { border-top: 1px solid var(--cx-border); }
+
+      &::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        color: var(--cx-ink);
+        font-weight: 500;
+      }
+    }
+  }
+
+  // ── Cards ─────────────────────────────────────────────────
+  .cx-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+
+    @media (max-width: 991px) { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 640px) { grid-template-columns: 1fr; }
+  }
+
+  .cx-card {
+    background: var(--cx-bg);
+    border: 1px solid var(--cx-border);
+    border-radius: var(--cx-radius);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    transition: border-color 0.25s $ease-expo;
+
+    &:hover { border-color: var(--cx-ink); }
+
+    &__title {
+      margin: 0;
+      font-size: 1.0625rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--cx-ink);
+    }
+
+    &__body {
+      margin: 0;
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: var(--cx-muted);
+    }
+  }
+
+  // ── How ───────────────────────────────────────────────────
+  .cx-how {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 56rem;
+  }
+
+  .cx-how__item {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1.75rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--cx-border);
+
+    &:first-child { border-top: 1px solid var(--cx-border); }
+
+    .cx-how__num {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--cx-ink);
+      line-height: 1.4;
+    }
+
+    .cx-how__text {
+      h3 {
+        margin: 0 0 0.5rem;
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--cx-text);
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.9375rem;
+        line-height: 1.65;
+        color: var(--cx-muted);
+        max-width: 42rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+
+  .cx-statement {
+    margin: 3.5rem 0 0;
+    max-width: 40rem;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--cx-ink);
+  }
+
+  // ── Price ─────────────────────────────────────────────────
+  .cx-price {
+    &__amount {
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: 0;
+      color: var(--cx-ink);
+    }
+
+    &__note {
+      margin: 1rem 0 0;
+      max-width: 40rem;
+      color: var(--cx-muted);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+    }
+
+    &__bullets {
+      list-style: none;
+      margin: 2rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 40rem;
+
+      li {
+        position: relative;
+        padding: 1rem 0 1rem 1.75rem;
+        border-bottom: 1px solid var(--cx-border);
+        font-size: 0.9375rem;
+        color: var(--cx-text);
+
+        &:first-child { border-top: 1px solid var(--cx-border); }
+
+        &::before {
+          content: '·';
+          position: absolute;
+          left: 0.5rem;
+          color: var(--cx-ink);
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  // ── FAQ ───────────────────────────────────────────────────
+  .cx-faq {
+    max-width: 46rem;
+
+    &__item {
+      border-bottom: 1px solid var(--cx-border);
+
+      &:first-child { border-top: 1px solid var(--cx-border); }
+
+      summary {
+        padding: 1.5rem 2.5rem 1.5rem 0;
+        font-size: 1.0625rem;
+        font-weight: 500;
+        color: var(--cx-text);
+        cursor: pointer;
+        list-style: none;
+        position: relative;
+
+        &::-webkit-details-marker { display: none; }
+
+        &::after {
+          content: '+';
+          position: absolute;
+          right: 0.25rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--cx-ink);
+          font-size: 1.375rem;
+          font-weight: 400;
+          transition: transform 0.25s $ease-expo;
+        }
+      }
+
+      &[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+
+      p {
+        margin: 0 0 1.5rem;
+        font-size: 0.9375rem;
+        line-height: 1.7;
+        color: var(--cx-muted);
+        max-width: 42rem;
+      }
+    }
+  }
+
+  // ── Final ─────────────────────────────────────────────────
+  .cx-final {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(64px, 9vw, 110px) clamp(1.5rem, 5vw, 2rem) 3rem;
+    text-align: center;
+    border-top: 1px solid var(--cx-border);
+
+    &__title {
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 auto;
+      max-width: 22ch;
+      color: var(--cx-ink);
+    }
+
+    &__note {
+      max-width: 34rem;
+      margin: 1.5rem auto 0;
+      color: var(--cx-muted);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    &__ctas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    &__footer {
+      margin-top: 5rem;
+      font-size: 0.8125rem;
+      color: var(--cx-muted);
+    }
+  }
+</style>

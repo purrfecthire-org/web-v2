@@ -78,5 +78,12 @@ See `DESIGN.md` for the complete design specification. Key points (Kate's 2026 s
 - CSS custom properties for design tokens
 - Scroll-reveal animations use the shared `.reveal` class (+ optional `.reveal-delay-1/2/3`) defined in `src/styles/global.scss`, toggled by a **single** IntersectionObserver in `Layout.astro`. Do not add per-component observers — just add the `.reveal` class to the element.
 
+## Logging & error tracking
+
+- A tiny client-side error reporter lives in `src/layouts/Layout.astro` (inline `<script>`, same pattern as the shared scroll-reveal observer). It listens for `window` `error` / `unhandledrejection` events and POSTs them to `{PUBLIC_LOG_ENDPOINT}/logs/client` (ATS backend contract: `{ entries: [{ level, message, source: "portal", context?, url?, occurred_at? }] }`, max 20 entries/request, fire-and-forget via `sendBeacon` with `fetch keepalive` fallback).
+- **Gated by `PUBLIC_LOG_ENDPOINT`** (see `.env.example`): when unset/empty — the default, since the backend is not publicly deployed yet — the reporter no-ops and the site makes **zero** network calls. Throttled to 5 reports per page load, dedups identical messages, fully wrapped in try/catch so it can never break the page.
+- **Any FUTURE network call added to this site** (e.g. when the offer-acceleration apply form in `src/pages/offer-acceleration/apply.astro` gets wired to a real endpoint) must: (a) send an `X-Request-Id` UUID header, and (b) report failures through the shared reporter / `logs/client` endpoint with `source: "portal"`.
+- **Never log or transmit form PII in error reports** — only error metadata (message, stack, url, userAgent). No cookies. Keep the site fully static: no adapters, no SSR.
+
 ## Considerations
 - When a new page is created, always update the sitemap and OpenA Graph (OA)
