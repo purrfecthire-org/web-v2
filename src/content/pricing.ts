@@ -258,7 +258,7 @@ export const pricingEs: PricingContent = {
           { label: 'Precio', value: '$200 USD', strong: true },
           { label: 'Entrada', value: 'WhatsApp, pago al reservar' },
         ],
-        detailHref: '/career-sessions',
+        detailHref: '/es/career-sessions',
         detailLabel: 'Ver detalles de la sesión →',
       },
       {
@@ -269,7 +269,7 @@ export const pricingEs: PricingContent = {
           { label: 'Precio', value: '$550 USD/mes, mínimo 3 meses', strong: true },
           { label: 'Entrada', value: 'Después de al menos 1 sesión 1:1' },
         ],
-        detailHref: '/career-momentum',
+        detailHref: '/es/career-momentum',
         detailLabel: 'Ver detalles de Momentum →',
       },
       {

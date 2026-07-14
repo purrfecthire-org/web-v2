@@ -206,7 +206,7 @@ export const kateEs: KateContent = {
       title: 'Estás creciendo',
       body: 'Una hora con Kate sobre tu entrevista, tu oferta o tu narrativa — $200, en español o en inglés.',
       label: 'Agenda una sesión 1:1',
-      href: '/career-sessions',
+      href: '/es/career-sessions',
     },
   },
 };
