@@ -5,11 +5,13 @@ import type { LandingContent } from '../../content/index';
 interface Props {
   content: LandingContent['nav'];
   lang: string;
+  /** Path the language toggle targets in the other locale (defaults to home). */
+  otherLangPath?: string;
 }
 
-const { content, lang } = Astro.props;
+const { content, lang, otherLangPath = '/' } = Astro.props;
 const otherLang = lang === 'en' ? 'es' : 'en';
-const otherLangHref = getRelativeLocaleUrl(otherLang, '/');
+const otherLangHref = getRelativeLocaleUrl(otherLang, otherLangPath);
 ---
 
 <header id="nav" class="v6-nav">

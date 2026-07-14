@@ -182,11 +182,13 @@ export const content_en: LandingContent = {
 
   nav: {
     logo: 'Purrfect Hire',
+    // Unified global nav (Jul 2026 architecture): same destinations on every
+    // page, EN and ES mirrored.
     links: [
-      { label: 'For founders', href: '#audience' },
-      { label: 'For talent', href: '#audience' },
-      { label: 'How it works', href: '#engine' },
-      { label: 'Open roles', href: '#roles' },
+      { label: 'For founders', href: '/for-founders' },
+      { label: 'For talent', href: '/for-talent' },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Open roles', href: '/roles' },
     ],
     cta: 'Get your first match',
   },
@@ -530,11 +532,13 @@ export const content_es: LandingContent = {
 
   nav: {
     logo: 'Purrfect Hire',
+    // Nav global unificado (arquitectura Jul 2026), espejo del EN. Las páginas
+    // for-founders / for-talent / roles aún no tienen versión ES.
     links: [
-      { label: 'Para founders', href: '#audience' },
-      { label: 'Para talento', href: '#audience' },
-      { label: 'Cómo funciona', href: '#engine' },
-      { label: 'Roles abiertos', href: '#roles' },
+      { label: 'Para founders', href: '/for-founders' },
+      { label: 'Para talento', href: '/for-talent' },
+      { label: 'Precios', href: '/es/pricing' },
+      { label: 'Roles abiertos', href: '/roles' },
     ],
     cta: 'Empieza tu búsqueda',
   },

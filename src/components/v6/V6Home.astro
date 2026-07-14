@@ -20,16 +20,9 @@ const { lang = 'en' } = Astro.props;
 const c = getContent(lang);
 const siteUrl = 'https://purrfecthire.com';
 
-// /  has its own two-lane structure, so the nav links point at the dedicated
-// destinations instead of the shared section ids. Labels are localized.
-const v6Nav = {
-  ...c.nav,
-  links: [
-    { label: c.v6.foundersBlock.tag, href: '/for-founders' },
-    { label: c.v6.talentBlock.tag, href: '/for-talent' },
-    { label: c.v6.talentBlock.rolesTitle, href: '/roles' },
-  ],
-};
+// Unified global nav — c.nav.links already points at the dedicated
+// destinations (for-founders / for-talent / pricing / roles), localized.
+const v6Nav = c.nav;
 
 // FAQ sets live inside each lane as collapsible accordions; the two are merged
 // below to drive a single FAQPage JSON-LD block.
