@@ -265,14 +265,46 @@ export const oaContent = {
       minChars: 'Cuéntanos un poco más (mínimo 10 caracteres).',
       number: 'Ingresa un número válido en USD.',
     },
-    analyzing: {
-      title: 'Analizando tu aplicación',
-      messages: [
-        'Leyendo tus respuestas…',
-        'Evaluando tu perfil contra el mercado…',
-        'Calculando tu salto salarial realista…',
-        'Preparando tu resultado…',
-      ],
+    // Post-submit loading overlay. Two phases; the animated dots ("." → ".." →
+    // "...") are rendered by CSS, so phrases are stored WITHOUT the ellipsis.
+    // EN + ES: the apply page picks the object matching its lang.
+    loading: {
+      en: {
+        phase1: 'Sending request',
+        phase2: 'Analyzing your response',
+      },
+      es: {
+        phase1: 'Enviando solicitud',
+        phase2: 'Analizando tu respuesta',
+      },
+    },
+    // Neutral result when the backend answers status: 'pending'.
+    pending: {
+      en: {
+        eyebrow: 'Application received',
+        title: 'We received your application.',
+        body: 'Our team is reviewing it right now. We will contact you by email or WhatsApp within the next 48 hours with your next step.',
+      },
+      es: {
+        eyebrow: 'Aplicación recibida',
+        title: 'Recibimos tu aplicación.',
+        body: 'Nuestro equipo la está revisando en este momento. Te contactaremos por email o WhatsApp en las próximas 48 horas con tu siguiente paso.',
+      },
+    },
+    // Inline error state when the submission request fails (network / HTTP).
+    error: {
+      en: {
+        eyebrow: 'Something went wrong',
+        title: 'We could not send your application.',
+        body: 'There was a connection problem and your application did not go through. Your answers are still here, try again in a few seconds.',
+        retry: 'Try again',
+      },
+      es: {
+        eyebrow: 'Algo salió mal',
+        title: 'No pudimos enviar tu aplicación.',
+        body: 'Hubo un problema de conexión y tu aplicación no llegó. Tus respuestas siguen aquí, inténtalo de nuevo en unos segundos.',
+        retry: 'Intentar de nuevo',
+      },
     },
     accepted: {
       eyebrow: 'Aplicación recibida',
@@ -281,8 +313,6 @@ export const oaContent = {
       calendlyName: 'Equipo Purrfect Hire',
       calendlyRole: 'Llamada de alineación · 30 min',
       calendlyCta: 'Agendar mi llamada',
-      mvpNote: '¿Ya tuviste la llamada con el equipo?',
-      mvpCta: 'Continuar a la reserva de tu cupo →',
     },
     rejected: {
       eyebrow: 'Aplicación recibida',

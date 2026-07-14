@@ -1,10 +1,11 @@
 ---
 // ── /kate — the living credential (EN + ES) ──────────────────────────────
-// The most photographic page of the site: hero (authority shot — pending
-// the shoot, so a described placeholder holds the slot), a big-number proof
-// bar, the three-chapter arc (Colombia → ADDI → Purrfect Hire), LinkedIn
-// authority, and two CTAs separated by audience. Flat 2026 system, `kt-`
-// prefix. Placeholder frames describe the exact photo that will fill them.
+// The most photographic page of the site: hero, a big-number proof bar, the
+// three-chapter arc (Colombia → ADDI → Purrfect Hire), LinkedIn authority,
+// and two CTAs separated by audience. Flat 2026 system, `kt-` prefix. Every
+// image slot reuses the one approved photo (KATE_PHOTO) until the shoot
+// delivers the rest of the shot list — captions still say what each real
+// photo will be, so no slot reads as empty in the meantime.
 import Layout from '../../layouts/Layout.astro';
 import V6Nav from '../v6/V6Nav.astro';
 import Footer from '../Footer.astro';
@@ -64,11 +65,11 @@ const personSchema = {
         <h1 class="kt-hero__headline">{c.hero.headline}</h1>
         <p class="kt-hero__sub">{c.hero.sub}</p>
       </div>
-      <!-- Reserved for the shoot's authority shot — never the blazer photo -->
-      <div class="kt-placeholder kt-hero__media" role="img" aria-label={c.hero.placeholderCaption}>
-        <span class="kt-placeholder__glyph" aria-hidden="true">📷</span>
-        <p class="kt-placeholder__caption">{c.hero.placeholderCaption}</p>
-      </div>
+      <!-- Stand-in until the shoot delivers the authority shot -->
+      <figure class="kt-hero__media">
+        <img src={KATE_PHOTO} alt="Kate Forero" width="1023" height="1537" />
+        <figcaption class="kt-hero__caption">{c.hero.placeholderCaption}</figcaption>
+      </figure>
     </section>
 
     <!-- ── Proof bar: big numbers, small labels ────────────────────── -->
@@ -92,14 +93,7 @@ const personSchema = {
             <p class="kt-chapter__body">{ch.body}</p>
           </div>
           <figure class="kt-chapter__media">
-            {ch.image ? (
-              <img src={ch.image} alt={ch.caption} loading="lazy" width="1023" height="1537" />
-            ) : (
-              <div class="kt-placeholder" role="img" aria-label={ch.caption}>
-                <span class="kt-placeholder__glyph" aria-hidden="true">📷</span>
-                <p class="kt-placeholder__caption">{ch.caption}</p>
-              </div>
-            )}
+            <img src={ch.image} alt={ch.caption} loading="lazy" width="1023" height="1537" />
             <figcaption class="kt-chapter__caption">{ch.caption}</figcaption>
           </figure>
         </article>
@@ -256,8 +250,26 @@ const personSchema = {
     }
 
     &__media {
+      margin: 0;
       aspect-ratio: 4 / 5;
       max-height: 460px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: var(--kt-radius);
+        border: 1px solid var(--kt-border);
+        display: block;
+      }
+    }
+
+    &__caption {
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--kt-muted);
     }
   }
 

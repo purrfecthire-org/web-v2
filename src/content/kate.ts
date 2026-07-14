@@ -2,9 +2,11 @@
 // /kate — the living credential (Jul 2026 architecture doc).
 // The arc: Colombia → ADDI 15→400 → Purrfect Hire → hiring today for YC-,
 // a16z- and Sequoia-backed founders. The most photographic page of the
-// site; while the photo shoot is pending, described placeholders hold the
-// slots (only the navy-blazer shot exists: /sessions/kate.jpeg — approved
-// for body use, NOT for this page's hero, which is reserved for the shoot).
+// site; until the shoot delivers the rest of the shot list, every image
+// slot (hero + all chapters) reuses the one approved photo we have
+// (/sessions/kate.jpeg) so the page never shows an empty frame. Captions
+// still describe what each real photo will show once it exists, so the
+// slot's intent stays legible.
 // Rendered by KatePage.astro; EN at /kate, ES at /es/kate.
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -19,9 +21,9 @@ export interface KateChapter {
   tag: string;
   title: string;
   body: string;
-  /** Real image path, or null → render a described placeholder */
-  image: string | null;
-  /** Caption under the image (or inside the placeholder frame) */
+  /** Image path — defaults to KATE_PHOTO until the shoot delivers this chapter's real shot */
+  image: string;
+  /** Caption describing what this slot shows (the real photo once it exists) */
   caption: string;
 }
 
@@ -33,7 +35,7 @@ export interface KateContent {
     eyebrow: string;
     headline: string;
     sub: string;
-    /** Hero image is always a placeholder until the shoot delivers the authority shot */
+    /** Caption describing the authority shot this slot is reserved for */
     placeholderCaption: string;
   };
   stats: { value: string; label: string }[];
@@ -84,7 +86,7 @@ export const kateEn: KateContent = {
       tag: '01 · Colombia',
       title: 'The bar was learned the hard way',
       body: 'Kate built her career in Colombia\'s tech ecosystem — more than a decade recruiting for the companies where a wrong senior hire costs runway, not just time. That is where she learned to separate what interviews reward from what teams actually need.',
-      image: null,
+      image: KATE_PHOTO,
       caption:
         'Photo pending: tech event in Colombia — Kate with the team, everyone in company sweaters.',
     },
@@ -92,7 +94,7 @@ export const kateEn: KateContent = {
       tag: '02 · ADDI',
       title: '15 people to 400',
       body: 'At ADDI, one of LATAM\'s fastest-scaling startups, Kate helped take the team from 15 to 400. Scaling at that speed forces the question every founder eventually asks: why do skilled hires fail? The answer — culture fit read early — became her method.',
-      image: null,
+      image: KATE_PHOTO,
       caption:
         'Photo pending: Kate teaching a public session — a virtual course where she shares the criteria in the open.',
     },
@@ -163,7 +165,7 @@ export const kateEs: KateContent = {
       tag: '01 · Colombia',
       title: 'El bar se aprendió a la brava',
       body: 'Kate construyó su carrera en el ecosistema tech de Colombia — más de una década reclutando para compañías donde un hire senior equivocado cuesta runway, no solo tiempo. Ahí aprendió a separar lo que premian las entrevistas de lo que los equipos necesitan de verdad.',
-      image: null,
+      image: KATE_PHOTO,
       caption:
         'Foto pendiente: evento de tecnología en Colombia — Kate con el equipo, todos con el sweater de la compañía.',
     },
@@ -171,7 +173,7 @@ export const kateEs: KateContent = {
       tag: '02 · ADDI',
       title: 'De 15 personas a 400',
       body: 'En ADDI, una de las startups que más rápido escaló en LATAM, Kate ayudó a llevar el equipo de 15 a 400. Escalar a esa velocidad obliga a la pregunta que todo founder termina haciéndose: ¿por qué fallan los hires con skills? La respuesta — leer el culture fit temprano — se volvió su método.',
-      image: null,
+      image: KATE_PHOTO,
       caption:
         'Foto pendiente: Kate dando una sesión pública — un curso virtual donde comparte los criterios en abierto.',
     },
