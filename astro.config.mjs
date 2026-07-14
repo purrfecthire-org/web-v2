@@ -15,6 +15,7 @@ export default defineConfig({
       // of the sitemap. Public pages (home, for-founders, for-talent,
       // offer-acceleration, privacy-policy) are included by default.
       filter: (page) =>
+        !page.includes('/app/') &&                        // candidate portal (authenticated, noindex)
         !/\/oa\/?$/.test(page) &&                         // /oa short-link redirect
         !page.includes('/oa/payment/') &&                 // payment view (not enabled yet)
         !/\/offer-acceleration\/apply\/?$/.test(page) &&  // OA application (not enabled yet)

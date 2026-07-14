@@ -1,0 +1,307 @@
+---
+// /app — portal login. Google Identity Services when PUBLIC_GOOGLE_CLIENT_ID is
+// set; otherwise (dev, GIS origins not registered yet) a dev email login form
+// against POST /portal/auth/dev-login. noindex + excluded from the sitemap.
+import Layout from '../../layouts/Layout.astro';
+
+const googleClientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
+---
+
+<Layout
+  title="Portal de participantes | Purrfect Hire"
+  description="Portal privado para participantes del programa Offer Acceleration."
+  lang="es"
+  noindex={true}
+>
+  <main class="login">
+    <div class="login__card" data-google-client-id={googleClientId}>
+      <img class="login__logo" src="/logos/logo-desktop.png" alt="Purrfect Hire" />
+      <h1 class="login__title">Portal de participantes</h1>
+      <p class="login__sub">Tu tracker de roles y tus sesiones del programa, en un solo lugar.</p>
+
+      <div class="login__body" id="login-body">
+        <p class="login__checking" id="login-checking">Verificando tu sesión…</p>
+
+        <div id="google-signin" class="login__google" hidden>
+          <div id="gsi-button"></div>
+        </div>
+
+        <form id="dev-login-form" class="login__form" hidden>
+          <label class="login__label" for="dev-email">Correo del programa</label>
+          <input
+            class="login__input"
+            id="dev-email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            placeholder="tu@correo.com"
+          />
+          <button type="submit" class="btn login__submit" id="dev-submit">Entrar</button>
+          <p class="login__hint">Acceso de desarrollo. El inicio de sesión con Google llega pronto.</p>
+        </form>
+
+        <div id="not-enrolled" class="login__error-card" hidden>
+          <p class="login__error-title">Este correo no está registrado en el programa</p>
+          <p class="login__error-msg" id="not-enrolled-msg"></p>
+          <p class="login__error-msg">
+            Si crees que es un error, escríbenos por
+            <a href="https://wa.me/16283588776" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            y lo revisamos.
+          </p>
+          <button type="button" class="btn-secondary login__retry" id="login-retry">Probar con otro correo</button>
+        </div>
+
+        <p class="login__generic-error" id="login-error" hidden></p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import {
+    getToken,
+    loginDev,
+    loginWithGoogle,
+    PortalApiError,
+    refreshSession,
+  } from '../../lib/portal/api';
+
+  const card = document.querySelector<HTMLElement>('.login__card')!;
+  const googleClientId = card.dataset.googleClientId || '';
+  const checking = document.getElementById('login-checking')!;
+  const googleWrap = document.getElementById('google-signin')!;
+  const devForm = document.getElementById('dev-login-form') as HTMLFormElement;
+  const notEnrolled = document.getElementById('not-enrolled')!;
+  const notEnrolledMsg = document.getElementById('not-enrolled-msg')!;
+  const genericError = document.getElementById('login-error')!;
+
+  function goToPortal(): void {
+    window.location.href = '/app/roles';
+  }
+
+  function showLoginUi(): void {
+    checking.hidden = true;
+    notEnrolled.hidden = true;
+    if (googleClientId) {
+      googleWrap.hidden = false;
+      devForm.hidden = true;
+    } else {
+      devForm.hidden = false;
+      googleWrap.hidden = true;
+    }
+  }
+
+  function showError(err: unknown): void {
+    if (err instanceof PortalApiError && err.code === 'PORTAL_NOT_ENROLLED') {
+      checking.hidden = true;
+      googleWrap.hidden = true;
+      devForm.hidden = true;
+      genericError.hidden = true;
+      notEnrolledMsg.textContent = err.message;
+      notEnrolled.hidden = false;
+      return;
+    }
+    genericError.textContent =
+      err instanceof PortalApiError && err.message
+        ? err.message
+        : 'Algo salió mal al iniciar sesión. Intenta de nuevo.';
+    genericError.hidden = false;
+  }
+
+  async function handleGoogleCredential(idToken: string): Promise<void> {
+    genericError.hidden = true;
+    try {
+      await loginWithGoogle(idToken);
+      goToPortal();
+    } catch (err) {
+      showError(err);
+    }
+  }
+
+  function mountGoogleButton(): void {
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      const google = (window as any).google;
+      if (!google?.accounts?.id) return;
+      google.accounts.id.initialize({
+        client_id: googleClientId,
+        callback: (response: { credential: string }) => {
+          void handleGoogleCredential(response.credential);
+        },
+      });
+      google.accounts.id.renderButton(document.getElementById('gsi-button'), {
+        theme: 'outline',
+        size: 'large',
+        text: 'signin_with',
+        shape: 'rectangular',
+        width: 280,
+      });
+    };
+    document.head.appendChild(script);
+  }
+
+  devForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    genericError.hidden = true;
+    const email = (document.getElementById('dev-email') as HTMLInputElement).value.trim();
+    if (!email) return;
+    const submit = document.getElementById('dev-submit') as HTMLButtonElement;
+    submit.disabled = true;
+    try {
+      await loginDev(email);
+      goToPortal();
+    } catch (err) {
+      showError(err);
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  document.getElementById('login-retry')?.addEventListener('click', showLoginUi);
+
+  // Boot: already signed in (this tab) or silently refreshable → straight in.
+  (async () => {
+    if (getToken()) return goToPortal();
+    const refreshed = await refreshSession();
+    if (refreshed) return goToPortal();
+    showLoginUi();
+    if (googleClientId) mountGoogleButton();
+  })();
+</script>
+
+<style lang="scss">
+  .login {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--bg-soft);
+  }
+
+  .login__card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    text-align: center;
+  }
+
+  .login__logo {
+    height: 28px;
+    width: auto;
+    margin: 0 auto 24px;
+    display: block;
+  }
+
+  .login__title {
+    font-size: clamp(22px, 3vw, 26px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+
+  .login__sub {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0 0 28px;
+  }
+
+  .login__checking {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .login__google {
+    display: flex;
+    justify-content: center;
+  }
+
+  .login__form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .login__label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+
+  .login__input {
+    font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+    font-size: 15px;
+    padding: 11px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--text);
+    background: var(--bg);
+
+    &:focus {
+      outline: none;
+      border-color: var(--ink);
+    }
+  }
+
+  .login__submit {
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .login__hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 4px 0 0;
+    text-align: center;
+  }
+
+  .login__error-card {
+    text-align: left;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    background: var(--bg-soft);
+  }
+
+  .login__error-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+
+  .login__error-msg {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+    margin: 0 0 8px;
+
+    a {
+      color: var(--ink);
+      font-weight: 500;
+    }
+  }
+
+  .login__retry {
+    margin-top: 8px;
+  }
+
+  .login__generic-error {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #b4231f;
+  }
+</style>

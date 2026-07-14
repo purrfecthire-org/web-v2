@@ -1,0 +1,1113 @@
+---
+// /app/roles — "Mis roles": kanban + table over application_stage.
+// Data: GET /portal/me/roles · PATCH .../stage · PATCH .../notes · POST (add role).
+// read_only participants (alumni) see everything but cannot mutate.
+import PortalLayout from '../../layouts/PortalLayout.astro';
+---
+
+<PortalLayout title="Mis roles" active="roles">
+  <div class="roles" id="roles-root">
+    <div class="roles__toolbar">
+      <div>
+        <h1 class="roles__title">Mis roles</h1>
+        <p class="roles__count" id="roles-count"></p>
+      </div>
+      <div class="roles__actions">
+        <div class="roles__view-toggle" role="tablist" aria-label="Vista">
+          <button type="button" class="roles__view-btn" id="view-kanban" role="tab">Kanban</button>
+          <button type="button" class="roles__view-btn" id="view-table" role="tab">Tabla</button>
+        </div>
+        <button type="button" class="btn roles__add-btn" id="add-role-btn" hidden>Agregar un rol</button>
+      </div>
+    </div>
+
+    <p class="roles__readonly-note" id="readonly-note" hidden>
+      Tu cohorte ya terminó, así que el tracker está en modo solo lectura.
+    </p>
+
+    <p class="roles__loading" id="roles-loading">Cargando tus roles…</p>
+    <div class="roles__board" id="board" hidden></div>
+    <div class="roles__table-wrap" id="table-wrap" hidden></div>
+
+    <!-- Role detail drawer -->
+    <div class="drawer" id="drawer" hidden>
+      <div class="drawer__backdrop" id="drawer-backdrop"></div>
+      <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+        <div id="drawer-content"></div>
+      </aside>
+    </div>
+
+    <!-- Add role modal -->
+    <dialog class="modal" id="add-dialog">
+      <form method="dialog" class="modal__form" id="add-form">
+        <h2 class="modal__title">Agregar un rol</h2>
+        <p class="modal__sub">Un rol al que estás aplicando por tu cuenta.</p>
+        <label class="modal__label" for="add-company">Empresa *</label>
+        <input class="modal__input" id="add-company" name="company" required placeholder="Acme Inc." />
+        <label class="modal__label" for="add-title">Rol</label>
+        <input class="modal__input" id="add-title" name="role_title" placeholder="Senior Product Designer" />
+        <label class="modal__label" for="add-url">Link a la oferta</label>
+        <input class="modal__input" id="add-url" name="job_url" type="url" placeholder="https://…" />
+        <div class="modal__row">
+          <div>
+            <label class="modal__label" for="add-location">Modalidad</label>
+            <select class="modal__input" id="add-location" name="location_type">
+              <option value="">Sin definir</option>
+              <option value="remote">Remoto</option>
+              <option value="hybrid">Híbrido</option>
+              <option value="onsite">Presencial</option>
+            </select>
+          </div>
+          <div>
+            <label class="modal__label" for="add-salary">Rango salarial</label>
+            <input class="modal__input" id="add-salary" name="salary_range" placeholder="$90k–$120k" />
+          </div>
+        </div>
+        <label class="modal__label" for="add-notes">Notas</label>
+        <textarea class="modal__input modal__textarea" id="add-notes" name="notes" rows="3"></textarea>
+        <div class="modal__footer">
+          <button type="button" class="btn-secondary" id="add-cancel">Cancelar</button>
+          <button type="submit" class="btn" id="add-submit">Agregar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Hired confirmation modal -->
+    <dialog class="modal" id="hired-dialog">
+      <div class="modal__form">
+        <h2 class="modal__title">¡Felicitaciones!</h2>
+        <p class="modal__sub" id="hired-msg">
+          ¿Confirmas que aceptaste la oferta? Avisaremos al equipo para celebrarlo contigo.
+        </p>
+        <div class="modal__footer">
+          <button type="button" class="btn-secondary" id="hired-cancel">Todavía no</button>
+          <button type="button" class="btn" id="hired-confirm">Sí, confirmo</button>
+        </div>
+      </div>
+    </dialog>
+  </div>
+</PortalLayout>
+
+<script>
+  import {
+    apiFetch,
+    getProfile,
+    PortalApiError,
+    requireSession,
+    type PortalAddRoleRequest,
+    type PortalRole,
+  } from '../../lib/portal/api';
+  import { formatShortDate, fromDatetimeLocal, toDatetimeLocal } from '../../lib/portal/format';
+  import { ACTIVE_STAGES, COLLAPSED_STAGES, stageLabel, type Stage } from '../../lib/portal/stages';
+  import { showToast } from '../../lib/portal/toast';
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  let roles: PortalRole[] = [];
+  let readOnly = false;
+  let view: 'kanban' | 'table' =
+    (localStorage.getItem('ph_roles_view') as 'kanban' | 'table') || 'kanban';
+  const expanded = new Set<string>(); // collapsed columns the user opened
+  let drawerRoleId: string | null = null;
+  let pendingHired: { roleId: string } | null = null;
+
+  const $ = <T extends HTMLElement = HTMLElement>(id: string) =>
+    document.getElementById(id) as T;
+
+  const esc = (v: unknown): string =>
+    String(v ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+
+  const LOCATION_LABELS: Record<string, string> = {
+    remote: 'Remoto',
+    hybrid: 'Híbrido',
+    onsite: 'Presencial',
+  };
+  const PRIORITY_LABELS: Record<string, string> = { alta: 'Alta', media: 'Media', baja: 'Baja' };
+
+  function findRole(id: string): PortalRole | undefined {
+    return roles.find((r) => r.id === id);
+  }
+
+  // ── Rendering helpers ──────────────────────────────────────────────────────
+
+  function stageSelectHtml(role: PortalRole, cls: string): string {
+    const options = [...ACTIVE_STAGES, ...COLLAPSED_STAGES]
+      .map(
+        (s) =>
+          `<option value="${s}" ${s === role.application_stage ? 'selected' : ''}>${stageLabel(s)}</option>`,
+      )
+      .join('');
+    return `<select class="${cls}" data-role-id="${role.id}" data-action="stage-select" aria-label="Etapa" ${readOnly ? 'disabled' : ''}>${options}</select>`;
+  }
+
+  function cardHtml(role: PortalRole): string {
+    const title = role.role_title ? `<p class="roles__card-role">${esc(role.role_title)}</p>` : '';
+    const priority = role.priority
+      ? `<span class="roles__chip roles__chip--${esc(role.priority)}">${esc(PRIORITY_LABELS[role.priority] ?? role.priority)}</span>`
+      : '';
+    const mine = role.added_by_me ? '<span class="roles__chip">Agregado por ti</span>' : '';
+    const next = role.next_action
+      ? `<p class="roles__card-next">Próximo: ${esc(role.next_action)}${role.next_action_at ? ` · ${formatShortDate(role.next_action_at)}` : ''}</p>`
+      : '';
+    return `
+      <article class="roles__card" data-role-id="${role.id}" ${readOnly ? '' : 'draggable="true"'} tabindex="0">
+        <p class="roles__card-company">${esc(role.company)}</p>
+        ${title}
+        ${priority || mine ? `<div class="roles__card-chips">${priority}${mine}</div>` : ''}
+        ${next}
+        ${stageSelectHtml(role, 'roles__card-stage')}
+      </article>`;
+  }
+
+  function renderBoard(): void {
+    const board = $('board');
+    const byStage = new Map<string, PortalRole[]>();
+    for (const r of roles) {
+      const list = byStage.get(r.application_stage) ?? [];
+      list.push(r);
+      byStage.set(r.application_stage, list);
+    }
+    const activeCols = ACTIVE_STAGES.map((stage) => {
+      const items = byStage.get(stage) ?? [];
+      return `
+        <section class="roles__col" data-stage="${stage}">
+          <header class="roles__col-head">
+            <span>${stageLabel(stage)}</span>
+            <span class="roles__col-count">${items.length}</span>
+          </header>
+          <div class="roles__col-body" data-stage="${stage}">
+            ${items.map(cardHtml).join('') || '<p class="roles__col-empty">Sin roles</p>'}
+          </div>
+        </section>`;
+    }).join('');
+    const collapsedCols = COLLAPSED_STAGES.map((stage) => {
+      const items = byStage.get(stage) ?? [];
+      const isOpen = expanded.has(stage);
+      if (!isOpen) {
+        return `
+          <section class="roles__col roles__col--collapsed" data-stage="${stage}">
+            <button type="button" class="roles__col-toggle" data-action="expand" data-stage="${stage}"
+              aria-expanded="false" title="${stageLabel(stage)}">
+              <span class="roles__col-toggle-label">${stageLabel(stage)}</span>
+              <span class="roles__col-count">${items.length}</span>
+            </button>
+            <div class="roles__col-body roles__col-body--collapsed" data-stage="${stage}"></div>
+          </section>`;
+      }
+      return `
+        <section class="roles__col" data-stage="${stage}">
+          <header class="roles__col-head">
+            <button type="button" class="roles__col-collapse" data-action="collapse" data-stage="${stage}" aria-expanded="true">
+              ${stageLabel(stage)} ▾
+            </button>
+            <span class="roles__col-count">${items.length}</span>
+          </header>
+          <div class="roles__col-body" data-stage="${stage}">
+            ${items.map(cardHtml).join('') || '<p class="roles__col-empty">Sin roles</p>'}
+          </div>
+        </section>`;
+    }).join('');
+    board.innerHTML = activeCols + collapsedCols;
+  }
+
+  function renderTable(): void {
+    const wrap = $('table-wrap');
+    if (!roles.length) {
+      wrap.innerHTML = '<p class="roles__col-empty">Todavía no hay roles en tu tracker.</p>';
+      return;
+    }
+    const rows = roles
+      .map(
+        (r) => `
+        <tr data-role-id="${r.id}">
+          <td class="roles__td-company">${esc(r.company)}</td>
+          <td>${esc(r.role_title ?? '')}</td>
+          <td>${stageSelectHtml(r, 'roles__table-stage')}</td>
+          <td>${esc(r.priority ? (PRIORITY_LABELS[r.priority] ?? r.priority) : '')}</td>
+          <td>${esc(r.next_action ?? '')}${r.next_action_at ? `<span class="roles__td-date"> · ${formatShortDate(r.next_action_at)}</span>` : ''}</td>
+          <td class="roles__td-date">${formatShortDate(r.created_at)}</td>
+        </tr>`,
+      )
+      .join('');
+    wrap.innerHTML = `
+      <table class="roles__table">
+        <thead>
+          <tr><th>Empresa</th><th>Rol</th><th>Etapa</th><th>Prioridad</th><th>Próxima acción</th><th>Agregado</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function render(): void {
+    $('roles-loading').hidden = true;
+    const total = roles.length;
+    $('roles-count').textContent = total
+      ? `${total} ${total === 1 ? 'rol' : 'roles'} en tu tracker`
+      : 'Todavía no hay roles en tu tracker.';
+    $('view-kanban').classList.toggle('roles__view-btn--active', view === 'kanban');
+    $('view-table').classList.toggle('roles__view-btn--active', view === 'table');
+    $('board').hidden = view !== 'kanban';
+    $('table-wrap').hidden = view !== 'table';
+    if (view === 'kanban') renderBoard();
+    else renderTable();
+  }
+
+  // ── Drawer ─────────────────────────────────────────────────────────────────
+
+  function attr(label: string, value: string | null | undefined): string {
+    if (!value) return '';
+    return `<div class="drawer__attr"><dt>${label}</dt><dd>${esc(value)}</dd></div>`;
+  }
+
+  function openDrawer(roleId: string): void {
+    const role = findRole(roleId);
+    if (!role) return;
+    drawerRoleId = roleId;
+    const content = $('drawer-content');
+    const linkedin = role.contact_linkedin
+      ? `<a href="${esc(role.contact_linkedin)}" target="_blank" rel="noopener noreferrer">LinkedIn</a>`
+      : '';
+    const contact = [esc(role.contact_name ?? ''), linkedin].filter(Boolean).join(' · ');
+    content.innerHTML = `
+      <header class="drawer__head">
+        <div>
+          <h2 class="drawer__title" id="drawer-title">${esc(role.company)}</h2>
+          ${role.role_title ? `<p class="drawer__subtitle">${esc(role.role_title)}</p>` : ''}
+        </div>
+        <button type="button" class="drawer__close" data-action="close-drawer" aria-label="Cerrar">✕</button>
+      </header>
+      <div class="drawer__stage-row">
+        ${stageSelectHtml(role, 'drawer__stage')}
+        ${role.job_url ? `<a class="btn-secondary drawer__jd" href="${esc(role.job_url)}" target="_blank" rel="noopener noreferrer">Ver oferta</a>` : ''}
+      </div>
+      ${
+        role.candidate_pitch_company || role.candidate_pitch_role
+          ? `<section class="drawer__section">
+              ${role.candidate_pitch_company ? `<h3 class="drawer__section-title">Empresa</h3><p class="drawer__pitch">${esc(role.candidate_pitch_company)}</p>` : ''}
+              ${role.candidate_pitch_role ? `<h3 class="drawer__section-title">Rol</h3><p class="drawer__pitch">${esc(role.candidate_pitch_role)}</p>` : ''}
+            </section>`
+          : ''
+      }
+      <section class="drawer__section">
+        <h3 class="drawer__section-title">Detalles</h3>
+        <dl class="drawer__attrs">
+          ${attr('Prioridad', role.priority ? (PRIORITY_LABELS[role.priority] ?? role.priority) : null)}
+          ${attr('Modalidad', role.location_type ? (LOCATION_LABELS[role.location_type] ?? role.location_type) : null)}
+          ${attr('Sponsorship', role.sponsorship)}
+          ${attr('Relocation', role.relocation == null ? null : role.relocation ? 'Sí' : 'No')}
+          ${attr('Etapa de la empresa', role.company_stage)}
+          ${attr('Industrias', role.industries?.length ? role.industries.join(', ') : null)}
+          ${attr('Rango salarial', role.salary_range)}
+          ${attr('Canal', role.channel)}
+          ${contact ? `<div class="drawer__attr"><dt>Contacto</dt><dd>${contact}</dd></div>` : ''}
+          ${attr('Compartido', formatShortDate(role.shared_at) || null)}
+          ${attr('Aplicado', formatShortDate(role.applied_at) || null)}
+        </dl>
+      </section>
+      <section class="drawer__section">
+        <h3 class="drawer__section-title">Notas y próxima acción</h3>
+        <label class="drawer__label" for="drawer-notes">Notas</label>
+        <textarea class="drawer__input drawer__textarea" id="drawer-notes" rows="4" ${readOnly ? 'disabled' : ''}>${esc(role.notes ?? '')}</textarea>
+        <label class="drawer__label" for="drawer-next-action">Próxima acción</label>
+        <input class="drawer__input" id="drawer-next-action" value="${esc(role.next_action ?? '')}" ${readOnly ? 'disabled' : ''} />
+        <label class="drawer__label" for="drawer-next-at">Fecha límite</label>
+        <input class="drawer__input" id="drawer-next-at" type="datetime-local" value="${toDatetimeLocal(role.next_action_at)}" ${readOnly ? 'disabled' : ''} />
+        ${readOnly ? '' : '<button type="button" class="btn drawer__save" data-action="save-notes">Guardar</button>'}
+      </section>`;
+    $('drawer').hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer(): void {
+    drawerRoleId = null;
+    $('drawer').hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  // ── Mutations ──────────────────────────────────────────────────────────────
+
+  async function doStageChange(roleId: string, stage: Stage): Promise<void> {
+    try {
+      const updated = await apiFetch<PortalRole>(`/portal/me/roles/${roleId}/stage`, {
+        method: 'PATCH',
+        body: JSON.stringify({ stage }),
+      });
+      roles = roles.map((r) => (r.id === roleId ? updated : r));
+      render();
+      if (drawerRoleId === roleId) openDrawer(roleId);
+      showToast(
+        stage === 'hired' ? '¡Felicitaciones! Rol marcado como Contratado.' : `Rol movido a ${stageLabel(stage)}.`,
+        'success',
+      );
+    } catch (err) {
+      render(); // revert any select left in a dirty state
+      showToast(err instanceof PortalApiError ? err.message : 'No pudimos mover el rol.', 'error');
+    }
+  }
+
+  function requestStageChange(roleId: string, stage: Stage): void {
+    const role = findRole(roleId);
+    if (!role || role.application_stage === stage) return;
+    if (stage === 'hired') {
+      pendingHired = { roleId };
+      const dialog = $('hired-dialog') as unknown as HTMLDialogElement;
+      $('hired-msg').textContent = `¿Confirmas que aceptaste la oferta de ${role.company}? Avisaremos al equipo para celebrarlo contigo.`;
+      dialog.showModal();
+      return;
+    }
+    void doStageChange(roleId, stage);
+  }
+
+  async function saveNotes(): Promise<void> {
+    if (!drawerRoleId) return;
+    const notes = ($('drawer-notes') as HTMLTextAreaElement).value;
+    const nextAction = ($('drawer-next-action') as HTMLInputElement).value;
+    const nextAt = fromDatetimeLocal(($('drawer-next-at') as HTMLInputElement).value);
+    try {
+      const updated = await apiFetch<PortalRole>(`/portal/me/roles/${drawerRoleId}/notes`, {
+        method: 'PATCH',
+        body: JSON.stringify({ notes, next_action: nextAction, next_action_at: nextAt }),
+      });
+      roles = roles.map((r) => (r.id === drawerRoleId ? updated : r));
+      render();
+      showToast('Notas guardadas.', 'success');
+    } catch (err) {
+      showToast(err instanceof PortalApiError ? err.message : 'No pudimos guardar las notas.', 'error');
+    }
+  }
+
+  async function addRole(form: HTMLFormElement): Promise<void> {
+    const fd = new FormData(form);
+    const payload: PortalAddRoleRequest = { company: String(fd.get('company') ?? '').trim() };
+    for (const key of ['role_title', 'job_url', 'location_type', 'salary_range', 'notes'] as const) {
+      const v = String(fd.get(key) ?? '').trim();
+      if (v) payload[key] = v;
+    }
+    if (!payload.company) return;
+    const submit = $('add-submit') as HTMLButtonElement;
+    submit.disabled = true;
+    try {
+      const created = await apiFetch<PortalRole>('/portal/me/roles', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      roles = [created, ...roles];
+      ($('add-dialog') as unknown as HTMLDialogElement).close();
+      form.reset();
+      render();
+      showToast('Rol agregado a tu tracker.', 'success');
+    } catch (err) {
+      if (err instanceof PortalApiError && err.code === 'ROLE_ALREADY_TRACKED') {
+        showToast('Ya estás siguiendo este rol.', 'error');
+      } else {
+        showToast(err instanceof PortalApiError ? err.message : 'No pudimos agregar el rol.', 'error');
+      }
+    } finally {
+      submit.disabled = false;
+    }
+  }
+
+  // ── Events ─────────────────────────────────────────────────────────────────
+
+  const root = $('roles-root');
+
+  root.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const action = target.closest<HTMLElement>('[data-action]')?.dataset.action;
+    if (action === 'expand' || action === 'collapse') {
+      const stage = target.closest<HTMLElement>('[data-stage]')!.dataset.stage!;
+      if (action === 'expand') expanded.add(stage);
+      else expanded.delete(stage);
+      render();
+      return;
+    }
+    if (action === 'close-drawer') return closeDrawer();
+    if (action === 'save-notes') return void saveNotes();
+    if (target.closest('select')) return; // stage select handles itself
+    const card = target.closest<HTMLElement>('.roles__card, tr[data-role-id]');
+    if (card?.dataset.roleId) openDrawer(card.dataset.roleId);
+  });
+
+  root.addEventListener('change', (e) => {
+    const select = (e.target as HTMLElement).closest<HTMLSelectElement>(
+      'select[data-action="stage-select"]',
+    );
+    if (!select) return;
+    requestStageChange(select.dataset.roleId!, select.value as Stage);
+  });
+
+  // Drag & drop (kanban)
+  let draggedRoleId: string | null = null;
+  root.addEventListener('dragstart', (e) => {
+    const card = (e.target as HTMLElement).closest<HTMLElement>('.roles__card');
+    if (!card || readOnly) return;
+    draggedRoleId = card.dataset.roleId ?? null;
+    e.dataTransfer?.setData('text/plain', draggedRoleId ?? '');
+    card.classList.add('roles__card--dragging');
+  });
+  root.addEventListener('dragend', (e) => {
+    (e.target as HTMLElement)
+      .closest<HTMLElement>('.roles__card')
+      ?.classList.remove('roles__card--dragging');
+  });
+  root.addEventListener('dragover', (e) => {
+    const col = (e.target as HTMLElement).closest<HTMLElement>('.roles__col');
+    if (!col || readOnly) return;
+    e.preventDefault();
+    col.classList.add('roles__col--over');
+  });
+  root.addEventListener('dragleave', (e) => {
+    (e.target as HTMLElement)
+      .closest<HTMLElement>('.roles__col')
+      ?.classList.remove('roles__col--over');
+  });
+  root.addEventListener('drop', (e) => {
+    const col = (e.target as HTMLElement).closest<HTMLElement>('.roles__col');
+    if (!col || readOnly) return;
+    e.preventDefault();
+    col.classList.remove('roles__col--over');
+    const roleId = draggedRoleId || e.dataTransfer?.getData('text/plain');
+    draggedRoleId = null;
+    const stage = col.dataset.stage as Stage | undefined;
+    if (roleId && stage) requestStageChange(roleId, stage);
+  });
+
+  $('drawer-backdrop').addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawerRoleId) closeDrawer();
+  });
+
+  $('view-kanban').addEventListener('click', () => {
+    view = 'kanban';
+    localStorage.setItem('ph_roles_view', view);
+    render();
+  });
+  $('view-table').addEventListener('click', () => {
+    view = 'table';
+    localStorage.setItem('ph_roles_view', view);
+    render();
+  });
+
+  $('add-role-btn').addEventListener('click', () => {
+    ($('add-dialog') as unknown as HTMLDialogElement).showModal();
+  });
+  $('add-cancel').addEventListener('click', () => {
+    ($('add-dialog') as unknown as HTMLDialogElement).close();
+  });
+  ($('add-form') as HTMLFormElement).addEventListener('submit', (e) => {
+    e.preventDefault();
+    void addRole(e.target as HTMLFormElement);
+  });
+
+  $('hired-cancel').addEventListener('click', () => {
+    pendingHired = null;
+    ($('hired-dialog') as unknown as HTMLDialogElement).close();
+    render(); // reset any select showing "Contratado" without confirmation
+  });
+  $('hired-confirm').addEventListener('click', () => {
+    const pending = pendingHired;
+    pendingHired = null;
+    ($('hired-dialog') as unknown as HTMLDialogElement).close();
+    if (pending) void doStageChange(pending.roleId, 'hired');
+  });
+
+  // ── Boot ───────────────────────────────────────────────────────────────────
+  (async () => {
+    const profile = await requireSession();
+    readOnly = profile.read_only || getProfile()?.read_only || false;
+    $('readonly-note').hidden = !readOnly;
+    $('add-role-btn').hidden = readOnly;
+    try {
+      roles = await apiFetch<PortalRole[]>('/portal/me/roles');
+      render();
+    } catch (err) {
+      $('roles-loading').textContent = 'No pudimos cargar tus roles. Recarga la página para intentar de nuevo.';
+      showToast(err instanceof PortalApiError ? err.message : 'Error al cargar tus roles.', 'error');
+    }
+  })();
+</script>
+
+<style lang="scss" is:global>
+  @use '../../styles/breakpoints.scss' as *;
+
+  .roles {
+    // ── Toolbar ──
+    .roles__toolbar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .roles__title {
+      font-size: clamp(24px, 3vw, 30px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .roles__count {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 4px 0 0;
+    }
+
+    .roles__actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .roles__view-toggle {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .roles__view-btn {
+      font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--bg);
+      border: none;
+      padding: 8px 14px;
+      cursor: pointer;
+
+      &--active {
+        color: #fff;
+        background: var(--ink);
+      }
+    }
+
+    .roles__readonly-note {
+      font-size: 13px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--bg-soft);
+      padding: 10px 14px;
+      margin: 0 0 16px;
+    }
+
+    .roles__loading,
+    .roles__col-empty {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    // ── Kanban ──
+    .roles__board {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      align-items: flex-start;
+      padding-bottom: 16px;
+    }
+
+    .roles__col {
+      flex: 0 0 240px;
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px;
+      min-height: 120px;
+
+      &--over {
+        border-color: var(--ink);
+      }
+
+      &--collapsed {
+        flex: 0 0 auto;
+        min-height: 0;
+        padding: 0;
+        background: transparent;
+        border: none;
+      }
+    }
+
+    .roles__col-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding: 4px 4px 10px;
+    }
+
+    .roles__col-count {
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--bg);
+      padding: 1px 8px;
+    }
+
+    .roles__col-toggle {
+      font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      background: var(--bg-soft);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--ink);
+        border-color: var(--ink);
+      }
+    }
+
+    .roles__col-collapse {
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      text-transform: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--ink);
+      }
+    }
+
+    .roles__col-body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 40px;
+
+      &--collapsed {
+        display: none;
+      }
+    }
+
+    .roles__card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      cursor: pointer;
+
+      &--dragging {
+        opacity: 0.5;
+      }
+
+      &:hover {
+        border-color: var(--ink);
+      }
+    }
+
+    .roles__card-company {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .roles__card-role {
+      font-size: 13px;
+      color: var(--text);
+      margin: 2px 0 0;
+    }
+
+    .roles__card-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .roles__chip {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 2px 8px;
+      background: var(--bg-soft);
+
+      &--alta {
+        color: var(--ink);
+        border-color: var(--ink);
+      }
+    }
+
+    .roles__card-next {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 6px 0 0;
+    }
+
+    .roles__card-stage,
+    .roles__table-stage {
+      font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+      font-size: 12px;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg);
+      padding: 5px 8px;
+      margin-top: 8px;
+      width: 100%;
+      cursor: pointer;
+
+      &:disabled {
+        cursor: default;
+        color: var(--muted);
+      }
+    }
+
+    .roles__table-stage {
+      margin-top: 0;
+      width: auto;
+    }
+
+    // ── Table ──
+    .roles__table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .roles__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+
+      th {
+        text-align: left;
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg-soft);
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--line);
+        color: var(--text);
+        vertical-align: middle;
+      }
+
+      tbody tr {
+        cursor: pointer;
+
+        &:hover {
+          background: var(--bg-soft);
+        }
+
+        &:last-child td {
+          border-bottom: none;
+        }
+      }
+    }
+
+    .roles__td-company {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .roles__td-date {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    // ── Drawer ──
+    .drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+    }
+
+    .drawer__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(28, 28, 28, 0.35);
+    }
+
+    .drawer__panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: min(440px, 100%);
+      background: var(--bg);
+      border-left: 1px solid var(--line);
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .drawer__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .drawer__title {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .drawer__subtitle {
+      font-size: 14px;
+      color: var(--text);
+      margin: 2px 0 0;
+    }
+
+    .drawer__close {
+      font-size: 14px;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      flex-shrink: 0;
+
+      &:hover {
+        color: var(--ink);
+        border-color: var(--ink);
+      }
+    }
+
+    .drawer__stage-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .drawer__stage {
+        flex: 1;
+        font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+        font-size: 14px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 10px 12px;
+        background: var(--bg);
+        cursor: pointer;
+      }
+
+      .drawer__jd {
+        padding: 10px 16px;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+    }
+
+    .drawer__section {
+      border-top: 1px solid var(--line);
+      padding: 16px 0;
+    }
+
+    .drawer__section-title {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    .drawer__pitch {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      margin: 0 0 14px;
+      white-space: pre-line;
+    }
+
+    .drawer__attrs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 16px;
+      margin: 0;
+    }
+
+    .drawer__attr {
+      dt {
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--muted);
+        margin: 0 0 2px;
+      }
+
+      dd {
+        font-size: 14px;
+        color: var(--text);
+        margin: 0;
+        overflow-wrap: anywhere;
+
+        a {
+          color: var(--ink);
+          font-weight: 500;
+        }
+      }
+    }
+
+    .drawer__label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 12px 0 4px;
+    }
+
+    .drawer__input {
+      width: 100%;
+      font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 9px 12px;
+      background: var(--bg);
+
+      &:focus {
+        outline: none;
+        border-color: var(--ink);
+      }
+
+      &:disabled {
+        color: var(--muted);
+        background: var(--bg-soft);
+      }
+    }
+
+    .drawer__textarea {
+      resize: vertical;
+    }
+
+    .drawer__save {
+      margin-top: 14px;
+    }
+
+    // ── Modals ──
+    .modal {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0;
+      width: min(440px, calc(100vw - 32px));
+
+      &::backdrop {
+        background: rgba(28, 28, 28, 0.35);
+      }
+    }
+
+    .modal__form {
+      padding: 24px;
+    }
+
+    .modal__title {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 0 0 6px;
+    }
+
+    .modal__sub {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+
+    .modal__label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 12px 0 4px;
+    }
+
+    .modal__input {
+      width: 100%;
+      font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 9px 12px;
+      background: var(--bg);
+
+      &:focus {
+        outline: none;
+        border-color: var(--ink);
+      }
+    }
+
+    .modal__textarea {
+      resize: vertical;
+    }
+
+    .modal__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    @include max-md {
+      .roles__col {
+        flex: 0 0 210px;
+      }
+
+      .drawer__attrs {
+        grid-template-columns: 1fr;
+      }
+
+      .modal__row {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+</style>

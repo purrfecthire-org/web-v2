@@ -1,0 +1,199 @@
+---
+// Authenticated shell for the candidate portal (/app/*).
+// Guard: requireSession() tries one silent refresh, then redirects to /app.
+// All /app pages are noindex and excluded from the sitemap (astro.config.mjs).
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+  active?: 'roles' | 'sessions';
+}
+
+const { title, active } = Astro.props;
+---
+
+<Layout title={`${title} | Purrfect Hire`} lang="es" noindex={true}>
+  <div class="portal">
+    <header class="portal__header">
+      <div class="portal__inner portal__header-inner">
+        <a href="/app/roles" class="portal__brand" aria-label="Purrfect Hire">
+          <img src="/logos/logo-desktop.png" alt="Purrfect Hire" height="26" />
+        </a>
+        <nav class="portal__nav" aria-label="Portal">
+          <a
+            href="/app/roles"
+            class:list={['portal__nav-link', { 'portal__nav-link--active': active === 'roles' }]}
+            aria-current={active === 'roles' ? 'page' : undefined}>Roles</a
+          >
+          <a
+            href="/app/sessions"
+            class:list={['portal__nav-link', { 'portal__nav-link--active': active === 'sessions' }]}
+            aria-current={active === 'sessions' ? 'page' : undefined}>Sesiones</a
+          >
+        </nav>
+        <div class="portal__user">
+          <span class="portal__user-name" id="portal-user-name"></span>
+          <span class="portal__chip" id="portal-cohort" hidden></span>
+          <button type="button" class="portal__logout" id="portal-logout">Salir</button>
+        </div>
+      </div>
+    </header>
+    <main class="portal__main">
+      <div class="portal__inner">
+        <slot />
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<script>
+  import { logout, requireSession } from '../lib/portal/api';
+
+  requireSession().then((profile) => {
+    const name = document.getElementById('portal-user-name');
+    if (name) name.textContent = profile.first_name;
+    const chip = document.getElementById('portal-cohort');
+    if (chip && profile.cohort_code) {
+      chip.textContent = profile.cohort_code;
+      chip.hidden = false;
+    }
+  });
+
+  document.getElementById('portal-logout')?.addEventListener('click', async () => {
+    await logout();
+    window.location.href = '/app';
+  });
+</script>
+
+<style lang="scss">
+  @use '../styles/breakpoints.scss' as *;
+
+  .portal {
+    min-height: 100vh;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .portal__inner {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .portal__header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .portal__header-inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 60px;
+  }
+
+  .portal__brand {
+    display: inline-flex;
+    align-items: center;
+
+    img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+  }
+
+  .portal__nav {
+    display: flex;
+    gap: 4px;
+  }
+
+  .portal__nav-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    transition: color 0.2s ease, background-color 0.2s ease;
+
+    &:hover {
+      color: var(--ink);
+    }
+
+    &--active {
+      color: var(--ink);
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      padding: 7px 11px;
+    }
+  }
+
+  .portal__user {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .portal__user-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .portal__chip {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 10px;
+    background: var(--bg-soft);
+  }
+
+  .portal__logout {
+    font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+  }
+
+  .portal__main {
+    flex: 1;
+    padding: 32px 0 64px;
+  }
+
+  @include max-md {
+    .portal__header-inner {
+      gap: 12px;
+    }
+
+    .portal__user-name,
+    .portal__chip {
+      display: none;
+    }
+
+    .portal__main {
+      padding: 20px 0 48px;
+    }
+  }
+</style>

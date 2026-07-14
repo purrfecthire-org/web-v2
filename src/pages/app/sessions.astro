@@ -1,0 +1,353 @@
+---
+// /app/sessions — "Mis sesiones": next-session banner + list grouped
+// upcoming/done with content links out to the Notion Hub.
+// Data: GET /portal/me/sessions.
+import PortalLayout from '../../layouts/PortalLayout.astro';
+---
+
+<PortalLayout title="Mis sesiones" active="sessions">
+  <div class="sess" id="sess-root">
+    <div class="sess__toolbar">
+      <h1 class="sess__title">Mis sesiones</h1>
+      <a class="btn-secondary sess__hub" id="hub-link" href="#" target="_blank" rel="noopener noreferrer" hidden>
+        Ir a mi hub en Notion
+      </a>
+    </div>
+
+    <p class="sess__loading" id="sess-loading">Cargando tus sesiones…</p>
+    <div id="sess-content" hidden>
+      <div class="sess__banner" id="next-banner" hidden>
+        <p class="sess__banner-label">Tu próxima sesión</p>
+        <p class="sess__banner-title" id="next-title"></p>
+        <p class="sess__banner-date" id="next-date"></p>
+      </div>
+
+      <section class="sess__group" id="upcoming-group" hidden>
+        <h2 class="sess__group-title">Próximas</h2>
+        <div class="sess__list" id="upcoming-list"></div>
+      </section>
+
+      <section class="sess__group" id="done-group" hidden>
+        <h2 class="sess__group-title">Completadas</h2>
+        <div class="sess__list" id="done-list"></div>
+      </section>
+
+      <p class="sess__empty" id="sess-empty" hidden>
+        Todavía no hay sesiones agendadas. Te avisaremos cuando quede la primera.
+      </p>
+    </div>
+  </div>
+</PortalLayout>
+
+<script>
+  import {
+    apiFetch,
+    PortalApiError,
+    requireSession,
+    type PortalSession,
+    type PortalSessions,
+  } from '../../lib/portal/api';
+  import { formatDateTime } from '../../lib/portal/format';
+  import { showToast } from '../../lib/portal/toast';
+
+  const $ = <T extends HTMLElement = HTMLElement>(id: string) =>
+    document.getElementById(id) as T;
+
+  const esc = (v: unknown): string =>
+    String(v ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+
+  const STATUS_LABELS: Record<string, string> = {
+    scheduled: 'Agendada',
+    rescheduled: 'Reagendada',
+    done: 'Completada',
+    cancelled: 'Cancelada',
+    no_show: 'No asistió',
+  };
+
+  function kindLabel(s: PortalSession): string {
+    switch (s.kind) {
+      case 'mentalidad':
+        return 'Mentalidad';
+      case 'diagnostico':
+        return 'Diagnóstico';
+      case 'module':
+        return s.sequence_number != null ? `Sesión ${s.sequence_number}` : 'Sesión';
+      case 'feedback':
+        return 'Feedback';
+      default:
+        return s.label || 'Sesión extra';
+    }
+  }
+
+  function linkHost(url: string): string {
+    try {
+      return new URL(url).hostname.replace(/^www\./, '');
+    } catch {
+      return 'link';
+    }
+  }
+
+  function sessionHtml(s: PortalSession): string {
+    const when = s.occurred_at ?? s.scheduled_at;
+    const links = s.content_links
+      .map(
+        (url, i) =>
+          `<a class="sess__link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">
+            ${s.content_links.length > 1 ? `Contenido ${i + 1}` : 'Ver contenido'}
+            <span class="sess__link-host">${esc(linkHost(url))}</span>
+          </a>`,
+      )
+      .join('');
+    const statusChip =
+      s.status === 'cancelled' || s.status === 'no_show' || s.status === 'rescheduled'
+        ? `<span class="sess__status sess__status--muted">${STATUS_LABELS[s.status] ?? s.status}</span>`
+        : '';
+    return `
+      <article class="sess__card ${s.status === 'done' ? 'sess__card--done' : ''}">
+        <div class="sess__card-main">
+          <span class="sess__kind">${esc(kindLabel(s))}</span>
+          ${s.label && s.kind !== 'ad_hoc' ? `<p class="sess__label">${esc(s.label)}</p>` : ''}
+          <p class="sess__date">${when ? esc(formatDateTime(when)) : 'Fecha por definir'} ${statusChip}</p>
+        </div>
+        ${links ? `<div class="sess__links">${links}</div>` : ''}
+      </article>`;
+  }
+
+  (async () => {
+    await requireSession();
+    try {
+      const data = await apiFetch<PortalSessions>('/portal/me/sessions');
+      $('sess-loading').hidden = true;
+      $('sess-content').hidden = false;
+
+      if (data.notion_hub_url) {
+        const hub = $('hub-link') as HTMLAnchorElement;
+        hub.href = data.notion_hub_url;
+        hub.hidden = false;
+      }
+
+      if (data.next_session_at) {
+        $('next-title').textContent = data.next_session_label ?? 'Sesión';
+        $('next-date').textContent = formatDateTime(data.next_session_at);
+        $('next-banner').hidden = false;
+      }
+
+      const upcoming = data.sessions.filter(
+        (s) => s.status === 'scheduled' || s.status === 'rescheduled',
+      );
+      const done = data.sessions.filter(
+        (s) => s.status === 'done' || s.status === 'cancelled' || s.status === 'no_show',
+      );
+      // upcoming soonest-first; done latest-first
+      upcoming.sort((a, b) => (a.scheduled_at ?? '').localeCompare(b.scheduled_at ?? ''));
+      done.sort((a, b) =>
+        (b.occurred_at ?? b.scheduled_at ?? '').localeCompare(a.occurred_at ?? a.scheduled_at ?? ''),
+      );
+
+      if (upcoming.length) {
+        $('upcoming-list').innerHTML = upcoming.map(sessionHtml).join('');
+        $('upcoming-group').hidden = false;
+      }
+      if (done.length) {
+        $('done-list').innerHTML = done.map(sessionHtml).join('');
+        $('done-group').hidden = false;
+      }
+      if (!data.sessions.length) $('sess-empty').hidden = false;
+    } catch (err) {
+      $('sess-loading').textContent =
+        'No pudimos cargar tus sesiones. Recarga la página para intentar de nuevo.';
+      showToast(err instanceof PortalApiError ? err.message : 'Error al cargar tus sesiones.', 'error');
+    }
+  })();
+</script>
+
+<style lang="scss" is:global>
+  @use '../../styles/breakpoints.scss' as *;
+
+  .sess {
+    max-width: 720px;
+
+    .sess__toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .sess__title {
+      font-size: clamp(24px, 3vw, 30px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .sess__hub {
+      font-size: 13px;
+      padding: 9px 16px;
+    }
+
+    .sess__loading,
+    .sess__empty {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .sess__banner {
+      background: var(--dark);
+      color: var(--on-dark);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+    }
+
+    .sess__banner-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.75;
+      margin: 0 0 6px;
+    }
+
+    .sess__banner-title {
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .sess__banner-date {
+      font-size: 14px;
+      opacity: 0.85;
+      margin: 4px 0 0;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+
+    .sess__group {
+      margin-bottom: 28px;
+    }
+
+    .sess__group-title {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    .sess__list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sess__card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+
+      &--done {
+        background: var(--bg-soft);
+      }
+    }
+
+    .sess__kind {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--bg);
+      padding: 2px 10px;
+      margin-bottom: 6px;
+    }
+
+    .sess__label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      margin: 0 0 2px;
+    }
+
+    .sess__date {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+
+    .sess__status {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+
+      &--muted {
+        color: var(--muted);
+      }
+    }
+
+    .sess__links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .sess__link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 7px 12px;
+      transition: border-color 0.2s ease;
+
+      &:hover {
+        border-color: var(--ink);
+      }
+    }
+
+    .sess__link-host {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted);
+      margin-left: 6px;
+    }
+
+    @include max-sm {
+      .sess__card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .sess__links {
+        align-items: flex-start;
+      }
+    }
+  }
+</style>
