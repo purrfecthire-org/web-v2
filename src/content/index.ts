@@ -156,6 +156,8 @@ export interface LandingContent {
       tag: string;
       headline: string;
       sub: string;
+      /** The full 4-rung ladder by commitment (Jul 2026 architecture). */
+      ladder: { label: string; price: string; href: string }[];
       oaEyebrow: string;
       oaTitle: string;
       oaBody: string;
@@ -471,8 +473,14 @@ export const content_en: LandingContent = {
     },
     talentBlock: {
       tag: 'For talent',
-      headline: 'Two ways in.',
+      headline: 'Four ways in, by level of commitment.',
       sub: "You already have the skills. What's missing is the strategy, the network, and the criteria to get in front of the right founders. We train senior LATAM professionals against the real bar of YC-, a16z- and Sequoia-backed startups, so you stop getting filtered and start getting introduced.",
+      ladder: [
+        { label: 'Open roles', price: 'Free', href: '/for-talent#roles' },
+        { label: '1:1 Session with Kate', price: '$200', href: '/career-sessions' },
+        { label: 'Momentum', price: '$550/mo', href: '/career-momentum' },
+        { label: 'Offer Acceleration', price: 'From $2,000', href: '/offer-acceleration' },
+      ],
       oaEyebrow: 'Coaching program',
       oaTitle: 'Offer Acceleration',
       oaBody: 'Offer Acceleration is a 1:1 program for senior LATAM professionals who already have the skills but keep getting filtered out, or land offers below their level. By the end, you stop applying and start being introduced to the companies you actually want to join.',
@@ -822,8 +830,14 @@ export const content_es: LandingContent = {
     },
     talentBlock: {
       tag: 'Para talento',
-      headline: 'Dos formas de entrar.',
+      headline: 'Cuatro formas de entrar, según tu nivel de compromiso.',
       sub: 'Ya tienes las habilidades. Lo que falta es la estrategia, la red y los criterios para llegar a los founders correctos. Entrenamos a profesionales senior de LATAM frente al estándar real de las startups respaldadas por YC, a16z y Sequoia, para que dejes de ser filtrado y empieces a ser presentado.',
+      ladder: [
+        { label: 'Roles abiertos', price: 'Gratis', href: '/for-talent#roles' },
+        { label: 'Sesión 1:1 con Kate', price: '$200', href: '/es/career-sessions' },
+        { label: 'Momentum', price: '$550/mes', href: '/es/career-momentum' },
+        { label: 'Offer Acceleration', price: 'Desde $2,000', href: '/offer-acceleration' },
+      ],
       oaEyebrow: 'Programa de coaching',
       oaTitle: 'Offer Acceleration',
       oaBody: 'Offer Acceleration es un programa 1:1 para profesionales senior de LATAM que ya tienen las habilidades pero siguen siendo filtrados, o reciben ofertas por debajo de su nivel. Al terminar, dejas de aplicar y empiezas a ser presentado a las empresas a las que de verdad quieres entrar.',

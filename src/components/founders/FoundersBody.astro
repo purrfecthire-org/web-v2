@@ -16,6 +16,28 @@ const { hero, engine, culture, testimonials } = content;
 
 const BOOKING_URL = 'https://calendly.com/purrfecthire/5';
 
+// "How we work" — compact view of the 3 B2B models; full tables on /pricing.
+const models = [
+  {
+    name: 'Success Fee',
+    forWho: '1–2 critical hires a year',
+    model: 'You pay only when you hire — a percentage of first-year salary. 90-day replacement guarantee.',
+    price: 'Exact terms in a 20-min call',
+  },
+  {
+    name: 'All You Can Hire',
+    forWho: '4–6+ senior hires a year',
+    model: 'Flat monthly fee, up to 6 senior hires in 12 months. Dedicated recruiter, always-on pipeline.',
+    price: 'From $9,000/month',
+  },
+  {
+    name: 'Embedded Search',
+    forWho: 'The role that defines the company',
+    model: 'Dedicated search with retainer + success fee. Kate directly on the search. 120-day guarantee.',
+    price: 'Direct conversation',
+  },
+];
+
 const clients = [
   { name: 'Trébol', logo: '/clients/trebol.png' },
   { name: 'Cheaf', logo: '/clients/cheaf.png' },
@@ -116,6 +138,45 @@ const quotes = [testimonials.featured, ...testimonials.grid.slice(0, 2)];
   </div>
 </section>
 
+<!-- ── How we work: the 3 engagement models (full tables on /pricing) ──── -->
+<section id="models" class="ff-models">
+  <div class="ff-models__container">
+    <header class="ff-models__header reveal">
+      <h2 class="ff-models__headline headline2">How we work</h2>
+      <p class="ff-models__sub body1">
+        Three ways to engage, depending on how much you hire. Structure is public;
+        exact terms are a 20-minute conversation.
+      </p>
+    </header>
+
+    <div class="ff-models__grid">
+      {models.map((m) => (
+        <article class="ff-models__card reveal reveal-delay-1">
+          <h3 class="ff-models__card-title">{m.name}</h3>
+          <p class="ff-models__card-for caption">{m.forWho}</p>
+          <p class="ff-models__card-body">{m.model}</p>
+          <p class="ff-models__card-price">{m.price}</p>
+        </article>
+      ))}
+    </div>
+
+    <p class="ff-models__foot reveal reveal-delay-1">
+      <a href="/pricing" class="ff-models__link">Compare the three models on the pricing page →</a>
+    </p>
+
+    <!-- B2B video slot — described placeholder until it's recorded -->
+    <div class="ff-models__video reveal reveal-delay-2" role="img"
+      aria-label="Video pending: Kate, founder-to-founder, on how we map your real bar and why our placements stay past year two — 60 seconds.">
+      <span class="ff-models__video-glyph" aria-hidden="true">▶</span>
+      <p class="ff-models__video-caption">
+        Video pending (60 seconds): Kate, founder-to-founder, on how we map your real bar
+        before opening the pipeline — and why 80% of our placements are still in the seat
+        after two years.
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- ── Closing CTA ─────────────────────────────────────────────────────── -->
 <section class="ff-cta">
   <div class="ff-cta__container reveal">
@@ -135,6 +196,116 @@ const quotes = [testimonials.featured, ...testimonials.grid.slice(0, 2)];
   @use '../../styles/breakpoints' as *;
 
   $accent: #29285F;
+
+  // ── How we work (3 models) ─────────────────────────────────
+  .ff-models {
+    position: relative;
+    z-index: 1;
+    padding-block: 5rem;
+    scroll-margin-top: 5rem;
+    border-top: 1px solid var(--line);
+
+    &__container {
+      max-width: 60rem;
+      margin-inline: auto;
+      padding-inline: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+
+      @include max-lg { padding-inline: 1.5rem; }
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 46rem;
+    }
+
+    &__headline { color: var(--ink); margin: 0; }
+    &__sub { color: var(--color-muted); margin: 0; }
+
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+
+      @include max-md { grid-template-columns: 1fr; }
+    }
+
+    &__card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      padding: 1.75rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--bg);
+      transition: border-color 0.2s ease;
+
+      &:hover { border-color: $accent; }
+    }
+
+    &__card-title { margin: 0; font-size: 1.125rem; font-weight: 700; color: var(--color-text); }
+    &__card-for { color: $accent; font-weight: 600; }
+    &__card-body { margin: 0; font-size: 0.875rem; line-height: 1.6; color: var(--color-muted); }
+    &__card-price {
+      margin: auto 0 0;
+      padding-top: 0.75rem;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: $accent;
+    }
+
+    &__foot { margin: 0; }
+    &__link {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: $accent;
+      text-decoration: none;
+
+      &:hover { text-decoration: underline; }
+    }
+
+    // B2B video placeholder — honest dashed frame, 16:9
+    &__video {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      text-align: center;
+      aspect-ratio: 16 / 9;
+      max-height: 340px;
+      padding: 2rem;
+      background: var(--bg-soft);
+      border: 1px dashed rgba(41, 40, 95, 0.35);
+      border-radius: var(--radius);
+    }
+
+    &__video-glyph {
+      width: 3.5rem;
+      height: 3.5rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: $accent;
+      color: #fff;
+      font-size: 1.125rem;
+      padding-left: 3px;
+    }
+
+    &__video-caption {
+      margin: 0;
+      font-size: 0.8125rem;
+      line-height: 1.55;
+      color: var(--color-muted);
+      max-width: 34rem;
+    }
+  }
 
   // ── Metrics ────────────────────────────────────────────────
   .ff-metrics {

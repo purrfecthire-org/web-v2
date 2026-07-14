@@ -8,6 +8,8 @@ export default defineConfig({
   redirects: {
     // Short link for the Offer Acceleration program
     '/oa': '/offer-acceleration',
+    // Short link for Momentum (Jul 2026 architecture doc names it /momentum)
+    '/momentum': '/career-momentum',
   },
   integrations: [
     sitemap({
@@ -16,6 +18,7 @@ export default defineConfig({
       // offer-acceleration, privacy-policy) are included by default.
       filter: (page) =>
         !/\/oa\/?$/.test(page) &&                         // /oa short-link redirect
+        !/\/momentum\/?$/.test(page) &&                   // /momentum short-link redirect
         !page.includes('/oa/payment/') &&                 // payment view (not enabled yet)
         !/\/offer-acceleration\/apply\/?$/.test(page) &&  // OA application (not enabled yet)
         !/\/roles\/?$/.test(page) &&                      // open-roles index (not enabled yet)

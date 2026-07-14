@@ -1,12 +1,13 @@
 // ─────────────────────────────────────────────────────────────────────────
-// Individual coaching offerings — shared content (ES).
-// Two products defined in the Jul 9 2026 check-in:
+// Individual coaching offerings — shared content (EN + ES).
+// Two products on the talent ladder (Jul 11 2026 pricing doc):
 //   1. /career-sessions — 1:1 sessions with Kate at $200 USD/session (open
-//      to anyone, not just program members).
-//   2. /career-momentum — $100 USD/month continuity subscription for people
-//      who finished Offer Acceleration (weekly execution check-ins, curated
-//      roles, pipeline tracking, interview role plays).
-// Both pages render through CoachingPage.astro.
+//      to anyone, not just program members). The $200 rung.
+//   2. /career-momentum — Momentum: $550 USD/month, 2 sessions/month with
+//      Kate + async review between sessions, 3-month minimum, entry after
+//      at least one paid 1:1 session. The rung between the $200 session and
+//      the $2,000+ Offer Acceleration program. (/momentum redirects here.)
+// All four pages render through CoachingPage.astro.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const coachingContact = {
@@ -16,7 +17,10 @@ export const coachingContact = {
 } as const;
 
 export interface CoachingContent {
+  lang: 'en' | 'es';
   path: string;
+  /** Same product in the other language (language toggle target). */
+  altPath: string;
   meta: { title: string; description: string };
   jsonLd: {
     serviceName: string;
@@ -32,7 +36,13 @@ export interface CoachingContent {
     para1: string;
     para2: string;
     stats: string[];
+    /** Approved hero photo (career-sessions only until the shoot). */
+    photo?: { src: string; alt: string };
+    /** Honest scarcity line under the stats (career-sessions). */
+    scarcity?: string;
   };
+  /** 60-sec Kate video slot — described placeholder until it's recorded. */
+  video?: { title: string; caption: string };
   forWho: { title: string; intro: string; items: string[] };
   cards: { title: string; intro: string; items: { title: string; body: string }[] };
   how: { title: string; intro: string; steps: { title: string; body: string }[]; close: string };
@@ -43,10 +53,14 @@ export interface CoachingContent {
 
 const wa = (text: string) => `https://wa.me/16283588776?text=${encodeURIComponent(text)}`;
 
-// ── 1:1 sessions with Kate — $200 USD/session ────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+// 1:1 sessions with Kate — $200 USD/session
+// ══════════════════════════════════════════════════════════════════════════
 
-export const careerSessionsContent: CoachingContent = {
-  path: '/career-sessions',
+export const careerSessionsEs: CoachingContent = {
+  lang: 'es',
+  path: '/es/career-sessions',
+  altPath: '/career-sessions',
 
   meta: {
     title: 'Sesiones 1:1 con Kate Forero — Coaching de carrera | Purrfect Hire',
@@ -63,7 +77,7 @@ export const careerSessionsContent: CoachingContent = {
   },
 
   whatsappUrl: wa('Hola, quiero agendar una sesión 1:1 con Kate.'),
-  navCta: 'Agenda tu sesión',
+  navCta: 'Agenda tu sesión · $200',
 
   hero: {
     eyebrow: 'Sesiones 1:1 · Coaching de carrera',
@@ -77,6 +91,15 @@ export const careerSessionsContent: CoachingContent = {
       '160+ placements en US, Europa y LATAM',
       'En español o en inglés',
     ],
+    photo: { src: '/sessions/kate.jpeg', alt: 'Kate Forero' },
+    scarcity:
+      'Kate abre pocos cupos de sesión por semana: el resto de su agenda son searches activos para founders.',
+  },
+
+  video: {
+    title: 'Qué pasa en una sesión, contado por Kate',
+    caption:
+      'Video pendiente (60 segundos): Kate a cámara explicando qué pasa en una sesión — con la honestidad de la FAQ: una sesión no te consigue trabajo, y desconfía de quien te lo prometa.',
   },
 
   forWho: {
@@ -93,8 +116,7 @@ export const careerSessionsContent: CoachingContent = {
 
   cards: {
     title: 'Qué puedes trabajar en una sesión',
-    intro:
-      'Cada sesión ataca un problema específico. Nos dices cuál es el tuyo y llegamos directo a él.',
+    intro: 'Cada sesión ataca un problema específico. Nos dices cuál es el tuyo y llegamos directo a él.',
     items: [
       {
         title: 'Diagnóstico de carrera',
@@ -141,7 +163,7 @@ export const careerSessionsContent: CoachingContent = {
       },
     ],
     close:
-      'Si tu caso necesita más que una sesión, te lo decimos de frente: para un proceso completo de reposicionamiento existe Offer Acceleration.',
+      'Si tu caso necesita más que una sesión, te lo decimos de frente: para continuidad mensual existe Momentum, y para un reposicionamiento completo, Offer Acceleration.',
   },
 
   price: {
@@ -163,7 +185,7 @@ export const careerSessionsContent: CoachingContent = {
         a: 'Cada sesión 1:1 cuesta $200 USD y dura una hora. El pago se hace al reservar y confirma tu cupo en la agenda. No hay suscripciones ni paquetes obligatorios: pagas solo las sesiones que tomas.',
       },
       {
-        q: '¿Necesito estar en Offer Acceleration para tomar una sesión?',
+        q: '¿Necesito estar en un programa para tomar una sesión?',
         a: 'No. Las sesiones 1:1 están abiertas a cualquier profesional, esté o no en nuestros programas. Son el formato correcto cuando tienes un problema puntual: una entrevista, una oferta, un perfil que no comunica lo que vales.',
       },
       {
@@ -179,8 +201,8 @@ export const careerSessionsContent: CoachingContent = {
         a: 'No, y desconfía de quien te lo prometa. Una sesión te da lectura honesta, entrenamiento real y una siguiente movida clara. Si lo que necesitas es un proceso completo de reposicionamiento y canal, ese es Offer Acceleration.',
       },
       {
-        q: '¿En qué se diferencia de Offer Acceleration?',
-        a: 'Offer Acceleration es un programa completo: estrategia escrita, mapa de mercado, posicionamiento, role plays y negociación, desde $2,000 USD. Las sesiones 1:1 son puntuales: una hora, un problema, $200 USD. Si empiezas por una sesión y luego quieres el programa, la conversación ya está empezada.',
+        q: '¿Y si quiero continuidad después de la sesión?',
+        a: 'Para eso existe Momentum: 2 sesiones al mes con Kate más revisión async de tus avances entre sesiones, a $550 USD/mes con mínimo de 3 meses. Se entra después de al menos una sesión 1:1 — la sesión es el diagnóstico. Y para una transformación completa está Offer Acceleration, desde $2,000 USD.',
       },
     ],
   },
@@ -193,113 +215,270 @@ export const careerSessionsContent: CoachingContent = {
   },
 };
 
-// ── Career Momentum — $100 USD/month continuity subscription ─────────────
-
-export const careerMomentumContent: CoachingContent = {
-  path: '/career-momentum',
+export const careerSessionsEn: CoachingContent = {
+  lang: 'en',
+  path: '/career-sessions',
+  altPath: '/es/career-sessions',
 
   meta: {
-    title: 'Career Momentum — Acompañamiento mensual de búsqueda | Purrfect Hire',
+    title: '1:1 Sessions with Kate Forero — Career coaching | Purrfect Hire',
     description:
-      'Career Momentum es la suscripción mensual de Purrfect Hire para quienes terminaron Offer Acceleration: check-in semanal de ejecución, vacantes curadas avisadas a tiempo, pipeline con métricas y role plays cuando tienes entrevistas. $100 USD al mes, sin permanencia.',
+      'Individual career-coaching sessions with Katerine Forero: profile diagnosis, interview role play in English or Spanish, LinkedIn and resume, impostor syndrome, and offer negotiation. $200 USD per one-hour session. Book via WhatsApp.',
   },
 
   jsonLd: {
-    serviceName: 'Career Momentum — acompañamiento mensual de búsqueda de empleo',
+    serviceName: '1:1 career coaching sessions with Kate Forero',
     serviceDescription:
-      'Suscripción mensual de acompañamiento para profesionales que completaron el programa Offer Acceleration de Purrfect Hire: check-in semanal de ejecución, vacantes curadas, seguimiento de pipeline con métricas, role plays de entrevista y soporte por WhatsApp.',
-    price: '100',
-    priceUnit: 'al mes',
+      'Individual one-hour sessions with Katerine Forero, founder of Purrfect Hire: career diagnosis, interview role play, LinkedIn and resume review, impostor syndrome, and offer negotiation. Open to any professional — no program membership required.',
+    price: '200',
+    priceUnit: 'per one-hour session',
   },
 
-  whatsappUrl: wa('Hola, quiero activar mi suscripción Career Momentum.'),
-  navCta: 'Activa tu suscripción',
+  whatsappUrl: wa('Hi Kate, I want to book a 1:1 session.'),
+  navCta: 'Book your session · $200',
 
   hero: {
-    eyebrow: 'Career Momentum · Suscripción mensual',
-    headline: 'Terminaste tus sesiones. La búsqueda sigue. El acompañamiento también.',
+    eyebrow: '1:1 Sessions · Career coaching',
+    headline: 'One hour with the person who hires for YC, a16z and Sequoia founders.',
     para1:
-      'Offer Acceleration te da la estrategia, los activos y el canal. Career Momentum mantiene la ejecución viva hasta que firmas: seguimiento semanal, vacantes curadas apenas se abren y un pipeline con métricas que no te deja perder el ritmo.',
+      'Kate Forero has placed 160+ senior profiles at startups in the US, Europe and LATAM, and has spent 10+ years reading how founders actually evaluate. In a 1:1 session that signal is applied straight to your case: your profile, your interview, your negotiation.',
     para2:
-      'Es la continuidad del programa para quienes ya pasaron por él y quieren seguir acompañados, sin pagar un programa completo otra vez.',
+      'No program required. You book the session you need, when you need it, and leave with concrete actions.',
     stats: [
-      '$100 USD al mes',
-      'Check-in semanal de ejecución',
-      'Cancelas cuando quieras',
+      '$200 USD per 1-hour session',
+      '160+ placements in the US, Europe and LATAM',
+      'In English or Spanish',
+    ],
+    photo: { src: '/sessions/kate.jpeg', alt: 'Kate Forero' },
+    scarcity:
+      'Kate opens a handful of session slots each week: the rest of her calendar is active searches for founders.',
+  },
+
+  video: {
+    title: 'What happens in a session, told by Kate',
+    caption:
+      'Video pending (60 seconds): Kate on camera explaining what happens in a session — with the honesty of the FAQ: a session does not get you a job, and you should distrust anyone who promises it will.',
+  },
+
+  forWho: {
+    title: 'Who it is for',
+    intro:
+      'For professionals with one specific career problem who want to solve it with someone who hires every day — not with generic theory.',
+    items: [
+      'You have an interview coming up and want to arrive prepared, not improvising.',
+      'You suspect your profile communicates less than you are worth and want an honest read.',
+      'Something internal is holding you back: impostor syndrome, limiting beliefs, a narrative that does not land.',
+      'You have an offer on the table and do not know whether to accept, hold, or ask for more.',
+    ],
+  },
+
+  cards: {
+    title: 'What you can work on in a session',
+    intro: 'Each session attacks one specific problem. You tell us which one is yours and we go straight at it.',
+    items: [
+      {
+        title: 'Career diagnosis',
+        body: 'An honest read of where you stand: what your profile communicates, where it contradicts itself, what tier you can realistically aim for, and what your next move is.',
+      },
+      {
+        title: 'Interview role play',
+        body: 'Kate plays the founder, the hiring manager, or the panel — in English or Spanish. You leave with pointed feedback: what you answered well, where you fall, and how to fix it before the real interview.',
+      },
+      {
+        title: 'Prep for an active process',
+        body: 'You already have an interview scheduled. We prepare that specific process: the company, the role, the likely questions, and the narrative that buyer needs to hear.',
+      },
+      {
+        title: 'LinkedIn, resume and narrative',
+        body: 'A direct review of how you present yourself. We find the contradictions between what you say and what you want, and reposition your profile for the level you are aiming at — not the one you have.',
+      },
+      {
+        title: 'Impostor syndrome and limiting beliefs',
+        body: 'When what holds you back is not the market. We work on the internal conversation that makes you undercharge, postpone the move, or sabotage the interview you had already won.',
+      },
+      {
+        title: 'Offer negotiation',
+        body: 'You have an offer or a counteroffer on the table. We define when to say yes, when to hold, and how to ask for more without breaking the process.',
+      },
+    ],
+  },
+
+  how: {
+    title: 'How it works',
+    intro: 'No long forms, no sales calls. Three steps and you are in session.',
+    steps: [
+      {
+        title: 'Message us on WhatsApp.',
+        body: 'Tell us in two lines what you want to work on: the interview you have, the offer you received, the doubt holding you back.',
+      },
+      {
+        title: 'We confirm focus, time and payment.',
+        body: 'We propose a time with Kate and you confirm your spot by paying for the session. $200 USD, one hour, locked calendar.',
+      },
+      {
+        title: 'One hour of direct work with Kate.',
+        body: 'No slides, no canned theory. You come in with a case and leave with honest feedback and concrete actions to execute this week.',
+      },
+    ],
+    close:
+      'If your case needs more than one session, we tell you straight: Momentum exists for monthly continuity, and Offer Acceleration for a full repositioning.',
+  },
+
+  price: {
+    title: 'Investment',
+    amount: '$200 USD',
+    note: 'Per one-hour session, 1:1 with Kate. You pay when you book. No subscriptions, no lock-in, no fine print.',
+    bullets: [
+      'Individual 60-minute session over video call',
+      'In English or Spanish, depending on what you need to train',
+      'Written summary of agreements and next steps afterward',
+    ],
+  },
+
+  faq: {
+    title: 'Straight questions',
+    items: [
+      {
+        q: 'How much does a career coaching session with Kate cost?',
+        a: 'Each 1:1 session costs $200 USD and lasts one hour. Payment is made when you book and confirms your spot. There are no subscriptions or mandatory packages: you pay only for the sessions you take.',
+      },
+      {
+        q: 'Do I need to be in a program to take a session?',
+        a: 'No. 1:1 sessions are open to any professional, in or out of our programs. They are the right format when you have one specific problem: an interview, an offer, a profile that does not communicate what you are worth.',
+      },
+      {
+        q: 'Can sessions be in English?',
+        a: 'Yes. Interview role plays happen in the language the real conversation will happen in. If your process is with a US startup, we train in English, under the same pressure you will feel in the interview.',
+      },
+      {
+        q: 'How do I book and pay?',
+        a: 'You message us on WhatsApp with what you want to work on. We propose a time with Kate and send you the payment link. The session is confirmed once payment is made.',
+      },
+      {
+        q: 'Will one session get me a job?',
+        a: 'No — and distrust anyone who promises it will. A session gives you an honest read, real training, and a clear next move. If what you need is a full repositioning process and channel, that is Offer Acceleration.',
+      },
+      {
+        q: 'What if I want continuity after the session?',
+        a: 'That is what Momentum is for: 2 sessions a month with Kate plus async review of your progress between sessions, at $550 USD/month with a 3-month minimum. Entry is after at least one 1:1 session — the session is the diagnosis. For a full transformation there is Offer Acceleration, from $2,000 USD.',
+      },
+    ],
+  },
+
+  final: {
+    title: 'A specific problem does not need a program. It needs one well-used hour.',
+    body: 'Message us on WhatsApp with what you want to work on and we will confirm the time of your session with Kate.',
+    buttonWhatsapp: 'Book via WhatsApp',
+    buttonEmail: 'Email us',
+  },
+};
+
+// ══════════════════════════════════════════════════════════════════════════
+// Momentum — $550 USD/month, 2 sessions/month with Kate, 3-month minimum,
+// entry after at least one paid 1:1 session. (Replaces the old $100/month
+// OA-alumni continuity product, Jul 11 2026 pricing doc.)
+// ══════════════════════════════════════════════════════════════════════════
+
+export const momentumEs: CoachingContent = {
+  lang: 'es',
+  path: '/es/career-momentum',
+  altPath: '/career-momentum',
+
+  meta: {
+    title: 'Momentum — 2 sesiones al mes con Kate Forero | Purrfect Hire',
+    description:
+      'Momentum es el acompañamiento mensual de Purrfect Hire: 2 sesiones al mes con Kate Forero más revisión async de tus avances entre sesiones. $550 USD al mes, mínimo 3 meses. Se entra después de al menos una sesión 1:1.',
+  },
+
+  jsonLd: {
+    serviceName: 'Momentum — acompañamiento mensual de carrera con Kate Forero',
+    serviceDescription:
+      'Suscripción mensual de coaching de carrera con Katerine Forero, founder de Purrfect Hire: 2 sesiones 1:1 al mes más revisión async de avances entre sesiones. Mínimo 3 meses. Entrada después de al menos una sesión 1:1.',
+    price: '550',
+    priceUnit: 'al mes, mínimo 3 meses',
+  },
+
+  whatsappUrl: wa('Hola, quiero activar Momentum.'),
+  navCta: 'Activa Momentum',
+
+  hero: {
+    eyebrow: 'Momentum · Acompañamiento mensual',
+    headline: 'Una sesión te da claridad. Momentum te da ritmo.',
+    para1:
+      'Dos sesiones al mes con Kate, y tus avances revisados async entre sesiones: los mensajes que vas a enviar, la narrativa que estás ajustando, el proceso que se movió esta semana. El contexto no se pierde entre sesiones — se acumula.',
+    para2:
+      'Se entra después de al menos una sesión 1:1. Esa primera sesión es el diagnóstico: nadie entra a recurrencia sin saber exactamente qué va a trabajar.',
+    stats: [
+      '$550 USD/mes, mínimo 3 meses',
+      '2 sesiones al mes con Kate',
+      'Revisión async entre sesiones',
     ],
   },
 
   forWho: {
     title: 'Para quién es',
-    intro: 'Career Momentum es exclusivo para quienes completaron Offer Acceleration.',
+    intro:
+      'Para quien ya hizo una sesión, sabe qué tiene que mover, y quiere avance sostenido mes a mes — no un empujón aislado.',
     items: [
-      'Terminaste tus sesiones del programa y tu búsqueda sigue activa.',
-      'Sabes exactamente qué hacer, pero sin seguimiento semanal el ritmo se cae.',
-      'Quieres seguir recibiendo vacantes curadas y preparación de entrevistas mientras cierras tu oferta.',
-      'Prefieres pagar por continuidad mes a mes que repetir un programa que ya hiciste.',
+      'Hiciste una sesión 1:1 y quieres continuidad sin saltar a un programa de $2,000.',
+      'Estás en medio de un cambio de nivel o de mercado y necesitas cadencia, no motivación.',
+      'Tienes varios procesos activos y quieres a Kate leyendo cada movida antes de hacerla.',
+      'Sabes que sin accountability quincenal el ritmo se te cae.',
     ],
   },
 
   cards: {
     title: 'Qué incluye tu mes',
-    intro:
-      'Todo lo que en el programa mantiene los procesos avanzando, convertido en una suscripción simple.',
+    intro: 'La cadencia completa: sesión, ejecución revisada, sesión. Nada queda flotando.',
     items: [
       {
-        title: 'Check-in semanal de ejecución',
-        body: '15 minutos cada semana con el equipo: revisamos mensajes enviados, aplicaciones hechas, respuestas recibidas y entrevistas en curso. Lo que se mide, avanza.',
+        title: '2 sesiones 1:1 al mes con Kate',
+        body: 'Una hora cada una, foco definido de antemano, resumen de acuerdos al salir. El mismo formato de la sesión suelta, con contexto acumulado.',
       },
       {
-        title: 'Vacantes curadas, avisadas a tiempo',
-        body: 'Roles ajustados a lo que buscas, avisados apenas se abren — no cuando ya tienen 100+ aplicantes. Calidad sobre volumen: pocas vacantes, todas relevantes.',
+        title: 'Revisión async entre sesiones',
+        body: 'Avances, mensajes, narrativa, dudas puntuales: los envías entre sesiones y Kate los revisa. La ejecución no espera a la próxima videollamada.',
       },
       {
-        title: 'Tu pipeline, con métricas',
-        body: 'Tu búsqueda vive en un solo lugar: en qué etapa está cada proceso, qué sigue esta semana y qué está frenado. Nada se pierde en un Excel olvidado.',
+        title: 'Contexto que se acumula',
+        body: 'No vuelves a explicar tu caso cada vez. Kate sigue tu búsqueda mes a mes: qué intentaste, qué respondió el mercado, qué toca ajustar.',
       },
       {
-        title: 'Role play cuando tienes entrevista',
-        body: 'Si un proceso avanza, te preparamos para esa conversación antes de tenerla — en español o en inglés, según el idioma de la entrevista real.',
-      },
-      {
-        title: 'Soporte directo por WhatsApp',
-        body: 'Dudas entre semana, validación de oportunidades antes de aplicar y feedback después de cada entrevista.',
-      },
-      {
-        title: 'Prioridad para sesiones 1:1 con Kate',
-        body: 'Si tu caso pide trabajo estratégico profundo — negociación, narrativa, un proceso crítico — agendas una sesión con Kate con prioridad en su agenda.',
+        title: 'Prioridad de agenda',
+        body: 'Tus sesiones quedan fijadas con prioridad en el calendario de Kate — la misma agenda donde viven los searches activos para founders.',
       },
     ],
   },
 
   how: {
     title: 'Cómo funciona',
-    intro: 'Si vienes del programa, ya conoces la dinámica. Activarla toma un mensaje.',
+    intro: 'La entrada tiene un solo requisito: haber trabajado con Kate al menos una vez.',
     steps: [
       {
-        title: 'Nos escribes por WhatsApp.',
-        body: 'Nos dices que quieres continuar con Momentum y activamos tu suscripción de $100 USD al mes.',
+        title: 'Haces (o ya hiciste) una sesión 1:1.',
+        body: 'Es el diagnóstico: $200 USD, una hora, un problema. Ahí se define si Momentum es tu siguiente paso y qué van a trabajar juntos.',
       },
       {
-        title: 'Fijamos tu check-in semanal.',
-        body: 'Un espacio fijo de 15 minutos cada semana, el mismo día, a la misma hora. Tu pipeline y tus vacantes siguen vivos sin interrupciones.',
+        title: 'Activas Momentum por WhatsApp.',
+        body: '$550 USD al mes, mínimo 3 meses. Fijamos la cadencia de tus 2 sesiones mensuales desde la primera semana.',
       },
       {
-        title: 'Ejecutas con seguimiento hasta firmar.',
-        body: 'Cada semana sales del check-in sabiendo qué mover. Cuando un proceso avanza, te preparamos. Cuando llega la oferta, la trabajamos.',
+        title: 'Sesión, ejecución revisada, sesión.',
+        body: 'Cada mes: dos horas de trabajo directo con Kate y tus avances revisados async entre sesiones. Cada sesión arranca donde quedó la anterior.',
       },
     ],
-    close: 'El objetivo de Momentum es que dejes de necesitarlo: cancelas el día que firmas.',
+    close:
+      'Tres meses de Momentum son $1,650 — deliberadamente debajo del programa completo. Si tu caso pide una transformación total, Offer Acceleration existe para eso.',
   },
 
   price: {
     title: 'Inversión',
-    amount: '$100 USD / mes',
-    note: 'Suscripción mensual, exclusiva para quienes completaron Offer Acceleration. Sin permanencia mínima: cancelas cuando quieras con un mensaje.',
+    amount: '$550 USD / mes',
+    note: 'Mínimo 3 meses. Se entra después de al menos una sesión 1:1 con Kate — esa sesión es el diagnóstico.',
     bullets: [
-      'Check-in semanal de ejecución de 15 minutos',
-      'Vacantes curadas + pipeline con métricas',
-      'Role plays de entrevista y soporte por WhatsApp',
+      '2 sesiones 1:1 de una hora al mes con Kate',
+      'Revisión async de avances entre sesiones',
+      'En español o en inglés, según tu búsqueda',
     ],
   },
 
@@ -307,36 +486,177 @@ export const careerMomentumContent: CoachingContent = {
     title: 'Preguntas directas',
     items: [
       {
-        q: '¿Qué es Career Momentum?',
-        a: 'Es la suscripción mensual de continuidad de Purrfect Hire: mantiene el acompañamiento de Offer Acceleration después de que terminas tus sesiones. Incluye check-in semanal de ejecución, vacantes curadas, seguimiento de pipeline con métricas y role plays cuando tienes entrevistas. Cuesta $100 USD al mes.',
+        q: '¿Qué es Momentum?',
+        a: 'Es el acompañamiento mensual de Purrfect Hire: 2 sesiones 1:1 al mes con Kate Forero más revisión async de tus avances entre sesiones. Cuesta $550 USD al mes con un mínimo de 3 meses. Es el peldaño entre la sesión suelta de $200 y el programa Offer Acceleration de $2,000+.',
+      },
+      {
+        q: '¿Por qué necesito una sesión 1:1 antes de entrar?',
+        a: 'Porque la primera sesión es el diagnóstico. Antes de comprometerte a meses de trabajo, tú y Kate confirman que hay un plan que vale la pena sostener. También protege la agenda: nadie entra a recurrencia sin caso definido.',
       },
       {
         q: '¿Cuánto cuesta y hay permanencia mínima?',
-        a: '$100 USD al mes, sin permanencia mínima y sin letra chica. Cancelas cuando quieras con un mensaje por WhatsApp antes de tu siguiente cobro. La mayoría cancela por la mejor razón posible: firmó su oferta.',
+        a: '$550 USD al mes, con permanencia mínima de 3 meses. Tres meses son $1,650 — el tiempo mínimo para que una búsqueda seria muestre resultados medibles. Después del tercer mes continúas mes a mes.',
       },
       {
-        q: '¿Puedo suscribirme sin haber hecho Offer Acceleration?',
-        a: 'No. Momentum es la continuidad del programa: asume que ya tienes estrategia escrita, perfil reposicionado y canal abierto. Si aún no has pasado por el programa, tu punto de entrada es Offer Acceleration o una sesión 1:1 con Kate.',
+        q: '¿En qué se diferencia de una sesión suelta?',
+        a: 'La sesión suelta resuelve un problema puntual: una hora, un foco, $200. Momentum es cadencia: dos sesiones al mes, avances revisados entre sesiones y contexto que se acumula. Si tu problema es de una hora, agenda una sesión. Si es de meses, Momentum.',
       },
       {
-        q: '¿Incluye sesiones con Kate?',
-        a: 'Incluye el check-in semanal con el equipo y role plays de preparación cuando tienes entrevistas. Las sesiones estratégicas 1:1 con Kate se agendan aparte a $200 USD la hora, con prioridad de agenda por ser suscriptor.',
+        q: '¿En qué se diferencia de Offer Acceleration?',
+        a: 'Offer Acceleration es un reposicionamiento completo hacia startups de US: estrategia escrita, mapa de mercado, role plays, negociación e intros directas, desde $2,000 USD con aplicación y cupos limitados. Momentum es avance sostenido con Kate, sin el programa completo. Muchos pasan de Momentum a OA cuando el caso lo pide.',
       },
       {
-        q: '¿Cuántas vacantes me envían al mes?',
-        a: 'Las que de verdad se ajustan a tu búsqueda — normalmente alrededor de dos por semana — avisadas apenas se abren, para que apliques antes de que el rol acumule cientos de aplicantes. No enviamos volumen: enviamos señal.',
-      },
-      {
-        q: '¿Cómo cancelo la suscripción?',
-        a: 'Con un mensaje por WhatsApp antes de tu siguiente cobro mensual. No hay formularios, no hay llamadas de retención. Si más adelante quieres volver, se reactiva igual de fácil.',
+        q: '¿Cómo empiezo?',
+        a: 'Si ya hiciste una sesión 1:1 con Kate, nos escribes por WhatsApp y activamos tu mes desde la próxima semana. Si aún no la has hecho, agenda primero tu sesión de $200 — es la puerta de entrada.',
       },
     ],
   },
 
   final: {
-    title: 'El offer no se firma solo. Se firma con ritmo.',
-    body: 'Escríbenos por WhatsApp y tu check-in de la próxima semana ya queda agendado.',
+    title: 'La claridad sin ritmo se evapora.',
+    body: 'Escríbenos por WhatsApp y dejamos fijada la cadencia de tu primer mes con Kate.',
     buttonWhatsapp: 'Activa Momentum por WhatsApp',
     buttonEmail: 'Escríbenos por email',
+  },
+};
+
+export const momentumEn: CoachingContent = {
+  lang: 'en',
+  path: '/career-momentum',
+  altPath: '/es/career-momentum',
+
+  meta: {
+    title: 'Momentum — 2 sessions a month with Kate Forero | Purrfect Hire',
+    description:
+      'Momentum is Purrfect Hire\'s monthly coaching cadence: 2 sessions a month with Kate Forero plus async review of your progress between sessions. $550 USD per month, 3-month minimum. Entry after at least one 1:1 session.',
+  },
+
+  jsonLd: {
+    serviceName: 'Momentum — monthly career coaching with Kate Forero',
+    serviceDescription:
+      'Monthly career-coaching subscription with Katerine Forero, founder of Purrfect Hire: 2 one-hour 1:1 sessions per month plus async review of progress between sessions. 3-month minimum. Entry after at least one 1:1 session.',
+    price: '550',
+    priceUnit: 'per month, 3-month minimum',
+  },
+
+  whatsappUrl: wa('Hi, I want to start Momentum.'),
+  navCta: 'Start Momentum',
+
+  hero: {
+    eyebrow: 'Momentum · Monthly coaching',
+    headline: 'One session gives you clarity. Momentum gives you cadence.',
+    para1:
+      'Two sessions a month with Kate, and your progress reviewed async in between: the messages you are about to send, the narrative you are adjusting, the process that moved this week. Context does not get lost between sessions — it compounds.',
+    para2:
+      'Entry is after at least one 1:1 session. That first session is the diagnosis: nobody starts a recurring engagement without knowing exactly what they are working on.',
+    stats: [
+      '$550 USD/month, 3-month minimum',
+      '2 sessions a month with Kate',
+      'Async review between sessions',
+    ],
+  },
+
+  forWho: {
+    title: 'Who it is for',
+    intro:
+      'For someone who already did a session, knows what they need to move, and wants sustained month-over-month progress — not an isolated push.',
+    items: [
+      'You did a 1:1 session and want continuity without jumping to a $2,000 program.',
+      'You are mid level-change or market-change and need cadence, not motivation.',
+      'You have several active processes and want Kate reading every move before you make it.',
+      'You know that without biweekly accountability your rhythm drops.',
+    ],
+  },
+
+  cards: {
+    title: 'What your month includes',
+    intro: 'The full cadence: session, reviewed execution, session. Nothing is left floating.',
+    items: [
+      {
+        title: '2 monthly 1:1 sessions with Kate',
+        body: 'One hour each, focus defined in advance, written summary of agreements afterward. The same format as the single session — with compounding context.',
+      },
+      {
+        title: 'Async review between sessions',
+        body: 'Progress, messages, narrative, specific doubts: you send them between sessions and Kate reviews them. Execution does not wait for the next video call.',
+      },
+      {
+        title: 'Context that compounds',
+        body: 'You never re-explain your case. Kate follows your search month over month: what you tried, how the market answered, what to adjust next.',
+      },
+      {
+        title: 'Calendar priority',
+        body: 'Your sessions are locked with priority on Kate\'s calendar — the same calendar where active founder searches live.',
+      },
+    ],
+  },
+
+  how: {
+    title: 'How it works',
+    intro: 'Entry has a single requirement: having worked with Kate at least once.',
+    steps: [
+      {
+        title: 'You take (or already took) a 1:1 session.',
+        body: 'It is the diagnosis: $200 USD, one hour, one problem. There you both define whether Momentum is your next step and what you will work on together.',
+      },
+      {
+        title: 'You start Momentum via WhatsApp.',
+        body: '$550 USD per month, 3-month minimum. We lock the cadence of your 2 monthly sessions from week one.',
+      },
+      {
+        title: 'Session, reviewed execution, session.',
+        body: 'Every month: two hours of direct work with Kate and your progress reviewed async in between. Every session starts where the last one ended.',
+      },
+    ],
+    close:
+      'Three months of Momentum is $1,650 — deliberately below the full program. If your case calls for a total transformation, that is what Offer Acceleration is for.',
+  },
+
+  price: {
+    title: 'Investment',
+    amount: '$550 USD / month',
+    note: '3-month minimum. Entry after at least one 1:1 session with Kate — that session is the diagnosis.',
+    bullets: [
+      '2 one-hour 1:1 sessions per month with Kate',
+      'Async review of progress between sessions',
+      'In English or Spanish, depending on your search',
+    ],
+  },
+
+  faq: {
+    title: 'Straight questions',
+    items: [
+      {
+        q: 'What is Momentum?',
+        a: 'It is Purrfect Hire\'s monthly coaching cadence: 2 one-hour 1:1 sessions a month with Kate Forero plus async review of your progress between sessions. It costs $550 USD per month with a 3-month minimum. It is the rung between the $200 single session and the $2,000+ Offer Acceleration program.',
+      },
+      {
+        q: 'Why do I need a 1:1 session before joining?',
+        a: 'Because the first session is the diagnosis. Before committing to months of work, you and Kate confirm there is a plan worth sustaining. It also protects the calendar: nobody starts a recurring engagement without a defined case.',
+      },
+      {
+        q: 'How much does it cost, and is there a minimum?',
+        a: '$550 USD per month, with a 3-month minimum. Three months is $1,650 — the minimum time for a serious search to show measurable results. After the third month you continue month to month.',
+      },
+      {
+        q: 'How is it different from a single session?',
+        a: 'A single session solves one specific problem: one hour, one focus, $200. Momentum is cadence: two sessions a month, progress reviewed in between, and context that compounds. If your problem fits in an hour, book a session. If it spans months, Momentum.',
+      },
+      {
+        q: 'How is it different from Offer Acceleration?',
+        a: 'Offer Acceleration is a full repositioning toward US startups: written strategy, market map, role plays, negotiation and direct intros, from $2,000 USD with an application and limited spots. Momentum is sustained progress with Kate without the full program. Many move from Momentum to OA when the case calls for it.',
+      },
+      {
+        q: 'How do I start?',
+        a: 'If you already did a 1:1 session with Kate, message us on WhatsApp and we activate your month starting next week. If you have not, book your $200 session first — it is the entry door.',
+      },
+    ],
+  },
+
+  final: {
+    title: 'Clarity without cadence evaporates.',
+    body: 'Message us on WhatsApp and we lock in the cadence of your first month with Kate.',
+    buttonWhatsapp: 'Start Momentum via WhatsApp',
+    buttonEmail: 'Email us',
   },
 };
