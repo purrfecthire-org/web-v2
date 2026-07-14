@@ -1,0 +1,86 @@
+---
+// ── Kate strip (home, before the footer) ─────────────────────────────────
+// The flywheel made visible: Kate's face (1:1 crop, approved use of the
+// navy-blazer photo) next to "We work both sides of the table", linking to
+// /kate. One image, one sentence, one link — a rest section, not a pitch.
+import type { KateStripContent } from '../../content/kate';
+import { KATE_PHOTO } from '../../content/kate';
+
+interface Props {
+  c: KateStripContent;
+}
+
+const { c } = Astro.props;
+---
+
+<section class="ks reveal">
+  <div class="ks__inner">
+    <img class="ks__photo" src={KATE_PHOTO} alt={c.alt} width="160" height="160" loading="lazy" />
+    <div class="ks__text">
+      <h2 class="ks__title">{c.title}</h2>
+      <p class="ks__body">{c.body}</p>
+      <a href={c.href} class="ks__link">{c.label}</a>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .ks {
+    background: var(--bg-soft, #fcfcfb);
+    border-top: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+
+    &__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: clamp(48px, 7vw, 80px) clamp(1.5rem, 5vw, 2rem);
+      display: flex;
+      align-items: center;
+      gap: clamp(1.5rem, 4vw, 3rem);
+
+      @media (max-width: 640px) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    &__photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+      flex-shrink: 0;
+
+      @media (max-width: 640px) { width: 120px; height: 120px; }
+    }
+
+    &__title {
+      margin: 0;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--ink, #29285f);
+    }
+
+    &__body {
+      margin: 1rem 0 0;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--muted, #6b6b6b);
+      max-width: 40rem;
+    }
+
+    &__link {
+      display: inline-block;
+      margin-top: 1.25rem;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--ink, #29285f);
+      text-decoration: none;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+</style>

@@ -9,8 +9,10 @@ import V6HeroSection from './V6HeroSection.astro';
 import V6PathChooser from './V6PathChooser.astro';
 import V6FoundersBlock from './V6FoundersBlock.astro';
 import V6TalentBlock from './V6TalentBlock.astro';
+import KateStrip from '../kate/KateStrip.astro';
 import Footer from '../Footer.astro';
 import { getContent, type Lang } from '../../content/index';
+import { kateStripEn, kateStripEs } from '../../content/kate';
 
 interface Props {
   lang?: Lang;
@@ -79,6 +81,7 @@ const websiteSchema = {
     <V6PathChooser content={c.v6.pathChooser} />
     <V6FoundersBlock content={c} faqs={founderFaqs} />
     <V6TalentBlock content={c} faqs={talentFaqs} />
+    <KateStrip c={lang === 'es' ? kateStripEs : kateStripEn} />
   </main>
   <Footer content={c.footer} />
 </Layout>
