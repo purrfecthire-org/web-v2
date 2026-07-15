@@ -209,7 +209,10 @@ export const oaContent = {
     next: 'Continuar',
     back: 'Atrás',
     submit: 'Enviar mi aplicación',
-    minCharsHint: 'Mínimo 10 caracteres',
+    // Static hint shown before the user starts typing (both bounds, friendly
+    // tone). The live char count/color feedback while typing is computed in
+    // the client script from each textarea's data-min/data-max attributes.
+    minCharsHint: 'Entre 10 y 600 caracteres',
     steps: [
       {
         key: 'personal',
@@ -263,6 +266,7 @@ export const oaContent = {
       required: 'Este campo es obligatorio.',
       email: 'Ingresa un email válido.',
       minChars: 'Cuéntanos un poco más (mínimo 10 caracteres).',
+      maxChars: 'Escríbelo un poco más corto (máximo 600 caracteres).',
       number: 'Ingresa un número válido en USD.',
     },
     // Post-submit loading overlay. Two phases; the animated dots ("." → ".." →
@@ -317,7 +321,7 @@ export const oaContent = {
     rejected: {
       eyebrow: 'Aplicación recibida',
       title: 'Por ahora, este programa no es el mejor fit para ti.',
-      body: 'Basado en tu momento actual y tus expectativas, hoy no podemos garantizarte el retorno que este programa promete — y no trabajamos así. Pero tu siguiente movida sí se puede preparar: sigamos en contacto.',
+      body: 'Basado en tu momento actual y tus expectativas, hoy no podemos garantizarte el retorno que este programa promete. Y no trabajamos así. Pero tu siguiente movida sí se puede preparar: sigamos en contacto.',
       linkedinName: 'Katerine Forero',
       linkedinRole: 'Founder & CEO, Purrfect Hire',
       linkedinCta: 'Seguir a Kate en LinkedIn',
