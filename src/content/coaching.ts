@@ -46,6 +46,13 @@ export interface CoachingContent {
   forWho: { title: string; intro: string; items: string[] };
   cards: { title: string; intro: string; items: { title: string; body: string }[] };
   how: { title: string; intro: string; steps: { title: string; body: string }[]; close: string };
+  /**
+   * Cross-references a sibling product from inside `how.close`: the first
+   * mention of each named term becomes a link (see src/lib/textLinks.ts).
+   * Only the "next step" moment right after learning how this product works
+   * gets linked, so a product is never linked twice on the same page.
+   */
+  howCloseLinks?: { term: string; href: string }[];
   price: { title: string; amount: string; note: string; bullets: string[] };
   faq: { title: string; items: { q: string; a: string }[] };
   final: { title: string; body: string; buttonWhatsapp: string; buttonEmail: string };
@@ -165,6 +172,10 @@ export const careerSessionsEs: CoachingContent = {
     close:
       'Si tu caso necesita más que una sesión, te lo decimos de frente: para continuidad mensual existe Momentum, y para un reposicionamiento completo, Offer Acceleration.',
   },
+  howCloseLinks: [
+    { term: 'Momentum', href: '/es/career-momentum' },
+    { term: 'Offer Acceleration', href: '/offer-acceleration' },
+  ],
 
   price: {
     title: 'Inversión',
@@ -323,6 +334,10 @@ export const careerSessionsEn: CoachingContent = {
     close:
       'If your case needs more than one session, we tell you straight: Momentum exists for monthly continuity, and Offer Acceleration for a full repositioning.',
   },
+  howCloseLinks: [
+    { term: 'Momentum', href: '/career-momentum' },
+    { term: 'Offer Acceleration', href: '/offer-acceleration' },
+  ],
 
   price: {
     title: 'Investment',
@@ -470,6 +485,7 @@ export const momentumEs: CoachingContent = {
     close:
       'Tres meses de Momentum son $1,650, deliberadamente debajo del programa completo. Si tu caso pide una transformación total, Offer Acceleration existe para eso.',
   },
+  howCloseLinks: [{ term: 'Offer Acceleration', href: '/offer-acceleration' }],
 
   price: {
     title: 'Inversión',
@@ -611,6 +627,7 @@ export const momentumEn: CoachingContent = {
     close:
       'Three months of Momentum is $1,650, deliberately below the full program. If your case calls for a total transformation, that is what Offer Acceleration is for.',
   },
+  howCloseLinks: [{ term: 'Offer Acceleration', href: '/offer-acceleration' }],
 
   price: {
     title: 'Investment',

@@ -6,7 +6,7 @@
 
 export const oaContent = {
   meta: {
-    title: 'Offer Acceleration — Purrfect Hire',
+    title: 'Offer Acceleration · Purrfect Hire',
     description:
       'No estás estancado por talento. Estás en el canal equivocado. Offer Acceleration te pone dentro de las redes donde los seniors se contratan y te entrena para ganar la conversación. En dólares, en semanas.',
   },

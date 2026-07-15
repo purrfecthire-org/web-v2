@@ -16,6 +16,7 @@ import Footer from '../Footer.astro';
 import type { CoachingContent } from '../../content/coaching';
 import { coachingContact } from '../../content/coaching';
 import { getContent } from '../../content/index';
+import { linkifyFirst } from '../../lib/textLinks';
 
 interface Props {
   c: CoachingContent;
@@ -23,6 +24,10 @@ interface Props {
 
 const { c } = Astro.props;
 const site = getContent(c.lang);
+
+// Cross-reference a sibling product from the "how it works" closing line
+// (see howCloseLinks on CoachingContent) — first mention of each term only.
+const howCloseSegments = c.howCloseLinks ? linkifyFirst(c.how.close, c.howCloseLinks) : [c.how.close];
 const siteUrl = 'https://purrfecthire.com';
 const pageUrl = `${siteUrl}${c.path}`;
 // Locale-less path for the nav language toggle (e.g. '/career-sessions').
@@ -165,7 +170,11 @@ const jsonLd = {
           </li>
         ))}
       </ol>
-      <p class="cx-statement reveal">{c.how.close}</p>
+      <p class="cx-statement reveal">
+        {howCloseSegments.map((seg) =>
+          typeof seg === 'string' ? seg : <a href={seg.href} class="cx-inline-link">{seg.text}</a>
+        )}
+      </p>
     </section>
 
     <!-- ── Price ────────────────────────────────────────────────────── -->
@@ -521,6 +530,17 @@ const jsonLd = {
     line-height: 1.35;
     letter-spacing: -0.01em;
     color: var(--cx-ink);
+  }
+
+  // Cross-reference link inside the "how it works" closing statement
+  .cx-inline-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(41, 40, 95, 0.35);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s $ease-expo;
+
+    &:hover { text-decoration-color: currentColor; }
   }
 
   // ── Price ─────────────────────────────────────────────────
