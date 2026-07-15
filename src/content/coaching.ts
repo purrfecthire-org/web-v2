@@ -63,7 +63,7 @@ export const careerSessionsEs: CoachingContent = {
   altPath: '/career-sessions',
 
   meta: {
-    title: 'Sesiones 1:1 con Kate Forero — Coaching de carrera | Purrfect Hire',
+    title: 'Sesiones 1:1 con Kate Forero · Coaching de carrera | Purrfect Hire',
     description:
       'Sesiones individuales de coaching de carrera con Katerine Forero: diagnóstico de perfil, role play de entrevista en español o inglés, LinkedIn y CV, síndrome del impostor y negociación de oferta. $200 USD por sesión de una hora. Agenda por WhatsApp.',
   },
@@ -99,7 +99,7 @@ export const careerSessionsEs: CoachingContent = {
   video: {
     title: 'Qué pasa en una sesión, contado por Kate',
     caption:
-      'Video pendiente (60 segundos): Kate a cámara explicando qué pasa en una sesión — con la honestidad de la FAQ: una sesión no te consigue trabajo, y desconfía de quien te lo prometa.',
+      'Video pendiente (60 segundos): Kate a cámara explicando qué pasa en una sesión, con la honestidad de la FAQ: una sesión no te consigue trabajo, y desconfía de quien te lo prometa.',
   },
 
   forWho: {
@@ -202,7 +202,7 @@ export const careerSessionsEs: CoachingContent = {
       },
       {
         q: '¿Y si quiero continuidad después de la sesión?',
-        a: 'Para eso existe Momentum: 2 sesiones al mes con Kate más revisión async de tus avances entre sesiones, a $550 USD/mes con mínimo de 3 meses. Se entra después de al menos una sesión 1:1 — la sesión es el diagnóstico. Y para una transformación completa está Offer Acceleration, desde $2,000 USD.',
+        a: 'Para eso existe Momentum: 2 sesiones al mes con Kate más revisión async de tus avances entre sesiones, a $550 USD/mes con mínimo de 3 meses. Se entra después de al menos una sesión 1:1. La sesión es el diagnóstico. Y para una transformación completa está Offer Acceleration, desde $2,000 USD.',
       },
     ],
   },
@@ -221,7 +221,7 @@ export const careerSessionsEn: CoachingContent = {
   altPath: '/es/career-sessions',
 
   meta: {
-    title: '1:1 Sessions with Kate Forero — Career coaching | Purrfect Hire',
+    title: '1:1 Sessions with Kate Forero · Career coaching | Purrfect Hire',
     description:
       'Individual career-coaching sessions with Katerine Forero: profile diagnosis, interview role play in English or Spanish, LinkedIn and resume, impostor syndrome, and offer negotiation. $200 USD per one-hour session. Book via WhatsApp.',
   },
@@ -229,7 +229,7 @@ export const careerSessionsEn: CoachingContent = {
   jsonLd: {
     serviceName: '1:1 career coaching sessions with Kate Forero',
     serviceDescription:
-      'Individual one-hour sessions with Katerine Forero, founder of Purrfect Hire: career diagnosis, interview role play, LinkedIn and resume review, impostor syndrome, and offer negotiation. Open to any professional — no program membership required.',
+      'Individual one-hour sessions with Katerine Forero, founder of Purrfect Hire: career diagnosis, interview role play, LinkedIn and resume review, impostor syndrome, and offer negotiation. Open to any professional, no program membership required.',
     price: '200',
     priceUnit: 'per one-hour session',
   },
@@ -257,13 +257,13 @@ export const careerSessionsEn: CoachingContent = {
   video: {
     title: 'What happens in a session, told by Kate',
     caption:
-      'Video pending (60 seconds): Kate on camera explaining what happens in a session — with the honesty of the FAQ: a session does not get you a job, and you should distrust anyone who promises it will.',
+      'Video pending (60 seconds): Kate on camera explaining what happens in a session, with the honesty of the FAQ: a session does not get you a job, and you should distrust anyone who promises it will.',
   },
 
   forWho: {
     title: 'Who it is for',
     intro:
-      'For professionals with one specific career problem who want to solve it with someone who hires every day — not with generic theory.',
+      'For professionals with one specific career problem who want to solve it with someone who hires every day, not with generic theory.',
     items: [
       'You have an interview coming up and want to arrive prepared, not improvising.',
       'You suspect your profile communicates less than you are worth and want an honest read.',
@@ -282,7 +282,7 @@ export const careerSessionsEn: CoachingContent = {
       },
       {
         title: 'Interview role play',
-        body: 'Kate plays the founder, the hiring manager, or the panel — in English or Spanish. You leave with pointed feedback: what you answered well, where you fall, and how to fix it before the real interview.',
+        body: 'Kate plays the founder, the hiring manager, or the panel, in English or Spanish. You leave with pointed feedback: what you answered well, where you fall, and how to fix it before the real interview.',
       },
       {
         title: 'Prep for an active process',
@@ -290,7 +290,7 @@ export const careerSessionsEn: CoachingContent = {
       },
       {
         title: 'LinkedIn, resume and narrative',
-        body: 'A direct review of how you present yourself. We find the contradictions between what you say and what you want, and reposition your profile for the level you are aiming at — not the one you have.',
+        body: 'A direct review of how you present yourself. We find the contradictions between what you say and what you want, and reposition your profile for the level you are aiming at, not the one you have.',
       },
       {
         title: 'Impostor syndrome and limiting beliefs',
@@ -356,11 +356,11 @@ export const careerSessionsEn: CoachingContent = {
       },
       {
         q: 'Will one session get me a job?',
-        a: 'No — and distrust anyone who promises it will. A session gives you an honest read, real training, and a clear next move. If what you need is a full repositioning process and channel, that is Offer Acceleration.',
+        a: 'No, and distrust anyone who promises it will. A session gives you an honest read, real training, and a clear next move. If what you need is a full repositioning process and channel, that is Offer Acceleration.',
       },
       {
         q: 'What if I want continuity after the session?',
-        a: 'That is what Momentum is for: 2 sessions a month with Kate plus async review of your progress between sessions, at $550 USD/month with a 3-month minimum. Entry is after at least one 1:1 session — the session is the diagnosis. For a full transformation there is Offer Acceleration, from $2,000 USD.',
+        a: 'That is what Momentum is for: 2 sessions a month with Kate plus async review of your progress between sessions, at $550 USD/month with a 3-month minimum. Entry is after at least one 1:1 session. The session is the diagnosis. For a full transformation there is Offer Acceleration, from $2,000 USD.',
       },
     ],
   },
@@ -385,13 +385,13 @@ export const momentumEs: CoachingContent = {
   altPath: '/career-momentum',
 
   meta: {
-    title: 'Momentum — 2 sesiones al mes con Kate Forero | Purrfect Hire',
+    title: 'Momentum · 2 sesiones al mes con Kate Forero | Purrfect Hire',
     description:
       'Momentum es el acompañamiento mensual de Purrfect Hire: 2 sesiones al mes con Kate Forero más revisión async de tus avances entre sesiones. $550 USD al mes, mínimo 3 meses. Se entra después de al menos una sesión 1:1.',
   },
 
   jsonLd: {
-    serviceName: 'Momentum — acompañamiento mensual de carrera con Kate Forero',
+    serviceName: 'Momentum: acompañamiento mensual de carrera con Kate Forero',
     serviceDescription:
       'Suscripción mensual de coaching de carrera con Katerine Forero, founder de Purrfect Hire: 2 sesiones 1:1 al mes más revisión async de avances entre sesiones. Mínimo 3 meses. Entrada después de al menos una sesión 1:1.',
     price: '550',
@@ -405,7 +405,7 @@ export const momentumEs: CoachingContent = {
     eyebrow: 'Momentum · Acompañamiento mensual',
     headline: 'Una sesión te da claridad. Momentum te da ritmo.',
     para1:
-      'Dos sesiones al mes con Kate, y tus avances revisados async entre sesiones: los mensajes que vas a enviar, la narrativa que estás ajustando, el proceso que se movió esta semana. El contexto no se pierde entre sesiones — se acumula.',
+      'Dos sesiones al mes con Kate, y tus avances revisados async entre sesiones: los mensajes que vas a enviar, la narrativa que estás ajustando, el proceso que se movió esta semana. El contexto no se pierde entre sesiones: se acumula.',
     para2:
       'Se entra después de al menos una sesión 1:1. Esa primera sesión es el diagnóstico: nadie entra a recurrencia sin saber exactamente qué va a trabajar.',
     stats: [
@@ -418,7 +418,7 @@ export const momentumEs: CoachingContent = {
   forWho: {
     title: 'Para quién es',
     intro:
-      'Para quien ya hizo una sesión, sabe qué tiene que mover, y quiere avance sostenido mes a mes — no un empujón aislado.',
+      'Para quien ya hizo una sesión, sabe qué tiene que mover, y quiere avance sostenido mes a mes, no un empujón aislado.',
     items: [
       'Hiciste una sesión 1:1 y quieres continuidad sin saltar a un programa de $2,000.',
       'Estás en medio de un cambio de nivel o de mercado y necesitas cadencia, no motivación.',
@@ -445,7 +445,7 @@ export const momentumEs: CoachingContent = {
       },
       {
         title: 'Prioridad de agenda',
-        body: 'Tus sesiones quedan fijadas con prioridad en el calendario de Kate — la misma agenda donde viven los searches activos para founders.',
+        body: 'Tus sesiones quedan fijadas con prioridad en el calendario de Kate, la misma agenda donde viven los searches activos para founders.',
       },
     ],
   },
@@ -468,13 +468,13 @@ export const momentumEs: CoachingContent = {
       },
     ],
     close:
-      'Tres meses de Momentum son $1,650 — deliberadamente debajo del programa completo. Si tu caso pide una transformación total, Offer Acceleration existe para eso.',
+      'Tres meses de Momentum son $1,650, deliberadamente debajo del programa completo. Si tu caso pide una transformación total, Offer Acceleration existe para eso.',
   },
 
   price: {
     title: 'Inversión',
     amount: '$550 USD / mes',
-    note: 'Mínimo 3 meses. Se entra después de al menos una sesión 1:1 con Kate — esa sesión es el diagnóstico.',
+    note: 'Mínimo 3 meses. Se entra después de al menos una sesión 1:1 con Kate. Esa sesión es el diagnóstico.',
     bullets: [
       '2 sesiones 1:1 de una hora al mes con Kate',
       'Revisión async de avances entre sesiones',
@@ -495,7 +495,7 @@ export const momentumEs: CoachingContent = {
       },
       {
         q: '¿Cuánto cuesta y hay permanencia mínima?',
-        a: '$550 USD al mes, con permanencia mínima de 3 meses. Tres meses son $1,650 — el tiempo mínimo para que una búsqueda seria muestre resultados medibles. Después del tercer mes continúas mes a mes.',
+        a: '$550 USD al mes, con permanencia mínima de 3 meses. Tres meses son $1,650, el tiempo mínimo para que una búsqueda seria muestre resultados medibles. Después del tercer mes continúas mes a mes.',
       },
       {
         q: '¿En qué se diferencia de una sesión suelta?',
@@ -507,7 +507,7 @@ export const momentumEs: CoachingContent = {
       },
       {
         q: '¿Cómo empiezo?',
-        a: 'Si ya hiciste una sesión 1:1 con Kate, nos escribes por WhatsApp y activamos tu mes desde la próxima semana. Si aún no la has hecho, agenda primero tu sesión de $200 — es la puerta de entrada.',
+        a: 'Si ya hiciste una sesión 1:1 con Kate, nos escribes por WhatsApp y activamos tu mes desde la próxima semana. Si aún no la has hecho, agenda primero tu sesión de $200: es la puerta de entrada.',
       },
     ],
   },
@@ -526,13 +526,13 @@ export const momentumEn: CoachingContent = {
   altPath: '/es/career-momentum',
 
   meta: {
-    title: 'Momentum — 2 sessions a month with Kate Forero | Purrfect Hire',
+    title: 'Momentum · 2 sessions a month with Kate Forero | Purrfect Hire',
     description:
       'Momentum is Purrfect Hire\'s monthly coaching cadence: 2 sessions a month with Kate Forero plus async review of your progress between sessions. $550 USD per month, 3-month minimum. Entry after at least one 1:1 session.',
   },
 
   jsonLd: {
-    serviceName: 'Momentum — monthly career coaching with Kate Forero',
+    serviceName: 'Momentum: monthly career coaching with Kate Forero',
     serviceDescription:
       'Monthly career-coaching subscription with Katerine Forero, founder of Purrfect Hire: 2 one-hour 1:1 sessions per month plus async review of progress between sessions. 3-month minimum. Entry after at least one 1:1 session.',
     price: '550',
@@ -546,7 +546,7 @@ export const momentumEn: CoachingContent = {
     eyebrow: 'Momentum · Monthly coaching',
     headline: 'One session gives you clarity. Momentum gives you cadence.',
     para1:
-      'Two sessions a month with Kate, and your progress reviewed async in between: the messages you are about to send, the narrative you are adjusting, the process that moved this week. Context does not get lost between sessions — it compounds.',
+      'Two sessions a month with Kate, and your progress reviewed async in between: the messages you are about to send, the narrative you are adjusting, the process that moved this week. Context does not get lost between sessions: it compounds.',
     para2:
       'Entry is after at least one 1:1 session. That first session is the diagnosis: nobody starts a recurring engagement without knowing exactly what they are working on.',
     stats: [
@@ -559,7 +559,7 @@ export const momentumEn: CoachingContent = {
   forWho: {
     title: 'Who it is for',
     intro:
-      'For someone who already did a session, knows what they need to move, and wants sustained month-over-month progress — not an isolated push.',
+      'For someone who already did a session, knows what they need to move, and wants sustained month-over-month progress, not an isolated push.',
     items: [
       'You did a 1:1 session and want continuity without jumping to a $2,000 program.',
       'You are mid level-change or market-change and need cadence, not motivation.',
@@ -574,7 +574,7 @@ export const momentumEn: CoachingContent = {
     items: [
       {
         title: '2 monthly 1:1 sessions with Kate',
-        body: 'One hour each, focus defined in advance, written summary of agreements afterward. The same format as the single session — with compounding context.',
+        body: 'One hour each, focus defined in advance, written summary of agreements afterward. The same format as the single session, with compounding context.',
       },
       {
         title: 'Async review between sessions',
@@ -586,7 +586,7 @@ export const momentumEn: CoachingContent = {
       },
       {
         title: 'Calendar priority',
-        body: 'Your sessions are locked with priority on Kate\'s calendar — the same calendar where active founder searches live.',
+        body: 'Your sessions are locked with priority on Kate\'s calendar, the same calendar where active founder searches live.',
       },
     ],
   },
@@ -609,13 +609,13 @@ export const momentumEn: CoachingContent = {
       },
     ],
     close:
-      'Three months of Momentum is $1,650 — deliberately below the full program. If your case calls for a total transformation, that is what Offer Acceleration is for.',
+      'Three months of Momentum is $1,650, deliberately below the full program. If your case calls for a total transformation, that is what Offer Acceleration is for.',
   },
 
   price: {
     title: 'Investment',
     amount: '$550 USD / month',
-    note: '3-month minimum. Entry after at least one 1:1 session with Kate — that session is the diagnosis.',
+    note: '3-month minimum. Entry after at least one 1:1 session with Kate. That session is the diagnosis.',
     bullets: [
       '2 one-hour 1:1 sessions per month with Kate',
       'Async review of progress between sessions',
@@ -636,7 +636,7 @@ export const momentumEn: CoachingContent = {
       },
       {
         q: 'How much does it cost, and is there a minimum?',
-        a: '$550 USD per month, with a 3-month minimum. Three months is $1,650 — the minimum time for a serious search to show measurable results. After the third month you continue month to month.',
+        a: '$550 USD per month, with a 3-month minimum. Three months is $1,650, the minimum time for a serious search to show measurable results. After the third month you continue month to month.',
       },
       {
         q: 'How is it different from a single session?',
@@ -648,7 +648,7 @@ export const momentumEn: CoachingContent = {
       },
       {
         q: 'How do I start?',
-        a: 'If you already did a 1:1 session with Kate, message us on WhatsApp and we activate your month starting next week. If you have not, book your $200 session first — it is the entry door.',
+        a: 'If you already did a 1:1 session with Kate, message us on WhatsApp and we activate your month starting next week. If you have not, book your $200 session first: it is the entry door.',
       },
     ],
   },

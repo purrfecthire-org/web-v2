@@ -48,9 +48,9 @@ export const pricingEn: PricingContent = {
   path: '/pricing',
 
   meta: {
-    title: 'Pricing — startup recruiting and career coaching | Purrfect Hire',
+    title: 'Pricing · startup recruiting and career coaching | Purrfect Hire',
     description:
-      'How much does a recruiter for startups cost? Three B2B models — success fee, All You Can Hire from $9,000/month, embedded search — and public career-coaching prices: $200 sessions, Momentum at $550/month, Offer Acceleration from $2,000.',
+      'How much does a recruiter for startups cost? Three B2B models (success fee, All You Can Hire from $9,000/month, embedded search) and public career-coaching prices: $200 sessions, Momentum at $550/month, Offer Acceleration from $2,000.',
   },
 
   hero: {
@@ -118,9 +118,9 @@ export const pricingEn: PricingContent = {
   b2c: {
     title: 'For talent',
     intro:
-      'Prices are public on purpose: they filter, and they remove friction. Every rung is with Kate — the person founders trust to make the hire.',
+      'Prices are public on purpose: they filter, and they remove friction. Every rung is with Kate, the person founders trust to make the hire.',
     kateCaption:
-      'Kate Forero — 160+ senior placements, 10+ years reading how founders actually evaluate.',
+      'Kate Forero. 160+ senior placements, 10+ years reading how founders actually evaluate.',
     plans: [
       {
         name: '1:1 Session',
@@ -163,7 +163,7 @@ export const pricingEn: PricingContent = {
       before: 'Not ready to invest? ',
       label: 'Browse open roles',
       href: '/roles',
-      after: ' — applying is free, and every search is live.',
+      after: '. Applying is free, and every search is live.',
     },
     ctaLabel: 'Book your session · $200',
     ctaHref: wa('Hi Kate, I want to book a 1:1 session.'),
@@ -176,9 +176,9 @@ export const pricingEs: PricingContent = {
   path: '/es/pricing',
 
   meta: {
-    title: 'Precios — recruiting para startups y coaching de carrera | Purrfect Hire',
+    title: 'Precios · recruiting para startups y coaching de carrera | Purrfect Hire',
     description:
-      '¿Cuánto cuesta un recruiter para startups? Tres modelos B2B — success fee, All You Can Hire desde $9,000/mes, embedded search — y precios públicos de coaching: sesiones de $200, Momentum a $550/mes y Offer Acceleration desde $2,000.',
+      '¿Cuánto cuesta un recruiter para startups? Tres modelos B2B (success fee, All You Can Hire desde $9,000/mes, embedded search) y precios públicos de coaching: sesiones de $200, Momentum a $550/mes y Offer Acceleration desde $2,000.',
   },
 
   hero: {
@@ -246,9 +246,9 @@ export const pricingEs: PricingContent = {
   b2c: {
     title: 'Para talento',
     intro:
-      'Los precios son públicos a propósito: filtran y eliminan fricción. Cada peldaño es con Kate — la persona a la que los founders le confían el hire.',
+      'Los precios son públicos a propósito: filtran y eliminan fricción. Cada peldaño es con Kate, la persona a la que los founders le confían el hire.',
     kateCaption:
-      'Kate Forero — 160+ placements senior, 10+ años leyendo cómo evalúan los founders de verdad.',
+      'Kate Forero. 160+ placements senior, 10+ años leyendo cómo evalúan los founders de verdad.',
     plans: [
       {
         name: 'Sesión 1:1',
@@ -291,7 +291,7 @@ export const pricingEs: PricingContent = {
       before: '¿Aún no quieres invertir? ',
       label: 'Mira los roles abiertos',
       href: '/roles',
-      after: ' — aplicar es gratis y cada búsqueda está activa.',
+      after: '. Aplicar es gratis y cada búsqueda está activa.',
     },
     ctaLabel: 'Agenda tu sesión · $200',
     ctaHref: wa('Hola Kate, quiero agendar una sesión 1:1.'),
