@@ -8,8 +8,12 @@
 // Jul 2026 architecture: pages live under the global V6 nav, the hero holds
 // the one primary CTA per viewport (WhatsApp with the price in the label),
 // career-sessions shows Kate's photo (approved 4:5 use) plus the honest
-// scarcity line, session types collapse to a one-line accordion, and a
-// described placeholder holds the 60-sec Kate video slot until it exists.
+// scarcity line, and session types collapse to a one-line accordion.
+//
+// PENDING ASSET (Richard, Jul 15 2026): the 60-sec Kate video isn't
+// recorded yet, so the placeholder slot is hidden via SHOW_VIDEO_PLACEHOLDER
+// below rather than shown as an empty box. Content (c.video) stays defined
+// in content/coaching.ts — flip the flag to `true` once the video exists.
 import Layout from '../../layouts/Layout.astro';
 import V6Nav from '../v6/V6Nav.astro';
 import Footer from '../Footer.astro';
@@ -17,6 +21,8 @@ import type { CoachingContent } from '../../content/coaching';
 import { coachingContact } from '../../content/coaching';
 import { getContent } from '../../content/index';
 import { linkifyFirst } from '../../lib/textLinks';
+
+const SHOW_VIDEO_PLACEHOLDER = false;
 
 interface Props {
   c: CoachingContent;
@@ -124,8 +130,8 @@ const jsonLd = {
       </ul>
     </section>
 
-    <!-- ── Video (60-sec Kate) — placeholder until recorded ─────────── -->
-    {c.video && (
+    <!-- ── Video (60-sec Kate) — hidden until it's recorded (see SHOW_VIDEO_PLACEHOLDER above) -->
+    {SHOW_VIDEO_PLACEHOLDER && c.video && (
       <section class="cx-chapter cx-chapter--narrow">
         <div class="cx-chapter__head reveal">
           <h2 class="cx-chapter__title">{c.video.title}</h2>

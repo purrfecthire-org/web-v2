@@ -2,16 +2,25 @@
 // ── /kate — the living credential (EN + ES) ──────────────────────────────
 // The most photographic page of the site: hero, a big-number proof bar, the
 // three-chapter arc (Colombia → ADDI → Purrfect Hire), LinkedIn authority,
-// and two CTAs separated by audience. Flat 2026 system, `kt-` prefix. Every
-// image slot reuses the one approved photo (KATE_PHOTO) until the shoot
-// delivers the rest of the shot list — captions still say what each real
-// photo will be, so no slot reads as empty in the meantime.
+// and two CTAs separated by audience. Flat 2026 system, `kt-` prefix.
+//
+// PENDING ASSETS (Richard, Jul 15 2026): the real chapter photos and the
+// LinkedIn post embeds aren't ready yet. Every chapter image slot currently
+// reuses the one approved hero photo (KATE_PHOTO) — showing it a 2nd/3rd/4th
+// time on the same page reads as a bug, not a placeholder, so those slots
+// are hidden below the SHOW_CHAPTER_PHOTOS / SHOW_LINKEDIN_POSTS flags
+// until distinct assets exist. The hero photo itself stays visible — it's
+// the one real photo we have and is only shown once on this page.
+// To restore: flip the flag to `true`, no other changes needed.
 import Layout from '../../layouts/Layout.astro';
 import V6Nav from '../v6/V6Nav.astro';
 import Footer from '../Footer.astro';
 import type { KateContent } from '../../content/kate';
 import { KATE_LINKEDIN, KATE_PHOTO } from '../../content/kate';
 import { getContent } from '../../content/index';
+
+const SHOW_CHAPTER_PHOTOS = false;
+const SHOW_LINKEDIN_POSTS = false;
 
 interface Props {
   c: KateContent;
@@ -86,16 +95,25 @@ const personSchema = {
     <section class="kt-arc">
       <h2 class="kt-arc__title reveal">{c.arcTitle}</h2>
       {c.chapters.map((ch, i) => (
-        <article class:list={['kt-chapter', 'reveal', { 'kt-chapter--flip': i % 2 === 1 }]}>
+        <article
+          class:list={[
+            'kt-chapter',
+            'reveal',
+            SHOW_CHAPTER_PHOTOS && { 'kt-chapter--flip': i % 2 === 1 },
+            !SHOW_CHAPTER_PHOTOS && 'kt-chapter--text-only',
+          ]}
+        >
           <div class="kt-chapter__text">
             <p class="kt-eyebrow">{ch.tag}</p>
             <h3 class="kt-chapter__title">{ch.title}</h3>
             <p class="kt-chapter__body">{ch.body}</p>
           </div>
-          <figure class="kt-chapter__media">
-            <img src={ch.image} alt={ch.caption} loading="lazy" width="1023" height="1537" />
-            <figcaption class="kt-chapter__caption">{ch.caption}</figcaption>
-          </figure>
+          {SHOW_CHAPTER_PHOTOS && (
+            <figure class="kt-chapter__media">
+              <img src={ch.image} alt={ch.caption} loading="lazy" width="1023" height="1537" />
+              <figcaption class="kt-chapter__caption">{ch.caption}</figcaption>
+            </figure>
+          )}
         </article>
       ))}
     </section>
@@ -106,14 +124,16 @@ const personSchema = {
         <h2 class="kt-li__title">{c.linkedin.title}</h2>
         <p class="kt-li__body">{c.linkedin.body}</p>
       </div>
-      <div class="kt-li__posts">
-        {c.linkedin.postPlaceholders.map((p) => (
-          <div class="kt-placeholder kt-placeholder--post reveal">
-            <span class="kt-placeholder__glyph" aria-hidden="true">in</span>
-            <p class="kt-placeholder__caption">{p}</p>
-          </div>
-        ))}
-      </div>
+      {SHOW_LINKEDIN_POSTS && (
+        <div class="kt-li__posts">
+          {c.linkedin.postPlaceholders.map((p) => (
+            <div class="kt-placeholder kt-placeholder--post reveal">
+              <span class="kt-placeholder__glyph" aria-hidden="true">in</span>
+              <p class="kt-placeholder__caption">{p}</p>
+            </div>
+          ))}
+        </div>
+      )}
       <p class="kt-li__link reveal">
         <a href={KATE_LINKEDIN} target="_blank" rel="noopener">{c.linkedin.profileLabel}</a>
       </p>
@@ -342,6 +362,15 @@ const personSchema = {
         .kt-chapter__text { order: 1; }
         .kt-chapter__media { order: 2; }
       }
+    }
+
+    // No photo for this chapter yet (SHOW_CHAPTER_PHOTOS off): single
+    // column, text reads as a normal article paragraph instead of half a
+    // grid with an empty second column.
+    &--text-only {
+      grid-template-columns: 1fr;
+
+      .kt-chapter__text { max-width: 46rem; }
     }
 
     &__title {

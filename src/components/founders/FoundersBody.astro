@@ -16,6 +16,11 @@ const { hero, engine, culture, testimonials } = content;
 
 const BOOKING_URL = 'https://calendly.com/purrfecthire/5';
 
+// PENDING ASSET (Richard, Jul 15 2026): the B2B video isn't recorded yet, so
+// the placeholder slot is hidden rather than shown as an empty box. Flip
+// this to `true` once the video exists — no other changes needed.
+const SHOW_VIDEO_PLACEHOLDER = false;
+
 // "How we work" — compact view of the 3 B2B models; full tables on /pricing.
 const models = [
   {
@@ -164,16 +169,18 @@ const quotes = [testimonials.featured, ...testimonials.grid.slice(0, 2)];
       <a href="/pricing" class="ff-models__link">Compare the three models on the pricing page →</a>
     </p>
 
-    <!-- B2B video slot — described placeholder until it's recorded -->
-    <div class="ff-models__video reveal reveal-delay-2" role="img"
-      aria-label="Video pending: Kate, founder-to-founder, on how we map your real bar and why our placements stay past year two. 60 seconds.">
-      <span class="ff-models__video-glyph" aria-hidden="true">▶</span>
-      <p class="ff-models__video-caption">
-        Video pending (60 seconds): Kate, founder-to-founder, on how we map your real bar
-        before opening the pipeline, and why 80% of our placements are still in the seat
-        after two years.
-      </p>
-    </div>
+    <!-- B2B video slot — hidden until it's recorded (see SHOW_VIDEO_PLACEHOLDER above) -->
+    {SHOW_VIDEO_PLACEHOLDER && (
+      <div class="ff-models__video reveal reveal-delay-2" role="img"
+        aria-label="Video pending: Kate, founder-to-founder, on how we map your real bar and why our placements stay past year two. 60 seconds.">
+        <span class="ff-models__video-glyph" aria-hidden="true">▶</span>
+        <p class="ff-models__video-caption">
+          Video pending (60 seconds): Kate, founder-to-founder, on how we map your real bar
+          before opening the pipeline, and why 80% of our placements are still in the seat
+          after two years.
+        </p>
+      </div>
+    )}
   </div>
 </section>
 
