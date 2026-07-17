@@ -1,17 +1,43 @@
 ---
-// ── Offer Acceleration — application form (MVP) ──────────────────────────
+// ── Offer Acceleration — application form ────────────────────────────────
 // Multi-step application: contact info → situación → perfil → salario →
-// visión. On submit, a fake 2s "AI analysis" runs and branches on current
-// salary: < $3,000 USD → LinkedIn follow (Kate), ≥ $3,000 → Calendly card.
-// No backend yet — everything is client-side for the MVP.
+// visión. On submit, a 5–8s two-phase loading overlay runs while the
+// application POSTs to {PUBLIC_API_ENDPOINT}/public/oa/applications; the
+// result card branches on the backend's data.status (accepted / rejected /
+// pending). When PUBLIC_API_ENDPOINT is unset (the default until the ATS
+// backend is publicly deployed) the form stays fully client-side with the
+// original salary branch and makes zero network calls.
+//
+// Loading overlay design: 8 selectable variants via ?loader=1..8 (default 1).
+// Preview gallery: /oa/loading-designs.
 import Layout from '../../layouts/Layout.astro';
+import OALoader from '../../components/oa/OALoader.astro';
 import { oaContent as c } from '../../content/offerAcceleration';
 
 const f = c.form;
 const TOTAL = f.steps.length;
+
+// This page ships Kate's Spanish copy and passes lang="es" to Layout; the
+// submission locale mirrors that. (New copy in offerAcceleration.ts is
+// EN + ES, keyed by lang, ready for a future EN route.)
+const PAGE_LANG = 'es' as const;
+const loading = f.loading[PAGE_LANG];
+const pending = f.pending[PAGE_LANG];
+const errorCopy = f.error[PAGE_LANG];
+
+// Config handed to the client script (replaces the old define:vars pattern —
+// the script is now a processed module so it can import the shared loader
+// controller and read import.meta.env.PUBLIC_*).
+const clientConfig = {
+  stepTitles: f.steps.map((s) => s.title),
+  errors: f.errors,
+  submitLabel: f.submit,
+  nextLabel: f.next,
+  locale: PAGE_LANG,
+};
 ---
 
-<Layout title={`${f.title} — Purrfect Hire`} description={c.meta.description} lang="es" noindex>
+<Layout title={`${f.title} · Purrfect Hire`} description={c.meta.description} lang="es" noindex>
   <main class="apl">
     <div class="apl-glow" aria-hidden="true"></div>
 
@@ -75,7 +101,7 @@ const TOTAL = f.steps.length;
           <p class="apl-step__desc">{f.steps[1].desc}</p>
           <div class="apl-field">
             <label for="apl-blockers">{f.fields.blockers.label} *</label>
-            <textarea id="apl-blockers" name="blockers" rows="6" placeholder={f.fields.blockers.placeholder} data-min="10" required></textarea>
+            <textarea id="apl-blockers" name="blockers" rows="6" placeholder={f.fields.blockers.placeholder} data-min="10" data-max="600" required></textarea>
             <div class="apl-field__foot">
               <span class="apl-error"></span>
               <span class="apl-hint" data-count-for="apl-blockers">{f.minCharsHint}</span>
@@ -133,13 +159,21 @@ const TOTAL = f.steps.length;
           <p class="apl-step__desc">{f.steps[4].desc}</p>
           <div class="apl-field">
             <label for="apl-vision">{f.fields.vision.label} *</label>
-            <textarea id="apl-vision" name="vision" rows="7" placeholder={f.fields.vision.placeholder} data-min="10" required></textarea>
+            <textarea id="apl-vision" name="vision" rows="7" placeholder={f.fields.vision.placeholder} data-min="10" data-max="600" required></textarea>
             <div class="apl-field__foot">
               <span class="apl-error"></span>
               <span class="apl-hint" data-count-for="apl-vision">{f.minCharsHint}</span>
             </div>
           </div>
         </fieldset>
+
+        <!-- Honeypot — visually hidden (off-screen, NOT display:none so bots
+             still fill it). Humans never see or tab into it; its value is
+             sent as `website` and must arrive empty. -->
+        <div class="apl-hp" aria-hidden="true">
+          <label for="apl-website">Website</label>
+          <input type="text" id="apl-website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
 
         <!-- Controls -->
         <div class="apl-controls">
@@ -149,23 +183,21 @@ const TOTAL = f.steps.length;
       </form>
     </section>
 
-    <!-- ── Analyzing overlay ────────────────────────────────────────── -->
+    <!-- ── Loading overlay (2 phases · 8 designs, ?loader=1..8) ─────── -->
     <div class="apl-analyzing" id="apl-analyzing" aria-hidden="true">
-      <div class="apl-analyzing__orb" aria-hidden="true">
-        <div class="apl-analyzing__orb-core"></div>
-      </div>
-      <p class="apl-analyzing__title">{f.analyzing.title}</p>
-      <p class="apl-analyzing__msg" id="apl-analyzing-msg">{f.analyzing.messages[0]}</p>
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+        <OALoader variant={n} phrases={loading} />
+      ))}
     </div>
 
-    <!-- ── Result: accepted (≥ $3,000) ──────────────────────────────── -->
+    <!-- ── Result: accepted ─────────────────────────────────────────── -->
     <section class="apl-result" id="apl-accepted" hidden>
       <p class="label-uppercase apl-result__eyebrow">{f.accepted.eyebrow}</p>
       <h2 class="apl-result__title">{f.accepted.title}</h2>
       <p class="apl-result__body">{f.accepted.body}</p>
 
       <div class="apl-person-card">
-        <img src="https://i.pravatar.cc/160?img=12" alt="" class="apl-person-card__photo" loading="lazy" />
+        <div class="apl-person-card__avatar" aria-hidden="true">PH</div>
         <div class="apl-person-card__info">
           <strong>{f.accepted.calendlyName}</strong>
           <span>{f.accepted.calendlyRole}</span>
@@ -174,21 +206,39 @@ const TOTAL = f.steps.length;
           {f.accepted.calendlyCta}
         </a>
       </div>
-
-      <div class="apl-mvp">
-        <span>{f.accepted.mvpNote}</span>
-        <a href="/oa/payment/123">{f.accepted.mvpCta}</a>
-      </div>
+      <!-- Payment link intentionally removed: the payment flow is never
+           surfaced from the application funnel (business decision). -->
     </section>
 
-    <!-- ── Result: not a fit (< $3,000) ─────────────────────────────── -->
+    <!-- ── Result: pending (backend is reviewing) ───────────────────── -->
+    <section class="apl-result" id="apl-pending" hidden>
+      <p class="label-uppercase apl-result__eyebrow">{pending.eyebrow}</p>
+      <h2 class="apl-result__title">{pending.title}</h2>
+      <p class="apl-result__body">{pending.body}</p>
+    </section>
+
+    <!-- ── Error: submission failed (network / HTTP) ────────────────── -->
+    <section class="apl-result" id="apl-error-card" hidden>
+      <p class="label-uppercase apl-result__eyebrow">{errorCopy.eyebrow}</p>
+      <h2 class="apl-result__title">{errorCopy.title}</h2>
+      <p class="apl-result__body">{errorCopy.body}</p>
+      <button type="button" class="btn" id="apl-retry">{errorCopy.retry}</button>
+    </section>
+
+    <!-- ── Result: not a fit ────────────────────────────────────────── -->
     <section class="apl-result" id="apl-rejected" hidden>
       <p class="label-uppercase apl-result__eyebrow">{f.rejected.eyebrow}</p>
       <h2 class="apl-result__title">{f.rejected.title}</h2>
       <p class="apl-result__body">{f.rejected.body}</p>
 
       <div class="apl-person-card">
-        <div class="apl-person-card__avatar" aria-hidden="true">KF</div>
+        <div class="apl-person-card__avatar" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </div>
         <div class="apl-person-card__info">
           <strong>{f.rejected.linkedinName}</strong>
           <span>{f.rejected.linkedinRole}</span>
@@ -202,26 +252,56 @@ const TOTAL = f.steps.length;
   </main>
 </Layout>
 
-<script define:vars={{ stepTitles: f.steps.map((s) => s.title), analyzingMessages: [...f.analyzing.messages], errors: f.errors, submitLabel: f.submit, nextLabel: f.next }}>
-  const TOTAL = stepTitles.length;
-  const SALARY_THRESHOLD = 3000;
-  const ANALYZE_MS = 2000;
+<script type="application/json" id="apl-config" set:html={JSON.stringify(clientConfig)} />
 
-  const card = document.getElementById('apl-card');
-  const steps = [...document.querySelectorAll('.apl-step')];
-  const backBtn = document.getElementById('apl-back');
-  const nextBtn = document.getElementById('apl-next');
-  const fill = document.getElementById('apl-progress-fill');
-  const stepNow = document.getElementById('apl-step-now');
-  const stepName = document.getElementById('apl-step-name');
-  const analyzing = document.getElementById('apl-analyzing');
-  const analyzingMsg = document.getElementById('apl-analyzing-msg');
+<script>
+  import { createOALoader, pickTimings } from '../../scripts/oaLoader';
+
+  const cfg = JSON.parse(document.getElementById('apl-config')!.textContent!) as {
+    stepTitles: string[];
+    errors: { required: string; email: string; minChars: string; maxChars: string; number: string };
+    submitLabel: string;
+    nextLabel: string;
+    locale: 'en' | 'es';
+  };
+  const { stepTitles, errors, submitLabel, nextLabel } = cfg;
+  const TOTAL = stepTitles.length;
+
+  // Backend base URLs — PUBLIC_* vars are inlined at build time. Unset/empty
+  // means "no backend": the site stays fully static with zero network calls.
+  const API_ENDPOINT = String(import.meta.env.PUBLIC_API_ENDPOINT ?? '').replace(/\/+$/, '');
+  const LOG_ENDPOINT = String(import.meta.env.PUBLIC_LOG_ENDPOINT ?? '').replace(/\/+$/, '');
+
+  // FALLBACK ONLY — the pre-existing client-side branch, kept solely so the
+  // site still works with no backend configured. This constant dies once the
+  // ATS backend is live; the real submission path never reads it.
+  const FALLBACK_SALARY_THRESHOLD = 3000;
+
+  // First render of step 1 → fill_time_ms in the submission payload.
+  const renderStart = Date.now();
+
+  const card = document.getElementById('apl-card')!;
+  const steps = [...document.querySelectorAll('.apl-step')] as HTMLElement[];
+  const backBtn = document.getElementById('apl-back') as HTMLButtonElement;
+  const nextBtn = document.getElementById('apl-next') as HTMLButtonElement;
+  const fill = document.getElementById('apl-progress-fill')!;
+  const stepNow = document.getElementById('apl-step-now')!;
+  const stepName = document.getElementById('apl-step-name')!;
+  const analyzing = document.getElementById('apl-analyzing')!;
+
+  // ── Loading overlay: pick 1 of the 8 designs via ?loader=1..8 ─────────
+  const requested = parseInt(new URLSearchParams(location.search).get('loader') ?? '1', 10);
+  const variant = requested >= 1 && requested <= 8 ? requested : 1;
+  const loaderRoot = analyzing.querySelector<HTMLElement>(`.oal[data-variant="${variant}"]`)!;
+  loaderRoot.hidden = false;
+  const loader = createOALoader(loaderRoot);
 
   let current = 0;
 
-  function setError(field, msg) {
-    const err = field.closest('.apl-field').querySelector('.apl-error');
-    err.textContent = msg || '';
+  function setError(field: HTMLElement, msg: string) {
+    const wrap = field.closest('.apl-field');
+    if (!wrap) return; // honeypot lives outside .apl-field on purpose
+    wrap.querySelector('.apl-error')!.textContent = msg || '';
     field.classList.toggle('is-invalid', !!msg);
   }
 
@@ -232,6 +312,8 @@ const TOTAL = f.steps.length;
     if (el.type === 'number' && (isNaN(parseFloat(v)) || parseFloat(v) < 0)) return errors.number;
     const min = parseInt(el.dataset.min || '0', 10);
     if (min && v.length < min) return errors.minChars;
+    const max = parseInt(el.dataset.max || '0', 10);
+    if (max && v.length > max) return errors.maxChars;
     return '';
   }
 
@@ -275,40 +357,178 @@ const TOTAL = f.steps.length;
   document.querySelectorAll('#apl-form input, #apl-form textarea, #apl-form select').forEach((el) => {
     el.addEventListener('input', () => setError(el, ''));
   });
+  // Live char counter: neutral while below the minimum, green once it's
+  // met, yellow near the maximum, red past it. Thresholds come from each
+  // textarea's own data-min/data-max, so this works for any field.
   document.querySelectorAll('.apl-hint[data-count-for]').forEach((hint) => {
     const ta = document.getElementById(hint.dataset.countFor);
-    const base = hint.textContent;
-    ta.addEventListener('input', () => {
+    const min = parseInt(ta.dataset.min || '0', 10);
+    const max = parseInt(ta.dataset.max || '0', 10);
+    const warnAt = max ? Math.round(max * 0.85) : Infinity; // last ~15% before the max
+    const base = hint.textContent; // friendly "Entre X y Y caracteres" from SSR
+
+    const update = () => {
       const n = ta.value.trim().length;
-      hint.textContent = n >= 10 ? n + ' caracteres' : base + ' · ' + n + '/10';
-      hint.classList.toggle('is-ok', n >= 10);
-    });
+      hint.classList.remove('is-ok', 'is-warning', 'is-over');
+
+      if (n === 0) {
+        hint.textContent = base;
+        return;
+      }
+      if (min && n < min) {
+        hint.textContent = base + ' · ' + n + '/' + min;
+        return;
+      }
+      hint.textContent = max ? n + '/' + max + ' caracteres' : n + ' caracteres';
+      if (max && n > max) hint.classList.add('is-over');
+      else if (n >= warnAt) hint.classList.add('is-warning');
+      else hint.classList.add('is-ok');
+    };
+
+    ta.addEventListener('input', update);
   });
 
-  function submit() {
-    const salary = parseFloat(document.getElementById('apl-salary-now').value) || 0;
+  // ── Submission ─────────────────────────────────────────────────────────
 
-    // Analyzing overlay (fake AI evaluation — MVP)
+  const inputValue = (id: string) => (document.getElementById(id) as HTMLInputElement).value;
+  const numValue = (id: string) => parseFloat(inputValue(id)) || 0;
+
+  type SubmitStatus = 'accepted' | 'rejected' | 'pending';
+
+  function collectPayload() {
+    return {
+      name: inputValue('apl-name').trim(),
+      email: inputValue('apl-email').trim(),
+      phone: inputValue('apl-phone').trim(),
+      linkedin: inputValue('apl-linkedin').trim(),
+      blockers: inputValue('apl-blockers').trim(),
+      role: inputValue('apl-role').trim(),
+      english_level: inputValue('apl-english'),
+      current_salary: numValue('apl-salary-now'),
+      expected_salary: numValue('apl-salary-want'),
+      vision: inputValue('apl-vision').trim(),
+      locale: cfg.locale,
+      fill_time_ms: Date.now() - renderStart,
+      website: inputValue('apl-website'), // honeypot — must arrive empty
+    };
+  }
+
+  async function postApplication(requestId: string): Promise<SubmitStatus> {
+    const res = await fetch(`${API_ENDPOINT}/public/oa/applications`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Request-Id': requestId, // site convention: correlate every network call
+      },
+      body: JSON.stringify(collectPayload()),
+    });
+    if (!res.ok) {
+      const err = new Error(`HTTP ${res.status}`) as Error & { status?: number };
+      err.status = res.status;
+      throw err;
+    }
+    // Envelope contract: { data: { id, status: 'accepted'|'rejected'|'pending' } }
+    const json = await res.json();
+    const status = json?.data?.status;
+    if (status !== 'accepted' && status !== 'rejected' && status !== 'pending') {
+      throw new Error('Malformed response envelope');
+    }
+    return status;
+  }
+
+  // Report submit failures through the shared /logs/client contract.
+  // NEVER include form PII — only status code + request id.
+  function reportFailure(err: unknown, requestId: string) {
+    if (!LOG_ENDPOINT) return;
+    try {
+      const status = (err as { status?: number })?.status ?? null;
+      fetch(`${LOG_ENDPOINT}/logs/client`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({
+          entries: [
+            {
+              level: 'error',
+              message: `OA application submit failed (${status ? `HTTP ${status}` : 'network error'})`,
+              source: 'portal',
+              url: location.origin + location.pathname,
+              occurred_at: new Date().toISOString(),
+              context: { status, request_id: requestId },
+            },
+          ],
+        }),
+      }).catch(() => {});
+    } catch {
+      /* reporter must never break the page */
+    }
+  }
+
+  function fallbackStatus(): SubmitStatus {
+    // Pre-existing client-side branch (no backend configured): current
+    // salary >= threshold → accepted card, otherwise → rejected card.
+    return numValue('apl-salary-now') >= FALLBACK_SALARY_THRESHOLD ? 'accepted' : 'rejected';
+  }
+
+  function showResult(id: string) {
+    const el = document.getElementById(id)!;
+    el.hidden = false;
+    el.classList.add('is-on');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function hideResult(id: string) {
+    const el = document.getElementById(id)!;
+    el.hidden = true;
+    el.classList.remove('is-on');
+  }
+
+  function submit() {
     card.style.display = 'none';
+    hideResult('apl-error-card'); // retry path
+
+    // Overlay on + phase schedule (phase 1: 0.5–1.1s, phase 2: 4–6s,
+    // total clamped to 5–8s — see pickTimings()).
+    loader.reset();
+    loader.setPhase(0);
     analyzing.classList.add('is-on');
     analyzing.setAttribute('aria-hidden', 'false');
+    const { phase1Ms, totalMs } = pickTimings();
+    const phaseTimer = setTimeout(() => loader.setPhase(1), phase1Ms);
+    const minDone = new Promise((r) => setTimeout(r, totalMs));
 
-    let msgIdx = 0;
-    const cycle = setInterval(() => {
-      msgIdx = (msgIdx + 1) % analyzingMessages.length;
-      analyzingMsg.textContent = analyzingMessages[msgIdx];
-    }, 550);
+    // The POST fires NOW, in parallel with the animation. The result shows
+    // only when BOTH the animation minimum has elapsed AND the response
+    // arrived; if the server is slower, phase 2 simply keeps looping.
+    const requestId = crypto.randomUUID();
+    const outcome: Promise<{ ok: true; status: SubmitStatus } | { ok: false; error: unknown }> =
+      API_ENDPOINT
+        ? postApplication(requestId)
+            .then((status) => ({ ok: true as const, status }))
+            .catch((error) => ({ ok: false as const, error }))
+        : Promise.resolve({ ok: true as const, status: fallbackStatus() }); // zero network calls
 
-    setTimeout(() => {
-      clearInterval(cycle);
+    Promise.all([minDone, outcome]).then(([, result]) => {
+      clearTimeout(phaseTimer);
+      loader.destroy();
       analyzing.classList.remove('is-on');
       analyzing.setAttribute('aria-hidden', 'true');
-      const result = document.getElementById(salary >= SALARY_THRESHOLD ? 'apl-accepted' : 'apl-rejected');
-      result.hidden = false;
-      result.classList.add('is-on');
-      result.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, ANALYZE_MS);
+      if (result.ok) {
+        showResult(
+          result.status === 'accepted'
+            ? 'apl-accepted'
+            : result.status === 'pending'
+              ? 'apl-pending'
+              : 'apl-rejected'
+        );
+      } else {
+        reportFailure(result.error, requestId);
+        showResult('apl-error-card');
+      }
+    });
   }
+
+  document.getElementById('apl-retry')!.addEventListener('click', submit);
 </script>
 
 <style lang="scss">
@@ -501,8 +721,11 @@ const TOTAL = f.steps.length;
     font-size: 0.8125rem;
     color: var(--color-tertiary);
     white-space: nowrap;
+    transition: color 0.15s ease;
 
     &.is-ok { color: #2f9e6e; }
+    &.is-warning { color: #b8860b; }
+    &.is-over { color: #d14343; }
   }
 
   .apl-money {
@@ -578,38 +801,17 @@ const TOTAL = f.steps.length;
       display: flex;
       animation: apl-fade 0.4s ease both;
     }
+  }
 
-    &__orb {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      padding: 3px;
-      background: conic-gradient(from 0deg, #3c2bdc, #8b7bff, #ff6ec7, #41d1ff, #3c2bdc);
-      animation: apl-spin 1.6s linear infinite;
-      filter: drop-shadow(0 0 28px rgba(60, 43, 220, 0.35));
-      margin-bottom: 1rem;
-    }
-
-    &__orb-core {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: var(--color-bg);
-    }
-
-    &__title {
-      font-size: 1.25rem;
-      font-weight: 500;
-      color: var(--color-text);
-      margin: 0;
-    }
-
-    &__msg {
-      font-size: 0.9375rem;
-      color: var(--color-muted);
-      margin: 0;
-      min-height: 1.5em;
-    }
+  // ── Honeypot (visually hidden, NOT display:none) ──────────
+  .apl-hp {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
   }
 
   // ── Results ───────────────────────────────────────────────
@@ -685,23 +887,6 @@ const TOTAL = f.steps.length;
     &__cta { flex-shrink: 0; }
   }
 
-  .apl-mvp {
-    margin-top: 2rem;
-    font-size: 0.875rem;
-    color: var(--color-tertiary);
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-
-    a {
-      color: var(--color-accent);
-      font-weight: 500;
-      text-decoration: none;
-
-      &:hover { text-decoration: underline; }
-    }
-  }
-
   // ── Keyframes ─────────────────────────────────────────────
   @keyframes apl-in {
     from { opacity: 0; transform: translateY(24px); }
@@ -715,14 +900,9 @@ const TOTAL = f.steps.length;
     from { opacity: 0; }
     to { opacity: 1; }
   }
-  @keyframes apl-spin {
-    to { transform: rotate(360deg); }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .apl-card,
     .apl-step.is-active,
     .apl-result.is-on { animation: none; }
-    .apl-analyzing__orb { animation-duration: 4s; }
   }
 </style>

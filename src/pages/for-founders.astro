@@ -26,17 +26,6 @@ const meta = {
     'Purrfect Hire places senior LATAM talent at YC, a16z and Sequoia startups. 160+ placements, 80% still in seat at 2+ years, first hire in under 4 weeks. Real proof, not promises.',
 };
 
-// Founders-only nav: in-page anchors + a cross-link to the talent page.
-const founderNav = {
-  ...c.nav,
-  links: [
-    { label: 'Proof', href: '#hero' },
-    { label: 'Why us', href: '#why' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'For talent', href: '/for-talent' },
-  ],
-};
-
 // Founder-facing FAQ — facts already stated on the site (no fabrication).
 const faqs = [
   {
@@ -86,7 +75,7 @@ const faqSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 
-  <V6Nav content={founderNav} lang="en" />
+  <V6Nav content={c.nav} lang="en" />
   <main style="position: relative; z-index: 1;">
     <FoundersHero />
     <FoundersBody content={c} />

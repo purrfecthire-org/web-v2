@@ -1,334 +1,463 @@
 ---
-import type { Role } from '../../content/roleSample';
+// ─────────────────────────────────────────────────────────────────────────────
+// RoleDetailV2 — public role detail, driven by the backend PublicRoleDetail DTO.
+//
+// HIDE-ABSENT-FIELDS RULE: every optional field renders NOTHING when null — no
+// empty labels, no placeholder boxes. Company identity is never present in the
+// DTO; `company_label` is the only company-adjacent string shown.
+//
+// The JD (`public_description`) is markdown, rendered safely (HTML-escaped, link
+// schemes sanitized) via src/lib/markdown.ts.
+//
+// The apply form POSTs multipart/form-data to {PUBLIC_API_ENDPOINT}{apply_path}.
+//
+// Chrome (nav + footer) is provided by the page (global v6). This component
+// renders only the two-column body and uses the shared brand tokens.
+// ─────────────────────────────────────────────────────────────────────────────
+import {
+  apiBase,
+  roleRailHTML,
+  roleReadOnlyContentHTML,
+  type PublicRoleDetail,
+} from '../../lib/roles';
 
 interface Props {
-  role: Role;
+  role: PublicRoleDetail;
 }
 
 const { role } = Astro.props;
-const c = role.company;
 
-const location = [...role.countries, ...(role.states ?? [])];
-const internalStages = role.interviewProcess?.filter((s) => s.group === 'internal') ?? [];
-const clientStages = role.interviewProcess?.filter((s) => s.group === 'client') ?? [];
-const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
+// Full apply endpoint; empty when no backend configured (form self-disables).
+const applyUrl = apiBase() ? `${apiBase()}${role.apply_path}` : '';
+
+// Rail + read-only content are rendered through the SAME functions the client
+// refresh script calls after fetchRole() resolves, so build-time and
+// client-refreshed markup never drift (identical to roleCardHTML()'s role on
+// the list page).
+const railHtml = roleRailHTML(role);
+const readonlyHtml = roleReadOnlyContentHTML(role);
+
+const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
 ---
 
-<div class="rv2">
-  <!-- Slim top bar -->
-  <header class="rv2__bar">
-    <a href="/" class="rv2__brand" aria-label="Purrfect Hire — home">
-      <img src="/logos/logo-desktop.png" class="rv2__brand-logo" alt="Purrfect Hire" />
+<div class="rv2" id="rv2-root" data-slug={role.slug}>
+  <!-- Back link to the list -->
+  <div class="rv2__crumb">
+    <a href="/roles" class="rv2__back">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      All open roles
     </a>
-    <nav class="rv2__bar-nav">
-      <a href="/for-talent" class="rv2__bar-link">For talent</a>
-      <a href="/roles" class="rv2__bar-link rv2__bar-link--active">Open roles</a>
-      <a href="/offer-acceleration" class="rv2__bar-link">Offer Acceleration</a>
-      <a href={applyHref} class="rv2__bar-cta">Apply</a>
-    </nav>
-  </header>
+  </div>
 
-  <div class="rv2__layout">
+  <!-- ── Loading skeleton ─────────────────────────────────────────────
+       Hidden by default (no-JS / static fallback shows the real content
+       below immediately). The client script un-hides this the moment it
+       starts the fetch-on-load refresh, then hides it again once the
+       fetch settles (success, 404, or network failure). -->
+  <div class="rv2__skeleton" id="rv2-skeleton" hidden aria-hidden="true">
+    <div class="rv2__skeleton-layout">
+      <div class="rv2__skeleton-rail">
+        <div class="rv2-sk" style="width:45%;height:11px;"></div>
+        <div class="rv2-sk" style="width:85%;height:26px;margin-top:6px;"></div>
+        <div class="rv2-sk" style="width:60%;height:26px;"></div>
+        <div class="rv2-sk rv2-sk--fact"></div>
+        <div class="rv2-sk rv2-sk--fact"></div>
+        <div class="rv2-sk rv2-sk--fact"></div>
+        <div class="rv2-sk rv2-sk--fact"></div>
+        <div class="rv2-sk" style="width:100%;height:46px;border-radius:12px;margin-top:8px;"></div>
+      </div>
+      <div class="rv2__skeleton-content">
+        <div class="rv2-sk" style="width:28%;height:11px;"></div>
+        <div class="rv2-sk" style="width:92%;height:16px;"></div>
+        <div class="rv2-sk" style="width:75%;height:16px;"></div>
+        <div class="rv2-sk" style="width:96%;height:16px;"></div>
+        <div class="rv2-sk" style="width:60%;height:16px;"></div>
+        <div class="rv2-sk" style="width:88%;height:16px;"></div>
+        <div class="rv2-sk" style="width:70%;height:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Closed state ─────────────────────────────────────────────────
+       Shown only when the client refresh gets a 404 (role was unpublished
+       or closed since this page was built). Replaces the WHOLE page body
+       — not just the apply form — reusing the same friendly messaging as
+       the apply form's own 404 case. -->
+  <div class="rv2__closed" id="rv2-closed" hidden>
+    <h2 class="rv2__closed-title">This role is no longer open</h2>
+    <p class="rv2__closed-body">
+      It may have been filled or closed since you opened this page.
+      <a class="rv2__result-link" href="/roles">Browse our other open roles →</a>
+    </p>
+  </div>
+
+  <div class="rv2__layout" id="rv2-layout">
     <!-- ── Sticky left rail ─────────────────────────────────────────── -->
     <aside class="rv2__rail">
-      <div class="rv2__rail-inner">
-        <span class="rv2__company">{role.companyLabel}</span>
-        <h1 class="rv2__title">{role.title}</h1>
-
-        <ul class="rv2__facts">
-          <li class="rv2__fact">
-            <span class="rv2__fact-key">Location</span>
-            <span class="rv2__fact-val">{location.join(', ')}</span>
-          </li>
-          <li class="rv2__fact">
-            <span class="rv2__fact-key">Work type</span>
-            <span class="rv2__fact-val">{role.modality} · {role.employmentType}</span>
-          </li>
-          {role.englishLevel && (
-            <li class="rv2__fact">
-              <span class="rv2__fact-key">English</span>
-              <span class="rv2__fact-val rv2__fact-val--accent">{role.englishLevel}</span>
-            </li>
-          )}
-          {c.size && (
-            <li class="rv2__fact">
-              <span class="rv2__fact-key">Team</span>
-              <span class="rv2__fact-val">{c.size}</span>
-            </li>
-          )}
-          {c.founded && (
-            <li class="rv2__fact">
-              <span class="rv2__fact-key">Founded</span>
-              <span class="rv2__fact-val">{c.founded}</span>
-            </li>
-          )}
-          {c.funding && (
-            <li class="rv2__fact">
-              <span class="rv2__fact-key">Funding</span>
-              <span class="rv2__fact-val">{c.funding}</span>
-            </li>
-          )}
-        </ul>
-
-        {c.ycBatch && (
-          <span class="rv2__yc">
-            <span class="rv2__yc-mark" aria-hidden="true">Y</span>
-            Y Combinator · {c.ycBatch}
-          </span>
-        )}
-
-        <a href={applyHref} class="rv2__apply">
-          Apply for this role
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-
-        <p class="rv2__rail-note">Company details are shared after your intro call.</p>
-      </div>
+      <div class="rv2__rail-inner" id="rv2-rail-inner" set:html={railHtml}></div>
     </aside>
 
     <!-- ── Scrollable content ───────────────────────────────────────── -->
     <main class="rv2__content">
-      <!-- Company -->
-      <section class="rv2__block">
-        <span class="rv2__eyebrow">The Company</span>
-        <p class="rv2__lede">{c.description}</p>
-        {c.industry && <p class="rv2__industry">{c.industry}</p>}
+      <!-- Company + Role sections — rendered from the single-source-of-truth
+           renderer (shared build-time + client-refresh). Never includes the
+           apply form, which stays static below and is never replaced. -->
+      <div id="rv2-readonly" set:html={readonlyHtml}></div>
 
-        {c.awards && c.awards.length > 0 && (
-          <div class="rv2__awards">
-            {c.awards.map((a) => (
-              <span class="rv2__award">
-                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M7 1.5 8.7 5l3.8.5-2.8 2.7.7 3.8L7 10.2 3.6 12l.7-3.8L1.5 5.5 5.3 5 7 1.5Z" fill="currentColor"/>
-                </svg>
-                {a.label}{a.year ? ` ${a.year}` : ''}{a.source ? ` · ${a.source}` : ''}
-              </span>
-            ))}
-          </div>
-        )}
+      <!-- ── Apply form ─────────────────────────────────────────────── -->
+      <section class="rv2__block rv2__apply-block" id="apply">
+        <span class="rv2__eyebrow">Apply</span>
+        <h2 class="rv2__apply-title">Apply for this role</h2>
+        <p class="rv2__apply-sub">Apply once. We match you with the roles where you fit best.</p>
 
-        {c.strengths && c.strengths.length > 0 && (
-          <div class="rv2__strengths">
-            {c.strengths.map((s) => (
-              <span class="rv2__strength">
-                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M11.5 4 6 9.5 3 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                {s}
-              </span>
-            ))}
-          </div>
-        )}
-      </section>
-
-      <div class="rv2__rule" aria-hidden="true"></div>
-
-      <!-- Role -->
-      <section class="rv2__block">
-        <span class="rv2__eyebrow rv2__eyebrow--role">The Role</span>
-        <p class="rv2__lede">{role.roleDescription}</p>
-
-        {role.skills && role.skills.length > 0 && (
-          <div class="rv2__skills">
-            {role.skills.map((s) => <span class="rv2__skill">{s}</span>)}
-          </div>
-        )}
-
-        <div class="rv2__reqs">
-          <div class="rv2__req-col">
-            <h3 class="rv2__req-title">Must have</h3>
-            <ul class="rv2__req-list">
-              {role.requirements.mandatory.map((r) => (
-                <li class="rv2__req rv2__req--must">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <circle cx="8" cy="8" r="8" fill="currentColor" opacity="0.12"/>
-                    <path d="M11.5 5.5 7 10 5 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>{r}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {role.requirements.niceToHave && role.requirements.niceToHave.length > 0 && (
-            <div class="rv2__req-col">
-              <h3 class="rv2__req-title rv2__req-title--nice">Nice to have</h3>
-              <ul class="rv2__req-list">
-                {role.requirements.niceToHave.map((r) => (
-                  <li class="rv2__req rv2__req--nice">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                      <path d="M4 8h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    </svg>
-                    <span>{r}</span>
-                  </li>
-                ))}
-              </ul>
+        <form class="rv2__form" id="rv2-form" data-apply-url={applyUrl} novalidate>
+          <div class="rv2__form-grid">
+            <div class="rv2__f">
+              <label for="rv2-name">Full name *</label>
+              <input type="text" id="rv2-name" name="full_name" autocomplete="name" required />
+              <span class="rv2__f-err" data-err-for="rv2-name"></span>
             </div>
-          )}
-        </div>
-
-        {role.englishLevel && (
-          <div class="rv2__english">
-            <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/>
-              <path d="M1.5 7h11M7 1.5c1.6 1.6 1.6 9.4 0 11M7 1.5c-1.6 1.6-1.6 9.4 0 11" stroke="currentColor" stroke-width="1.1"/>
-            </svg>
-            Minimum English required: <strong>{role.englishLevel}</strong>
+            <div class="rv2__f">
+              <label for="rv2-email">Email *</label>
+              <input type="email" id="rv2-email" name="email" autocomplete="email" required />
+              <span class="rv2__f-err" data-err-for="rv2-email"></span>
+            </div>
+            <div class="rv2__f">
+              <label for="rv2-phone">Phone</label>
+              <input type="tel" id="rv2-phone" name="phone" autocomplete="tel" />
+            </div>
+            <div class="rv2__f">
+              <label for="rv2-linkedin">LinkedIn</label>
+              <input type="text" id="rv2-linkedin" name="linkedin" placeholder="linkedin.com/in/…" />
+            </div>
+            <div class="rv2__f">
+              <label for="rv2-english">English level</label>
+              <select id="rv2-english" name="english_level">
+                <option value="">Select…</option>
+                {englishOptions.map((o) => <option value={o}>{o}</option>)}
+              </select>
+            </div>
+            <div class="rv2__f">
+              <label for="rv2-cur">Current salary (USD / mo)</label>
+              <input type="number" id="rv2-cur" name="current_salary_usd" min="0" step="50" inputmode="numeric" />
+            </div>
+            <div class="rv2__f">
+              <label for="rv2-des">Desired salary (USD / mo)</label>
+              <input type="number" id="rv2-des" name="desired_salary_usd" min="0" step="50" inputmode="numeric" />
+            </div>
+            <div class="rv2__f rv2__f--full">
+              <label for="rv2-cv">CV — PDF, max 3 MB *</label>
+              <input type="file" id="rv2-cv" name="cv" accept="application/pdf,.pdf" required />
+              <span class="rv2__f-err" data-err-for="rv2-cv"></span>
+            </div>
           </div>
-        )}
-      </section>
 
-      <!-- Interview process (optional) -->
-      {role.interviewProcess && role.interviewProcess.length > 0 && (
-        <>
-          <div class="rv2__rule" aria-hidden="true"></div>
-          <section class="rv2__block">
-            <span class="rv2__eyebrow">Interview Process</span>
+          <!-- Honeypot: visually hidden (off-screen, NOT display:none). Humans
+               never see or tab into it; bots fill it and get flagged. -->
+          <div class="rv2__hp" aria-hidden="true">
+            <label for="rv2-website">Website</label>
+            <input type="text" id="rv2-website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
 
-            {internalStages.length > 0 && (
-              <div class="rv2__phase">
-                <h3 class="rv2__phase-title">Internal process</h3>
-                <ol class="rv2__timeline">
-                  {internalStages.map((s) => (
-                    <li class="rv2__step">
-                      <span class="rv2__step-dot" aria-hidden="true"></span>
-                      <div class="rv2__step-body">
-                        <div class="rv2__step-head">
-                          <span class="rv2__step-name">{s.name}</span>
-                          {s.duration && <span class="rv2__step-time">{s.duration}</span>}
-                        </div>
-                        {s.detail && <p class="rv2__step-detail">{s.detail}</p>}
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
+          <div class="rv2__form-foot">
+            <button type="submit" class="rv2__apply rv2__apply--submit" id="rv2-submit">
+              Submit application
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <p class="rv2__form-note" id="rv2-formnote"></p>
+          </div>
+        </form>
 
-            {clientStages.length > 0 && (
-              <div class="rv2__phase">
-                <h3 class="rv2__phase-title rv2__phase-title--client">Client stage</h3>
-                <ol class="rv2__timeline">
-                  {clientStages.map((s) => (
-                    <li class="rv2__step rv2__step--client">
-                      <span class="rv2__step-dot" aria-hidden="true"></span>
-                      <div class="rv2__step-body">
-                        <div class="rv2__step-head">
-                          <span class="rv2__step-name">{s.name}</span>
-                          {s.duration && <span class="rv2__step-time">{s.duration}</span>}
-                        </div>
-                        {s.detail && <p class="rv2__step-detail">{s.detail}</p>}
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-          </section>
-        </>
-      )}
-
-      <!-- Final CTA -->
-      <section class="rv2__cta" id="apply">
-        <div>
-          <h2 class="rv2__cta-title">Think this is you?</h2>
-          <p class="rv2__cta-sub">Apply once. We match you with the roles where you fit best.</p>
+        <!-- Success -->
+        <div class="rv2__result rv2__result--ok" id="rv2-ok" hidden>
+          <h3 class="rv2__result-title">Application received</h3>
+          <p class="rv2__result-body">
+            Thanks — we've got your application. If there's a fit we'll reach out by email.
+          </p>
         </div>
-        <a href={applyHref} class="rv2__apply rv2__apply--cta">
-          Apply for this role
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
+
+        <!-- Error -->
+        <div class="rv2__result rv2__result--err" id="rv2-fail" hidden>
+          <h3 class="rv2__result-title" id="rv2-fail-title">Something went wrong</h3>
+          <p class="rv2__result-body" id="rv2-fail-body">
+            We couldn't submit your application. Please try again in a moment.
+          </p>
+          <button type="button" class="rv2__apply rv2__apply--submit" id="rv2-retry">Try again</button>
+        </div>
       </section>
     </main>
   </div>
 </div>
 
-<style lang="scss">
+<script>
+  // ── Client refresh (primary data path) ──────────────────────────────────
+  // On load: show the skeleton, fetch GET /public/roles/{slug}, then render
+  // fresh data into #rv2-rail-inner / #rv2-readonly (same renderers used at
+  // build time, so markup never drifts — see src/lib/roles.ts).
+  //   • success        → swap in fresh content, hide skeleton.
+  //   • 404             → role closed since build; hide the whole layout and
+  //                       show the "no longer open" message.
+  //   • network/other   → keep the prerendered content as-is (progressive
+  //                       enhancement fallback), just hide the skeleton.
+  // The apply form (further below in the DOM) is never touched by this
+  // script, so its own listeners (registered later in this same file) keep
+  // working after any swap.
+  import { fetchRole, roleRailHTML, roleReadOnlyContentHTML, reportClientError, FetchRoleError } from '../../lib/roles';
+
+  (async () => {
+    const root = document.getElementById('rv2-root') as HTMLElement | null;
+    const slug = root?.dataset.slug;
+    if (!root || !slug) return;
+
+    const skeleton = document.getElementById('rv2-skeleton');
+    const layout = document.getElementById('rv2-layout');
+    const closed = document.getElementById('rv2-closed');
+    const railInner = document.getElementById('rv2-rail-inner');
+    const readonly = document.getElementById('rv2-readonly');
+
+    skeleton?.removeAttribute('hidden');
+    layout?.setAttribute('hidden', '');
+
+    try {
+      const fresh = await fetchRole(slug);
+      if (railInner) railInner.innerHTML = roleRailHTML(fresh);
+      if (readonly) readonly.innerHTML = roleReadOnlyContentHTML(fresh);
+      layout?.removeAttribute('hidden');
+    } catch (err) {
+      if (err instanceof FetchRoleError && err.status === 404) {
+        closed?.removeAttribute('hidden');
+        reportClientError('role detail refresh: role no longer open (HTTP 404)', {
+          stage: 'role_detail_refresh',
+          status: 404,
+          slug,
+        });
+      } else {
+        // Network error or misconfiguration — keep the prerendered content.
+        layout?.removeAttribute('hidden');
+        reportClientError(`role detail refresh failed: ${(err as Error)?.message ?? err}`, {
+          stage: 'role_detail_refresh',
+          slug,
+        });
+      }
+    } finally {
+      skeleton?.setAttribute('hidden', '');
+    }
+  })();
+
+  const form = document.getElementById('rv2-form') as HTMLFormElement | null;
+  if (form) {
+    const APPLY_URL = form.dataset.applyUrl || '';
+    const MAX_BYTES = 3 * 1024 * 1024; // 3 MB
+    const mountTime = Date.now(); // → fill_time_ms
+
+    const submitBtn = document.getElementById('rv2-submit') as HTMLButtonElement;
+    const note = document.getElementById('rv2-formnote') as HTMLElement;
+    const okCard = document.getElementById('rv2-ok') as HTMLElement;
+    const failCard = document.getElementById('rv2-fail') as HTMLElement;
+    const failTitle = document.getElementById('rv2-fail-title') as HTMLElement;
+    const failBody = document.getElementById('rv2-fail-body') as HTMLElement;
+    const retryBtn = document.getElementById('rv2-retry') as HTMLButtonElement;
+
+    const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+
+    function setErr(id: string, msg: string) {
+      const el = document.querySelector(`[data-err-for="${id}"]`);
+      if (el) el.textContent = msg;
+      $(id)?.classList.toggle('is-invalid', !!msg);
+    }
+
+    function clearErrors() {
+      ['rv2-name', 'rv2-email', 'rv2-cv'].forEach((id) => setErr(id, ''));
+    }
+
+    // Reset the error card back to its generic (retryable) shape.
+    function resetFailCard() {
+      failTitle.textContent = 'Something went wrong';
+      retryBtn.hidden = false;
+    }
+
+    function validate(): boolean {
+      clearErrors();
+      let ok = true;
+      const name = $('rv2-name').value.trim();
+      const email = $('rv2-email').value.trim();
+      const cv = $('rv2-cv').files?.[0];
+
+      if (!name) { setErr('rv2-name', 'Please enter your full name.'); ok = false; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setErr('rv2-email', 'Please enter a valid email.'); ok = false;
+      }
+      if (!cv) {
+        setErr('rv2-cv', 'Please attach your CV (PDF).'); ok = false;
+      } else {
+        const isPdf = cv.type === 'application/pdf' || /\.pdf$/i.test(cv.name);
+        if (!isPdf) { setErr('rv2-cv', 'CV must be a PDF file.'); ok = false; }
+        else if (cv.size > MAX_BYTES) { setErr('rv2-cv', 'CV must be 3 MB or smaller.'); ok = false; }
+      }
+      return ok;
+    }
+
+    async function submit() {
+      if (!validate()) return;
+
+      if (!APPLY_URL) {
+        // No backend configured — cannot submit.
+        resetFailCard();
+        retryBtn.hidden = true;
+        failBody.textContent = 'Applications are not open yet. Please check back soon.';
+        form!.hidden = true;
+        failCard.hidden = false;
+        return;
+      }
+
+      submitBtn.disabled = true;
+      note.textContent = 'Submitting…';
+
+      const fd = new FormData();
+      fd.append('full_name', $('rv2-name').value.trim());
+      fd.append('email', $('rv2-email').value.trim());
+      fd.append('phone', $('rv2-phone').value.trim());
+      fd.append('linkedin', $('rv2-linkedin').value.trim());
+      fd.append('english_level', $('rv2-english').value);
+      fd.append('current_salary_usd', $('rv2-cur').value);
+      fd.append('desired_salary_usd', $('rv2-des').value);
+      fd.append('website', $('rv2-website').value); // honeypot — must be empty
+      fd.append('fill_time_ms', String(Date.now() - mountTime));
+      const cv = $('rv2-cv').files?.[0];
+      if (cv) fd.append('cv', cv, cv.name);
+
+      const requestId = crypto.randomUUID();
+      try {
+        const res = await fetch(APPLY_URL, {
+          method: 'POST',
+          headers: { 'X-Request-Id': requestId }, // let the browser set multipart Content-Type
+          body: fd,
+        });
+        const json = await res.json().catch(() => null);
+        const respId = res.headers.get('X-Request-Id') || json?.error?.details?.request_id || requestId;
+
+        if (res.ok && json?.data?.status === 'received') {
+          form!.hidden = true;
+          okCard.hidden = false;
+          okCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // The role was unpublished/closed since this page was prerendered — the
+        // backend answers 404. Show a friendly, distinct message (no retry).
+        if (res.status === 404) {
+          failTitle.textContent = 'This role is no longer open';
+          failBody.innerHTML =
+            'It may have been filled or closed since you opened this page. ' +
+            '<a class="rv2__result-link" href="/roles">Browse our other open roles →</a>';
+          retryBtn.hidden = true;
+          note.textContent = '';
+          submitBtn.disabled = false;
+          form!.hidden = true;
+          failCard.hidden = false;
+          okCard.hidden = true;
+          reportClientError('role application: role no longer open (HTTP 404)', {
+            stage: 'role_application_submit',
+            status: 404,
+            request_id: requestId,
+          });
+          return;
+        }
+
+        // Generic (retryable) error — surface the support reference.
+        resetFailCard();
+        failBody.textContent =
+          `We couldn't submit your application. Please try again. If it keeps happening, quote reference ${respId}.`;
+        note.textContent = '';
+        submitBtn.disabled = false;
+        form!.hidden = true;
+        failCard.hidden = false;
+        reportClientError(`role application submit failed (HTTP ${res.status})`, {
+          stage: 'role_application_submit',
+          status: res.status,
+          request_id: requestId,
+        });
+      } catch (err) {
+        note.textContent = '';
+        submitBtn.disabled = false;
+        resetFailCard();
+        failBody.textContent =
+          `We couldn't reach the server. Please check your connection and try again. Reference ${requestId}.`;
+        form!.hidden = true;
+        failCard.hidden = false;
+        reportClientError(`role application network error: ${(err as Error)?.message ?? err}`, {
+          stage: 'role_application_submit',
+          request_id: requestId,
+        });
+      }
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      submit();
+    });
+    ['rv2-name', 'rv2-email', 'rv2-cv'].forEach((id) =>
+      $(id)?.addEventListener('input', () => setErr(id, ''))
+    );
+    retryBtn?.addEventListener('click', () => {
+      failCard.hidden = true;
+      form!.hidden = false;
+      form!.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+</script>
+
+<style lang="scss" is:global>
+  /* Styled GLOBALLY (like the .rl__card* rules on the roles list page) because
+     the rail + read-only content are injected via set:html (build) / innerHTML
+     (client refresh) and never receive Astro's scoped attribute. */
   @use '../../styles/breakpoints' as *;
 
-  $accent: #3C2BDC;   // purple — accent only, used sparingly
-  $indigo: #3C2BDC;   // alias kept so existing references resolve to the single accent
-  $cyan: #5C5C5C;     // was a second violet — now neutral muted
-  $emerald: #0F0F0F;  // was navy — now ink
-  $ink: #0F0F0F;
-  $muted: #5C5C5C;
-  $subtle: #A3A3A3;
-  $border: #E5E5E1;
+  // Brand tokens (Kate's 2026 system) — navy ink, white canvas, 12px radius.
+  $ink: #29285F;      // single brand color (navy)
+  $text: #1C1C1C;
+  $muted: #6B6B6B;
+  $subtle: #9A9A9A;
+  $line: rgba(0, 0, 0, 0.08);
   $surface: #FFFFFF;
-  $chip: #F2F1EE;     // neutral chip fill replacing purple tints
+  $soft: #FCFCFB;
+  $tint: #ECECF3;     // light navy tint for subtle fills
 
   .rv2 {
     position: relative;
     z-index: 1;
-    font-family: Inter, sans-serif;
-    color: $ink;
-    min-height: 100vh;
+    font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+    color: $text;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding: 5.5rem clamp(1.25rem, 4vw, 2.5rem) 4rem;
+
+    @include max-lg { padding-top: 5rem; }
   }
 
-  // ── Top bar ──────────────────────────────────────────────────────
-  .rv2__bar {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px clamp(1.25rem, 4vw, 2.5rem);
-    background: rgba(250, 249, 247, 0.8);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid $border;
-  }
+  // ── Back crumb ───────────────────────────────────────────────────
+  .rv2__crumb { margin-bottom: 1.5rem; }
 
-  .rv2__brand {
+  .rv2__back {
     display: inline-flex;
     align-items: center;
-    text-decoration: none;
-  }
-
-  .rv2__brand-logo {
-    width: 9.5rem;
-    height: auto;
-    display: block;
-    @include max-sm { width: 8.5rem; }
-  }
-
-  .rv2__bar-nav { display: flex; align-items: center; gap: 1.5rem; }
-
-  .rv2__bar-link {
-    font-size: 14px;
+    gap: 7px;
+    font-size: 0.875rem;
     font-weight: 500;
     color: $muted;
     text-decoration: none;
     transition: color 0.15s ease;
+    svg { transition: transform 0.2s ease; }
     &:hover { color: $ink; }
-    &--active { color: $ink; font-weight: 600; }
-    @include max-sm { display: none; }
-  }
-
-  .rv2__bar-cta {
-    display: inline-flex;
-    align-items: center;
-    background: #0F0F0F;
-    color: #fff;
-    border-radius: 999px;
-    padding: 9px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-    &:hover { background: $accent; }
+    &:hover svg { transform: translateX(-3px); }
   }
 
   // ── Two-column layout ────────────────────────────────────────────
   .rv2__layout {
-    max-width: 78rem;
-    margin-inline: auto;
-    padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem) 4rem;
     display: grid;
     grid-template-columns: 340px 1fr;
     gap: clamp(2rem, 5vw, 4rem);
@@ -340,26 +469,23 @@ const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
   // ── Left rail ────────────────────────────────────────────────────
   .rv2__rail {
     position: sticky;
-    top: 88px;
-
+    top: 5.5rem;
     @include max-lg { position: static; }
   }
 
   .rv2__rail-inner {
-    background: rgba(255, 255, 255, 0.85);
-    border: 1.5px solid $border;
-    border-radius: 22px;
+    background: $surface;
+    border: 1px solid $line;
+    border-top: 4px solid $ink;
+    border-radius: var(--radius);
     padding: clamp(1.5rem, 3vw, 2rem);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 36px rgba(15, 15, 15, 0.05);
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
   }
 
   .rv2__company {
-    font-size: 11.5px;
+    font-size: 0.6875rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.14em;
@@ -368,20 +494,14 @@ const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
 
   .rv2__title {
     font-size: clamp(1.6rem, 3vw, 2rem);
-    font-weight: 800;
+    font-weight: 600;
     line-height: 1.12;
     letter-spacing: -0.025em;
     margin: -0.5rem 0 0;
     color: $ink;
   }
 
-  .rv2__facts {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-  }
+  .rv2__facts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 
   .rv2__fact {
     display: flex;
@@ -389,12 +509,12 @@ const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
     justify-content: space-between;
     gap: 1rem;
     padding: 11px 0;
-    border-bottom: 1px solid $border;
+    border-bottom: 1px solid $line;
     &:last-child { border-bottom: none; }
   }
 
   .rv2__fact-key {
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -403,11 +523,11 @@ const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
   }
 
   .rv2__fact-val {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
-    color: $ink;
+    color: $text;
     text-align: right;
-    &--accent { color: $indigo; }
+    &--accent { color: $ink; }
   }
 
   .rv2__yc {
@@ -419,9 +539,8 @@ const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
     color: #fff;
     border-radius: 999px;
     padding: 6px 14px 6px 7px;
-    font-size: 13px;
+    font-size: 0.8125rem;
     font-weight: 700;
-    box-shadow: 0 4px 14px rgba(255, 107, 0, 0.3);
   }
 
   .rv2__yc-mark {
@@ -434,7 +553,7 @@ const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
     background: #fff;
     color: #FF6B00;
     font-weight: 800;
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .rv2__apply {
@@ -442,162 +561,118 @@ const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: #0F0F0F;
+    background: $ink;
     color: #fff;
-    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+    border-radius: var(--radius);
     padding: 14px 26px;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 0.9375rem;
+    font-weight: 500;
     text-decoration: none;
     transition: background-color 0.2s ease;
     svg { transition: transform 0.2s ease; }
-    &:hover { background: $accent; }
+    &:hover { background: #1E1D47; }
     &:hover svg { transform: translateX(3px); }
-    &--cta { flex-shrink: 0; }
+    &:focus-visible { outline: 2px solid $ink; outline-offset: 2px; }
+    &:disabled { opacity: 0.55; cursor: default; }
+    &--submit { align-self: flex-start; }
   }
 
-  .rv2__rail-note {
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.5;
-    color: $subtle;
-    text-align: center;
-  }
+  .rv2__rail-note { margin: 0; font-size: 0.75rem; line-height: 1.5; color: $subtle; text-align: center; }
 
   // ── Content column ───────────────────────────────────────────────
-  .rv2__content {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2.25rem;
-  }
+  .rv2__content { min-width: 0; display: flex; flex-direction: column; gap: 2.25rem; }
 
-  .rv2__rule {
-    height: 1px;
-    background: $border;
-  }
+  .rv2__rule { height: 1px; background: $line; }
 
   .rv2__eyebrow {
     display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: $accent;
+    color: $ink;
     margin-bottom: 1rem;
-
     &--role { color: $ink; }
   }
 
-  .rv2__lede {
-    font-size: 1.0625rem;
-    line-height: 1.75;
-    color: #374151;
-    margin: 0;
-  }
+  .rv2__industry { margin: 0; font-size: 0.875rem; font-weight: 600; color: $muted; }
 
-  .rv2__industry {
-    margin: 0.75rem 0 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: $muted;
-  }
-
-  .rv2__awards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 1.5rem;
-  }
+  .rv2__awards { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
 
   .rv2__award {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: $chip;
-    border: 1px solid $border;
-    color: $ink;
+    background: $soft;
+    border: 1px solid $line;
+    color: $text;
     border-radius: 999px;
     padding: 6px 14px;
-    font-size: 12.5px;
+    font-size: 0.78125rem;
     font-weight: 600;
     svg { color: #F59E0B; }
   }
 
-  .rv2__strengths {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 1rem;
-  }
+  .rv2__strengths { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
 
   .rv2__strength {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: $chip;
-    border: 1px solid $border;
-    color: $ink;
+    background: $soft;
+    border: 1px solid $line;
+    color: $text;
     border-radius: 999px;
     padding: 7px 14px;
-    font-size: 13px;
+    font-size: 0.8125rem;
     font-weight: 500;
-    svg { color: $accent; }
+    svg { color: $ink; }
   }
 
-  .rv2__skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 1.5rem;
-  }
+  .rv2__skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
 
   .rv2__skill {
-    background: $chip;
-    color: $muted;
-    border: 1px solid $border;
-    border-radius: 7px;
-    padding: 5px 12px;
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  .rv2__reqs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.75rem 2.5rem;
-    margin-top: 2rem;
-    @include max-md { grid-template-columns: 1fr; gap: 1.75rem; }
-  }
-
-  .rv2__req-title {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    background: $tint;
     color: $ink;
-    margin: 0 0 1rem;
-    &--nice { color: $subtle; }
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 5px 13px;
+    font-size: 0.8125rem;
+    font-weight: 500;
   }
 
-  .rv2__req-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
+  // ── JD prose (rendered markdown) ─────────────────────────────────
+  .rv2__prose {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: #374151;
 
-  .rv2__req {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    svg { flex-shrink: 0; margin-top: 2px; }
-    &--must { color: #1F2937; font-weight: 500; svg { color: $indigo; } }
-    &--nice { color: $muted; svg { color: $subtle; } }
+    :global(h1), :global(h2), :global(h3) {
+      color: $ink;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin: 1.75rem 0 0.75rem;
+    }
+    :global(h1) { font-size: 1.4rem; }
+    :global(h2) { font-size: 1.2rem; }
+    :global(h3) { font-size: 1.05rem; }
+    :global(p) { margin: 0 0 1rem; }
+    :global(ul), :global(ol) { margin: 0 0 1rem; padding-left: 1.35rem; }
+    :global(li) { margin: 0.35rem 0; }
+    :global(strong) { color: $text; font-weight: 700; }
+    :global(a) { color: $ink; text-decoration: underline; }
+    :global(code) {
+      background: $soft;
+      border: 1px solid $line;
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-size: 0.9em;
+    }
+    :global(> :first-child) { margin-top: 0; }
   }
 
   .rv2__english {
@@ -605,110 +680,183 @@ const applyHref = role.applyEmail ? `mailto:${role.applyEmail}` : '#apply';
     align-items: center;
     gap: 8px;
     margin-top: 2rem;
-    background: $chip;
-    border: 1px solid $border;
-    border-radius: 12px;
+    background: $tint;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
     padding: 12px 16px;
-    font-size: 14px;
-    color: #374151;
-    svg { color: $accent; flex-shrink: 0; }
-    strong { color: $accent; font-weight: 700; }
+    font-size: 0.875rem;
+    color: $text;
+    svg { color: $ink; flex-shrink: 0; }
+    strong { color: $ink; font-weight: 700; }
   }
 
-  // ── Timeline ─────────────────────────────────────────────────────
-  .rv2__phase { & + & { margin-top: 2rem; } }
+  // ── Apply form ───────────────────────────────────────────────────
+  .rv2__apply-block { scroll-margin-top: 5.5rem; }
 
-  .rv2__phase-title {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: $ink;
-    margin: 0 0 1.25rem;
-    &--client { color: $muted; }
-  }
-
-  .rv2__timeline { list-style: none; margin: 0; padding: 0; }
-
-  .rv2__step {
-    position: relative;
-    padding-left: 28px;
-    padding-bottom: 1.5rem;
-    &::before {
-      content: '';
-      position: absolute;
-      left: 6px;
-      top: 16px;
-      bottom: -2px;
-      width: 2px;
-      background: $border;
-    }
-    &:last-child::before { display: none; }
-    &--client::before { background: $border; }
-  }
-
-  .rv2__step-dot {
-    position: absolute;
-    left: 0;
-    top: 5px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #fff;
-    border: 3px solid $accent;
-    .rv2__step--client & { border-color: $subtle; }
-  }
-
-  .rv2__step-head {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .rv2__step-name { font-size: 1rem; font-weight: 700; color: $ink; }
-
-  .rv2__step-time {
-    font-size: 12px;
-    font-weight: 600;
-    color: $muted;
-    background: rgba(17, 24, 39, 0.05);
-    border-radius: 999px;
-    padding: 2px 10px;
-  }
-
-  .rv2__step-detail {
-    margin: 5px 0 0;
-    font-size: 0.9rem;
-    line-height: 1.55;
-    color: $muted;
-  }
-
-  // ── Final CTA ────────────────────────────────────────────────────
-  .rv2__cta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    padding: clamp(1.75rem, 4vw, 2.5rem);
-    background: $surface;
-    border: 1.5px solid $border;
-    border-radius: 22px;
-    margin-top: 0.5rem;
-  }
-
-  .rv2__cta-title {
+  .rv2__apply-title {
     font-size: clamp(1.35rem, 2.5vw, 1.75rem);
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: -0.02em;
+    color: $ink;
     margin: 0;
   }
 
-  .rv2__cta-sub {
-    font-size: 0.95rem;
-    color: $muted;
-    margin: 0.4rem 0 0;
-    max-width: 380px;
+  .rv2__apply-sub { font-size: 0.95rem; color: $muted; margin: 0.4rem 0 1.75rem; }
+
+  .rv2__form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    @include max-md { grid-template-columns: 1fr; }
+  }
+
+  .rv2__f {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    &--full { grid-column: 1 / -1; }
+
+    label { font-size: 0.875rem; font-weight: 500; color: $text; }
+
+    input, select {
+      font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+      font-size: 0.9375rem;
+      color: $text;
+      background: #fff;
+      border: 1px solid $line;
+      border-radius: 10px;
+      padding: 0.75rem 0.9rem;
+      width: 100%;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: $ink;
+        box-shadow: 0 0 0 3px rgba(41, 40, 95, 0.12);
+      }
+      &.is-invalid {
+        border-color: #d14343;
+        box-shadow: 0 0 0 3px rgba(209, 67, 67, 0.1);
+      }
+    }
+
+    input[type='file'] { padding: 0.6rem 0.9rem; }
+  }
+
+  .rv2__f-err { font-size: 0.8125rem; color: #d14343; min-height: 1em; }
+
+  // Honeypot — off-screen (NOT display:none so bots still fill it)
+  .rv2__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .rv2__form-foot {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: 1.75rem;
+  }
+
+  .rv2__form-note { margin: 0; font-size: 0.875rem; color: $muted; }
+
+  .rv2__result {
+    margin-top: 1.5rem;
+    border: 1px solid $line;
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    background: $surface;
+
+    &--ok { border-color: #b6e0c8; background: #f4fbf7; }
+    &--err { border-color: #eec4c4; background: #fdf6f6; }
+  }
+
+  .rv2__result-title { font-size: 1.15rem; font-weight: 600; margin: 0 0 0.5rem; color: $ink; }
+
+  .rv2__result-body { font-size: 0.95rem; line-height: 1.6; color: $muted; margin: 0 0 1rem; }
+  .rv2__result--ok .rv2__result-body { margin-bottom: 0; }
+
+  .rv2__result-body .rv2__result-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: $ink;
+    text-decoration: underline;
+  }
+
+  // ── Closed state (client-detected 404 — whole-page equivalent of the
+  //    apply form's own 404 card) ─────────────────────────────────────
+  .rv2__closed {
+    max-width: 40rem;
+    margin: 3rem auto;
+    text-align: center;
+    border: 1px solid $line;
+    border-radius: var(--radius);
+    padding: clamp(2.5rem, 6vw, 3.5rem) 2rem;
+    background: $soft;
+
+    &[hidden] { display: none; }
+  }
+  .rv2__closed-title { font-size: clamp(1.4rem, 3vw, 1.75rem); font-weight: 600; letter-spacing: -0.02em; margin: 0 0 0.75rem; color: $ink; }
+  .rv2__closed-body { font-size: 1rem; line-height: 1.65; color: $muted; margin: 0; }
+  .rv2__closed-body .rv2__result-link { display: inline-block; margin-top: 0.5rem; font-weight: 600; color: $ink; text-decoration: underline; }
+
+  // ── Loading skeleton ─────────────────────────────────────────────────
+  // Hidden by default (no-JS fallback = real prerendered content shows
+  // immediately). Shimmer bars sized to roughly match the rail + content
+  // layout so there's no jump when the real content swaps in.
+  .rv2__skeleton {
+    &[hidden] { display: none; }
+  }
+
+  .rv2__skeleton-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+
+    @include max-lg { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .rv2__skeleton-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    background: $surface;
+    border: 1px solid $line;
+    border-top: 4px solid $line;
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .rv2__skeleton-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .rv2-sk {
+    border-radius: 6px;
+    background: linear-gradient(90deg, $soft 25%, $line 37%, $soft 63%);
+    background-size: 400% 100%;
+    animation: rv2-shimmer 1.4s ease infinite;
+
+    &--fact { width: 100%; height: 20px; margin-top: 4px; }
+  }
+
+  @keyframes rv2-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rv2-sk { animation: none; background: $soft; }
   }
 </style>

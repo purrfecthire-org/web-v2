@@ -4,6 +4,10 @@ on:
   # Run on every push to main
   push:
     branches: [main]
+  # Weekly rebuild (Mondays 06:00 UTC) so the static /roles SEO snapshot
+  # refreshes from the backend even without a push.
+  schedule:
+    - cron: '0 6 * * 1'
   # Allow manual runs from the Actions tab
   workflow_dispatch:
 
@@ -40,6 +44,15 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build site
+        # PUBLIC_API_ENDPOINT drives the /roles list + detail build-time fetch
+        # (and its client-side refresh) plus the apply forms. Without it set as
+        # a repo Actions variable, these all fall back to their empty/offline
+        # states and every production build silently ships with no roles.
+        # Settings → Secrets and variables → Actions → Variables →
+        # PUBLIC_API_ENDPOINT = https://ats-backend-snowy.vercel.app
+        env:
+          PUBLIC_API_ENDPOINT: ${{ vars.PUBLIC_API_ENDPOINT }}
+          PUBLIC_LOG_ENDPOINT: ${{ vars.PUBLIC_LOG_ENDPOINT }}
         run: pnpm build
 
       - name: Upload Pages artifact

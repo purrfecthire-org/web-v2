@@ -7,9 +7,11 @@ interface Props {
   lang: string;
   /** Path the language toggle targets in the other locale (defaults to home). */
   otherLangPath?: string;
+  /** Set false for pages with no counterpart in the other locale. */
+  showLangToggle?: boolean;
 }
 
-const { content, lang, otherLangPath = '/' } = Astro.props;
+const { content, lang, otherLangPath = '/', showLangToggle = true } = Astro.props;
 const otherLang = lang === 'en' ? 'es' : 'en';
 const otherLangHref = getRelativeLocaleUrl(otherLang, otherLangPath);
 ---
@@ -28,30 +30,55 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, otherLangPath);
         {content.links.map((link, i) => (
           <>
             {i > 0 && <span class="v6-nav__sep" aria-hidden="true">·</span>}
-            <a href={link.href} class="v6-nav__link">
-              {link.label}
-            </a>
+            {link.children ? (
+              <div class="v6-nav__dropdown">
+                <a href={link.href} class="v6-nav__link v6-nav__link--dropdown">
+                  {link.label}
+                  <svg class="v6-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                    <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </a>
+                <div class="v6-nav__dropdown-panel">
+                  <div class="v6-nav__dropdown-panel-inner">
+                    {link.children.map((child) => (
+                      <a href={child.href} class="v6-nav__dropdown-item">
+                        <span class="v6-nav__dropdown-item-label">{child.label}</span>
+                        <span class="v6-nav__dropdown-item-desc">{child.description}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a href={link.href} class="v6-nav__link">
+                {link.label}
+              </a>
+            )}
           </>
         ))}
       </div>
 
-      <!-- Right side: language toggle only (hidden while hero is in view) -->
+      <!-- Right side: extra CTA slot + language toggle (hidden while hero is in view) -->
       <div class="v6-nav__actions v6-nav__collapsible">
-        <div class="v6-nav__lang-toggle">
-          {lang === 'en' ? (
-            <>
-              <span class="v6-nav__lang v6-nav__lang--active">EN</span>
-              <span class="v6-nav__lang-divider">|</span>
-              <a href={otherLangHref} class="v6-nav__lang v6-nav__lang--inactive">ES</a>
-            </>
-          ) : (
-            <>
-              <a href={otherLangHref} class="v6-nav__lang v6-nav__lang--inactive">EN</a>
-              <span class="v6-nav__lang-divider">|</span>
-              <span class="v6-nav__lang v6-nav__lang--active">ES</span>
-            </>
-          )}
-        </div>
+        <slot name="extra-cta" />
+
+        {showLangToggle && (
+          <div class="v6-nav__lang-toggle">
+            {lang === 'en' ? (
+              <>
+                <span class="v6-nav__lang v6-nav__lang--active">EN</span>
+                <span class="v6-nav__lang-divider">|</span>
+                <a href={otherLangHref} class="v6-nav__lang v6-nav__lang--inactive">ES</a>
+              </>
+            ) : (
+              <>
+                <a href={otherLangHref} class="v6-nav__lang v6-nav__lang--inactive">EN</a>
+                <span class="v6-nav__lang-divider">|</span>
+                <span class="v6-nav__lang v6-nav__lang--active">ES</span>
+              </>
+            )}
+          </div>
+        )}
 
         <button
           id="mobile-menu-btn"
@@ -75,9 +102,24 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, otherLangPath);
   <div id="mobile-menu" class="v6-nav__mobile-menu">
     <div class="v6-nav__mobile-inner">
       {content.links.map((link) => (
-        <a href={link.href} class="v6-nav__link v6-nav__link--mobile">
-          {link.label}
-        </a>
+        link.children ? (
+          <div class="v6-nav__mobile-group">
+            <a href={link.href} class="v6-nav__link v6-nav__link--mobile v6-nav__link--mobile-parent">
+              {link.label}
+            </a>
+            <div class="v6-nav__mobile-submenu">
+              {link.children.map((child) => (
+                <a href={child.href} class="v6-nav__link v6-nav__link--mobile v6-nav__link--mobile-child">
+                  {child.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a href={link.href} class="v6-nav__link v6-nav__link--mobile">
+            {link.label}
+          </a>
+        )
       ))}
     </div>
   </div>
@@ -202,6 +244,116 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, otherLangPath);
         padding-inline: 0;
         padding-block: 0.5rem;
       }
+
+      &--mobile-parent {
+        font-weight: 500;
+      }
+
+      &--mobile-child {
+        font-weight: 400;
+        color: var(--color-muted);
+        padding-block: 0.375rem;
+      }
+
+      &--dropdown {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        white-space: nowrap;
+      }
+    }
+
+    &__chevron {
+      color: var(--color-tertiary);
+      transition: transform 0.2s ease;
+    }
+
+    &__dropdown {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+
+      &:hover .v6-nav__dropdown-panel,
+      &:focus-within .v6-nav__dropdown-panel {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(-50%);
+        transition:
+          opacity 150ms ease,
+          transform 150ms ease,
+          pointer-events 0s;
+      }
+
+      &:hover .v6-nav__chevron,
+      &:focus-within .v6-nav__chevron {
+        transform: rotate(180deg);
+      }
+    }
+
+    // Invisible hit-box: sits flush against the trigger (no gap) so the
+    // pointer never crosses dead space between the link and the visible
+    // card — the `padding-top` here IS the hoverable bridge. Closing is
+    // delayed so a slow diagonal mouse move doesn't drop out of hover.
+    &__dropdown-panel {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      padding-top: 0.625rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(-4px);
+      transition:
+        opacity 180ms ease 220ms,
+        transform 180ms ease 220ms,
+        pointer-events 0s 400ms;
+    }
+
+    &__dropdown-panel-inner {
+      min-width: 15rem;
+      padding: 0.375rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 0.75rem;
+    }
+
+    &__dropdown-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+      padding: 0.625rem 0.75rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: background 0.15s ease;
+
+      &:hover,
+      &:focus-visible {
+        background: var(--color-bg-soft);
+      }
+    }
+
+    &__dropdown-item-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    &__dropdown-item-desc {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+    }
+
+    &__mobile-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__mobile-submenu {
+      display: flex;
+      flex-direction: column;
+      padding-left: 1rem;
     }
 
     &__actions {

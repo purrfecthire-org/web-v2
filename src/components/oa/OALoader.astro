@@ -1,0 +1,446 @@
+---
+// ── OA loading overlay — one of 8 selectable designs ─────────────────────
+// Renders a single loader variant (1–8). All variants honor the same
+// contract: two phases (data-phase="0" | "1" on the root, set by
+// src/scripts/oaLoader.ts) and an animated 1→2→3→reset dots cycle on the
+// active phrase (pure CSS). Phrases are pre-rendered into data-p1/data-p2 so
+// the runtime controller needs no extra config.
+//
+// Variants:
+//   1 spinner ring · 2 bouncing dots · 3 progress bar with phase steps ·
+//   4 orbiting dots · 5 pulsing concentric rings · 6 typewriter + caret ·
+//   7 vertical step checklist · 8 morphing blob
+//
+// Used by /offer-acceleration/apply (picked via ?loader=1..8) and the
+// internal gallery /oa/loading-designs.
+interface Props {
+  variant: number;
+  phrases: { phase1: string; phase2: string };
+}
+const { variant, phrases } = Astro.props;
+
+// Dots markup is identical everywhere; a tiny helper keeps the template flat.
+const singlePhrase = variant !== 3 && variant !== 7;
+---
+
+<div class="oal" data-variant={variant} data-p1={phrases.phase1} data-p2={phrases.phase2} hidden>
+  {variant === 1 && (
+    <div class="oal__visual">
+      <div class="oal__ring" aria-hidden="true"></div>
+    </div>
+  )}
+
+  {variant === 2 && (
+    <div class="oal__visual oal__bounce" aria-hidden="true">
+      <i></i><i></i><i></i>
+    </div>
+  )}
+
+  {variant === 3 && (
+    <div class="oal__visual oal__progress">
+      <div class="oal__bar" aria-hidden="true"><div class="oal__bar-fill"></div></div>
+      <div class="oal__psteps">
+        <div class="oal__pstep is-active" data-step="0">
+          <span class="oal__pcheck" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2 5 8.7l4.5-5.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="oal__ptext">{phrases.phase1}<span class="oal__dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></span>
+        </div>
+        <div class="oal__pstep" data-step="1">
+          <span class="oal__pcheck" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2 5 8.7l4.5-5.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="oal__ptext">{phrases.phase2}<span class="oal__dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></span>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {variant === 4 && (
+    <div class="oal__visual oal__orbit" aria-hidden="true">
+      <span class="oal__orbit-center"></span>
+      <span class="oal__orbit-ring"><i></i><i></i><i></i></span>
+    </div>
+  )}
+
+  {variant === 5 && (
+    <div class="oal__visual oal__pulse" aria-hidden="true">
+      <i></i><i></i><i></i>
+      <span class="oal__pulse-core"></span>
+    </div>
+  )}
+
+  {variant === 7 && (
+    <div class="oal__visual oal__list">
+      <div class="oal__lstep is-active" data-step="0">
+        <span class="oal__lcheck" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2 5 8.7l4.5-5.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="oal__ltext">{phrases.phase1}<span class="oal__dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></span>
+      </div>
+      <div class="oal__lstep" data-step="1">
+        <span class="oal__lcheck" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2 5 8.7l4.5-5.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="oal__ltext">{phrases.phase2}<span class="oal__dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></span>
+      </div>
+    </div>
+  )}
+
+  {variant === 8 && (
+    <div class="oal__visual">
+      <div class="oal__blob" aria-hidden="true"></div>
+    </div>
+  )}
+
+  {singlePhrase && variant === 6 && (
+    <p class="oal__phrase oal__phrase--type">
+      <span class="oal__text">{phrases.phase1}</span><span class="oal__caret" aria-hidden="true"></span><span class="oal__dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span>
+    </p>
+  )}
+  {singlePhrase && variant !== 6 && (
+    <p class="oal__phrase">
+      <span class="oal__text">{phrases.phase1}</span><span class="oal__dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span>
+    </p>
+  )}
+</div>
+
+<style lang="scss">
+  // Design tokens per DESIGN.md: single navy ink #29285F (var(--ink) /
+  // var(--color-ink)), hairline borders, 12px radius, no shadows.
+
+  .oal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .oal__visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 88px;
+  }
+
+  // ── Shared phrase + dots ──────────────────────────────────
+  .oal__phrase {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin: 0;
+    min-height: 1.6em;
+  }
+
+  .oal__dots {
+    display: inline-block;
+    letter-spacing: 0.08em;
+    margin-left: 0.1em;
+
+    i {
+      font-style: normal;
+      opacity: 0;
+    }
+    // One dot, then two, then three, then reset — a synced cumulative cycle.
+    i:nth-child(1) { animation: oal-dot-1 1.4s steps(1, end) infinite; }
+    i:nth-child(2) { animation: oal-dot-2 1.4s steps(1, end) infinite; }
+    i:nth-child(3) { animation: oal-dot-3 1.4s steps(1, end) infinite; }
+  }
+
+  @keyframes oal-dot-1 { 0%, 24% { opacity: 0; } 25%, 100% { opacity: 1; } }
+  @keyframes oal-dot-2 { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
+  @keyframes oal-dot-3 { 0%, 74% { opacity: 0; } 75%, 100% { opacity: 1; } }
+
+  // ── 1 · Spinner ring ──────────────────────────────────────
+  .oal__ring {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--color-accent-light);
+    border-top-color: var(--color-ink);
+    animation: oal-spin 0.9s linear infinite;
+  }
+
+  // ── 2 · Bouncing dots ─────────────────────────────────────
+  .oal__bounce {
+    gap: 0.75rem;
+
+    i {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--color-ink);
+      animation: oal-bounce 1.1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+    i:nth-child(2) { animation-delay: 0.15s; }
+    i:nth-child(3) { animation-delay: 0.3s; }
+  }
+
+  @keyframes oal-bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-16px); }
+  }
+
+  // ── 3 · Progress bar with phase steps ─────────────────────
+  .oal__progress {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    width: min(22rem, 78vw);
+  }
+
+  .oal__bar {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--color-accent-light);
+    overflow: hidden;
+  }
+
+  .oal__bar-fill {
+    height: 100%;
+    width: 6%;
+    border-radius: 999px;
+    background: var(--color-ink);
+    // Long, decelerating transition: JS sets ~18% on phase 1 and ~92% on
+    // phase 2; the bar keeps creeping while phase 2 loops.
+    transition: width 4.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .oal__psteps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    text-align: left;
+  }
+
+  .oal__pstep {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    color: var(--color-tertiary);
+    transition: color 0.3s ease;
+
+    .oal__dots { visibility: hidden; }
+
+    &.is-active {
+      color: var(--color-text);
+      font-weight: 500;
+      .oal__dots { visibility: visible; }
+    }
+    &.is-done { color: var(--color-muted); }
+  }
+
+  .oal__pcheck {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    color: transparent;
+    background: var(--color-bg);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+    svg { width: 11px; height: 11px; }
+  }
+
+  .oal__pstep.is-active .oal__pcheck { border-color: var(--color-ink); }
+  .oal__pstep.is-done .oal__pcheck {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: #fff;
+  }
+
+  // ── 4 · Orbiting dots ─────────────────────────────────────
+  .oal__orbit {
+    position: relative;
+    width: 84px;
+    height: 84px;
+  }
+
+  .oal__orbit-center {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border-radius: 50%;
+    background: var(--color-ink);
+  }
+
+  .oal__orbit-ring {
+    position: absolute;
+    inset: 0;
+    animation: oal-spin 1.8s linear infinite;
+
+    i {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-ink);
+    }
+    i:nth-child(1) { top: 0; left: 50%; margin-left: -5px; opacity: 0.9; }
+    i:nth-child(2) { bottom: 9%; left: 12%; opacity: 0.55; }
+    i:nth-child(3) { bottom: 9%; right: 12%; opacity: 0.3; }
+  }
+
+  // ── 5 · Pulsing concentric rings ──────────────────────────
+  .oal__pulse {
+    position: relative;
+    width: 96px;
+    height: 96px;
+
+    i {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-ink);
+      opacity: 0;
+      animation: oal-pulse 2.4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+    }
+    i:nth-child(2) { animation-delay: 0.8s; }
+    i:nth-child(3) { animation-delay: 1.6s; }
+  }
+
+  .oal__pulse-core {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    animation: oal-core 2.4s ease-in-out infinite;
+  }
+
+  @keyframes oal-pulse {
+    0% { transform: scale(0.22); opacity: 0.75; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+  @keyframes oal-core {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+  }
+
+  // ── 6 · Typewriter ────────────────────────────────────────
+  // While typing, hide the cycling dots so the caret reads clean
+  // (is-typing is toggled on the .oal root by src/scripts/oaLoader.ts).
+  .oal.is-typing .oal__phrase--type .oal__dots { visibility: hidden; }
+
+  .oal__caret {
+    display: inline-block;
+    width: 2px;
+    height: 1.05em;
+    margin: 0 0.15em -0.18em 0.12em;
+    background: var(--color-ink);
+    animation: oal-caret 1s steps(1, end) infinite;
+  }
+
+  @keyframes oal-caret {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  // ── 7 · Vertical step checklist ───────────────────────────
+  .oal__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.875rem;
+    min-width: min(20rem, 78vw);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius, 12px);
+    padding: 1.5rem 1.75rem;
+    background: var(--color-surface);
+    text-align: left;
+  }
+
+  .oal__lstep {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    color: var(--color-tertiary);
+    transition: color 0.3s ease;
+
+    .oal__dots { visibility: hidden; }
+
+    &.is-active {
+      color: var(--color-text);
+      font-weight: 500;
+      .oal__dots { visibility: visible; }
+      .oal__lcheck { border-color: var(--color-ink); animation: oal-tick 1.2s ease-in-out infinite; }
+    }
+    &.is-done {
+      color: var(--color-muted);
+      .oal__lcheck {
+        background: var(--color-ink);
+        border-color: var(--color-ink);
+        color: #fff;
+        animation: none;
+      }
+    }
+  }
+
+  .oal__lcheck {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-border);
+    color: transparent;
+    background: var(--color-bg);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+    svg { width: 12px; height: 12px; }
+  }
+
+  @keyframes oal-tick {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+  }
+
+  // ── 8 · Morphing blob ─────────────────────────────────────
+  .oal__blob {
+    width: 84px;
+    height: 84px;
+    background: radial-gradient(circle at 32% 28%, #4a498a 0%, var(--color-ink) 68%);
+    animation: oal-blob 5s ease-in-out infinite;
+  }
+
+  @keyframes oal-blob {
+    0%, 100% {
+      border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
+      transform: rotate(0deg) scale(1);
+    }
+    33% {
+      border-radius: 42% 58% 46% 54% / 58% 42% 58% 42%;
+      transform: rotate(28deg) scale(1.06);
+    }
+    66% {
+      border-radius: 52% 48% 62% 38% / 42% 52% 48% 58%;
+      transform: rotate(-22deg) scale(0.96);
+    }
+  }
+
+  // ── Shared ────────────────────────────────────────────────
+  @keyframes oal-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .oal__ring,
+    .oal__orbit-ring { animation-duration: 4s; }
+    .oal__bounce i,
+    .oal__pulse i,
+    .oal__pulse-core,
+    .oal__blob,
+    .oal__lstep.is-active .oal__lcheck { animation: none; }
+  }
+</style>

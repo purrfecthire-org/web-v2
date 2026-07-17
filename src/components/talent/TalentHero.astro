@@ -19,14 +19,6 @@ const situations = [
 // The ladder — every rung is public-priced and one click deep.
 const ladder = [
   {
-    eyebrow: 'Free',
-    title: 'Open roles',
-    body: 'Senior roles at YC-, a16z- and Sequoia-backed startups, active right now. Apply once, get evaluated against the real bar.',
-    price: 'Free',
-    href: '#roles',
-    cta: 'Browse roles →',
-  },
-  {
     eyebrow: 'One problem',
     title: '1:1 Session',
     body: 'One hour with Kate on your interview, offer, narrative or limiting beliefs. Book via WhatsApp, pay when you book.',
@@ -185,9 +177,8 @@ const ladder = [
     // ── Ladder cards ─────────────────────────────────────────
     &__routes {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
-      @include max-lg { grid-template-columns: 1fr 1fr; }
       @include max-sm { grid-template-columns: 1fr; }
     }
 
@@ -208,7 +199,6 @@ const ladder = [
       &:nth-child(1) { animation-delay: 0.35s; }
       &:nth-child(2) { animation-delay: 0.45s; }
       &:nth-child(3) { animation-delay: 0.55s; }
-      &:nth-child(4) { animation-delay: 0.65s; }
 
       &:hover {
         transform: translateY(-4px);

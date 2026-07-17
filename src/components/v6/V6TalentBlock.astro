@@ -1,6 +1,7 @@
 ---
 import type { LandingContent } from '../../content/index';
 import V6FaqAccordion from './V6FaqAccordion.astro';
+import { fetchRoles, v6RoleTeaserHTML, type PublicRoleListItem } from '../../lib/roles';
 
 interface Props {
   content: LandingContent;
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const { content, faqs } = Astro.props;
-const { roles, offerAcceleration } = content;
+const { offerAcceleration } = content;
 const tb = content.v6.talentBlock;
 
 // Links to the dedicated pages that explain each path in full depth.
@@ -20,9 +21,18 @@ const ROLES_URL = '/roles';
 const oaFit = offerAcceleration.blocks[0]; // "You're the right fit if:"
 const oaSessions = offerAcceleration.blocks[1]; // "Across 8 sessions:"
 
-// Show every active role (not a fixed slice) so the scroller scales as more
-// searches are added over time.
-const activeRoles = roles.cards;
+// Live open roles — same backend fetch as /roles (build-time prerender here,
+// client-side refresh below). Resilience: never fail the home page build on
+// a backend outage — render the empty state instead.
+let activeRoles: PublicRoleListItem[] = [];
+try {
+  activeRoles = await fetchRoles();
+} catch (err) {
+  console.warn(
+    `[V6TalentBlock] build-time roles fetch failed, rendering empty state: ${(err as Error)?.message ?? err}`
+  );
+}
+const rolesHtml = activeRoles.map(v6RoleTeaserHTML).join('');
 ---
 
 <section id="v6-talent" class="v6-talent">
@@ -90,27 +100,58 @@ const activeRoles = roles.cards;
         <a href={ROLES_URL} class="btn v6-talent__btn--navy v6-talent__roles-cta">{tb.rolesBrowseAll}</a>
       </div>
 
-      <div class="v6-talent__scroller">
-        {activeRoles.map((role) => (
-          <a href={ROLES_URL} class="v6-talent__role" aria-label={`${role.title} — ${role.cta}`}>
-            <div class="v6-talent__role-top">
-              <span class="v6-talent__role-tag eyebrow">{role.tag}</span>
-              <span class="v6-talent__role-comp">{role.comp}</span>
-            </div>
-            <h4 class="v6-talent__role-title">{role.title}</h4>
-            <p class="v6-talent__role-stage caption">{role.stage}</p>
-            <div class="v6-talent__role-stack">
-              {role.stack.map((s) => <span class="v6-talent__skill">{s}</span>)}
-            </div>
-          </a>
+      <!-- Loading skeleton — shown the instant the client refresh script
+           starts fetching; hidden by default so no-JS visitors see the
+           prerendered scroller/empty-state below immediately. -->
+      <div class="v6-talent__scroller v6-talent__skeleton" id="v6r-skeleton" hidden aria-hidden="true">
+        {Array.from({ length: 3 }).map(() => (
+          <div class="v6-talent__role-skel">
+            <div class="v6r-sk" style="width:45%;height:9px;"></div>
+            <div class="v6r-sk" style="width:80%;height:17px;margin-top:12px;"></div>
+            <div class="v6r-sk" style="width:60%;height:11px;margin-top:12px;"></div>
+            <div class="v6r-sk" style="width:70%;height:20px;border-radius:999px;margin-top:14px;"></div>
+          </div>
         ))}
+      </div>
+
+      <!-- Roles scroller — single-source-of-truth card renderer, shared with
+           the client refresh script below. -->
+      <div
+        class="v6-talent__scroller"
+        id="v6r-scroller"
+        hidden={activeRoles.length === 0}
+        set:html={rolesHtml}
+      />
+
+      <!-- Empty state — no open roles (or the build-time fetch failed). The
+           "Browse all roles" CTA above stays visible either way. -->
+      <div class="v6-talent__roles-empty" id="v6r-empty" hidden={activeRoles.length > 0}>
+        <p class="v6-talent__roles-empty-text">
+          No open roles right now — new searches go live every week. Browse all roles to send us
+          your profile.
+        </p>
       </div>
     </div>
 
   </div>
 </section>
 
-<style lang="scss">
+<script>
+  // Client refresh (primary data path) — same fetch-on-load pattern as
+  // /roles, sharing the wiring via initRolesRefresh so mid-week publishes
+  // show up on the home page teaser without a rebuild.
+  import { v6RoleTeaserHTML, initRolesRefresh } from '../../lib/roles';
+
+  initRolesRefresh({
+    containerId: 'v6r-scroller',
+    emptyId: 'v6r-empty',
+    skeletonId: 'v6r-skeleton',
+    render: v6RoleTeaserHTML,
+    stage: 'home_roles_teaser_refresh',
+  });
+</script>
+
+<style lang="scss" is:global>
   @use '../../styles/breakpoints' as *;
 
   // Talent lane theme — navy
@@ -371,5 +412,61 @@ const activeRoles = roles.cards;
       border-radius: 6px;
       padding: 2px 8px;
     }
+
+    // `[hidden]` alone loses to the `display: flex` rules above (author CSS
+    // always wins over the UA stylesheet), so both toggled containers need
+    // an explicit override.
+    &__scroller[hidden],
+    &__roles-empty[hidden] {
+      display: none;
+    }
+
+    // Loading skeleton — same box metrics as &__role so there's no layout
+    // jump when the client refresh swaps it for real cards.
+    &__role-skel {
+      flex: 0 0 22rem;
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--bg);
+
+      @include max-sm { flex-basis: 17rem; }
+    }
+
+    // Empty state — no open roles (or the fetch failed). The roles-head CTA
+    // above ("Browse all roles") stays visible regardless.
+    &__roles-empty {
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      text-align: center;
+    }
+    &__roles-empty-text {
+      margin: 0;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--color-muted);
+      max-width: 32rem;
+      margin-inline: auto;
+    }
+  }
+
+  .v6r-sk {
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--bg-soft) 25%, var(--color-border) 37%, var(--bg-soft) 63%);
+    background-size: 400% 100%;
+    animation: v6r-shimmer 1.4s ease infinite;
+  }
+
+  @keyframes v6r-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v6r-sk { animation: none; background: var(--bg-soft); }
   }
 </style>
