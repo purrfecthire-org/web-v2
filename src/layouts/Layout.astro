@@ -9,6 +9,12 @@ interface Props {
   canonicalUrl?: string;
   /** Design-test pages: keep out of search results */
   noindex?: boolean;
+  /**
+   * Absolute URL for og:image / twitter:image. B2C pages (career-sessions,
+   * momentum, /kate) must pass the Kate photo: shared over WhatsApp they
+   * should show her face, not the logo (visual spec §5).
+   */
+  ogImage?: string;
 }
 
 const {
@@ -17,11 +23,11 @@ const {
   lang = 'en',
   canonicalUrl,
   noindex = false,
+  ogImage = 'https://purrfecthire.com/logos/ph_imagotipo.png',
 } = Astro.props;
 
 const siteUrl = 'https://purrfecthire.com';
 const currentUrl = canonicalUrl ?? `${siteUrl}${Astro.url.pathname}`;
-const ogImage = `${siteUrl}/logos/ph_imagotipo.png`;
 const alternateLang = lang === 'en' ? 'es' : 'en';
 const alternateUrl = lang === 'en' ? `${siteUrl}/es/` : siteUrl;
 ---

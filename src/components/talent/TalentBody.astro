@@ -5,6 +5,7 @@
 // full — plus a placed-candidate testimonial and a closing CTA. Content comes
 // from the shared content object. Isolated under the `ft-` prefix.
 import type { LandingContent } from '../../content/index';
+import { fetchRoles, ftRoleCardHTML, type PublicRoleListItem } from '../../lib/roles';
 
 interface Props {
   content: LandingContent;
@@ -19,6 +20,19 @@ const ROLES_URL = '/roles';
 
 // Open-roles enquiries route to recruitment@ (distinct from the general hiring@).
 const ROLES_EMAIL = 'recruitment@purrfecthire.com';
+
+// Live open roles — same backend fetch as /roles (build-time prerender here,
+// client-side refresh below). Resilience: never fail the page build on a
+// backend outage — render the empty state instead.
+let liveRoles: PublicRoleListItem[] = [];
+try {
+  liveRoles = await fetchRoles();
+} catch (err) {
+  console.warn(
+    `[TalentBody] build-time roles fetch failed, rendering empty state: ${(err as Error)?.message ?? err}`
+  );
+}
+const rolesHtml = liveRoles.map(ftRoleCardHTML).join('');
 
 const oaFit = offerAcceleration.blocks[0];      // "You're the right fit if:"
 const oaSessions = offerAcceleration.blocks[1]; // "Across 8 sessions:"
@@ -40,20 +54,37 @@ const candidate = testimonials.candidateTestimonial;
       </p>
     </header>
 
-    <div class="ft-roles__grid">
-      {roles.cards.map((role) => (
-        <article class="ft-roles__card reveal reveal-delay-1">
-          <div class="ft-roles__card-head">
-            <span class="ft-roles__card-title">{role.title}</span>
-            <span class="ft-roles__card-comp">{role.comp}</span>
-          </div>
-          <span class="ft-roles__card-meta caption">{role.tag} · {role.stage}</span>
-          <div class="ft-roles__card-stack">
-            {role.stack.map((s) => <span class="ft-roles__skill">{s}</span>)}
-          </div>
-          <a href={ROLES_URL} class="ft-roles__card-cta">{role.cta}</a>
-        </article>
+    <!-- Loading skeleton — shown the instant the client refresh script
+         starts fetching; hidden by default so no-JS visitors see the
+         prerendered grid/empty-state below immediately. -->
+    <div class="ft-roles__grid ft-roles__skeleton" id="ftr-skeleton" hidden aria-hidden="true">
+      {Array.from({ length: 3 }).map(() => (
+        <div class="ft-roles__skel-card">
+          <div class="ftr-sk" style="width:70%;height:15px;"></div>
+          <div class="ftr-sk" style="width:45%;height:11px;margin-top:10px;"></div>
+          <div class="ftr-sk" style="width:80%;height:20px;border-radius:999px;margin-top:14px;"></div>
+          <div class="ftr-sk" style="width:35%;height:13px;margin-top:16px;"></div>
+        </div>
       ))}
+    </div>
+
+    <!-- Roles grid — single-source-of-truth card renderer, shared with the
+         client refresh script below. -->
+    <div
+      class="ft-roles__grid"
+      id="ftr-grid"
+      hidden={liveRoles.length === 0}
+      set:html={rolesHtml}
+    />
+
+    <!-- Empty state — no open roles (or the build-time fetch failed). The
+         "Browse all roles" CTA below stays visible either way. -->
+    <div class="ft-roles__empty" id="ftr-empty" hidden={liveRoles.length > 0}>
+      <h3 class="ft-roles__empty-title">No open roles right now</h3>
+      <p class="ft-roles__empty-sub">
+        New searches go live every week. Send us your profile below and we'll reach out the
+        moment something fits.
+      </p>
     </div>
 
     <div class="ft-roles__foot reveal reveal-delay-1">
@@ -120,7 +151,22 @@ const candidate = testimonials.candidateTestimonial;
   </figure>
 </section>
 
-<style lang="scss">
+<script>
+  // Client refresh (primary data path) — same fetch-on-load pattern as
+  // /roles, sharing the wiring via initRolesRefresh so mid-week publishes
+  // show up on this teaser without a rebuild.
+  import { ftRoleCardHTML, initRolesRefresh } from '../../lib/roles';
+
+  initRolesRefresh({
+    containerId: 'ftr-grid',
+    emptyId: 'ftr-empty',
+    skeletonId: 'ftr-skeleton',
+    render: ftRoleCardHTML,
+    stage: 'for_talent_roles_teaser_refresh',
+  });
+</script>
+
+<style lang="scss" is:global>
   @use '../../styles/breakpoints' as *;
 
   $talent: #29285F;
@@ -205,6 +251,41 @@ const candidate = testimonials.candidateTestimonial;
       &:hover { color: $accent; }
     }
 
+    // `[hidden]` alone loses to the `display: grid`/`flex` rules above
+    // (author CSS always wins over the UA stylesheet), so every toggled
+    // container needs an explicit override.
+    &__grid[hidden],
+    &__empty[hidden] {
+      display: none;
+    }
+
+    // Loading skeleton — same grid + box metrics as &__card so there's no
+    // layout jump when the client refresh swaps it for real cards.
+    &__skel-card {
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--bg-soft);
+    }
+
+    // Empty state — no open roles (or the fetch failed). The foot CTA below
+    // ("Browse all roles" + submit-your-profile note) stays visible either way.
+    &__empty {
+      padding: clamp(2.5rem, 6vw, 3.5rem) 1.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--bg-soft);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    &__empty-title { font-size: clamp(1.25rem, 2.5vw, 1.5rem); font-weight: 600; letter-spacing: -0.01em; margin: 0; color: var(--color-text); }
+    &__empty-sub { font-size: 0.9375rem; line-height: 1.6; color: var(--color-muted); margin: 0; max-width: 30rem; }
+
     &__foot {
       margin-top: 2.5rem;
       display: flex;
@@ -220,6 +301,22 @@ const candidate = testimonials.candidateTestimonial;
     }
     &__foot-note { color: var(--color-muted); }
     &__foot-link { color: $accent; text-decoration: underline; text-underline-offset: 2px; }
+  }
+
+  .ftr-sk {
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--bg) 25%, var(--color-border) 37%, var(--bg) 63%);
+    background-size: 400% 100%;
+    animation: ftr-shimmer 1.4s ease infinite;
+  }
+
+  @keyframes ftr-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ftr-sk { animation: none; background: var(--bg); }
   }
 
   // ── Offer Acceleration ─────────────────────────────────────

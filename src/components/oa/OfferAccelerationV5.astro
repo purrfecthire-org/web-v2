@@ -4,7 +4,10 @@
 // box-shadow, no purple accent — flat surfaces, navy ink (#29285F),
 // border-based elevation, Schibsted Grotesk (loaded globally).
 import Layout from '../../layouts/Layout.astro';
+import V6Nav from '../v6/V6Nav.astro';
+import Footer from '../Footer.astro';
 import { oaContent as c } from '../../content/offerAcceleration';
+import { getContent } from '../../content/index';
 
 interface Props {
   /** /offer-acceleration (canonical) is indexable; the /5 test route is not. */
@@ -12,27 +15,18 @@ interface Props {
 }
 
 const { noindex = true } = Astro.props;
+const { nav, footer } = getContent('es');
 ---
 
 <Layout title={c.meta.title} description={c.meta.description} lang="es" noindex={noindex}>
 
   <main class="oa5">
 
-    <header class="oa5-nav">
-      <a href="/" class="oa5-nav__logo-link" aria-label="Purrfect Hire — inicio">
-        <img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="oa5-nav__logo" />
-      </a>
-      <nav class="oa5-nav__links">
-        <a href="/for-talent" class="oa5-nav__link">Para talento</a>
-        <a href="/roles" class="oa5-nav__link">Vacantes abiertas</a>
-        <a href="/offer-acceleration" class="oa5-nav__link oa5-nav__link--active">Offer Acceleration</a>
-        <a href="/career-sessions" class="oa5-nav__link">Sesiones 1:1</a>
-        <a href="/career-momentum" class="oa5-nav__link">Momentum</a>
-      </nav>
-      <a href={c.apply.url} id="oa5-apply-btn" class="oa5-btn oa5-btn--solid">
+    <V6Nav content={nav} lang="es" showLangToggle={false}>
+      <a slot="extra-cta" href={c.apply.url} id="oa5-apply-btn" class="oa5-btn oa5-btn--solid">
         {c.apply.label}
       </a>
-    </header>
+    </V6Nav>
 
     <!-- ── Hero ─────────────────────────────────────────────────────── -->
     <section class="oa5-hero">
@@ -200,6 +194,8 @@ const { noindex = true } = Astro.props;
       <p class="oa5-final__footer">© {new Date().getFullYear()} Purrfect Hire · Offer Acceleration</p>
     </section>
   </main>
+
+  <Footer content={footer} />
 </Layout>
 
 <style lang="scss">
@@ -222,6 +218,8 @@ const { noindex = true } = Astro.props;
     color: var(--oa5-text);
     font-family: 'Schibsted Grotesk', Arial, sans-serif;
     overflow-x: hidden;
+    // Clear the fixed V6 nav
+    padding-top: 4rem;
 
     ::selection {
       background: var(--oa5-ink);
@@ -235,47 +233,6 @@ const { noindex = true } = Astro.props;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--oa5-ink);
-  }
-
-  // ── Nav ───────────────────────────────────────────────────
-  .oa5-nav {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem clamp(1.5rem, 5vw, 3rem);
-    background: var(--oa5-bg);
-    border-bottom: 1px solid var(--oa5-border);
-
-    &__logo-link {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    &__logo {
-      width: 10rem;
-    }
-
-    &__links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-
-      @media (max-width: 767px) { display: none; }
-    }
-
-    &__link {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--oa5-muted);
-      text-decoration: none;
-      transition: color 0.2s ease;
-
-      &:hover { color: var(--oa5-ink); }
-      &--active { color: var(--oa5-text); }
-    }
   }
 
   // ── Buttons ───────────────────────────────────────────────

@@ -8,7 +8,12 @@ export interface LandingContent {
   };
   nav: {
     logo: string;
-    links: { label: string; href: string }[];
+    links: {
+      label: string;
+      href: string;
+      /** Dropdown items shown under this link (desktop hover / mobile inline). */
+      children?: { label: string; description: string; href: string }[];
+    }[];
     cta: string;
   };
   hero: {
@@ -107,14 +112,6 @@ export interface LandingContent {
     headline: string;
     subheadline: string;
     contextLine: string;
-    cards: {
-      tag: string;
-      title: string;
-      stage: string;
-      comp: string;
-      stack: string[];
-      cta: string;
-    }[];
     closingText: string;
     closingEmail: string;
   };
@@ -156,6 +153,8 @@ export interface LandingContent {
       tag: string;
       headline: string;
       sub: string;
+      /** The full 4-rung ladder by commitment (Jul 2026 architecture). */
+      ladder: { label: string; price: string; href: string }[];
       oaEyebrow: string;
       oaTitle: string;
       oaBody: string;
@@ -182,11 +181,23 @@ export const content_en: LandingContent = {
 
   nav: {
     logo: 'Purrfect Hire',
+    // Unified global nav (Jul 2026 architecture): same destinations on every
+    // page, EN and ES mirrored. "For talent" carries a dropdown grouping the
+    // talent-facing programs so the top-level nav stays at 4 items.
     links: [
-      { label: 'For founders', href: '#audience' },
-      { label: 'For talent', href: '#audience' },
-      { label: 'How it works', href: '#engine' },
-      { label: 'Open roles', href: '#roles' },
+      { label: 'For founders', href: '/for-founders' },
+      {
+        label: 'For talent',
+        href: '/for-talent',
+        children: [
+          { label: 'Offer Acceleration', description: '8-session interview sprint', href: '/offer-acceleration' },
+          { label: 'Career Momentum', description: 'Ongoing monthly coaching', href: '/career-momentum' },
+          { label: 'Career Sessions', description: '1:1 sessions with Kate', href: '/career-sessions' },
+          { label: 'Open roles', description: 'Apply to live searches', href: '/roles' },
+        ],
+      },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Kate', href: '/kate' },
     ],
     cta: 'Get your first match',
   },
@@ -380,32 +391,6 @@ export const content_en: LandingContent = {
     headline: 'Senior roles at high-growth startups.',
     subheadline: 'Curated. Calibrated. Active right now.',
     contextLine: 'Company names confidential until intro.',
-    cards: [
-      {
-        tag: 'Engineering · Remote',
-        title: 'Founding Engineer',
-        stage: 'YC W26 portfolio · Seed-stage',
-        comp: '$130k–$170k + equity',
-        stack: ['TypeScript', 'Postgres', 'AWS'],
-        cta: 'Apply now →',
-      },
-      {
-        tag: 'AI/ML · Hybrid (SF)',
-        title: 'Senior ML Engineer',
-        stage: 'a16z portfolio · Series A',
-        comp: '$160k–$200k + equity',
-        stack: ['Python', 'PyTorch', 'LLMs'],
-        cta: 'Apply now →',
-      },
-      {
-        tag: 'Sales · Remote LATAM',
-        title: 'Founding Account Executive',
-        stage: 'YC W25 portfolio · Post-Seed',
-        comp: '$90k–$130k + commission',
-        stack: ['B2B SaaS', 'Outbound', 'US clients'],
-        cta: 'Apply now →',
-      },
-    ],
     closingText: 'Don\'t see a fit? Send us your profile. We place proactively.',
     closingEmail: 'hiring@purrfecthire.com',
   },
@@ -468,8 +453,14 @@ export const content_en: LandingContent = {
     },
     talentBlock: {
       tag: 'For talent',
-      headline: 'Two ways in.',
+      headline: 'Four ways in, by level of commitment.',
       sub: "You already have the skills. What's missing is the strategy, the network, and the criteria to get in front of the right founders. We train senior LATAM professionals against the real bar of YC-, a16z- and Sequoia-backed startups, so you stop getting filtered and start getting introduced.",
+      ladder: [
+        { label: 'Open roles', price: 'Free', href: '/for-talent#roles' },
+        { label: '1:1 Session with Kate', price: '$200', href: '/career-sessions' },
+        { label: 'Momentum', price: '$550/mo', href: '/career-momentum' },
+        { label: 'Offer Acceleration', price: 'From $2,000', href: '/offer-acceleration' },
+      ],
       oaEyebrow: 'Coaching program',
       oaTitle: 'Offer Acceleration',
       oaBody: 'Offer Acceleration is a 1:1 program for senior LATAM professionals who already have the skills but keep getting filtered out, or land offers below their level. By the end, you stop applying and start being introduced to the companies you actually want to join.',
@@ -530,11 +521,24 @@ export const content_es: LandingContent = {
 
   nav: {
     logo: 'Purrfect Hire',
+    // Nav global unificado (arquitectura Jul 2026), espejo del EN. Las páginas
+    // for-founders / for-talent aún no tienen versión ES. "Para talento" agrupa
+    // los programas en un dropdown para mantener el nav superior en 4 ítems.
     links: [
-      { label: 'Para founders', href: '#audience' },
-      { label: 'Para talento', href: '#audience' },
-      { label: 'Cómo funciona', href: '#engine' },
-      { label: 'Roles abiertos', href: '#roles' },
+      { label: 'Para founders', href: '/for-founders' },
+      {
+        label: 'Para talento',
+        href: '/for-talent',
+        children: [
+          { label: 'Offer Acceleration', description: 'Sprint de 8 sesiones para entrevistas', href: '/offer-acceleration' },
+          { label: 'Career Momentum', description: 'Coaching mensual continuo', href: '/es/career-momentum' },
+          { label: 'Career Sessions', description: 'Sesiones 1:1 con Kate', href: '/es/career-sessions' },
+          // { label: 'Roles abiertos', description: 'Postula a búsquedas activas', href: '/roles' },
+          // ^ habilitar cuando el backend/destinatarios de roles estén listos
+        ],
+      },
+      { label: 'Precios', href: '/es/pricing' },
+      { label: 'Kate', href: '/es/kate' },
     ],
     cta: 'Empieza tu búsqueda',
   },
@@ -728,32 +732,6 @@ export const content_es: LandingContent = {
     headline: 'Roles senior en startups de alto crecimiento.',
     subheadline: 'Curados. Calibrados. Activos ahora.',
     contextLine: 'Nombres de empresa confidenciales hasta la intro.',
-    cards: [
-      {
-        tag: 'Engineering · Remote',
-        title: 'Founding Engineer',
-        stage: 'Portfolio YC W26 · Etapa Seed',
-        comp: '$130k–$170k + equity',
-        stack: ['TypeScript', 'Postgres', 'AWS'],
-        cta: 'Aplicar ahora →',
-      },
-      {
-        tag: 'AI/ML · Híbrido (SF)',
-        title: 'Senior ML Engineer',
-        stage: 'Portfolio a16z · Series A',
-        comp: '$160k–$200k + equity',
-        stack: ['Python', 'PyTorch', 'LLMs'],
-        cta: 'Aplicar ahora →',
-      },
-      {
-        tag: 'Sales · Remoto LATAM',
-        title: 'Founding Account Executive',
-        stage: 'Portfolio YC W25 · Post-Seed',
-        comp: '$90k–$130k + comisión',
-        stack: ['B2B SaaS', 'Outbound', 'Clientes US'],
-        cta: 'Aplicar ahora →',
-      },
-    ],
     closingText: '¿No ves un fit? Envíanos tu perfil. Colocamos proactivamente.',
     closingEmail: 'hiring@purrfecthire.com',
   },
@@ -816,8 +794,14 @@ export const content_es: LandingContent = {
     },
     talentBlock: {
       tag: 'Para talento',
-      headline: 'Dos formas de entrar.',
+      headline: 'Cuatro formas de entrar, según tu nivel de compromiso.',
       sub: 'Ya tienes las habilidades. Lo que falta es la estrategia, la red y los criterios para llegar a los founders correctos. Entrenamos a profesionales senior de LATAM frente al estándar real de las startups respaldadas por YC, a16z y Sequoia, para que dejes de ser filtrado y empieces a ser presentado.',
+      ladder: [
+        { label: 'Roles abiertos', price: 'Gratis', href: '/for-talent#roles' },
+        { label: 'Sesión 1:1 con Kate', price: '$200', href: '/es/career-sessions' },
+        { label: 'Momentum', price: '$550/mes', href: '/es/career-momentum' },
+        { label: 'Offer Acceleration', price: 'Desde $2,000', href: '/offer-acceleration' },
+      ],
       oaEyebrow: 'Programa de coaching',
       oaTitle: 'Offer Acceleration',
       oaBody: 'Offer Acceleration es un programa 1:1 para profesionales senior de LATAM que ya tienen las habilidades pero siguen siendo filtrados, o reciben ofertas por debajo de su nivel. Al terminar, dejas de aplicar y empiezas a ser presentado a las empresas a las que de verdad quieres entrar.',

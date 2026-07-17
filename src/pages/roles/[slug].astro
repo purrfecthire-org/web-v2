@@ -1,0 +1,92 @@
+---
+// ─────────────────────────────────────────────────────────────────────────────
+// Dynamic role detail — one prerendered page per open role slug.
+//
+// getStaticPaths() fetches the roles list at BUILD time, then fetches each
+// role's full detail (GET /public/roles/{slug}). If the backend is unreachable
+// in CI, we catch and simply emit zero paths — the build still succeeds and the
+// list page renders its empty state.
+//
+// Company identity is never present in PublicRoleDetail; only `company_label`
+// is shown. Every optional field is hidden when null (see RoleDetailV2).
+//
+// Chrome is the GLOBAL v6 nav + footer (same as for-founders / for-talent).
+// ─────────────────────────────────────────────────────────────────────────────
+import Layout from '../../layouts/Layout.astro';
+import V6Nav from '../../components/v6/V6Nav.astro';
+import Footer from '../../components/Footer.astro';
+import RoleDetailV2 from '../../components/roles-v2/RoleDetailV2.astro';
+import { getContent } from '../../content/index';
+import { fetchRoles, fetchRole, type PublicRoleDetail } from '../../lib/roles';
+
+export async function getStaticPaths() {
+  let slugs: string[] = [];
+  try {
+    const roles = await fetchRoles();
+    slugs = roles.map((r) => r.slug).filter(Boolean);
+  } catch (err) {
+    console.warn(
+      `[roles/[slug]] build-time list fetch failed, no detail pages emitted: ${(err as Error)?.message ?? err}`
+    );
+    return [];
+  }
+
+  const results = await Promise.all(
+    slugs.map(async (slug) => {
+      try {
+        const detail = await fetchRole(slug);
+        return { params: { slug }, props: { role: detail } };
+      } catch (err) {
+        console.warn(
+          `[roles/[slug]] skipping ${slug}, detail fetch failed: ${(err as Error)?.message ?? err}`
+        );
+        return null;
+      }
+    })
+  );
+
+  return results.filter((r): r is NonNullable<typeof r> => r !== null);
+}
+
+interface Props {
+  role: PublicRoleDetail;
+}
+
+const { role } = Astro.props as Props;
+
+const c = getContent('en');
+const siteUrl = 'https://purrfecthire.com';
+const pageUrl = `${siteUrl}/roles/${role.slug}`;
+
+// ── OG / link-preview description (build time) ──────────────────────────────
+// Plain-text, single-line excerpt of the JD so WhatsApp/LinkedIn/Slack previews
+// show a real summary. Strip markdown syntax (headings, emphasis, list bullets,
+// link/image wrappers, code, blockquotes), collapse whitespace, then trim to a
+// clean ~180-char sentence boundary. Falls back to a generic line when empty.
+const rawExcerpt = (role.public_description ?? '')
+  .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')      // images → drop
+  .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')    // links → keep visible text
+  .replace(/`{1,3}[^`]*`{1,3}/g, ' ')          // inline/code fences
+  .replace(/[#>*_~`|-]/g, ' ')                 // md punctuation
+  .replace(/\s+/g, ' ')
+  .trim();
+
+let metaDescription: string;
+if (rawExcerpt) {
+  metaDescription = rawExcerpt.length > 180 ? `${rawExcerpt.slice(0, 177).trimEnd()}…` : rawExcerpt;
+} else {
+  metaDescription = `${role.title}: an open role at a vetted YC, a16z or Sequoia startup hiring senior LatAm talent.`;
+}
+---
+
+<Layout title={`${role.title} · Purrfect Hire`} description={metaDescription} lang="en" canonicalUrl={pageUrl}>
+  <style is:global>
+    body { background-color: var(--bg); }
+    html { scroll-behavior: smooth; }
+    .v6-nav { opacity: 1; }
+  </style>
+
+  <V6Nav content={c.nav} lang="en" />
+  <RoleDetailV2 role={role} />
+  <Footer content={c.footer} />
+</Layout>

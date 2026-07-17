@@ -1,0 +1,496 @@
+---
+// ── /pricing — shared renderer (EN + ES) ─────────────────────────────────
+// One page, two doors: a segmented selector ("I'm hiring" / "I'm growing")
+// toggles between the B2B and B2C blocks. Without JS both blocks render
+// stacked, so nothing is lost for crawlers or no-script readers.
+// Per the visual spec this page is the exception: almost no images — clean
+// tables, lots of white, a single Kate thumbnail next to the B2C block.
+// Flat 2026 system (navy ink, hairline borders, no shadows). Prefix: `pr-`.
+import Layout from '../../layouts/Layout.astro';
+import V6Nav from '../../components/v6/V6Nav.astro';
+import Footer from '../../components/Footer.astro';
+import type { PricingContent } from '../../content/pricing';
+import { getContent } from '../../content/index';
+
+interface Props {
+  c: PricingContent;
+}
+
+const { c } = Astro.props;
+const site = getContent(c.lang);
+const siteUrl = 'https://purrfecthire.com';
+const pageUrl = `${siteUrl}${c.path}`;
+
+// Two Services: recruiting (structure public, no numbers beyond the AYCH
+// anchor) and coaching (public prices — the SEO capture for "how much does
+// a recruiter/coach cost").
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Service',
+      '@id': `${pageUrl}#recruiting`,
+      name: 'Startup recruiting · Purrfect Hire',
+      serviceType: 'Recruiting',
+      url: pageUrl,
+      description: c.b2b.intro,
+      provider: { '@type': 'Organization', name: 'Purrfect Hire', url: siteUrl },
+      areaServed: ['United States', 'Latin America'],
+    },
+    {
+      '@type': 'Service',
+      '@id': `${pageUrl}#coaching`,
+      name: 'Career coaching with Kate Forero · Purrfect Hire',
+      serviceType: 'Career coaching',
+      url: pageUrl,
+      description: c.b2c.intro,
+      provider: { '@type': 'Organization', name: 'Purrfect Hire', url: siteUrl },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Career coaching',
+        itemListElement: [
+          { '@type': 'Offer', name: c.b2c.plans[0].name, price: '200', priceCurrency: 'USD' },
+          { '@type': 'Offer', name: c.b2c.plans[1].name, price: '550', priceCurrency: 'USD' },
+          { '@type': 'Offer', name: c.b2c.plans[2].name, price: '2000', priceCurrency: 'USD' },
+        ],
+      },
+    },
+  ],
+};
+---
+
+<Layout title={c.meta.title} description={c.meta.description} lang={c.lang} canonicalUrl={pageUrl}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <V6Nav content={site.nav} lang={c.lang} otherLangPath="/pricing" />
+
+  <main class="pr" id="pricing-root">
+    <!-- ── Hero ─────────────────────────────────────────────────────── -->
+    <section class="pr-hero">
+      <p class="pr-eyebrow">{c.hero.eyebrow}</p>
+      <h1 class="pr-hero__headline">{c.hero.headline}</h1>
+      <p class="pr-hero__sub">{c.hero.sub}</p>
+
+      <!-- Selector: routes by side of the table -->
+      <div class="pr-selector" role="tablist" aria-label={c.hero.eyebrow}>
+        <button
+          type="button"
+          class="pr-selector__btn"
+          role="tab"
+          id="tab-hiring"
+          aria-selected="true"
+          aria-controls="hiring"
+          data-side="hiring"
+        >{c.selector.hiring}</button>
+        <button
+          type="button"
+          class="pr-selector__btn"
+          role="tab"
+          id="tab-growing"
+          aria-selected="false"
+          aria-controls="growing"
+          data-side="growing"
+        >{c.selector.growing}</button>
+      </div>
+    </section>
+
+    <!-- ── B2B block ────────────────────────────────────────────────── -->
+    <section id="hiring" class="pr-block" data-side="hiring" role="tabpanel" aria-labelledby="tab-hiring">
+      <div class="pr-block__head reveal">
+        <h2 class="pr-block__title">{c.b2b.title}</h2>
+        <p class="pr-block__intro">{c.b2b.intro}</p>
+      </div>
+
+      <div class="pr-plans">
+        {c.b2b.plans.map((plan) => (
+          <article class="pr-plan reveal">
+            <h3 class="pr-plan__name">{plan.name}</h3>
+            <dl class="pr-plan__rows">
+              {plan.rows.map((row) => (
+                <div class:list={['pr-plan__row', { 'pr-plan__row--strong': row.strong }]}>
+                  <dt>{row.label}</dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </article>
+        ))}
+      </div>
+
+      <div class="pr-cta reveal">
+        <a href={c.b2b.ctaHref} class="pr-btn pr-btn--solid pr-btn--lg" target="_blank" rel="noopener">
+          {c.b2b.ctaLabel}
+        </a>
+        <p class="pr-cta__note">{c.b2b.ctaNote}</p>
+      </div>
+
+      <!-- The flywheel line — the argument that turns both sides into one engine -->
+      <p class="pr-flywheel reveal">“{c.b2b.flywheel}”</p>
+    </section>
+
+    <!-- ── B2C block ────────────────────────────────────────────────── -->
+    <section id="growing" class="pr-block" data-side="growing" role="tabpanel" aria-labelledby="tab-growing">
+      <div class="pr-block__head reveal">
+        <h2 class="pr-block__title">{c.b2c.title}</h2>
+        <p class="pr-block__intro">{c.b2c.intro}</p>
+        <figure class="pr-kate">
+          {/* eager on purpose: lazy images inside the initially-hidden tab
+              panel stall in Chromium and never load when the tab opens */}
+          <img src="/sessions/kate.jpeg" alt="Kate Forero" width="72" height="72" />
+          <figcaption>{c.b2c.kateCaption}</figcaption>
+        </figure>
+      </div>
+
+      <div class="pr-plans">
+        {c.b2c.plans.map((plan) => (
+          <article class="pr-plan reveal">
+            <h3 class="pr-plan__name">{plan.name}</h3>
+            <dl class="pr-plan__rows">
+              {plan.rows.map((row) => (
+                <div class:list={['pr-plan__row', { 'pr-plan__row--strong': row.strong }]}>
+                  <dt>{row.label}</dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+            {plan.detailHref && (
+              <a href={plan.detailHref} class="pr-plan__link">{plan.detailLabel}</a>
+            )}
+          </article>
+        ))}
+      </div>
+
+      <p class="pr-free reveal">
+        {c.b2c.freeLine.before}<a href={c.b2c.freeLine.href}>{c.b2c.freeLine.label}</a>{c.b2c.freeLine.after}
+      </p>
+
+      <div class="pr-cta reveal">
+        <a href={c.b2c.ctaHref} class="pr-btn pr-btn--solid pr-btn--lg" target="_blank" rel="noopener">
+          {c.b2c.ctaLabel}
+        </a>
+        <p class="pr-cta__note">{c.b2c.ctaNote}</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer content={site.footer} />
+</Layout>
+
+<script>
+  // Selector: show one side at a time. Runs only with JS, so no-script
+  // visitors (and crawlers) see both blocks stacked. Hash deep-links
+  // (#growing / #hiring) pick the initial side — e.g. talent CTAs can
+  // link straight to /pricing#growing.
+  const root = document.getElementById('pricing-root');
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.pr-selector__btn'));
+
+  const activate = (side: string, scroll = false) => {
+    root?.setAttribute('data-active', side);
+    for (const tab of tabs) {
+      tab.setAttribute('aria-selected', String(tab.dataset.side === side));
+    }
+    if (scroll) {
+      document.querySelector(`.pr-block[data-side="${side}"]`)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  activate(location.hash === '#growing' ? 'growing' : 'hiring');
+  for (const tab of tabs) {
+    tab.addEventListener('click', () => {
+      const side = tab.dataset.side ?? 'hiring';
+      activate(side);
+      history.replaceState(null, '', side === 'growing' ? '#growing' : '#hiring');
+    });
+  }
+</script>
+
+<style lang="scss">
+  $ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  .pr {
+    --pr-bg: var(--bg, #ffffff);
+    --pr-text: var(--text, #1c1c1c);
+    --pr-ink: var(--ink, #29285f);
+    --pr-muted: var(--muted, #6b6b6b);
+    --pr-border: var(--line, rgba(0, 0, 0, 0.08));
+    --pr-radius: var(--radius, 12px);
+
+    background: var(--pr-bg);
+    color: var(--pr-text);
+    font-family: 'Schibsted Grotesk', Arial, sans-serif;
+    // Clear the fixed V6 nav
+    padding-top: 4rem;
+
+    ::selection {
+      background: var(--pr-ink);
+      color: #fff;
+    }
+  }
+
+  // JS-only tab behavior: when a side is active, hide the other block.
+  .pr[data-active='hiring'] .pr-block[data-side='growing'] { display: none; }
+  .pr[data-active='growing'] .pr-block[data-side='hiring'] { display: none; }
+
+  .pr-eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--pr-ink);
+    margin: 0 0 1.5rem;
+  }
+
+  // ── Hero ──────────────────────────────────────────────────
+  .pr-hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(48px, 7vw, 88px) clamp(1.5rem, 5vw, 2rem) 0;
+    text-align: center;
+
+    &__headline {
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      margin: 0 auto;
+      max-width: 20ch;
+      color: var(--pr-ink);
+    }
+
+    &__sub {
+      max-width: 40rem;
+      margin: 1.5rem auto 0;
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--pr-muted);
+    }
+  }
+
+  // ── Selector ──────────────────────────────────────────────
+  .pr-selector {
+    display: inline-flex;
+    margin: 2.5rem auto 0;
+    border: 1px solid var(--pr-border);
+    border-radius: var(--pr-radius);
+    padding: 4px;
+    gap: 4px;
+
+    &__btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--pr-muted);
+      padding: 10px 22px;
+      border-radius: calc(var(--pr-radius) - 4px);
+      cursor: pointer;
+      transition: background 0.25s $ease-expo, color 0.25s $ease-expo;
+
+      &:hover { color: var(--pr-ink); }
+
+      &[aria-selected='true'] {
+        background: var(--pr-ink);
+        color: #fff;
+      }
+    }
+
+    @media (max-width: 480px) {
+      display: flex;
+      max-width: 100%;
+
+      &__btn { flex: 1; padding-inline: 10px; }
+    }
+  }
+
+  // ── Blocks ────────────────────────────────────────────────
+  .pr-block {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(48px, 7vw, 80px) clamp(1.5rem, 5vw, 2rem);
+    scroll-margin-top: 5rem;
+
+    & + & { border-top: 1px solid var(--pr-border); }
+
+    &__head { max-width: 46rem; margin-bottom: 3rem; }
+
+    &__title {
+      font-size: clamp(1.75rem, 3vw, 2rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0;
+      color: var(--pr-ink);
+    }
+
+    &__intro {
+      margin: 1rem 0 0;
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--pr-muted);
+    }
+  }
+
+  // ── Kate thumbnail (the only image on the page) ───────────
+  .pr-kate {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.75rem 0 0;
+
+    img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 1px solid var(--pr-border);
+    }
+
+    figcaption {
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: var(--pr-text);
+      max-width: 26rem;
+    }
+  }
+
+  // ── Plans ─────────────────────────────────────────────────
+  .pr-plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+
+    @media (max-width: 991px) { grid-template-columns: 1fr; }
+  }
+
+  .pr-plan {
+    border: 1px solid var(--pr-border);
+    border-radius: var(--pr-radius);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.25s $ease-expo;
+
+    &:hover { border-color: var(--pr-ink); }
+
+    &__name {
+      margin: 0 0 1.25rem;
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--pr-text);
+    }
+
+    &__rows {
+      margin: 0;
+      flex: 1;
+    }
+
+    &__row {
+      padding: 0.875rem 0;
+      border-top: 1px solid var(--pr-border);
+
+      dt {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--pr-muted);
+        margin: 0 0 0.25rem;
+      }
+
+      dd {
+        margin: 0;
+        font-size: 0.9375rem;
+        line-height: 1.55;
+        color: var(--pr-text);
+      }
+
+      // The price row is the proof number: big, navy, small label above.
+      &--strong dd {
+        font-size: 1.375rem;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+        color: var(--pr-ink);
+      }
+    }
+
+    &__link {
+      margin-top: 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--pr-ink);
+      text-decoration: none;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+
+  // ── CTA (one primary per viewport) ────────────────────────
+  .pr-cta {
+    margin-top: 3rem;
+    text-align: center;
+
+    &__note {
+      margin: 1rem auto 0;
+      font-size: 0.875rem;
+      color: var(--pr-muted);
+      max-width: 30rem;
+    }
+  }
+
+  .pr-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: var(--pr-radius);
+    text-decoration: none;
+    transition: background 0.25s $ease-expo, border-color 0.25s $ease-expo;
+
+    &--solid {
+      background: var(--pr-ink);
+      color: #fff;
+
+      &:hover { background: #1e1d47; }
+    }
+
+    &--lg { padding: 16px 34px; font-size: 0.9375rem; }
+  }
+
+  // ── Flywheel line — a rest section, one sentence, lots of air
+  .pr-flywheel {
+    margin: clamp(48px, 7vw, 80px) auto 0;
+    max-width: 34ch;
+    text-align: center;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: var(--pr-ink);
+  }
+
+  // ── Free line ─────────────────────────────────────────────
+  .pr-free {
+    margin: 2.5rem 0 0;
+    text-align: center;
+    font-size: 0.9375rem;
+    color: var(--pr-muted);
+
+    a {
+      color: var(--pr-ink);
+      font-weight: 500;
+      text-decoration: none;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+</style>

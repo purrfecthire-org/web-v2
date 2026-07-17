@@ -2,29 +2,45 @@
 // ── For Talent — Hero ────────────────────────────────────────────────────
 // Isolated design test (navy-accent variant of the V6 language). Talent who
 // land here are senior already — the hook is the gap between their skill and
-// their offers. The hero names that gap, then forks into the two real ways in:
-// the Offer Acceleration program and live open roles. Prefix: `ft-`.
-const OA_DETAILS = '/offer-acceleration';
-const ROLES_URL = '/roles';
+// their offers. The hero names that gap, then routes two ways (Jul 2026
+// architecture, Levels.fyi pattern): a "What do you need today?" situation
+// selector, and the full 4-rung ladder by level of commitment — open roles
+// (free) → 1:1 session ($200) → Momentum ($550/mo) → Offer Acceleration
+// ($2,000+). Prefix: `ft-`.
 
-const routes = [
+// Route by situation — each chip names a moment, not a product.
+const situations = [
+  { label: 'I have an interview or an offer this week', href: '/career-sessions' },
+  { label: 'I want steady progress, month over month', href: '/career-momentum' },
+  { label: 'I want to fully reposition toward US startups', href: '/offer-acceleration' },
+  { label: 'I just want to see live roles', href: '#roles' },
+];
+
+// The ladder — every rung is public-priced and one click deep.
+const ladder = [
   {
-    eyebrow: 'Coaching program',
-    title: 'Offer Acceleration',
-    body:
-      'A 1:1 program that gives you the strategy, network, and real startup criteria to stop getting filtered, and start being introduced.',
-    href: OA_DETAILS,
-    cta: 'See more details →',
-    target: OA_DETAILS,
+    eyebrow: 'One problem',
+    title: '1:1 Session',
+    body: 'One hour with Kate on your interview, offer, narrative or limiting beliefs. Book via WhatsApp, pay when you book.',
+    price: '$200',
+    href: '/career-sessions',
+    cta: 'See the session →',
   },
   {
-    eyebrow: 'Active searches',
-    title: 'Open roles',
-    body:
-      'Senior roles at YC-, a16z- and Sequoia-backed startups, curated and active right now. Apply once, get evaluated against the real bar, and introduced when there is a fit.',
-    href: ROLES_URL,
-    cta: 'Browse roles →',
-    target: '#roles',
+    eyebrow: 'Continuity',
+    title: 'Momentum',
+    body: '2 sessions a month with Kate plus async review between sessions. Entry after at least one 1:1 session.',
+    price: '$550/mo',
+    href: '/career-momentum',
+    cta: 'See Momentum →',
+  },
+  {
+    eyebrow: 'Transformation',
+    title: 'Offer Acceleration',
+    body: 'Full repositioning toward US startups: written strategy, market map, role plays, negotiation, direct intros.',
+    price: 'From $2,000',
+    href: '/offer-acceleration',
+    cta: 'See the program →',
   },
 ];
 ---
@@ -33,9 +49,8 @@ const routes = [
   <div class="ft-hero__container">
 
     <header class="ft-hero__head">
-      <!-- <span class="ft-hero__tag">For talent</span>  -->
       <h1 class="ft-hero__headline">
-        Why you keep
+        Why do you keep
         <span class="ft-hero__headline-accent">missing offers?</span>
       </h1>
       <p class="ft-hero__sub body1">
@@ -45,13 +60,24 @@ const routes = [
       </p>
     </header>
 
-    <!-- Two ways in -->
+    <!-- Route by situation -->
+    <div class="ft-hero__selector">
+      <p class="ft-hero__selector-label eyebrow">What do you need today?</p>
+      <div class="ft-hero__chips">
+        {situations.map((s) => (
+          <a href={s.href} class="ft-hero__chip">{s.label}</a>
+        ))}
+      </div>
+    </div>
+
+    <!-- The ladder: four ways in, by level of commitment -->
     <div class="ft-hero__routes">
-      {routes.map((r) => (
-        <a href={r.target} class="ft-hero__card">
+      {ladder.map((r) => (
+        <a href={r.href} class="ft-hero__card">
           <span class="ft-hero__card-eyebrow eyebrow">{r.eyebrow}</span>
           <h2 class="ft-hero__card-title">{r.title}</h2>
           <p class="ft-hero__card-body">{r.body}</p>
+          <span class="ft-hero__card-price">{r.price}</span>
           <span class="ft-hero__card-link">{r.cta}</span>
         </a>
       ))}
@@ -83,15 +109,15 @@ const routes = [
 
     &__container {
       width: 100%;
-      max-width: 64rem;
+      max-width: 72rem;
       margin-inline: auto;
       padding-inline: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 3rem;
+      gap: 2.5rem;
 
       @include max-lg { padding-inline: 1.5rem; }
-      @include max-sm { padding-inline: 1rem; gap: 2.25rem; }
+      @include max-sm { padding-inline: 1rem; gap: 2rem; }
     }
 
     &__head {
@@ -101,18 +127,6 @@ const routes = [
       max-width: 48rem;
       opacity: 0;
       animation: ft-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-    }
-
-    &__tag {
-      align-self: flex-start;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #fff;
-      background: $talent;
-      padding: 5px 14px;
-      border-radius: var(--radius);
     }
 
     &__headline {
@@ -126,19 +140,53 @@ const routes = [
     &__headline-accent { display: block; color: $accent; }
     &__sub { max-width: 42rem; }
 
-    // ── Route cards ──────────────────────────────────────────
+    // ── Situation selector ───────────────────────────────────
+    &__selector {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      opacity: 0;
+      animation: ft-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+    }
+
+    &__selector-label { color: $talent; font-weight: 600; }
+
+    &__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.625rem;
+    }
+
+    &__chip {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text);
+      text-decoration: none;
+      padding: 9px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      transition: border-color 0.2s ease, color 0.2s ease;
+
+      &:hover {
+        border-color: $talent;
+        color: $talent;
+      }
+    }
+
+    // ── Ladder cards ─────────────────────────────────────────
     &__routes {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      @include max-md { grid-template-columns: 1fr; }
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      @include max-sm { grid-template-columns: 1fr; }
     }
 
     &__card {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      padding: 2.25rem;
+      gap: 0.625rem;
+      padding: 1.75rem;
       border: 1px solid var(--color-border);
       border-top: 4px solid $talent;
       border-radius: var(--radius);
@@ -149,34 +197,41 @@ const routes = [
       opacity: 0;
       animation: ft-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       &:nth-child(1) { animation-delay: 0.35s; }
-      &:nth-child(2) { animation-delay: 0.5s; }
+      &:nth-child(2) { animation-delay: 0.45s; }
+      &:nth-child(3) { animation-delay: 0.55s; }
 
       &:hover {
         transform: translateY(-4px);
         border-color: $talent;
       }
 
-      @include max-sm { padding: 1.75rem; }
+      @include max-sm { padding: 1.5rem; }
     }
 
     &__card-eyebrow { color: $talent; font-weight: 600; }
     &__card-title {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
       line-height: 1.2;
       color: var(--color-text);
       margin: 0;
     }
     &__card-body {
-      font-size: 0.9375rem;
-      line-height: 1.6;
+      font-size: 0.875rem;
+      line-height: 1.55;
       color: var(--color-muted);
       margin: 0;
     }
-    &__card-link {
+    &__card-price {
       margin-top: auto;
-      padding-top: 0.5rem;
-      font-size: 0.9375rem;
+      padding-top: 0.75rem;
+      font-size: 1.375rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: $accent;
+    }
+    &__card-link {
+      font-size: 0.875rem;
       font-weight: 600;
       color: $accent;
     }
@@ -188,6 +243,7 @@ const routes = [
 
   @media (prefers-reduced-motion: reduce) {
     .ft-hero__head,
+    .ft-hero__selector,
     .ft-hero__card {
       animation: none;
       opacity: 1;

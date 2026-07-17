@@ -1,0 +1,196 @@
+---
+// ── Internal preview gallery — OA loading overlay designs ────────────────
+// Shows the 8 loading-overlay variants side by side so the team can pick
+// one. Each card plays the full fake cycle (phase 1 → phase 2 → reset) and
+// links to /offer-acceleration/apply?loader=N to test it live in the form.
+// noindex + excluded from the sitemap (astro.config.mjs), like the apply
+// page. Internal tool: labels are inline on purpose (not user-facing copy).
+import Layout from '../../layouts/Layout.astro';
+import OALoader from '../../components/oa/OALoader.astro';
+import { oaContent as c } from '../../content/offerAcceleration';
+
+const phrases = c.form.loading.es; // preview with the copy the apply page ships
+
+const designs = [
+  { n: 1, name: 'Spinner ring' },
+  { n: 2, name: 'Bouncing dots' },
+  { n: 3, name: 'Progress bar + steps' },
+  { n: 4, name: 'Orbiting dots' },
+  { n: 5, name: 'Pulsing rings' },
+  { n: 6, name: 'Typewriter' },
+  { n: 7, name: 'Step checklist' },
+  { n: 8, name: 'Morphing blob' },
+];
+---
+
+<Layout title="OA loading designs · Purrfect Hire" description="Internal preview of the Offer Acceleration loading overlay designs." lang="es" noindex>
+  <main class="ldg">
+    <header class="ldg-header">
+      <p class="label-uppercase">Interno · Offer Acceleration</p>
+      <h1 class="ldg-title">Loading overlay: 8 diseños</h1>
+      <p class="ldg-subtitle">
+        Pulsa "Play" para ver el ciclo completo (fase 1 → fase 2), o abre el
+        formulario real con ese diseño vía <code>?loader=N</code>.
+      </p>
+    </header>
+
+    <div class="ldg-grid">
+      {designs.map((d) => (
+        <article class="ldg-card">
+          <header class="ldg-card__head">
+            <span class="ldg-card__num">{d.n}</span>
+            <h2 class="ldg-card__name">{d.name}</h2>
+          </header>
+          <div class="ldg-card__stage">
+            <OALoader variant={d.n} phrases={phrases} />
+          </div>
+          <footer class="ldg-card__foot">
+            <button type="button" class="btn ldg-card__play" data-play={d.n}>Play</button>
+            <a class="ldg-card__link" href={`/offer-acceleration/apply?loader=${d.n}`}>
+              Probar en el formulario →
+            </a>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { createOALoader, pickTimings } from '../../scripts/oaLoader';
+
+  // Every loader is visible from the start (idle at phase copy 1, no phase
+  // classes running) — the component ships `hidden` for the apply overlay.
+  const controllers = new Map<string, ReturnType<typeof createOALoader>>();
+  document.querySelectorAll<HTMLElement>('.oal').forEach((el) => {
+    el.hidden = false;
+    controllers.set(String(el.dataset.variant), createOALoader(el));
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-play]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const n = btn.dataset.play!;
+      const loader = controllers.get(n);
+      if (!loader || btn.disabled) return;
+      btn.disabled = true;
+      const { phase1Ms, totalMs } = pickTimings();
+      loader.reset();
+      loader.setPhase(0);
+      setTimeout(() => loader.setPhase(1), phase1Ms);
+      setTimeout(() => {
+        loader.reset();
+        btn.disabled = false;
+      }, totalMs);
+    });
+  });
+</script>
+
+<style lang="scss">
+  .ldg {
+    min-height: 100svh;
+    background: var(--color-bg);
+    padding: 3rem 2rem 6rem;
+  }
+
+  .ldg-header {
+    max-width: 68rem;
+    margin: 0 auto 2.5rem;
+  }
+
+  .ldg-title {
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    margin: 0.625rem 0 0.5rem;
+  }
+
+  .ldg-subtitle {
+    font-size: 1rem;
+    color: var(--color-muted);
+    margin: 0;
+
+    code {
+      font-size: 0.875rem;
+      background: var(--color-bg-soft);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 0.1em 0.4em;
+    }
+  }
+
+  .ldg-grid {
+    max-width: 68rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    gap: 1.5rem;
+  }
+
+  .ldg-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius, 12px);
+    overflow: hidden;
+
+    &__head {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    &__num {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--color-ink);
+      color: #fff;
+      font-size: 0.8125rem;
+      font-weight: 500;
+    }
+
+    &__name {
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    &__stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 15rem;
+      padding: 1.5rem 1rem;
+      background: var(--color-bg-soft);
+    }
+
+    &__foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    &__play {
+      padding: 0.5rem 1.25rem;
+
+      &:disabled { opacity: 0.5; cursor: default; }
+    }
+
+    &__link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-ink);
+      text-decoration: none;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+</style>

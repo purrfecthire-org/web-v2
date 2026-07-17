@@ -1,21 +1,43 @@
 ---
-// ── Coaching landing pages (career-sessions / career-momentum) ───────────
-// Shared renderer for the individual-coaching offerings. Same flat
-// navy/white 2026 system as the OA page: no gradients, no shadows,
-// border-based elevation, Schibsted Grotesk, one dark section max (none
-// here). Scroll reveals use the shared `.reveal` class from global.scss,
-// driven by the single IntersectionObserver in Layout.astro.
+// ── Coaching landing pages (career-sessions / career-momentum, EN + ES) ──
+// Shared renderer for the individual-coaching offerings. Flat navy/white
+// 2026 system: no gradients, no shadows, border-based elevation, Schibsted
+// Grotesk, one dark section max (none here). Scroll reveals use the shared
+// `.reveal` class from global.scss (single IntersectionObserver in Layout).
+//
+// Jul 2026 architecture: pages live under the global V6 nav, the hero holds
+// the one primary CTA per viewport (WhatsApp with the price in the label),
+// career-sessions shows Kate's photo (approved 4:5 use) plus the honest
+// scarcity line, and session types collapse to a one-line accordion.
+//
+// PENDING ASSET (Richard, Jul 15 2026): the 60-sec Kate video isn't
+// recorded yet, so the placeholder slot is hidden via SHOW_VIDEO_PLACEHOLDER
+// below rather than shown as an empty box. Content (c.video) stays defined
+// in content/coaching.ts — flip the flag to `true` once the video exists.
 import Layout from '../../layouts/Layout.astro';
+import V6Nav from '../v6/V6Nav.astro';
+import Footer from '../Footer.astro';
 import type { CoachingContent } from '../../content/coaching';
 import { coachingContact } from '../../content/coaching';
+import { getContent } from '../../content/index';
+import { linkifyFirst } from '../../lib/textLinks';
+
+const SHOW_VIDEO_PLACEHOLDER = false;
 
 interface Props {
   c: CoachingContent;
 }
 
 const { c } = Astro.props;
+const site = getContent(c.lang);
 
+// Cross-reference a sibling product from the "how it works" closing line
+// (see howCloseLinks on CoachingContent) — first mention of each term only.
+const howCloseSegments = c.howCloseLinks ? linkifyFirst(c.how.close, c.howCloseLinks) : [c.how.close];
 const siteUrl = 'https://purrfecthire.com';
+const pageUrl = `${siteUrl}${c.path}`;
+// Locale-less path for the nav language toggle (e.g. '/career-sessions').
+const basePath = c.path.replace(/^\/es/, '');
 
 // Service + Offer + FAQPage structured data so search engines and AI
 // answer engines can extract the offering, its price, and the Q&A directly.
@@ -24,11 +46,11 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'Service',
-      '@id': `${siteUrl}${c.path}#service`,
+      '@id': `${pageUrl}#service`,
       name: c.jsonLd.serviceName,
       description: c.jsonLd.serviceDescription,
       serviceType: 'Career coaching',
-      url: `${siteUrl}${c.path}`,
+      url: pageUrl,
       inLanguage: ['es', 'en'],
       provider: {
         '@type': 'Organization',
@@ -48,7 +70,7 @@ const jsonLd = {
     },
     {
       '@type': 'FAQPage',
-      '@id': `${siteUrl}${c.path}#faq`,
+      '@id': `${pageUrl}#faq`,
       mainEntity: c.faq.items.map((f) => ({
         '@type': 'Question',
         name: f.q,
@@ -59,42 +81,42 @@ const jsonLd = {
 };
 ---
 
-<Layout title={c.meta.title} description={c.meta.description} lang="es">
+<Layout
+  title={c.meta.title}
+  description={c.meta.description}
+  lang={c.lang}
+  canonicalUrl={pageUrl}
+  ogImage={`${siteUrl}/sessions/kate.jpeg`}
+>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <main class="cx">
-    <header class="cx-nav">
-      <a href="/" class="cx-nav__logo-link" aria-label="Purrfect Hire — inicio">
-        <img src="/logos/logo-desktop.png" alt="Purrfect Hire" class="cx-nav__logo" />
-      </a>
-      <nav class="cx-nav__links">
-        <a href="/for-talent" class="cx-nav__link">Para talento</a>
-        <a href="/offer-acceleration" class="cx-nav__link">Offer Acceleration</a>
-        <a
-          href="/career-sessions"
-          class:list={['cx-nav__link', { 'cx-nav__link--active': c.path === '/career-sessions' }]}
-        >Sesiones 1:1</a>
-        <a
-          href="/career-momentum"
-          class:list={['cx-nav__link', { 'cx-nav__link--active': c.path === '/career-momentum' }]}
-        >Momentum</a>
-      </nav>
-      <a href={c.whatsappUrl} class="cx-btn cx-btn--solid" target="_blank" rel="noopener">
-        {c.navCta}
-      </a>
-    </header>
+  <V6Nav content={site.nav} lang={c.lang} otherLangPath={basePath} />
 
-    <!-- ── Hero ─────────────────────────────────────────────────────── -->
-    <section class="cx-hero">
-      <p class="cx-eyebrow cx-hero__eyebrow">{c.hero.eyebrow}</p>
-      <h1 class="cx-hero__headline">{c.hero.headline}</h1>
-      <div class="cx-hero__body">
-        <p>{c.hero.para1}</p>
-        <p>{c.hero.para2}</p>
+  <main class="cx">
+    <!-- ── Hero: face + claim + one CTA ─────────────────────────────── -->
+    <section class:list={['cx-hero', { 'cx-hero--photo': !!c.hero.photo }]}>
+      <div class="cx-hero__main">
+        <p class="cx-eyebrow cx-hero__eyebrow">{c.hero.eyebrow}</p>
+        <h1 class="cx-hero__headline">{c.hero.headline}</h1>
+        <div class="cx-hero__body">
+          <p>{c.hero.para1}</p>
+          <p>{c.hero.para2}</p>
+        </div>
+        <div class="cx-hero__cta">
+          <a href={c.whatsappUrl} class="cx-btn cx-btn--solid cx-btn--lg" target="_blank" rel="noopener">
+            {c.navCta}
+          </a>
+        </div>
+        <ul class="cx-hero__stats">
+          {c.hero.stats.map((s) => <li class="cx-hero__stat">{s}</li>)}
+        </ul>
+        {c.hero.scarcity && <p class="cx-hero__scarcity">{c.hero.scarcity}</p>}
       </div>
-      <ul class="cx-hero__stats">
-        {c.hero.stats.map((s) => <li class="cx-hero__stat">{s}</li>)}
-      </ul>
+      {c.hero.photo && (
+        <figure class="cx-hero__media">
+          <img src={c.hero.photo.src} alt={c.hero.photo.alt} width="1023" height="1537" />
+        </figure>
+      )}
     </section>
 
     <!-- ── For who ──────────────────────────────────────────────────── -->
@@ -108,18 +130,31 @@ const jsonLd = {
       </ul>
     </section>
 
-    <!-- ── Cards (session types / what's included) ──────────────────── -->
-    <section class="cx-chapter">
+    <!-- ── Video (60-sec Kate) — hidden until it's recorded (see SHOW_VIDEO_PLACEHOLDER above) -->
+    {SHOW_VIDEO_PLACEHOLDER && c.video && (
+      <section class="cx-chapter cx-chapter--narrow">
+        <div class="cx-chapter__head reveal">
+          <h2 class="cx-chapter__title">{c.video.title}</h2>
+        </div>
+        <div class="cx-video reveal" role="img" aria-label={c.video.caption}>
+          <span class="cx-video__glyph" aria-hidden="true">▶</span>
+          <p class="cx-video__caption">{c.video.caption}</p>
+        </div>
+      </section>
+    )}
+
+    <!-- ── What's included / session types (one-line accordion) ─────── -->
+    <section class="cx-chapter cx-chapter--narrow">
       <div class="cx-chapter__head reveal">
         <h2 class="cx-chapter__title">{c.cards.title}</h2>
       </div>
       <p class="cx-chapter__subhead reveal">{c.cards.intro}</p>
-      <div class="cx-cards">
+      <div class="cx-faq reveal">
         {c.cards.items.map((item) => (
-          <article class="cx-card reveal">
-            <h3 class="cx-card__title">{item.title}</h3>
-            <p class="cx-card__body">{item.body}</p>
-          </article>
+          <details class="cx-faq__item">
+            <summary>{item.title}</summary>
+            <p>{item.body}</p>
+          </details>
         ))}
       </div>
     </section>
@@ -141,7 +176,11 @@ const jsonLd = {
           </li>
         ))}
       </ol>
-      <p class="cx-statement reveal">{c.how.close}</p>
+      <p class="cx-statement reveal">
+        {howCloseSegments.map((seg) =>
+          typeof seg === 'string' ? seg : <a href={seg.href} class="cx-inline-link">{seg.text}</a>
+        )}
+      </p>
     </section>
 
     <!-- ── Price ────────────────────────────────────────────────────── -->
@@ -185,9 +224,10 @@ const jsonLd = {
           {c.final.buttonEmail}
         </a>
       </div>
-      <p class="cx-final__footer">© {new Date().getFullYear()} Purrfect Hire</p>
     </section>
   </main>
+
+  <Footer content={site.footer} />
 </Layout>
 
 <style lang="scss">
@@ -206,6 +246,7 @@ const jsonLd = {
     color: var(--cx-text);
     font-family: 'Schibsted Grotesk', Arial, sans-serif;
     overflow-x: hidden;
+    padding-top: 4rem; // clear the fixed V6 nav
 
     ::selection {
       background: var(--cx-ink);
@@ -219,47 +260,6 @@ const jsonLd = {
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--cx-ink);
-  }
-
-  // ── Nav ───────────────────────────────────────────────────
-  .cx-nav {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem clamp(1.5rem, 5vw, 3rem);
-    background: var(--cx-bg);
-    border-bottom: 1px solid var(--cx-border);
-
-    &__logo-link {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    &__logo {
-      width: 10rem;
-    }
-
-    &__links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-
-      @media (max-width: 767px) { display: none; }
-    }
-
-    &__link {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--cx-muted);
-      text-decoration: none;
-      transition: color 0.2s ease;
-
-      &:hover { color: var(--cx-ink); }
-      &--active { color: var(--cx-text); }
-    }
   }
 
   // ── Buttons ───────────────────────────────────────────────
@@ -288,8 +288,8 @@ const jsonLd = {
       color: #fff;
 
       &:hover {
-        background: var(--cx-text);
-        border-color: var(--cx-text);
+        background: #1e1d47;
+        border-color: #1e1d47;
         color: #fff;
       }
     }
@@ -303,12 +303,21 @@ const jsonLd = {
     margin: 0 auto;
     padding: clamp(64px, 9vw, 120px) clamp(1.5rem, 5vw, 2rem) 80px;
 
+    &--photo {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: center;
+
+      @media (max-width: 860px) { grid-template-columns: 1fr; }
+    }
+
     &__eyebrow { margin-bottom: 1.75rem; }
 
     &__headline {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 700;
-      line-height: 1.04;
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
+      font-weight: 500;
+      line-height: 1.06;
       letter-spacing: -0.02em;
       margin: 0;
       max-width: 20ch;
@@ -330,9 +339,11 @@ const jsonLd = {
       }
     }
 
+    &__cta { margin-top: 2.25rem; }
+
     &__stats {
       list-style: none;
-      margin: 3rem 0 0;
+      margin: 2.5rem 0 0;
       padding: 2rem 0 0;
       border-top: 1px solid var(--cx-border);
       display: flex;
@@ -353,6 +364,30 @@ const jsonLd = {
         color: var(--cx-muted);
       }
     }
+
+    &__scarcity {
+      margin: 1.25rem 0 0;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--cx-muted);
+      max-width: 34rem;
+    }
+
+    // Approved use: career-sessions hero, 4:5 crop, hands and desk respected.
+    &__media {
+      margin: 0;
+
+      img {
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        max-height: 480px;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: var(--cx-radius);
+        border: 1px solid var(--cx-border);
+        display: block;
+      }
+    }
   }
 
   // ── Chapters ──────────────────────────────────────────────
@@ -367,8 +402,8 @@ const jsonLd = {
     &__head { margin-bottom: 2.5rem; }
 
     &__title {
-      font-size: clamp(1.875rem, 3.4vw, 3rem);
-      font-weight: 700;
+      font-size: clamp(1.75rem, 3vw, 2rem);
+      font-weight: 500;
       letter-spacing: -0.02em;
       line-height: 1.1;
       margin: 0;
@@ -411,41 +446,38 @@ const jsonLd = {
     }
   }
 
-  // ── Cards ─────────────────────────────────────────────────
-  .cx-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-
-    @media (max-width: 991px) { grid-template-columns: repeat(2, 1fr); }
-    @media (max-width: 640px) { grid-template-columns: 1fr; }
-  }
-
-  .cx-card {
-    background: var(--cx-bg);
-    border: 1px solid var(--cx-border);
-    border-radius: var(--cx-radius);
-    padding: 2rem;
+  // ── Video placeholder ─────────────────────────────────────
+  .cx-video {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-    transition: border-color 0.25s $ease-expo;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+    aspect-ratio: 16 / 9;
+    padding: 2rem;
+    background: var(--cx-bg-soft);
+    border: 1px dashed rgba(41, 40, 95, 0.35);
+    border-radius: var(--cx-radius);
 
-    &:hover { border-color: var(--cx-ink); }
-
-    &__title {
-      margin: 0;
-      font-size: 1.0625rem;
-      font-weight: 700;
-      line-height: 1.4;
-      color: var(--cx-ink);
+    &__glyph {
+      width: 3.5rem;
+      height: 3.5rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--cx-ink);
+      color: #fff;
+      font-size: 1.125rem;
+      padding-left: 3px;
     }
 
-    &__body {
+    &__caption {
       margin: 0;
-      font-size: 0.9375rem;
-      line-height: 1.65;
+      font-size: 0.8125rem;
+      line-height: 1.55;
       color: var(--cx-muted);
+      max-width: 30rem;
     }
   }
 
@@ -477,7 +509,7 @@ const jsonLd = {
       h3 {
         margin: 0 0 0.5rem;
         font-size: 1.125rem;
-        font-weight: 700;
+        font-weight: 500;
         color: var(--cx-text);
       }
 
@@ -506,11 +538,22 @@ const jsonLd = {
     color: var(--cx-ink);
   }
 
+  // Cross-reference link inside the "how it works" closing statement
+  .cx-inline-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(41, 40, 95, 0.35);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s $ease-expo;
+
+    &:hover { text-decoration-color: currentColor; }
+  }
+
   // ── Price ─────────────────────────────────────────────────
   .cx-price {
     &__amount {
       font-size: clamp(2.25rem, 5vw, 3.5rem);
-      font-weight: 700;
+      font-weight: 500;
       letter-spacing: -0.02em;
       line-height: 1.05;
       margin: 0;
@@ -554,7 +597,7 @@ const jsonLd = {
     }
   }
 
-  // ── FAQ ───────────────────────────────────────────────────
+  // ── FAQ / accordion (also used for session types) ─────────
   .cx-faq {
     max-width: 46rem;
 
@@ -603,13 +646,13 @@ const jsonLd = {
   .cx-final {
     max-width: 1100px;
     margin: 0 auto;
-    padding: clamp(64px, 9vw, 110px) clamp(1.5rem, 5vw, 2rem) 3rem;
+    padding: clamp(64px, 9vw, 110px) clamp(1.5rem, 5vw, 2rem) clamp(64px, 8vw, 90px);
     text-align: center;
     border-top: 1px solid var(--cx-border);
 
     &__title {
       font-size: clamp(2rem, 4.5vw, 3.25rem);
-      font-weight: 700;
+      font-weight: 500;
       letter-spacing: -0.02em;
       line-height: 1.1;
       margin: 0 auto;
@@ -631,12 +674,6 @@ const jsonLd = {
       justify-content: center;
       gap: 1rem;
       margin-top: 2.5rem;
-    }
-
-    &__footer {
-      margin-top: 5rem;
-      font-size: 0.8125rem;
-      color: var(--cx-muted);
     }
   }
 </style>

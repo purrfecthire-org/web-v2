@@ -6,7 +6,7 @@
 
 export const oaContent = {
   meta: {
-    title: 'Offer Acceleration — Purrfect Hire',
+    title: 'Offer Acceleration · Purrfect Hire',
     description:
       'No estás estancado por talento. Estás en el canal equivocado. Offer Acceleration te pone dentro de las redes donde los seniors se contratan y te entrena para ganar la conversación. En dólares, en semanas.',
   },
@@ -209,7 +209,10 @@ export const oaContent = {
     next: 'Continuar',
     back: 'Atrás',
     submit: 'Enviar mi aplicación',
-    minCharsHint: 'Mínimo 10 caracteres',
+    // Static hint shown before the user starts typing (both bounds, friendly
+    // tone). The live char count/color feedback while typing is computed in
+    // the client script from each textarea's data-min/data-max attributes.
+    minCharsHint: 'Entre 10 y 600 caracteres',
     steps: [
       {
         key: 'personal',
@@ -263,16 +266,49 @@ export const oaContent = {
       required: 'Este campo es obligatorio.',
       email: 'Ingresa un email válido.',
       minChars: 'Cuéntanos un poco más (mínimo 10 caracteres).',
+      maxChars: 'Escríbelo un poco más corto (máximo 600 caracteres).',
       number: 'Ingresa un número válido en USD.',
     },
-    analyzing: {
-      title: 'Analizando tu aplicación',
-      messages: [
-        'Leyendo tus respuestas…',
-        'Evaluando tu perfil contra el mercado…',
-        'Calculando tu salto salarial realista…',
-        'Preparando tu resultado…',
-      ],
+    // Post-submit loading overlay. Two phases; the animated dots ("." → ".." →
+    // "...") are rendered by CSS, so phrases are stored WITHOUT the ellipsis.
+    // EN + ES: the apply page picks the object matching its lang.
+    loading: {
+      en: {
+        phase1: 'Sending request',
+        phase2: 'Analyzing your response',
+      },
+      es: {
+        phase1: 'Enviando solicitud',
+        phase2: 'Analizando tu respuesta',
+      },
+    },
+    // Neutral result when the backend answers status: 'pending'.
+    pending: {
+      en: {
+        eyebrow: 'Application received',
+        title: 'We received your application.',
+        body: 'Our team is reviewing it right now. We will contact you by email or WhatsApp within the next 48 hours with your next step.',
+      },
+      es: {
+        eyebrow: 'Aplicación recibida',
+        title: 'Recibimos tu aplicación.',
+        body: 'Nuestro equipo la está revisando en este momento. Te contactaremos por email o WhatsApp en las próximas 48 horas con tu siguiente paso.',
+      },
+    },
+    // Inline error state when the submission request fails (network / HTTP).
+    error: {
+      en: {
+        eyebrow: 'Something went wrong',
+        title: 'We could not send your application.',
+        body: 'There was a connection problem and your application did not go through. Your answers are still here, try again in a few seconds.',
+        retry: 'Try again',
+      },
+      es: {
+        eyebrow: 'Algo salió mal',
+        title: 'No pudimos enviar tu aplicación.',
+        body: 'Hubo un problema de conexión y tu aplicación no llegó. Tus respuestas siguen aquí, inténtalo de nuevo en unos segundos.',
+        retry: 'Intentar de nuevo',
+      },
     },
     accepted: {
       eyebrow: 'Aplicación recibida',
@@ -281,13 +317,11 @@ export const oaContent = {
       calendlyName: 'Equipo Purrfect Hire',
       calendlyRole: 'Llamada de alineación · 30 min',
       calendlyCta: 'Agendar mi llamada',
-      mvpNote: '¿Ya tuviste la llamada con el equipo?',
-      mvpCta: 'Continuar a la reserva de tu cupo →',
     },
     rejected: {
       eyebrow: 'Aplicación recibida',
       title: 'Por ahora, este programa no es el mejor fit para ti.',
-      body: 'Basado en tu momento actual y tus expectativas, hoy no podemos garantizarte el retorno que este programa promete — y no trabajamos así. Pero tu siguiente movida sí se puede preparar: sigamos en contacto.',
+      body: 'Basado en tu momento actual y tus expectativas, hoy no podemos garantizarte el retorno que este programa promete. Y no trabajamos así. Pero tu siguiente movida sí se puede preparar: sigamos en contacto.',
       linkedinName: 'Katerine Forero',
       linkedinRole: 'Founder & CEO, Purrfect Hire',
       linkedinCta: 'Seguir a Kate en LinkedIn',
