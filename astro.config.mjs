@@ -21,7 +21,6 @@ export default defineConfig({
         !/\/oa\/?$/.test(page) &&                         // /oa short-link redirect
         !/\/momentum\/?$/.test(page) &&                   // /momentum short-link redirect
         !page.includes('/oa/payment/') &&                 // payment view (not enabled yet)
-        !/\/oa\/loading-designs\/?$/.test(page) &&        // internal loader-design gallery
         !/\/offer-acceleration\/apply\/?$/.test(page),    // OA application (not enabled yet)
     }),
   ],

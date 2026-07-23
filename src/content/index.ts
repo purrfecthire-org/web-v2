@@ -126,6 +126,56 @@ export interface LandingContent {
     links: { label: string; href: string }[];
     legal: string;
   };
+  // Home router (Jul 2026). Copy for the 3-screen router home that replaced the
+  // long two-lane scroll: claim → shared proof → bifurcation. Founders/talent
+  // depth now lives on /for-founders and /for-talent; this block holds only the
+  // strings the router screens need. Stats/logos are reused from the sections
+  // above (hero.stats, hero.trustLabel, testimonials).
+  homeRouter: {
+    nav: { cta: string; ctaHref: string };
+    hero: {
+      // headline + headlineAccent reuse hero.headline / hero.headlineAccent.
+      whoPre: string;
+      whoHighlight: string; // YC, a16z and Sequoia — rendered in navy ink
+      whoPost: string;
+      ctaFounders: string;
+      ctaTalent: string;
+    };
+    proof: {
+      eyebrow: string;
+      headline: string;
+      lead: string; // single descriptive paragraph: what the engine is + both outcomes
+      founderQuoteLabel: string;
+      talentQuoteLabel: string;
+    };
+    fork: {
+      eyebrow: string;
+      headline: string;
+      sub: string;
+      founders: {
+        label: string;
+        title: string;
+        promise: string;
+        anchor: string;
+        cta: string;
+        ctaHref: string;
+        escapePre: string;
+        escapeLink: string;
+        escapeHref: string;
+      };
+      talent: {
+        label: string;
+        title: string;
+        promise: string;
+        anchor: string;
+        cta: string;
+        ctaHref: string;
+        escapePre: string;
+        escapeLink: string;
+        escapeHref: string;
+      };
+    };
+  };
   // V6 home. Copy for the two-lane default landing (/, /es/). Data-driven
   // blocks (stats, engine steps, roles, OA blocks) still come from the
   // sections above; this holds the strings that used to be hardcoded in the
@@ -183,7 +233,8 @@ export const content_en: LandingContent = {
     logo: 'Purrfect Hire',
     // Unified global nav (Jul 2026 architecture): same destinations on every
     // page, EN and ES mirrored. "For talent" carries a dropdown grouping the
-    // talent-facing programs so the top-level nav stays at 4 items.
+    // talent-facing programs; "Open roles" also lives inside that dropdown and
+    // as its own top-level link.
     links: [
       { label: 'For founders', href: '/for-founders' },
       {
@@ -197,6 +248,7 @@ export const content_en: LandingContent = {
         ],
       },
       { label: 'Pricing', href: '/pricing' },
+      { label: 'Open roles', href: '/roles' },
       { label: 'Kate', href: '/kate' },
     ],
     cta: 'Get your first match',
@@ -412,6 +464,51 @@ export const content_en: LandingContent = {
     legal: '© 2026 Purrfect Hire',
   },
 
+  homeRouter: {
+    nav: { cta: 'Talk to us', ctaHref: 'mailto:hiring@purrfecthire.com' },
+    hero: {
+      whoPre: 'We place senior LATAM talent at ',
+      whoHighlight: 'YC, a16z and Sequoia',
+      whoPost: ' startups.',
+      ctaFounders: 'I\'m hiring',
+      ctaTalent: 'I want to get placed',
+    },
+    proof: {
+      eyebrow: 'Both sides of the table',
+      headline: 'One engine. Founders on one side, talent on the other.',
+      lead: 'Purrfect Hire is a closed-loop recruiting engine. We map how startups actually evaluate, train the talent we place against that signal, and feed every outcome back in. Founders hire people who stay. Talent gets introduced, not filtered.',
+      founderQuoteLabel: 'For founders',
+      talentQuoteLabel: 'For talent · Placed in 16 days',
+    },
+    fork: {
+      eyebrow: 'One click decides',
+      headline: 'Which side of the table are you on?',
+      sub: 'Two very different problems. One engine. Pick yours.',
+      founders: {
+        label: 'For founders',
+        title: 'I\'m hiring.',
+        promise: 'Senior people who clear your real bar. And stay past week four.',
+        anchor: 'First calibrated candidates in under 4 weeks.',
+        cta: 'See how we hire for you',
+        ctaHref: '/for-founders',
+        escapePre: 'Already decided?',
+        escapeLink: 'Contact our sales team',
+        escapeHref: 'mailto:hiring@purrfecthire.com',
+      },
+      talent: {
+        label: 'For talent',
+        title: 'I want to grow.',
+        promise: 'Land an offer at a US startup that actually matters. Get introduced, not filtered.',
+        anchor: 'From filtered out to introduced.',
+        cta: 'See your paths',
+        ctaHref: '/for-talent',
+        escapePre: 'Ready to commit?',
+        escapeLink: 'Apply to Offer Acceleration',
+        escapeHref: '/offer-acceleration/apply/',
+      },
+    },
+  },
+
   v6: {
     pathChooser: {
       eyebrow: 'Start here',
@@ -523,7 +620,8 @@ export const content_es: LandingContent = {
     logo: 'Purrfect Hire',
     // Nav global unificado (arquitectura Jul 2026), espejo del EN. Las páginas
     // for-founders / for-talent aún no tienen versión ES. "Para talento" agrupa
-    // los programas en un dropdown para mantener el nav superior en 4 ítems.
+    // los programas en un dropdown; "Roles abiertos" vive dentro del dropdown y
+    // también como su propio link de primer nivel. Espejo exacto del EN.
     links: [
       { label: 'Para founders', href: '/for-founders' },
       {
@@ -533,11 +631,11 @@ export const content_es: LandingContent = {
           { label: 'Offer Acceleration', description: 'Sprint de 8 sesiones para entrevistas', href: '/offer-acceleration' },
           { label: 'Career Momentum', description: 'Coaching mensual continuo', href: '/es/career-momentum' },
           { label: 'Career Sessions', description: 'Sesiones 1:1 con Kate', href: '/es/career-sessions' },
-          // { label: 'Roles abiertos', description: 'Postula a búsquedas activas', href: '/roles' },
-          // ^ habilitar cuando el backend/destinatarios de roles estén listos
+          { label: 'Roles abiertos', description: 'Postula a búsquedas activas', href: '/roles' },
         ],
       },
       { label: 'Precios', href: '/es/pricing' },
+      { label: 'Roles abiertos', href: '/roles' },
       { label: 'Kate', href: '/es/kate' },
     ],
     cta: 'Empieza tu búsqueda',
@@ -751,6 +849,51 @@ export const content_es: LandingContent = {
       { label: 'Roles abiertos', href: '/roles' },
     ],
     legal: '© 2026 Purrfect Hire',
+  },
+
+  homeRouter: {
+    nav: { cta: 'Hablemos', ctaHref: 'mailto:hiring@purrfecthire.com' },
+    hero: {
+      whoPre: 'Colocamos talento senior de LATAM en startups de ',
+      whoHighlight: 'YC, a16z y Sequoia',
+      whoPost: '.',
+      ctaFounders: 'Estoy contratando',
+      ctaTalent: 'Quiero ser contratado',
+    },
+    proof: {
+      eyebrow: 'Ambos lados de la mesa',
+      headline: 'Un solo motor. Founders de un lado, talento del otro.',
+      lead: 'Purrfect Hire es un motor de reclutamiento de ciclo cerrado. Mapeamos cómo evalúan las startups de verdad, entrenamos al talento que colocamos contra esa señal, y cada resultado retroalimenta el sistema. Los founders contratan gente que se queda. Al talento lo presentan, no lo filtran.',
+      founderQuoteLabel: 'Para founders',
+      talentQuoteLabel: 'Para talento · Colocada en 16 días',
+    },
+    fork: {
+      eyebrow: 'Un clic decide',
+      headline: '¿De qué lado de la mesa estás?',
+      sub: 'Dos problemas muy distintos. Un solo motor. Elige el tuyo.',
+      founders: {
+        label: 'Para founders',
+        title: 'Estoy contratando.',
+        promise: 'Gente senior que cumple tu vara real. Y que sigue ahí después de la semana cuatro.',
+        anchor: 'Primeros candidatos calibrados en menos de 4 semanas.',
+        cta: 'Cómo contratamos para ti',
+        ctaHref: '/for-founders',
+        escapePre: '¿Ya decidiste?',
+        escapeLink: 'Contacta a nuestro equipo',
+        escapeHref: 'mailto:hiring@purrfecthire.com',
+      },
+      talent: {
+        label: 'Para talento',
+        title: 'Quiero crecer.',
+        promise: 'Consigue una oferta en una startup de EE. UU. que de verdad importa. Te presentan, no te filtran.',
+        anchor: 'De filtrado a presentado.',
+        cta: 'Mira tus opciones',
+        ctaHref: '/for-talent',
+        escapePre: '¿Listo para empezar?',
+        escapeLink: 'Aplica a Offer Acceleration',
+        escapeHref: '/offer-acceleration/apply/',
+      },
+    },
   },
 
   v6: {

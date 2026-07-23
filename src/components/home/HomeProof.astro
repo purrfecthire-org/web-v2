@@ -1,0 +1,179 @@
+---
+// ── Home router · Screen 2: shared proof ─────────────────────────────────
+// The only screen that serves both ICPs at once, so it carries all the trust
+// weight: how the engine works (grouped one-idea-per-line), the client logo
+// wall, and two quotes — one founder, one placed candidate. Labels use the
+// same small-caps treatment as the bifurcation ("For founders" / "For talent").
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  content: LandingContent;
+}
+
+const { content } = Astro.props;
+const p = content.homeRouter.proof;
+const hero = content.hero;
+const t = content.testimonials;
+
+// Lead with the most recognizable names first (Kate's credibility note: this
+// screen carries the trust on the router home).
+const clients = [
+  { name: 'Optery', logo: '/clients/optery.png' },
+  { name: 'PayJoy', logo: '/clients/payjoy.png' },
+  { name: 'Konta', logo: '/clients/konta.png' },
+  { name: 'Cometa', logo: '/clients/cometa.png' },
+  { name: 'Trébol', logo: '/clients/trebol.png' },
+  { name: 'Cheaf', logo: '/clients/cheaf.png' },
+  { name: 'Hera', logo: '/clients/hera.png' },
+  { name: 'Mavi', logo: '/clients/mavi.png' },
+];
+---
+
+<section class="home-proof">
+  <div class="home-proof__inner">
+
+    <header class="home-proof__head reveal">
+      <p class="home-proof__eyebrow eyebrow">{p.eyebrow}</p>
+      <h2 class="home-proof__headline headline2">{p.headline}</h2>
+    </header>
+
+    <p class="home-proof__lead reveal reveal-delay-1">{p.lead}</p>
+
+    <div class="home-proof__clients reveal reveal-delay-1">
+      <p class="home-proof__trust eyebrow">{hero.trustLabel}</p>
+      <div class="home-proof__logos">
+        {clients.map((c) => (
+          <img src={c.logo} alt={c.name} class="home-proof__logo" loading="lazy" />
+        ))}
+      </div>
+    </div>
+
+    <div class="home-proof__quotes reveal reveal-delay-2">
+      <figure class="home-proof__quote">
+        <figcaption class="home-proof__quote-label eyebrow">{p.founderQuoteLabel}</figcaption>
+        <blockquote class="home-proof__quote-text">"{t.featured.quote}"</blockquote>
+        <div class="home-proof__quote-who">
+          <span class="home-proof__quote-name">{t.featured.name}</span>
+          <span class="home-proof__quote-role">{t.featured.role}</span>
+        </div>
+      </figure>
+      <figure class="home-proof__quote">
+        <figcaption class="home-proof__quote-label eyebrow">{p.talentQuoteLabel}</figcaption>
+        <blockquote class="home-proof__quote-text">"{t.candidateTestimonial.quote}"</blockquote>
+        <div class="home-proof__quote-who">
+          <span class="home-proof__quote-name">{t.candidateTestimonial.name}</span>
+          <span class="home-proof__quote-role">{t.candidateTestimonial.role}</span>
+        </div>
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .home-proof {
+    background: var(--color-bg-soft);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding-block: 6rem;
+
+    @include max-md { padding-block: 4.5rem; }
+
+    &__inner {
+      max-width: 60rem;
+      margin-inline: auto;
+      padding-inline: 1.5rem;
+      text-align: center;
+    }
+
+    &__eyebrow { color: var(--color-muted); }
+
+    &__headline {
+      margin-top: 0.85rem;
+      color: var(--color-ink);
+    }
+
+    // ── Descriptive lead paragraph ──────────────────────────
+    &__lead {
+      max-width: 40rem;
+      margin: 1.25rem auto 0;
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      color: var(--color-muted);
+    }
+
+    // ── Client logo wall ────────────────────────────────────
+    &__clients { margin-top: 3.25rem; }
+
+    &__trust { color: var(--color-muted); }
+
+    &__logos {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1.75rem 2.5rem;
+    }
+
+    &__logo {
+      height: 1.6rem;
+      width: auto;
+      filter: grayscale(1);
+      opacity: 0.55;
+
+      @include max-sm { height: 1.35rem; }
+    }
+
+    // ── Two quotes ──────────────────────────────────────────
+    &__quotes {
+      margin-top: 3.25rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      text-align: left;
+
+      @include max-md { grid-template-columns: 1fr; }
+    }
+
+    &__quote {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin: 0;
+    }
+
+    &__quote-label {
+      color: var(--color-ink);
+      display: block;
+    }
+
+    &__quote-text {
+      margin: 0.9rem 0 0;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    &__quote-who {
+      margin-top: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    &__quote-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-ink);
+    }
+
+    &__quote-role {
+      font-size: 0.8125rem;
+      color: var(--color-muted);
+    }
+  }
+</style>

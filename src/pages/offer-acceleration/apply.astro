@@ -9,7 +9,6 @@
 // original salary branch and makes zero network calls.
 //
 // Loading overlay design: 8 selectable variants via ?loader=1..8 (default 1).
-// Preview gallery: /oa/loading-designs.
 import Layout from '../../layouts/Layout.astro';
 import OALoader from '../../components/oa/OALoader.astro';
 import { oaContent as c } from '../../content/offerAcceleration';
@@ -50,7 +49,13 @@ const clientConfig = {
       <div class="apl-intro">
         <p class="label-uppercase">{c.hero.eyebrow}</p>
         <h1 class="apl-title">{f.title}</h1>
-        <p class="apl-subtitle">{f.subtitle}</p>
+        <p class="apl-fill">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <polyline points="12 7 12 12 15.5 13.5"></polyline>
+          </svg>
+          {f.fillTime}
+        </p>
       </div>
 
       <!-- Progress -->
@@ -93,29 +98,36 @@ const clientConfig = {
               <input type="text" id="apl-linkedin" name="linkedin" placeholder={f.fields.linkedin.placeholder} required />
               <span class="apl-error"></span>
             </div>
-          </div>
-        </fieldset>
-
-        <!-- Step 2 — Tu situación -->
-        <fieldset class="apl-step" data-step="1">
-          <p class="apl-step__desc">{f.steps[1].desc}</p>
-          <div class="apl-field">
-            <label for="apl-blockers">{f.fields.blockers.label} *</label>
-            <textarea id="apl-blockers" name="blockers" rows="6" placeholder={f.fields.blockers.placeholder} data-min="10" data-max="600" required></textarea>
-            <div class="apl-field__foot">
+            <div class="apl-field apl-field--full">
+              <label for="apl-country">{f.fields.country.label} *</label>
+              <select id="apl-country" name="country" required>
+                <option value="" disabled selected>{f.fields.country.placeholder}</option>
+                {f.fields.country.groups.map((g) => (
+                  <optgroup label={g.label}>
+                    {g.options.map((o) => <option value={o.key}>{o.label}</option>)}
+                  </optgroup>
+                ))}
+              </select>
               <span class="apl-error"></span>
-              <span class="apl-hint" data-count-for="apl-blockers">{f.minCharsHint}</span>
             </div>
           </div>
         </fieldset>
 
-        <!-- Step 3 — Tu perfil -->
-        <fieldset class="apl-step" data-step="2">
-          <p class="apl-step__desc">{f.steps[2].desc}</p>
+        <!-- Step 2 — Tu perfil -->
+        <fieldset class="apl-step" data-step="1">
+          <p class="apl-step__desc">{f.steps[1].desc}</p>
           <div class="apl-grid">
-            <div class="apl-field">
+            <div class="apl-field apl-field--full">
               <label for="apl-role">{f.fields.role.label} *</label>
               <input type="text" id="apl-role" name="role" placeholder={f.fields.role.placeholder} required />
+              <span class="apl-error"></span>
+            </div>
+            <div class="apl-field">
+              <label for="apl-seniority">{f.fields.seniority.label} *</label>
+              <select id="apl-seniority" name="seniority" required>
+                <option value="" disabled selected>{f.fields.seniority.placeholder}</option>
+                {f.fields.seniority.options.map((o) => <option value={o.key}>{o.label}</option>)}
+              </select>
               <span class="apl-error"></span>
             </div>
             <div class="apl-field">
@@ -129,26 +141,80 @@ const clientConfig = {
           </div>
         </fieldset>
 
-        <!-- Step 4 — Tu salario -->
+        <!-- Step 3 — Tu objetivo -->
+        <fieldset class="apl-step" data-step="2">
+          <p class="apl-step__desc">{f.steps[2].desc}</p>
+
+          <div class="apl-field">
+            <label for="apl-target-roles">{f.fields.targetRoles.label} *</label>
+            <input type="text" id="apl-target-roles" name="targetRoles" placeholder={f.fields.targetRoles.placeholder} data-min="3" data-max="100" required />
+            <div class="apl-field__foot">
+              <span class="apl-error"></span>
+              <span class="apl-hint" data-count-for="apl-target-roles">{f.fields.targetRoles.charsHint}</span>
+            </div>
+          </div>
+
+          <div class="apl-field">
+            <label>{f.fields.companies.label} * <span class="apl-field__hint">{f.fields.companies.hint}</span></label>
+            <div class="apl-chips" data-required data-name="companies" data-exclusive={f.fields.companies.exclusive}>
+              {f.fields.companies.options.map((o) => (
+                <label class="apl-chip">
+                  <input type="checkbox" name="companies" value={o.key} />
+                  <span>{o.label}</span>
+                </label>
+              ))}
+            </div>
+            <span class="apl-error"></span>
+          </div>
+
+          <div class="apl-field">
+            <label>{f.fields.objective.label} * <span class="apl-field__hint">{f.fields.objective.hint}</span></label>
+            <div class="apl-chips" data-required data-name="objective" data-exclusive={f.fields.objective.exclusive}>
+              {f.fields.objective.options.map((o) => (
+                <label class="apl-chip">
+                  <input type="checkbox" name="objective" value={o.key} />
+                  <span>{o.label}</span>
+                </label>
+              ))}
+            </div>
+            <span class="apl-error"></span>
+          </div>
+        </fieldset>
+
+        <!-- Step 4 — Números y tiempos -->
         <fieldset class="apl-step" data-step="3">
           <p class="apl-step__desc">{f.steps[3].desc}</p>
           <div class="apl-grid">
             <div class="apl-field">
-              <label for="apl-salary-now">{f.fields.currentSalary.label} *</label>
-              <div class="apl-money">
-                <span>$</span>
-                <input type="number" id="apl-salary-now" name="currentSalary" min="0" step="50" placeholder={f.fields.currentSalary.placeholder} inputmode="numeric" required />
-                <span class="apl-money__unit">USD/mes</span>
-              </div>
+              <label for="apl-income">{f.fields.currentIncome.label} *</label>
+              <select id="apl-income" name="currentIncome" required>
+                <option value="" disabled selected>{f.fields.currentIncome.placeholder}</option>
+                {f.fields.currentIncome.options.map((o) => <option value={o.key}>{o.label}</option>)}
+              </select>
               <span class="apl-error"></span>
             </div>
             <div class="apl-field">
-              <label for="apl-salary-want">{f.fields.expectedSalary.label} *</label>
-              <div class="apl-money">
-                <span>$</span>
-                <input type="number" id="apl-salary-want" name="expectedSalary" min="0" step="50" placeholder={f.fields.expectedSalary.placeholder} inputmode="numeric" required />
-                <span class="apl-money__unit">USD/mes</span>
-              </div>
+              <label for="apl-target-salary">{f.fields.targetSalary.label} *</label>
+              <select id="apl-target-salary" name="targetSalary" required>
+                <option value="" disabled selected>{f.fields.targetSalary.placeholder}</option>
+                {f.fields.targetSalary.options.map((o) => <option value={o.key}>{o.label}</option>)}
+              </select>
+              <span class="apl-error"></span>
+            </div>
+            <div class="apl-field">
+              <label for="apl-timeline">{f.fields.timeline.label} *</label>
+              <select id="apl-timeline" name="timeline" required>
+                <option value="" disabled selected>{f.fields.timeline.placeholder}</option>
+                {f.fields.timeline.options.map((o) => <option value={o.key}>{o.label}</option>)}
+              </select>
+              <span class="apl-error"></span>
+            </div>
+            <div class="apl-field">
+              <label for="apl-us-interviews">{f.fields.usInterviews.label} *</label>
+              <select id="apl-us-interviews" name="usInterviews" required>
+                <option value="" disabled selected>{f.fields.usInterviews.placeholder}</option>
+                {f.fields.usInterviews.options.map((o) => <option value={o.key}>{o.label}</option>)}
+              </select>
               <span class="apl-error"></span>
             </div>
           </div>
@@ -158,12 +224,28 @@ const clientConfig = {
         <fieldset class="apl-step" data-step="4">
           <p class="apl-step__desc">{f.steps[4].desc}</p>
           <div class="apl-field">
+            <label for="apl-blockers">{f.fields.blockers.label} *</label>
+            <textarea id="apl-blockers" name="blockers" rows="5" placeholder={f.fields.blockers.placeholder} data-min="10" data-max="600" required></textarea>
+            <div class="apl-field__foot">
+              <span class="apl-error"></span>
+              <span class="apl-hint" data-count-for="apl-blockers">{f.minCharsHint}</span>
+            </div>
+          </div>
+          <div class="apl-field">
             <label for="apl-vision">{f.fields.vision.label} *</label>
-            <textarea id="apl-vision" name="vision" rows="7" placeholder={f.fields.vision.placeholder} data-min="10" data-max="600" required></textarea>
+            <textarea id="apl-vision" name="vision" rows="5" placeholder={f.fields.vision.placeholder} data-min="10" data-max="600" required></textarea>
             <div class="apl-field__foot">
               <span class="apl-error"></span>
               <span class="apl-hint" data-count-for="apl-vision">{f.minCharsHint}</span>
             </div>
+          </div>
+          <div class="apl-field">
+            <label for="apl-commitment">{f.fields.commitment.label} *</label>
+            <select id="apl-commitment" name="commitment" required>
+              <option value="" disabled selected>{f.fields.commitment.placeholder}</option>
+              {f.fields.commitment.options.map((o) => <option value={o.key}>{o.label}</option>)}
+            </select>
+            <span class="apl-error"></span>
           </div>
         </fieldset>
 
@@ -259,7 +341,7 @@ const clientConfig = {
 
   const cfg = JSON.parse(document.getElementById('apl-config')!.textContent!) as {
     stepTitles: string[];
-    errors: { required: string; email: string; minChars: string; maxChars: string; number: string };
+    errors: { required: string; email: string; minChars: string; maxChars: string; number: string; selectOne: string };
     submitLabel: string;
     nextLabel: string;
     locale: 'en' | 'es';
@@ -273,9 +355,10 @@ const clientConfig = {
   const LOG_ENDPOINT = String(import.meta.env.PUBLIC_LOG_ENDPOINT ?? '').replace(/\/+$/, '');
 
   // FALLBACK ONLY — the pre-existing client-side branch, kept solely so the
-  // site still works with no backend configured. This constant dies once the
-  // ATS backend is live; the real submission path never reads it.
-  const FALLBACK_SALARY_THRESHOLD = 3000;
+  // site still works with no backend configured. Mirrors ats-backend's
+  // config/oa_applications.json default accepted_income_bands. Dies once the
+  // ATS backend is live; the real path never reads it.
+  const FALLBACK_ACCEPTED_INCOME_BANDS = new Set(['3000_4500', '4500_6000', 'gt_6000']);
 
   // First render of step 1 → fill_time_ms in the submission payload.
   const renderStart = Date.now();
@@ -311,23 +394,56 @@ const clientConfig = {
     if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return errors.email;
     if (el.type === 'number' && (isNaN(parseFloat(v)) || parseFloat(v) < 0)) return errors.number;
     const min = parseInt(el.dataset.min || '0', 10);
-    if (min && v.length < min) return errors.minChars;
+    if (min && v.length < min) return errors.minChars.replace('{min}', String(min));
     const max = parseInt(el.dataset.max || '0', 10);
-    if (max && v.length > max) return errors.maxChars;
+    if (max && v.length > max) return errors.maxChars.replace('{max}', String(max));
     return '';
+  }
+
+  function setGroupError(group: HTMLElement, msg: string) {
+    const wrap = group.closest('.apl-field');
+    if (wrap) wrap.querySelector('.apl-error')!.textContent = msg || '';
+    group.classList.toggle('is-invalid', !!msg);
   }
 
   function validateStep(i) {
     let ok = true;
     let firstBad = null;
-    steps[i].querySelectorAll('input, textarea, select').forEach((el) => {
+    // Standard fields (checkboxes are chip groups, validated separately below).
+    steps[i].querySelectorAll('input:not([type="checkbox"]), textarea, select').forEach((el) => {
       const msg = validateField(el);
       setError(el, msg);
       if (msg && !firstBad) firstBad = el;
       if (msg) ok = false;
     });
+    // Required chip groups: at least one option checked.
+    steps[i].querySelectorAll<HTMLElement>('.apl-chips[data-required]').forEach((group) => {
+      const checked = group.querySelector('input:checked');
+      setGroupError(group, checked ? '' : errors.selectOne);
+      if (!checked) {
+        ok = false;
+        if (!firstBad) firstBad = group.querySelector('input');
+      }
+    });
     if (firstBad) firstBad.focus();
     return ok;
+  }
+
+  // Silent completeness check (no error messages, no focus) used to enable /
+  // disable the Continue button for the current step.
+  function isStepValid(i) {
+    let ok = true;
+    steps[i].querySelectorAll('input:not([type="checkbox"]), textarea, select').forEach((el) => {
+      if (validateField(el)) ok = false;
+    });
+    steps[i].querySelectorAll('.apl-chips[data-required]').forEach((group) => {
+      if (!group.querySelector('input:checked')) ok = false;
+    });
+    return ok;
+  }
+
+  function updateNextState() {
+    nextBtn.disabled = !isStepValid(current);
   }
 
   function show(i) {
@@ -339,6 +455,7 @@ const clientConfig = {
     backBtn.disabled = i === 0;
     nextBtn.textContent = i === TOTAL - 1 ? submitLabel : nextLabel;
     nextBtn.classList.toggle('apl-next--submit', i === TOTAL - 1);
+    updateNextState();
     card.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -353,9 +470,12 @@ const clientConfig = {
     }
   });
 
-  // Clear errors while typing + live char hint on textareas
+  // Clear errors while typing + live char hint on textareas + re-check whether
+  // the current step is complete (to enable/disable the Continue button).
   document.querySelectorAll('#apl-form input, #apl-form textarea, #apl-form select').forEach((el) => {
-    el.addEventListener('input', () => setError(el, ''));
+    const onChange = () => { setError(el, ''); updateNextState(); };
+    el.addEventListener('input', onChange);
+    el.addEventListener('change', onChange); // selects fire change reliably
   });
   // Live char counter: neutral while below the minimum, green once it's
   // met, yellow near the maximum, red past it. Thresholds come from each
@@ -388,25 +508,64 @@ const clientConfig = {
     ta.addEventListener('input', update);
   });
 
+  // ── Chip groups (multi-select) ──────────────────────────────────────────
+  // Clear the group error on any toggle, and enforce the "exclusive" option
+  // (e.g. "Aún no lo sé"): checking it clears the rest; checking anything else
+  // clears it.
+  document.querySelectorAll<HTMLElement>('.apl-chips').forEach((group) => {
+    const exclusive = group.dataset.exclusive;
+    group.addEventListener('change', (e) => {
+      group.classList.remove('is-invalid');
+      const wrap = group.closest('.apl-field');
+      if (wrap) wrap.querySelector('.apl-error')!.textContent = '';
+
+      const target = e.target as HTMLInputElement;
+      if (!exclusive || !target.checked) return;
+      const inputs = group.querySelectorAll<HTMLInputElement>('input');
+      if (target.value === exclusive) {
+        inputs.forEach((inp) => { if (inp !== target) inp.checked = false; });
+      } else {
+        inputs.forEach((inp) => { if (inp.value === exclusive) inp.checked = false; });
+      }
+      updateNextState();
+    });
+  });
+
+  // Initial state: step 1 starts empty, so the Continue button starts disabled.
+  updateNextState();
+
   // ── Submission ─────────────────────────────────────────────────────────
 
   const inputValue = (id: string) => (document.getElementById(id) as HTMLInputElement).value;
-  const numValue = (id: string) => parseFloat(inputValue(id)) || 0;
+  const checkedValues = (name: string) =>
+    [...document.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)].map((el) => el.value);
 
   type SubmitStatus = 'accepted' | 'rejected' | 'pending';
 
+  // Every field below is already the backend's key (select/checkbox `value`
+  // attributes are rendered from `option.key`, not `option.label` — see
+  // offerAcceleration.ts). Only `english_level` stays display text, per its
+  // pre-existing lenient-normalization contract.
   function collectPayload() {
     return {
       name: inputValue('apl-name').trim(),
       email: inputValue('apl-email').trim(),
       phone: inputValue('apl-phone').trim(),
       linkedin: inputValue('apl-linkedin').trim(),
-      blockers: inputValue('apl-blockers').trim(),
+      country: inputValue('apl-country'),
       role: inputValue('apl-role').trim(),
+      seniority: inputValue('apl-seniority'),
       english_level: inputValue('apl-english'),
-      current_salary: numValue('apl-salary-now'),
-      expected_salary: numValue('apl-salary-want'),
+      objectives: checkedValues('objective'),
+      target_roles: inputValue('apl-target-roles').trim(),
+      target_companies: checkedValues('companies'),
+      current_income_band: inputValue('apl-income'),
+      target_salary_band: inputValue('apl-target-salary'),
+      timeline: inputValue('apl-timeline'),
+      us_interview_experience: inputValue('apl-us-interviews'),
+      blockers: inputValue('apl-blockers').trim(),
       vision: inputValue('apl-vision').trim(),
+      commitment: inputValue('apl-commitment'),
       locale: cfg.locale,
       fill_time_ms: Date.now() - renderStart,
       website: inputValue('apl-website'), // honeypot — must arrive empty
@@ -465,9 +624,9 @@ const clientConfig = {
   }
 
   function fallbackStatus(): SubmitStatus {
-    // Pre-existing client-side branch (no backend configured): current
-    // salary >= threshold → accepted card, otherwise → rejected card.
-    return numValue('apl-salary-now') >= FALLBACK_SALARY_THRESHOLD ? 'accepted' : 'rejected';
+    // Pre-existing client-side branch (no backend configured): accepted
+    // income band keys → accepted card, otherwise → rejected card.
+    return FALLBACK_ACCEPTED_INCOME_BANDS.has(inputValue('apl-income')) ? 'accepted' : 'rejected';
   }
 
   function showResult(id: string) {
@@ -589,6 +748,22 @@ const clientConfig = {
     margin: 0;
   }
 
+  // Reassurance pill: time + step count, so the form reads as short up front.
+  .apl-fill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.875rem 0 0;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-muted);
+
+    svg { color: var(--color-accent); flex-shrink: 0; }
+  }
+
   // ── Progress ──────────────────────────────────────────────
   .apl-progress {
     margin-bottom: 2.25rem;
@@ -654,6 +829,11 @@ const clientConfig = {
     gap: 1.25rem;
   }
 
+  // Step 3 stacks fields (chips + text) vertically.
+  .apl-step[data-step='2'] .apl-field + .apl-field { margin-top: 1.5rem; }
+  // Step 5 stacks its two textareas + select vertically.
+  .apl-step[data-step='4'] .apl-field + .apl-field { margin-top: 1.5rem; }
+
   // ── Fields ────────────────────────────────────────────────
   .apl-field {
     display: flex;
@@ -709,6 +889,62 @@ const clientConfig = {
       align-items: baseline;
       gap: 1rem;
     }
+
+    // Span the full 2-column grid (long labels, selects, textareas).
+    &--full { grid-column: 1 / -1; }
+
+    &__hint {
+      font-weight: 400;
+      color: var(--color-tertiary);
+    }
+  }
+
+  // ── Chips (multi-select) ──────────────────────────────────────────
+  .apl-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+
+    &.is-invalid { /* error text is shown below; keep chips neutral */ }
+  }
+
+  .apl-chip {
+    position: relative;
+    display: inline-flex;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    span {
+      display: block;
+      padding: 0.625rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      background: var(--color-bg);
+      font-size: 0.875rem;
+      line-height: 1.3;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    &:hover span { border-color: var(--color-accent); }
+
+    input:checked + span {
+      border-color: var(--color-accent);
+      background: rgba(60, 43, 220, 0.06);
+      color: var(--color-accent);
+      box-shadow: inset 0 0 0 1px var(--color-accent);
+    }
+
+    input:focus-visible + span {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(60, 43, 220, 0.16);
+    }
   }
 
   .apl-error {
@@ -726,30 +962,6 @@ const clientConfig = {
     &.is-ok { color: #2f9e6e; }
     &.is-warning { color: #b8860b; }
     &.is-over { color: #d14343; }
-  }
-
-  .apl-money {
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    > span:first-child {
-      position: absolute;
-      left: 1rem;
-      font-size: 0.9375rem;
-      color: var(--color-tertiary);
-      pointer-events: none;
-    }
-
-    input { padding-left: 1.75rem; padding-right: 5.25rem; }
-
-    &__unit {
-      position: absolute;
-      right: 1rem;
-      font-size: 0.8125rem;
-      color: var(--color-tertiary);
-      pointer-events: none;
-    }
   }
 
   // ── Controls ──────────────────────────────────────────────
@@ -782,6 +994,17 @@ const clientConfig = {
     background-color: var(--color-accent) !important;
 
     &:hover { background-color: #5847e8 !important; }
+  }
+
+  // Disabled Continue/Submit: greyed until the current step's required fields
+  // are complete. The scoped selector (with Astro's data attribute) outranks
+  // the global submit-variant rules above, including their hover state.
+  .apl-next:disabled {
+    background-color: var(--color-border) !important;
+    color: var(--color-tertiary) !important;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 1;
   }
 
   // ── Analyzing overlay ─────────────────────────────────────
@@ -885,6 +1108,23 @@ const clientConfig = {
     }
 
     &__cta { flex-shrink: 0; }
+  }
+
+  // ── Responsive ────────────────────────────────────────────
+  @media (max-width: 640px) {
+    .apl-header { padding: 1rem 1.25rem; }
+
+    .apl-card {
+      margin-top: 1.5rem;
+      padding: 1.75rem 1.375rem 1.75rem;
+      border-radius: 14px;
+    }
+
+    .apl-title { font-size: 1.625rem; }
+
+    // Single column so long labels and selects have room.
+    .apl-grid { grid-template-columns: 1fr; }
+
   }
 
   // ── Keyframes ─────────────────────────────────────────────

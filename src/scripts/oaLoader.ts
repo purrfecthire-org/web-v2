@@ -5,8 +5,7 @@
 // except for the typewriter effect (variant 6) and the progress bar fill
 // (variant 3). Dots animation is pure CSS and needs no JS.
 //
-// Used by /offer-acceleration/apply (real submission) and by the internal
-// preview gallery /oa/loading-designs (fake cycles).
+// Used by /offer-acceleration/apply (real submission).
 
 export interface OALoaderHandle {
   /** Switch to phase 0 ("Sending request") or 1 ("Analyzing your response"). */

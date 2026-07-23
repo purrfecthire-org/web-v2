@@ -25,8 +25,8 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, otherLangPath);
         <img src="/logos/logo-desktop.png" class="v6-nav__logo" alt="Purrfect Hire" />
       </a>
 
-      <!-- Desktop links (hidden while hero is in view) -->
-      <div class="v6-nav__links v6-nav__collapsible">
+      <!-- Desktop links -->
+      <div class="v6-nav__links">
         {content.links.map((link, i) => (
           <>
             {i > 0 && <span class="v6-nav__sep" aria-hidden="true">·</span>}
@@ -58,8 +58,8 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, otherLangPath);
         ))}
       </div>
 
-      <!-- Right side: extra CTA slot + language toggle (hidden while hero is in view) -->
-      <div class="v6-nav__actions v6-nav__collapsible">
+      <!-- Right side: extra CTA slot + language toggle -->
+      <div class="v6-nav__actions">
         <slot name="extra-cta" />
 
         {showLangToggle && (
@@ -129,24 +129,6 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, otherLangPath);
   const nav = document.getElementById('nav');
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
-  const hero = document.querySelector('[data-section="hero"]') || document.querySelector('.v6-hero');
-
-  if (hero) {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          nav?.classList.remove('v6-nav--expanded');
-        } else {
-          nav?.classList.add('v6-nav--expanded');
-        }
-      },
-      // Trigger when less than 50% of the hero is visible
-      { threshold: 0.5 }
-    );
-    observer.observe(hero);
-  } else {
-    nav?.classList.add('v6-nav--expanded');
-  }
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) {
@@ -198,22 +180,6 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, otherLangPath);
 
     &__logo {
       width: 10rem;
-    }
-
-    // Collapsible elements: hidden by default, revealed when hero is out of view
-    &__collapsible {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-4px);
-      transition:
-        opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
-        transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    &--expanded &__collapsible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
     }
 
     &__links {

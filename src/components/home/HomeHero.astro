@@ -1,0 +1,170 @@
+---
+// ── Home router · Screen 1: the claim ────────────────────────────────────
+// Answers "who are we" in under 3 seconds: headline (the belief), one line
+// (what we do + for whom, with the funds highlighted), three metrics, two
+// buttons for the first self-selection. Metrics render as PLAIN TEXT — no
+// count-from-zero — so search/social previews never show "0+ placements".
+import type { LandingContent } from '../../content/index';
+
+interface Props {
+  hero: LandingContent['hero'];
+  router: LandingContent['homeRouter']['hero'];
+}
+
+const { hero, router } = Astro.props;
+---
+
+<section class="home-hero">
+  <div class="home-hero__inner">
+    <h1 class="home-hero__headline headline1">
+      <span class="home-hero__line home-hero__line--accent">{hero.headline}</span>
+      <span class="home-hero__line">{hero.headlineAccent}</span>
+    </h1>
+
+    <p class="home-hero__who">
+      {router.whoPre}<span class="home-hero__vc">{router.whoHighlight}</span>{router.whoPost}
+    </p>
+
+    <div class="home-hero__stats">
+      {hero.stats.map((stat, i) => (
+        <>
+          {i > 0 && <span class="home-hero__divider" aria-hidden="true" />}
+          <div class="home-hero__stat">
+            <div class="home-hero__stat-value">{stat.suffixLeft}{stat.value}{stat.suffix}</div>
+            <div class="home-hero__stat-label">{stat.label}</div>
+          </div>
+        </>
+      ))}
+    </div>
+
+    <div class="home-hero__ctas">
+      <a href="/for-founders" class="btn home-hero__cta">{router.ctaFounders}</a>
+      <a href="/for-talent" class="btn-secondary home-hero__cta">{router.ctaTalent}</a>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../styles/breakpoints' as *;
+
+  .home-hero {
+    min-height: calc(92svh - 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 1.5rem 3.5rem;
+
+    @include max-md {
+      min-height: auto;
+      padding: 7rem 1.25rem 4rem;
+    }
+
+    &__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 60rem;
+    }
+
+    &__headline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    &__line {
+      display: block;
+      color: var(--color-text);
+
+      &--accent { color: var(--color-ink); }
+    }
+
+    &__who {
+      margin-top: 1.4rem;
+      max-width: 34rem;
+      font-size: 1.1875rem;
+      line-height: 1.5;
+      color: var(--color-muted);
+
+      @include max-sm { font-size: 1.0625rem; }
+    }
+
+    &__vc {
+      color: var(--color-ink);
+      font-weight: 500;
+    }
+
+    &__stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2.75rem;
+
+      @include max-sm { gap: 0; }
+    }
+
+    &__stat {
+      padding-inline: 2.5rem;
+
+      // 1rem (not 1.25) so the ES row ("contrataciones" / "al primer hire")
+      // fits a 375px viewport with margin to spare.
+      @include max-sm { padding-inline: 1rem; }
+    }
+
+    &__stat-value {
+      font-size: 2.5rem;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--color-ink);
+
+      @include max-sm { font-size: 1.875rem; }
+    }
+
+    &__stat-label {
+      margin-top: 0.4rem;
+      font-size: 0.875rem;
+      color: var(--color-muted);
+    }
+
+    &__divider {
+      width: 1px;
+      height: 2.75rem;
+      background: var(--color-border);
+    }
+
+    &__ctas {
+      display: flex;
+      gap: 0.875rem;
+      margin-top: 2.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      @include max-sm {
+        flex-direction: column;
+        width: 100%;
+        max-width: 20rem;
+      }
+    }
+
+    &__cta {
+      @include max-sm { width: 100%; }
+    }
+  }
+
+  // Very small phones (≤374px, e.g. 320–360). The three-across metrics have a
+  // natural min-width of ~353px; below 360 that overflows the viewport, so
+  // tighten padding/type and let multi-word labels wrap to keep the row inside
+  // the screen. 375px and up is untouched.
+  @media (max-width: 374px) {
+    .home-hero__stat { padding-inline: 0.4rem; }
+    .home-hero__stat-value { font-size: 1.5rem; }
+    .home-hero__stat-label {
+      font-size: 0.75rem;
+      // Wide enough for the longest single word in either locale
+      // ("contrataciones" ≈ 84px at this size); multi-word labels wrap.
+      max-width: 5.5rem;
+    }
+  }
+</style>

@@ -202,8 +202,9 @@ export const oaContent = {
 
   // ── Application funnel (multi-step form) ────────────────────────────────
   form: {
-    title: 'Aplica a Offer Acceleration',
-    subtitle: 'Cuéntanos quién eres y hacia dónde vas. Menos de 5 minutos.',
+    title: 'Formulario de Aplicación',
+    // Reassurance pill under the title: a light time estimate, nothing more.
+    fillTime: '≈ 4 min',
     stepLabel: 'Paso',
     of: 'de',
     next: 'Continuar',
@@ -220,54 +221,219 @@ export const oaContent = {
         desc: 'Lo esencial para poder contactarte.',
       },
       {
-        key: 'blockers',
-        title: 'Tu situación',
-        desc: 'Sin filtros. Mientras más honesto, mejor podemos ayudarte.',
-      },
-      {
         key: 'profile',
         title: 'Tu perfil',
         desc: 'Dónde estás parado hoy.',
       },
       {
-        key: 'salary',
-        title: 'Tu salario',
-        desc: 'Cifras en USD mensuales. Esto calibra tu estrategia.',
+        key: 'objective',
+        title: 'Tu objetivo',
+        desc: 'Qué buscas y hacia dónde apuntas.',
+      },
+      {
+        key: 'numbers',
+        title: 'Números y tiempos',
+        desc: 'Esto calibra tu estrategia. Cifras en USD mensuales.',
       },
       {
         key: 'vision',
         title: 'Tu visión',
-        desc: 'Hacia dónde quieres ir.',
+        desc: 'Hacia dónde quieres ir y qué tan listo estás.',
       },
     ],
     fields: {
+      // ── Step 1 · Sobre ti ────────────────────────────────────────────────
       name: { label: 'Nombre completo', placeholder: 'Tu nombre y apellido' },
       email: { label: 'Email', placeholder: 'tu@email.com' },
       phone: { label: 'Número de WhatsApp', placeholder: '+57 300 123 4567' },
       linkedin: { label: 'Perfil de LinkedIn', placeholder: 'linkedin.com/in/tu-perfil' },
+      // Options below carry {key, label}. `key` is the stable, backend-owned
+      // contract (source/oa_applications/domain/form_options.py in ats-backend
+      // — see the Notion "OA Apply Form — Option Key Registry" cross-system
+      // contract). `label` is this portal's own copy and may be reworded
+      // freely; only the key list must stay in sync with the backend's
+      // active keys. This is a deliberate hardcoded mirror (not fetched from
+      // an endpoint) — see ats-backend/docs/oa_form_option_keys.md.
+      country: {
+        label: 'País de residencia',
+        placeholder: 'Selecciona tu país',
+        // Rendered as a grouped <select> (optgroups). LATAM first, since that
+        // is where most applicants apply from. `key` = ISO 3166-1 alpha-2
+        // code (matches ats-backend's `countries.code`), not a custom enum.
+        groups: [
+          {
+            label: 'LATAM',
+            options: [
+              { key: 'AR', label: 'Argentina' },
+              { key: 'BO', label: 'Bolivia' },
+              { key: 'BR', label: 'Brasil' },
+              { key: 'CL', label: 'Chile' },
+              { key: 'CO', label: 'Colombia' },
+              { key: 'CR', label: 'Costa Rica' },
+              { key: 'CU', label: 'Cuba' },
+              { key: 'EC', label: 'Ecuador' },
+              { key: 'SV', label: 'El Salvador' },
+              { key: 'GT', label: 'Guatemala' },
+              { key: 'HN', label: 'Honduras' },
+              { key: 'MX', label: 'México' },
+              { key: 'NI', label: 'Nicaragua' },
+              { key: 'PA', label: 'Panamá' },
+              { key: 'PY', label: 'Paraguay' },
+              { key: 'PE', label: 'Perú' },
+              { key: 'PR', label: 'Puerto Rico' },
+              { key: 'DO', label: 'República Dominicana' },
+              { key: 'UY', label: 'Uruguay' },
+              { key: 'VE', label: 'Venezuela' },
+            ],
+          },
+          {
+            label: 'Europa',
+            options: [
+              { key: 'ES', label: 'España' },
+              { key: 'PT', label: 'Portugal' },
+            ],
+          },
+          {
+            label: 'Otros',
+            options: [
+              { key: 'US', label: 'Estados Unidos' },
+              { key: 'CA', label: 'Canadá' },
+              { key: 'GB', label: 'Reino Unido' },
+              { key: 'NG', label: 'Nigeria' },
+              { key: 'IN', label: 'India' },
+              { key: 'other', label: 'Otro país' },
+            ],
+          },
+        ],
+      },
+
+      // ── Step 2 · Tu perfil ───────────────────────────────────────────────
+      role: { label: '¿Cuál es tu rol actual?', placeholder: 'Ej. Senior Frontend Engineer' },
+      seniority: {
+        label: '¿Cuál es tu nivel / seniority?',
+        placeholder: 'Selecciona tu nivel',
+        options: [
+          { key: 'ic', label: 'Individual Contributor (junior / mid)' },
+          { key: 'senior_ic', label: 'Senior (Senior IC)' },
+          { key: 'staff_lead_manager', label: 'Staff / Lead / Manager' },
+          { key: 'principal_director', label: 'Principal / Director' },
+          { key: 'c_level_vp_head', label: 'C-Level / VP / Head of' },
+        ],
+      },
+      english: {
+        label: '¿Cuál es tu nivel de inglés?',
+        // english_level keeps the pre-existing lenient-normalization contract
+        // (ats-backend normalizes this label server-side) — not a key here.
+        options: ['Básico', 'Intermedio', 'Avanzado', 'Nativo / Bilingüe'],
+        placeholder: 'Selecciona tu nivel',
+      },
+
+      // ── Step 3 · Tu objetivo ─────────────────────────────────────────────
+      objective: {
+        label: '¿Qué buscas lograr con este programa?',
+        hint: 'Puedes elegir varias.',
+        // `exclusive` clears the rest when selected (and vice versa).
+        exclusive: 'unclear',
+        options: [
+          { key: 'change_industry', label: 'Cambiar de industria (por ejemplo, de una tradicional a tech)' },
+          { key: 'change_role_or_career', label: 'Cambiar de rol o carrera (pivote profesional)' },
+          { key: 'same_role_industry_usd_offer', label: 'Mantener mi rol e industria, pero conseguir una oferta en USD' },
+          { key: 'level_up_seniority', label: 'Subir de nivel / seniority en mi mismo campo' },
+          { key: 'unclear', label: 'Aún no lo tengo claro' },
+        ],
+      },
+      targetRoles: {
+        label: '¿Qué roles estás buscando?',
+        placeholder: 'Ej. Senior Backend Engineer, Product Manager',
+        // Character bounds + counter, same style as the textareas below.
+        charsHint: 'Entre 3 y 100 caracteres',
+      },
+      companies: {
+        label: '¿Qué tipo de empresas estás buscando?',
+        hint: 'Puedes elegir varias.',
+        exclusive: 'unsure',
+        options: [
+          { key: 'us_startups_yc_a16z', label: 'Startups en EE. UU. (YC / a16z)' },
+          { key: 'latam_startups', label: 'Startups en LATAM' },
+          { key: 'scaleups_series_b_plus', label: 'Scale-ups / empresas en crecimiento (Series B+)' },
+          { key: 'big_tech_corporate', label: 'Big Tech / Corporativos (Rappi, Mercado Libre, Amazon, Globant)' },
+          { key: 'remote_global_usd', label: 'Empresas remotas globales que pagan en USD' },
+          { key: 'saas_product_tech', label: 'SaaS / empresas de producto tech' },
+          { key: 'unsure', label: 'Aún no lo sé' },
+        ],
+      },
+
+      // ── Step 4 · Números y tiempos ───────────────────────────────────────
+      currentIncome: {
+        label: 'Ingreso mensual actual (aprox. USD)',
+        placeholder: 'Selecciona un rango',
+        options: [
+          { key: 'lt_1500', label: 'Menos de $1,500' },
+          { key: '1500_3000', label: '$1,500 a $3,000' },
+          { key: '3000_4500', label: '$3,000 a $4,500' },
+          { key: '4500_6000', label: '$4,500 a $6,000' },
+          { key: 'gt_6000', label: '$6,000+' },
+        ],
+      },
+      targetSalary: {
+        label: 'Salario mensual objetivo (USD, meta a 6 meses)',
+        placeholder: 'Selecciona un rango',
+        options: [
+          { key: '3000_5000', label: '$3K a $5K' },
+          { key: '5000_7000', label: '$5K a $7K' },
+          { key: '7000_9000', label: '$7K a $9K' },
+          { key: '9000_12000', label: '$9K a $12K' },
+          { key: 'gt_12000', label: '$12K+' },
+        ],
+      },
+      timeline: {
+        label: '¿Para cuándo quieres asegurar una oferta en USD?',
+        placeholder: 'Selecciona una opción',
+        options: [
+          { key: 'asap', label: 'Lo antes posible' },
+          { key: '30_days', label: 'En 30 días' },
+          { key: '60_days', label: 'En 60 días' },
+          { key: 'exploring', label: 'Explorando' },
+        ],
+      },
+      usInterviews: {
+        label: '¿Has entrevistado con startups de EE. UU. antes?',
+        placeholder: 'Selecciona una opción',
+        options: [
+          { key: 'none_yet', label: 'No, todavía no' },
+          { key: 'failed_early_rounds', label: 'Sí, pero no pasé las primeras rondas' },
+          { key: 'reached_final_no_offer', label: 'Sí, llegué a etapas finales pero no cerré oferta' },
+          { key: 'closed_offer', label: 'Sí, y cerré al menos una oferta' },
+        ],
+      },
+
+      // ── Step 5 · Tu visión ───────────────────────────────────────────────
       blockers: {
         label: '¿Por qué crees que estás perdiendo roles que podrías estar ganando?',
         placeholder: 'Procesos que se caen, entrevistas que no avanzan, ofertas por debajo de tu nivel…',
       },
-      role: { label: '¿Cuál es tu rol actual?', placeholder: 'Ej. Senior Frontend Engineer' },
-      english: {
-        label: '¿Cuál es tu nivel de inglés?',
-        options: ['Básico', 'Intermedio', 'Avanzado', 'Nativo / Bilingüe'],
-        placeholder: 'Selecciona tu nivel',
-      },
-      currentSalary: { label: 'Salario actual (USD/mes)', placeholder: '2500' },
-      expectedSalary: { label: 'Salario esperado (USD/mes)', placeholder: '6000' },
       vision: {
         label: '¿Cómo te ves en 1 año y en 5 años?',
         placeholder: 'En 1 año… En 5 años… Describe el rol, el tipo de empresa, el estilo de vida que buscas.',
+      },
+      commitment: {
+        label: 'Es un programa privado y selectivo, con una inversión desde $2,000 USD. ¿Cómo lo ves?',
+        placeholder: 'Selecciona una opción',
+        options: [
+          { key: 'ready_to_invest', label: 'Sí, estoy listo para invertir' },
+          { key: 'has_questions', label: 'Tengo algunas preguntas primero' },
+          { key: 'not_for_me_now', label: 'Por ahora no es para mí' },
+        ],
       },
     },
     errors: {
       required: 'Este campo es obligatorio.',
       email: 'Ingresa un email válido.',
-      minChars: 'Cuéntanos un poco más (mínimo 10 caracteres).',
-      maxChars: 'Escríbelo un poco más corto (máximo 600 caracteres).',
+      // {min}/{max} are filled from each field's own data-min/data-max.
+      minChars: 'Cuéntanos un poco más (mínimo {min} caracteres).',
+      maxChars: 'Escríbelo un poco más corto (máximo {max} caracteres).',
       number: 'Ingresa un número válido en USD.',
+      selectOne: 'Selecciona al menos una opción.',
     },
     // Post-submit loading overlay. Two phases; the animated dots ("." → ".." →
     // "...") are rendered by CSS, so phrases are stored WITHOUT the ellipsis.

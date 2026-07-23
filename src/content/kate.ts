@@ -35,7 +35,7 @@ export interface KateContent {
     eyebrow: string;
     headline: string;
     sub: string;
-    /** Caption describing the authority shot this slot is reserved for */
+    /** Caption under the hero photo */
     placeholderCaption: string;
   };
   stats: { value: string; label: string }[];
@@ -69,8 +69,7 @@ export const kateEn: KateContent = {
     eyebrow: 'Kate Forero · Founder',
     headline: 'The credential is a person.',
     sub: 'Every service we sell, to founders and to talent, runs on the same asset: Kate reads how startup founders actually evaluate, because she hires for them every week.',
-    placeholderCaption:
-      'Photo pending from the shoot: the authority shot with direct gaze and clean background. This slot is reserved for it.',
+    placeholderCaption: 'Kate Forero, founder of Purrfect Hire.',
   },
 
   stats: [
@@ -148,8 +147,7 @@ export const kateEs: KateContent = {
     eyebrow: 'Kate Forero · Founder',
     headline: 'La credencial es una persona.',
     sub: 'Todo lo que vendemos, a founders y a talento, corre sobre el mismo activo: Kate lee cómo evalúan los founders de startups de verdad, porque contrata para ellos cada semana.',
-    placeholderCaption:
-      'Foto pendiente del shoot: la toma de autoridad con mirada directa y fondo limpio. Este espacio está reservado para ella.',
+    placeholderCaption: 'Kate Forero, founder de Purrfect Hire.',
   },
 
   stats: [
