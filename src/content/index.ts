@@ -554,7 +554,7 @@ export const content_en: LandingContent = {
       sub: "You already have the skills. What's missing is the strategy, the network, and the criteria to get in front of the right founders. We train senior LATAM professionals against the real bar of YC-, a16z- and Sequoia-backed startups, so you stop getting filtered and start getting introduced.",
       ladder: [
         { label: 'Open roles', price: 'Free', href: '/for-talent#roles' },
-        { label: '1:1 Session with Kate', price: '$200', href: '/career-sessions' },
+        { label: '1:1 Session with Kate', price: '$300', href: '/career-sessions' },
         { label: 'Momentum', price: '$550/mo', href: '/career-momentum' },
         { label: 'Offer Acceleration', price: 'From $2,000', href: '/offer-acceleration' },
       ],
@@ -941,7 +941,7 @@ export const content_es: LandingContent = {
       sub: 'Ya tienes las habilidades. Lo que falta es la estrategia, la red y los criterios para llegar a los founders correctos. Entrenamos a profesionales senior de LATAM frente al estándar real de las startups respaldadas por YC, a16z y Sequoia, para que dejes de ser filtrado y empieces a ser presentado.',
       ladder: [
         { label: 'Roles abiertos', price: 'Gratis', href: '/for-talent#roles' },
-        { label: 'Sesión 1:1 con Kate', price: '$200', href: '/es/career-sessions' },
+        { label: 'Sesión 1:1 con Kate', price: '$300', href: '/es/career-sessions' },
         { label: 'Momentum', price: '$550/mes', href: '/es/career-momentum' },
         { label: 'Offer Acceleration', price: 'Desde $2,000', href: '/offer-acceleration' },
       ],

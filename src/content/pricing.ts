@@ -50,7 +50,7 @@ export const pricingEn: PricingContent = {
   meta: {
     title: 'Pricing · startup recruiting and career coaching | Purrfect Hire',
     description:
-      'How much does a recruiter for startups cost? Three B2B models (success fee, All You Can Hire from $9,000/month, embedded search) and public career-coaching prices: $200 sessions, Momentum at $550/month, Offer Acceleration from $2,000.',
+      'How much does a recruiter for startups cost? Three B2B models (success fee, All You Can Hire from $9,000/month, embedded search) and public career-coaching prices: $300 sessions, Momentum at $550/month, Offer Acceleration from $2,000.',
   },
 
   hero: {
@@ -127,7 +127,7 @@ export const pricingEn: PricingContent = {
         rows: [
           { label: 'For whom', value: 'One specific problem: interview, offer, narrative, limiting beliefs' },
           { label: 'Format', value: '1 hour with Kate, single focus, written summary of agreements' },
-          { label: 'Price', value: '$200 USD', strong: true },
+          { label: 'Price', value: '$300 USD', strong: true },
           { label: 'How to start', value: 'WhatsApp, payment when you book' },
         ],
         detailHref: '/career-sessions',
@@ -165,7 +165,7 @@ export const pricingEn: PricingContent = {
       href: '/roles',
       after: '. Applying is free, and every search is live.',
     },
-    ctaLabel: 'Book your session · $200',
+    ctaLabel: 'Book your session · $300',
     ctaHref: wa('Hi Kate, I want to book a 1:1 session.'),
     ctaNote: 'WhatsApp, payment when you book. In Spanish or English.',
   },
@@ -178,7 +178,7 @@ export const pricingEs: PricingContent = {
   meta: {
     title: 'Precios · recruiting para startups y coaching de carrera | Purrfect Hire',
     description:
-      '¿Cuánto cuesta un recruiter para startups? Tres modelos B2B (success fee, All You Can Hire desde $9,000/mes, embedded search) y precios públicos de coaching: sesiones de $200, Momentum a $550/mes y Offer Acceleration desde $2,000.',
+      '¿Cuánto cuesta un recruiter para startups? Tres modelos B2B (success fee, All You Can Hire desde $9,000/mes, embedded search) y precios públicos de coaching: sesiones de $300, Momentum a $550/mes y Offer Acceleration desde $2,000.',
   },
 
   hero: {
@@ -255,7 +255,7 @@ export const pricingEs: PricingContent = {
         rows: [
           { label: 'Para quién', value: 'Un problema puntual: entrevista, oferta, narrativa, creencias limitantes' },
           { label: 'Formato', value: '1 hora con Kate, foco único, resumen de acuerdos por escrito' },
-          { label: 'Precio', value: '$200 USD', strong: true },
+          { label: 'Precio', value: '$300 USD', strong: true },
           { label: 'Entrada', value: 'WhatsApp, pago al reservar' },
         ],
         detailHref: '/es/career-sessions',
@@ -293,7 +293,7 @@ export const pricingEs: PricingContent = {
       href: '/roles',
       after: '. Aplicar es gratis y cada búsqueda está activa.',
     },
-    ctaLabel: 'Agenda tu sesión · $200',
+    ctaLabel: 'Agenda tu sesión · $300',
     ctaHref: wa('Hola Kate, quiero agendar una sesión 1:1.'),
     ctaNote: 'Por WhatsApp, pago al reservar. En español o en inglés.',
   },

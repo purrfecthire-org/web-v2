@@ -1,11 +1,11 @@
 // ─────────────────────────────────────────────────────────────────────────
 // Individual coaching offerings — shared content (EN + ES).
 // Two products on the talent ladder (Jul 11 2026 pricing doc):
-//   1. /career-sessions — 1:1 sessions with Kate at $200 USD/session (open
-//      to anyone, not just program members). The $200 rung.
+//   1. /career-sessions — 1:1 sessions with Kate at $300 USD/session (open
+//      to anyone, not just program members). The $300 rung.
 //   2. /career-momentum — Momentum: $550 USD/month, 2 sessions/month with
 //      Kate + async review between sessions, 3-month minimum, entry after
-//      at least one paid 1:1 session. The rung between the $200 session and
+//      at least one paid 1:1 session. The rung between the $300 session and
 //      the $2,000+ Offer Acceleration program. (/momentum redirects here.)
 // All four pages render through CoachingPage.astro.
 // ─────────────────────────────────────────────────────────────────────────
@@ -61,7 +61,7 @@ export interface CoachingContent {
 const wa = (text: string) => `https://wa.me/16283588776?text=${encodeURIComponent(text)}`;
 
 // ══════════════════════════════════════════════════════════════════════════
-// 1:1 sessions with Kate — $200 USD/session
+// 1:1 sessions with Kate — $300 USD/session
 // ══════════════════════════════════════════════════════════════════════════
 
 export const careerSessionsEs: CoachingContent = {
@@ -72,19 +72,19 @@ export const careerSessionsEs: CoachingContent = {
   meta: {
     title: 'Sesiones 1:1 con Kate Forero · Coaching de carrera | Purrfect Hire',
     description:
-      'Sesiones individuales de coaching de carrera con Katerine Forero: diagnóstico de perfil, role play de entrevista en español o inglés, LinkedIn y CV, síndrome del impostor y negociación de oferta. $200 USD por sesión de una hora. Agenda por WhatsApp.',
+      'Sesiones individuales de coaching de carrera con Katerine Forero: diagnóstico de perfil, role play de entrevista en español o inglés, LinkedIn y CV, síndrome del impostor y negociación de oferta. $300 USD por sesión de una hora. Agenda por WhatsApp.',
   },
 
   jsonLd: {
     serviceName: 'Sesiones 1:1 de coaching de carrera con Kate Forero',
     serviceDescription:
       'Sesiones individuales de una hora con Katerine Forero, founder de Purrfect Hire: diagnóstico de carrera, role play de entrevista, revisión de LinkedIn y CV, síndrome del impostor y negociación de oferta. Abiertas a cualquier profesional, sin necesidad de entrar a un programa.',
-    price: '200',
+    price: '300',
     priceUnit: 'por sesión de una hora',
   },
 
   whatsappUrl: wa('Hola, quiero agendar una sesión 1:1 con Kate.'),
-  navCta: 'Agenda tu sesión · $200',
+  navCta: 'Agenda tu sesión · $300',
 
   hero: {
     eyebrow: 'Sesiones 1:1 · Coaching de carrera',
@@ -94,7 +94,7 @@ export const careerSessionsEs: CoachingContent = {
     para2:
       'No necesitas entrar a un programa. Reservas la sesión que necesitas, cuando la necesitas, y sales con acciones concretas.',
     stats: [
-      '$200 USD por sesión de 1 hora',
+      '$300 USD por sesión de 1 hora',
       '160+ placements en US, Europa y LATAM',
       'En español o en inglés',
     ],
@@ -162,7 +162,7 @@ export const careerSessionsEs: CoachingContent = {
       },
       {
         title: 'Confirmamos foco, horario y pago.',
-        body: 'Te proponemos horario con Kate y confirmas tu cupo pagando la sesión. $200 USD, una hora, agenda cerrada.',
+        body: 'Te proponemos horario con Kate y confirmas tu cupo pagando la sesión. $300 USD, una hora, agenda cerrada.',
       },
       {
         title: 'Una hora de trabajo directo con Kate.',
@@ -179,7 +179,7 @@ export const careerSessionsEs: CoachingContent = {
 
   price: {
     title: 'Inversión',
-    amount: '$200 USD',
+    amount: '$300 USD',
     note: 'Por sesión de una hora, 1:1 con Kate. Pagas al reservar. Sin suscripciones, sin permanencia, sin letra chica.',
     bullets: [
       'Sesión individual de 60 minutos por videollamada',
@@ -193,7 +193,7 @@ export const careerSessionsEs: CoachingContent = {
     items: [
       {
         q: '¿Cuánto cuesta una sesión de coaching de carrera con Kate?',
-        a: 'Cada sesión 1:1 cuesta $200 USD y dura una hora. El pago se hace al reservar y confirma tu cupo en la agenda. No hay suscripciones ni paquetes obligatorios: pagas solo las sesiones que tomas.',
+        a: 'Cada sesión 1:1 cuesta $300 USD y dura una hora. El pago se hace al reservar y confirma tu cupo en la agenda. No hay suscripciones ni paquetes obligatorios: pagas solo las sesiones que tomas.',
       },
       {
         q: '¿Necesito estar en un programa para tomar una sesión?',
@@ -234,19 +234,19 @@ export const careerSessionsEn: CoachingContent = {
   meta: {
     title: '1:1 Sessions with Kate Forero · Career coaching | Purrfect Hire',
     description:
-      'Individual career-coaching sessions with Katerine Forero: profile diagnosis, interview role play in English or Spanish, LinkedIn and resume, impostor syndrome, and offer negotiation. $200 USD per one-hour session. Book via WhatsApp.',
+      'Individual career-coaching sessions with Katerine Forero: profile diagnosis, interview role play in English or Spanish, LinkedIn and resume, impostor syndrome, and offer negotiation. $300 USD per one-hour session. Book via WhatsApp.',
   },
 
   jsonLd: {
     serviceName: '1:1 career coaching sessions with Kate Forero',
     serviceDescription:
       'Individual one-hour sessions with Katerine Forero, founder of Purrfect Hire: career diagnosis, interview role play, LinkedIn and resume review, impostor syndrome, and offer negotiation. Open to any professional, no program membership required.',
-    price: '200',
+    price: '300',
     priceUnit: 'per one-hour session',
   },
 
   whatsappUrl: wa('Hi Kate, I want to book a 1:1 session.'),
-  navCta: 'Book your session · $200',
+  navCta: 'Book your session · $300',
 
   hero: {
     eyebrow: '1:1 Sessions · Career coaching',
@@ -256,7 +256,7 @@ export const careerSessionsEn: CoachingContent = {
     para2:
       'No program required. You book the session you need, when you need it, and leave with concrete actions.',
     stats: [
-      '$200 USD per 1-hour session',
+      '$300 USD per 1-hour session',
       '160+ placements in the US, Europe and LATAM',
       'In English or Spanish',
     ],
@@ -324,7 +324,7 @@ export const careerSessionsEn: CoachingContent = {
       },
       {
         title: 'We confirm focus, time and payment.',
-        body: 'We propose a time with Kate and you confirm your spot by paying for the session. $200 USD, one hour, locked calendar.',
+        body: 'We propose a time with Kate and you confirm your spot by paying for the session. $300 USD, one hour, locked calendar.',
       },
       {
         title: 'One hour of direct work with Kate.',
@@ -341,7 +341,7 @@ export const careerSessionsEn: CoachingContent = {
 
   price: {
     title: 'Investment',
-    amount: '$200 USD',
+    amount: '$300 USD',
     note: 'Per one-hour session, 1:1 with Kate. You pay when you book. No subscriptions, no lock-in, no fine print.',
     bullets: [
       'Individual 60-minute session over video call',
@@ -355,7 +355,7 @@ export const careerSessionsEn: CoachingContent = {
     items: [
       {
         q: 'How much does a career coaching session with Kate cost?',
-        a: 'Each 1:1 session costs $200 USD and lasts one hour. Payment is made when you book and confirms your spot. There are no subscriptions or mandatory packages: you pay only for the sessions you take.',
+        a: 'Each 1:1 session costs $300 USD and lasts one hour. Payment is made when you book and confirms your spot. There are no subscriptions or mandatory packages: you pay only for the sessions you take.',
       },
       {
         q: 'Do I need to be in a program to take a session?',
@@ -471,7 +471,7 @@ export const momentumEs: CoachingContent = {
     steps: [
       {
         title: 'Haces (o ya hiciste) una sesión 1:1.',
-        body: 'Es el diagnóstico: $200 USD, una hora, un problema. Ahí se define si Momentum es tu siguiente paso y qué van a trabajar juntos.',
+        body: 'Es el diagnóstico: $300 USD, una hora, un problema. Ahí se define si Momentum es tu siguiente paso y qué van a trabajar juntos.',
       },
       {
         title: 'Activas Momentum por WhatsApp.',
@@ -503,7 +503,7 @@ export const momentumEs: CoachingContent = {
     items: [
       {
         q: '¿Qué es Momentum?',
-        a: 'Es el acompañamiento mensual de Purrfect Hire: 2 sesiones 1:1 al mes con Kate Forero más revisión async de tus avances entre sesiones. Cuesta $550 USD al mes con un mínimo de 3 meses. Es el peldaño entre la sesión suelta de $200 y el programa Offer Acceleration de $2,000+.',
+        a: 'Es el acompañamiento mensual de Purrfect Hire: 2 sesiones 1:1 al mes con Kate Forero más revisión async de tus avances entre sesiones. Cuesta $550 USD al mes con un mínimo de 3 meses. Es el peldaño entre la sesión suelta de $300 y el programa Offer Acceleration de $2,000+.',
       },
       {
         q: '¿Por qué necesito una sesión 1:1 antes de entrar?',
@@ -515,7 +515,7 @@ export const momentumEs: CoachingContent = {
       },
       {
         q: '¿En qué se diferencia de una sesión suelta?',
-        a: 'La sesión suelta resuelve un problema puntual: una hora, un foco, $200. Momentum es cadencia: dos sesiones al mes, avances revisados entre sesiones y contexto que se acumula. Si tu problema es de una hora, agenda una sesión. Si es de meses, Momentum.',
+        a: 'La sesión suelta resuelve un problema puntual: una hora, un foco, $300. Momentum es cadencia: dos sesiones al mes, avances revisados entre sesiones y contexto que se acumula. Si tu problema es de una hora, agenda una sesión. Si es de meses, Momentum.',
       },
       {
         q: '¿En qué se diferencia de Offer Acceleration?',
@@ -523,7 +523,7 @@ export const momentumEs: CoachingContent = {
       },
       {
         q: '¿Cómo empiezo?',
-        a: 'Si ya hiciste una sesión 1:1 con Kate, nos escribes por WhatsApp y activamos tu mes desde la próxima semana. Si aún no la has hecho, agenda primero tu sesión de $200: es la puerta de entrada.',
+        a: 'Si ya hiciste una sesión 1:1 con Kate, nos escribes por WhatsApp y activamos tu mes desde la próxima semana. Si aún no la has hecho, agenda primero tu sesión de $300: es la puerta de entrada.',
       },
     ],
   },
@@ -613,7 +613,7 @@ export const momentumEn: CoachingContent = {
     steps: [
       {
         title: 'You take (or already took) a 1:1 session.',
-        body: 'It is the diagnosis: $200 USD, one hour, one problem. There you both define whether Momentum is your next step and what you will work on together.',
+        body: 'It is the diagnosis: $300 USD, one hour, one problem. There you both define whether Momentum is your next step and what you will work on together.',
       },
       {
         title: 'You start Momentum via WhatsApp.',
@@ -645,7 +645,7 @@ export const momentumEn: CoachingContent = {
     items: [
       {
         q: 'What is Momentum?',
-        a: 'It is Purrfect Hire\'s monthly coaching cadence: 2 one-hour 1:1 sessions a month with Kate Forero plus async review of your progress between sessions. It costs $550 USD per month with a 3-month minimum. It is the rung between the $200 single session and the $2,000+ Offer Acceleration program.',
+        a: 'It is Purrfect Hire\'s monthly coaching cadence: 2 one-hour 1:1 sessions a month with Kate Forero plus async review of your progress between sessions. It costs $550 USD per month with a 3-month minimum. It is the rung between the $300 single session and the $2,000+ Offer Acceleration program.',
       },
       {
         q: 'Why do I need a 1:1 session before joining?',
@@ -657,7 +657,7 @@ export const momentumEn: CoachingContent = {
       },
       {
         q: 'How is it different from a single session?',
-        a: 'A single session solves one specific problem: one hour, one focus, $200. Momentum is cadence: two sessions a month, progress reviewed in between, and context that compounds. If your problem fits in an hour, book a session. If it spans months, Momentum.',
+        a: 'A single session solves one specific problem: one hour, one focus, $300. Momentum is cadence: two sessions a month, progress reviewed in between, and context that compounds. If your problem fits in an hour, book a session. If it spans months, Momentum.',
       },
       {
         q: 'How is it different from Offer Acceleration?',
@@ -665,7 +665,7 @@ export const momentumEn: CoachingContent = {
       },
       {
         q: 'How do I start?',
-        a: 'If you already did a 1:1 session with Kate, message us on WhatsApp and we activate your month starting next week. If you have not, book your $200 session first: it is the entry door.',
+        a: 'If you already did a 1:1 session with Kate, message us on WhatsApp and we activate your month starting next week. If you have not, book your $300 session first: it is the entry door.',
       },
     ],
   },

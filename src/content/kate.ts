@@ -126,7 +126,7 @@ export const kateEn: KateContent = {
     },
     talent: {
       title: "You're growing",
-      body: 'One hour with Kate on your interview, offer or narrative. $200, in Spanish or English.',
+      body: 'One hour with Kate on your interview, offer or narrative. $300, in Spanish or English.',
       label: 'Book a 1:1 session',
       href: '/career-sessions',
     },
@@ -204,7 +204,7 @@ export const kateEs: KateContent = {
     },
     talent: {
       title: 'Estás creciendo',
-      body: 'Una hora con Kate sobre tu entrevista, tu oferta o tu narrativa. $200, en español o en inglés.',
+      body: 'Una hora con Kate sobre tu entrevista, tu oferta o tu narrativa. $300, en español o en inglés.',
       label: 'Agenda una sesión 1:1',
       href: '/es/career-sessions',
     },
