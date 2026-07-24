@@ -11,9 +11,17 @@ const wa = (text: string) => `https://wa.me/16283588776?text=${encodeURIComponen
 
 export interface PricingPlan {
   name: string;
+  /** One-line "is this me?" qualifier shown right under the plan name. */
+  tagline: string;
   rows: { label: string; value: string; strong?: boolean }[];
   detailHref?: string;
   detailLabel?: string;
+}
+
+/** One-sentence decision rail above the B2B cards: it picks the plan for you. */
+export interface PricingDecision {
+  question: string;
+  items: { match: string; plan: string }[];
 }
 
 export interface PricingContent {
@@ -25,6 +33,7 @@ export interface PricingContent {
   b2b: {
     title: string;
     intro: string;
+    decision: PricingDecision;
     plans: PricingPlan[];
     ctaLabel: string;
     ctaHref: string;
@@ -65,46 +74,54 @@ export const pricingEn: PricingContent = {
     title: 'For founders',
     intro:
       'Structure is public; exact terms are a 20-minute conversation. One guarantee standard across web and contracts.',
+    decision: {
+      question: 'How many senior hires this year?',
+      items: [
+        { match: '1–2', plan: 'Success Fee' },
+        { match: '4–6+', plan: 'All You Can Hire' },
+        { match: 'The role that defines the company', plan: 'Embedded Search' },
+      ],
+    },
     plans: [
       {
         name: 'Success Fee',
+        tagline: 'For 1–2 critical hires a year',
         rows: [
-          { label: 'For whom', value: '1–2 critical hires a year' },
+          { label: 'Price', value: 'Exact terms in a 20-min call', strong: true },
           { label: 'Model', value: 'You pay only when you hire. A percentage of first-year salary.' },
           { label: 'Includes', value: 'Mapping of your real bar, calibrated candidates in under 4 weeks' },
           { label: 'Guarantee', value: '90-day replacement' },
-          { label: 'Price', value: 'Exact terms in a 20-min call', strong: true },
         ],
       },
       {
         name: 'All You Can Hire',
+        tagline: 'For 4–6+ senior hires a year',
         rows: [
-          { label: 'For whom', value: '4–6+ senior hires a year' },
+          {
+            label: 'Price',
+            value: 'From $9,000 USD/month, annual commitment · $11,000/month quarterly',
+            strong: true,
+          },
           { label: 'Model', value: 'Flat monthly fee. Up to 6 senior hires in 12 months.' },
           {
             label: 'Includes',
             value: 'Dedicated recruiter, always-on pipeline, no re-briefing, priority on our calendar',
           },
           { label: 'Guarantee', value: 'Included while the subscription is active' },
-          {
-            label: 'Price',
-            value: 'From $9,000 USD/month, annual commitment · $11,000/month quarterly',
-            strong: true,
-          },
           { label: 'Extra hires (7+)', value: 'Reduced flat fee per additional hire' },
         ],
       },
       {
         name: 'Embedded Search',
+        tagline: 'For the role that defines the company: CTO, founding exec',
         rows: [
-          { label: 'For whom', value: 'The role that defines the company (CTO, founding exec)' },
+          { label: 'Price', value: 'Direct conversation', strong: true },
           { label: 'Model', value: 'Dedicated search with retainer + success fee' },
           {
             label: 'Includes',
             value: 'Kate directly on the search, full market map, compensation calibrated with real data',
           },
           { label: 'Guarantee', value: '120-day replacement' },
-          { label: 'Price', value: 'Direct conversation', strong: true },
         ],
       },
     ],
@@ -124,10 +141,10 @@ export const pricingEn: PricingContent = {
     plans: [
       {
         name: '1:1 Session',
+        tagline: 'For one specific problem: interview, offer, narrative, limiting beliefs',
         rows: [
-          { label: 'For whom', value: 'One specific problem: interview, offer, narrative, limiting beliefs' },
-          { label: 'Format', value: '1 hour with Kate, single focus, written summary of agreements' },
           { label: 'Price', value: '$300 USD', strong: true },
+          { label: 'Format', value: '1 hour with Kate, single focus, written summary of agreements' },
           { label: 'How to start', value: 'WhatsApp, payment when you book' },
         ],
         detailHref: '/career-sessions',
@@ -135,10 +152,10 @@ export const pricingEn: PricingContent = {
       },
       {
         name: 'Momentum',
+        tagline: 'For sustained progress, month over month',
         rows: [
-          { label: 'For whom', value: 'Sustained progress, month over month' },
-          { label: 'Format', value: '2 sessions/month with Kate + async review of progress between sessions' },
           { label: 'Price', value: '$550 USD/month, 3-month minimum', strong: true },
+          { label: 'Format', value: '2 sessions/month with Kate + async review of progress between sessions' },
           { label: 'How to start', value: 'After at least one 1:1 session' },
         ],
         detailHref: '/career-momentum',
@@ -146,13 +163,13 @@ export const pricingEn: PricingContent = {
       },
       {
         name: 'Offer Acceleration',
+        tagline: 'For a full repositioning toward US startups',
         rows: [
-          { label: 'For whom', value: 'A full repositioning toward US startups' },
+          { label: 'Price', value: 'From $2,000 USD', strong: true },
           {
             label: 'Format',
             value: '1:1 program: written strategy, market map, role plays, negotiation, direct intros',
           },
-          { label: 'Price', value: 'From $2,000 USD', strong: true },
           { label: 'How to start', value: 'Application, limited spots' },
         ],
         detailHref: '/offer-acceleration',
@@ -193,46 +210,54 @@ export const pricingEs: PricingContent = {
     title: 'Para founders',
     intro:
       'La estructura es pública; los términos exactos son una conversación de 20 minutos. Una sola garantía estándar en web y contratos.',
+    decision: {
+      question: '¿Cuántos hires senior este año?',
+      items: [
+        { match: '1–2', plan: 'Success Fee' },
+        { match: '4–6+', plan: 'All You Can Hire' },
+        { match: 'El rol que define la compañía', plan: 'Embedded Search' },
+      ],
+    },
     plans: [
       {
         name: 'Success Fee',
+        tagline: 'Para 1–2 hires críticos al año',
         rows: [
-          { label: 'Para quién', value: '1–2 hires críticos al año' },
+          { label: 'Precio', value: 'Términos exactos en un call de 20 min', strong: true },
           { label: 'Modelo', value: 'Pagas solo cuando contratas. Un porcentaje del salario del primer año.' },
           { label: 'Incluye', value: 'Mapeo de tu bar real, candidatos calibrados en menos de 4 semanas' },
           { label: 'Garantía', value: 'Reemplazo a 90 días' },
-          { label: 'Precio', value: 'Términos exactos en un call de 20 min', strong: true },
         ],
       },
       {
         name: 'All You Can Hire',
+        tagline: 'Para 4–6+ hires senior al año',
         rows: [
-          { label: 'Para quién', value: '4–6+ hires senior al año' },
+          {
+            label: 'Precio',
+            value: 'Desde $9,000 USD/mes con compromiso anual · $11,000/mes trimestral',
+            strong: true,
+          },
           { label: 'Modelo', value: 'Fee mensual fijo. Hasta 6 hires senior en 12 meses.' },
           {
             label: 'Incluye',
             value: 'Recruiter dedicado, pipeline siempre activo, sin re-briefing, prioridad de agenda',
           },
           { label: 'Garantía', value: 'Incluida mientras la suscripción está activa' },
-          {
-            label: 'Precio',
-            value: 'Desde $9,000 USD/mes con compromiso anual · $11,000/mes trimestral',
-            strong: true,
-          },
           { label: 'Hire adicional (7+)', value: 'Fee flat reducido por hire extra' },
         ],
       },
       {
         name: 'Embedded Search',
+        tagline: 'Para el rol que define la compañía: CTO, founding exec',
         rows: [
-          { label: 'Para quién', value: 'El rol que define la compañía (CTO, founding exec)' },
+          { label: 'Precio', value: 'Conversación directa', strong: true },
           { label: 'Modelo', value: 'Búsqueda dedicada con retainer + success fee' },
           {
             label: 'Incluye',
             value: 'Kate directamente en el search, mapa de mercado completo, compensación calibrada con datos reales',
           },
           { label: 'Garantía', value: 'Reemplazo a 120 días' },
-          { label: 'Precio', value: 'Conversación directa', strong: true },
         ],
       },
     ],
@@ -252,10 +277,10 @@ export const pricingEs: PricingContent = {
     plans: [
       {
         name: 'Sesión 1:1',
+        tagline: 'Para un problema puntual: entrevista, oferta, narrativa, creencias limitantes',
         rows: [
-          { label: 'Para quién', value: 'Un problema puntual: entrevista, oferta, narrativa, creencias limitantes' },
-          { label: 'Formato', value: '1 hora con Kate, foco único, resumen de acuerdos por escrito' },
           { label: 'Precio', value: '$300 USD', strong: true },
+          { label: 'Formato', value: '1 hora con Kate, foco único, resumen de acuerdos por escrito' },
           { label: 'Entrada', value: 'WhatsApp, pago al reservar' },
         ],
         detailHref: '/es/career-sessions',
@@ -263,10 +288,10 @@ export const pricingEs: PricingContent = {
       },
       {
         name: 'Momentum',
+        tagline: 'Para avance sostenido mes a mes',
         rows: [
-          { label: 'Para quién', value: 'Avance sostenido mes a mes' },
-          { label: 'Formato', value: '2 sesiones/mes con Kate + revisión async de avances entre sesiones' },
           { label: 'Precio', value: '$550 USD/mes, mínimo 3 meses', strong: true },
+          { label: 'Formato', value: '2 sesiones/mes con Kate + revisión async de avances entre sesiones' },
           { label: 'Entrada', value: 'Después de al menos 1 sesión 1:1' },
         ],
         detailHref: '/es/career-momentum',
@@ -274,13 +299,13 @@ export const pricingEs: PricingContent = {
       },
       {
         name: 'Offer Acceleration',
+        tagline: 'Para un reposicionamiento completo hacia startups de US',
         rows: [
-          { label: 'Para quién', value: 'Reposicionamiento completo hacia startups de US' },
+          { label: 'Precio', value: 'Desde $2,000 USD', strong: true },
           {
             label: 'Formato',
             value: 'Programa 1:1: estrategia escrita, mapa de mercado, role plays, negociación, intros directas',
           },
-          { label: 'Precio', value: 'Desde $2,000 USD', strong: true },
           { label: 'Entrada', value: 'Aplicación, cupos limitados' },
         ],
         detailHref: '/offer-acceleration',
