@@ -481,7 +481,7 @@ export const oaContent = {
       title: 'Tu perfil tiene potencial real en este programa.',
       body: 'El siguiente paso es una llamada corta con nuestro equipo para alinear expectativas y resolver tus dudas. Elige el horario que mejor te funcione.',
       calendlyName: 'Equipo Purrfect Hire',
-      calendlyRole: 'Llamada de alineación · 30 min',
+      calendlyRole: 'Llamada de alineación · 15 min',
       calendlyCta: 'Agendar mi llamada',
     },
     rejected: {
