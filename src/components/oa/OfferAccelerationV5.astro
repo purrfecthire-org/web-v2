@@ -166,6 +166,18 @@ const { nav, footer } = getContent('es');
       <p class="oa5-format oa5-reveal">{c.format.body}</p>
     </section>
 
+    <!-- ── Post-program accompaniment ───────────────────────────────── -->
+    <section class="oa5-chapter oa5-chapter--narrow">
+      <div class="oa5-chapter__head oa5-reveal">
+        <h2 class="oa5-chapter__title">{c.after.title}</h2>
+      </div>
+      <div class="oa5-after oa5-reveal">
+        <p>{c.after.body1}</p>
+        <p>{c.after.body2}</p>
+        <p>{c.after.body3}</p>
+      </div>
+    </section>
+
     <!-- ── FAQ ──────────────────────────────────────────────────────── -->
     <section class="oa5-chapter oa5-chapter--narrow">
       <div class="oa5-chapter__head oa5-reveal">
@@ -645,6 +657,26 @@ const { nav, footer } = getContent('es');
     font-size: 1.0625rem;
     line-height: 1.7;
     color: var(--oa5-muted);
+  }
+
+  // ── Post-program accompaniment ────────────────────────────
+  .oa5-after {
+    max-width: 46rem;
+
+    p {
+      margin: 0;
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: var(--oa5-muted);
+
+      & + p { margin-top: 1.25rem; }
+    }
+
+    // The differentiator line reads first and in ink.
+    p:first-child {
+      color: var(--oa5-ink, #29285f);
+      font-weight: 500;
+    }
   }
 
   // ── FAQ ───────────────────────────────────────────────────

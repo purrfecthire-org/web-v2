@@ -156,7 +156,18 @@ export const oaContent = {
 
   format: {
     title: 'Formato',
-    body: '3 a 6 sesiones 1:1 con Kate según tu velocidad de ejecución, con role play en vivo. Dos sesiones especiales: una de mentalidad con invitado, una con advisor de US y startups. Soporte directo por WhatsApp y email: validamos oportunidades antes de aplicar, revisamos drafts, damos feedback después de cada entrevista. El pipeline arranca la primera semana.',
+    body: '8 sesiones semanales: 1 de diagnóstico + 7 sesiones 1:1 con Kate, con role play en vivo. Dos sesiones especiales: una de mentalidad con invitado, una con advisor de US y startups. Weekly de seguimiento con el equipo, y soporte directo por WhatsApp y email: validamos oportunidades antes de aplicar, revisamos drafts, damos feedback después de cada entrevista. El pipeline arranca la primera semana.',
+  },
+
+  // ── Post-program accompaniment: what changes after session 8 ───────────
+  after: {
+    title: 'Te acompañamos hasta que te ubiques',
+    body1:
+      'El programa son 8 sesiones. El acompañamiento no tiene fecha de vencimiento, y queremos que lo tengas claro desde hoy, porque es lo que nos diferencia de todo lo que hay allá afuera: no te soltamos en la mitad.',
+    body2:
+      'Lo que cambia cuando terminan las 8 sesiones es el formato, no el compromiso. El material no caduca, el weekly con el equipo sigue igual, y por WhatsApp nos escribes cuando lo necesites. Lo único que funciona distinto es el tiempo en vivo con Kate: deja de ser semanal y se activa por evento, cuando hay una conversación con fecha en el calendario. Entrevista confirmada, panel final, oferta sobre la mesa, negociación abierta.',
+    body3:
+      'La razón: una sesión semanal en fase de ejecución reemplaza al mercado. Te da la sensación de avanzar sin haber hablado con una sola persona que pueda contratarte. Ahí no te vamos a acompañar. En la conversación que decide tu oferta, sí, siempre.',
   },
 
   faq: {
@@ -508,8 +519,8 @@ export const oaContent = {
       title: 'Resumen de tu programa',
       items: [
         { label: 'Programa', value: 'Offer Acceleration 1:1' },
-        { label: 'Sesiones', value: '3 a 6 sesiones 1:1 + 2 especiales' },
-        { label: 'Duración', value: '3 a 6 semanas' },
+        { label: 'Sesiones', value: '8 sesiones: 1 diagnóstico + 7 con Kate, más 2 especiales' },
+        { label: 'Duración', value: '8 semanas + acompañamiento hasta que te ubiques' },
         { label: 'Soporte', value: 'WhatsApp y email continuo' },
       ],
       totalLabel: 'Total · pago único',
@@ -536,7 +547,7 @@ export const oaContent = {
     },
     checks: {
       terms: 'Acepto los términos y condiciones del programa.',
-      sessions: 'Entiendo y acepto el número de sesiones incluidas (3 a 6 sesiones 1:1 + 2 sesiones especiales).',
+      sessions: 'Entiendo y acepto el número de sesiones incluidas (8 sesiones: 1 de diagnóstico + 7 con Kate, más 2 sesiones especiales).',
     },
     confirm: 'Confirmar pago y reservar mi cupo',
     processing: 'Procesando tu pago de forma segura…',
