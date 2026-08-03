@@ -6,6 +6,7 @@
 import Layout from '../../layouts/Layout.astro';
 import V6Nav from '../v6/V6Nav.astro';
 import Footer from '../Footer.astro';
+import OATestimonials from './OATestimonials.astro';
 import { oaContent as c } from '../../content/offerAcceleration';
 import { getContent } from '../../content/index';
 
@@ -55,22 +56,8 @@ const { nav, footer } = getContent('es');
       </div>
     </section>
 
-    <!-- ── Cases ────────────────────────────────────────────────────── -->
-    <section class="oa5-chapter" id="casos">
-      <div class="oa5-chapter__head oa5-reveal">
-        <h2 class="oa5-chapter__title">{c.cases.title}</h2>
-      </div>
-      <p class="oa5-chapter__subhead oa5-reveal">{c.cases.intro}</p>
-
-      <div class="oa5-cases">
-        {c.cases.items.map((item) => (
-          <article class="oa5-case oa5-reveal">
-            <h3 class="oa5-case__title">{item.title}</h3>
-            <p class="oa5-case__body">{item.body}</p>
-          </article>
-        ))}
-      </div>
-    </section>
+    <!-- ── Testimonials (replaces the old cases grid) ──────────────────── -->
+    <OATestimonials />
 
     <!-- ── How we work ──────────────────────────────────────────────── -->
     <section class="oa5-chapter">
@@ -435,43 +422,6 @@ const { nav, footer } = getContent('es');
     line-height: 1.3;
     letter-spacing: -0.01em;
     color: var(--oa5-ink);
-  }
-
-  // ── Cases ─────────────────────────────────────────────────
-  .oa5-cases {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-
-    @media (max-width: 767px) { grid-template-columns: 1fr; }
-  }
-
-  .oa5-case {
-    background: var(--oa5-surface);
-    border: 1px solid var(--oa5-border);
-    border-radius: var(--oa5-radius);
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-    transition: border-color 0.25s $ease-expo;
-
-    &:hover { border-color: var(--oa5-ink); }
-
-    &__title {
-      margin: 0;
-      font-size: 1.0625rem;
-      font-weight: 700;
-      line-height: 1.4;
-      color: var(--oa5-ink);
-    }
-
-    &__body {
-      margin: 0;
-      font-size: 0.9375rem;
-      line-height: 1.65;
-      color: var(--oa5-muted);
-    }
   }
 
   // ── How ───────────────────────────────────────────────────

@@ -40,26 +40,38 @@ export const oaContent = {
     body3: 'No es urgencia inventada. Es aritmética que ya sabes hacer.',
   },
 
-  cases: {
-    title: 'El patrón se repite: no cambia el talento, cambia el canal',
+  // ── Candidate testimonials (replaces the old "cases" section on the page).
+  // `paragraphs` is Alejandro's testimonial verbatim: never paraphrase, trim
+  // or reword it. `pull2` and the labels are site copy and can be edited
+  // freely. `highlights[i]` must be an exact substring of `paragraphs[i]` —
+  // the component wraps it for emphasis at render time.
+  testimonials: {
+    title: 'En palabras de quienes ya lo vivieron',
     intro:
-      'Cada caso es la misma mecánica. Salir del intermediario y de la cola de aplicaciones, y entrar directo a donde los seniors realmente se contratan.',
+      'Historias reales, con nombre, cara y perfil que puedes verificar.',
+    verifiedLabel: 'Historia real · perfil verificable',
+    linkedinCta: 'Ver perfil en LinkedIn',
+    readMore: 'Leer la historia completa',
+    readLess: 'Cerrar historia',
     items: [
       {
-        title: 'UX/UI Designer · de $1,750 a $4,500 sacándolo del intermediario.',
-        body: 'Llevaba más de un año en staff augmentation, con un intermediario quedándose con la otra mitad de su tarifa: cobraba la mitad de lo que ya valía. Lo pusimos directo frente a startups US contratando sin intermediario. +$33,000 al año. Mismo talento, otro canal.',
-      },
-      {
-        title: 'Frontend Lead · duplicó su ingreso entrando directo al fundador.',
-        body: 'Estancado en una empresa local sin saber que su perfil ya calificaba para una Series B en US. Mapeamos 12 empresas y entró por la puerta directa al fundador, no por la cola de aplicaciones. De Senior IC a Lead, con cambio de geografía salarial.',
-      },
-      {
-        title: 'De dos trabajos a una sola oferta senior de $9,000.',
-        body: 'Sostenía un full-time más freelance pesado para juntar $6,500 al mes. Lo reposicionamos para que un solo rol senior cubriera la suma. Cerró en $9,000 en un contrato y recuperó sus noches y sus fines de semana.',
-      },
-      {
-        title: 'Founder → Head of Product, sin leerse como fracaso.',
-        body: 'Cerró su startup y no sabía cómo volver al mercado. Construimos la narrativa de founder en transición y lo posicionamos a nivel ejecutivo. Cerró un Head of Product.',
+        name: 'Alejandro Eljadue',
+        linkedin: 'https://www.linkedin.com/in/aeljaduetarud/',
+        photo: '/testimonials/alejandro-eljadue.jpg',
+        photoAlt: 'Alejandro Eljadue, alumni del programa Offer Acceleration',
+        pull2: 'Te enseña una metodología para tomar el control de tu carrera.',
+        paragraphs: [
+          'Antes de entrar al programa estaba invirtiendo muchísimo tiempo aplicando a vacantes, pero sentía que mi búsqueda dependía más de la suerte que de una estrategia. Sabía que tenía experiencia, pero no estaba logrando generar el tipo de conversaciones que quería con las empresas.',
+          'Lo que cambió fue mi forma de posicionarme. Aprendí a comunicar mi impacto con mucha más claridad, a enfocar mi búsqueda en oportunidades donde realmente tenía fit y a prepararme para que cada entrevista sumara, en lugar de improvisar.',
+          'Eso hizo que dejara de perseguir oportunidades y empezara a atraer conversaciones mucho más relevantes, hasta encontrar una posición alineada con lo que estaba buscando.',
+          'Lo que más valoro de PurrfectHire es que no te entrega una lista de consejos o un CV bonito. Te enseña una metodología para tomar el control de tu carrera y entender cómo piensan las empresas cuando contratan. Es el tipo de aprendizaje que sigue siendo útil mucho después de conseguir el siguiente trabajo.',
+        ],
+        highlights: [
+          'mi búsqueda dependía más de la suerte que de una estrategia',
+          'Lo que cambió fue mi forma de posicionarme.',
+          'dejara de perseguir oportunidades y empezara a atraer conversaciones mucho más relevantes',
+          'una metodología para tomar el control de tu carrera',
+        ],
       },
     ],
   },
