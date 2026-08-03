@@ -5,6 +5,7 @@
 // wall, and two quotes — one founder, one placed candidate. Labels use the
 // same small-caps treatment as the bifurcation ("For founders" / "For talent").
 import type { LandingContent } from '../../content/index';
+import LogoCarousel from '../shared/LogoCarousel.astro';
 
 interface Props {
   content: LandingContent;
@@ -15,17 +16,21 @@ const p = content.homeRouter.proof;
 const hero = content.hero;
 const t = content.testimonials;
 
-// Lead with the most recognizable names first (Kate's credibility note: this
-// screen carries the trust on the router home).
+// Same roster as the /for-founders client wall, so the trust signal is
+// consistent wherever it shows up on the site.
 const clients = [
-  { name: 'Optery', logo: '/clients/optery.png' },
-  { name: 'PayJoy', logo: '/clients/payjoy.png' },
-  { name: 'Konta', logo: '/clients/konta.png' },
-  { name: 'Cometa', logo: '/clients/cometa.png' },
   { name: 'Trébol', logo: '/clients/trebol.png' },
   { name: 'Cheaf', logo: '/clients/cheaf.png' },
-  { name: 'Hera', logo: '/clients/hera.png' },
   { name: 'Mavi', logo: '/clients/mavi.png' },
+  { name: 'Hera', logo: '/clients/hera.png' },
+  { name: 'Heron', logo: '/clients/heron.png' },
+  { name: 'Optery', logo: '/clients/optery.png' },
+  { name: 'Telepatia', logo: '/clients/telepatia.png' },
+  { name: 'Cometa', logo: '/clients/cometa.png' },
+  { name: 'Sauce', logo: '/clients/sauce.png' },
+  { name: 'Addi', logo: '/clients/addi.png' },
+  { name: 'PayJoy', logo: '/clients/payjoy.png' },
+  { name: 'Mercai', logo: '/clients/mercai.png' },
 ];
 ---
 
@@ -40,12 +45,7 @@ const clients = [
     <p class="home-proof__lead reveal reveal-delay-1">{p.lead}</p>
 
     <div class="home-proof__clients reveal reveal-delay-1">
-      <p class="home-proof__trust eyebrow">{hero.trustLabel}</p>
-      <div class="home-proof__logos">
-        {clients.map((c) => (
-          <img src={c.logo} alt={c.name} class="home-proof__logo" loading="lazy" />
-        ))}
-      </div>
+      <LogoCarousel logos={clients} label={hero.trustLabel} />
     </div>
 
     <div class="home-proof__quotes reveal reveal-delay-2">
@@ -106,26 +106,6 @@ const clients = [
 
     // ── Client logo wall ────────────────────────────────────
     &__clients { margin-top: 3.25rem; }
-
-    &__trust { color: var(--color-muted); }
-
-    &__logos {
-      margin-top: 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 1.75rem 2.5rem;
-    }
-
-    &__logo {
-      height: 1.6rem;
-      width: auto;
-      filter: grayscale(1);
-      opacity: 0.55;
-
-      @include max-sm { height: 1.35rem; }
-    }
 
     // ── Two quotes ──────────────────────────────────────────
     &__quotes {
