@@ -47,8 +47,12 @@ export const oaContent = {
   // the component wraps it for emphasis at render time.
   testimonials: {
     title: 'En palabras de quienes ya lo vivieron',
+    // Singular on purpose: only one story is shown here, named and
+    // verifiable. The cases further down the page are real but anonymous
+    // (client confidentiality), so this line must not read as a plural
+    // promise of "verifiable profiles" the page doesn't back up.
     intro:
-      'Historias reales, con nombre, cara y perfil que puedes verificar.',
+      'Una historia real, con nombre, cara y perfil que puedes verificar.',
     verifiedLabel: 'Historia real · perfil verificable',
     linkedinCta: 'Ver perfil en LinkedIn',
     readMore: 'Leer la historia completa',
@@ -61,13 +65,13 @@ export const oaContent = {
         // <picture> fallback for browsers without WebP support.
         photoWebp: '/testimonials/alejandro-eljadue.webp',
         photo: '/testimonials/alejandro-eljadue.jpg',
-        photoAlt: 'Alejandro Eljadue, alumni del programa Offer Acceleration',
+        photoAlt: 'Alejandro Eljadue, alumno del programa Offer Acceleration',
         pull2: 'Te enseña una metodología para tomar el control de tu carrera.',
         paragraphs: [
           'Antes de entrar al programa estaba invirtiendo muchísimo tiempo aplicando a vacantes, pero sentía que mi búsqueda dependía más de la suerte que de una estrategia. Sabía que tenía experiencia, pero no estaba logrando generar el tipo de conversaciones que quería con las empresas.',
           'Lo que cambió fue mi forma de posicionarme. Aprendí a comunicar mi impacto con mucha más claridad, a enfocar mi búsqueda en oportunidades donde realmente tenía fit y a prepararme para que cada entrevista sumara, en lugar de improvisar.',
           'Eso hizo que dejara de perseguir oportunidades y empezara a atraer conversaciones mucho más relevantes, hasta encontrar una posición alineada con lo que estaba buscando.',
-          'Lo que más valoro de PurrfectHire es que no te entrega una lista de consejos o un CV bonito. Te enseña una metodología para tomar el control de tu carrera y entender cómo piensan las empresas cuando contratan. Es el tipo de aprendizaje que sigue siendo útil mucho después de conseguir el siguiente trabajo.',
+          'Lo que más valoro de Purrfect Hire es que no te entrega una lista de consejos o un CV bonito. Te enseña una metodología para tomar el control de tu carrera y entender cómo piensan las empresas cuando contratan. Es el tipo de aprendizaje que sigue siendo útil mucho después de conseguir el siguiente trabajo.',
         ],
         highlights: [
           'mi búsqueda dependía más de la suerte que de una estrategia',
@@ -214,7 +218,7 @@ export const oaContent = {
     kate: {
       name: 'Katerine Forero.',
       role: 'Founder & CEO, Purrfect Hire.',
-      bio: '10+ años en talento y recruiting. Entró a ADDI cuando eran 5 personas y lideró la operación de talento mientras escalaron a 500. Vive en Suiza y opera entre LATAM, US y Europa todos los días.',
+      bio: '10+ años en talento y recruiting. Entró a ADDI cuando eran 15 personas y lideró la operación de talento mientras escalaron a +400. Vive en Suiza y opera entre LATAM, US y Europa todos los días.',
       quote: 'No optimizo para caer bien. Optimizo para que las cosas funcionen.',
     },
     team: {

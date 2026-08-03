@@ -2,8 +2,8 @@
 // ── Home router · Screen 2: shared proof ─────────────────────────────────
 // The only screen that serves both ICPs at once, so it carries all the trust
 // weight: how the engine works (grouped one-idea-per-line), the client logo
-// wall, and two quotes — one founder, one placed candidate. Labels use the
-// same small-caps treatment as the bifurcation ("For founders" / "For talent").
+// wall, and a founder quote. Label uses the same small-caps treatment as the
+// bifurcation ("For founders" / "For talent").
 import type { LandingContent } from '../../content/index';
 import LogoCarousel from '../shared/LogoCarousel.astro';
 
@@ -57,14 +57,6 @@ const clients = [
           <span class="home-proof__quote-role">{t.featured.role}</span>
         </div>
       </figure>
-      <figure class="home-proof__quote">
-        <figcaption class="home-proof__quote-label eyebrow">{p.talentQuoteLabel}</figcaption>
-        <blockquote class="home-proof__quote-text">"{t.candidateTestimonial.quote}"</blockquote>
-        <div class="home-proof__quote-who">
-          <span class="home-proof__quote-name">{t.candidateTestimonial.name}</span>
-          <span class="home-proof__quote-role">{t.candidateTestimonial.role}</span>
-        </div>
-      </figure>
     </div>
 
   </div>
@@ -107,18 +99,16 @@ const clients = [
     // ── Client logo wall ────────────────────────────────────
     &__clients { margin-top: 3.25rem; }
 
-    // ── Two quotes ──────────────────────────────────────────
+    // ── Founder quote ─────────────────────────────────────────
     &__quotes {
       margin-top: 3.25rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      display: flex;
+      justify-content: center;
       text-align: left;
-
-      @include max-md { grid-template-columns: 1fr; }
     }
 
     &__quote {
+      max-width: 32rem;
       background: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: var(--radius);

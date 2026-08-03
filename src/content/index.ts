@@ -100,12 +100,6 @@ export interface LandingContent {
       role: string;
       badge: string;
     }[];
-    candidateTestimonial: {
-      quote: string;
-      name: string;
-      role: string;
-      badge: string;
-    };
   };
   roles: {
     eyebrow: string;
@@ -146,7 +140,6 @@ export interface LandingContent {
       headline: string;
       lead: string; // single descriptive paragraph: what the engine is + both outcomes
       founderQuoteLabel: string;
-      talentQuoteLabel: string;
     };
     fork: {
       eyebrow: string;
@@ -424,12 +417,6 @@ export const content_en: LandingContent = {
         badge: 'Client',
       },
     ],
-    candidateTestimonial: {
-      quote: 'I\'ve never been in such a supportive process. The team was attentive at every moment. I knew exactly where I stood.',
-      name: 'Diana Arteaga',
-      role: 'Customer Service Lead, Konta (MX)',
-      badge: 'Candidate · Placed in 16 days',
-    },
   },
 
   roles: {
@@ -472,7 +459,6 @@ export const content_en: LandingContent = {
       headline: 'One engine. Founders on one side, talent on the other.',
       lead: 'Purrfect Hire is a closed-loop recruiting engine. We map how startups actually evaluate, train the talent we place against that signal, and feed every outcome back in. Founders hire people who stay. Talent gets introduced, not filtered.',
       founderQuoteLabel: 'For founders',
-      talentQuoteLabel: 'For talent · Placed in 16 days',
     },
     fork: {
       eyebrow: 'One click decides',
@@ -805,12 +791,6 @@ export const content_es: LandingContent = {
         badge: 'Cliente',
       },
     ],
-    candidateTestimonial: {
-      quote: 'Nunca había estado en un proceso tan acompañado. El equipo estuvo atento en cada momento. Sabía exactamente dónde estaba parada.',
-      name: 'Diana Arteaga',
-      role: 'Customer Service Lead, Konta (MX)',
-      badge: 'Candidata · Colocada en 16 días',
-    },
   },
 
   roles: {
@@ -853,7 +833,6 @@ export const content_es: LandingContent = {
       headline: 'Un solo motor. Founders de un lado, talento del otro.',
       lead: 'Purrfect Hire es un motor de reclutamiento de ciclo cerrado. Mapeamos cómo evalúan las startups de verdad, entrenamos al talento que colocamos contra esa señal, y cada resultado retroalimenta el sistema. Los founders contratan gente que se queda. Al talento lo presentan, no lo filtran.',
       founderQuoteLabel: 'Para founders',
-      talentQuoteLabel: 'Para talento · Colocada en 16 días',
     },
     fork: {
       eyebrow: 'Un clic decide',

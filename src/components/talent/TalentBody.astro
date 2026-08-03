@@ -2,8 +2,8 @@
 // ── For Talent — Body ────────────────────────────────────────────────────
 // Below the hero: the two things talent actually wants to see — live open
 // roles (proof there's real demand) and the Offer Acceleration program in
-// full — plus a placed-candidate testimonial and a closing CTA. Content comes
-// from the shared content object. Isolated under the `ft-` prefix.
+// full. Content comes from the shared content object. Isolated under the
+// `ft-` prefix.
 import type { LandingContent } from '../../content/index';
 import { fetchRoles, ftRoleCardHTML, type PublicRoleListItem } from '../../lib/roles';
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { content } = Astro.props;
-const { roles, offerAcceleration, testimonials } = content;
+const { roles, offerAcceleration } = content;
 
 const OA_LEARN_MORE = '/offer-acceleration';
 const OA_APPLY = '/offer-acceleration/apply';
@@ -36,8 +36,6 @@ const rolesHtml = liveRoles.map(ftRoleCardHTML).join('');
 const oaFit = offerAcceleration.blocks[0];      // "You're the right fit if:"
 const oaSessions = offerAcceleration.blocks[1]; // "Across 8 sessions:"
 const oaEnd = offerAcceleration.blocks[2];      // "By the end:"
-
-const candidate = testimonials.candidateTestimonial;
 ---
 
 <!-- ── Open roles ──────────────────────────────────────────────────────── -->
@@ -136,18 +134,6 @@ const candidate = testimonials.candidateTestimonial;
       <span class="ft-oa__subline caption">{offerAcceleration.ctaSubline}</span>
     </div>
   </div>
-</section>
-
-<!-- ── Candidate testimonial ───────────────────────────────────────────── -->
-<section class="ft-quote">
-  <figure class="ft-quote__container reveal">
-    <blockquote class="ft-quote__text">"{candidate.quote}"</blockquote>
-    <figcaption class="ft-quote__meta">
-      <span class="ft-quote__name">{candidate.name}</span>
-      <span class="ft-quote__role caption">{candidate.role}</span>
-      <span class="ft-quote__badge">{candidate.badge}</span>
-    </figcaption>
-  </figure>
 </section>
 
 <script>
@@ -423,46 +409,5 @@ const candidate = testimonials.candidateTestimonial;
       &:hover { color: $accent; }
     }
     &__subline { color: var(--color-tertiary); width: 100%; text-align: center; }
-  }
-
-  // ── Candidate quote ────────────────────────────────────────
-  .ft-quote {
-    position: relative;
-    z-index: 1;
-    padding-block: 5rem 6rem;
-
-    &__container {
-      max-width: 44rem;
-      margin-inline: auto;
-      padding: 2.5rem;
-      border: 1px solid var(--color-border);
-      border-left: 4px solid $talent;
-      border-radius: var(--radius);
-      background: var(--bg-soft);
-      text-align: center;
-
-      @include max-sm { padding: 1.75rem; }
-    }
-    &__text {
-      font-size: 1.25rem;
-      line-height: 1.5;
-      font-style: italic;
-      color: var(--color-text);
-      margin: 0 0 1.25rem;
-    }
-    &__meta { display: flex; flex-direction: column; gap: 0.25rem; align-items: center; }
-    &__name { font-weight: 600; color: var(--color-text); }
-    &__role { color: var(--color-tertiary); }
-    &__badge {
-      margin-top: 0.25rem;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: $talent;
-      background: rgba(41, 40, 95, 0.07);
-      padding: 4px 12px;
-      border-radius: var(--radius);
-    }
   }
 </style>
