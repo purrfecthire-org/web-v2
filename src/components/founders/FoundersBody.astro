@@ -6,6 +6,7 @@
 // from the shared content object so the facts stay consistent with the rest
 // of the site. Isolated under the `ff-` prefix.
 import type { LandingContent } from '../../content/index';
+import LogoCarousel from '../shared/LogoCarousel.astro';
 
 interface Props {
   content: LandingContent;
@@ -50,6 +51,12 @@ const clients = [
   { name: 'Hera', logo: '/clients/hera.png' },
   { name: 'Heron', logo: '/clients/heron.png' },
   { name: 'Optery', logo: '/clients/optery.png' },
+  { name: 'Telepatia', logo: '/clients/telepatia.png' },
+  { name: 'Cometa', logo: '/clients/cometa.png' },
+  { name: 'Sauce', logo: '/clients/sauce.png' },
+  { name: 'Addi', logo: '/clients/addi.png' },
+  { name: 'PayJoy', logo: '/clients/payjoy.png' },
+  { name: 'Mercai', logo: '/clients/mercai.png' },
 ];
 
 // Two founder testimonials — the proof, kept short. The hero already quotes
@@ -75,12 +82,7 @@ const quotes = [testimonials.grid[0], testimonials.grid[2]];
 
     <!-- Client wall -->
     <div class="ff-metrics__clients reveal reveal-delay-1">
-      <p class="ff-metrics__clients-label eyebrow">Trusted by founders at</p>
-      <div class="ff-metrics__clients-row">
-        {clients.map((c) => (
-          <img src={c.logo} alt={c.name} class="ff-metrics__client-logo" loading="lazy" />
-        ))}
-      </div>
+      <LogoCarousel logos={clients} label="Trusted by founders at" />
     </div>
   </div>
 </section>
@@ -382,22 +384,6 @@ const quotes = [testimonials.grid[0], testimonials.grid[2]];
     &__divider { width: 1px; height: 44px; background: var(--color-border); }
 
     &__clients { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; width: 100%; }
-    &__clients-label { color: var(--color-tertiary); }
-    &__clients-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-      @include max-sm { gap: 1.5rem; }
-    }
-    &__client-logo {
-      height: 28px; width: auto; max-width: 110px; object-fit: contain;
-      filter: grayscale(1);
-      opacity: 0.55;
-      transition: opacity .2s;
-      &:hover { opacity: 1; }
-    }
   }
 
   // ── Why ────────────────────────────────────────────────────

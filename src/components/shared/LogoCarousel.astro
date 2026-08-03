@@ -1,0 +1,100 @@
+---
+// ── Logo carousel — infinite right-to-left marquee ───────────────────────
+// For client-logo walls that have outgrown a static wrapping row. Renders
+// the list twice back-to-back and animates the track from 0 to -50%, so the
+// loop is seamless. Grayscale/opacity treatment matches the old static row;
+// edges fade via a mask so logos appear/disappear instead of hard-cutting.
+interface Logo {
+  name: string;
+  logo: string;
+}
+
+interface Props {
+  logos: Logo[];
+  label?: string;
+  speed?: number; // seconds per logo — lower is faster
+}
+
+const { logos, label, speed = 3.5 } = Astro.props;
+const duration = Math.max(logos.length * speed, 12);
+---
+
+<div class="logo-carousel">
+  {label && <p class="logo-carousel__label eyebrow">{label}</p>}
+  <div class="logo-carousel__viewport">
+    <div class="logo-carousel__track" style={`--duration: ${duration}s`}>
+      {[...logos, ...logos].map((c, i) => (
+        <img
+          src={c.logo}
+          alt={c.name}
+          class="logo-carousel__logo"
+          loading="lazy"
+          aria-hidden={i >= logos.length ? 'true' : undefined}
+        />
+      ))}
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  .logo-carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+  }
+
+  .logo-carousel__label { color: var(--color-tertiary, var(--color-muted)); }
+
+  .logo-carousel__viewport {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .logo-carousel__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: 3.5rem;
+    animation: logo-carousel-scroll var(--duration, 30s) linear infinite;
+
+    @media (max-width: 640px) {
+      gap: 2.25rem;
+    }
+  }
+
+  .logo-carousel__viewport:hover .logo-carousel__track {
+    animation-play-state: paused;
+  }
+
+  .logo-carousel__logo {
+    flex: 0 0 auto;
+    height: 28px;
+    width: auto;
+    max-width: 130px;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: opacity 0.2s ease;
+
+    &:hover { opacity: 1; }
+
+    @media (max-width: 640px) {
+      height: 22px;
+    }
+  }
+
+  @keyframes logo-carousel-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-carousel__track {
+      animation: none;
+    }
+  }
+</style>
