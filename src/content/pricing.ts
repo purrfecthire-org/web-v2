@@ -25,6 +25,7 @@ export interface PricingContent {
   b2b: {
     title: string;
     intro: string;
+    kateLine: string;
     plans: PricingPlan[];
     ctaLabel: string;
     ctaHref: string;
@@ -50,7 +51,7 @@ export const pricingEn: PricingContent = {
   meta: {
     title: 'Pricing · startup recruiting and career coaching | Purrfect Hire',
     description:
-      'How much does a recruiter for startups cost? Three B2B models (success fee, All You Can Hire from $9,000/month, embedded search) and public career-coaching prices: $300 sessions, Momentum at $550/month, Offer Acceleration from $2,000.',
+      'How much does a recruiter for startups cost? Three B2B models (success fee at 20-25% of first-year salary, Always-on Hiring from $9,000/month, embedded search) and public career-coaching prices: $300 sessions, Momentum at $550/month, Offer Acceleration from $2,000.',
   },
 
   hero: {
@@ -64,20 +65,22 @@ export const pricingEn: PricingContent = {
   b2b: {
     title: 'For founders',
     intro:
-      'Structure is public; exact terms are a 20-minute conversation. One guarantee standard across web and contracts.',
+      'Prices are public, including the percentage. A 20-minute call settles the exact terms for your search. One guarantee standard across web and contracts.',
+    kateLine:
+      'Kate scaled ADDI from 15 to 400 people in two years. Purrfect Hire is that playbook, run for founders who are about to do the same thing.',
     plans: [
       {
         name: 'Success Fee',
         rows: [
           { label: 'For whom', value: '1–2 critical hires a year' },
-          { label: 'Model', value: 'You pay only when you hire. A percentage of first-year salary.' },
+          { label: 'Model', value: 'You pay only when you hire.' },
           { label: 'Includes', value: 'Mapping of your real bar, calibrated candidates in under 4 weeks' },
           { label: 'Guarantee', value: '90-day replacement' },
-          { label: 'Price', value: 'Exact terms in a 20-min call', strong: true },
+          { label: 'Price', value: '20-25% of first-year salary', strong: true },
         ],
       },
       {
-        name: 'All You Can Hire',
+        name: 'Always-on Hiring',
         rows: [
           { label: 'For whom', value: '4–6+ senior hires a year' },
           { label: 'Model', value: 'Flat monthly fee. Up to 6 senior hires in 12 months.' },
@@ -178,7 +181,7 @@ export const pricingEs: PricingContent = {
   meta: {
     title: 'Precios · recruiting para startups y coaching de carrera | Purrfect Hire',
     description:
-      '¿Cuánto cuesta un recruiter para startups? Tres modelos B2B (success fee, All You Can Hire desde $9,000/mes, embedded search) y precios públicos de coaching: sesiones de $300, Momentum a $550/mes y Offer Acceleration desde $2,000.',
+      '¿Cuánto cuesta un recruiter para startups? Tres modelos B2B (success fee de 20-25% del salario del primer año, Always-on Hiring desde $9,000/mes, embedded search) y precios públicos de coaching: sesiones de $300, Momentum a $550/mes y Offer Acceleration desde $2,000.',
   },
 
   hero: {
@@ -192,20 +195,22 @@ export const pricingEs: PricingContent = {
   b2b: {
     title: 'Para founders',
     intro:
-      'La estructura es pública; los términos exactos son una conversación de 20 minutos. Una sola garantía estándar en web y contratos.',
+      'Los precios son públicos, incluido el porcentaje. Un call de 20 minutos cierra los términos exactos de tu búsqueda. Una sola garantía estándar en web y contratos.',
+    kateLine:
+      'Kate escaló ADDI de 15 a 400 personas en dos años. Purrfect Hire es ese playbook, ejecutado para founders que están a punto de hacer lo mismo.',
     plans: [
       {
         name: 'Success Fee',
         rows: [
           { label: 'Para quién', value: '1–2 hires críticos al año' },
-          { label: 'Modelo', value: 'Pagas solo cuando contratas. Un porcentaje del salario del primer año.' },
+          { label: 'Modelo', value: 'Pagas solo cuando contratas.' },
           { label: 'Incluye', value: 'Mapeo de tu bar real, candidatos calibrados en menos de 4 semanas' },
           { label: 'Garantía', value: 'Reemplazo a 90 días' },
-          { label: 'Precio', value: 'Términos exactos en un call de 20 min', strong: true },
+          { label: 'Precio', value: '20-25% del salario del primer año', strong: true },
         ],
       },
       {
-        name: 'All You Can Hire',
+        name: 'Always-on Hiring',
         rows: [
           { label: 'Para quién', value: '4–6+ hires senior al año' },
           { label: 'Modelo', value: 'Fee mensual fijo. Hasta 6 hires senior en 12 meses.' },

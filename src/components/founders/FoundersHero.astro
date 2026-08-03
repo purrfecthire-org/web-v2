@@ -5,42 +5,25 @@
 // `ff-` (for-founders) prefix so nothing here leaks into the shared system.
 //
 // The first second has to land the proof, not the pitch: founders arriving
-// from the main site are busy operators. So the hero leads with two real
-// placement outcomes rendered as oversized "proof" cards.
-//
+// from the main site are busy operators. Proof only counts with a name on
+// it, so the hero cards are real client quotes with name, role and company;
+// anonymous outcome claims were dropped.
 const BOOKING_URL = 'https://calendly.com/purrfecthire/5';
-
-// How many logos to show before collapsing the rest into a (non-clickable)
-// "+N more" pill. The pill is a teaser, not a link — it signals depth of
-// roster without claiming a destination.
-const MAX_LOGOS = 3;
 
 const proof = [
   {
-    big: '2+ years',
-    headline: 'Placed once. Still building today.',
-    body:
-      'A senior hire we placed is still in seat and shipping more than two years later.',
-    companies: [
-      { name: 'Cometa', logo: '/clients/cometa.png' },
-      { name: 'Infolaft', logo: '/clients/infolaft.png' },
-      { name: 'Konta', logo: '/clients/konta.png' },
-      { name: 'PayJoy', logo: '/clients/payjoy.png' },
-      { name: 'Ponte', logo: '/clients/ponte.png' },
-      { name: 'Trébol', logo: '/clients/trebol.png' },
-    ],
+    headline: 'Hired for culture fit. Promoted for it.',
+    quote:
+      'The people we\'ve hired through Purrfect Hire didn\'t just continue working. They were promoted to roles of greater responsibility because of how well they adapted to our culture.',
+    name: 'Micaela Crosta',
+    role: 'Head of Customer Operations, OutDo (US)',
   },
   {
-    big: 'Senior → Head',
-    headline: 'Hired as a senior. Now a decision maker.',
-    body:
-      'Several placements walked in as senior individual contributors. The fit was so right that today they run teams as heads and decision makers.',
-    companies: [
-      { name: 'Optery', logo: '/clients/optery.png' },
-      { name: 'Mercai', logo: '/clients/mercai.png' },
-      { name: 'Cheaf', logo: '/clients/cheaf.png' },
-      { name: 'Cometa', logo: '/clients/cometa.png' },
-    ],
+    headline: 'A search partner, not a pipeline.',
+    quote:
+      'Purrfect Hire adapted to our processes and to each specific role. They\'re a real search partner, not just a pipeline.',
+    name: 'Fabián Torres',
+    role: 'CEO, Trébol (CO)',
   },
 ];
 ---
@@ -57,24 +40,15 @@ const proof = [
       </p>
     </header>
 
-    <!-- Two real outcomes, sized to read in under a second -->
+    <!-- Two named client quotes, sized to read in under a second -->
     <div class="ff-hero__proof">
       {proof.map((p) => (
         <article class="ff-hero__card">
-          <div class="ff-hero__card-big">{p.big}</div>
           <h2 class="ff-hero__card-headline">{p.headline}</h2>
-          <p class="ff-hero__card-body">{p.body}</p>
+          <blockquote class="ff-hero__card-quote">"{p.quote}"</blockquote>
           <div class="ff-hero__card-foot">
-            <div class="ff-hero__logos">
-              {p.companies.slice(0, MAX_LOGOS).map((c) => (
-                <img src={c.logo} alt={c.name} class="ff-hero__card-logo" loading="eager" />
-              ))}
-              {p.companies.length > MAX_LOGOS && (
-                <span class="ff-hero__logos-more" aria-label={`and ${p.companies.length - MAX_LOGOS} more ${p.companies.length - MAX_LOGOS === 1 ? 'company' : 'companies'}`}>
-                  +{p.companies.length - MAX_LOGOS} more
-                </span>
-              )}
-            </div>
+            <span class="ff-hero__card-name">{p.name}</span>
+            <span class="ff-hero__card-role">{p.role}</span>
           </div>
         </article>
       ))}
@@ -199,26 +173,20 @@ const proof = [
       @include max-sm { padding: 1.75rem; }
     }
 
-    &__card-big {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      color: $accent;
-    }
-
     &__card-headline {
-      font-size: 1.25rem;
-      font-weight: 600;
-      line-height: 1.3;
-      color: var(--color-text);
+      font-size: 1.375rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      color: $accent;
       margin: 0;
     }
 
-    &__card-body {
+    &__card-quote {
       font-size: 0.9375rem;
       line-height: 1.6;
-      color: var(--color-muted);
+      font-style: italic;
+      color: var(--color-text);
       margin: 0;
     }
 
@@ -226,50 +194,20 @@ const proof = [
       margin-top: auto;
       padding-top: 1rem;
       display: flex;
-      align-items: center;
-      gap: 0.875rem;
+      flex-direction: column;
+      gap: 0.125rem;
       border-top: 1px solid var(--color-border);
     }
 
-    &__logos {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem 1.25rem;
-    }
-
-    &__card-logo {
-      height: 24px;
-      width: auto;
-      max-width: 96px;
-      object-fit: contain;
-      filter: grayscale(1);
-      opacity: 0.55;
-      transition: opacity .2s;
-      &:hover { opacity: 1; }
-    }
-
-    // Non-clickable teaser — signals a deeper roster without claiming a link
-    &__logos-more {
-      display: inline-flex;
-      align-items: center;
-      font-size: 0.75rem;
+    &__card-name {
+      font-size: 0.875rem;
       font-weight: 600;
-      letter-spacing: 0.01em;
-      color: var(--color-muted);
-      background: rgba(41, 40, 95, 0.08);
-      border: 1px solid rgba(41, 40, 95, 0.16);
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      white-space: nowrap;
+      color: var(--color-text);
     }
 
-    &__card-note {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: var(--color-tertiary);
+    &__card-role {
+      font-size: 0.8125rem;
+      color: var(--color-muted);
     }
 
     // ── CTAs ─────────────────────────────────────────────────

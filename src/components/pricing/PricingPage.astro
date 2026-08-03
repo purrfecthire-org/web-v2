@@ -99,6 +99,8 @@ const jsonLd = {
       <div class="pr-block__head reveal">
         <h2 class="pr-block__title">{c.b2b.title}</h2>
         <p class="pr-block__intro">{c.b2b.intro}</p>
+        <!-- The credential line: who Kate is, before the numbers -->
+        <p class="pr-block__cred">{c.b2b.kateLine}</p>
       </div>
 
       <div class="pr-plans">
@@ -332,6 +334,15 @@ const jsonLd = {
       font-size: 1.0625rem;
       line-height: 1.65;
       color: var(--pr-muted);
+    }
+
+    &__cred {
+      margin: 1.25rem 0 0;
+      padding-left: 0.875rem;
+      border-left: 3px solid var(--pr-ink);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--pr-ink);
     }
   }
 

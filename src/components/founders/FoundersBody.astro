@@ -26,11 +26,11 @@ const models = [
   {
     name: 'Success Fee',
     forWho: '1–2 critical hires a year',
-    model: 'You pay only when you hire, a percentage of first-year salary. 90-day replacement guarantee.',
-    price: 'Exact terms in a 20-min call',
+    model: 'You pay only when you hire. 90-day replacement guarantee.',
+    price: '20-25% of first-year salary',
   },
   {
-    name: 'All You Can Hire',
+    name: 'Always-on Hiring',
     forWho: '4–6+ senior hires a year',
     model: 'Flat monthly fee, up to 6 senior hires in 12 months. Dedicated recruiter, always-on pipeline.',
     price: 'From $9,000/month',
@@ -52,8 +52,10 @@ const clients = [
   { name: 'Optery', logo: '/clients/optery.png' },
 ];
 
-// Three founder testimonials — the proof, kept short.
-const quotes = [testimonials.featured, ...testimonials.grid.slice(0, 2)];
+// Two founder testimonials — the proof, kept short. The hero already quotes
+// Micaela (featured) and Fabián (grid[1]), so this grid uses the other two
+// to avoid repeating the same voices on one page.
+const quotes = [testimonials.grid[0], testimonials.grid[2]];
 ---
 
 <!-- ── Metrics ─────────────────────────────────────────────────────────── -->
@@ -90,20 +92,30 @@ const quotes = [testimonials.featured, ...testimonials.grid.slice(0, 2)];
     <div class="ff-why__answer reveal">
       <h2 class="ff-why__q headline2">Why hire for culture fit, not just skills?</h2>
       <p class="ff-why__a body1">
-        Because the interview isn't where hires fail. Week four is. 46% of new hires fail
-        within 18 months, and 89% of those failures come down to culture and attitude
-        misalignment, not a skills gap. In a team of ten, one wrong hire doesn't just
-        underperform: they slow everyone down, erode trust, and force your best people to
-        cover the gap. We start with fit, so it's the foundation rather than the final check.
+        The interview is not where hires fail. Week four is. Skills tell you what someone
+        has done. They do not tell you how that person decides at 11pm on a Friday, or
+        whether they ask for help before something breaks.
       </p>
-      <div class="ff-why__quote-row">
-        {culture.quotes.map((q) => (
-          <figure class="ff-why__research">
-            <blockquote class="body2">"{q.text}"</blockquote>
-            <figcaption class="eyebrow">{q.attribution}</figcaption>
-          </figure>
-        ))}
-      </div>
+      <p class="ff-why__a body1">
+        In a team of ten, a wrong hire does not just underperform. They slow everyone down,
+        erode trust, and force your best people to cover the gap. By the time it is obvious,
+        you have burned four months of runway and the goodwill of the team.
+      </p>
+      <p class="ff-why__a body1">
+        We have run 160+ searches inside early-stage startups, and we track what happens
+        after the offer, not just up to it. 80% of the people we place are still in seat
+        past two years. That number is the whole argument.
+      </p>
+      {culture.quotes.length > 0 && (
+        <div class="ff-why__quote-row">
+          {culture.quotes.map((q) => (
+            <figure class="ff-why__research">
+              <blockquote class="body2">"{q.text}"</blockquote>
+              <figcaption class="eyebrow">{q.attribution}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
     </div>
 
     <!-- The engine -->
@@ -149,8 +161,13 @@ const quotes = [testimonials.featured, ...testimonials.grid.slice(0, 2)];
     <header class="ff-models__header reveal">
       <h2 class="ff-models__headline headline2">How we work</h2>
       <p class="ff-models__sub body1">
-        Three ways to engage, depending on how much you hire. Structure is public;
-        exact terms are a 20-minute conversation.
+        Three ways to engage, depending on how much you hire. The numbers are public;
+        a 20-minute call settles the exact terms for your search.
+      </p>
+      <!-- Who Kate is, before her name shows up inside the Embedded Search card -->
+      <p class="ff-models__cred body1">
+        Kate scaled ADDI from 15 to 400 people in two years. Purrfect Hire is that
+        playbook, run for founders who are about to do the same thing.
       </p>
     </header>
 
@@ -233,6 +250,12 @@ const quotes = [testimonials.featured, ...testimonials.grid.slice(0, 2)];
 
     &__headline { color: var(--ink); margin: 0; }
     &__sub { color: var(--color-muted); margin: 0; }
+    &__cred {
+      margin: 0.25rem 0 0;
+      padding-left: 0.875rem;
+      border-left: 3px solid $accent;
+      color: var(--ink);
+    }
 
     &__grid {
       display: grid;
@@ -448,7 +471,7 @@ const quotes = [testimonials.featured, ...testimonials.grid.slice(0, 2)];
     // Testimonials
     &__quotes {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.25rem;
       @include max-md { grid-template-columns: 1fr; }
     }

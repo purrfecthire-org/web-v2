@@ -366,8 +366,8 @@ export const content_en: LandingContent = {
       },
       {
         id: '02',
-        title: 'That signal trains the talent we place.',
-        description: 'Specific calibration: how this type of company moves, decides, and evaluates under pressure.',
+        title: 'That signal calibrates the search, and the candidate.',
+        description: 'We tell candidates the truth about how your team actually operates: the real bar, the pace, how decisions get made, what breaks in week three. Candidates in client searches never pay us. Ever. You pay only if you hire, and the guarantee means we carry the risk if the fit fails. Our incentive is not to place someone. It is to place someone who is still here in two years.',
       },
       {
         id: '03',
@@ -386,19 +386,13 @@ export const content_en: LandingContent = {
   culture: {
     headline: 'The interview isn\'t where hires fail. Week four is.',
     body: [
-      '46% of new hires fail within 18 months. 89% of those failures are due to culture and attitude misalignment, not skills.',
-      'In a team of 10, one wrong person doesn\'t just underperform. They slow everyone else down, erode trust, and force your best people to absorb the gap.',
+      'Skills tell you what someone has done. They do not tell you how that person decides at 11pm on a Friday, or whether they ask for help before something breaks.',
+      'In a team of ten, a wrong hire does not just underperform. They slow everyone down, erode trust, and force your best people to cover the gap. By the time it is obvious, you have burned four months of runway and the goodwill of the team.',
+      'We have run 160+ searches inside early-stage startups, and we track what happens after the offer, not just up to it. 80% of the people we place are still in seat past two years. That number is the whole argument.',
     ],
-    quotes: [
-      {
-        text: 'Founders blame exits on performance. The real cause is usually a process that never read the culture.',
-        attribution: 'OUR PRINCIPLE',
-      },
-      {
-        text: 'Your first hires write the culture. They define how decisions get made when you\'re not in the room.',
-        attribution: 'OUR PRINCIPLE',
-      },
-    ],
+    // Self-attributed "OUR PRINCIPLE" quote cards removed (read as fake
+    // testimonials); the argument now lives in the body copy above.
+    quotes: [],
   },
 
   testimonials: {
@@ -541,7 +535,7 @@ export const content_en: LandingContent = {
       headline: 'Senior hires who clear your bar. And stay past week four.',
       sub: 'Purrfect Hire places senior LATAM engineers, operators, and go-to-market hires at YC-, a16z- and Sequoia-backed startups. We map how your team actually evaluates, then put candidates already calibrated to that bar in front of you, typically in under four weeks. Less noise, faster decisions, and people who are still there two years later.',
       cultureQ: 'Why hire for culture fit, not just skills?',
-      cultureA: "Because the interview isn't where hires fail. Week four is. 46% of new hires fail within 18 months, and 89% of those failures come down to culture and attitude misalignment, not a skills gap. In a team of ten, one wrong hire doesn't just underperform: they slow everyone down, erode trust, and force your best people to cover the gap. We start with fit, so it's the foundation rather than the final check.",
+      cultureA: "Because the interview isn't where hires fail. Week four is. Skills tell you what someone has done, not how they decide at 11pm on a Friday or whether they ask for help before something breaks. In a team of ten, a wrong hire slows everyone down, erodes trust, and forces your best people to cover the gap. We start with fit and track what happens after the offer, not just up to it.",
       engineQ: 'How the engine works',
       engineA: "It's a closed loop. We go deep on how a startup really operates, that signal trains the talent we place, candidates arrive already aligned, and every outcome feeds back to sharpen the model. Four steps:",
       ctaBtn: 'Talk to our team →',
@@ -576,7 +570,7 @@ export const content_en: LandingContent = {
       },
       {
         q: 'What roles and seniority do you place?',
-        a: 'Senior LATAM professionals across engineering, AI/ML, and founding go-to-market roles, placed at Seed to Series A startups backed by Y Combinator, Andreessen Horowitz (a16z), and Sequoia. Roles are typically remote or hybrid at US market compensation plus equity.',
+        a: 'Senior LATAM professionals across engineering, AI/ML, and founding go-to-market roles, placed at Seed to Series A startups, most of them Y Combinator backed, where a wrong hire costs months of runway. Roles are typically remote or hybrid at US market compensation plus equity.',
       },
       {
         q: 'How are you different from a typical recruiter?',
@@ -584,7 +578,7 @@ export const content_en: LandingContent = {
       },
       {
         q: 'What does it cost to work with you?',
-        a: 'We focus on roles where a wrong hire costs months of runway. The fastest way to get exact terms is a short call, we will walk you through how we would run your search and what it involves before you commit to anything.',
+        a: 'On the success-fee model you pay 20-25% of first-year salary, only when you hire, with a 90-day replacement guarantee. Always-on Hiring starts at $9,000 per month for teams making 4-6+ senior hires a year. A short call settles the exact terms for your search before you commit to anything.',
       },
     ],
     talentFaqs: [
@@ -753,8 +747,8 @@ export const content_es: LandingContent = {
       },
       {
         id: '02',
-        title: 'Esa señal entrena al talento que colocamos.',
-        description: 'Calibración específica: cómo se mueve, decide y evalúa este tipo de empresa bajo presión.',
+        title: 'Esa señal calibra la búsqueda, y al candidato.',
+        description: 'A los candidatos les decimos la verdad sobre cómo opera tu equipo: la vara real, el ritmo, cómo se toman las decisiones, qué se rompe en la semana tres. Los candidatos de búsquedas de clientes nunca nos pagan. Nunca. Tú pagas solo si contratas, y la garantía significa que nosotros cargamos el riesgo si el fit falla. Nuestro incentivo no es colocar a alguien. Es colocar a alguien que siga aquí en dos años.',
       },
       {
         id: '03',
@@ -773,19 +767,13 @@ export const content_es: LandingContent = {
   culture: {
     headline: 'La entrevista no es donde fallan los hires. La semana cuatro sí.',
     body: [
-      '46% de los nuevos hires fallan en los primeros 18 meses. 89% de esas fallas son por desajuste cultural y de actitud, no por skills.',
-      'En un equipo de 10, una persona equivocada no solo rinde menos. Frena al resto, erosiona la confianza, y obliga a tus mejores a cubrir el hueco.',
+      'Los skills te dicen qué ha hecho una persona. No te dicen cómo decide un viernes a las 11pm, ni si pide ayuda antes de que algo se rompa.',
+      'En un equipo de diez, un mal hire no solo rinde menos. Frena al resto, erosiona la confianza y obliga a tus mejores personas a cubrir el hueco. Para cuando es obvio, ya quemaste cuatro meses de runway y la buena voluntad del equipo.',
+      'Hemos corrido 160+ búsquedas dentro de startups early-stage, y medimos lo que pasa después de la oferta, no solo hasta ella. El 80% de las personas que colocamos sigue en su rol pasados los dos años. Ese número es todo el argumento.',
     ],
-    quotes: [
-      {
-        text: 'Los founders culpan del churn al performance. La causa real suele ser un proceso que nunca leyó la cultura.',
-        attribution: 'NUESTRO PRINCIPIO',
-      },
-      {
-        text: 'Tus primeros hires escriben la cultura. Definen cómo se toman las decisiones cuando no estás en la sala.',
-        attribution: 'NUESTRO PRINCIPIO',
-      },
-    ],
+    // Tarjetas auto-citadas "NUESTRO PRINCIPIO" eliminadas (se leían como
+    // testimonios falsos); el argumento vive ahora en el cuerpo de arriba.
+    quotes: [],
   },
 
   testimonials: {
@@ -928,7 +916,7 @@ export const content_es: LandingContent = {
       headline: 'Contrataciones senior que cumplen tu estándar. Y se quedan más allá de la semana cuatro.',
       sub: 'Purrfect Hire coloca ingenieros, operadores y perfiles de go-to-market senior de LATAM en startups respaldadas por YC, a16z y Sequoia. Mapeamos cómo evalúa tu equipo en realidad y ponemos frente a ti candidatos ya calibrados a ese estándar, normalmente en menos de cuatro semanas. Menos ruido, decisiones más rápidas y gente que sigue ahí dos años después.',
       cultureQ: '¿Por qué contratar por culture fit y no solo por habilidades?',
-      cultureA: 'Porque la entrevista no es donde fallan las contrataciones. La semana cuatro sí. El 46% de las nuevas contrataciones fracasa en 18 meses, y el 89% de esos fracasos se debe a un desajuste de cultura y actitud, no a una brecha de habilidades. En un equipo de diez, una mala contratación no solo rinde por debajo: frena a todos, erosiona la confianza y obliga a tus mejores personas a cubrir el hueco. Empezamos por el fit, para que sea la base y no la última verificación.',
+      cultureA: 'Porque la entrevista no es donde fallan las contrataciones. La semana cuatro sí. Los skills te dicen qué ha hecho una persona, no cómo decide un viernes a las 11pm ni si pide ayuda antes de que algo se rompa. En un equipo de diez, un mal hire frena a todos, erosiona la confianza y obliga a tus mejores personas a cubrir el hueco. Empezamos por el fit y medimos lo que pasa después de la oferta, no solo hasta ella.',
       engineQ: 'Cómo funciona el motor',
       engineA: 'Es un ciclo cerrado. Profundizamos en cómo opera de verdad una startup, esa señal entrena al talento que colocamos, los candidatos llegan ya alineados y cada resultado retroalimenta y afina el modelo. Cuatro pasos:',
       ctaBtn: 'Habla con nuestro equipo →',
@@ -963,7 +951,7 @@ export const content_es: LandingContent = {
       },
       {
         q: '¿Qué roles y seniority colocan?',
-        a: 'Profesionales senior de LATAM en ingeniería, IA/ML y roles fundacionales de go-to-market, colocados en startups de Seed a Serie A respaldadas por Y Combinator, Andreessen Horowitz (a16z) y Sequoia. Los roles suelen ser remotos o híbridos, con compensación de mercado de EE. UU. más equity.',
+        a: 'Profesionales senior de LATAM en ingeniería, IA/ML y roles fundacionales de go-to-market, colocados en startups de Seed a Serie A, la mayoría respaldadas por Y Combinator, donde una mala contratación cuesta meses de runway. Los roles suelen ser remotos o híbridos, con compensación de mercado de EE. UU. más equity.',
       },
       {
         q: '¿En qué se diferencian de un reclutador típico?',
@@ -971,7 +959,7 @@ export const content_es: LandingContent = {
       },
       {
         q: '¿Cuánto cuesta trabajar con ustedes?',
-        a: 'Nos enfocamos en roles donde una mala contratación cuesta meses de runway. La forma más rápida de conocer los términos exactos es una llamada corta, te explicamos cómo correríamos tu búsqueda y qué implica antes de que te comprometas a nada.',
+        a: 'En el modelo de success fee pagas 20-25% del salario del primer año, solo cuando contratas, con garantía de reemplazo a 90 días. Always-on Hiring parte de $9,000 al mes para equipos que hacen 4-6+ hires senior al año. Una llamada corta cierra los términos exactos de tu búsqueda antes de que te comprometas a nada.',
       },
     ],
     talentFaqs: [

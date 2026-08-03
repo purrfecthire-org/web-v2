@@ -27,7 +27,8 @@ const clients = [
 // Two founder testimonials — the proof, kept short.
 const quotes = [testimonials.featured, testimonials.grid[0]];
 
-// Culture-fit principles (de-attributed: stated as our own, no firm source).
+// Culture-fit quote cards; empty since the self-attributed "OUR PRINCIPLE"
+// cards were removed — the guard below keeps the row from rendering.
 const cultureQuotes = content.culture.quotes;
 ---
 
@@ -54,14 +55,16 @@ const cultureQuotes = content.culture.quotes;
     <div class="v6-founders__answer reveal reveal-delay-1">
       <h3 class="v6-founders__q headline3">{fb.cultureQ}</h3>
       <p class="v6-founders__a body1">{fb.cultureA}</p>
-      <div class="v6-founders__quote-row">
-        {cultureQuotes.map((q) => (
-          <figure class="v6-founders__research">
-            <blockquote class="body2">"{q.text}"</blockquote>
-            <figcaption class="eyebrow">{q.attribution}</figcaption>
-          </figure>
-        ))}
-      </div>
+      {cultureQuotes.length > 0 && (
+        <div class="v6-founders__quote-row">
+          {cultureQuotes.map((q) => (
+            <figure class="v6-founders__research">
+              <blockquote class="body2">"{q.text}"</blockquote>
+              <figcaption class="eyebrow">{q.attribution}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
     </div>
 
     <!-- Answer block: how it works -->
