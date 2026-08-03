@@ -114,8 +114,11 @@ export const pricingEn: PricingContent = {
     ctaLabel: 'Book a 20-min call',
     ctaHref: FOUNDERS_CALENDLY,
     ctaNote: 'No deck, no discovery maze. You leave the call with exact terms.',
+    // Framed around the post-offer result (shorter ramp, retention), not
+    // around training talent to clear the client's bar: read from the
+    // founder's side, the latter invites a conflict-of-interest reading.
     flywheel:
-      'We work both sides of the table. The talent we place trains against the same bar we use to evaluate for you.',
+      'We work both sides of the table. The talent we place walks in already understanding how your team actually operates: onboarding is shorter, and 80% are still in the seat two years later.',
   },
 
   b2c: {
@@ -244,8 +247,11 @@ export const pricingEs: PricingContent = {
     ctaLabel: 'Agenda un call de 20 min',
     ctaHref: FOUNDERS_CALENDLY,
     ctaNote: 'Sin deck y sin laberinto de discovery. Sales del call con términos exactos.',
+    // Ver la nota en la versión EN: el foco es el resultado después de la
+    // oferta (arranque más corto, retención), no entrenar al talento para
+    // pasar la vara del cliente.
     flywheel:
-      'Trabajamos las dos caras de la mesa. El talento que colocamos entrena contra el mismo bar con el que evaluamos para ti.',
+      'Trabajamos las dos caras de la mesa. El talento que colocamos llega entendiendo cómo opera tu equipo de verdad: el onboarding es más corto y el 80% sigue en su rol dos años después.',
   },
 
   b2c: {
