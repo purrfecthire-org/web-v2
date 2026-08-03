@@ -7,6 +7,7 @@ import Layout from '../../layouts/Layout.astro';
 import V6Nav from '../v6/V6Nav.astro';
 import Footer from '../Footer.astro';
 import OATestimonials from './OATestimonials.astro';
+import OASuccessCases from './OASuccessCases.astro';
 import { oaContent as c } from '../../content/offerAcceleration';
 import { getContent } from '../../content/index';
 
@@ -124,6 +125,9 @@ const { nav, footer } = getContent('es');
       </div>
       <p class="oa5-tiers__note oa5-reveal">{c.investment.tableNote}</p>
     </section>
+
+    <!-- ── Success cases: real jumps behind the table above ─────────── -->
+    <OASuccessCases />
 
     <!-- ── Who's behind (dark section) ──────────────────────────────── -->
     <section class="oa5-chapter oa5-chapter--dark">

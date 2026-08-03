@@ -79,6 +79,63 @@ export const oaContent = {
     ],
   },
 
+  // ── Anonymous outcome cases ────────────────────────────────────────────
+  // Placed AFTER the investment table on the page, not next to Alejandro's
+  // testimonial: the tier table promises an abstract "salto realista", and
+  // these are four real jumps that already happened, so they land as
+  // evidence for that promise instead of as a second wall of proof up top.
+  // Names are withheld at the clients' request (see `disclaimer`), so each
+  // card leads with the outcome, not the person.
+  cases: {
+    title: 'El patrón se repite: no cambia el talento, cambia el canal',
+    intro:
+      'La tabla de arriba no es teoría. Son casos reales del programa, con el salto ya hecho. Cada uno es la misma mecánica: salir del intermediario y de la cola de aplicaciones, y entrar directo a donde los seniors realmente se contratan.',
+    labels: {
+      problem: 'Problema',
+      action: 'Intervención',
+      result: 'Resultado',
+    },
+    confidential: 'Nombre reservado por confidencialidad.',
+    items: [
+      {
+        role: 'Senior UX/UI Designer',
+        problem:
+          'Llevaba más de un año en staff augmentation, con un intermediario quedándose con la otra mitad de su tarifa: cobraba la mitad de lo que ya valía.',
+        action: 'Lo pusimos directo frente a startups US contratando sin intermediario.',
+        result: 'De $1,750 a $4,500',
+        resultNote: '+$33,000 al año. Mismo talento, otro canal.',
+      },
+      {
+        role: 'Frontend Lead',
+        problem:
+          'Estancado en una empresa local sin saber que su perfil ya calificaba para una Series B en US.',
+        action:
+          'Mapeamos 12 empresas y entró por la puerta directa al fundador, no por la cola de aplicaciones.',
+        result: 'Duplicó su ingreso',
+        resultNote: 'De Senior IC a Lead, con cambio de geografía salarial.',
+      },
+      {
+        role: 'Senior IC con dos trabajos',
+        problem: 'Sostenía un full-time más freelance pesado para juntar $6,500 al mes.',
+        action: 'Lo reposicionamos para que un solo rol senior cubriera la suma.',
+        result: 'De $6,500 a $9,000',
+        resultNote: 'En un solo contrato, y recuperó sus noches y sus fines de semana.',
+      },
+      {
+        role: 'Founder → Head of Product',
+        problem: 'Cerró su startup y no sabía cómo volver al mercado.',
+        action:
+          'Construimos la narrativa de founder en transición y lo posicionamos a nivel ejecutivo.',
+        result: 'Cerró un Head of Product',
+        resultNote: 'Sin que su etapa de founder se leyera como un fracaso.',
+      },
+    ],
+    disclaimer: {
+      body: 'Algunos de nuestros clientes prefieren mantener su identidad privada, por acuerdos de confidencialidad o porque siguen trabajando en las empresas donde consiguieron estas oportunidades.',
+      close: 'Lo que importa no es quiénes son, sino los resultados que hoy están viviendo.',
+    },
+  },
+
   how: {
     title: 'Cómo trabajamos',
     intro:
