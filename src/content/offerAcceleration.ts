@@ -91,11 +91,10 @@ export const oaContent = {
     intro:
       'La tabla de arriba no es teoría. Son casos reales del programa, con el salto ya hecho. Cada uno es la misma mecánica: salir del intermediario y de la cola de aplicaciones, y entrar directo a donde los seniors realmente se contratan.',
     labels: {
-      problem: 'Problema',
+      before: 'Antes',
+      after: 'Después',
       action: 'Intervención',
-      result: 'Resultado',
     },
-    confidential: 'Nombre reservado por confidencialidad.',
     items: [
       {
         role: 'Senior UX/UI Designer',
@@ -130,10 +129,8 @@ export const oaContent = {
         resultNote: 'Sin que su etapa de founder se leyera como un fracaso.',
       },
     ],
-    disclaimer: {
-      body: 'Algunos de nuestros clientes prefieren mantener su identidad privada, por acuerdos de confidencialidad o porque siguen trabajando en las empresas donde consiguieron estas oportunidades.',
-      close: 'Lo que importa no es quiénes son, sino los resultados que hoy están viviendo.',
-    },
+    disclaimer:
+      'Algunos de nuestros clientes prefieren mantener su identidad privada, por acuerdos de confidencialidad o porque siguen trabajando en las empresas donde consiguieron estas oportunidades.',
   },
 
   how: {

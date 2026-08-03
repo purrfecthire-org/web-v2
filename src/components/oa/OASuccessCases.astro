@@ -2,71 +2,66 @@
 // ── OA success cases — anonymous outcome proof ───────────────────────────
 // Sits right after the investment tier table: that table promises an
 // abstract "salto realista" per seniority, these are four real jumps that
-// already happened. Each card leads with the RESULT (navy, largest type in
-// the card) and keeps problem/intervention as supporting detail, so the
-// outcome is readable at a glance without reading the prose.
+// already happened. Each case is laid out as the transformation itself:
+// the starting state, an arrow, and the outcome, with the intervention as
+// the connecting caption underneath, so the jump reads without prose.
 // Named proof lives in OATestimonials.astro (Alejandro); these clients
-// asked to stay anonymous, hence the per-card note + closing disclaimer.
+// asked to stay anonymous, hence the closing disclaimer.
 import { oaContent as c } from '../../content/offerAcceleration';
 
 const cs = c.cases;
 ---
 
 <section class="oac" id="casos">
-  <div class="oac-inner">
-    <div class="oac-head reveal">
-      <h2 class="oac-title">{cs.title}</h2>
-      <p class="oac-intro">{cs.intro}</p>
-    </div>
+  <div class="oac-head reveal">
+    <h2 class="oac-title">{cs.title}</h2>
+    <p class="oac-intro">{cs.intro}</p>
+  </div>
 
-    <div class="oac-grid">
-      {cs.items.map((item, i) => (
-        <article class="oac-case reveal">
-          <header class="oac-case__head">
-            <span class="oac-case__num">{String(i + 1).padStart(2, '0')}</span>
-            <h3 class="oac-case__role">{item.role}</h3>
-          </header>
+  <div class="oac-cases">
+    {cs.items.map((item, i) => (
+      <article class="oac-case reveal">
+        <header class="oac-case__head">
+          <span class="oac-case__num">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="oac-case__role">{item.role}</h3>
+        </header>
 
-          <div class="oac-case__body">
-            <div class="oac-case__facts">
-              <div class="oac-fact">
-                <span class="oac-label">{cs.labels.problem}</span>
-                <p class="oac-fact__text">{item.problem}</p>
-              </div>
-              <div class="oac-fact">
-                <span class="oac-label">{cs.labels.action}</span>
-                <p class="oac-fact__text">{item.action}</p>
-              </div>
-            </div>
-
-            <div class="oac-case__result">
-              <span class="oac-label">{cs.labels.result}</span>
-              <p class="oac-case__value">{item.result}</p>
-              <p class="oac-case__note">{item.resultNote}</p>
-            </div>
+        <div class="oac-case__jump">
+          <div class="oac-case__state">
+            <span class="oac-label">{cs.labels.before}</span>
+            <p class="oac-case__before">{item.problem}</p>
           </div>
 
-          <p class="oac-case__conf">{cs.confidential}</p>
-        </article>
-      ))}
-    </div>
+          <span class="oac-case__arrow" aria-hidden="true">→</span>
 
-    <aside class="oac-disclaimer reveal">
-      <svg class="oac-disclaimer__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.6" />
-        <path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-      </svg>
-      <div class="oac-disclaimer__text">
-        <p>{cs.disclaimer.body}</p>
-        <p class="oac-disclaimer__close">{cs.disclaimer.close}</p>
-      </div>
-    </aside>
+          <div class="oac-case__state oac-case__state--after">
+            <span class="oac-label">{cs.labels.after}</span>
+            <p class="oac-case__result">{item.result}</p>
+            <p class="oac-case__note">{item.resultNote}</p>
+          </div>
+        </div>
+
+        <p class="oac-case__how">
+          <span class="oac-case__how-label">{cs.labels.action}:</span> {item.action}
+        </p>
+      </article>
+    ))}
   </div>
+
+  <aside class="oac-disclaimer reveal">
+    <svg class="oac-disclaimer__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="4" y="10" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.6" />
+      <path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </svg>
+    <p class="oac-disclaimer__text">{cs.disclaimer}</p>
+  </aside>
 </section>
 
 <style lang="scss">
   $ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
+  // Same box as .oa5-chapter on the parent page, so this section shares the
+  // page's single content column instead of running wider.
   .oac {
     --oac-ink: var(--ink, #29285f);
     --oac-text: var(--text, #1c1c1c);
@@ -76,8 +71,6 @@ const cs = c.cases;
     --oac-bg-soft: var(--bg-soft, #fcfcfb);
     --oac-radius: var(--radius, 12px);
 
-    // Same box as .oa5-chapter on the parent page, so this section shares
-    // the page's single content column instead of running 32px wider.
     position: relative;
     max-width: 1100px;
     margin: 0 auto;
@@ -109,7 +102,7 @@ const cs = c.cases;
     line-height: 1.65;
   }
 
-  // Shared micro-label above every block (Problema / Intervención / Resultado)
+  // Micro-label above each state (Antes / Después)
   .oac-label {
     display: block;
     font-size: 0.6875rem;
@@ -120,32 +113,18 @@ const cs = c.cases;
     margin-bottom: 0.5rem;
   }
 
-  .oac-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-
-    @media (max-width: 900px) { grid-template-columns: 1fr; }
-  }
-
+  // ── Cases: borderless rows split by hairlines ──────────────────────────
   .oac-case {
-    display: flex;
-    flex-direction: column;
-    background: var(--oac-bg);
-    border: 1px solid var(--oac-border);
-    border-radius: var(--oac-radius);
-    padding: clamp(1.5rem, 2.5vw, 2rem);
-    transition: border-color 0.25s $ease-expo;
+    padding: 2.25rem 0;
+    border-top: 1px solid var(--oac-border);
 
-    &:hover { border-color: var(--oac-ink); }
+    &:first-child { border-top: none; padding-top: 0; }
 
     &__head {
       display: flex;
       align-items: baseline;
       gap: 0.875rem;
-      padding-bottom: 1.25rem;
       margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--oac-border);
     }
 
     &__num {
@@ -163,39 +142,43 @@ const cs = c.cases;
       color: var(--oac-text);
     }
 
-    // Facts left, result right. The divider is a hairline, no fill.
-    &__body {
-      flex: 1;
+    // The transformation as layout: state A → state B.
+    &__jump {
       display: grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap: 1.75rem;
+      grid-template-columns: 1fr auto 1fr;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      align-items: center;
 
-      @media (max-width: 1080px) { grid-template-columns: 1fr; gap: 1.5rem; }
-    }
-
-    &__facts {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    &__result {
-      padding-left: 1.75rem;
-      border-left: 1px solid var(--oac-border);
-
-      @media (max-width: 1080px) {
-        padding-left: 0;
-        padding-top: 1.5rem;
-        border-left: none;
-        border-top: 1px solid var(--oac-border);
+      @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+        gap: 1rem;
       }
     }
 
-    // The outcome is the loudest thing in the card.
-    &__value {
+    &__arrow {
+      font-size: 1.75rem;
+      color: var(--oac-ink);
+      line-height: 1;
+
+      @media (max-width: 720px) {
+        transform: rotate(90deg);
+        justify-self: start;
+        margin-left: 0.25rem;
+      }
+    }
+
+    &__before {
+      margin: 0;
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: var(--oac-muted);
+    }
+
+    // The outcome is the loudest thing in the row.
+    &__result {
       margin: 0;
       font-family: 'Schibsted Grotesk', sans-serif;
-      font-size: clamp(1.375rem, 2.1vw, 1.75rem);
+      font-size: clamp(1.5rem, 2.4vw, 1.875rem);
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.15;
@@ -203,27 +186,27 @@ const cs = c.cases;
     }
 
     &__note {
-      margin: 0.75rem 0 0;
+      margin: 0.625rem 0 0;
       font-size: 0.875rem;
       line-height: 1.6;
       color: var(--oac-muted);
     }
 
-    &__conf {
-      margin: 1.75rem 0 0;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--oac-border);
-      font-size: 0.8125rem;
-      font-style: italic;
+    &__how {
+      margin: 1.5rem 0 0;
+      font-size: 0.875rem;
+      line-height: 1.6;
       color: var(--oac-muted);
+      max-width: 56rem;
     }
-  }
 
-  .oac-fact__text {
-    margin: 0;
-    font-size: 0.9375rem;
-    line-height: 1.65;
-    color: var(--oac-muted);
+    &__how-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--oac-ink);
+    }
   }
 
   // ── Confidentiality disclaimer ─────────────────────────────────────────
@@ -231,7 +214,7 @@ const cs = c.cases;
     display: flex;
     align-items: flex-start;
     gap: 1.125rem;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     padding: 1.75rem;
     background: var(--oac-bg-soft);
     border: 1px solid var(--oac-border);
@@ -245,18 +228,12 @@ const cs = c.cases;
       margin-top: 0.125rem;
     }
 
-    &__text p {
+    &__text {
       margin: 0;
       font-size: 0.9375rem;
       line-height: 1.7;
       color: var(--oac-muted);
       max-width: 60rem;
-    }
-
-    &__close {
-      margin-top: 0.75rem !important;
-      font-weight: 500;
-      color: var(--oac-ink) !important;
     }
 
     @media (max-width: 640px) {
