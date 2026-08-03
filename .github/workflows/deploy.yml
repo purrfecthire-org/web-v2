@@ -5,11 +5,26 @@ on:
   push:
     branches: [main]
   # Weekly rebuild (Mondays 06:00 UTC) so the static /roles SEO snapshot
-  # refreshes from the backend even without a push.
+  # refreshes from the backend even without a push. This is a fallback net,
+  # not the primary mechanism — see repository_dispatch below.
   schedule:
     - cron: '0 6 * * 1'
   # Allow manual runs from the Actions tab
   workflow_dispatch:
+  # Event-driven rebuild: the ATS backend fires this the moment a role is
+  # published/edited/closed, so a new /roles/{slug} detail page (prerendered
+  # via getStaticPaths in src/pages/roles/[slug].astro) goes live within a
+  # couple minutes instead of waiting for the next push or the weekly cron.
+  # Backend calls, e.g.:
+  #   curl -X POST -H "Authorization: Bearer $GH_TOKEN" \
+  #     -H "Accept: application/vnd.github+json" \
+  #     https://api.github.com/repos/purrfecthire-org/web-v2/dispatches \
+  #     -d '{"event_type":"role-published"}'
+  # $GH_TOKEN needs a fine-grained PAT scoped to this repo with
+  # "Actions: write" permission (not the default GITHUB_TOKEN, which can't
+  # trigger repository_dispatch and can't be used cross-repo).
+  repository_dispatch:
+    types: [role-published]
 
 # Permissions the GITHUB_TOKEN needs to deploy to Pages
 permissions:
