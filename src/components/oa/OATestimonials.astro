@@ -32,9 +32,10 @@ const withHl = p.paragraphs.map((text, i) => {
       <span class="oat-card__mark" aria-hidden="true">“</span>
       <blockquote class="oat-card__quote">{p.pull2}</blockquote>
 
-      <span class="oat-photo oat-avatar">
+      <picture class="oat-photo oat-avatar">
+        <source srcset={p.photoWebp} type="image/webp" />
         <img src={p.photo} alt={p.photoAlt} loading="lazy" width="900" height="1125" />
-      </span>
+      </picture>
 
       <div class="oat-card__person">
         <span class="oat-name">{p.name}</span>

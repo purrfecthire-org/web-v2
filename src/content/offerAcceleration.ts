@@ -57,6 +57,9 @@ export const oaContent = {
       {
         name: 'Alejandro Eljadue',
         linkedin: 'https://www.linkedin.com/in/aeljaduetarud/',
+        // `photoWebp` is served first (smaller, faster); `photo` (JPG) is the
+        // <picture> fallback for browsers without WebP support.
+        photoWebp: '/testimonials/alejandro-eljadue.webp',
         photo: '/testimonials/alejandro-eljadue.jpg',
         photoAlt: 'Alejandro Eljadue, alumni del programa Offer Acceleration',
         pull2: 'Te enseña una metodología para tomar el control de tu carrera.',
