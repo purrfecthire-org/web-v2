@@ -36,7 +36,10 @@ const otherLangHref = getRelativeLocaleUrl(otherLang, '/privacy-policy');
   <header class="legal-nav">
     <div class="legal-nav__inner">
       <a href={homeHref} aria-label="Purrfect Hire home">
-        <img src="/logos/logo-desktop.png" class="legal-nav__logo" alt="Purrfect Hire" />
+        <picture>
+          <source srcset="/logos/logo-desktop.webp" type="image/webp" />
+          <img src="/logos/logo-desktop.png" class="legal-nav__logo" alt="Purrfect Hire" />
+        </picture>
       </a>
       <div class="legal-nav__lang">
         {lang === 'en' ? (

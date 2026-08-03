@@ -16,7 +16,7 @@ import Layout from '../../layouts/Layout.astro';
 import V6Nav from '../v6/V6Nav.astro';
 import Footer from '../Footer.astro';
 import type { KateContent } from '../../content/kate';
-import { KATE_LINKEDIN, KATE_PHOTO } from '../../content/kate';
+import { KATE_LINKEDIN, KATE_PHOTO, KATE_PHOTO_WEBP } from '../../content/kate';
 import { getContent } from '../../content/index';
 
 const SHOW_CHAPTER_PHOTOS = false;
@@ -76,7 +76,10 @@ const personSchema = {
       </div>
       <!-- Stand-in until the shoot delivers the authority shot -->
       <figure class="kt-hero__media">
-        <img src={KATE_PHOTO} alt="Kate Forero" width="1023" height="1537" />
+        <picture>
+          <source srcset={KATE_PHOTO_WEBP} type="image/webp" />
+          <img src={KATE_PHOTO} alt="Kate Forero" width="1023" height="1537" />
+        </picture>
         <figcaption class="kt-hero__caption">{c.hero.placeholderCaption}</figcaption>
       </figure>
     </section>
@@ -110,7 +113,10 @@ const personSchema = {
           </div>
           {SHOW_CHAPTER_PHOTOS && (
             <figure class="kt-chapter__media">
-              <img src={ch.image} alt={ch.caption} loading="lazy" width="1023" height="1537" />
+              <picture>
+                {ch.image === KATE_PHOTO && <source srcset={KATE_PHOTO_WEBP} type="image/webp" />}
+                <img src={ch.image} alt={ch.caption} loading="lazy" width="1023" height="1537" />
+              </picture>
               <figcaption class="kt-chapter__caption">{ch.caption}</figcaption>
             </figure>
           )}

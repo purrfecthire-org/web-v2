@@ -32,6 +32,13 @@ body {
   box-sizing: border-box;
 }
 
+/* <picture> is a resource-selection wrapper only (WebP source + JPEG/PNG
+   fallback) — keep it out of layout so every existing size/position rule
+   written for the inner <img> keeps working unchanged. */
+picture {
+  display: contents;
+}
+
 /* ─── Button primary — navy, 12px radius ─────────────────────────────── */
 .btn {
   display: inline-flex;

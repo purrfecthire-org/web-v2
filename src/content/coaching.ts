@@ -37,7 +37,7 @@ export interface CoachingContent {
     para2: string;
     stats: string[];
     /** Approved hero photo (career-sessions only until the shoot). */
-    photo?: { src: string; alt: string };
+    photo?: { src: string; webp: string; alt: string };
     /** Honest scarcity line under the stats (career-sessions). */
     scarcity?: string;
   };
@@ -98,7 +98,7 @@ export const careerSessionsEs: CoachingContent = {
       '160+ placements en US, Europa y LATAM',
       'En español o en inglés',
     ],
-    photo: { src: '/sessions/kate.jpeg', alt: 'Kate Forero' },
+    photo: { src: '/sessions/kate.jpeg', webp: '/sessions/kate.webp', alt: 'Kate Forero' },
     scarcity:
       'Kate abre pocos cupos de sesión por semana: el resto de su agenda son searches activos para founders.',
   },
@@ -260,7 +260,7 @@ export const careerSessionsEn: CoachingContent = {
       '160+ placements in the US, Europe and LATAM',
       'In English or Spanish',
     ],
-    photo: { src: '/sessions/kate.jpeg', alt: 'Kate Forero' },
+    photo: { src: '/sessions/kate.jpeg', webp: '/sessions/kate.webp', alt: 'Kate Forero' },
     scarcity:
       'Kate opens a handful of session slots each week: the rest of her calendar is active searches for founders.',
   },

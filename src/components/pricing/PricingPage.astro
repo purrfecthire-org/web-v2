@@ -138,7 +138,10 @@ const jsonLd = {
         <figure class="pr-kate">
           {/* eager on purpose: lazy images inside the initially-hidden tab
               panel stall in Chromium and never load when the tab opens */}
-          <img src="/sessions/kate.jpeg" alt="Kate Forero" width="72" height="72" />
+          <picture>
+            <source srcset="/sessions/kate.webp" type="image/webp" />
+            <img src="/sessions/kate.jpeg" alt="Kate Forero" width="72" height="72" />
+          </picture>
           <figcaption>{c.b2c.kateCaption}</figcaption>
         </figure>
       </div>

@@ -4,7 +4,7 @@
 // navy-blazer photo) next to "We work both sides of the table", linking to
 // /kate. One image, one sentence, one link — a rest section, not a pitch.
 import type { KateStripContent } from '../../content/kate';
-import { KATE_PHOTO } from '../../content/kate';
+import { KATE_PHOTO, KATE_PHOTO_WEBP } from '../../content/kate';
 
 interface Props {
   c: KateStripContent;
@@ -15,7 +15,10 @@ const { c } = Astro.props;
 
 <section class="ks reveal">
   <div class="ks__inner">
-    <img class="ks__photo" src={KATE_PHOTO} alt={c.alt} width="160" height="160" loading="lazy" />
+    <picture>
+      <source srcset={KATE_PHOTO_WEBP} type="image/webp" />
+      <img class="ks__photo" src={KATE_PHOTO} alt={c.alt} width="160" height="160" loading="lazy" />
+    </picture>
     <div class="ks__text">
       <h2 class="ks__title">{c.title}</h2>
       <p class="ks__body">{c.body}</p>

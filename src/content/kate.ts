@@ -14,6 +14,8 @@ import { FOUNDERS_CALENDLY } from './pricing';
 
 export const KATE_LINKEDIN = 'https://www.linkedin.com/in/kathforero/';
 export const KATE_PHOTO = '/sessions/kate.jpeg';
+// WebP served first (smaller, faster); KATE_PHOTO (JPEG) is the <picture> fallback.
+export const KATE_PHOTO_WEBP = '/sessions/kate.webp';
 
 const wa = (text: string) => `https://wa.me/16283588776?text=${encodeURIComponent(text)}`;
 
