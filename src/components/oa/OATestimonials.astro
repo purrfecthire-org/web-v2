@@ -58,7 +58,7 @@ const BARS = Array.from({ length: 48 }, (_, i) => {
         </a>
       </div>
 
-      <details class="oat-expand">
+      <details class="oat-expand oat-expand--story">
         <summary>
           <span class="oat-expand__more">{t.readMore}</span>
           <span class="oat-expand__less">{t.readLess}</span>
@@ -271,6 +271,25 @@ const BARS = Array.from({ length: 48 }, (_, i) => {
     }
 
     &[open] summary::after { transform: rotate(45deg); }
+
+    // Alejandro's story opens behind a real button, not a text link: the
+    // quote + photo + name scan in seconds and eyes jump to the next story,
+    // so the expander has to read as the card's main action. Meri's
+    // transcript keeps the quiet text toggle — her main action is the
+    // player, and the transcript is secondary to the audio itself.
+    &--story summary {
+      padding: 14px 28px;
+      font-size: 1rem;
+      border: 1px solid var(--oat-ink);
+      border-radius: var(--oat-radius);
+      background: var(--oat-bg);
+      transition: background 0.25s $ease-expo, color 0.25s $ease-expo;
+
+      &:hover {
+        background: var(--oat-ink);
+        color: #fff;
+      }
+    }
 
     .oat-expand__less { display: none; }
     &[open] .oat-expand__more { display: none; }
