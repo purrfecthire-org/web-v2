@@ -1,23 +1,36 @@
 ---
 // ── OA testimonials — candidate proof section ────────────────────────────
-// Replaces the old "cases" grid on /offer-acceleration. Full-bleed soft
-// stage, centered navy pull quote, duotone portrait (navy monotone at rest,
-// real color on hover) and an expandable full testimonial. First entry is
-// Alejandro's; future cohort testimonials append to
-// oaContent.testimonials.items and render as additional .oat sections.
+// Two stories, deliberately different in format so they read as two
+// different candidates: Alejandro (named, face + verifiable LinkedIn) and
+// Meri (audio-only, first name only, at her request — the voice card leads
+// with a player instead of a photo, and the privacy note is stated rather
+// than hidden). Future named testimonials append to
+// oaContent.testimonials.items; future voice ones extend `voice`.
 import { oaContent as c } from '../../content/offerAcceleration';
 
 const t = c.testimonials;
 const p = t.items[0];
+const v = t.voice;
 
-// Split each paragraph on its exact highlight substring so the markup can
+// Split a paragraph on its exact highlight substring so the markup can
 // emphasize it without storing HTML in the content file.
-const withHl = p.paragraphs.map((text, i) => {
-  const hl: string | undefined = p.highlights[i];
-  const at = hl ? text.indexOf(hl) : -1;
-  return at >= 0
-    ? { pre: text.slice(0, at), hl: hl as string, post: text.slice(at + (hl as string).length) }
-    : { pre: text, hl: '', post: '' };
+const splitHl = (paragraphs: string[], highlights: string[]) =>
+  paragraphs.map((text, i) => {
+    const hl: string | undefined = highlights[i];
+    const at = hl ? text.indexOf(hl) : -1;
+    return at >= 0
+      ? { pre: text.slice(0, at), hl: hl as string, post: text.slice(at + (hl as string).length) }
+      : { pre: text, hl: '', post: '' };
+  });
+
+const withHl = splitHl(p.paragraphs, p.highlights);
+const voiceHl = splitHl(v.paragraphs, v.highlights);
+
+// Decorative waveform: deterministic bar heights (percent) so the SSR
+// output is stable. Purely visual — seeking works on the whole strip.
+const BARS = Array.from({ length: 48 }, (_, i) => {
+  const wave = Math.abs(Math.sin(i * 0.55)) * 0.55 + Math.abs(Math.sin(i * 1.9 + 2)) * 0.45;
+  return Math.round(18 + wave * 72);
 });
 ---
 
@@ -29,6 +42,7 @@ const withHl = p.paragraphs.map((text, i) => {
     </div>
 
     <div class="oat-card reveal">
+      <p class="oat-kicker">{p.kicker}</p>
       <span class="oat-card__mark" aria-hidden="true">“</span>
       <blockquote class="oat-card__quote">{p.pull2}</blockquote>
 
@@ -51,6 +65,62 @@ const withHl = p.paragraphs.map((text, i) => {
         </summary>
         <div class="oat-expand__body">
           {withHl.map((seg) => (
+            <p>
+              {seg.pre}{seg.hl && <strong class="oat-hl">{seg.hl}</strong>}{seg.post}
+            </p>
+          ))}
+        </div>
+      </details>
+    </div>
+
+    <hr class="oat-divider" />
+
+    <!-- ── Voice story: Meri (audio-only at her request) ─────────────── -->
+    <div class="oat-card oat-voice reveal">
+      <p class="oat-kicker">{v.kicker}</p>
+      <span class="oat-card__mark" aria-hidden="true">“</span>
+      <blockquote class="oat-card__quote oat-voice__quote">{v.pull}</blockquote>
+
+      <div class="oat-player">
+        <p class="oat-player__label">{v.audioLabel}</p>
+        <audio preload="metadata" src={v.audioSrc}></audio>
+        <div class="oat-player__row">
+          <button class="oat-player__btn" type="button" aria-label="Reproducir el testimonio de Meri">
+            <svg class="oat-player__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8 5.5v13l11-6.5-11-6.5z" />
+            </svg>
+            <svg class="oat-player__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <rect x="7" y="5" width="3.5" height="14" rx="1" />
+              <rect x="13.5" y="5" width="3.5" height="14" rx="1" />
+            </svg>
+          </button>
+
+          <div class="oat-player__wave" role="slider" tabindex="0" aria-label="Progreso del audio"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            {BARS.map((h) => (
+              <span class="oat-player__bar" style={`height:${h}%`}></span>
+            ))}
+          </div>
+
+          <span class="oat-player__time" data-duration={v.audioDuration}>0:00&thinsp;/&thinsp;{v.audioDuration}</span>
+        </div>
+      </div>
+
+      <div class="oat-card__person">
+        <span class="oat-name">{v.name}</span>
+        <span class="oat-voice__role">{v.role}</span>
+      </div>
+
+      <p class="oat-voice__privacy">{v.privacyNote}</p>
+
+      <details class="oat-expand">
+        <summary>
+          <span class="oat-expand__more">{v.transcriptMore}</span>
+          <span class="oat-expand__less">{v.transcriptLess}</span>
+        </summary>
+        <div class="oat-expand__body">
+          <p class="oat-voice__transcript-note">{v.transcriptNote}</p>
+          {voiceHl.map((seg) => (
             <p>
               {seg.pre}{seg.hl && <strong class="oat-hl">{seg.hl}</strong>}{seg.post}
             </p>
@@ -268,6 +338,153 @@ const withHl = p.paragraphs.map((text, i) => {
     }
   }
 
+  // ── Story kicker + divider between the two candidates ──────────────────
+  .oat-kicker {
+    margin: 0;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--oat-muted);
+  }
+
+  .oat-divider {
+    max-width: 220px;
+    margin: clamp(3rem, 6vw, 4.5rem) auto;
+    border: none;
+    border-top: 1px solid var(--oat-border);
+  }
+
+  // ── Voice story (Meri) ─────────────────────────────────────────────────
+  .oat-voice {
+    &__quote {
+      font-size: clamp(1.375rem, 2.6vw, 2rem);
+      max-width: 28ch;
+    }
+
+    &__role {
+      font-size: 0.8125rem;
+      color: var(--oat-muted);
+    }
+
+    &__privacy {
+      margin: -0.25rem auto 0;
+      max-width: 34rem;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--oat-muted);
+    }
+
+    &__transcript-note {
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--oat-muted);
+    }
+  }
+
+  // Custom flat player: navy play button + decorative waveform whose navy
+  // fill tracks playback. The real <audio> stays hidden.
+  .oat-player {
+    width: min(100%, 34rem);
+    border: 1px solid var(--oat-border);
+    border-radius: var(--oat-radius);
+    background: var(--oat-bg);
+    padding: 1.25rem 1.5rem 1.5rem;
+
+    audio { display: none; }
+
+    &__label {
+      margin: 0 0 1rem;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--oat-ink);
+      text-align: left;
+    }
+
+    &__row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    &__btn {
+      flex: 0 0 auto;
+      width: 48px;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 50%;
+      background: var(--oat-ink);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.25s $ease-expo;
+
+      &:hover { background: var(--oat-text); }
+
+      svg { width: 22px; height: 22px; }
+      .oat-player__icon-pause { display: none; }
+    }
+
+    &.is-playing .oat-player__btn {
+      .oat-player__icon-play { display: none; }
+      .oat-player__icon-pause { display: block; }
+    }
+
+    &__wave {
+      position: relative;
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 44px;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--oat-ink);
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
+    }
+
+    &__bar {
+      flex: 1 1 0;
+      min-width: 2px;
+      border-radius: 2px;
+      background: rgba(41, 40, 95, 0.18);
+    }
+
+    &__time {
+      flex: 0 0 auto;
+      font-size: 0.8125rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--oat-muted);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      padding: 1rem 1.125rem 1.25rem;
+
+      &__row { gap: 0.75rem; }
+      &__btn { width: 42px; height: 42px; }
+      &__time { font-size: 0.75rem; }
+      // Narrow screens: thinner bars and half of them hidden, so the
+      // waveform's min-content width never pushes the time label out of
+      // the row (progress JS counts all bars, so the fill stays accurate).
+      &__wave { gap: 2px; }
+      &__bar { min-width: 1px; }
+      &__bar:nth-child(even) { display: none; }
+    }
+  }
+
+  // Played bars are re-colored by JS toggling .is-played per bar — cheaper
+  // and cleaner than a masked overlay.
+  .oat-player__bar.is-played { background: var(--oat-ink); }
+
   @media (prefers-reduced-motion: reduce) {
     .oat-photo img,
     .oat-photo::after,
@@ -278,3 +495,69 @@ const withHl = p.paragraphs.map((text, i) => {
     .oat-expand[open] .oat-expand__body { animation: none; }
   }
 </style>
+
+<script>
+  // Minimal vanilla player for the voice testimonial: play/pause, live
+  // waveform tint, click/keyboard seeking. No libraries (see CLAUDE.md).
+  const player = document.querySelector<HTMLElement>('.oat-player');
+  const audio = player?.querySelector('audio');
+
+  if (player && audio) {
+    const btn = player.querySelector<HTMLButtonElement>('.oat-player__btn')!;
+    const wave = player.querySelector<HTMLElement>('.oat-player__wave')!;
+    const time = player.querySelector<HTMLElement>('.oat-player__time')!;
+    const bars = [...player.querySelectorAll<HTMLElement>('.oat-player__bar')];
+    const durationLabel = time.dataset.duration ?? '';
+
+    const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+    const paint = () => {
+      const dur = audio.duration || 0;
+      const pct = dur ? audio.currentTime / dur : 0;
+      const lit = Math.round(pct * bars.length);
+      bars.forEach((b, i) => b.classList.toggle('is-played', i < lit));
+      wave.setAttribute('aria-valuenow', String(Math.round(pct * 100)));
+      time.textContent = `${fmt(audio.currentTime)} / ${dur ? fmt(dur) : durationLabel}`;
+    };
+
+    btn.addEventListener('click', () => (audio.paused ? audio.play() : audio.pause()));
+
+    audio.addEventListener('play', () => {
+      player.classList.add('is-playing');
+      btn.setAttribute('aria-label', 'Pausar el testimonio de Meri');
+    });
+    audio.addEventListener('pause', () => {
+      player.classList.remove('is-playing');
+      btn.setAttribute('aria-label', 'Reproducir el testimonio de Meri');
+    });
+    audio.addEventListener('timeupdate', paint);
+    audio.addEventListener('loadedmetadata', paint);
+    audio.addEventListener('ended', () => {
+      audio.currentTime = 0;
+      paint();
+    });
+
+    const seekTo = (pct: number) => {
+      if (!audio.duration) return;
+      audio.currentTime = Math.min(Math.max(pct, 0), 1) * audio.duration;
+      paint();
+    };
+
+    wave.addEventListener('click', (e) => {
+      const r = wave.getBoundingClientRect();
+      seekTo((e.clientX - r.left) / r.width);
+    });
+
+    wave.addEventListener('keydown', (e) => {
+      if (!audio.duration) return;
+      const step = 5 / audio.duration;
+      const pct = audio.currentTime / audio.duration;
+      if (e.key === 'ArrowRight') { e.preventDefault(); seekTo(pct + step); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); seekTo(pct - step); }
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        audio.paused ? audio.play() : audio.pause();
+      }
+    });
+  }
+</script>

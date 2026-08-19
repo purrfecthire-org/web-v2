@@ -47,18 +47,19 @@ export const oaContent = {
   // the component wraps it for emphasis at render time.
   testimonials: {
     title: 'En palabras de quienes ya lo vivieron',
-    // Singular on purpose: only one story is shown here, named and
-    // verifiable. The cases further down the page are real but anonymous
-    // (client confidentiality), so this line must not read as a plural
-    // promise of "verifiable profiles" the page doesn't back up.
+    // Two stories, each with a different kind of proof: Alejandro is named
+    // and verifiable (face + LinkedIn); Meri chose to share her story in
+    // audio, first name only. The intro must describe exactly that — never
+    // promise more verifiability than each story actually offers.
     intro:
-      'Una historia real, con nombre, cara y perfil que puedes verificar.',
+      'Dos historias reales, cada una contada a su manera: una con nombre, cara y perfil que puedes verificar; la otra en la voz de su protagonista.',
     verifiedLabel: 'Historia real · perfil verificable',
     linkedinCta: 'Ver perfil en LinkedIn',
     readMore: 'Leer la historia completa',
     readLess: 'Cerrar historia',
     items: [
       {
+        kicker: 'Historia 01 · Con nombre y perfil verificable',
         name: 'Alejandro Eljadue',
         linkedin: 'https://www.linkedin.com/in/aeljaduetarud/',
         // `photoWebp` is served first (smaller, faster); `photo` (JPG) is the
@@ -81,6 +82,40 @@ export const oaContent = {
         ],
       },
     ],
+    // ── Voice testimonial (Meri) ─────────────────────────────────────────
+    // Meri asked not to record a video, not to publish her last name, and
+    // to appear first-name-only — the audio IS the proof, so the card leads
+    // with the player instead of a photo. `paragraphs` is the literal
+    // transcript of the audio (only punctuation normalized): never
+    // paraphrase, trim or reword it — anyone can press play and compare.
+    // `pull` is her verbatim sentence; `highlights[i]` must be an exact
+    // substring of `paragraphs[i]`.
+    voice: {
+      kicker: 'Historia 02 · En su propia voz',
+      name: 'Meri',
+      role: 'Alumna del programa',
+      pull: 'Desde que me inscribí hasta que encontré trabajo pasaron tres semanas.',
+      audioSrc: '/testimonials/meri-testimonio.mp3',
+      audioDuration: '1:43',
+      audioLabel: 'Escucha su historia',
+      privacyNote:
+        'Meri prefirió contar su historia en audio y compartir solo su nombre. La voz es suya; el resultado, también.',
+      transcriptMore: 'Leer la transcripción',
+      transcriptLess: 'Cerrar transcripción',
+      transcriptNote: 'Transcripción literal del audio.',
+      paragraphs: [
+        'Hace unos meses hubo un corte de personal en mi trabajo y me tocó a mí y me quedé sin trabajo, y empecé a aplicar a varios trabajos, o bueno, a varias posiciones, vacantes, etcétera, pero no recibía respuesta. En LinkedIn me encontré a Kate y le escribí, me explicó cómo funcionaba el programa y decidí darle una oportunidad.',
+        'Desde que me inscribí hasta que encontré trabajo pasaron tres semanas, o un poquito menos de un mes, básicamente. La verdad es que increíble. En cuanto empecé a trabajar con ella, a los dos, tres días empecé a recibir entrevistas. Empecé a hacer varias. Me ayudó a prepararme para todas las entrevistas.',
+        'Cuando llegó una de esas entrevistas, una de esas propuestas que era un trabajo que me interesaba, ella me ayudó con todo el proceso: prepararme para cada entrevista, para cada reto que me habían puesto, a negociar mi sueldo, etc. Y la verdad es que encontré un trabajo espectacular. Soy muy feliz. Y se lo debo todo a Kate, la verdad. Es un gran equipo.',
+        'Son súper dedicados. Saben muchísimo de lo que están haciendo y recomiendo ampliamente que trabajen con ella. He recomendado a varias personas. No sé si han terminado usando el servicio, pero 100% recomendable.',
+      ],
+      highlights: [
+        'pero no recibía respuesta',
+        'a los dos, tres días empecé a recibir entrevistas',
+        'encontré un trabajo espectacular',
+        '100% recomendable',
+      ],
+    },
   },
 
   // ── Anonymous outcome cases ────────────────────────────────────────────
