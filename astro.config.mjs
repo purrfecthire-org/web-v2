@@ -21,7 +21,11 @@ export default defineConfig({
         !/\/oa\/?$/.test(page) &&                         // /oa short-link redirect
         !/\/momentum\/?$/.test(page) &&                   // /momentum short-link redirect
         !page.includes('/oa/payment/') &&                 // payment view (not enabled yet)
-        !/\/offer-acceleration\/apply\/?$/.test(page),    // OA application (not enabled yet)
+        !/\/offer-acceleration\/apply\/?$/.test(page) &&  // OA application (not enabled yet)
+        // OA lead-capture pages: campaign landing pages reached only from a
+        // LinkedIn post or DM. They are noindex and unlinked from the nav, so
+        // they must never enter the sitemap either.
+        !/\/offer-acceleration\/(preguntas|te-suena|espejo)\/?$/.test(page),
     }),
   ],
   i18n: {

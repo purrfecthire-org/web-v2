@@ -1,0 +1,456 @@
+---
+// ── OA lead-capture micro form ───────────────────────────────────────────
+// Shared by the three noindex funnel pages (preguntas / te-suena / espejo).
+//
+// Required: LinkedIn + the objective radio group. Optional: blocker (omitted
+// on `espejo`), email, WhatsApp. Salary is deliberately never asked — these
+// pages exist to get an ICP reader onto a 15-min call without making them
+// feel judged.
+//
+// On submit it POSTs to {PUBLIC_API_ENDPOINT}/public/oa/leads with an
+// X-Request-Id header (site convention) and shows a single neutral
+// confirmation. Unlike /offer-acceleration/apply there is NO scoring and no
+// accepted/rejected branch: every successful submit gets the same card.
+// When PUBLIC_API_ENDPOINT is unset (the default) the form makes zero
+// network calls and shows the confirmation directly.
+import type { OALeadFormCopy, OALeadVariant } from '../../content/oaLeadForms';
+
+interface Props {
+  variant: OALeadVariant;
+  copy: OALeadFormCopy;
+  /** Renders on the navy section (variant `te_suena`). */
+  onDark?: boolean;
+  /** Collect the self-audit answers into the payload (variant `espejo`). */
+  withAudit?: boolean;
+}
+
+const { variant, copy, onDark = false, withAudit = false } = Astro.props;
+
+// Unique per-page id prefix keeps label/for wiring valid if a page ever
+// renders two forms.
+const uid = `oal-${variant}`;
+
+const clientConfig = { variant, withAudit, requiredError: copy.errors.required };
+---
+
+<div class={`oal-form-wrap${onDark ? ' oal-form-wrap--on-dark' : ''}`}>
+  <form class="oal-form" id={`${uid}-form`} novalidate>
+    <p class="oal-form__hint">{copy.hint}</p>
+
+    <div class="oal-field">
+      <label for={`${uid}-linkedin`}>{copy.linkedin.label}</label>
+      <input
+        type="text"
+        id={`${uid}-linkedin`}
+        name="linkedin"
+        placeholder={copy.linkedin.placeholder}
+        autocomplete="url"
+        required
+      />
+    </div>
+
+    <fieldset class="oal-field oal-field--group">
+      <legend>{copy.objective.label}</legend>
+      <div class="oal-pills" data-group="objective">
+        {copy.objective.options.map((o) => (
+          <label class="oal-pill">
+            <input type="radio" name="objective" value={o.key} />
+            <span>{o.label}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    {copy.blocker && (
+      <fieldset class="oal-field oal-field--group">
+        <legend>{copy.blocker.label}</legend>
+        <div class="oal-pills" data-group="blocker">
+          {copy.blocker.options.map((o) => (
+            <label class="oal-pill">
+              <input type="radio" name="blocker" value={o.key} />
+              <span>{o.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    )}
+
+    <div class="oal-field">
+      <span class="oal-field__label">
+        {copy.contact.label} <span class="oal-field__optional">{copy.contact.optional}</span>
+      </span>
+      <div class="oal-field__row">
+        <input
+          type="email"
+          name="email"
+          placeholder={copy.contact.email}
+          autocomplete="email"
+          aria-label={`${copy.contact.email} ${copy.contact.optional}`}
+        />
+        <input
+          type="tel"
+          name="phone"
+          placeholder={copy.contact.phone}
+          autocomplete="tel"
+          aria-label={`${copy.contact.phone} ${copy.contact.optional}`}
+        />
+      </div>
+      <p class="oal-field__note">{copy.contact.note}</p>
+    </div>
+
+    {/* Honeypot — off-screen, NOT display:none, so bots still fill it.
+        Must arrive empty; the backend rejects the lead otherwise. */}
+    <div class="oal-hp" aria-hidden="true">
+      <label for={`${uid}-website`}>Website</label>
+      <input type="text" id={`${uid}-website`} name="website" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <button type="submit" class="btn oal-form__submit">{copy.submit}</button>
+    <p class="oal-form__error" data-error hidden>{copy.errors.required}</p>
+    <p class="oal-form__privacy">{copy.privacy}</p>
+  </form>
+
+  <!-- Success -->
+  <div class="oal-result" data-result="success" hidden>
+    <div class="oal-result__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <p class="oal-result__eyebrow">{copy.success.eyebrow}</p>
+    <h3 class="oal-result__title">{copy.success.title}</h3>
+    <p class="oal-result__body">{copy.success.body}</p>
+  </div>
+
+  <!-- Submission failed (network / HTTP) -->
+  <div class="oal-result" data-result="error" hidden>
+    <p class="oal-result__eyebrow">{copy.error.eyebrow}</p>
+    <h3 class="oal-result__title">{copy.error.title}</h3>
+    <p class="oal-result__body">{copy.error.body}</p>
+    <button type="button" class="btn oal-result__retry" data-retry>{copy.error.retry}</button>
+  </div>
+</div>
+
+<script type="application/json" data-oal-config set:html={JSON.stringify(clientConfig)} />
+
+<script>
+  // Config is read from the sibling JSON tag of each form wrapper, so a page
+  // could host more than one form without the scripts colliding.
+  document.querySelectorAll<HTMLElement>('.oal-form-wrap').forEach((wrap) => {
+    const cfgEl = wrap.nextElementSibling as HTMLScriptElement | null;
+    if (!cfgEl?.hasAttribute('data-oal-config')) return;
+
+    const cfg = JSON.parse(cfgEl.textContent!) as {
+      variant: string;
+      withAudit: boolean;
+      requiredError: string;
+    };
+
+    const form = wrap.querySelector<HTMLFormElement>('.oal-form')!;
+    const errorEl = wrap.querySelector<HTMLElement>('[data-error]')!;
+    const successCard = wrap.querySelector<HTMLElement>('[data-result="success"]')!;
+    const errorCard = wrap.querySelector<HTMLElement>('[data-result="error"]')!;
+    const submitBtn = form.querySelector<HTMLButtonElement>('.oal-form__submit')!;
+    const retryBtn = wrap.querySelector<HTMLButtonElement>('[data-retry]')!;
+
+    // PUBLIC_* vars are inlined at build time. Unset/empty means "no backend":
+    // the page stays fully static and makes zero network calls.
+    const API_ENDPOINT = String(import.meta.env.PUBLIC_API_ENDPOINT ?? '').replace(/\/+$/, '');
+    const LOG_ENDPOINT = String(import.meta.env.PUBLIC_LOG_ENDPOINT ?? '').replace(/\/+$/, '');
+
+    const renderStart = Date.now();
+
+    const value = (name: string) =>
+      (form.elements.namedItem(name) as HTMLInputElement | null)?.value.trim() ?? '';
+    const checked = (name: string) =>
+      form.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? null;
+
+    /** Self-audit answers (variant `espejo`), keyed by question id. */
+    function collectAudit(): Record<string, string> | null {
+      if (!cfg.withAudit) return null;
+      const out: Record<string, string> = {};
+      document.querySelectorAll<HTMLElement>('[data-audit-item]').forEach((item) => {
+        const on = item.querySelector<HTMLElement>('[data-audit-answer].is-on');
+        const id = item.dataset.auditItem;
+        if (on && id) out[id] = on.dataset.auditAnswer!;
+      });
+      return Object.keys(out).length ? out : null;
+    }
+
+    function collectPayload() {
+      return {
+        linkedin: value('linkedin'),
+        objective: checked('objective'),
+        blocker: checked('blocker'),
+        // Optional contact channels; null (not "") when the user skipped them.
+        email: value('email') || null,
+        phone: value('phone') || null,
+        audit: collectAudit(),
+        variant: cfg.variant,
+        source: 'portal',
+        locale: 'es',
+        fill_time_ms: Date.now() - renderStart,
+        website: value('website'), // honeypot — must arrive empty
+      };
+    }
+
+    async function postLead(requestId: string) {
+      const res = await fetch(`${API_ENDPOINT}/public/oa/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Request-Id': requestId, // site convention: correlate every network call
+        },
+        body: JSON.stringify(collectPayload()),
+      });
+      if (!res.ok) {
+        const err = new Error(`HTTP ${res.status}`) as Error & { status?: number };
+        err.status = res.status;
+        throw err;
+      }
+    }
+
+    // Failures go through the shared /logs/client contract.
+    // NEVER include form PII — only status code + request id + variant.
+    function reportFailure(err: unknown, requestId: string) {
+      if (!LOG_ENDPOINT) return;
+      try {
+        const status = (err as { status?: number })?.status ?? null;
+        fetch(`${LOG_ENDPOINT}/logs/client`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          keepalive: true,
+          body: JSON.stringify({
+            entries: [
+              {
+                level: 'error',
+                message: `OA lead submit failed (${status ? `HTTP ${status}` : 'network error'})`,
+                source: 'portal',
+                url: location.origin + location.pathname,
+                occurred_at: new Date().toISOString(),
+                context: { status, request_id: requestId, variant: cfg.variant },
+              },
+            ],
+          }),
+        }).catch(() => {});
+      } catch {
+        /* reporter must never break the page */
+      }
+    }
+
+    function show(card: HTMLElement) {
+      form.hidden = true;
+      card.hidden = false;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    async function submit() {
+      errorCard.hidden = true; // retry path
+      submitBtn.disabled = true;
+
+      const requestId = crypto.randomUUID();
+      try {
+        if (API_ENDPOINT) await postLead(requestId);
+        show(successCard);
+      } catch (err) {
+        reportFailure(err, requestId);
+        form.hidden = true;
+        errorCard.hidden = false;
+        errorCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } finally {
+        submitBtn.disabled = false;
+      }
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const ok = !!value('linkedin') && !!checked('objective');
+      errorEl.hidden = ok;
+      if (!ok) return;
+      submit();
+    });
+
+    retryBtn.addEventListener('click', () => {
+      errorCard.hidden = true;
+      form.hidden = false;
+      submit();
+    });
+  });
+</script>
+
+<style lang="scss">
+  @use '../../styles/breakpoints.scss' as *;
+
+  .oal-form-wrap {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    color: var(--ink);
+  }
+
+  .oal-form__hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0 0 1.25rem;
+  }
+
+  .oal-field {
+    margin: 0 0 1.4rem;
+    border: none;
+    padding: 0;
+
+    /* <legend> and <label> share one look across the form. */
+    label,
+    legend,
+    &__label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      padding: 0;
+    }
+
+    input[type='text'],
+    input[type='email'],
+    input[type='tel'] {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.95rem;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--ink);
+
+      &:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 1px;
+      }
+    }
+
+    &__optional {
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    &__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+
+      @include max-sm {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    &__note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin: 0.5rem 0 0;
+    }
+  }
+
+  .oal-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .oal-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 0.95rem;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    cursor: pointer;
+    background: var(--bg);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+
+    &:hover {
+      border-color: var(--ink);
+    }
+
+    input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &:has(input:checked) {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+
+    &:has(input:focus-visible) {
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
+    }
+  }
+
+  /* Honeypot: off-screen rather than display:none so bots still fill it. */
+  .oal-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .oal-form__submit {
+    border: none;
+  }
+
+  .oal-form__error {
+    color: #a03232;
+    font-size: 0.85rem;
+    margin: 0.75rem 0 0;
+  }
+
+  .oal-form__privacy {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 1rem 0 0;
+  }
+
+  /* ── Result cards ─────────────────────────────────────────────────── */
+  .oal-result {
+    &__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      display: grid;
+      place-items: center;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+
+    &__eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--muted);
+      margin: 0 0 0.6rem;
+    }
+
+    &__title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin: 0 0 0.6rem;
+    }
+
+    &__body {
+      color: var(--text);
+      margin: 0;
+      max-width: 52ch;
+    }
+
+    &__retry {
+      margin-top: 1.25rem;
+    }
+  }
+</style>

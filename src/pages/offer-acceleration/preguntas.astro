@@ -1,0 +1,128 @@
+---
+// ── /offer-acceleration/preguntas · OA lead-capture variant A ────────────
+// "Las cinco preguntas": the questions a recruiter answers about a candidate
+// from the profile alone, before ever writing to them. Every question must
+// stay answerable from a LinkedIn profile — that constraint is the whole
+// premise, so do not add questions about salary expectations or referrals.
+//
+// NOINDEX and intentionally unlinked from the nav: the audience arrives from
+// a specific LinkedIn post (see `audience` in the content file).
+import OALeadShell from '../../components/oa-lead/OALeadShell.astro';
+import { oaPreguntas as c } from '../../content/oaLeadForms';
+---
+
+<OALeadShell
+  variant={c.variant}
+  meta={c.meta}
+  hero={c.hero}
+  apply={c.apply}
+  form={c.form}
+  footer={c.footer}
+>
+  <section class="pre">
+    <ol class="pre__list">
+      {c.questions.map((item, i) => (
+        <li class="pre__item reveal">
+          <span class="pre__num">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h2 class="pre__q">{item.q}</h2>
+            <p class="pre__body">{item.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="pre__cases">
+      <h2 class="pre__cases-title">{c.cases.title}</h2>
+      <div class="pre__cases-grid">
+        {c.cases.items.map((item) => (
+          <span class="pre__case">{item}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+</OALeadShell>
+
+<style lang="scss">
+  @use '../../styles/breakpoints.scss' as *;
+
+  .pre {
+    padding: 2.5rem 0 0;
+    border-top: 1px solid var(--line);
+
+    &__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 1rem;
+    }
+
+    &__item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--bg);
+      padding: 1.25rem 1.4rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+
+      @include max-sm {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+      }
+    }
+
+    &__num {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      padding-top: 0.2rem;
+    }
+
+    &__q {
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.35;
+      margin: 0 0 0.3rem;
+      color: var(--ink);
+    }
+
+    &__body {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text);
+      margin: 0;
+    }
+
+    /* ── Harder-move chips ──────────────────────────────────────────── */
+    &__cases {
+      margin-top: 2.75rem;
+    }
+
+    &__cases-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 0 0 1rem;
+      color: var(--ink);
+    }
+
+    &__cases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 0.6rem;
+    }
+
+    &__case {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--bg-soft);
+      padding: 0.75rem 0.95rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+  }
+</style>

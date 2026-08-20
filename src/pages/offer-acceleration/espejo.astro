@@ -1,0 +1,215 @@
+---
+// ── /offer-acceleration/espejo · OA lead-capture variant C ───────────────
+// "El espejo": a seven-question self-audit the reader answers in-page
+// (Sí / No / No lo sé). Anything that is not "Sí" turns red, and the verdict
+// converts the red answers into the reason to take the call.
+//
+// The answers are collected into the lead payload as `audit` (keyed by each
+// question's stable `id`), so the team opens the 15-min call already knowing
+// which filters the person flagged. No scoring happens client-side and none
+// is shown: the verdict is copy, not a diagnosis.
+//
+// NOINDEX and intentionally unlinked from the nav: this is the page sent to
+// warm contacts and DMs (see `audience` in the content file).
+import OALeadShell from '../../components/oa-lead/OALeadShell.astro';
+import { oaEspejo as c } from '../../content/oaLeadForms';
+
+const verdictConfig = {
+  total: c.audit.questions.length,
+  copy: c.audit.verdict,
+};
+---
+
+<OALeadShell
+  variant={c.variant}
+  meta={c.meta}
+  hero={c.hero}
+  apply={c.apply}
+  form={c.form}
+  footer={c.footer}
+  withAudit
+>
+  <section class="mir">
+    <div class="mir__list" data-audit>
+      {c.audit.questions.map((item) => (
+        <div class="mir__item" data-audit-item={item.id}>
+          <p class="mir__q">{item.q}</p>
+          <div class="mir__opts" role="group" aria-label={item.q}>
+            {c.audit.options.map((o) => (
+              <button type="button" class="mir__opt" data-audit-answer={o.value}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p class="mir__verdict" data-verdict>{c.audit.verdict.idle}</p>
+  </section>
+</OALeadShell>
+
+<script type="application/json" id="mir-config" set:html={JSON.stringify(verdictConfig)} />
+
+<script>
+  const cfgEl = document.getElementById('mir-config');
+  const list = document.querySelector<HTMLElement>('[data-audit]');
+  const verdict = document.querySelector<HTMLElement>('[data-verdict]');
+
+  if (cfgEl && list && verdict) {
+    const { total, copy } = JSON.parse(cfgEl.textContent!) as {
+      total: number;
+      copy: {
+        idle: string;
+        partial: string;
+        clean: string;
+        redOne: string;
+        redMany: string;
+        redTail: string;
+      };
+    };
+
+    list.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-audit-answer]');
+      if (!btn) return;
+
+      // Single-select per question; "Sí" reads as resolved, anything else as
+      // a gap, which is what the red state marks.
+      const group = btn.parentElement!;
+      group.querySelectorAll<HTMLElement>('[data-audit-answer]').forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('is-on', on);
+        b.classList.toggle('is-on-neg', on && b.dataset.auditAnswer !== 'yes');
+        b.setAttribute('aria-pressed', String(on));
+      });
+
+      let answered = 0;
+      let red = 0;
+      list.querySelectorAll<HTMLElement>('[data-audit-item]').forEach((item) => {
+        const on = item.querySelector<HTMLElement>('[data-audit-answer].is-on');
+        if (!on) return;
+        answered += 1;
+        if (on.dataset.auditAnswer !== 'yes') red += 1;
+      });
+
+      const complete = answered === total;
+      verdict.classList.toggle('is-red', complete && red > 0);
+
+      if (!complete) {
+        verdict.innerHTML = copy.partial
+          .replace('{answered}', String(answered))
+          .replace('{total}', String(total));
+      } else if (red === 0) {
+        verdict.innerHTML = copy.clean;
+      } else {
+        const head = red === 1 ? copy.redOne : copy.redMany.replace('{count}', String(red));
+        verdict.innerHTML = head + copy.redTail;
+      }
+    });
+  }
+</script>
+
+<style lang="scss">
+  @use '../../styles/breakpoints.scss' as *;
+
+  .mir {
+    padding: 2.5rem 0 0;
+    border-top: 1px solid var(--line);
+
+    &__list {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    &__item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+
+      @include max-sm {
+        align-items: flex-start;
+      }
+    }
+
+    &__q {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--ink);
+      flex: 1 1 20rem;
+    }
+
+    &__opts {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    &__opt {
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      background: var(--bg);
+      color: var(--ink);
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+      &:hover {
+        border-color: var(--ink);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 2px;
+      }
+
+      /* Resolved answer: brand navy. */
+      &.is-on {
+        background: var(--ink);
+        color: #fff;
+        border-color: var(--ink);
+      }
+
+      /* Gap ("No" / "No lo sé"): red, so the problem is visible, not just
+         readable. Overrides .is-on, which is set on the same element. */
+      &.is-on-neg {
+        background: #fbefef;
+        color: #a03232;
+        border-color: #a03232;
+      }
+    }
+
+    &__verdict {
+      margin: 1.25rem 0 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--bg-soft);
+      padding: 1.1rem 1.3rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text);
+
+      :global(strong) {
+        color: var(--ink);
+        font-weight: 500;
+      }
+
+      &.is-red {
+        border-color: #a03232;
+        background: #fbefef;
+
+        :global(strong) {
+          color: #a03232;
+        }
+      }
+    }
+  }
+</style>

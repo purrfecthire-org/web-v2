@@ -1,0 +1,87 @@
+---
+// ── /offer-acceleration/te-suena · OA lead-capture variant B ─────────────
+// "¿Te suena?": five ICP situations, each led by the question a recruiter
+// would ask about that profile. The question is the headline and the
+// narrative is deliberately secondary — readers scan the cards, so the
+// question has to carry the whole card on its own.
+//
+// NOINDEX and intentionally unlinked from the nav: the audience arrives from
+// a specific LinkedIn post (see `audience` in the content file).
+import OALeadShell from '../../components/oa-lead/OALeadShell.astro';
+import { oaTeSuena as c } from '../../content/oaLeadForms';
+---
+
+<OALeadShell
+  variant={c.variant}
+  meta={c.meta}
+  hero={c.hero}
+  apply={c.apply}
+  form={c.form}
+  footer={c.footer}
+>
+  <section class="sit">
+    {c.situations.map((s) => (
+      <article class={`sit__card sit__card--${s.tint} reveal`}>
+        <p class="sit__kicker">{s.kicker}</p>
+        <h2 class="sit__q">{s.q}</h2>
+        <p class="sit__body">{s.body}</p>
+      </article>
+    ))}
+  </section>
+</OALeadShell>
+
+<style lang="scss">
+  .sit {
+    padding: 2.5rem 0 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 1.1rem;
+
+    &__card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.6rem;
+
+      /* Soft tints keep the five situations visually separable while staying
+         inside the white-canvas system: each is a desaturated wash, never a
+         second brand color. */
+      &--1 { background: #f0f2fa; }
+      &--2 { background: #faf3ea; }
+      &--3 { background: #eef6f2; }
+      &--4 { background: #f7f0f5; }
+      &--5 { background: #fbf6ec; }
+    }
+
+    &__kicker {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.25rem 0.7rem;
+      margin: 0 0 0.85rem;
+    }
+
+    &__q {
+      font-size: 1.3rem;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.7rem;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+
+    &__body {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--text);
+      margin: 0;
+      max-width: 60ch;
+    }
+  }
+</style>
