@@ -14,8 +14,12 @@ import type { OALeadFormCopy, OALeadVariant } from '../../content/oaLeadForms';
 interface Props {
   variant: OALeadVariant;
   meta: { title: string; description: string };
-  hero: { eyebrow: string; headline: string; lede: string; signature?: string };
-  apply: { title: string; body: string; dark: boolean };
+  /** `eyebrow` is optional: `preguntas` hides the program name up top so the
+      reader meets the questions before any brand framing. */
+  hero: { eyebrow?: string; headline: string; lede: string; signature?: string };
+  /** `points` renders as a row of check badges under the body: the scannable
+      no-catch reassurances (free, human not AI, 15 min). */
+  apply: { title: string; body: string; dark: boolean; points?: readonly string[] };
   form: OALeadFormCopy;
   footer: string;
   /** Collect the self-audit answers into the payload (variant `espejo`). */
@@ -38,7 +42,7 @@ const { variant, meta, hero, apply, form, footer, withAudit = false } = Astro.pr
 
     <div class="oal__page">
       <section class="oal__hero">
-        <p class="oal__eyebrow">{hero.eyebrow}</p>
+        {hero.eyebrow && <p class="oal__eyebrow">{hero.eyebrow}</p>}
         <h1 class="oal__headline">{hero.headline}</h1>
         <p class="oal__lede">{hero.lede}</p>
         {hero.signature && <p class="oal__signature">{hero.signature}</p>}
@@ -49,6 +53,18 @@ const { variant, meta, hero, apply, form, footer, withAudit = false } = Astro.pr
       <section class={`oal__apply${apply.dark ? ' oal__apply--dark' : ''}`}>
         <h2 class="oal__apply-title">{apply.title}</h2>
         <p class="oal__apply-body">{apply.body}</p>
+        {apply.points && (
+          <ul class="oal__points">
+            {apply.points.map((point) => (
+              <li>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                {point}
+              </li>
+            ))}
+          </ul>
+        )}
         <OALeadForm variant={variant} copy={form} onDark={apply.dark} withAudit={withAudit} />
       </section>
 
@@ -162,6 +178,35 @@ const { variant, meta, hero, apply, form, footer, withAudit = false } = Astro.pr
       color: var(--text);
       max-width: 58ch;
       margin: 0 0 1.5rem;
+    }
+
+    /* ── Check badges: the no-catch reassurances ────────────────────── */
+    &__points {
+      list-style: none;
+      margin: 0 0 1.5rem;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+
+      li {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--bg-soft);
+        padding: 0.45rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--ink);
+      }
+    }
+
+    &__apply--dark .oal__points li {
+      background: rgba(243, 239, 230, 0.1);
+      border-color: rgba(243, 239, 230, 0.25);
+      color: var(--on-dark);
     }
 
     &__footer {

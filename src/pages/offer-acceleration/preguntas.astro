@@ -31,15 +31,6 @@ import { oaPreguntas as c } from '../../content/oaLeadForms';
         </li>
       ))}
     </ol>
-
-    <div class="pre__cases">
-      <h2 class="pre__cases-title">{c.cases.title}</h2>
-      <div class="pre__cases-grid">
-        {c.cases.items.map((item) => (
-          <span class="pre__case">{item}</span>
-        ))}
-      </div>
-    </div>
   </section>
 </OALeadShell>
 
@@ -81,48 +72,24 @@ import { oaPreguntas as c } from '../../content/oaLeadForms';
       padding-top: 0.2rem;
     }
 
+    /* The question is what a scanner reads: larger and in ink, with the
+       explanation demoted to small muted text. Weight stays at 500, the
+       heaviest the design system loads. */
     &__q {
-      font-size: 1.05rem;
+      font-size: 1.2rem;
       font-weight: 500;
       line-height: 1.35;
-      margin: 0 0 0.3rem;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.4rem;
       color: var(--ink);
+      text-wrap: balance;
     }
 
     &__body {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       line-height: 1.6;
-      color: var(--text);
+      color: var(--muted);
       margin: 0;
-    }
-
-    /* ── Harder-move chips ──────────────────────────────────────────── */
-    &__cases {
-      margin-top: 2.75rem;
-    }
-
-    &__cases-title {
-      font-size: 1.1rem;
-      font-weight: 500;
-      margin: 0 0 1rem;
-      color: var(--ink);
-    }
-
-    &__cases-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 0.6rem;
-    }
-
-    &__case {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--bg-soft);
-      padding: 0.75rem 0.95rem;
-      font-size: 0.88rem;
-      font-weight: 500;
-      line-height: 1.4;
-      color: var(--ink);
     }
   }
 </style>

@@ -300,9 +300,12 @@ const clientConfig = { variant, withAudit, requiredError: copy.errors.required }
     border: none;
     padding: 0;
 
-    /* <legend> and <label> share one look across the form. */
-    label,
-    legend,
+    /* <legend> and <label> share one look across the form. Direct children
+       only: `label` alone would also catch the .oal-pill labels nested in
+       .oal-pills and, with its extra type selector, out-rank .oal-pill,
+       flattening every pill to display:block / padding:0. */
+    > label,
+    > legend,
     &__label {
       display: block;
       font-size: 0.9rem;
@@ -354,7 +357,7 @@ const clientConfig = { variant, withAudit, requiredError: copy.errors.required }
   .oal-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.6rem;
   }
 
   .oal-pill {

@@ -129,10 +129,11 @@ export const oaPreguntas = {
     description:
       'Antes de escribirte, un recruiter ya respondió cinco preguntas sobre ti mirando solo tu perfil. Estas son.',
   },
+  // No eyebrow: the reader meets the questions before any program branding,
+  // and less text up top means the headline is the only thing to scan.
   hero: {
-    eyebrow: 'Offer Acceleration',
     headline: 'Antes de escribirte, un recruiter ya respondió cinco preguntas sobre ti. Sin ti.',
-    lede: 'Cuando una startup US busca a alguien de tu nivel, nadie lee aplicaciones. Alguien busca perfiles y descarta en segundos. Estas son las preguntas con las que te leen, y con las que casi siempre te descartan sin que te enteres.',
+    lede: 'Nadie lee aplicaciones: un recruiter busca perfiles y descarta en segundos. Estas son las cinco preguntas con las que lo hace.',
   },
   questions: [
     {
@@ -156,20 +157,14 @@ export const oaPreguntas = {
       body: 'No el inglés del CV. El de una conversación en vivo con la persona que firma. El recruiter busca esas señales antes de gastar una llamada.',
     },
   ],
-  cases: {
-    title: 'Y pesan doble si tu siguiente movimiento es de los difíciles:',
-    items: [
-      'Entrar a tech desde una industria tradicional',
-      'Pasar de freelance a un rol estable sin bajar ingreso',
-      'Saltar de una empresa local a una startup US en USD',
-      'Cambiar de rol o de carrera',
-      'Subir de nivel en lo que ya haces',
-      'Volver al mercado después de un recorte',
-    ],
-  },
+  // Straight from the questions into the offer. Deliberately short: a wall of
+  // text here reads as "what's the catch?", so the pitch is one title, two
+  // sentences and three check badges. "No una IA" is the differentiator in
+  // 2026: people assume a bot reads their profile, and here it is a CEO.
   apply: {
-    title: 'No vamos a responder estas preguntas aquí.',
-    body: 'Las respondemos sobre tu perfil, en una llamada de 15 minutos con nuestro equipo. Para llegar a ella solo necesitamos tu LinkedIn y dos respuestas. Así los 15 minutos son sobre tu caso, no sobre presentaciones.',
+    title: 'Una CEO lee tu perfil. No una IA.',
+    body: '15 minutos en vivo con quien ha colocado a más de 160 personas en startups de YC y a16z, revisando tu perfil como lo hace un recruiter. Déjanos tu LinkedIn y te contactamos.',
+    points: ['Gratis, sin letra chica', '15 minutos, en vivo', 'Un humano, no una IA'],
     dark: false,
   },
   form: {
