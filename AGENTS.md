@@ -35,10 +35,6 @@ pnpm build        # Production build to ./dist/
 pnpm preview      # Preview production build
 ```
 
-Or as part of the full stack: `docker compose up -d` from the workspace root (project
-`ph-intranet`) runs this at **localhost:4325** (matching `.claude/launch.json`, since 4321 is
-used by the `ats-frontend-design-v1` worktree). `docker compose watch` live-syncs `src/`.
-
 ## Content System
 
 All text lives in `src/content/index.ts`. Components receive content via props — no hardcoded strings. The `getContent(lang)` function returns the correct language object.
