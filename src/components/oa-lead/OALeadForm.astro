@@ -37,18 +37,8 @@ const clientConfig = { variant, withAudit, requiredError: copy.errors.required }
   <form class="oal-form" id={`${uid}-form`} novalidate>
     <p class="oal-form__hint">{copy.hint}</p>
 
-    <div class="oal-field">
-      <label for={`${uid}-linkedin`}>{copy.linkedin.label}</label>
-      <input
-        type="text"
-        id={`${uid}-linkedin`}
-        name="linkedin"
-        placeholder={copy.linkedin.placeholder}
-        autocomplete="url"
-        required
-      />
-    </div>
-
+    {/* Context questions first: they are one tap each, so the reader is two
+        taps invested before any typing. Contact details come last. */}
     <fieldset class="oal-field oal-field--group">
       <legend>{copy.objective.label}</legend>
       <div class="oal-pills" data-group="objective">
@@ -75,27 +65,37 @@ const clientConfig = { variant, withAudit, requiredError: copy.errors.required }
       </fieldset>
     )}
 
+    {/* One grouped contact block: LinkedIn (the profile we read), then email
+        and WhatsApp. None is labeled optional; only LinkedIn blocks submit. */}
     <div class="oal-field">
-      <span class="oal-field__label">
-        {copy.contact.label} <span class="oal-field__optional">{copy.contact.optional}</span>
-      </span>
-      <div class="oal-field__row">
+      <label for={`${uid}-linkedin`}>{copy.contact.label}</label>
+      <div class="oal-contact">
         <input
-          type="email"
-          name="email"
-          placeholder={copy.contact.email}
-          autocomplete="email"
-          aria-label={`${copy.contact.email} ${copy.contact.optional}`}
+          type="text"
+          id={`${uid}-linkedin`}
+          name="linkedin"
+          placeholder={copy.linkedin.placeholder}
+          autocomplete="url"
+          aria-label={copy.linkedin.label}
+          required
         />
-        <input
-          type="tel"
-          name="phone"
-          placeholder={copy.contact.phone}
-          autocomplete="tel"
-          aria-label={`${copy.contact.phone} ${copy.contact.optional}`}
-        />
+        <div class="oal-field__row">
+          <input
+            type="email"
+            name="email"
+            placeholder={copy.contact.email}
+            autocomplete="email"
+            aria-label={copy.contact.email}
+          />
+          <input
+            type="tel"
+            name="phone"
+            placeholder={copy.contact.phone}
+            autocomplete="tel"
+            aria-label={copy.contact.phone}
+          />
+        </div>
       </div>
-      <p class="oal-field__note">{copy.contact.note}</p>
     </div>
 
     {/* Honeypot — off-screen, NOT display:none, so bots still fill it.
@@ -332,11 +332,6 @@ const clientConfig = { variant, withAudit, requiredError: copy.errors.required }
       }
     }
 
-    &__optional {
-      font-weight: 400;
-      color: var(--muted);
-    }
-
     &__row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -346,12 +341,12 @@ const clientConfig = { variant, withAudit, requiredError: copy.errors.required }
         grid-template-columns: 1fr;
       }
     }
+  }
 
-    &__note {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin: 0.5rem 0 0;
-    }
+  /* LinkedIn on top, email + WhatsApp below, one visual unit. */
+  .oal-contact {
+    display: grid;
+    gap: 0.9rem;
   }
 
   .oal-pills {

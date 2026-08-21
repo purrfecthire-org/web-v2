@@ -60,7 +60,11 @@ export interface OALeadFormCopy {
   objective: { label: string; options: OALeadOption[] };
   /** Omitted on the `espejo` variant, which asks a single question. */
   blocker?: { label: string; options: OALeadOption[] };
-  contact: { label: string; optional: string; email: string; phone: string; note: string };
+  /** One grouped block after the questions: LinkedIn, then email + phone.
+      Nothing is labeled "optional" — validation still only blocks on
+      LinkedIn + objective, but the label would invite skipping fields we
+      want for fast contact. */
+  contact: { label: string; email: string; phone: string };
   submit: string;
   errors: { required: string };
   privacy: string;
@@ -89,10 +93,8 @@ const MOVE_OPTIONS: OALeadOption[] = [
 // ── Shared form chrome: identical on the three pages ─────────────────────
 const CONTACT_COPY = {
   label: '¿Cómo te contactamos?',
-  optional: '(opcional)',
   email: 'Email',
   phone: 'WhatsApp',
-  note: 'Si nos dejas uno de los dos, te respondemos más rápido. Si no, te escribimos por LinkedIn.',
 };
 
 const SUCCESS_COPY = {
