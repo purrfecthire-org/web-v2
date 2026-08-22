@@ -134,6 +134,8 @@ const clientConfig = { variant, withAudit, requiredError: copy.errors.required }
 <script type="application/json" data-oal-config set:html={JSON.stringify(clientConfig)} />
 
 <script>
+  import { classifyError, createTelemetry, flushQueue, queueForRetry } from '../../lib/formTelemetry';
+
   // Config is read from the sibling JSON tag of each form wrapper, so a page
   // could host more than one form without the scripts colliding.
   document.querySelectorAll<HTMLElement>('.oal-form-wrap').forEach((wrap) => {
@@ -157,6 +159,15 @@ const clientConfig = { variant, withAudit, requiredError: copy.errors.required }
     // the page stays fully static and makes zero network calls.
     const API_ENDPOINT = String(import.meta.env.PUBLIC_API_ENDPOINT ?? '').replace(/\/+$/, '');
     const LOG_ENDPOINT = String(import.meta.env.PUBLIC_LOG_ENDPOINT ?? '').replace(/\/+$/, '');
+
+    const FORM_KEY = 'oa_lead';
+    const telemetry = createTelemetry({
+      endpoint: API_ENDPOINT, formKey: FORM_KEY, variant: cfg.variant,
+    });
+    telemetry.view();
+    // Re-send anything an earlier visit could not deliver. The network is
+    // demonstrably working right now — this page just loaded.
+    void flushQueue(telemetry);
 
     const renderStart = Date.now();
 
@@ -249,11 +260,28 @@ const clientConfig = { variant, withAudit, requiredError: copy.errors.required }
       submitBtn.disabled = true;
 
       const requestId = crypto.randomUUID();
+      // Counted BEFORE the request leaves. This is the denominator: without it,
+      // "nobody applied" and "everybody applied and it broke" look identical.
+      telemetry.attempt(requestId);
       try {
         if (API_ENDPOINT) await postLead(requestId);
+        telemetry.success(requestId);
         show(successCard);
       } catch (err) {
+        telemetry.error(requestId, err);
         reportFailure(err, requestId);
+        // Counting a lost lead does not get it back. Persist the payload so the
+        // reader's next visit re-sends it: a transient blip becomes a late lead
+        // rather than no lead. A 4xx is never queued — it would fail forever.
+        if (API_ENDPOINT && classifyError(err).kind !== 'http_4xx') {
+          queueForRetry({
+            url: `${API_ENDPOINT}/public/oa/leads`,
+            body: JSON.stringify(collectPayload()),
+            request_id: requestId,
+            form_key: FORM_KEY,
+            variant: cfg.variant,
+          });
+        }
         form.hidden = true;
         errorCard.hidden = false;
         errorCard.scrollIntoView({ behavior: 'smooth', block: 'center' });

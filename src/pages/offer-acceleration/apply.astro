@@ -342,6 +342,7 @@ const clientConfig = {
 <script type="application/json" id="apl-config" set:html={JSON.stringify(clientConfig)} />
 
 <script>
+  import { classifyError, createTelemetry, flushQueue, queueForRetry } from '../../lib/formTelemetry';
   import { createOALoader, pickTimings } from '../../scripts/oaLoader';
 
   const cfg = JSON.parse(document.getElementById('apl-config')!.textContent!) as {
@@ -357,6 +358,9 @@ const clientConfig = {
   // Backend base URLs — PUBLIC_* vars are inlined at build time. Unset/empty
   // means "no backend": the site stays fully static with zero network calls.
   const API_ENDPOINT = String(import.meta.env.PUBLIC_API_ENDPOINT ?? '').replace(/\/+$/, '');
+  // Same instrumentation as the three short lead pages, under a different
+  // form_key: comparing the long and short funnels is the experiment being run.
+  const FORM_KEY = 'oa_apply';
   const LOG_ENDPOINT = String(import.meta.env.PUBLIC_LOG_ENDPOINT ?? '').replace(/\/+$/, '');
 
   // FALLBACK ONLY — the pre-existing client-side branch, kept solely so the
@@ -364,6 +368,10 @@ const clientConfig = {
   // config/oa_applications.json default accepted_income_bands. Dies once the
   // ATS backend is live; the real path never reads it.
   const FALLBACK_ACCEPTED_INCOME_BANDS = new Set(['3000_4500', '4500_6000', 'gt_6000']);
+
+  const telemetry = createTelemetry({ endpoint: API_ENDPOINT, formKey: FORM_KEY });
+  telemetry.view();
+  void flushQueue(telemetry);
 
   // First render of step 1 → fill_time_ms in the submission payload.
   const renderStart = Date.now();
@@ -665,6 +673,8 @@ const clientConfig = {
     // only when BOTH the animation minimum has elapsed AND the response
     // arrived; if the server is slower, phase 2 simply keeps looping.
     const requestId = crypto.randomUUID();
+    // Counted before the request leaves — the denominator the CRM cannot see.
+    telemetry.attempt(requestId);
     const outcome: Promise<{ ok: true; status: SubmitStatus } | { ok: false; error: unknown }> =
       API_ENDPOINT
         ? postApplication(requestId)
@@ -678,6 +688,7 @@ const clientConfig = {
       analyzing.classList.remove('is-on');
       analyzing.setAttribute('aria-hidden', 'true');
       if (result.ok) {
+        telemetry.success(requestId);
         showResult(
           result.status === 'accepted'
             ? 'apl-accepted'
@@ -686,7 +697,17 @@ const clientConfig = {
               : 'apl-rejected'
         );
       } else {
+        telemetry.error(requestId, result.error);
         reportFailure(result.error, requestId);
+        // A long form is a lot of typing to lose to a network blip.
+        if (API_ENDPOINT && classifyError(result.error).kind !== 'http_4xx') {
+          queueForRetry({
+            url: `${API_ENDPOINT}/public/oa/applications`,
+            body: JSON.stringify(collectPayload()),
+            request_id: requestId,
+            form_key: FORM_KEY,
+          });
+        }
         showResult('apl-error-card');
       }
     });

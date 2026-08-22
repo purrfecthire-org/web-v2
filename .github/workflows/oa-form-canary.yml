@@ -1,0 +1,108 @@
+# Probes the public OA lead endpoint from OUTSIDE our infrastructure.
+#
+# This is the half of the canary that matters most and the half that cannot live
+# in the backend. An in-process probe cannot detect that the backend is down,
+# because it *is* the backend; and the browser-reported attempt counters on the
+# Form health panel share a fate with the submissions they describe, so a total
+# outage shows there as a quiet day rather than as failure.
+#
+# GitHub runs this from its own network, so it also catches an expired TLS
+# certificate, a DNS change, and an origin missing from the CORS allowlist —
+# none of which produce a single log line on our side.
+#
+# It writes a REAL submission, marked `source: canary`. The backend excludes
+# that source from every business metric and sweeps the rows within the hour
+# (source/oa_forms/application/canary.py), so this never pollutes the board.
+#
+# Setup: add repository variable OA_CANARY_ENDPOINT (the public API base URL,
+# no trailing slash). Until it is set the job skips rather than failing, so the
+# workflow can be merged before the endpoint is live.
+
+name: OA form canary
+
+on:
+  schedule:
+    # Every 15 minutes. GitHub's scheduler is approximate and can delay a run
+    # under load — fine for "is it broken", useless for precise timing, and this
+    # is only ever the former.
+    - cron: '*/15 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  # Never let a backlog of delayed runs pile probes on top of each other.
+  group: oa-form-canary
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe POST /public/oa/leads
+        env:
+          ENDPOINT: ${{ vars.OA_CANARY_ENDPOINT }}
+        run: |
+          set -uo pipefail
+
+          if [ -z "${ENDPOINT}" ]; then
+            echo "OA_CANARY_ENDPOINT is not set — skipping."
+            echo "Set it to the public API base URL to turn the canary on."
+            exit 0
+          fi
+
+          marker="gh-$(date +%s)-${RANDOM}"
+          payload=$(cat <<JSON
+          {
+            "linkedin": "linkedin.com/in/canary-probe-${marker}",
+            "objective": "unclear",
+            "source": "canary",
+            "locale": "es",
+            "fill_time_ms": 30000,
+            "website": ""
+          }
+          JSON
+          )
+
+          # --max-time bounds a hung connection: a probe that never returns is a
+          # probe that never alerts.
+          status=$(curl --silent --show-error --max-time 20 \
+            --output /tmp/canary-body.json --write-out '%{http_code}' \
+            --request POST "${ENDPOINT}/public/oa/leads" \
+            --header 'Content-Type: application/json' \
+            --header "X-Request-Id: ${marker}" \
+            --data "${payload}") || status="000"
+
+          echo "HTTP ${status}"
+          echo "--- body ---"
+          cat /tmp/canary-body.json 2>/dev/null || true
+          echo
+
+          # 000 is curl's "no response at all" — DNS, TLS or the host being down,
+          # which is precisely the case nothing on our own side can report.
+          if [ "${status}" = "000" ]; then
+            echo "::error::OA lead endpoint UNREACHABLE (no HTTP response). \
+          DNS, TLS or the service being down. Nothing on our side can see this."
+            exit 1
+          fi
+
+          case "${status}" in
+            2*) ;;
+            *)
+              echo "::error::OA lead endpoint returned HTTP ${status}. \
+          Public form submissions are failing right now."
+              exit 1
+              ;;
+          esac
+
+          # A 2xx with the wrong shape means the contract drifted: the portal
+          # only checks res.ok, so it would show readers a success card while
+          # the backend quietly stopped storing anything.
+          if ! grep -q '"status"[[:space:]]*:[[:space:]]*"received"' /tmp/canary-body.json; then
+            echo "::error::OA lead endpoint answered ${status} but not the agreed \
+          envelope. The portal would still show a success card."
+            exit 1
+          fi
+
+          echo "Canary healthy."
