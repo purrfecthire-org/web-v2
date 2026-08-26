@@ -10,6 +10,13 @@
 # certificate, a DNS change, and an origin missing from the CORS allowlist —
 # none of which produce a single log line on our side.
 #
+# The CORS case needs its own explicit step: curl is not a browser, so a plain
+# POST sails through even when every real browser is blocked at the preflight.
+# (Proven live on 2026-08-26: the local portal origin was missing from the
+# allowlist, submissions died with ERR_FAILED, and a naive probe stayed green.)
+# So the probe below ALSO sends OPTIONS with the portal's Origin and requires
+# the allow-origin header back — failing exactly the way a browser would.
+#
 # It writes a REAL submission, marked `source: canary`. The backend excludes
 # that source from every business metric and sweeps the rows within the hour
 # (source/oa_forms/application/canary.py), so this never pollutes the board.
@@ -52,6 +59,35 @@ jobs:
             exit 0
           fi
 
+          # ── The browser's half: the CORS preflight ─────────────────────────
+          # A browser sends this before every JSON POST. If it fails, every
+          # real submission fails with no server-side trace, while direct
+          # probes keep passing. PORTAL_ORIGIN is the origin real readers use.
+          PORTAL_ORIGIN="https://purrfecthire.com"
+
+          preflight_headers=$(curl --silent --show-error --max-time 20 \
+            --request OPTIONS "${ENDPOINT}/public/oa/leads" \
+            --header "Origin: ${PORTAL_ORIGIN}" \
+            --header 'Access-Control-Request-Method: POST' \
+            --header 'Access-Control-Request-Headers: content-type' \
+            --dump-header - --output /dev/null) || preflight_headers=""
+
+          if ! printf '%s' "${preflight_headers}" | head -1 | grep -q ' 200'; then
+            echo "::error::CORS preflight for ${PORTAL_ORIGIN} FAILED. Browsers \
+          cannot submit the form even though direct probes succeed. Check \
+          CORS_ORIGINS on the backend."
+            printf '%s\n' "${preflight_headers}"
+            exit 1
+          fi
+          if ! printf '%s' "${preflight_headers}" | grep -qi "access-control-allow-origin: ${PORTAL_ORIGIN}"; then
+            echo "::error::Preflight answered 200 but did not allow ${PORTAL_ORIGIN}. \
+          Browsers will still block the submission."
+            printf '%s\n' "${preflight_headers}"
+            exit 1
+          fi
+          echo "CORS preflight for ${PORTAL_ORIGIN}: ok"
+
+          # ── The server's half: a real submission ───────────────────────────
           marker="gh-$(date +%s)-${RANDOM}"
           payload=$(cat <<JSON
           {
@@ -71,6 +107,7 @@ jobs:
             --output /tmp/canary-body.json --write-out '%{http_code}' \
             --request POST "${ENDPOINT}/public/oa/leads" \
             --header 'Content-Type: application/json' \
+            --header "Origin: ${PORTAL_ORIGIN}" \
             --header "X-Request-Id: ${marker}" \
             --data "${payload}") || status="000"
 
