@@ -316,7 +316,7 @@ export const oaContent = {
     email: 'hiring@purrfecthire.com',
     emailUrl: 'mailto:hiring@purrfecthire.com',
     kateLinkedIn: 'https://www.linkedin.com/in/kathforero/',
-    calendly: 'https://calendly.com/alison-ph/oa',
+    calendly: 'https://calendly.com/katefs1/offer-a/',
   },
 
   // ── Application funnel (multi-step form) ────────────────────────────────
