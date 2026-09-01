@@ -41,20 +41,20 @@ export const oaContent = {
       kicker: 'Lado founder',
       lead: 'Lo que escuchamos cada semana:',
       bullets: [
-        'por qué entrevistan a una persona y descartan a otra;',
-        'qué significa seniority dentro de cada compañía;',
-        'qué señales les generan confianza;',
-        'cuánto están dispuestos a pagar por determinados perfiles.',
+        'Por qué entrevistan a una persona y descartan a otra.',
+        'Qué significa seniority dentro de cada compañía.',
+        'Qué señales les generan confianza.',
+        'Cuánto están dispuestos a pagar por cada perfil.',
       ],
     },
     talent: {
       kicker: 'Lado talento',
       lead: 'Lo que eso decide en tu carrera:',
       bullets: [
-        'dónde competir y qué nivel defender;',
-        'cómo contar tu experiencia;',
-        'cómo entrar a las conversaciones correctas;',
-        'cómo ganar una entrevista, una oferta o una negociación.',
+        'Dónde competir y qué nivel defender.',
+        'Cómo contar tu experiencia.',
+        'Cómo entrar a las conversaciones correctas.',
+        'Cómo ganar una entrevista, una oferta o una negociación.',
       ],
     },
     proof: [
@@ -68,7 +68,7 @@ export const oaContent = {
   fit: {
     title: 'Tu nivel creció más rápido que la forma en que el mercado te está leyendo.',
     lead:
-      'Offer Acceleration es para profesionales senior — Senior, Staff, Head, C-level o ex-founders, muchos ganando USD 4K–8K+ — con o sin trabajo hoy. Probablemente es para ti si…',
+      'Offer Acceleration es para profesionales senior: Senior, Staff, Head, C-level o ex-founders, muchos ganando USD 4K a 8K+ al mes, con o sin trabajo hoy. Probablemente es para ti si:',
     items: [
       'Tu título o tu compensación se quedaron atrás de tu nivel real.',
       'Tienes un buen rol, pero no tienes claro tu siguiente capítulo.',
@@ -200,7 +200,7 @@ export const oaContent = {
     title: 'Qué incluye',
     lead: 'El valor no está en las 8 sesiones. Está en tener un equipo pensando contigo durante las decisiones importantes de tu carrera.',
     items: [
-      '8 sesiones 1:1 — 1 de diagnóstico + 7 con Kate',
+      '8 sesiones 1:1 (1 de diagnóstico + 7 con Kate)',
       'Material personalizado después de cada sesión',
       'Weekly de seguimiento con el equipo',
       'Soporte directo por WhatsApp y email',
@@ -222,7 +222,7 @@ export const oaContent = {
     title: 'Built inside a recruiting company, not a coaching company.',
     team: {
       name: 'Purrfect Hire.',
-      bio: 'Somos una empresa de recruiting: más de tres años contratando talento directamente con founders y startups. Offer Acceleration lleva ese conocimiento — qué señales compran los founders y por qué — al otro lado de la mesa.',
+      bio: 'Somos una empresa de recruiting con más de tres años contratando talento directamente con founders y startups. Offer Acceleration lleva al otro lado de la mesa lo que aprendemos ahí: qué señales compran los founders y por qué.',
     },
     kate: {
       name: 'Katerine Forero.',
@@ -240,7 +240,7 @@ export const oaContent = {
       },
       {
         q: '¿Ustedes me consiguen el trabajo?',
-        a: 'No, y desconfía de quien te lo prometa. Construimos contigo estrategia, posicionamiento y preparación, y entramos contigo a entrevistas, ofertas y negociación. Las conversaciones las tienes tú; el criterio lo construimos juntos.',
+        a: 'No, y desconfía de quien te lo prometa. Construimos contigo estrategia, posicionamiento y preparación, y entramos contigo a entrevistas, ofertas y negociación. Las conversaciones las tienes tú. El criterio lo construimos juntos.',
       },
       {
         q: 'No estoy buscando trabajo activamente. ¿Tiene sentido?',

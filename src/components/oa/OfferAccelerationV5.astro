@@ -447,7 +447,7 @@ const { nav, footer } = getContent('es');
 
       li {
         position: relative;
-        padding: 0.5rem 0 0.5rem 1.5rem;
+        padding: 0.5rem 0 0.5rem 1.25rem;
         font-size: 0.9375rem;
         line-height: 1.6;
         color: var(--oa5-muted);
@@ -455,11 +455,16 @@ const { nav, footer } = getContent('es');
 
         &:first-child { border-top: none; }
 
+        // Round bullet, vertically centered on the first text line.
         &::before {
-          content: '—';
+          content: '';
           position: absolute;
-          left: 0;
-          color: var(--oa5-ink);
+          left: 1px;
+          top: calc(0.5rem + 0.8em - 3px);
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--oa5-ink);
         }
       }
     }
@@ -505,18 +510,22 @@ const { nav, footer } = getContent('es');
 
   .oa5-fit__item {
     position: relative;
-    padding: 1rem 0 1rem 1.75rem;
+    padding: 1rem 0 1rem 1.375rem;
     font-size: 0.9375rem;
     line-height: 1.6;
     color: var(--oa5-text);
     border-bottom: 1px solid var(--oa5-border);
 
+    // Round bullet, vertically centered on the first text line.
     &::before {
-      content: '—';
+      content: '';
       position: absolute;
-      left: 0;
-      color: var(--oa5-ink);
-      font-weight: 500;
+      left: 1px;
+      top: calc(1rem + 0.8em - 3px);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--oa5-ink);
     }
   }
 
