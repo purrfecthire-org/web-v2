@@ -1,18 +1,18 @@
 ---
 // ── Offer Acceleration — v5 (the default program page) ───────────────────
-// Positioning: "Private Career Advisory for senior operators" (Notion brief
-// "Offer Acceleration | Website V2"). Section order follows the brief's
-// recommended landing order: hero → authority → both sides → ICP → what we
-// see → the five decisions → real-time execution → proof → accompaniment →
-// price narrative → who's behind → format → FAQ → final CTA.
+// Positioning: "Private Career Advisory para profesionales senior".
+// V2.1 editorial pass: reduce, unify, elevate. Exactly eleven sections:
+// hero → both sides + proof → para quién → outputs → resultados reales →
+// acompañamiento → qué incluye → inversión → Purrfect + Kate → FAQ (4) →
+// CTA final. The both-sides advantage appears exactly once; Spanish body
+// with only the three English brand phrases + product IP names.
 // Direction: flat navy/white 2026 system. No gradients, no glows, no
 // box-shadow, no purple accent — flat surfaces, navy ink (#29285F),
 // border-based elevation, Schibsted Grotesk (loaded globally).
 import Layout from '../../layouts/Layout.astro';
 import V6Nav from '../v6/V6Nav.astro';
 import Footer from '../Footer.astro';
-import OATestimonials from './OATestimonials.astro';
-import OASuccessCases from './OASuccessCases.astro';
+import OAResults from './OAResults.astro';
 import { oaContent as c } from '../../content/offerAcceleration';
 import { getContent } from '../../content/index';
 
@@ -35,7 +35,7 @@ const { nav, footer } = getContent('es');
       </a>
     </V6Nav>
 
-    <!-- ── Hero ─────────────────────────────────────────────────────── -->
+    <!-- ── 1 · Hero ─────────────────────────────────────────────────── -->
     <section class="oa5-hero">
       <p class="oa5-eyebrow oa5-hero__eyebrow">{c.hero.eyebrow}</p>
       <h1 class="oa5-hero__headline">{c.hero.headline}</h1>
@@ -48,32 +48,17 @@ const { nav, footer } = getContent('es');
           {c.apply.label}
         </a>
       </div>
-      <ul class="oa5-hero__stats">
-        {c.hero.stats.map((s) => (
-          <li class="oa5-hero__stat">{s}</li>
-        ))}
-      </ul>
     </section>
 
-    <!-- ── Authority statement: we're inside the market ─────────────── -->
+    <!-- ── 2 · Both sides of the hiring table + proof ────────────────── -->
     <section class="oa5-chapter">
       <div class="oa5-chapter__head oa5-reveal">
-        <h2 class="oa5-chapter__title">{c.inside.title}</h2>
+        <h2 class="oa5-chapter__title">{c.advantage.title}</h2>
       </div>
-      <div class="oa5-inside oa5-reveal">
-        <p>{c.inside.body1}</p>
-        <p>{c.inside.body2}</p>
-      </div>
-    </section>
-
-    <!-- ── Both sides of the table ──────────────────────────────────── -->
-    <section class="oa5-chapter">
-      <div class="oa5-chapter__head oa5-reveal">
-        <h2 class="oa5-chapter__title">{c.bothSides.title}</h2>
-      </div>
+      <p class="oa5-chapter__subhead oa5-reveal">{c.advantage.body}</p>
 
       <div class="oa5-sides oa5-reveal">
-        {[c.bothSides.founder, c.bothSides.talent].map((side) => (
+        {[c.advantage.founder, c.advantage.talent].map((side) => (
           <div class="oa5-sides__card">
             <p class="oa5-eyebrow">{side.kicker}</p>
             <p class="oa5-sides__lead">{side.lead}</p>
@@ -86,10 +71,14 @@ const { nav, footer } = getContent('es');
         ))}
       </div>
 
-      <p class="oa5-statement oa5-reveal">{c.bothSides.close}</p>
+      <ul class="oa5-proof oa5-reveal">
+        {c.advantage.proof.map((p) => (
+          <li class="oa5-proof__item">{p}</li>
+        ))}
+      </ul>
     </section>
 
-    <!-- ── Who this is for ──────────────────────────────────────────── -->
+    <!-- ── 3 · Para quién es ─────────────────────────────────────────── -->
     <section class="oa5-chapter">
       <div class="oa5-chapter__head oa5-reveal">
         <h2 class="oa5-chapter__title">{c.fit.title}</h2>
@@ -105,95 +94,76 @@ const { nav, footer } = getContent('es');
       <p class="oa5-statement oa5-reveal">{c.fit.close}</p>
     </section>
 
-    <!-- ── What we see that candidates don't ────────────────────────── -->
-    <section class="oa5-chapter oa5-chapter--narrow">
-      <div class="oa5-chapter__head oa5-reveal">
-        <h2 class="oa5-chapter__title">{c.see.title}</h2>
-      </div>
-      <div class="oa5-inside oa5-reveal">
-        <p>{c.see.body1}</p>
-        <p class="oa5-inside__strong">{c.see.body2}</p>
-      </div>
-      <p class="oa5-proofline oa5-reveal">{c.see.proof}</p>
-    </section>
-
-    <!-- ── How the advisory works: the five decisions ───────────────── -->
+    <!-- ── 4 · Qué construimos contigo ───────────────────────────────── -->
     <section class="oa5-chapter">
       <div class="oa5-chapter__head oa5-reveal">
-        <h2 class="oa5-chapter__title">{c.how.title}</h2>
+        <h2 class="oa5-chapter__title">{c.build.title}</h2>
       </div>
-      <p class="oa5-chapter__subhead oa5-reveal">{c.how.intro}</p>
+      <p class="oa5-chapter__subhead oa5-reveal">{c.build.intro}</p>
 
       <ol class="oa5-how">
-        {c.how.bullets.map((b, i) => (
+        {c.build.bullets.map((b, i) => (
           <li class="oa5-how__item oa5-reveal">
             <span class="oa5-how__num">{String(i + 1).padStart(2, '0')}</span>
             <div class="oa5-how__text">
               <h3>{b.title}</h3>
               <p>{b.body}</p>
               <p class="oa5-how__output">
-                <span class="oa5-how__output-label">{c.how.outputLabel}</span>
+                <span class="oa5-how__output-label">{c.build.outputLabel}</span>
                 {b.output}
               </p>
             </div>
           </li>
         ))}
       </ol>
-
-      <p class="oa5-statement oa5-reveal">{c.how.close}</p>
     </section>
 
-    <!-- ── Real-time execution: the rooms ───────────────────────────── -->
+    <!-- ── 5 · Resultados reales ─────────────────────────────────────── -->
+    <OAResults />
+
+    <!-- ── 6 · Acompañamiento durante procesos reales ────────────────── -->
     <section class="oa5-chapter">
       <div class="oa5-chapter__head oa5-reveal">
-        <h2 class="oa5-chapter__title">{c.execution.title}</h2>
+        <h2 class="oa5-chapter__title">{c.support.title}</h2>
       </div>
-      <p class="oa5-chapter__subhead oa5-reveal">{c.execution.intro}</p>
+      <p class="oa5-chapter__subhead oa5-reveal">{c.support.intro}</p>
 
       <div class="oa5-rooms oa5-reveal">
-        {c.execution.rooms.map((r) => (
+        {c.support.rooms.map((r) => (
           <div class="oa5-rooms__card">
             <h3>{r.name}</h3>
             <p>{r.body}</p>
           </div>
         ))}
       </div>
+
+      <p class="oa5-note oa5-reveal">{c.support.note}</p>
     </section>
 
-    <!-- ── Proof: testimonials + transformation cases ───────────────── -->
-    <OATestimonials />
-    <OASuccessCases />
-
-    <!-- ── The advisory doesn't end when the sessions do ────────────── -->
-    <section class="oa5-chapter oa5-chapter--narrow">
-      <div class="oa5-chapter__head oa5-reveal">
-        <h2 class="oa5-chapter__title">{c.after.title}</h2>
-      </div>
-      <div class="oa5-after oa5-reveal">
-        <p>{c.after.body1}</p>
-        <p>{c.after.body2}</p>
-        <p>{c.after.body3}</p>
-      </div>
-    </section>
-
-    <!-- ── Price narrative: the cost of a bad decision ──────────────── -->
+    <!-- ── 7 · Qué incluye ───────────────────────────────────────────── -->
     <section class="oa5-chapter">
       <div class="oa5-chapter__head oa5-reveal">
-        <h2 class="oa5-chapter__title">{c.price.title}</h2>
+        <h2 class="oa5-chapter__title">{c.includes.title}</h2>
       </div>
-      <p class="oa5-chapter__subhead oa5-reveal">{c.price.lead}</p>
+      <p class="oa5-chapter__subhead oa5-chapter__subhead--strong oa5-reveal">{c.includes.lead}</p>
 
       <ul class="oa5-fit oa5-reveal">
-        {c.price.items.map((item) => (
+        {c.includes.items.map((item) => (
           <li class="oa5-fit__item">{item}</li>
         ))}
       </ul>
+    </section>
 
-      <p class="oa5-statement oa5-reveal">{c.price.close}</p>
+    <!-- ── 8 · Inversión ─────────────────────────────────────────────── -->
+    <section class="oa5-chapter">
+      <div class="oa5-chapter__head oa5-reveal">
+        <h2 class="oa5-chapter__title">{c.investment.title}</h2>
+      </div>
+      <p class="oa5-chapter__subhead oa5-reveal">{c.investment.body}</p>
 
       <div class="oa5-invest oa5-reveal">
-        <p class="oa5-invest__price">{c.price.price}</p>
-        <p class="oa5-invest__note">{c.price.priceNote}</p>
+        <p class="oa5-invest__price">{c.investment.price}</p>
+        <p class="oa5-invest__note">{c.investment.priceNote}</p>
         <div class="oa5-invest__ctas">
           <a href={c.apply.url} class="oa5-btn oa5-btn--solid oa5-btn--lg">
             {c.apply.label}
@@ -202,7 +172,7 @@ const { nav, footer } = getContent('es');
       </div>
     </section>
 
-    <!-- ── Who's behind (dark section) ──────────────────────────────── -->
+    <!-- ── 9 · Purrfect + Kate (dark section) ────────────────────────── -->
     <section class="oa5-chapter oa5-chapter--dark">
       <div class="oa5-chapter__head oa5-reveal">
         <h2 class="oa5-chapter__title">{c.who.title}</h2>
@@ -217,20 +187,11 @@ const { nav, footer } = getContent('es');
           <h3>{c.who.kate.name}</h3>
           <p class="oa5-who__role">{c.who.kate.role}</p>
           <p>{c.who.kate.bio}</p>
-          <p class="oa5-who__quote">“{c.who.kate.quote}”</p>
         </div>
       </div>
     </section>
 
-    <!-- ── Format ───────────────────────────────────────────────────── -->
-    <section class="oa5-chapter oa5-chapter--narrow">
-      <div class="oa5-chapter__head oa5-reveal">
-        <h2 class="oa5-chapter__title">{c.format.title}</h2>
-      </div>
-      <p class="oa5-format oa5-reveal">{c.format.body}</p>
-    </section>
-
-    <!-- ── FAQ ──────────────────────────────────────────────────────── -->
+    <!-- ── 10 · FAQ ──────────────────────────────────────────────────── -->
     <section class="oa5-chapter oa5-chapter--narrow">
       <div class="oa5-chapter__head oa5-reveal">
         <h2 class="oa5-chapter__title">{c.faq.title}</h2>
@@ -246,7 +207,7 @@ const { nav, footer } = getContent('es');
       </div>
     </section>
 
-    <!-- ── Final ────────────────────────────────────────────────────── -->
+    <!-- ── 11 · Final ────────────────────────────────────────────────── -->
     <section class="oa5-final">
       <h2 class="oa5-final__title oa5-reveal">{c.final.title}</h2>
       <p class="oa5-final__note oa5-reveal">{c.final.body}</p>
@@ -338,7 +299,7 @@ const { nav, footer } = getContent('es');
     position: relative;
     max-width: 1100px;
     margin: 0 auto;
-    padding: clamp(64px, 9vw, 120px) clamp(1.5rem, 5vw, 2rem) 80px;
+    padding: clamp(64px, 9vw, 120px) clamp(1.5rem, 5vw, 2rem) clamp(56px, 7vw, 88px);
 
     &__eyebrow {
       margin-bottom: 1.75rem;
@@ -366,9 +327,6 @@ const { nav, footer } = getContent('es');
     &__body {
       max-width: 44rem;
       margin-top: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
 
       p {
         margin: 0;
@@ -380,30 +338,6 @@ const { nav, footer } = getContent('es');
 
     &__ctas {
       margin-top: 2.25rem;
-    }
-
-    &__stats {
-      list-style: none;
-      margin: 3rem 0 0;
-      padding: 2rem 0 0;
-      border-top: 1px solid var(--oa5-border);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem 2.5rem;
-    }
-
-    &__stat {
-      position: relative;
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: var(--oa5-text);
-
-      &:not(:last-child)::after {
-        content: '·';
-        position: absolute;
-        right: -1.4rem;
-        color: var(--oa5-muted);
-      }
     }
   }
 
@@ -447,6 +381,12 @@ const { nav, footer } = getContent('es');
       margin: -1rem 0 3rem;
       font-size: 1.0625rem;
       line-height: 1.65;
+
+      &--strong {
+        color: var(--oa5-text);
+        font-weight: 500;
+        font-size: 1.1875rem;
+      }
     }
   }
 
@@ -458,45 +398,6 @@ const { nav, footer } = getContent('es');
     margin-right: auto;
   }
 
-  // ── Inside / prose blocks ─────────────────────────────────
-  .oa5-inside {
-    max-width: 46rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-
-    p {
-      margin: 0;
-      font-size: 1.0625rem;
-      line-height: 1.7;
-      color: var(--oa5-muted);
-
-      &:first-child {
-        font-size: 1.375rem;
-        line-height: 1.5;
-        font-weight: 500;
-        color: var(--oa5-text);
-      }
-    }
-
-    &__strong {
-      font-weight: 500;
-      color: var(--oa5-ink) !important;
-    }
-  }
-
-  .oa5-proofline {
-    margin: 2.5rem 0 0;
-    padding: 1.25rem 1.5rem;
-    max-width: 46rem;
-    border: 1px solid var(--oa5-border);
-    border-radius: var(--oa5-radius);
-    background: var(--oa5-bg-soft);
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--oa5-text);
-  }
-
   .oa5-statement {
     margin: 3.5rem 0 0;
     max-width: 40rem;
@@ -506,6 +407,14 @@ const { nav, footer } = getContent('es');
     line-height: 1.3;
     letter-spacing: -0.01em;
     color: var(--oa5-ink);
+  }
+
+  .oa5-note {
+    margin: 2.5rem 0 0;
+    max-width: 46rem;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--oa5-muted);
   }
 
   // ── Both sides ────────────────────────────────────────────
@@ -556,7 +465,32 @@ const { nav, footer } = getContent('es');
     }
   }
 
-  // ── Fit checklist (also reused by the price section) ──────
+  // Proof strip under the advantage cards
+  .oa5-proof {
+    list-style: none;
+    margin: 2.5rem 0 0;
+    padding: 2rem 0 0;
+    border-top: 1px solid var(--oa5-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+  }
+
+  .oa5-proof__item {
+    position: relative;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--oa5-text);
+
+    &:not(:last-child)::after {
+      content: '·';
+      position: absolute;
+      right: -1.4rem;
+      color: var(--oa5-muted);
+    }
+  }
+
+  // ── Fit checklist (also reused by "qué incluye") ──────────
   .oa5-fit {
     list-style: none;
     margin: 0;
@@ -586,7 +520,7 @@ const { nav, footer } = getContent('es');
     }
   }
 
-  // ── How: the five decisions ───────────────────────────────
+  // ── Build: the five decisions ─────────────────────────────
   .oa5-how {
     list-style: none;
     margin: 0;
@@ -656,7 +590,7 @@ const { nav, footer } = getContent('es');
     }
   }
 
-  // ── Execution rooms ───────────────────────────────────────
+  // ── Support rooms ─────────────────────────────────────────
   .oa5-rooms {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -689,10 +623,6 @@ const { nav, footer } = getContent('es');
 
   // ── Investment ────────────────────────────────────────────
   .oa5-invest {
-    margin-top: 3.5rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid var(--oa5-border);
-
     &__price {
       font-family: 'Schibsted Grotesk', sans-serif;
       font-size: clamp(1.75rem, 3.6vw, 2.5rem);
@@ -704,7 +634,7 @@ const { nav, footer } = getContent('es');
     }
 
     &__note {
-      margin-top: 1rem;
+      margin-top: 0.75rem;
       color: var(--oa5-muted);
       font-size: 1.0625rem;
     }
@@ -751,41 +681,6 @@ const { nav, footer } = getContent('es');
       border: 1px solid rgba(243, 239, 230, 0.16);
       border-radius: var(--oa5-radius);
       padding: 2rem;
-    }
-
-    &__quote {
-      color: var(--oa5-on-dark) !important;
-      font-weight: 500;
-      font-size: 1.0625rem !important;
-    }
-  }
-
-  // ── Format ────────────────────────────────────────────────
-  .oa5-format {
-    margin: 0;
-    max-width: 46rem;
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    color: var(--oa5-muted);
-  }
-
-  // ── Post-program accompaniment ────────────────────────────
-  .oa5-after {
-    max-width: 46rem;
-
-    p {
-      margin: 0;
-      font-size: 1.0625rem;
-      line-height: 1.7;
-      color: var(--oa5-muted);
-
-      & + p { margin-top: 1.25rem; }
-    }
-
-    // The differentiator line reads first and in ink.
-    p:first-child {
-      color: var(--oa5-ink, #29285f);
-      font-weight: 500;
     }
   }
 
