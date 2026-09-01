@@ -1,43 +1,100 @@
 // ─────────────────────────────────────────────────────────────────────────
 // Offer Acceleration program — shared content (ES).
 // Single source of copy for /offer-acceleration (OfferAccelerationV5.astro).
-// Copy is Kate's final Spanish version — verbatim, do not paraphrase.
+// Positioning follows the Notion brief "Offer Acceleration | Website V2 —
+// Private Career Advisory": brand headlines stay in English (verbatim from
+// the brief), body copy is Spanish. Testimonial `paragraphs` remain verbatim
+// quotes — never paraphrase those.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const oaContent = {
   meta: {
-    title: 'Offer Acceleration · Purrfect Hire',
+    title: 'Offer Acceleration · Private Career Advisory | Purrfect Hire',
     description:
-      'No estás estancado por talento. Estás en el canal equivocado. Offer Acceleration te pone dentro de las redes donde los seniors se contratan y te entrena para ganar la conversación. En dólares, en semanas.',
+      'Private Career Advisory para senior operators. Toma el movimiento correcto en nivel, mercado, posicionamiento y compensación con un equipo que se sienta en ambos lados de la mesa de contratación. 160+ placements en US, Europa y LATAM.',
   },
 
   hero: {
     eyebrow: 'Offer Acceleration',
-    headline: 'No estás estancado por talento. Estás en el canal equivocado.',
+    headline: 'Your career has advisors too.',
+    category: 'Private Career Advisory for senior operators.',
     para1:
-      'Los roles senior en empresas de producto VC-backed se llenan antes de publicarse, a través de redes que no incluyen a quien aplica desde afuera. Por eso el mejor operador de LatAm puede ser invisible para la empresa que más pagaría por él.',
-    para2:
-      'Offer Acceleration te pone dentro de esas redes y te entrena para ganar la conversación. En dólares, en semanas.',
+      'Toma el movimiento correcto en nivel, mercado, posicionamiento y compensación, con un equipo que se sienta en ambos lados de la mesa de contratación.',
     stats: [
-      '7 de cada 10 cierran en mejores condiciones',
-      'salto típico de 1.5x a 3x',
       '160+ placements en US, Europa y LATAM',
+      'Trabajamos directo con founders y startups respaldadas por YC, a16z y Sequoia',
     ],
   },
 
   apply: {
     url: '/offer-acceleration/apply',
-    label: 'Empieza tu aplicación',
-    labelFinal: 'Empieza tu aplicación',
+    label: 'Aplica a Offer Acceleration',
+    labelFinal: 'Aplica a Offer Acceleration',
   },
 
-  cost: {
-    title: 'El costo de esperar',
+  // ── Authority statement right below the hero ───────────────────────────
+  inside: {
+    title: "We don't study the hiring market from the outside. We're inside it.",
     body1:
-      'La pregunta no es cuánto cuesta el programa. Es cuánto cuesta cada mes que sigues cobrando lo que cobras hoy.',
+      'Ayudamos a founders a decidir a quién contratar. Y ayudamos a senior operators a entender cómo convertirse en la persona que esos founders quieren contratar.',
     body2:
-      'Con un salto realista de $4,000 USD/mes, tres meses de espera son $12,000 USD que no vuelven. El programa se recupera en las primeras semanas. El resto del año lo cobras en dólares.',
-    body3: 'No es urgencia inventada. Es aritmética que ya sabes hacer.',
+      'Cada búsqueda que hacemos para una startup mejora nuestra lectura del mercado: qué señales compra, qué genera dudas, qué lleva a alguien a una entrevista y qué hace que una empresa esté dispuesta a pagar más.',
+  },
+
+  // ── The core differentiator: both sides of the table ───────────────────
+  bothSides: {
+    title: 'One market. Both sides of the table.',
+    founder: {
+      kicker: 'Founder side',
+      lead: 'Estamos en conversaciones con founders y hiring teams que nos cuentan:',
+      bullets: [
+        'qué problemas necesitan sacar de su plato;',
+        'por qué entrevistan a una persona y descartan a otra;',
+        'qué significa seniority dentro de su compañía;',
+        'qué señales les generan confianza;',
+        'dónde están subiendo la barra;',
+        'cuánto están dispuestos a pagar por determinados perfiles.',
+      ],
+    },
+    talent: {
+      kicker: 'Talent side',
+      lead: 'Convertimos esa información en decisiones concretas para tu carrera:',
+      bullets: [
+        'dónde competir;',
+        'qué nivel defender;',
+        'cómo contar tu experiencia;',
+        'qué gaps cerrar;',
+        'cómo entrar a las conversaciones correctas;',
+        'cómo ganar una entrevista, una oferta o una negociación importante.',
+      ],
+    },
+    close: "We see things candidates normally don't get to see.",
+  },
+
+  // ── Who this is for (wider than "unemployed / job hunting") ────────────
+  fit: {
+    title: "Your career may have outgrown the story you're telling about it.",
+    lead: 'Probablemente esto es para ti si…',
+    items: [
+      'Has crecido más rápido que tu título o tu compensación.',
+      'Tienes un buen rol, pero no sabes si debería ser tu siguiente capítulo.',
+      'Dejaste una empresa o startup y necesitas reconstruir cómo el mercado interpreta tu historia.',
+      'Quieres competir en US o Europa y no sabes dónde encaja realmente tu perfil.',
+      'Estás considerando Staff, management, C-level, founder o un cambio importante.',
+      'Llegas a entrevistas, pero no estás convirtiendo tu experiencia en una decisión de contratación.',
+      'Tienes una oferta y necesitas entender compensación, equity, riesgo y upside.',
+      'Sabes que puedes estar jugando en otro nivel, pero no tienes claridad sobre cuál es el movimiento correcto.',
+    ],
+    close: "You don't need to be job hunting to need a career strategy.",
+  },
+
+  // ── The feedback loop candidates don't have access to ──────────────────
+  see: {
+    title: "What we see that candidates normally don't.",
+    body1:
+      'Cada semana estamos en conversaciones que los candidatos normalmente no escuchan: founders explicándonos por qué un candidato les genera confianza, hiring managers contándonos por qué otro senior no pasó, empresas calibrando cuánto están dispuestas a pagar, equipos definiendo qué significa Staff, Head o C-level en su contexto.',
+    body2: 'Offer Acceleration convierte esa información en decisiones sobre tu carrera.',
+    proof: '160+ placements. Founders y startups respaldadas por YC, a16z y Sequoia. Un solo feedback loop.',
   },
 
   // ── Candidate testimonials (replaces the old "cases" section on the page).
@@ -119,16 +176,14 @@ export const oaContent = {
   },
 
   // ── Anonymous outcome cases ────────────────────────────────────────────
-  // Placed AFTER the investment table on the page, not next to Alejandro's
-  // testimonial: the tier table promises an abstract "salto realista", and
-  // these are four real jumps that already happened, so they land as
-  // evidence for that promise instead of as a second wall of proof up top.
-  // Names are withheld at the clients' request (see `disclaimer`), so each
-  // card leads with the outcome, not the person.
+  // Proof-of-transformation cases in the brief's ideal format: before →
+  // decision/intervention → after. Names are withheld at the clients'
+  // request (see `disclaimer`), so each card leads with the outcome, not
+  // the person.
   cases: {
-    title: 'El patrón se repite: no cambia el talento, cambia el canal',
+    title: 'Antes, la decisión, y el después',
     intro:
-      'La tabla de arriba no es teoría. Son casos reales del programa, con el salto ya hecho. Cada uno es la misma mecánica: salir del intermediario y de la cola de aplicaciones, y entrar directo a donde los seniors realmente se contratan.',
+      'Casos reales del programa: dónde estaba cada persona, qué decidimos cambiar y qué consiguió. Los números son reales. Cada caso es la misma mecánica: leer bien el mercado, reposicionar el perfil y entrar a las conversaciones correctas.',
     labels: {
       before: 'Antes',
       after: 'Después',
@@ -141,7 +196,7 @@ export const oaContent = {
           'Llevaba más de un año en staff augmentation, con un intermediario quedándose con la otra mitad de su tarifa: cobraba la mitad de lo que ya valía.',
         action: 'Lo pusimos directo frente a startups US contratando sin intermediario.',
         result: 'De $1,750 a $4,500',
-        resultNote: '+$33,000 al año. Mismo talento, otro canal.',
+        resultNote: '+$33,000 al año. Mismo talento, otro posicionamiento.',
       },
       {
         role: 'Frontend Lead',
@@ -173,92 +228,89 @@ export const oaContent = {
   },
 
   how: {
-    title: 'Cómo trabajamos',
+    title: 'Cómo funciona el advisory',
     intro:
-      'Esto no es un curso ni una comunidad. Es una operación 1:1 con dirección de primer nivel, construida sobre tu caso, no descargada de un módulo.',
+      'No es una secuencia de sesiones ni un curso. Son las cinco decisiones importantes que tomamos contigo, cada una con un entregable tangible.',
+    outputLabel: 'Output',
     bullets: [
       {
-        title: 'Estrategia de carrera escrita.',
-        body: 'A qué tier apuntas, qué empresas, en qué timeline, con qué narrativa. Sobre tus cicatrices y tus medallas, no sobre un template.',
+        title: 'Where should you play?',
+        body: 'Definimos qué rol, nivel, mercado, geografía y tipo de compañía tienen sentido para la carrera que ya construiste y para la que quieres construir.',
+        output: 'Career Market Map',
       },
       {
-        title: 'Mapa de mercado y la puerta de entrada.',
-        body: 'Empresas con nombre y apellido contratando hoy, con stage, geografía y rango. Y el canal por donde se entra: redes de talento de fondos, warm intros y founder-direct. No una lista para aplicar. Una vía para que te contraten.',
+        title: 'What are you actually worth?',
+        body: 'Identificamos el nivel que puedes defender con evidencia, cómo se compara tu compensación y qué upside existe en distintos caminos.',
+        output: 'Compensation & Level Benchmark',
       },
       {
-        title: 'Posicionamiento al tier que apuntas.',
-        body: 'LinkedIn y narrativa reescritos para el comprador que decide. De operador con resultados, no de mano de obra barata.',
+        title: 'How is the market reading you?',
+        body: 'Evaluamos cómo te leería hoy un founder, recruiter o hiring manager en los primeros segundos, y dónde hay distancia entre tu nivel real y las señales que estás enviando.',
+        output: 'Founder Readiness Score',
       },
       {
-        title: 'Role play 1:1 con Kate.',
-        body: 'Kate simula al founder, al hiring manager, al panel. Te entrena en la conversación real antes de tenerla, en el idioma y bajo la presión en que va a pasar. Ahí se gana el proceso.',
+        title: 'How do you get into the right rooms?',
+        body: 'Diseñamos empresas objetivo, personas, canales, networking, intros y estrategia de entrada. No se trata de 200 aplicaciones: se trata de estar en las conversaciones correctas.',
+        output: 'Target Market + Access Strategy',
       },
       {
-        title: 'Estrategia de negociación.',
-        body: 'Calibrada a tu caso, tu seniority y la empresa al frente. Cuándo decir sí, cuándo aguantar, cómo mover una contraoferta.',
+        title: 'How do you win the decision?',
+        body: 'Trabajamos founder conversations, entrevistas, storytelling, final rounds, ofertas, equity y negociación.',
+        output: 'Interview & Negotiation War Room',
       },
     ],
-    close: 'La meta no son 200 aplicaciones. Son de 10 a 15 procesos con estrategia que cierran.',
+    close: "The market can't recognize an evolution you haven't learned to explain.",
   },
 
-  split: {
-    title: 'La mitad que no hacemos por ti',
-    body1:
-      'Este programa no te consigue el trabajo. Te mete al canal donde los seniors se contratan y te entrena para ganar la conversación. Esa mitad es nuestra: dirección, estándar, mapa, narrativa, role play.',
-    body2:
-      'La otra mitad es tuya. Ejecutar el outreach, tomar las conversaciones, mover los procesos cada semana, desde la semana 1. El programa avanza por entregas, no por calendario.',
-    body3:
-      'Trabajamos con quien ejecuta. Si buscas que alguien aplique por ti mientras esperas, somos el programa equivocado. Si estás listo para ejecutar con dirección de primer nivel, cierras en semanas.',
+  // ── Real-time execution: the advisory shows up when the decision does ──
+  execution: {
+    title: 'Advice when the decision actually matters.',
+    intro: 'Las sesiones construyen la estrategia. El advisory entra cuando aparece una decisión real.',
+    rooms: [
+      {
+        name: 'Interview War Room',
+        body: 'Si aparece una entrevista importante — founder interview, panel o final round — entramos a preparar esa oportunidad específica.',
+      },
+      {
+        name: 'Offer / Deal Desk',
+        body: 'Cuando llega una oferta trabajamos base, bonus, equity, vesting, beneficios, riesgo de compañía, BATNA, contrapropuesta y la conversación de negociación.',
+      },
+      {
+        name: 'Career Decision Room',
+        body: 'Cuando aparece una decisión de dirección, analizamos el trade-off: aceptar, quedarse, cambiar de mercado, management vs IC, startup vs corporate.',
+      },
+    ],
   },
 
-  investment: {
-    title: 'Inversión',
-    price: 'Desde $2,000 USD.',
+  // ── Price narrative: the cost of a bad decision, not a salary promise ──
+  price: {
+    title: 'A bad career decision can cost much more than $2,000.',
+    lead: 'Ejemplos que vemos cada semana:',
+    items: [
+      'Aceptar un rol por debajo de tu nivel.',
+      'Negociar $20K a $40K menos de lo que el mercado habría pagado.',
+      'Entrar a la startup equivocada.',
+      'Pasar 18 meses construyendo experiencia que no te acerca al siguiente nivel.',
+      'Aceptar management cuando tu mejor trayectoria era IC.',
+      'Ejercer equity sin entender realmente el riesgo.',
+      'Rechazar una oportunidad buena porque no sabes evaluar el upside.',
+    ],
+    close: 'The biggest decisions in a senior career are valuable enough not to make alone.',
+    price: 'Inversión: desde $2,000 USD.',
     priceNote: 'Pago único. Sin recurrencias, sin costos escondidos, sin letra chica.',
-    tiers: [
-      {
-        seniority: 'Mid',
-        current: '$1,500 a $2,500',
-        jump: '$3,500 a $5,000',
-        annual: '+$18K a +$36K',
-        payback: '2 a 4 semanas',
-      },
-      {
-        seniority: 'Senior',
-        current: '$3,000 a $5,000',
-        jump: '$6,000 a $8,500',
-        annual: '+$24K a +$54K',
-        payback: '2 a 3 semanas',
-      },
-      {
-        seniority: 'Staff / Lead',
-        current: '$6,000 a $8,000',
-        jump: '$9,500 a $13,000',
-        annual: '+$30K a +$72K',
-        payback: '2 a 3 semanas',
-      },
-      {
-        seniority: 'Principal / C-Level',
-        current: '$9,000+',
-        jump: '$14,000 a $18,000+',
-        annual: '+$48K a +$96K+',
-        payback: '1 a 2 semanas',
-      },
-    ],
-    tableNote: 'Cifras en USD/mes. Salto realista en máximo 4 meses.',
   },
 
   who: {
-    title: 'Quién está detrás',
-    kate: {
-      name: 'Katerine Forero.',
-      role: 'Founder & CEO, Purrfect Hire.',
-      bio: '10+ años en talento y recruiting. Entró a ADDI cuando eran 15 personas y lideró la operación de talento mientras escalaron a +400. Vive en Suiza y opera entre LATAM, US y Europa todos los días.',
-      quote: 'No optimizo para caer bien. Optimizo para que las cosas funcionen.',
-    },
+    title: 'Built inside a recruiting company, not a coaching company.',
     team: {
       name: 'Purrfect Hire.',
-      bio: '160+ placements entre startups de US, Europa y LATAM. Trabajamos con founders de YC, Sequoia y a16z, y esos founders no reciben aplicantes: reciben operadores que ya validamos. Cohortes pequeñas, atención real, cero diluida.',
+      bio: 'Llevamos más de tres años trabajando directamente con startups y founders para contratar talento, con 160+ placements entre US, Europa y LATAM. Cada búsqueda nos enseña cómo cambia el mercado, qué señales están comprando los founders, dónde están subiendo la barra y por qué dos perfiles con experiencia similar producen decisiones completamente distintas. Offer Acceleration nació para llevar ese feedback loop al otro lado de la mesa.',
+    },
+    kate: {
+      name: 'Katerine Forero.',
+      role: 'Founder, Purrfect Hire · Advisor',
+      bio: '10+ años en talento y recruiting. Entró a ADDI cuando eran 15 personas y lideró la operación de talento mientras escalaron a +400. Hoy vive en Suiza, opera entre LATAM, US y Europa, y conecta cada advisory con las decisiones reales de contratación que ve todas las semanas.',
+      quote: 'No optimizo para caer bien. Optimizo para que las cosas funcionen.',
     },
   },
 
@@ -269,33 +321,33 @@ export const oaContent = {
 
   // ── Post-program accompaniment: what changes after session 8 ───────────
   after: {
-    title: 'Te acompañamos hasta que te ubiques',
+    title: "The advisory doesn't end when the sessions do.",
     body1:
-      'El programa son 8 sesiones. El acompañamiento no tiene fecha de vencimiento, y queremos que lo tengas claro desde hoy, porque es lo que nos diferencia de todo lo que hay allá afuera: no te soltamos en la mitad.',
+      'Las sesiones construyen la estrategia. Después volvemos a entrar cuando la decisión importa: una founder interview, un final round, una oferta sobre la mesa, una negociación abierta o un cambio de dirección.',
     body2:
-      'Lo que cambia cuando terminan las 8 sesiones es el formato, no el compromiso. El material no caduca, el weekly con el equipo sigue igual, y por WhatsApp nos escribes cuando lo necesites. Lo único que funciona distinto es el tiempo en vivo con Kate: deja de ser semanal y se activa por evento, cuando hay una conversación con fecha en el calendario. Entrevista confirmada, panel final, oferta sobre la mesa, negociación abierta.',
+      'No necesitas otra sesión porque llegó el martes. Necesitas un advisor cuando tienes una decisión real enfrente. Mientras tanto, el material no caduca, el weekly con el equipo sigue igual y por WhatsApp nos escribes cuando lo necesites.',
     body3:
-      'La razón: una sesión semanal en fase de ejecución reemplaza al mercado. Te da la sensación de avanzar sin haber hablado con una sola persona que pueda contratarte. Ahí no te vamos a acompañar. En la conversación que decide tu oferta, sí, siempre.',
+      'No prometemos empleo ni garantizamos una oferta. Prometemos acompañamiento, criterio, preparación y ejecución en los momentos que deciden tu carrera.',
   },
 
   faq: {
     title: 'Preguntas directas',
     items: [
       {
-        q: '¿Ustedes me consiguen el trabajo?',
-        a: 'No. Te metemos al canal correcto, construimos los activos y te entrenamos para la conversación. Tú ejecutas el outreach y tomas las entrevistas. Esa división es lo que hace que funcione, y es lo que la mayoría de programas no te dice.',
+        q: '¿Esto es career coaching?',
+        a: 'No. Es Private Career Advisory construido dentro de una empresa de recruiting. Trabajamos todas las semanas con los founders y hiring managers que toman las decisiones de contratación, y usamos ese acceso para que tomes mejores decisiones sobre tu carrera.',
       },
       {
-        q: 'Estoy en un proceso y prefiero esperar a ver qué pasa.',
-        a: 'Un solo proceso vivo no da leverage y te deja a merced de una decisión que no controlas. El programa te abre de 10 a 15. Esperar a uno es la apuesta más cara.',
+        q: '¿Ustedes me consiguen el trabajo?',
+        a: 'No, y desconfía de quien te lo prometa. Construimos contigo la estrategia, el posicionamiento y la preparación, y entramos contigo a las decisiones importantes: entrevistas, ofertas, negociación. Las conversaciones las tienes tú; el criterio lo construimos juntos.',
+      },
+      {
+        q: 'No estoy buscando trabajo activamente. ¿Tiene sentido?',
+        a: 'Sí. No necesitas estar buscando empleo para necesitar una estrategia de carrera. Una parte real de los casos son personas con buen rol que quieren claridad sobre su siguiente movimiento, renegociar internamente o evaluar una oferta que les llegó.',
       },
       {
         q: '¿Funciona si estoy full-time?',
         a: 'Sí, es el caso de la mayoría. Sesiones de una hora, fuera de horario si hace falta. El formato 1:1 está hecho para gente ocupada.',
-      },
-      {
-        q: 'Quiero renegociar donde estoy, no irme.',
-        a: 'Mismo enfoque, distinto destino. Una parte real de los casos son personas subiendo rol y salario internamente con otra estrategia.',
       },
       {
         q: 'Soy C-level.',
@@ -305,9 +357,9 @@ export const oaContent = {
   },
 
   final: {
-    title: 'La diferencia no es talento. Es velocidad de decisión.',
-    body: '48 a 72 horas entre tu aplicación y la primera sesión. Completas tu aplicación, agendas con el equipo, reservas tu cupo, y arrancamos.',
-    button: 'Empieza tu aplicación',
+    title: 'Your career has advisors too.',
+    body: '48 a 72 horas entre tu aplicación y la primera conversación. Completas tu aplicación, agendas con el equipo y arrancamos.',
+    button: 'Aplica a Offer Acceleration',
   },
 
   contact: {
