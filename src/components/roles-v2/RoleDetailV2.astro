@@ -125,27 +125,31 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
               <span class="rv2__f-err" data-err-for="rv2-email"></span>
             </div>
             <div class="rv2__f">
-              <label for="rv2-phone">Phone</label>
-              <input type="tel" id="rv2-phone" name="phone" autocomplete="tel" />
+              <label for="rv2-phone">Phone *</label>
+              <input type="tel" id="rv2-phone" name="phone" autocomplete="tel" required />
+              <span class="rv2__f-err" data-err-for="rv2-phone"></span>
             </div>
             <div class="rv2__f">
-              <label for="rv2-linkedin">LinkedIn</label>
-              <input type="text" id="rv2-linkedin" name="linkedin" placeholder="linkedin.com/in/…" />
+              <label for="rv2-linkedin">LinkedIn *</label>
+              <input type="text" id="rv2-linkedin" name="linkedin" placeholder="linkedin.com/in/…" required />
+              <span class="rv2__f-err" data-err-for="rv2-linkedin"></span>
             </div>
             <div class="rv2__f">
-              <label for="rv2-english">English level</label>
-              <select id="rv2-english" name="english_level">
+              <label for="rv2-english">English level *</label>
+              <select id="rv2-english" name="english_level" required>
                 <option value="">Select…</option>
                 {englishOptions.map((o) => <option value={o}>{o}</option>)}
               </select>
+              <span class="rv2__f-err" data-err-for="rv2-english"></span>
             </div>
             <div class="rv2__f">
-              <label for="rv2-cur">Current salary (USD / mo)</label>
-              <input type="number" id="rv2-cur" name="current_salary_usd" min="0" step="50" inputmode="numeric" />
+              <label for="rv2-cur">Current salary (USD / year)</label>
+              <input type="number" id="rv2-cur" name="current_salary_usd" min="0" step="1000" inputmode="numeric" />
             </div>
             <div class="rv2__f">
-              <label for="rv2-des">Desired salary (USD / mo)</label>
-              <input type="number" id="rv2-des" name="desired_salary_usd" min="0" step="50" inputmode="numeric" />
+              <label for="rv2-des">Desired salary (USD / year) *</label>
+              <input type="number" id="rv2-des" name="desired_salary_usd" min="0" step="1000" inputmode="numeric" required />
+              <span class="rv2__f-err" data-err-for="rv2-des"></span>
             </div>
             <div class="rv2__f rv2__f--full">
               <label for="rv2-cv">CV — PDF, max 3 MB *</label>
@@ -153,6 +157,14 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
               <span class="rv2__f-err" data-err-for="rv2-cv"></span>
             </div>
           </div>
+
+          <!-- Declares the unit the two salary fields above were entered in.
+               The backend reads this through an allowlist (only the literal
+               "annual" is honored) and defaults anything else — including a
+               stale cached copy of this page with no such field at all — to
+               "monthly", which is the safe direction. See ats-backend
+               source/external_applications/application/submit_external_application.py. -->
+          <input type="hidden" name="salary_basis" value="annual" />
 
           <!-- Honeypot: visually hidden (off-screen, NOT display:none). Humans
                never see or tab into it; bots fill it and get flagged. -->
@@ -271,7 +283,8 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     }
 
     function clearErrors() {
-      ['rv2-name', 'rv2-email', 'rv2-cv'].forEach((id) => setErr(id, ''));
+      ['rv2-name', 'rv2-email', 'rv2-phone', 'rv2-linkedin', 'rv2-english', 'rv2-des', 'rv2-cv']
+        .forEach((id) => setErr(id, ''));
     }
 
     // Reset the error card back to its generic (retryable) shape.
@@ -285,12 +298,24 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       let ok = true;
       const name = $('rv2-name').value.trim();
       const email = $('rv2-email').value.trim();
+      // Presence only, deliberately not format-checked — a phone or LinkedIn
+      // regex rejects real people (dial codes, bare handles, country
+      // subdomains). The backend enforces the same rule; see
+      // ats-backend source/external_applications/adapters/http/public_router.py.
+      const phone = $('rv2-phone').value.trim();
+      const linkedin = $('rv2-linkedin').value.trim();
+      const english = $('rv2-english').value.trim();
+      const desired = $('rv2-des').value.trim();
       const cv = $('rv2-cv').files?.[0];
 
       if (!name) { setErr('rv2-name', 'Please enter your full name.'); ok = false; }
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         setErr('rv2-email', 'Please enter a valid email.'); ok = false;
       }
+      if (!phone) { setErr('rv2-phone', 'Please enter a phone number.'); ok = false; }
+      if (!linkedin) { setErr('rv2-linkedin', 'Please add your LinkedIn profile.'); ok = false; }
+      if (!english) { setErr('rv2-english', 'Please select your English level.'); ok = false; }
+      if (!desired) { setErr('rv2-des', 'Please enter your desired salary.'); ok = false; }
       if (!cv) {
         setErr('rv2-cv', 'Please attach your CV (PDF).'); ok = false;
       } else {
@@ -325,6 +350,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       fd.append('english_level', $('rv2-english').value);
       fd.append('current_salary_usd', $('rv2-cur').value);
       fd.append('desired_salary_usd', $('rv2-des').value);
+      fd.append('salary_basis', 'annual'); // this page always asks for annual figures now
       fd.append('website', $('rv2-website').value); // honeypot — must be empty
       fd.append('fill_time_ms', String(Date.now() - mountTime));
       const cv = $('rv2-cv').files?.[0];
@@ -400,9 +426,8 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       e.preventDefault();
       submit();
     });
-    ['rv2-name', 'rv2-email', 'rv2-cv'].forEach((id) =>
-      $(id)?.addEventListener('input', () => setErr(id, ''))
-    );
+    ['rv2-name', 'rv2-email', 'rv2-phone', 'rv2-linkedin', 'rv2-english', 'rv2-des', 'rv2-cv']
+      .forEach((id) => $(id)?.addEventListener('input', () => setErr(id, '')));
     retryBtn?.addEventListener('click', () => {
       failCard.hidden = true;
       form!.hidden = false;
