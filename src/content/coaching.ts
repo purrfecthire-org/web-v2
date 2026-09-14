@@ -219,7 +219,7 @@ export const careerSessionsEs: CoachingContent = {
   },
 
   final: {
-    title: 'Un problema puntual no necesita un programa.',
+    title: 'Un problema puntual no necesita un programa. Necesita una hora bien usada.',
     body: 'Escríbenos por WhatsApp con lo que quieres trabajar y te confirmamos el horario de tu sesión con Kate.',
     buttonWhatsapp: 'Agenda por WhatsApp',
     buttonEmail: 'Escríbenos por email',
