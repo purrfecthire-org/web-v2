@@ -675,29 +675,29 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     line-height: 1.75;
     color: #374151;
 
-    :global(h1), :global(h2), :global(h3) {
+    h1, h2, h3 {
       color: $ink;
       font-weight: 600;
       letter-spacing: -0.01em;
       line-height: 1.3;
       margin: 1.75rem 0 0.75rem;
     }
-    :global(h1) { font-size: 1.4rem; }
-    :global(h2) { font-size: 1.2rem; }
-    :global(h3) { font-size: 1.05rem; }
-    :global(p) { margin: 0 0 1rem; }
-    :global(ul), :global(ol) { margin: 0 0 1rem; padding-left: 1.35rem; }
-    :global(li) { margin: 0.35rem 0; }
-    :global(strong) { color: $text; font-weight: 700; }
-    :global(a) { color: $ink; text-decoration: underline; }
-    :global(code) {
+    h1 { font-size: 1.4rem; }
+    h2 { font-size: 1.2rem; }
+    h3 { font-size: 1.05rem; }
+    p { margin: 0 0 1rem; }
+    ul, ol { margin: 0 0 1rem; padding-left: 1.35rem; }
+    li { margin: 0.35rem 0; }
+    strong { color: $text; font-weight: 700; }
+    a { color: $ink; text-decoration: underline; }
+    code {
       background: $soft;
       border: 1px solid $line;
       border-radius: 5px;
       padding: 1px 6px;
       font-size: 0.9em;
     }
-    :global(> :first-child) { margin-top: 0; }
+    > :first-child { margin-top: 0; }
   }
 
   .rv2__english {
