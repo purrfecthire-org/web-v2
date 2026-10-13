@@ -442,7 +442,7 @@ export const content_en: LandingContent = {
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire' },
       { label: 'Open roles', href: '/roles' },
     ],
-    legal: '© 2026 Purrfect Hire',
+    legal: '© 2026 Purrfect Hire Inc.',
   },
 
   homeRouter: {
