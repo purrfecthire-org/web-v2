@@ -14,7 +14,13 @@ export interface TalentV2Content {
   problem: { eyebrow: string; headline: string; body: string };
   work: { eyebrow: string; headline: string; items: { title: string; body: string }[]; note: string; cta: string };
   firewall: { headline: string; body: string[]; status: string };
-  proof: { eyebrow: string; headline: string; note: string; slots: string[] };
+  proof: {
+    eyebrow: string;
+    headline: string;
+    note: string;
+    lead: { result: string; detail: string; photoNote: string };
+    slots: string[];
+  };
   paths: { eyebrow: string; headline: string; items: { name: string; body: string; cta: string; href: string }[] };
   close: { headline: string; body: string; cta: string };
 }
@@ -28,7 +34,7 @@ export const talentV2En: TalentV2Content = {
   hero: {
     eyebrow: 'For talent',
     headline: 'Make your signal impossible to miss.',
-    sub: 'You may already be operating at the next level. The question is whether the market can see the evidence.',
+    sub: 'You may be operating above the level the market is assigning you. Or the evidence may not support the move yet. We help you know the difference.',
     audience:
       'For senior professionals competing for high-impact opportunities across the US, Europe and Latin America.',
     cta: 'Explore Offer Accelerator',
@@ -77,9 +83,13 @@ export const talentV2En: TalentV2Content = {
     eyebrow: 'Proof',
     headline: 'What changed for them.',
     note: 'Each case shows level and scope, the company, the access that did not exist before, and compensation only where the person authorised it. Nothing is published without written permission.',
+    lead: {
+      result: '[PROOF PENDING — headline result]',
+      detail: '[PROOF PENDING — role, level, company and what changed]',
+      photoNote: '[REAL TALENT PHOTO — working environment]',
+    },
     slots: [
       '[PROOF PENDING — level or scope change]',
-      '[PROOF PENDING — access to a company that was out of reach]',
       '[PROOF PENDING — scope increase in the same company]',
     ],
   },

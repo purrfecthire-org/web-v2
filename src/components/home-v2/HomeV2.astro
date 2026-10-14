@@ -116,19 +116,21 @@ const clients = [
           <div class="h3-co__right">
             <p class="h3-body">{t.companies.hard}</p>
             <p class="h3-body">{t.companies.pov}</p>
-            <p class="h3-co__evidence">
-              <span class="h3-dot" aria-hidden="true"></span>{t.companies.evidence}
-            </p>
+            <p class="h3-co__evidence">{t.companies.evidence}</p>
             <figure class="h3-quote">
-              <figure class="h3-ph h3-ph--face">
-                <figcaption>{t.companies.casePhotoNote}</figcaption>
-              </figure>
-              <p class="h3-eyebrow">{t.companies.quoteLabel}</p>
-              <blockquote>“{featured.quote}”</blockquote>
-              <figcaption>
-                <span class="h3-quote__name">{featured.name}</span>
-                <span class="h3-quote__role">{featured.role}</span>
-              </figcaption>
+              <div class="h3-quote__portrait">
+                <div class="h3-ph h3-ph--portrait">
+                  <span class="h3-ph__label">{t.companies.casePhotoNote}</span>
+                </div>
+              </div>
+              <div class="h3-quote__text">
+                <p class="h3-eyebrow">{t.companies.quoteLabel}</p>
+                <blockquote>“{featured.quote}”</blockquote>
+                <figcaption>
+                  <span class="h3-quote__name">{featured.name}</span>
+                  <span class="h3-quote__role">{featured.role}</span>
+                </figcaption>
+              </div>
             </figure>
           </div>
         </div>
@@ -174,7 +176,9 @@ const clients = [
             <h2 class="h3-h2">{t.kate.headline}</h2>
             <p class="h3-body">{t.kate.body}</p>
             <div class="h3-kate__ctas">
-              <a href={`${p}/for-founders`} class="h3-btn">{t.kate.ctaCompanies}</a>
+              <a href={`${p}/for-founders`} class="h3-link">
+                {t.kate.ctaCompanies} <span aria-hidden="true">→</span>
+              </a>
               <a href={`${p}/for-talent`} class="h3-link">
                 {t.kate.ctaTalent} <span aria-hidden="true">→</span>
               </a>
@@ -266,6 +270,9 @@ const clients = [
   .h3-body { font-size: 1.125rem; line-height: 1.7; color: var(--muted); max-width: 34rem; }
   .h3-body--on-dark { color: var(--on-dark-muted); }
   .h3-body + .h3-body { margin-top: 1.1rem; }
+  .h3-lead + .h3-body { margin-top: 1.15rem; }
+  .h3-h2 + .h3-body { margin-top: 1.5rem; }
+  .h3-h2 + .h3-lead { margin-top: 1.5rem; }
 
   /* Clearly marked asset placeholders */
   .h3-ph {
@@ -282,8 +289,13 @@ const clients = [
   .h3-ph--hero { aspect-ratio: 4 / 5; }
   .h3-ph--cat { aspect-ratio: 1 / 1; }
   .h3-ph--kate { aspect-ratio: 3 / 4; }
-  .h3-ph--face { aspect-ratio: 1 / 1; width: 5.5rem; margin-bottom: 1.25rem; padding: 0.5rem; }
-  .h3-ph--face figcaption { font-size: 0.5rem; letter-spacing: 0.03em; }
+  .h3-ph--portrait {
+    aspect-ratio: 3 / 4; width: 100%; padding: 0.6rem; align-items: flex-end;
+  }
+  .h3-ph__label {
+    font-size: 0.5rem; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--muted); line-height: 1.45;
+  }
 
   /* Nav */
   .h3-nav {
@@ -300,6 +312,8 @@ const clients = [
   .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; color: var(--on-dark-muted); }
   .h3-nav__links a:hover { color: var(--on-dark); }
   @media (min-width: 56rem) { .h3-nav__links { display: flex; } }
+  .h3-nav .h3-btn--sm { display: none; }
+  @media (min-width: 48rem) { .h3-nav .h3-btn--sm { display: inline-flex; } }
 
   /* 1 · Hero */
   .h3-hero { background: var(--midnight); color: var(--on-dark); padding: 4.5rem 0 5rem; }
@@ -360,16 +374,19 @@ const clients = [
   @media (min-width: 56rem) { .h3-co__left { position: sticky; top: 7rem; } }
   .h3-co__cta { margin-top: 2rem; }
   .h3-co__right { min-width: 0; }
-  .h3-co__evidence {
-    margin-top: 1.75rem; padding: 1.1rem 1.25rem; border-radius: 10px;
-    background: #fff; border: 1px solid var(--line); font-size: 1rem; font-weight: 500;
+  .h3-co__evidence { margin-top: 1.5rem; font-size: 1.125rem; font-weight: 500; }
+  .h3-quote {
+    margin-top: 3rem; padding-top: 2.25rem; border-top: 1px solid var(--line);
+    display: grid; gap: 1.5rem; align-items: start;
   }
-  .h3-quote { margin-top: 2.75rem; padding-top: 2.25rem; border-top: 1px solid var(--line); }
+  @media (min-width: 40rem) { .h3-quote { grid-template-columns: 11rem 1fr; gap: 2.25rem; } }
+  .h3-quote__portrait { max-width: 11rem; }
+  .h3-quote__text { min-width: 0; }
   .h3-quote blockquote {
-    margin-top: 1rem; font-family: var(--h-serif);
+    margin-top: 0.85rem; font-family: var(--h-serif);
     font-size: clamp(1.375rem, 2.2vw, 1.75rem); line-height: 1.3;
   }
-  .h3-quote figcaption { margin-top: 1.25rem; display: flex; flex-direction: column; font-size: 0.875rem; }
+  .h3-quote figcaption { margin-top: 1.1rem; display: flex; flex-direction: column; font-size: 0.9375rem; }
   .h3-quote__name { font-weight: 500; }
   .h3-quote__role { color: var(--muted); }
 
@@ -390,7 +407,7 @@ const clients = [
   .h3-belief { background: var(--stone); padding: 4.5rem 0; }
   @media (min-width: 56rem) { .h3-belief { padding: 7rem 0; } }
   .h3-belief__statement {
-    margin-top: 1.25rem; max-width: 26ch; font-family: var(--h-serif);
+    margin-top: 1.25rem; max-width: 30ch; font-family: var(--h-serif);
     font-size: clamp(1.875rem, 3.6vw, 3rem); line-height: 1.1; letter-spacing: -0.01em;
     text-wrap: balance;
   }
