@@ -35,10 +35,12 @@ const t = getOfferV2(lang);
               {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
           </div>
-          <figure class="h3-hero__media">
-            <picture>
-              <source srcset="/brand/conversation.webp" type="image/webp" />
-              <img src="/brand/conversation.jpg" alt="" aria-hidden="true" width="1600" height="1066" />
+          <figure class="h3-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
+<picture>
+              <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/offer-mobile.webp" />
+              <source media="(max-width: 55.99rem)" srcset="/photos/web/offer-mobile.png" />
+              <source type="image/webp" srcset="/photos/web/offer-desktop.webp" />
+              <img src="/photos/web/offer-desktop.png" alt="Two people having a conversation at a desk." width="1200" height="750" decoding="async" fetchpriority="high" />
             </picture>
             <span class="h3-hero__scrim" aria-hidden="true"></span>
           </figure>

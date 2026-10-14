@@ -67,10 +67,12 @@ const clients = [
             </div>
           </div>
 
-          <figure class="h3-hero__media">
-            <picture>
-              <source srcset="/brand/team-table.webp" type="image/webp" />
-              <img src="/brand/team-table.jpg" alt="" aria-hidden="true" width="1600" height="1066" />
+          <figure class="h3-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
+<picture>
+              <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/library/home-editorial-mobile.webp" />
+              <source media="(max-width: 55.99rem)" srcset="/photos/library/home-editorial-mobile.png" />
+              <source type="image/webp" srcset="/photos/library/home-editorial-desktop.webp" />
+              <img src="/photos/library/home-editorial-desktop.png" alt="Three people discussing work around a table." width="1200" height="750" decoding="async" fetchpriority="high" />
             </picture>
             <span class="h3-hero__scrim" aria-hidden="true"></span>
           </figure>
@@ -100,12 +102,6 @@ const clients = [
             <a href={PAGE_COMPANIES} data-cta="home-companies-block" class="h3-btn h3-btn--ink h3-co__cta">
               {t.companies.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
-            <figure class="h3-co__scene">
-              <picture>
-                <source srcset="/brand/team-meeting.webp" type="image/webp" />
-                <img src="/brand/team-meeting.jpg" alt="" aria-hidden="true" width="1600" height="1066" loading="lazy" />
-              </picture>
-            </figure>
           </div>
 
           <div class="h3-co__right">
@@ -135,15 +131,11 @@ const clients = [
       <!-- 4 · For talent -->
       <section class="h3-ta">
         <div class="h3-wrap h3-ta__grid">
-          <figure class="h3-ta__media">
-            <picture>
-              <source srcset="/brand/listening.webp" type="image/webp" />
-              <img src="/brand/listening.jpg" alt="" aria-hidden="true" width="1600" height="1066" loading="lazy" />
-            </picture>
-          </figure>
-          <div class="h3-ta__copy">
+          <div class="h3-ta__head">
             <p class="h3-eyebrow h3-eyebrow--on-dark">{t.talent.eyebrow}</p>
             <h2 class="h3-h2 h3-h2--on-dark">{t.talent.headline}</h2>
+          </div>
+          <div class="h3-ta__copy">
             <p class="h3-lead h3-lead--on-dark">{t.talent.body}</p>
             <p class="h3-body h3-body--on-dark">{t.talent.sub}</p>
             <a href={PAGE_OFFER} data-cta="home-offer-block" class="h3-btn h3-ta__cta">{t.talent.cta}</a>
@@ -247,12 +239,10 @@ const clients = [
   .h3-co { background: var(--sand); padding: 4.5rem 0 5rem; }
   @media (min-width: 56rem) { .h3-co { padding: 7rem 0 8rem; } }
   .h3-co__grid { display: grid; gap: 3rem; align-items: start; }
-  @media (min-width: 56rem) { .h3-co__grid { grid-template-columns: 1fr 1.1fr; gap: 5.5rem; } }
+  @media (min-width: 56rem) { .h3-co__grid { grid-template-columns: 0.9fr 1.1fr; gap: 5rem; } }
   .h3-co__left { min-width: 0; }
   @media (min-width: 56rem) { .h3-co__left { position: sticky; top: 7rem; } }
   .h3-co__cta { margin-top: 2rem; }
-  .h3-co__scene { margin: 2.75rem 0 0; aspect-ratio: 16 / 10; overflow: hidden; }
-  .h3-co__scene img { display: block; width: 100%; height: 100%; object-fit: cover; }
   @media (min-width: 56rem) { .h3-co__left { position: static; } }
   .h3-co__right { min-width: 0; }
   .h3-co__evidence { margin-top: 1.5rem; font-size: 1.125rem; font-weight: 500; }
@@ -275,9 +265,12 @@ const clients = [
   /* 4 · For talent */
   .h3-ta { background: var(--midnight); color: var(--on-dark); padding: 5rem 0; }
   @media (min-width: 56rem) { .h3-ta { padding: 8rem 0; } }
-  .h3-ta__grid { display: grid; gap: 3rem; align-items: center; }
-  @media (min-width: 56rem) { .h3-ta__grid { grid-template-columns: 0.8fr 1.2fr; gap: 5.5rem; } }
-  .h3-ta__copy { min-width: 0; }
+  /* Sin la fotografía, el bloque reparte titular y cuerpo en dos columnas,
+     como el de empresas, en lugar de dejar media banda vacía. */
+  .h3-ta__grid { display: grid; gap: 2rem; align-items: start; }
+  @media (min-width: 56rem) { .h3-ta__grid { grid-template-columns: 1fr 1.05fr; gap: 5rem; } }
+  .h3-ta__head, .h3-ta__copy { min-width: 0; }
+  .h3-ta__copy .h3-lead { margin-top: 0; }
   .h3-ta__cta { margin-top: 2rem; }
   .h3-note {
     margin-top: 1.75rem; font-size: 0.6875rem; letter-spacing: 0.06em;

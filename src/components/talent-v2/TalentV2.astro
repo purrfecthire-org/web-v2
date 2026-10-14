@@ -35,10 +35,12 @@ const t = getTalentV2(lang);
               {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
           </div>
-          <figure class="h3-hero__media">
-            <picture>
-              <source srcset="/brand/talent-desk.webp" type="image/webp" />
-              <img src="/brand/talent-desk.jpg" alt="" aria-hidden="true" width="1600" height="1066" />
+          <figure class="h3-hero__media" style={{ "--photo-desktop": "4 / 3", "--photo-mobile": "4 / 5" }}>
+<picture>
+              <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/talent-mobile.webp" />
+              <source media="(max-width: 55.99rem)" srcset="/photos/web/talent-mobile.png" />
+              <source type="image/webp" srcset="/photos/web/talent-desktop.webp" />
+              <img src="/photos/web/talent-desktop.png" alt="A person working on a laptop in a café." width="1200" height="900" decoding="async" fetchpriority="high" />
             </picture>
           </figure>
         </div>

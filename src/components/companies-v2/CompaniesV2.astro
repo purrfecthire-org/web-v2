@@ -44,10 +44,12 @@ const clients = [
           {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
       </div>
-      <figure class="h3-hero__media fc-hero__media">
-        <picture>
-          <source srcset="/brand/team-meeting.webp" type="image/webp" />
-          <img src="/brand/team-meeting.jpg" alt="" aria-hidden="true" width="1600" height="1066" />
+      <figure class="h3-hero__media fc-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
+<picture>
+          <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/companies-mobile.webp" />
+          <source media="(max-width: 55.99rem)" srcset="/photos/web/companies-mobile.png" />
+          <source type="image/webp" srcset="/photos/web/companies-desktop.webp" />
+          <img src="/photos/web/companies-desktop.png" alt="People discussing work at a table in an office." width="1200" height="750" decoding="async" fetchpriority="high" />
         </picture>
       </figure>
     </div>
@@ -198,9 +200,7 @@ const clients = [
 <style lang="scss" is:global>
   /* The frame holds the whole conversation: a wider ratio and a crop that
      keeps both people, instead of a portrait that cuts one at the edge. */
-  @media (min-width: 56rem) {
-    .h3--light .fc-hero__media { aspect-ratio: 5 / 4; }
-  }
+
   .fc-hero__media img { object-position: 42% 42%; }
   .fc-credential {
     margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line);

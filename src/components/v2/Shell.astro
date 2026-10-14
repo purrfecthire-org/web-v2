@@ -264,27 +264,37 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   .h3-hero__media { position: relative; margin: 0; }
   .h3-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
   @media (max-width: 56rem) {
-    .h3-hero__media { margin-top: 2rem; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; }
+    .h3-hero__media { margin-top: 2rem; border-radius: 14px; overflow: hidden; }
   }
-  /* Dark heroes: the photograph runs to the edge and dissolves into Midnight. */
+  /* Dark heroes: the photograph reaches the right edge and melts into
+     Midnight on its left, while keeping the aspect ratio it was cropped to.
+     A full-bleed half-screen slot would crop these frames vertically and cut
+     a person out of the conversation. */
   @media (min-width: 56rem) {
-    .h3--dark .h3-hero__media { position: absolute; inset: 0 0 0 50%; z-index: 0; }
-    .h3--light .h3-hero__media { aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; }
+    .h3--dark .h3-hero__media {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      width: 50%; z-index: 0;
+      border-radius: 14px 0 0 14px; overflow: hidden;
+    }
+    .h3--light .h3-hero__media { border-radius: 14px; overflow: hidden; }
   }
   .h3-hero__scrim { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
   @media (min-width: 56rem) {
     .h3--dark .h3-hero__scrim {
-      background:
-        linear-gradient(90deg, var(--midnight) 0%, rgba(10, 11, 20, 0.86) 18%, rgba(10, 11, 20, 0.28) 48%, rgba(10, 11, 20, 0.18) 100%),
-        linear-gradient(0deg, rgba(10, 11, 20, 0.55) 0%, rgba(10, 11, 20, 0) 35%);
+      background: linear-gradient(90deg, var(--midnight) 0%, rgba(10, 11, 20, 0.55) 22%, rgba(10, 11, 20, 0) 60%);
     }
   }
   @media (max-width: 56rem) {
     .h3--dark .h3-hero__scrim {
       border-radius: 14px;
-      background: linear-gradient(180deg, rgba(10, 11, 20, 0.45) 0%, rgba(10, 11, 20, 0.05) 40%);
+      background: linear-gradient(180deg, rgba(10, 11, 20, 0.4) 0%, rgba(10, 11, 20, 0) 45%);
     }
   }
+
+  /* Each hero declares the ratio of the file it was given, so nothing is
+     re-cropped in the browser. */
+  .h3-hero__media { aspect-ratio: var(--photo-mobile, 4 / 3); }
+  @media (min-width: 56rem) { .h3-hero__media { aspect-ratio: var(--photo-desktop, 8 / 5); } }
 
   /* ── Footer ───────────────────────────────────────────────────────── */
   .h3-footer {
