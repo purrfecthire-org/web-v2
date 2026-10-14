@@ -15,7 +15,7 @@ export const oaContent = {
   meta: {
     title: 'Offer Acceleration · Private Career Advisory | Purrfect Hire',
     description:
-      'Private Career Advisory para profesionales senior. Un equipo que se sienta en ambos lados de la mesa de contratación: 160+ placements con startups de YC, a16z y Sequoia. Inversión: USD 2,000.',
+      'Private Career Advisory para profesionales senior. Un equipo que se sienta en ambos lados de la mesa de contratación, con startups de YC, a16z y Sequoia. Inversión: USD 2,000.',
   },
 
   hero: {
@@ -58,7 +58,7 @@ export const oaContent = {
       ],
     },
     proof: [
-      '160+ placements en US, Europa y LATAM',
+      'Placements en US, Europa y LATAM',
       'Startups respaldadas por YC, a16z y Sequoia',
       '3+ años del lado que contrata',
     ],

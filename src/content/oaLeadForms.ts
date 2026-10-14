@@ -115,7 +115,7 @@ const ERRORS = { required: 'Completa tu LinkedIn y elige una opción.' };
 const PRIVACY =
   'Usamos tus datos solo para preparar tu caso y contactarte. Nada se publica, nada se comparte.';
 
-const FOOTER = 'Purrfect Hire · 160+ placements en US, Europa y LATAM';
+const FOOTER = 'Purrfect Hire · Placements en US, Europa y LATAM';
 
 // ═════════════════════════════════════════════════════════════════════════
 // Variant A · /offer-acceleration/preguntas
@@ -165,7 +165,7 @@ export const oaPreguntas = {
   // 2026: people assume a bot reads their profile, and here it is a CEO.
   apply: {
     title: 'Una CEO lee tu perfil. No una IA.',
-    body: '15 minutos en vivo con quien ha colocado a más de 160 personas en startups de YC y a16z, revisando tu perfil como lo hace un recruiter. Déjanos tu LinkedIn y te contactamos.',
+    body: '15 minutos en vivo con quien coloca gente en startups de YC y a16z, revisando tu perfil como lo hace un recruiter. Déjanos tu LinkedIn y te contactamos.',
     points: ['Gratis, sin letra chica', '15 minutos, en vivo', 'Un humano, no una IA'],
     dark: false,
   },

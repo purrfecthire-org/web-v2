@@ -64,7 +64,7 @@ export const kateEn: KateContent = {
   meta: {
     title: 'Kate Forero · The person founders trust with the hire | Purrfect Hire',
     description:
-      'Kate Forero scaled ADDI from 15 to 400 people, founded Purrfect Hire, and hires today for YC-, a16z- and Sequoia-backed founders. 160+ senior placements. 297K people follow how she evaluates.',
+      'Kate Forero scaled ADDI from 15 to 400 people, founded Purrfect Hire, and hires today for YC-, a16z- and Sequoia-backed founders. 297K people follow how she evaluates.',
   },
 
   hero: {
@@ -75,7 +75,6 @@ export const kateEn: KateContent = {
   },
 
   stats: [
-    { value: '160+', label: 'senior placements' },
     { value: '10+', label: 'years reading how founders evaluate' },
     { value: '297K', label: 'LinkedIn followers' },
   ],
@@ -141,7 +140,7 @@ export const kateEs: KateContent = {
   meta: {
     title: 'Kate Forero · La persona a la que los founders le confían el hire | Purrfect Hire',
     description:
-      'Kate Forero escaló ADDI de 15 a 400 personas, fundó Purrfect Hire y hoy contrata para founders respaldados por YC, a16z y Sequoia. 160+ placements senior. 297K personas siguen cómo evalúa.',
+      'Kate Forero escaló ADDI de 15 a 400 personas, fundó Purrfect Hire y hoy contrata para founders respaldados por YC, a16z y Sequoia. 297K personas siguen cómo evalúa.',
   },
 
   hero: {
@@ -152,7 +151,6 @@ export const kateEs: KateContent = {
   },
 
   stats: [
-    { value: '160+', label: 'placements senior' },
     { value: '10+', label: 'años leyendo cómo evalúan los founders' },
     { value: '297K', label: 'seguidores en LinkedIn' },
   ],

@@ -25,6 +25,7 @@ const { hero, router } = Astro.props;
       {router.whoPre}<span class="home-hero__vc">{router.whoHighlight}</span>{router.whoPost}
     </p>
 
+    {hero.stats.length > 0 && (
     <div class="home-hero__stats">
       {hero.stats.map((stat, i) => (
         <>
@@ -36,6 +37,7 @@ const { hero, router } = Astro.props;
         </>
       ))}
     </div>
+    )}
 
     <div class="home-hero__ctas">
       <a href="/for-founders" class="btn home-hero__cta">{router.ctaFounders}</a>

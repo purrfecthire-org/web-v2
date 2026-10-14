@@ -113,7 +113,7 @@ export const pricingEn: PricingContent = {
     intro:
       'Prices are public on purpose: they filter, and they remove friction. Every rung is with Kate, the person founders trust to make the hire.',
     kateCaption:
-      'Kate Forero. 160+ senior placements, 10+ years reading how founders actually evaluate.',
+      'Kate Forero. 10+ years reading how founders actually evaluate.',
     plans: [
       {
         name: '1:1 Session',
@@ -233,7 +233,7 @@ export const pricingEs: PricingContent = {
     intro:
       'Los precios son públicos a propósito: filtran y eliminan fricción. Cada peldaño es con Kate, la persona a la que los founders le confían el hire.',
     kateCaption:
-      'Kate Forero. 160+ placements senior, 10+ años leyendo cómo evalúan los founders de verdad.',
+      'Kate Forero. 10+ años leyendo cómo evalúan los founders de verdad.',
     plans: [
       {
         name: 'Sesión 1:1',

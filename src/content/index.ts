@@ -219,7 +219,7 @@ export const content_en: LandingContent = {
 
   meta: {
     title: 'Purrfect Hire. Senior hires for YC, a16z and Sequoia founders',
-    description: 'Senior hires for startups between seed and Series B. Evidence on every candidate. 160+ placements.',
+    description: 'Senior hires for startups between seed and Series B. Evidence on every candidate.',
   },
 
   nav: {
@@ -252,7 +252,6 @@ export const content_en: LandingContent = {
     headlineAccent: 'Culture fit makes them stay.',
     subheadline: 'We place senior LATAM talent at YC, a16z and Sequoia startups where getting the hire wrong costs months of runway you can\'t recover.',
     stats: [
-      { value: '160', suffix: '+', label: 'placements' },
     ],
     ctaPrimary: 'Get your first match',
     ctaSecondary: 'See how it works',
@@ -275,7 +274,7 @@ export const content_en: LandingContent = {
     headline: 'Any tool can source. None of them know who\'ll stay.',
     body: [
       'Prism finds profiles. Contra fills contracts. Metaview transcribes interviews.',
-      'None of them have been inside 160+ startups, learning where hires actually break.',
+      'None of them have sat inside an early-stage startup, learning where hires actually break.',
       'We have. And we train the talent we place against that signal, before they ever meet you.',
     ],
     closing: 'That\'s not a keyword filter. That\'s a conversation.',
@@ -340,7 +339,7 @@ export const content_en: LandingContent = {
         ],
       },
     ],
-    closing: 'Built by recruiters who\'ve placed 160+ senior hires at YC, a16z and Sequoia portfolios. We know exactly where the bar is. Now we share it with you.',
+    closing: 'Built by recruiters who hire for YC, a16z and Sequoia portfolios. We know exactly where the bar is. Now we share it with you.',
     cta: 'Apply for Offer Acceleration →',
     ctaSubline: 'Limited cohorts. Application required.',
   },
@@ -379,7 +378,7 @@ export const content_en: LandingContent = {
     body: [
       'Skills tell you what someone has done. They do not tell you how that person decides at 11pm on a Friday, or whether they ask for help before something breaks.',
       'In a team of ten, a wrong hire does not just underperform. They slow everyone down, erode trust, and force your best people to cover the gap. By the time it is obvious, you have burned four months of runway and the goodwill of the team.',
-      'We have run 160+ searches inside early-stage startups, and we track what happens after the offer, not just up to it.',
+      'We run searches inside early-stage startups, and we track what happens after the offer, not just up to it.',
     ],
     // Self-attributed "OUR PRINCIPLE" quote cards removed (read as fake
     // testimonials); the argument now lives in the body copy above.
@@ -591,7 +590,7 @@ export const content_es: LandingContent = {
 
   meta: {
     title: 'Purrfect Hire. Hires senior para founders de YC, a16z y Sequoia',
-    description: 'Hires senior para startups entre seed y Serie B. Evidencia de cada candidato. 160+ contrataciones.',
+    description: 'Hires senior para startups entre seed y Serie B. Evidencia de cada candidato.',
   },
 
   nav: {
@@ -624,7 +623,6 @@ export const content_es: LandingContent = {
     headlineAccent: 'El fit cultural te hace quedarte.',
     subheadline: 'Conectamos talento senior de LATAM con startups de YC, a16z y Sequoia donde equivocarse en el hire cuesta meses de runway que no se recuperan.',
     stats: [
-      { value: '160', suffix: '+', label: 'contrataciones' },
     ],
     ctaPrimary: 'Empieza tu búsqueda',
     ctaSecondary: 'Ver cómo funciona',
@@ -647,7 +645,7 @@ export const content_es: LandingContent = {
     headline: 'Cualquier tool sourcea. Ninguna sabe quién se queda.',
     body: [
       'Prism encuentra perfiles. Contra llena contratos. Metaview transcribe entrevistas.',
-      'Ninguna ha estado dentro de 160+ startups aprendiendo dónde se rompen los hires de verdad.',
+      'Ninguna ha estado dentro de una startup early-stage aprendiendo dónde se rompen los hires de verdad.',
       'Nosotros sí. Y entrenamos al talento que colocamos contra esa señal, antes de que te conozca.',
     ],
     closing: 'Eso no es un filtro de keywords. Es una conversación.',
@@ -712,7 +710,7 @@ export const content_es: LandingContent = {
         ],
       },
     ],
-    closing: 'Construido por recruiters que han colocado 160+ hires senior en portfolios de YC, a16z y Sequoia. Sabemos exactamente dónde está la vara. Ahora la compartimos contigo.',
+    closing: 'Construido por recruiters que contratan para portfolios de YC, a16z y Sequoia. Sabemos exactamente dónde está la vara. Ahora la compartimos contigo.',
     cta: 'Aplica a Offer Acceleration →',
     ctaSubline: 'Cohortes limitadas. Aplicación requerida.',
   },
@@ -751,7 +749,7 @@ export const content_es: LandingContent = {
     body: [
       'Los skills te dicen qué ha hecho una persona. No te dicen cómo decide un viernes a las 11pm, ni si pide ayuda antes de que algo se rompa.',
       'En un equipo de diez, un mal hire no solo rinde menos. Frena al resto, erosiona la confianza y obliga a tus mejores personas a cubrir el hueco. Para cuando es obvio, ya quemaste cuatro meses de runway y la buena voluntad del equipo.',
-      'Hemos corrido 160+ búsquedas dentro de startups early-stage, y medimos lo que pasa después de la oferta, no solo hasta ella.',
+      'Corremos búsquedas dentro de startups early-stage, y medimos lo que pasa después de la oferta, no solo hasta ella.',
     ],
     // Tarjetas auto-citadas "NUESTRO PRINCIPIO" eliminadas (se leían como
     // testimonios falsos); el argumento vive ahora en el cuerpo de arriba.

@@ -90,12 +90,12 @@ export const careerSessionsEs: CoachingContent = {
     eyebrow: 'Sesiones 1:1 · Coaching de carrera',
     headline: 'Una hora con quien contrata para founders de YC, a16z y Sequoia.',
     para1:
-      'Kate Forero ha colocado 160+ perfiles senior en startups de US, Europa y LATAM, y lleva 10+ años leyendo cómo evalúan los founders de verdad. En una sesión 1:1 esa señal se aplica directo a tu caso: tu perfil, tu entrevista, tu negociación.',
+      'Kate Forero coloca perfiles senior en startups de US, Europa y LATAM, y lleva 10+ años leyendo cómo evalúan los founders de verdad. En una sesión 1:1 esa señal se aplica directo a tu caso: tu perfil, tu entrevista, tu negociación.',
     para2:
       'No necesitas entrar a un programa. Reservas la sesión que necesitas, cuando la necesitas, y sales con acciones concretas.',
     stats: [
       '$300 USD por sesión de 1 hora',
-      '160+ placements en US, Europa y LATAM',
+      'Placements en US, Europa y LATAM',
       'En español o en inglés',
     ],
     photo: { src: '/sessions/kate.jpeg', webp: '/sessions/kate.webp', alt: 'Kate Forero' },
@@ -252,12 +252,12 @@ export const careerSessionsEn: CoachingContent = {
     eyebrow: '1:1 Sessions · Career coaching',
     headline: 'One hour with the person who hires for YC, a16z and Sequoia founders.',
     para1:
-      'Kate Forero has placed 160+ senior profiles at startups in the US, Europe and LATAM, and has spent 10+ years reading how founders actually evaluate. In a 1:1 session that signal is applied straight to your case: your profile, your interview, your negotiation.',
+      'Kate Forero places senior profiles at startups in the US, Europe and LATAM, and has spent 10+ years reading how founders actually evaluate. In a 1:1 session that signal is applied straight to your case: your profile, your interview, your negotiation.',
     para2:
       'No program required. You book the session you need, when you need it, and leave with concrete actions.',
     stats: [
       '$300 USD per 1-hour session',
-      '160+ placements in the US, Europe and LATAM',
+      'Placements in the US, Europe and LATAM',
       'In English or Spanish',
     ],
     photo: { src: '/sessions/kate.jpeg', webp: '/sessions/kate.webp', alt: 'Kate Forero' },
