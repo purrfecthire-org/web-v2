@@ -1,0 +1,603 @@
+{
+  "brand": "Purrfect Hire",
+  "created": "2026-10-14",
+  "preserveExistingHomeKate": true,
+  "existingHomeKate": {
+    "instruction": "Conservar exactamente la fotografía actual de Kate vestida de negro en Home, con su archivo, edición, recorte y presentación actuales.",
+    "replacementIncluded": false
+  },
+  "kateGreenPortrait": {
+    "publishAutomatically": false,
+    "use": "Alternativa de biblioteca. No sustituye la fotografía actual de negro."
+  },
+  "teamNames": {
+    "juanca": "Juanca",
+    "nico": "Nico",
+    "ana": "Ana",
+    "rich": "Rich",
+    "dave": "Dave"
+  },
+  "editorialScenes": "Las escenas son material ilustrativo; no atribuirlas a clientes, equipo o sesiones reales.",
+  "files": [
+    {
+      "file": "library/home-editorial-desktop.png",
+      "width": 1200,
+      "height": 750,
+      "bytes": 1284052,
+      "sha256": "f4b4aea9c3abeb5e6b3b4176b12afd8c726b776b7623cd1ad5c5b3792f683e29",
+      "category": "editorial_scene",
+      "optionalUseOnly": true,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/home-editorial-desktop.webp",
+      "width": 1200,
+      "height": 750,
+      "bytes": 105648,
+      "sha256": "d17a99e980db291b741fab4ce9cfe6766253905e77c7681b9d17181bb8c7c5f9",
+      "category": "editorial_scene",
+      "optionalUseOnly": true,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/home-editorial-mobile.png",
+      "width": 960,
+      "height": 720,
+      "bytes": 1004443,
+      "sha256": "3d95882906caf8f8080d4bc03a903804ef86c2e251f85f3d9eecb232221caeff",
+      "category": "editorial_scene",
+      "optionalUseOnly": true,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/home-editorial-mobile.webp",
+      "width": 960,
+      "height": 720,
+      "bytes": 86588,
+      "sha256": "008321821a1cc34fb92d7c57915383b9cd470b13b7d19a035eded382f546f58b",
+      "category": "editorial_scene",
+      "optionalUseOnly": true,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/kate-alternative-320.png",
+      "width": 320,
+      "height": 320,
+      "bytes": 204668,
+      "sha256": "69ee709c9a718782d2770303aadf9e064603023bfb115c9f7915a3e41e3f7885",
+      "category": "team_portrait",
+      "optionalUseOnly": true,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/kate-alternative-320.webp",
+      "width": 320,
+      "height": 320,
+      "bytes": 23592,
+      "sha256": "de076ad81d1f4a957ab028166eef41bfe050a72fd2359bd52bb8cd255d1e2e6c",
+      "category": "team_portrait",
+      "optionalUseOnly": true,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/kate-alternative.png",
+      "width": 640,
+      "height": 640,
+      "bytes": 714317,
+      "sha256": "89ea901edeed7d0566440cd09a8de213ce89f6a6843ca79a2c028341d0774163",
+      "category": "team_portrait",
+      "optionalUseOnly": true,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/kate-alternative.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 65952,
+      "sha256": "11e6d519677e684aa1409c2bc5d37c0b9f0ff46b43a9fb6c7c317547c8608ca9",
+      "category": "team_portrait",
+      "optionalUseOnly": true,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/team-ana-master.png",
+      "width": 800,
+      "height": 800,
+      "bytes": 934628,
+      "sha256": "957f5c16c55f3fa2207cf0a0caff3d4491618608d82108abf8f637080cc79f5d",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/team-dave-master.png",
+      "width": 1666,
+      "height": 1316,
+      "bytes": 2056091,
+      "sha256": "f40cf4b8e1d2ec18c8bfd1ddd919f377b014a75ba872e0d41d51f201b3eb0db4",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/team-juanca-master.png",
+      "width": 1371,
+      "height": 1148,
+      "bytes": 1792487,
+      "sha256": "0ae5a689b3ad263ef05ce519388b76a6228f09d0f762ce2a3e7248965bc43eea",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/team-kate-alternative-master.png",
+      "width": 800,
+      "height": 800,
+      "bytes": 1057465,
+      "sha256": "330b119b0dd298d76a996cdbedcc4153a9a374c5ac1db57c9aaf187513e7b560",
+      "category": "team_portrait",
+      "optionalUseOnly": true,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/team-nico-master.png",
+      "width": 1280,
+      "height": 960,
+      "bytes": 1679728,
+      "sha256": "947708a46b9bd9672e29bda314b81a1b4cf9d315824ca7095e82e232f065dca0",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "library/team-rich-master.png",
+      "width": 800,
+      "height": 800,
+      "bytes": 767325,
+      "sha256": "e7dd32915d629aaae62919b9b23715ec89d56dc2be585a49e92e04f472d5d262",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-01.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2244119,
+      "sha256": "9802ae0b5a6018466107d35232110fa81879b6d847731460a61ff6bf201eb275",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-02.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2188036,
+      "sha256": "7c2688c4afdaef6c023d072d75f9ceb05a7790d597ef66a0cc1b4b3e0f60ba22",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-03.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2344303,
+      "sha256": "699cef784ad01501543ca1ce351283137d46835a064e4269fb1528d4d3ffbe74",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-04.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2373720,
+      "sha256": "9ffdcf3afd26ad9b79269afd19f78e616377c4481b8975c9119f5e8c1acaefb0",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-05.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2266581,
+      "sha256": "0941b72f09146ca962ac8319fdce8468bcae1f21aced97657a921582eadbc4d9",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-06.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2271825,
+      "sha256": "29736b903024040f8b1510af50ba6db110edbe9c72bde224903f57e6cb06eb5b",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-07.png",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 2084630,
+      "sha256": "5c36808bc4218d73d0c64fc71d6be050589202ad60dd97484932c39c3caccdb6",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-08.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2161565,
+      "sha256": "5bf05eed4e50c0df76a8152561ed018222b62184101974b42efa538f7c0c336e",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-09.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2117496,
+      "sha256": "464edad92341d149e71129da6dd187d34bdf5d18647066d3e5418259763a5ef0",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-10.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2161085,
+      "sha256": "875c51aef5bee051b2d8daaa775fce3c6ddbdb3d708541351085912f1a890656",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-11.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2125203,
+      "sha256": "a6e43ddf07ee9bea837730dfef561743a12bb51869cf5d63f2348534cb326fe4",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "scenes/scene-12.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2110335,
+      "sha256": "5101b9f725343caacc0a535a1d1e31f5ba6ae4afdfd57ac4d8b8c85953e7f7f7",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/ana-320.png",
+      "width": 320,
+      "height": 320,
+      "bytes": 188839,
+      "sha256": "3e4516d3cfb1461370a4dddec84582f12c8c9a79097589173e9d5f8652a6af25",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/ana-320.webp",
+      "width": 320,
+      "height": 320,
+      "bytes": 19376,
+      "sha256": "5e4170633e93416418052f450af9e0fe0ce6e96d2c9d34b4a948fe965ce42093",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/ana.png",
+      "width": 640,
+      "height": 640,
+      "bytes": 632587,
+      "sha256": "96b0b7d83df94b38a14e76f00e73c1b1299b08ce731a757d3fc13adbf86f8796",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/ana.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 44182,
+      "sha256": "80a0da2bf1ad4391188c4c60d29d38abc8d6533692a3d5cf245961c02b9b7a1c",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/dave-320.png",
+      "width": 320,
+      "height": 320,
+      "bytes": 136043,
+      "sha256": "66f7ff4f2e14b9d34a6a6dc4184b81228b1dabb8e6089e8be466bf8f422e7d06",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/dave-320.webp",
+      "width": 320,
+      "height": 320,
+      "bytes": 10180,
+      "sha256": "2899ccfbf831b43b980aa7f4163ab585ef72531996840fc33c282f9a89ae2d50",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/dave.png",
+      "width": 640,
+      "height": 640,
+      "bytes": 420211,
+      "sha256": "d34bbc99629bada49d2f0de2048f4873966226d4cce4b488a4cd2e1e51643dd4",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/dave.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 21510,
+      "sha256": "14bce441aa10bb947a5267611fe19abff4dca37943044620ec0bb72f5101cf42",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/juanca-320.png",
+      "width": 320,
+      "height": 320,
+      "bytes": 148329,
+      "sha256": "ec4ed042d7c40e1893791e4ece0d139e4ec34b4ce4d66b3bc3996d4c459c2f4b",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/juanca-320.webp",
+      "width": 320,
+      "height": 320,
+      "bytes": 11382,
+      "sha256": "ffb0eb78992ca167d78b9c5bdb25bc89b355a1db5c7d3b0dfae8a2c86d55d9f7",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/juanca.png",
+      "width": 640,
+      "height": 640,
+      "bytes": 507257,
+      "sha256": "5733e0ac34057973e50c61316fad395dfbcf4c1e5f2fea6c17b3ac0618070deb",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/juanca.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 29186,
+      "sha256": "acc7a226641b970cbb4d7ff39c67fa92d7f22740cded10ea12797aad64e9d588",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/nico-320.png",
+      "width": 320,
+      "height": 320,
+      "bytes": 186467,
+      "sha256": "8138342817f4fc085739acbd7c6af29cba87291869a3e3801d5365ab29261985",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/nico-320.webp",
+      "width": 320,
+      "height": 320,
+      "bytes": 23222,
+      "sha256": "56583359d819ff571003a109d3737a727b4a17ed7d90c674acbfce221569736c",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/nico.png",
+      "width": 640,
+      "height": 640,
+      "bytes": 642604,
+      "sha256": "cae172893e743079fa79f2e2ed6a8657fbe28ce46912776a0c085affdf935aaf",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/nico.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 71996,
+      "sha256": "56695b8ea9165c7ec58ea3098fc2f7938c80c9556db3ae5e688751943a427137",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/rich-320.png",
+      "width": 320,
+      "height": 320,
+      "bytes": 155500,
+      "sha256": "d6ac088664b44fc21c9312772ffb0ca4ed33e5079dd0ffbdd52ba7d40bf1b970",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/rich-320.webp",
+      "width": 320,
+      "height": 320,
+      "bytes": 9174,
+      "sha256": "16f8a5702d51f942a1eb0d6d32b01f90de8e3502370be20a56f55063e02e8c24",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/rich.png",
+      "width": 640,
+      "height": 640,
+      "bytes": 530986,
+      "sha256": "b33e9b0a52d0bcd8e845ffd31dc5cff597dda5819b61e781672aa3055e27f1c0",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "team/rich.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 19774,
+      "sha256": "b4b819beb0fa5179415c20bc4d64f02df8d6e34590625bbb4c87c590882530d0",
+      "category": "team_portrait",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/companies-desktop.png",
+      "width": 1200,
+      "height": 750,
+      "bytes": 1264464,
+      "sha256": "6a80c56b1dccf08267aa04b6debd69fd15b37517e3819f1528bb3e32557df6de",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/companies-desktop.webp",
+      "width": 1200,
+      "height": 750,
+      "bytes": 93324,
+      "sha256": "7abe307168d94636d4e77df21a1fcca75324a90eed4134874c720e42d7d6ee98",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/companies-mobile.png",
+      "width": 960,
+      "height": 720,
+      "bytes": 992167,
+      "sha256": "edb0d08c2f92390aae5c4a3397f4cbd60442730f92138001835ec547aaa8b428",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/companies-mobile.webp",
+      "width": 960,
+      "height": 720,
+      "bytes": 80668,
+      "sha256": "18c396d5f42ecbaea8da20f85fae3b7413dea35aa85b9229b02f7075f51a86a0",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/offer-desktop.png",
+      "width": 1200,
+      "height": 750,
+      "bytes": 1310737,
+      "sha256": "2ca5cea81034f66df2c23fd12a0f0abc1a06afaa584bf86b059e85e701c9e0dc",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/offer-desktop.webp",
+      "width": 1200,
+      "height": 750,
+      "bytes": 115080,
+      "sha256": "21ab603e2144e6ebedfa63e08234dfa82b7ef234e22cdee71602660a0d744db1",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/offer-mobile.png",
+      "width": 960,
+      "height": 720,
+      "bytes": 1023463,
+      "sha256": "f82a6914360f3b3fecc010c43ed2f488e0bf9e21d7b52e925dbc516aa959927b",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/offer-mobile.webp",
+      "width": 960,
+      "height": 720,
+      "bytes": 94094,
+      "sha256": "4e74d498e86a8cd9c45fd2bfad5ebc3699a4abfbc52265c885cbd6bbadae92a8",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/talent-desktop.png",
+      "width": 1200,
+      "height": 900,
+      "bytes": 1458423,
+      "sha256": "13d3943db8c69704b835b1225d0362ce65dd2b03143bb01f7c5f79fb8b8f7f54",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/talent-desktop.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 82044,
+      "sha256": "621621c95545dc87699ba93c6e506574d810e760b07f3a997f4a2ba8647d12d9",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/talent-mobile.png",
+      "width": 640,
+      "height": 800,
+      "bytes": 725923,
+      "sha256": "d7e815f421b1a9d928e5f6bb0aea0a64342ff32238b28a3438d7b7466227c50d",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "web/talent-mobile.webp",
+      "width": 640,
+      "height": 800,
+      "bytes": 49316,
+      "sha256": "ea456184971ea66a7a204f51269b2b33596ba95b4775c9b02f3f2722d4817a46",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    }
+  ]
+}

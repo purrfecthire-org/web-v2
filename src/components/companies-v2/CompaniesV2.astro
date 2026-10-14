@@ -1,0 +1,335 @@
+---
+// ── For Companies ────────────────────────────────────────────────────────
+// Light hero with a lateral photograph, the approved structure and method.
+// Shares the header, footer and system with the other three pages through
+// Shell. Every primary action is Midnight and goes to the B2B calendar.
+import Shell from '../v2/Shell.astro';
+import type { Lang } from '../../content/index';
+import { getCompaniesV2 } from '../../content/companiesV2';
+import { BOOKING_B2B as BOOKING_URL, KATE } from '../../content/links';
+
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props;
+const t = getCompaniesV2(lang);
+
+const clients = [
+  { name: 'Addi', logo: '/clients/addi.png' },
+  { name: 'PayJoy', logo: '/clients/payjoy.png' },
+  { name: 'Heron', logo: '/clients/heron.png' },
+  { name: 'Optery', logo: '/clients/optery.png' },
+  { name: 'Trébol', logo: '/clients/trebol.png' },
+  { name: 'Cheaf', logo: '/clients/cheaf.png' },
+  { name: 'Mavi', logo: '/clients/mavi.png' },
+  { name: 'Hera', logo: '/clients/hera.png' },
+];
+---
+
+<Shell
+  lang={lang}
+  title={t.meta.title}
+  description={t.meta.description}
+  theme="light"
+  navCta={{ label: 'Discuss your hire', href: BOOKING_URL }}
+  journey="companies"
+>
+  <!-- Hero -->
+  <section class="h3-hero">
+    <div class="h3-wrap h3-hero__grid">
+      <div class="h3-hero__copy">
+        <p class="h3-eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="h3-hero__h1">{t.hero.headline}</h1>
+        <p class="h3-hero__sub">{t.hero.sub}</p>
+        <p class="fc-credential">{t.hero.credential}</p>
+        <a href={BOOKING_URL} data-cta="companies-hero-booking" class="h3-btn h3-btn--ink h3-hero__cta">
+          {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <figure class="h3-hero__media fc-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
+<picture>
+          <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/companies-mobile.webp" />
+          <source media="(max-width: 55.99rem)" srcset="/photos/web/companies-mobile.png" />
+          <source type="image/webp" srcset="/photos/web/companies-desktop.webp" />
+          <img src="/photos/web/companies-desktop.png" alt="People discussing work at a table in an office." width="1200" height="750" decoding="async" fetchpriority="high" />
+        </picture>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Problem + what we look for + method, one Sand surface -->
+  <section class="fc-main">
+    <div class="h3-wrap">
+      <div class="fc-problem">
+        <div>
+          <p class="h3-eyebrow">{t.problem.eyebrow}</p>
+          <h2 class="h3-h2 fc-problem__h2">
+            {t.problem.headline}<span class="h3-dot--end" aria-hidden="true"></span>
+          </h2>
+        </div>
+        <div class="fc-problem__body">
+          {t.problem.body.map((b) => <p class="h3-body">{b}</p>)}
+        </div>
+      </div>
+
+      <div class="fc-lenses">
+        <p class="h3-eyebrow">{t.lenses.eyebrow}</p>
+        <h2 class="h3-h2">{t.lenses.headline}</h2>
+        <p class="h3-body fc-lenses__sub">{t.lenses.sub}</p>
+        <div class="fc-lenses__grid">
+          {t.lenses.items.map((l) => (
+            <article class="fc-lens">
+              <h3 class="fc-lens__title">{l.title}</h3>
+              <p class="fc-lens__body">{l.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div class="fc-method">
+        <p class="h3-eyebrow">{t.method.eyebrow}</p>
+        <h2 class="h3-h2 fc-method__h2">{t.method.headline}</h2>
+        <ol class="fc-steps">
+          {t.method.steps.map((s) => (
+            <li class="fc-step">
+              <span class="fc-step__id">{s.id}</span>
+              <div>
+                <h3 class="fc-step__title">{s.title}</h3>
+                <p class="fc-step__body">{s.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Evidence: the single weighted moment -->
+  <section class="fc-evidence">
+    <div class="h3-wrap fc-evidence__grid">
+      <div>
+        <p class="h3-eyebrow h3-eyebrow--on-dark">{t.evidence.eyebrow}</p>
+        <h2 class="h3-h2 h3-h2--on-dark">{t.evidence.headline}</h2>
+        <p class="h3-body h3-body--on-dark fc-evidence__sub">{t.evidence.sub}</p>
+      </div>
+      <ul class="fc-evidence__list">
+        {t.evidence.items.map((e) => <li>{e}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Proof: the client quote leads, logos close. The Product Lead case is
+       out of this release until the facts and the written permission are in. -->
+  <section class="fc-proof">
+    <div class="h3-wrap">
+      <figure class="fc-quote fc-quote--lead">
+        <div class="fc-quote__portrait">
+          <picture>
+            <source srcset="/brand/fabian-torres.webp" type="image/webp" />
+            <img src="/brand/fabian-torres.jpg" alt="Fabián Torres" width="480" height="480" />
+          </picture>
+        </div>
+        <div>
+          <blockquote>“{t.proof.quote}”</blockquote>
+          <figcaption>
+            <span class="fc-quote__name">{t.proof.name}</span>
+            <span class="fc-quote__role">{t.proof.role}</span>
+          </figcaption>
+        </div>
+      </figure>
+
+      <div class="fc-logos">
+        <p class="h3-eyebrow">{t.proof.logosLabel}</p>
+        <ul>
+          {clients.map((c) => <li><img src={c.logo} alt={c.name} loading="lazy" /></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Engagement models -->
+  <section class="fc-models">
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.models.eyebrow}</p>
+      <h2 class="h3-h2 fc-models__h2">{t.models.headline}</h2>
+      <ul class="fc-models__list">
+        {t.models.items.map((m) => (
+          <li class="fc-model">
+            <span class="fc-model__name">{m.name}</span>
+            <span class="fc-model__note">{m.note}</span>
+          </li>
+        ))}
+      </ul>
+      <a href={BOOKING_URL} data-cta="companies-models-booking" class="h3-link fc-models__cta">
+        {t.models.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Kate -->
+  <section class="fc-kate">
+    <div class="h3-wrap fc-kate__grid">
+      <figure class="fc-kate__portrait">
+        <picture>
+          <source srcset="/brand/kate.webp" type="image/webp" />
+          <img src="/brand/kate.jpg" alt="Kate Forero" width="900" height="1124" />
+        </picture>
+      </figure>
+      <div>
+        <p class="h3-eyebrow">{t.kate.eyebrow}</p>
+        <h2 class="h3-h2">{t.kate.headline}</h2>
+        <p class="h3-body">{t.kate.body}</p>
+        <a href={KATE} class="h3-link fc-kate__cta">
+          {t.kate.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Close -->
+  <section class="fc-close">
+    <div class="h3-wrap">
+      <h2 class="h3-h2 fc-close__h2">{t.close.headline}</h2>
+      <p class="h3-body fc-close__body">{t.close.body}</p>
+      <a href={BOOKING_URL} data-cta="companies-close-booking" class="h3-btn h3-btn--ink fc-close__cta">
+        {t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="fc-close__how">{t.close.howNote}</p>
+    </div>
+  </section>
+</Shell>
+
+<style lang="scss" is:global>
+  /* The frame holds the whole conversation: a wider ratio and a crop that
+     keeps both people, instead of a portrait that cuts one at the edge. */
+
+  .fc-hero__media img { object-position: 42% 42%; }
+  .fc-credential {
+    margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+    font-size: 0.9375rem; color: var(--muted); max-width: 30rem;
+  }
+
+  .fc-main { background: var(--sand); border-top: 1px solid var(--line); padding: 4.5rem 0 5.5rem; }
+  @media (min-width: 56rem) { .fc-main { padding: 6.5rem 0 7.5rem; } }
+
+  .fc-problem { display: grid; gap: 1.75rem; align-items: start; }
+  @media (min-width: 56rem) { .fc-problem { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
+  .fc-problem__h2 { max-width: 18ch; }
+  @media (min-width: 56rem) { .fc-problem__body { padding-top: 1.9rem; } }
+
+  .fc-lenses { margin-top: 4.5rem; }
+  @media (min-width: 56rem) { .fc-lenses { margin-top: 7rem; } }
+  .fc-lenses__sub { margin-top: 1.25rem; }
+  .fc-lenses__grid { margin-top: 2.5rem; display: grid; gap: 1.25rem; }
+  @media (min-width: 56rem) { .fc-lenses__grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; } }
+  .fc-lens {
+    background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+    padding: 1.75rem; min-width: 0;
+  }
+  .fc-lens__title { font-size: 1.0625rem; font-weight: 500; line-height: 1.3; }
+  .fc-lens__body { margin-top: 0.75rem; font-size: 1rem; line-height: 1.6; color: var(--muted); }
+
+  .fc-method { margin-top: 4.5rem; }
+  @media (min-width: 56rem) { .fc-method { margin-top: 7rem; } }
+  .fc-method__h2 { max-width: 30ch; }
+  .fc-steps { margin-top: 2.5rem; display: grid; gap: 0 3.5rem; border-top: 1px solid var(--line); }
+  @media (min-width: 56rem) { .fc-steps { grid-template-columns: 1fr 1fr; } }
+  .fc-step { display: grid; grid-template-columns: 2.75rem 1fr; gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+  .fc-step__id { font-size: 0.8125rem; font-weight: 500; color: var(--muted); padding-top: 0.25rem; }
+  .fc-step__title { font-size: 1.125rem; font-weight: 500; line-height: 1.3; }
+  .fc-step__body { margin-top: 0.4rem; color: var(--muted); }
+
+  .fc-evidence { background: var(--midnight); color: var(--on-dark); padding: 5rem 0; }
+  @media (min-width: 56rem) { .fc-evidence { padding: 7rem 0; } }
+  .fc-evidence__grid { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 56rem) { .fc-evidence__grid { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+  .fc-evidence__sub { margin-top: 1.5rem; }
+  .fc-evidence__list { border-top: 1px solid var(--line-dark); }
+  .fc-evidence__list li { padding: 1.1rem 0; border-bottom: 1px solid var(--line-dark); font-size: 1.0625rem; }
+
+  .fc-proof { background: var(--sand); padding: 5rem 0; }
+  @media (min-width: 56rem) { .fc-proof { padding: 7rem 0; } }
+
+  .fc-quote {
+    margin-top: 3.5rem; padding-top: 2.25rem; border-top: 1px solid var(--line);
+    display: grid; gap: 1.5rem; align-items: center; max-width: 52rem;
+  }
+  @media (min-width: 40rem) { .fc-quote { grid-template-columns: 9rem 1fr; gap: 2.25rem; } }
+  .fc-quote--lead { margin-top: 0; padding-top: 0; border-top: 0; }
+  .fc-quote--lead blockquote { font-size: clamp(1.35rem, 2.4vw, 1.75rem); line-height: 1.38; }
+  .fc-quote__portrait { max-width: 9rem; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 14px; }
+  .fc-quote__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .fc-quote blockquote {
+    font-family: var(--h-serif); font-size: clamp(1.25rem, 2vw, 1.625rem); line-height: 1.3;
+  }
+  .fc-quote figcaption { margin-top: 1rem; display: flex; flex-direction: column; font-size: 0.9375rem; }
+  .fc-quote__name { font-weight: 500; }
+  .fc-quote__role { color: var(--muted); }
+
+  .fc-logos { margin-top: 4rem; padding-top: 2.5rem; border-top: 1px solid var(--line); }
+  .fc-logos ul { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; align-items: center; }
+  .fc-logos img { height: 1.45rem; width: auto; display: block; filter: grayscale(1); opacity: 0.5; transition: opacity 0.2s ease; }
+  .fc-logos img:hover { opacity: 1; }
+
+  .fc-models { background: var(--stone); padding: 4.5rem 0; }
+  @media (min-width: 56rem) { .fc-models { padding: 6rem 0; } }
+  .fc-models__h2 { max-width: 28ch; }
+  .fc-models__list { margin-top: 2.25rem; border-top: 1px solid var(--line); max-width: 52rem; }
+  .fc-model {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 1.25rem;
+    padding: 1.1rem 0; border-bottom: 1px solid var(--line);
+  }
+  .fc-model__name { font-weight: 500; }
+  .fc-model__note { font-size: 0.9375rem; color: var(--muted); }
+  .fc-models__cta { margin-top: 1.75rem; }
+
+  .fc-kate { background: var(--sand); padding: 5rem 0; }
+  @media (min-width: 56rem) { .fc-kate { padding: 6.5rem 0; } }
+  .fc-kate__grid { display: grid; gap: 2.5rem; align-items: center; }
+  @media (min-width: 56rem) { .fc-kate__grid { grid-template-columns: 0.5fr 1.5fr; gap: 4rem; } }
+  .fc-kate__portrait { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 14px; max-width: 20rem; }
+  .fc-kate__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+  .fc-kate__cta { margin-top: 1.75rem; }
+
+  .fc-close { background: var(--sand); border-top: 1px solid var(--line); padding: 5rem 0 6rem; }
+  @media (min-width: 56rem) { .fc-close { padding: 6.5rem 0 7.5rem; } }
+  .fc-close__h2 { max-width: 24ch; }
+  .fc-close__body { margin-top: 1.25rem; }
+  .fc-close__cta { margin-top: 2rem; }
+  .fc-close__mail { margin-top: 1.5rem; font-size: 0.9375rem; color: var(--muted); }
+  .fc-close__mail a { color: var(--text); border-bottom: 1px solid var(--line); }
+
+  /* Small screens: one rhythm between blocks, so the page stops being a scroll. */
+  @media (max-width: 56rem) {
+    /* The three lenses read as a list, not as three padded cards. */
+    .fc-lenses__grid { gap: 0; border-top: 1px solid var(--line); }
+    .fc-lens {
+      background: transparent; border: 0; border-bottom: 1px solid var(--line);
+      border-radius: 0; padding: 1.1rem 0;
+    }
+    .fc-lens__body { margin-top: 0.35rem; }
+    .h3-hero { padding: 5.5rem 0 2.5rem; }
+    .h3-hero__media { margin-top: 1.5rem; }
+    .fc-credential { margin-top: 1.1rem; padding-top: 1rem; }
+    .fc-logos ul { gap: 1rem 2rem; }
+    .fc-logos img { height: 1.25rem; }
+    .fc-problem__body .h3-body { font-size: 1.0625rem; }
+    .fc-kate__portrait { max-width: 11rem; }
+    .fc-main { padding: 3rem 0 3.5rem; }
+    .fc-lenses, .fc-method { margin-top: 3rem; }
+    .fc-steps, .fc-models__list, .fc-evidence__list { margin-top: 1.75rem; }
+    .fc-lenses__grid { margin-top: 1.5rem; }
+    .fc-step, .fc-model, .fc-evidence__list li, .fc-logos ul { padding-block: 1rem; }
+    .fc-evidence, .fc-proof, .fc-models, .fc-kate, .fc-close { padding: 3.25rem 0; }
+    .fc-quote--lead { margin-top: 0; padding-top: 0; }
+    .fc-logos { margin-top: 2rem; padding-top: 1.5rem; }
+    .fc-kate__grid { gap: 1.75rem; }
+    .fc-kate__portrait { max-width: 14rem; }
+    .fc-close { padding-bottom: 4rem; }
+  }
+
+  .fc-close__mail, .fc-close__mail a { overflow-wrap: anywhere; }
+
+  .fc-close__how {
+    margin-top: 1rem; max-width: 32rem;
+    font-size: 0.875rem; line-height: 1.6; color: var(--muted);
+  }
+</style>

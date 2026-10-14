@@ -5,27 +5,46 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://purrfecthire.com',
+  // Every URL the previous site handed out lands on its nearest equivalent.
+  // GitHub Pages serves no server redirects, so Astro emits a small HTML page
+  // per entry with a meta refresh and a canonical link. Nothing 404s silently.
   redirects: {
-    // Short link for the Offer Acceleration program
+    // Commercial pages that moved
+    '/for-founders': '/for-companies',
+    '/kate': '/#kate',
+    // Pricing is gone as a page: the B2B models live on For Companies, the
+    // Offer price on Offer, the session price on For Talent. Home lets the
+    // visitor pick a journey first.
+    '/pricing': '/',
+    // Talent routes that the launch does not carry
+    '/career-sessions': '/for-talent',
+    '/career-momentum': '/for-talent',
+    '/momentum': '/for-talent',
+    '/roles': '/for-talent',
+    // Offer Accelerator
     '/oa': '/offer-acceleration',
-    // Short link for Momentum (Jul 2026 architecture doc names it /momentum)
-    '/momentum': '/career-momentum',
+    // The long application form is withdrawn: with no backend configured it
+    // showed applicants an accepted screen and sent the application nowhere.
+    '/offer-acceleration/apply': '/offer-acceleration',
+    '/offer-acceleration/preguntas': '/offer-acceleration',
+    '/offer-acceleration/te-suena': '/offer-acceleration',
+    '/offer-acceleration/espejo': '/offer-acceleration',
+    // Spanish: the site is English only.
+    '/es': '/',
+    '/es/kate': '/#kate',
+    '/es/pricing': '/',
+    '/es/career-sessions': '/for-talent',
+    '/es/career-momentum': '/for-talent',
+    '/es/privacy-policy': '/privacy-policy',
   },
   integrations: [
     sitemap({
-      // The short-link redirect and the views that aren't public yet stay out
-      // of the sitemap. Public pages (home, for-founders, for-talent,
-      // offer-acceleration, privacy-policy, and the now-live /roles list +
-      // /roles/<slug> detail pages) are included by default.
+      // Five real pages: home, for-companies, for-talent, offer-acceleration
+      // and the privacy policy. Redirect stubs are not pages and never enter
+      // the sitemap.
       filter: (page) =>
-        !/\/oa\/?$/.test(page) &&                         // /oa short-link redirect
-        !/\/momentum\/?$/.test(page) &&                   // /momentum short-link redirect
-        !page.includes('/oa/payment/') &&                 // payment view (not enabled yet)
-        !/\/offer-acceleration\/apply\/?$/.test(page) &&  // OA application (not enabled yet)
-        // OA lead-capture pages: campaign landing pages reached only from a
-        // LinkedIn post or DM. They are noindex and unlinked from the nav, so
-        // they must never enter the sitemap either.
-        !/\/offer-acceleration\/(preguntas|te-suena|espejo)\/?$/.test(page),
+        /\/(for-companies|for-talent|offer-acceleration|privacy-policy)\/?$/.test(page) ||
+        /^https:\/\/purrfecthire\.com\/$/.test(page),
     }),
   ],
   i18n: {
