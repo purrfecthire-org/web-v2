@@ -2,8 +2,11 @@
 // For Talent v2 (rebrand prototype). Entry point to the ecosystem, not the
 // Offer Accelerator product page: enough for someone senior to recognise
 // their own problem, then click through.
-// Rules: no coaching language, no program detail, no pricing, no promise of
+// Rules: no coaching language, no program detail, no promise of
 // introductions, no assumption that the person is already at the next level.
+// Pricing policy (Oct 2026): B2B shows no price anywhere; the Offer
+// Accelerator number lives only on its own page; the 1:1 session, the
+// lowest-friction entry, shows its price here; applying to roles is free.
 // The firewall block is public only once the internal practice exists.
 // ─────────────────────────────────────────────────────────────────────────
 import type { Lang } from './index';
@@ -105,7 +108,7 @@ export const talentV2En: TalentV2Content = {
       },
       {
         name: '1:1 Strategic Session',
-        body: 'For an active process, a negotiation or a specific career decision.',
+        body: 'For an active process, a negotiation or a specific career decision. USD 300.',
         cta: 'Book a session',
         href: '/career-sessions',
       },
