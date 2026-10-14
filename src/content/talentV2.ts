@@ -1,31 +1,34 @@
 // ─────────────────────────────────────────────────────────────────────────
-// For Talent v2 (rebrand prototype). Entry point to the ecosystem, not the
-// Offer Accelerator product page: enough for someone senior to recognise
-// their own problem, then click through.
+// For Talent. Launch copy, 14 October 2026 brief.
+// Entry point to the ecosystem, not the Offer Accelerator product page:
+// enough for someone senior to recognise their own problem, then click
+// through.
 // Rules: no coaching language, no program detail, no promise of
 // introductions, no assumption that the person is already at the next level.
 // Pricing policy (Oct 2026): B2B shows no price anywhere; the Offer
 // Accelerator number lives only on its own page; the 1:1 session, the
-// lowest-friction entry, shows its price here; applying to roles is free.
-// The firewall block is public only once the internal practice exists.
+// lowest-friction entry, shows its price here.
+// Open roles is out of this release: no live destination with real vacancies
+// at launch, so the card and the nav entry are withdrawn and the two
+// remaining ways in stand on their own.
 // ─────────────────────────────────────────────────────────────────────────
 import type { Lang } from './index';
 
+export const SESSION_MAILTO =
+  'mailto:hiring@purrfecthire.com?subject=1%3A1%20Strategic%20Session';
+
 export interface TalentV2Content {
   meta: { title: string; description: string };
-  hero: { eyebrow: string; headline: string; sub: string; audience: string; cta: string; photoNote: string };
+  hero: { eyebrow: string; headline: string; sub: string; audience: string; cta: string };
   problem: { eyebrow: string; headline: string; body: string };
   work: { eyebrow: string; headline: string; items: { title: string; body: string }[]; note: string; cta: string };
-  firewall: { headline: string; lead: string; body: string[]; more: string; status: string };
+  firewall: { headline: string; lead: string; body: string[]; more: string };
   proof: {
     eyebrow: string;
     headline: string;
-    note: string;
-    results: { arc: string; detail: string; pending: string }[];
-    voiceLabel: string;
-    voice: { quote: string; name: string; role: string; translationNote: string; pending: string };
+    voice: { quote: string; name: string; role: string; translationNote: string };
   };
-  paths: { eyebrow: string; headline: string; items: { name: string; body: string; cta: string; href: string }[] };
+  paths: { eyebrow: string; headline: string; items: { name: string; body: string; cta: string; href: string; note?: string }[] };
   close: { headline: string; body: string; cta: string };
 }
 
@@ -42,7 +45,6 @@ export const talentV2En: TalentV2Content = {
     audience:
       'For senior professionals competing for high-impact opportunities across the US, Europe and Latin America.',
     cta: 'Explore Offer Accelerator',
-    photoNote: '[REAL TALENT PHOTO — Offer Accelerator outcome, working environment]',
   },
   problem: {
     eyebrow: 'The real question',
@@ -67,41 +69,25 @@ export const talentV2En: TalentV2Content = {
     lead: 'Advisory engagements are confidential. Participation in Offer Accelerator does not change how candidates are assessed in Purrfect client searches.',
     more: 'What this means in practice',
     body: [
-      'You can apply to a real vacancy if you meet its requirements. The recommendation rests on the same role requirements and evidence standards that apply to everyone else.',
+      'You can be considered for a real vacancy if you meet its requirements. The recommendation rests on the same role requirements and evidence standards that apply to everyone else.',
       'We protect both sides: no private rubrics, no interview answers, no confidential client information and no private advisory notes are shared.',
-      'Applying to our open roles is free. Offer Accelerator is never required.',
+      'Being considered in a Purrfect search is free. Offer Accelerator is never required.',
     ],
-    status: 'Confirmed by Kate, 14 October 2026. Sales uses these exact words.',
   },
   proof: {
     eyebrow: 'Proof',
-    headline: 'What changed for them.',
-    note: 'Each case shows level and scope, the company, the access that did not exist before, and compensation only where the person authorised it. Nothing is published without written permission.',
-    results: [
-      {
-        arc: 'DevOps · $9k → $15k per month',
-        detail: 'Four months.',
-        pending: 'Pending: currency, whether the two figures are comparable, the conditions on both sides, and written permission.',
-      },
-      {
-        arc: 'Founder → Head of Product',
-        detail: '[PENDING — the role, the company and what they became responsible for]',
-        pending: 'Pending: the actual change of role, company and responsibilities, plus written permission. Positioning is not a result.',
-      },
-    ],
-    voiceLabel: 'In their own words',
+    headline: 'In their own words.',
     voice: {
       quote:
         'I did not join because I was struggling to find work. I joined because this time I wanted the job I took to be the one I chose, not the one the market chose for me.',
       name: 'Daniel Contreras',
       role: 'Product Designer, 10 years in technology and product',
       translationNote: 'Translated from Spanish, approved by Daniel.',
-      pending: 'Pending from Daniel: company, role and level before and after, and his photo.',
     },
   },
   paths: {
     eyebrow: 'Ways in',
-    headline: 'Three ways to work with us.',
+    headline: 'Two ways to work with us.',
     items: [
       {
         name: 'Offer Accelerator',
@@ -113,13 +99,8 @@ export const talentV2En: TalentV2Content = {
         name: '1:1 Strategic Session',
         body: 'For an active process, a negotiation or a specific career decision. USD 300.',
         cta: 'Book a session',
-        href: '/career-sessions',
-      },
-      {
-        name: 'Open roles',
-        body: 'The searches we are currently running for clients. Applying is free, and Offer Accelerator is never required.',
-        cta: 'Browse open roles',
-        href: '/roles',
+        href: SESSION_MAILTO,
+        note: 'Sessions are booked by email. The button opens your email app, or write to hiring@purrfecthire.com.',
       },
     ],
   },

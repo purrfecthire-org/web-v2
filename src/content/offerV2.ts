@@ -1,28 +1,39 @@
 // ─────────────────────────────────────────────────────────────────────────
-// Offer Accelerator v2 (rebrand prototype). The product page: who it is for,
-// what decisions it helps with, how the team works, what is included and for
-// how long, what it costs, how to apply.
+// Offer Accelerator. Launch copy, 14 October 2026 brief.
+// The product page: who it is for, what decisions it helps with, how the
+// team works, what is included and for how long, what it costs, how to
+// apply.
 //
-// Decisions still open, marked in the page as internal notes:
-// Confirmed by Kate, 14 October 2026: USD 2,000 flat, eight sessions in
-// total, and process-specific support afterwards until the placement, while
-// the participant actively carries out the agreed plan. Response times and
-// an inactivity policy are not defined, so neither is published.
+// Commercial terms confirmed by Kate, 14 October 2026: USD 2,000 flat,
+// eight sessions in total, and support through each new hiring process
+// afterwards until the person is placed, while they actively carry out the
+// agreed plan. Never "from", never a month limit, never eight new sessions
+// per process, unlimited calls, a guaranteed hire or 24/7 availability.
+// Response times and an inactivity policy are not defined, so neither is
+// published. No internal review notes on the page: pendings live in the
+// team doc.
+//
+// Applications: there is no confirmed application URL for launch, so the
+// four buttons open an email application, flagged next to the button. Swap
+// APPLY_HREF for the form URL the day it exists.
 // ─────────────────────────────────────────────────────────────────────────
 import type { Lang } from './index';
 
+export const APPLY_HREF =
+  'mailto:hiring@purrfecthire.com?subject=Offer%20Accelerator%20application';
+
 export interface OfferV2Content {
   meta: { title: string; description: string };
-  hero: { eyebrow: string; headline: string; sub: string; cta: string; photoNote: string };
+  hero: { eyebrow: string; headline: string; sub: string; cta: string };
   question: { eyebrow: string; headline: string; body: string; who: string };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
   access: { headline: string; body: string; limit: string };
-  firewall: { headline: string; lead: string; body: string[]; more: string; status: string };
-  includes: { eyebrow: string; headline: string; items: string[]; closing: string; scopeNote: string };
+  firewall: { headline: string; lead: string; body: string[]; more: string };
+  includes: { eyebrow: string; headline: string; items: string[]; closing: string };
   behind: { eyebrow: string; headline: string; body: string[] };
-  proof: { eyebrow: string; headline: string; quote: string; name: string; role: string; translationNote: string; pending: string };
-  investment: { eyebrow: string; headline: string; price: string; next: string; priceNote: string };
-  apply: { headline: string; body: string; cta: string; capacityNote: string };
+  proof: { eyebrow: string; headline: string; quote: string; name: string; role: string; translationNote: string };
+  investment: { eyebrow: string; headline: string; price: string; next: string };
+  apply: { headline: string; body: string; cta: string; howNote: string };
   editorial: string;
 }
 
@@ -37,11 +48,10 @@ export const offerV2En: OfferV2Content = {
     headline: 'Make your signal impossible to miss.',
     sub: 'Private market advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
     cta: 'Apply to Offer Accelerator',
-    photoNote: '[REAL TALENT PHOTO — working environment]',
   },
   question: {
     eyebrow: 'The real question',
-    headline: 'Find out what level the market can actually support.',
+    headline: 'Find out what level the market can actually validate.',
     body: 'You may be operating above the level the market is assigning you. Or the evidence may not support the move yet. We help you know the difference.',
     who: 'For senior professionals with real scope and results who are about to make a decision that sets the next few years: an offer, a negotiation, a market change, a move between IC and management, or a jump in level.',
   },
@@ -65,11 +75,10 @@ export const offerV2En: OfferV2Content = {
     lead: 'Advisory engagements are confidential. Participation in Offer Accelerator does not change how candidates are assessed in Purrfect client searches.',
     more: 'What this means in practice',
     body: [
-      'You can apply to a real vacancy if you meet its requirements. The recommendation rests on the same role requirements and evidence standards that apply to everyone else.',
+      'You can be considered for a real vacancy if you meet its requirements. The recommendation rests on the same role requirements and evidence standards that apply to everyone else.',
       'We protect both sides: no private rubrics, no interview answers, no confidential client information and no private advisory notes are shared.',
-      'Applying to our open roles is free. Offer Accelerator is never required.',
+      'Being considered in a Purrfect search is free. Offer Accelerator is never required.',
     ],
-    status: 'Confirmed by Kate, 14 October 2026. Sales uses these exact words.',
   },
   includes: {
     eyebrow: 'What is included',
@@ -85,7 +94,6 @@ export const offerV2En: OfferV2Content = {
       'After the eight sessions, support through each new hiring process until you secure your next role, while you actively carry out the agreed plan',
     ],
     closing: 'We review opportunities, prepare for interviews, assess feedback and support negotiations. You keep us informed as your search progresses.',
-    scopeNote: 'Not published because it is not defined: a response time, 24/7 availability and an inactivity policy. Opportunity validation still needs one line on what we review and what you receive.',
   },
   behind: {
     eyebrow: 'Where our read comes from',
@@ -103,20 +111,18 @@ export const offerV2En: OfferV2Content = {
     name: 'Daniel Contreras',
     role: 'Product Designer, 10 years in technology and product',
     translationNote: 'Translated from Spanish, approved by Daniel.',
-    pending: 'Pending from Daniel: company, and role and level before and after, plus his photo.',
   },
   investment: {
     eyebrow: 'Investment',
     headline: 'A considered investment in your next move.',
     price: 'USD 2,000',
     next: 'Eight sessions, followed by support through each new hiring process until you secure your next role, while you actively carry out the agreed plan.',
-    priceNote: 'The Pricing page still says from USD 2,000 and has to be corrected in the same release.',
   },
   apply: {
     headline: 'Apply to Offer Accelerator.',
     body: 'Tell us where you are and what the next move has to change.',
     cta: 'Apply to Offer Accelerator',
-    capacityNote: 'No capacity or scarcity line, because no real limit has been defined.',
+    howNote: 'Applications open in your email app. You can also write to hiring@purrfecthire.com.',
   },
   editorial: 'Your career has advisors too.',
 };

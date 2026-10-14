@@ -1,12 +1,14 @@
 ---
-// ── Offer Accelerator v2 · rebrand prototype ─────────────────────────────
-// Product page. Same system as Home and For Talent: Sand as the main
+// ── Offer Accelerator ────────────────────────────────────────────────────
+// Product page. Same system as Home and For Talent: Ivory as the main
 // surface, Midnight for the hero and one weighted moment, Stone for the
 // investment block, purple only for action and the single brand dot.
-// Internal notes carry data-internal so they can be stripped before publish.
+// Every apply button opens the same destination, and the line under the
+// button says what happens when it does.
 import Shell from '../v2/Shell.astro';
 import type { Lang } from '../../content/index';
 import { getOfferV2 } from '../../content/offerV2';
+import { APPLY_OFFER } from '../../content/links';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
@@ -18,7 +20,8 @@ const t = getOfferV2(lang);
   title={t.meta.title}
   description={t.meta.description}
   theme="dark"
-  navCta={{ label: "Apply to Offer Accelerator", href: "/offer-acceleration/apply" }}
+  navCta={{ label: "Apply to Offer Accelerator", href: APPLY_OFFER, external: true }}
+  journey="offer"
 >
 
       <!-- Hero -->
@@ -28,7 +31,7 @@ const t = getOfferV2(lang);
             <p class="h3-eyebrow h3-eyebrow--on-dark">{t.hero.eyebrow}</p>
             <h1 class="h3-hero__h1">{t.hero.headline}</h1>
             <p class="h3-hero__sub">{t.hero.sub}</p>
-            <a href="/offer-acceleration/apply" class="h3-btn oa-hero__cta">
+            <a href={APPLY_OFFER} class="h3-btn oa-hero__cta">
               {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
           </div>
@@ -87,7 +90,6 @@ const t = getOfferV2(lang);
               <summary>{t.firewall.more}</summary>
               <div>{t.firewall.body.map((b) => <p>{b}</p>)}</div>
             </details>
-            <p class="h3-note" data-internal>{t.firewall.status}</p>
           </aside>
         </div>
       </section>
@@ -99,7 +101,6 @@ const t = getOfferV2(lang);
             <p class="h3-eyebrow">{t.includes.eyebrow}</p>
             <h2 class="h3-h2">{t.includes.headline}</h2>
             <p class="oa-includes__closing">{t.includes.closing}</p>
-            <p class="h3-note" data-internal>{t.includes.scopeNote}</p>
           </div>
           <ul class="oa-list">
             {t.includes.items.map((i) => <li>{i}</li>)}
@@ -133,7 +134,6 @@ const t = getOfferV2(lang);
               <span class="oa-quote__role">{t.proof.translationNote}</span>
             </figcaption>
           </figure>
-          <p class="h3-note" data-internal>{t.proof.pending}</p>
         </div>
       </section>
 
@@ -147,7 +147,6 @@ const t = getOfferV2(lang);
           <div>
             <p class="oa-price">{t.investment.price}</p>
             <p class="h3-body oa-investment__next">{t.investment.next}</p>
-            <p class="h3-note" data-internal>{t.investment.priceNote}</p>
           </div>
         </div>
       </section>
@@ -157,10 +156,10 @@ const t = getOfferV2(lang);
         <div class="h3-wrap">
           <h2 class="h3-h2 oa-apply__h2">{t.apply.headline}</h2>
           <p class="h3-body oa-apply__body">{t.apply.body}</p>
-          <a href="/offer-acceleration/apply" class="h3-btn h3-btn--ink oa-apply__cta">
+          <a href={APPLY_OFFER} class="h3-btn oa-apply__cta">
             {t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span>
           </a>
-          <p class="h3-note" data-internal>{t.apply.capacityNote}</p>
+          <p class="oa-apply__how">{t.apply.howNote}</p>
           <p class="oa-editorial">{t.editorial}</p>
         </div>
       </section>
@@ -250,6 +249,11 @@ const t = getOfferV2(lang);
   .oa-apply__h2 { max-width: 24ch; }
   .oa-apply__body { margin-top: 1.25rem; }
   .oa-apply__cta { margin-top: 2rem; }
+  /* Says what the button does before it is pressed. */
+  .oa-apply__how {
+    margin-top: 1rem; max-width: 30rem;
+    font-size: 0.875rem; line-height: 1.6; color: var(--muted);
+  }
   .oa-editorial {
     margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--line);
     font-family: var(--h-serif); font-size: clamp(1.375rem, 2.2vw, 1.75rem);

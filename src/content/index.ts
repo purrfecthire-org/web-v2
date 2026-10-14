@@ -241,7 +241,6 @@ export const content_en: LandingContent = {
         ],
       },
       { label: 'Pricing', href: '/pricing' },
-      { label: 'Open roles', href: '/roles' },
       { label: 'Kate', href: '/kate' },
     ],
     cta: 'Get your first match',
@@ -437,7 +436,6 @@ export const content_en: LandingContent = {
     links: [
       { label: 'Privacy', href: '/privacy-policy' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire' },
-      { label: 'Open roles', href: '/roles' },
     ],
     legal: '© 2026 Purrfect Hire',
   },
@@ -612,7 +610,6 @@ export const content_es: LandingContent = {
         ],
       },
       { label: 'Precios', href: '/es/pricing' },
-      { label: 'Roles abiertos', href: '/roles' },
       { label: 'Kate', href: '/es/kate' },
     ],
     cta: 'Empieza tu búsqueda',
@@ -808,7 +805,6 @@ export const content_es: LandingContent = {
     links: [
       { label: 'Privacidad', href: '/es/privacy-policy' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire' },
-      { label: 'Roles abiertos', href: '/roles' },
     ],
     legal: '© 2026 Purrfect Hire',
   },

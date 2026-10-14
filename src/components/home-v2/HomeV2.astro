@@ -10,6 +10,7 @@
 import Shell from '../v2/Shell.astro';
 import { getContent, type Lang } from '../../content/index';
 import { getHomeV2 } from '../../content/homeV2';
+import { BOOKING_B2B, PAGE_COMPANIES, PAGE_TALENT, PAGE_OFFER } from '../../content/links';
 
 interface Props { lang?: Lang }
 
@@ -19,7 +20,6 @@ const content = getContent(lang);
 // Fabián Torres: three years working together, his own recommendation, and a
 // photograph we can publish. The quote stays in his words.
 const featured = content.testimonials.grid.find((q) => q.name === 'Fabián Torres') ?? content.testimonials.featured;
-const p = lang === 'es' ? '/es' : '';
 
 const clients = [
   { name: 'Addi', logo: '/clients/addi.png' },
@@ -38,7 +38,8 @@ const clients = [
   title={t.meta.title}
   description={t.meta.description}
   theme="dark"
-  navCta={{ label: "Start a search", href: "/for-founders" }}
+  navCta={{ label: "Start a search", href: BOOKING_B2B, external: true }}
+  journey="home"
 >
 
       <!-- 1 · Hero: router with a brand layer -->
@@ -49,14 +50,14 @@ const clients = [
             <p class="h3-hero__sub">{t.hero.sub}</p>
 
             <div class="h3-doors">
-              <a href={`${p}/for-founders`} class="h3-door">
+              <a href={PAGE_COMPANIES} class="h3-door">
                 <span class="h3-door__label">
   {t.hero.companies.label}
                 </span>
                 <span class="h3-door__promise">{t.hero.companies.promise}</span>
                 <span class="h3-door__arrow" aria-hidden="true">→</span>
               </a>
-              <a href={`${p}/for-talent`} class="h3-door">
+              <a href={PAGE_TALENT} class="h3-door">
                 <span class="h3-door__label">
   {t.hero.talent.label}
                 </span>
@@ -96,7 +97,7 @@ const clients = [
               {t.companies.headline}<span class="h3-dot h3-dot--end" aria-hidden="true"></span>
             </h2>
             <p class="h3-lead">{t.companies.intro}</p>
-            <a href={`${p}/for-founders`} class="h3-btn h3-btn--ink h3-co__cta">
+            <a href={PAGE_COMPANIES} class="h3-btn h3-btn--ink h3-co__cta">
               {t.companies.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
             <figure class="h3-co__scene">
@@ -115,7 +116,7 @@ const clients = [
               <div class="h3-quote__portrait">
                 <picture>
                   <source srcset="/brand/fabian-torres.webp" type="image/webp" />
-                  <img src="/brand/fabian-torres.jpg" alt="Fabián Torres" width="900" height="1200" loading="lazy" />
+                  <img src="/brand/fabian-torres.jpg" alt="Fabián Torres" width="480" height="480" />
                 </picture>
               </div>
               <div class="h3-quote__text">
@@ -145,7 +146,7 @@ const clients = [
             <h2 class="h3-h2 h3-h2--on-dark">{t.talent.headline}</h2>
             <p class="h3-lead h3-lead--on-dark">{t.talent.body}</p>
             <p class="h3-body h3-body--on-dark">{t.talent.sub}</p>
-            <a href={`${p}/for-talent`} class="h3-btn h3-ta__cta">{t.talent.cta}</a>
+            <a href={PAGE_OFFER} class="h3-btn h3-ta__cta">{t.talent.cta}</a>
           </div>
         </div>
       </section>
@@ -163,12 +164,12 @@ const clients = [
       </section>
 
       <!-- 6 · Kate -->
-      <section class="h3-kate">
+      <section class="h3-kate" id="kate">
         <div class="h3-wrap h3-kate__grid">
           <figure class="h3-kate__portrait">
             <picture>
               <source srcset="/brand/kate.webp" type="image/webp" />
-              <img src="/brand/kate.jpg" alt="Kate Forero" width="1200" height="1525" loading="lazy" />
+              <img src="/brand/kate.jpg" alt="Kate Forero" width="900" height="1124" />
             </picture>
           </figure>
           <div>
@@ -176,10 +177,10 @@ const clients = [
             <h2 class="h3-h2">{t.kate.headline}</h2>
             <p class="h3-body">{t.kate.body}</p>
             <div class="h3-kate__ctas">
-              <a href={`${p}/for-founders`} class="h3-link">
+              <a href={PAGE_COMPANIES} class="h3-link">
                 {t.kate.ctaCompanies} <span class="h3-arrow" aria-hidden="true">→</span>
               </a>
-              <a href={`${p}/for-talent`} class="h3-link">
+              <a href={PAGE_TALENT} class="h3-link">
                 {t.kate.ctaTalent} <span class="h3-arrow" aria-hidden="true">→</span>
               </a>
             </div>
@@ -221,7 +222,9 @@ const clients = [
     font-family: var(--h-serif); font-size: clamp(1.375rem, 2.2vw, 1.75rem);
     line-height: 1.15; color: var(--on-dark);
   }
-  .h3-door__arrow { color: var(--purple); font-size: 1.25rem; }
+  /* Was --purple, which reads at 3.1:1 on Midnight. The signal dots keep the
+     brand colour; the arrow needs to be legible. */
+  .h3-door__arrow { color: var(--on-dark); font-size: 1.25rem; }
   /* 2 · Trust */
   .h3-trust { background: var(--sand); padding: 4rem 0 4.5rem; }
   .h3-co { border-top: 1px solid var(--line); }

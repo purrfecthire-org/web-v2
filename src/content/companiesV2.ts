@@ -1,8 +1,10 @@
 // ─────────────────────────────────────────────────────────────────────────
-// For Companies v2 (rebrand prototype). Same structure and method as the
-// approved restructure, moved onto the new system: light hero with a lateral
-// photograph, Midnight for the single weighted moment, Sand as the surface.
-// Nothing here carries a figure that is not verified.
+// For Companies. Launch copy, 14 October 2026 brief.
+// Light hero with a lateral photograph, Midnight for the single weighted
+// moment, Ivory as the surface.
+// Rules baked in: no fee and no percentages, no retainer, no placement or
+// retention metrics, no figure that is not verified, no em dashes, no
+// "not X, it's Y". No internal review notes: pendings live in the team doc.
 // ─────────────────────────────────────────────────────────────────────────
 import type { Lang } from './index';
 
@@ -14,11 +16,6 @@ export interface CompaniesV2Content {
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
   evidence: { eyebrow: string; headline: string; sub: string; items: string[] };
   proof: {
-    eyebrow: string;
-    arc: string;
-    meta: string;
-    body: string;
-    pending: string;
     quote: string;
     name: string;
     role: string;
@@ -33,12 +30,12 @@ export const companiesV2En: CompaniesV2Content = {
   meta: {
     title: 'For companies. Build smaller, stronger teams | Purrfect Hire',
     description:
-      'Senior hires for early-stage companies, with the performance, judgment and slope to grow beyond the role. Evidence on every candidate.',
+      'Senior and executive search for VC-backed startups across engineering, product, go-to-market and leadership. Evidence on every candidate.',
   },
   hero: {
     eyebrow: 'For companies',
     headline: 'Build smaller, stronger teams.',
-    sub: 'Senior and executive hires across engineering, product, go-to-market and leadership, for people with the judgment, ownership and ability to grow as the company changes.',
+    sub: 'Senior and executive search across engineering, product, go-to-market and leadership. We assess the ownership, judgment and capacity to grow that each role requires.',
     credential: 'VC-backed startups, seed to Series B · The search follows the market, working model and language of the role',
     cta: 'Start a search',
   },
@@ -57,8 +54,8 @@ export const companiesV2En: CompaniesV2Content = {
     items: [
       { title: 'Hires that grow with the company', body: 'We look at what they actually owned, how they decide, and whether they can grow as the company changes.' },
       { title: 'A read on the search before sourcing', body: 'We review the problem and the stage of the company before we open the search.' },
-      { title: 'A read on the role, before any commitment', body: 'We tell you what the role actually requires, and what it will take to fill it, before anything is signed.' },
-      { title: 'Evidence on every candidate', body: 'We meet each person before presenting them, and the recommendation separates what we observed, what was stated and what we could not validate.' },
+      { title: 'A read on the role, before any commitment', body: 'Before you commit, we give you a read on where the profile sits in the market, what it pays, what moves candidates and the three questions we would screen with.' },
+      { title: 'Evidence on every candidate', body: 'We meet each person before presenting them, and the recommendation separates what we observed, what they owned and what remains to be validated.' },
     ],
   },
   method: {
@@ -74,8 +71,7 @@ export const companiesV2En: CompaniesV2Content = {
   evidence: {
     eyebrow: 'What you get',
     headline: 'Evidence on every candidate.',
-    sub: 'For every candidate we present, you receive a written assessment of their experience, the evidence behind our recommendation and what remains unverified.',
-    pending: 'Pending before publishing: one real anonymised example, and the search lead approving the report and confirming the delivery standard. Until then this section stays in review.',
+    sub: 'We meet each person before presenting them. Our recommendation explains what we observed, what they owned and what remains to be validated.',
     items: [
       'What we saw',
       'What they owned',
@@ -85,11 +81,6 @@ export const companiesV2En: CompaniesV2Content = {
     ],
   },
   proof: {
-    eyebrow: 'Built for what comes next',
-    arc: 'Product Lead → Director of Product',
-    meta: 'Two years · San Francisco startup',
-    body: 'We placed a Product Lead at an early-stage San Francisco startup. Within two years they had grown into Director of Product. That is the hire we look for: someone who solves the problem in front of them today and grows into what the company needs next.',
-    pending: 'Pending before publishing: confirm the facts and the written permission, including whether the city can be named.',
     quote: 'Purrfect Hire adapted to our processes and to each specific role. They\'re a real search partner, not just a pipeline.',
     name: 'Fabián Torres',
     role: 'CEO, Trébol (CO)',
@@ -107,7 +98,7 @@ export const companiesV2En: CompaniesV2Content = {
   kate: {
     eyebrow: 'Who is behind the searches',
     headline: 'Built from inside early-stage companies.',
-    body: 'Kate led recruiting through Addi\'s growth, from an early-stage team to almost 500 people, post-Series B. Purrfect Hire came out of seeing first hand which hires scale with a company and which ones stall.',
+    body: 'Kate led recruiting at Addi. Today, Purrfect Hire runs senior and executive searches for VC-backed companies across the US, Europe and Latin America.',
     cta: 'Meet Kate',
   },
   close: {

@@ -10,13 +10,12 @@ import type { Lang } from './index';
 
 export interface HomeV2Content {
   meta: { title: string; description: string };
-  nav: { companies: string; talent: string; roles: string; kate: string; cta: string };
+  nav: { companies: string; talent: string; kate: string; cta: string };
   hero: {
     headline: string;
     sub: string;
     companies: { label: string; promise: string };
     talent: { label: string; promise: string };
-    photoNote: string;
   };
   trust: { label: string; evidence: string };
   companies: {
@@ -29,6 +28,8 @@ export interface HomeV2Content {
     quoteLabel: string;
     cta: string;
   };
+  // Kate's bio: one wording across Home and For Companies, and no figure
+  // that the supplied sources disagree about.
   talent: {
     eyebrow: string;
     headline: string;
@@ -37,7 +38,7 @@ export interface HomeV2Content {
     cta: string;
   };
   belief: { eyebrow: string; statement: string; forCompanies: string; forTalent: string };
-  kate: { eyebrow: string; headline: string; body: string; ctaCompanies: string; ctaTalent: string; photoNote: string };
+  kate: { eyebrow: string; headline: string; body: string; ctaCompanies: string; ctaTalent: string };
   footer: { legal: string; privacy: string; linkedin: string };
 }
 
@@ -50,7 +51,6 @@ export const homeV2En: HomeV2Content = {
   nav: {
     companies: 'For companies',
     talent: 'For talent',
-    roles: 'Open roles',
     kate: 'Kate',
     cta: 'Start a search',
   },
@@ -59,7 +59,6 @@ export const homeV2En: HomeV2Content = {
     sub: 'Senior and executive search for VC-backed startups, matching people to the problem, stage and operating context of the company.',
     companies: { label: 'For companies', promise: 'Build smaller, stronger teams.' },
     talent: { label: 'For talent', promise: 'Make your signal impossible to miss.' },
-    photoNote: '[REAL TEAM PHOTO — Purrfect or a client team, candid, natural light]',
   },
   trust: {
     label: 'Trusted by founders at',
@@ -76,7 +75,6 @@ export const homeV2En: HomeV2Content = {
       'We look beyond whether someone can do the job today: what they actually owned, how they make decisions, how fast they learn and whether their slope matches where the company is going.',
     evidence: 'Evidence on every candidate.',
     quoteLabel: 'A client, in his words',
-    casePhotoNote: '[REAL CLIENT PHOTO — Head of Customer Operations, working environment]',
     cta: 'See how we work with companies',
   },
   talent: {
@@ -96,10 +94,9 @@ export const homeV2En: HomeV2Content = {
   kate: {
     eyebrow: 'Purrfect Hire',
     headline: 'Founded by Kate Forero.',
-    body: 'Kate led recruiting at Addi through two years of growth, to almost 500 people, post-Series B. Today Purrfect Hire runs senior searches globally for early-stage companies, including teams backed by YC, a16z and Sequoia.',
+    body: 'Kate led recruiting at Addi. Today, Purrfect Hire runs senior and executive searches for VC-backed companies across the US, Europe and Latin America.',
     ctaCompanies: 'For companies',
     ctaTalent: 'For talent',
-    photoNote: '[REAL KATE PHOTO — documentary, not a corporate headshot]',
   },
   footer: { legal: '© 2026 Purrfect Hire', privacy: 'Privacy', linkedin: 'LinkedIn' },
 };
@@ -112,7 +109,6 @@ export const homeV2Es: HomeV2Content = {
   nav: {
     companies: 'Para empresas',
     talent: 'Para talento',
-    roles: 'Roles abiertos',
     kate: 'Kate',
     cta: 'Iniciar una búsqueda',
   },
@@ -121,7 +117,6 @@ export const homeV2Es: HomeV2Content = {
     sub: 'Purrfect Hire es una boutique de talento global para compañías early-stage. Hacemos búsquedas senior en US, Europa y Latinoamérica, conectando personas excepcionales con el problema, la etapa y el contexto operativo de la compañía.',
     companies: { label: 'Para empresas', promise: 'Equipos más pequeños y más fuertes.' },
     talent: { label: 'Para talento', promise: 'Haz que tu señal sea imposible de ignorar.' },
-    photoNote: '[REAL TEAM PHOTO — Purrfect o equipo cliente, candid, luz natural]',
   },
   trust: {
     label: 'Confían en nosotros founders de',
@@ -138,7 +133,6 @@ export const homeV2Es: HomeV2Content = {
       'Miramos más allá de si alguien puede hacer el trabajo hoy: qué fue realmente suyo, cómo toma decisiones, qué tan rápido aprende y si su pendiente acompaña hacia dónde va la compañía.',
     evidence: 'Cada candidato llega con evidencia.',
     quoteLabel: 'Un cliente, con sus palabras',
-    casePhotoNote: '[REAL CLIENT PHOTO — Head of Customer Operations, entorno de trabajo]',
     cta: 'Cómo trabajamos con empresas',
   },
   talent: {
@@ -158,10 +152,9 @@ export const homeV2Es: HomeV2Content = {
   kate: {
     eyebrow: 'Purrfect Hire',
     headline: 'Fundada por Kate Forero.',
-    body: 'Kate lideró el recruiting de Addi durante dos años de crecimiento, hasta casi 500 personas, después de la Serie B. Hoy Purrfect Hire hace búsquedas senior globalmente para compañías early-stage, incluidos equipos respaldados por YC, a16z y Sequoia.',
+    body: 'Kate lideró el recruiting de Addi. Hoy Purrfect Hire hace búsquedas senior y de liderazgo para compañías respaldadas por venture capital en Estados Unidos, Europa y Latinoamérica.',
     ctaCompanies: 'Para empresas',
     ctaTalent: 'Para talento',
-    photoNote: '[REAL KATE PHOTO — documental, no headshot corporativo]',
   },
   footer: { legal: '© 2026 Purrfect Hire', privacy: 'Privacidad', linkedin: 'LinkedIn' },
 };

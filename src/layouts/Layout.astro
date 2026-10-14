@@ -10,6 +10,14 @@ interface Props {
   /** Design-test pages: keep out of search results */
   noindex?: boolean;
   /**
+   * The four commercial pages ship Fraunces + Inter from their own shell.
+   * Only the pages still on the previous system need Schibsted Grotesk, so
+   * they are the only ones that pay for the request.
+   */
+  legacyFonts?: boolean;
+  /** Set only on pages that genuinely exist in both languages. */
+  hasAlternateLang?: boolean;
+  /**
    * Absolute URL for og:image / twitter:image. B2C pages (career-sessions,
    * momentum, /kate) must pass the Kate photo: shared over WhatsApp they
    * should show her face, not the logo (visual spec §5).
@@ -23,7 +31,9 @@ const {
   lang = 'en',
   canonicalUrl,
   noindex = false,
-  ogImage = 'https://purrfecthire.com/logos/ph_imagotipo.png',
+  legacyFonts = true,
+  hasAlternateLang = false,
+  ogImage = 'https://purrfecthire.com/brand/og-default.png',
 } = Astro.props;
 
 const siteUrl = 'https://purrfecthire.com';
@@ -40,10 +50,14 @@ const alternateUrl = lang === 'en' ? `${siteUrl}/es/` : siteUrl;
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Canonical & hreflang (prevents EN/ES duplicate content penalty) -->
+    <!-- Canonical, and hreflang only where a translation really exists -->
     <link rel="canonical" href={currentUrl} />
-    <link rel="alternate" hreflang={lang} href={currentUrl} />
-    <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
+    {hasAlternateLang && (
+      <Fragment>
+        <link rel="alternate" hreflang={lang} href={currentUrl} />
+        <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
+      </Fragment>
+    )}
     <link rel="alternate" hreflang="x-default" href={siteUrl} />
 
     <!-- Open Graph -->
@@ -61,13 +75,19 @@ const alternateUrl = lang === 'en' ? `${siteUrl}/es/` : siteUrl;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-optical.svg" />
+    <link rel="apple-touch-icon" href="/favicon-180.png" />
+    {legacyFonts && (
+      <Fragment>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
+      </Fragment>
+    )}
     <title>{title}</title>
     <slot name="head" />
   </head>
