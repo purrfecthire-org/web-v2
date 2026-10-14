@@ -11,6 +11,12 @@ const pageUrl = `${siteUrl}/privacy-policy`;
 // hiring@ is the verified inbox; privacy@ has never received a message.
 const contactEmail = 'hiring@purrfecthire.com';
 
+// This section is driven by the same flag that turns measurement on, so the
+// policy cannot say one thing while the site does another. Set
+// PUBLIC_ANALYTICS_NAME to the tool's name when you set PUBLIC_ANALYTICS_SRC.
+const analyticsOn = Boolean(import.meta.env.PUBLIC_ANALYTICS_SRC);
+const analyticsName = import.meta.env.PUBLIC_ANALYTICS_NAME ?? 'a privacy-focused analytics provider';
+
 const meta = {
   title: 'Privacy Policy | Purrfect Hire',
   description:
@@ -73,11 +79,33 @@ const meta = {
     nothing from third parties. There is no advertising, no tracking pixel and
     no cross-site profiling, which is why you are not asked to accept cookies.
   </p>
+  {analyticsOn ? (
+    <Fragment>
+      <p>
+        We measure audience with <strong>{analyticsName}</strong>, configured
+        without cookies. It records the page visited, the referring site, and
+        the country, browser type and device type derived from your request. It
+        does not store your IP address, does not set an identifier on your
+        device and cannot follow you to other websites.
+      </p>
+      <p>
+        We also count which of our main buttons are used, so we know whether a
+        page works for companies, for talent or for Offer Accelerator. What is
+        recorded is the name of the button and which of those three journeys it
+        belongs to. Nothing you type, no email address and nothing about an
+        advisory engagement is ever sent to measurement.
+      </p>
+    </Fragment>
+  ) : (
+    <p>
+      If we add audience measurement, it will be a tool that counts visits
+      without cookies and without identifying you personally, and this section
+      will say so before it goes live.
+    </p>
+  )}
   <p>
-    If we add audience measurement, it will be a tool that counts visits
-    without cookies and without identifying you personally, and this section
-    will say so before it goes live. Our hosting provider may keep standard
-    server logs, including IP addresses, for security and reliability.
+    Our hosting provider may keep standard server logs, including IP addresses,
+    for security and reliability.
   </p>
 
   <h3>Information from third parties</h3>

@@ -125,17 +125,25 @@ const alternateUrl =
           const journey =
             document.querySelector('[data-journey]')?.getAttribute('data-journey') ?? 'unknown';
 
+          // Standard queueing stub: clicks that happen before the provider's
+          // script finishes loading are held and drained by it on arrival.
+          const w = window as unknown as {
+            plausible?: { (...args: unknown[]): void; q?: unknown[] };
+          };
+          if (!w.plausible) {
+            const stub = function (...args: unknown[]) {
+              (stub.q = stub.q || []).push(args);
+            } as { (...args: unknown[]): void; q?: unknown[] };
+            w.plausible = stub;
+          }
+
           document.addEventListener('click', (e) => {
             try {
               const a = (e.target as HTMLElement)?.closest?.('[data-cta]');
               if (!a) return;
               const name = a.getAttribute('data-cta');
               if (!name) return;
-              // Plausible-compatible queue; harmless if the tool never loads.
-              const w = window as unknown as { plausible?: (...args: unknown[]) => void };
-              w.plausible =
-                w.plausible || ((...args: unknown[]) => ((w.plausible as unknown as { q: unknown[] }).q = (w.plausible as unknown as { q?: unknown[] }).q || []).push(args));
-              w.plausible('cta', { props: { cta: name, journey } });
+              w.plausible?.('cta', { props: { cta: name, journey } });
             } catch {
               /* measurement must never break a click */
             }
