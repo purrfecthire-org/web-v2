@@ -52,7 +52,7 @@ export const homeV2En: HomeV2Content = {
     companies: 'For companies',
     talent: 'For talent',
     kate: 'Kate',
-    cta: 'Start a search',
+    cta: 'Discuss your hire',
   },
   hero: {
     headline: 'Exceptional people build extraordinary things.',
@@ -110,7 +110,7 @@ export const homeV2Es: HomeV2Content = {
     companies: 'Para empresas',
     talent: 'Para talento',
     kate: 'Kate',
-    cta: 'Iniciar una búsqueda',
+    cta: 'Hablemos de tu contratación',
   },
   hero: {
     headline: 'Las personas excepcionales construyen cosas extraordinarias.',

@@ -17,20 +17,24 @@
 // ─────────────────────────────────────────────────────────────────────────
 
 /**
- * B2B scoping call. Companies hero, models, close, and the Home nav CTA.
+ * B2B first contact. Companies hero, models and close, plus the Home and
+ * Companies nav CTAs: seven buttons, one destination.
  *
- * BLOQUEA LA PUBLICACIÓN. El evento actual ("Builder fit call") mezcla Offer,
- * candidatos, cultural fit y contratación, así que un founder que pulsa
- * "Start a search" llega a una agenda que no es la suya.
+ * Was calendly.com/purrfecthire/5, an event that mixes Offer, candidates,
+ * cultural fit and hiring, so a founder pressing "Discuss your hire" landed
+ * on a calendar that was not theirs. Email until the companies-only calendar
+ * exists: swapping this one line moves all seven at once.
  *
- * Reemplazar por la agenda exclusiva de compañías en cuanto exista:
- *   Título   Purrfect Hire | Senior hiring discussion
- *   Preguntas  compañía · rol abierto
- *   Logo     brand/logo/logo-horizontal-midnight.svg
+ * The calendar to create:
+ *   Title      Purrfect Hire | Senior hiring discussion
+ *   Questions  company · open role
+ *   Logo       brand/logo/logo-horizontal-midnight.svg
  *
- * Cambiar solo esta línea deja las cuatro apariciones apuntando bien.
+ * B2B and Offer never share a destination: different subject lines keep the
+ * two inboxes legible even while both are email.
  */
-export const BOOKING_B2B = 'https://calendly.com/purrfecthire/5';
+export const BOOKING_B2B =
+  'mailto:hiring@purrfecthire.com?subject=Discuss%20your%20hire&body=Hi%20Kate%2C%0A%0AI%20would%20like%20to%20discuss%20a%20hire.%0A%0ACompany%3A%0ARole%20we%20are%20opening%3A%0AWhat%20this%20hire%20has%20to%20change%3A%0A%0AThanks%2C%0A';
 
 /** Single inbox for the whole site. */
 export const CONTACT_EMAIL = 'hiring@purrfecthire.com';

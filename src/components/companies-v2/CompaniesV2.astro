@@ -29,7 +29,7 @@ const clients = [
   title={t.meta.title}
   description={t.meta.description}
   theme="light"
-  navCta={{ label: 'Start a search', href: BOOKING_URL, external: true }}
+  navCta={{ label: 'Discuss your hire', href: BOOKING_URL }}
   journey="companies"
 >
   <!-- Hero -->
@@ -40,7 +40,7 @@ const clients = [
         <h1 class="h3-hero__h1">{t.hero.headline}</h1>
         <p class="h3-hero__sub">{t.hero.sub}</p>
         <p class="fc-credential">{t.hero.credential}</p>
-        <a href={BOOKING_URL} target="_blank" rel="noopener" data-cta="companies-hero-booking" class="h3-btn h3-btn--ink h3-hero__cta">
+        <a href={BOOKING_URL} data-cta="companies-hero-booking" class="h3-btn h3-btn--ink h3-hero__cta">
           {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
       </div>
@@ -158,7 +158,7 @@ const clients = [
           </li>
         ))}
       </ul>
-      <a href={BOOKING_URL} target="_blank" rel="noopener" data-cta="companies-models-booking" class="h3-link fc-models__cta">
+      <a href={BOOKING_URL} data-cta="companies-models-booking" class="h3-link fc-models__cta">
         {t.models.cta}<span class="h3-arrow" aria-hidden="true">→</span>
       </a>
     </div>
@@ -189,10 +189,10 @@ const clients = [
     <div class="h3-wrap">
       <h2 class="h3-h2 fc-close__h2">{t.close.headline}</h2>
       <p class="h3-body fc-close__body">{t.close.body}</p>
-      <a href={BOOKING_URL} target="_blank" rel="noopener" data-cta="companies-close-booking" class="h3-btn h3-btn--ink fc-close__cta">
+      <a href={BOOKING_URL} data-cta="companies-close-booking" class="h3-btn h3-btn--ink fc-close__cta">
         {t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span>
       </a>
-      <p class="fc-close__mail"><a href={`mailto:${t.close.email}`}>{t.close.email}</a></p>
+      <p class="fc-close__how">{t.close.howNote}</p>
     </div>
   </section>
 </Shell>
@@ -327,4 +327,9 @@ const clients = [
   }
 
   .fc-close__mail, .fc-close__mail a { overflow-wrap: anywhere; }
+
+  .fc-close__how {
+    margin-top: 1rem; max-width: 32rem;
+    font-size: 0.875rem; line-height: 1.6; color: var(--muted);
+  }
 </style>

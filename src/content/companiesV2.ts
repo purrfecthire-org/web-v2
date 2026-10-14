@@ -23,7 +23,7 @@ export interface CompaniesV2Content {
   };
   models: { eyebrow: string; headline: string; items: { name: string; note: string }[]; cta: string };
   kate: { eyebrow: string; headline: string; body: string; cta: string };
-  close: { headline: string; body: string; cta: string; email: string };
+  close: { headline: string; body: string; cta: string; email: string; howNote: string };
 }
 
 export const companiesV2En: CompaniesV2Content = {
@@ -37,7 +37,7 @@ export const companiesV2En: CompaniesV2Content = {
     headline: 'Build smaller, stronger teams.',
     sub: 'Senior and executive search across engineering, product, go-to-market and leadership. We assess the ownership, judgment and capacity to grow that each role requires.',
     credential: 'VC-backed startups, seed to Series B · The search follows the market, working model and language of the role',
-    cta: 'Start a search',
+    cta: 'Discuss your hire',
   },
   problem: {
     eyebrow: 'Why this hire is hard',
@@ -93,7 +93,7 @@ export const companiesV2En: CompaniesV2Content = {
       { name: 'Success fee', note: 'You pay only when you hire.' },
       { name: 'All You Can Hire', note: 'Up to six roles open at the same time, any seniority, with two recruiters dedicated to the account. A monthly fee instead of a percentage.' },
     ],
-    cta: 'Scope it on a call',
+    cta: 'Discuss your hire',
   },
   kate: {
     eyebrow: 'Who is behind the searches',
@@ -104,8 +104,9 @@ export const companiesV2En: CompaniesV2Content = {
   close: {
     headline: 'Tell us what this hire needs to change.',
     body: 'We will tell you what we think the search actually requires.',
-    cta: 'Start a search',
+    cta: 'Discuss your hire',
     email: 'hiring@purrfecthire.com',
+    howNote: 'The button opens your email app with the three things we need: your company, the role you are opening and what this hire has to change.',
   },
 };
 

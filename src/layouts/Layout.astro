@@ -99,6 +99,53 @@ const alternateUrl =
   <body>
     <slot />
     <script>
+      // Analytics — flag-gated by PUBLIC_ANALYTICS_SRC, same pattern as the
+      // error reporter. Unset (the default) means this block does nothing and
+      // the site keeps making zero network calls.
+      //
+      // Built for a cookieless, no-personal-data tool (Plausible, Fathom,
+      // Simple Analytics and friends all take a script URL plus a domain).
+      // That choice is deliberate: no cookies means no consent banner, and
+      // the privacy policy can keep saying the site sets none.
+      //
+      // Pageviews come from the tool itself. On top of that, every primary
+      // action carries data-cta and every page carries data-journey, so
+      // Companies, Talent and Offer are counted apart. Only those two values
+      // are ever sent: no emails, no form fields, no advisory data.
+      const A_SRC = import.meta.env.PUBLIC_ANALYTICS_SRC;
+      const A_DOMAIN = import.meta.env.PUBLIC_ANALYTICS_DOMAIN;
+      if (A_SRC) {
+        try {
+          const el = document.createElement('script');
+          el.defer = true;
+          el.src = String(A_SRC);
+          if (A_DOMAIN) el.setAttribute('data-domain', String(A_DOMAIN));
+          document.head.appendChild(el);
+
+          const journey =
+            document.querySelector('[data-journey]')?.getAttribute('data-journey') ?? 'unknown';
+
+          document.addEventListener('click', (e) => {
+            try {
+              const a = (e.target as HTMLElement)?.closest?.('[data-cta]');
+              if (!a) return;
+              const name = a.getAttribute('data-cta');
+              if (!name) return;
+              // Plausible-compatible queue; harmless if the tool never loads.
+              const w = window as unknown as { plausible?: (...args: unknown[]) => void };
+              w.plausible =
+                w.plausible || ((...args: unknown[]) => ((w.plausible as unknown as { q: unknown[] }).q = (w.plausible as unknown as { q?: unknown[] }).q || []).push(args));
+              w.plausible('cta', { props: { cta: name, journey } });
+            } catch {
+              /* measurement must never break a click */
+            }
+          });
+        } catch {
+          /* analytics must never break the page */
+        }
+      }
+    </script>
+    <script>
       // Shared scroll-reveal: a single observer toggles `.visible` on every
       // `.reveal` element on the page, so individual sections no longer ship
       // their own IntersectionObserver. Honors prefers-reduced-motion via CSS.

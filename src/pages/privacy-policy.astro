@@ -8,7 +8,8 @@ import LegalLayout from '../layouts/LegalLayout.astro';
 
 const siteUrl = 'https://purrfecthire.com';
 const pageUrl = `${siteUrl}/privacy-policy`;
-const contactEmail = 'privacy@purrfecthire.com';
+// hiring@ is the verified inbox; privacy@ has never received a message.
+const contactEmail = 'hiring@purrfecthire.com';
 
 const meta = {
   title: 'Privacy Policy | Purrfect Hire',
@@ -23,7 +24,7 @@ const meta = {
   lang="en"
   pageUrl={pageUrl}
   heading="Privacy Policy"
-  lastUpdated="June 15, 2026"
+  lastUpdated="October 14, 2026"
   lastUpdatedLabel="Last updated"
 >
   <p class="legal-intro">
@@ -67,9 +68,17 @@ const meta = {
   </ul>
 
   <h3>Information collected automatically</h3>
-  <ul>
-    <li>Basic device and usage data such as IP address, browser type, pages visited, and referring URLs, collected through cookies and similar technologies to operate and improve the site.</li>
-  </ul>
+  <p>
+    This website sets no cookies, stores nothing in your browser and loads
+    nothing from third parties. There is no advertising, no tracking pixel and
+    no cross-site profiling, which is why you are not asked to accept cookies.
+  </p>
+  <p>
+    If we add audience measurement, it will be a tool that counts visits
+    without cookies and without identifying you personally, and this section
+    will say so before it goes live. Our hosting provider may keep standard
+    server logs, including IP addresses, for security and reliability.
+  </p>
 
   <h3>Information from third parties</h3>
   <ul>
