@@ -219,7 +219,7 @@ export const content_en: LandingContent = {
 
   meta: {
     title: 'Purrfect Hire. Senior hires for YC, a16z and Sequoia founders',
-    description: 'We place senior LATAM talent at YC, a16z and Sequoia startups where getting the hire wrong costs months of runway. 160+ placements. 80% retention at 24 months.',
+    description: 'Senior hires for startups between seed and Series B. Evidence on every candidate. 160+ placements. 80% stay 2+ years.',
   },
 
   nav: {
@@ -254,7 +254,6 @@ export const content_en: LandingContent = {
     stats: [
       { value: '160', suffix: '+', label: 'placements' },
       { value: '80', suffix: '%', label: 'stay 2+ years' },
-      { value: '4', suffixLeft: '<', suffix: 'wks', label: 'to first hire' },
     ],
     ctaPrimary: 'Get your first match',
     ctaSecondary: 'See how it works',
@@ -448,31 +447,31 @@ export const content_en: LandingContent = {
   homeRouter: {
     nav: { cta: 'Talk to us', ctaHref: 'mailto:hiring@purrfecthire.com' },
     hero: {
-      whoPre: 'We place senior LATAM talent at ',
-      whoHighlight: 'YC, a16z and Sequoia',
-      whoPost: ' startups.',
+      whoPre: 'Senior hires for startups between seed and Series B. ',
+      whoHighlight: 'Evidence on every candidate.',
+      whoPost: '',
       ctaFounders: 'I\'m hiring',
       ctaTalent: 'I want to get placed',
     },
     proof: {
-      eyebrow: 'Both sides of the table',
-      headline: 'One engine. Founders on one side, talent on the other.',
-      lead: 'Purrfect Hire is a closed-loop recruiting engine. We map how startups actually evaluate, train the talent we place against that signal, and feed every outcome back in. Founders hire people who stay. Talent gets introduced, not filtered.',
+      eyebrow: 'How we work',
+      headline: 'Fewer mistakes on senior hires.',
+      lead: 'We map how your team actually evaluates before we open the search, so the people you meet are already calibrated to your bar. Every candidate comes with evidence: what they solved on their own, where they needed a hint, what was not tested.',
       founderQuoteLabel: 'For founders',
     },
     fork: {
-      eyebrow: 'One click decides',
-      headline: 'Which side of the table are you on?',
-      sub: 'Two very different problems. One engine. Pick yours.',
+      eyebrow: 'Start here',
+      headline: 'What brings you here?',
+      sub: 'Two paths. Pick yours.',
       founders: {
         label: 'For founders',
         title: 'I\'m hiring.',
         promise: 'Senior people who clear your real bar. And stay past week four.',
-        anchor: 'First calibrated candidates in under 4 weeks.',
+        anchor: 'Evidence on every candidate.',
         cta: 'See how we hire for you',
         ctaHref: '/for-founders',
         escapePre: 'Already decided?',
-        escapeLink: 'Contact our sales team',
+        escapeLink: 'Email us',
         escapeHref: 'mailto:hiring@purrfecthire.com',
       },
       talent: {
@@ -482,9 +481,9 @@ export const content_en: LandingContent = {
         anchor: 'From filtered out to introduced.',
         cta: 'See your paths',
         ctaHref: '/for-talent',
-        escapePre: 'Ready to commit?',
-        escapeLink: 'Apply to Offer Acceleration',
-        escapeHref: '/offer-acceleration/apply/',
+        escapePre: '',
+        escapeLink: '',
+        escapeHref: '',
       },
     },
   },
@@ -560,11 +559,11 @@ export const content_en: LandingContent = {
       },
       {
         q: 'How are you different from a typical recruiter?',
-        a: 'We run a closed loop, not a pipeline. We map your real bar, what you reward and what breaks in week three, train the talent we place against it before they ever meet you, and feed every outcome back so the model gets sharper with each search.',
+        a: 'We map your real bar before we open the search: what you reward and what breaks in week three. Then you meet only candidates measured against it, each with evidence of what they solved on their own and what was not tested.',
       },
       {
         q: 'What does it cost to work with you?',
-        a: 'On the success-fee model you pay 20-25% of first-year salary, only when you hire, with a 90-day replacement guarantee. Always-on Hiring starts at $9,000 per month for teams making 4-6+ senior hires a year. A short call settles the exact terms for your search before you commit to anything.',
+        a: 'You pay only when you hire, and a 90-day replacement guarantee comes with it. If you have several urgent roles at once, All You Can Hire swaps the percentage for a monthly fee. Confidential C-level searches have a retained option. We scope all of it on a 20-minute call, before you commit to anything.',
       },
     ],
     talentFaqs: [
@@ -593,7 +592,7 @@ export const content_es: LandingContent = {
 
   meta: {
     title: 'Purrfect Hire. Hires senior para founders de YC, a16z y Sequoia',
-    description: 'Conectamos talento senior de LATAM con startups de YC, a16z y Sequoia donde equivocarse en el hire cuesta meses de runway. 160+ contrataciones. 80% retención a 24 meses.',
+    description: 'Hires senior para startups entre seed y Serie B. Evidencia de cada candidato. 160+ contrataciones. 80% se queda 2+ años.',
   },
 
   nav: {
@@ -628,7 +627,6 @@ export const content_es: LandingContent = {
     stats: [
       { value: '160', suffix: '+', label: 'contrataciones' },
       { value: '80', suffix: '%', label: 'se quedan 2+ años' },
-      { value: '4', suffixLeft: '<', suffix: 'sem', label: 'al primer hire' },
     ],
     ctaPrimary: 'Empieza tu búsqueda',
     ctaSecondary: 'Ver cómo funciona',
@@ -822,27 +820,27 @@ export const content_es: LandingContent = {
   homeRouter: {
     nav: { cta: 'Hablemos', ctaHref: 'mailto:hiring@purrfecthire.com' },
     hero: {
-      whoPre: 'Colocamos talento senior de LATAM en startups de ',
-      whoHighlight: 'YC, a16z y Sequoia',
-      whoPost: '.',
+      whoPre: 'Hires senior para startups entre seed y Serie B. ',
+      whoHighlight: 'Evidencia de cada candidato.',
+      whoPost: '',
       ctaFounders: 'Estoy contratando',
       ctaTalent: 'Quiero ser contratado',
     },
     proof: {
-      eyebrow: 'Ambos lados de la mesa',
-      headline: 'Un solo motor. Founders de un lado, talento del otro.',
-      lead: 'Purrfect Hire es un motor de reclutamiento de ciclo cerrado. Mapeamos cómo evalúan las startups de verdad, entrenamos al talento que colocamos contra esa señal, y cada resultado retroalimenta el sistema. Los founders contratan gente que se queda. Al talento lo presentan, no lo filtran.',
+      eyebrow: 'Cómo trabajamos',
+      headline: 'Menos errores en las contrataciones senior.',
+      lead: 'Mapeamos cómo evalúa tu equipo de verdad antes de abrir la búsqueda, así que las personas que conoces ya vienen calibradas a tu estándar. Cada candidato llega con evidencia: qué resolvió solo, dónde necesitó una pista, qué no se probó.',
       founderQuoteLabel: 'Para founders',
     },
     fork: {
-      eyebrow: 'Un clic decide',
-      headline: '¿De qué lado de la mesa estás?',
-      sub: 'Dos problemas muy distintos. Un solo motor. Elige el tuyo.',
+      eyebrow: 'Empieza aquí',
+      headline: '¿Qué te trae por aquí?',
+      sub: 'Dos caminos. Elige el tuyo.',
       founders: {
         label: 'Para founders',
         title: 'Estoy contratando.',
         promise: 'Gente senior que cumple tu vara real. Y que sigue ahí después de la semana cuatro.',
-        anchor: 'Primeros candidatos calibrados en menos de 4 semanas.',
+        anchor: 'Evidencia de cada candidato.',
         cta: 'Cómo contratamos para ti',
         ctaHref: '/for-founders',
         escapePre: '¿Ya decidiste?',
@@ -856,9 +854,9 @@ export const content_es: LandingContent = {
         anchor: 'De filtrado a presentado.',
         cta: 'Mira tus opciones',
         ctaHref: '/for-talent',
-        escapePre: '¿Listo para empezar?',
-        escapeLink: 'Aplica a Offer Acceleration',
-        escapeHref: '/offer-acceleration/apply/',
+        escapePre: '',
+        escapeLink: '',
+        escapeHref: '',
       },
     },
   },
@@ -934,11 +932,11 @@ export const content_es: LandingContent = {
       },
       {
         q: '¿En qué se diferencian de un reclutador típico?',
-        a: 'Operamos un ciclo cerrado, no un pipeline. Mapeamos tu estándar real, qué premias y qué se rompe en la semana tres, entrenamos al talento que colocamos frente a ese estándar antes de que te conozcan, y retroalimentamos cada resultado para que el modelo sea más preciso en cada búsqueda.',
+        a: 'Mapeamos tu estándar real antes de abrir la búsqueda: qué premias y qué se rompe en la semana tres. Después solo conoces candidatos medidos contra ese estándar, cada uno con evidencia de qué resolvió solo y qué no se probó.',
       },
       {
         q: '¿Cuánto cuesta trabajar con ustedes?',
-        a: 'En el modelo de success fee pagas 20-25% del salario del primer año, solo cuando contratas, con garantía de reemplazo a 90 días. Always-on Hiring parte de $9,000 al mes para equipos que hacen 4-6+ hires senior al año. Una llamada corta cierra los términos exactos de tu búsqueda antes de que te comprometas a nada.',
+        a: 'Pagas solo cuando contratas, y la garantía de reemplazo a 90 días viene incluida. Si tienes varios roles urgentes a la vez, All You Can Hire cambia el porcentaje por una tarifa mensual. Las búsquedas C-level confidenciales tienen una opción retenida. Lo definimos todo en una llamada de 20 minutos, antes de que te comprometas a nada.',
       },
     ],
     talentFaqs: [

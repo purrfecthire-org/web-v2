@@ -25,22 +25,22 @@ const SHOW_VIDEO_PLACEHOLDER = false;
 // "How we work" — compact view of the 3 B2B models; full tables on /pricing.
 const models = [
   {
-    name: 'Success Fee',
-    forWho: '1–2 critical hires a year',
-    model: 'You pay only when you hire. 90-day replacement guarantee.',
-    price: '20-25% of first-year salary',
+    name: 'Success fee',
+    forWho: 'You pay only when you hire',
+    model: '90-day replacement guarantee.',
+    price: 'Exact terms on a 20-minute call',
   },
   {
-    name: 'Always-on Hiring',
-    forWho: '4–6+ senior hires a year',
-    model: 'Flat monthly fee, up to 6 senior hires in 12 months. Dedicated recruiter, always-on pipeline.',
-    price: 'From $9,000/month',
+    name: 'All You Can Hire',
+    forWho: 'Several urgent roles at once',
+    model: 'A monthly fee instead of the percentage: up to 6 roles open at a time, any seniority, two recruiters dedicated to your account.',
+    price: 'Scoped on a call',
   },
   {
-    name: 'Embedded Search',
-    forWho: 'The role that defines the company',
-    model: 'Dedicated search with retainer + success fee. Kate directly on the search. 120-day guarantee.',
-    price: 'Direct conversation',
+    name: 'Retained search, C-level only',
+    forWho: 'CEO, CTO and VP searches that need to stay confidential',
+    model: '120-day replacement guarantee.',
+    price: 'Scoped in a direct conversation',
   },
 ];
 
@@ -163,13 +163,14 @@ const quotes = [testimonials.grid[0], testimonials.grid[2]];
     <header class="ff-models__header reveal">
       <h2 class="ff-models__headline headline2">How we work</h2>
       <p class="ff-models__sub body1">
-        Three ways to engage, depending on how much you hire. The numbers are public;
-        a 20-minute call settles the exact terms for your search.
+        Three ways to engage, depending on how much you hire. A 20-minute call
+        settles the exact terms for your search.
       </p>
-      <!-- Who Kate is, before her name shows up inside the Embedded Search card -->
+      <!-- Who Kate is, before her name shows up inside the retained search card -->
       <p class="ff-models__cred body1">
-        Kate scaled ADDI from 15 to 400 people in two years. Purrfect Hire is that
-        playbook, run for founders who are about to do the same thing.
+        Kate led recruiting at Addi through two years of growth, to almost 500 people,
+        post-Series B. Purrfect Hire is that playbook, run for founders who are about
+        to do the same thing.
       </p>
     </header>
 

@@ -33,10 +33,12 @@ const cards = [fork.founders, fork.talent];
           <p class="home-fork__card-anchor">{card.anchor}</p>
           <div class="home-fork__card-actions">
             <a href={card.ctaHref} class="btn home-fork__card-cta">{card.cta}</a>
-            <p class="home-fork__card-escape">
-              {card.escapePre}{' '}
-              <a href={card.escapeHref}>{card.escapeLink}</a>
-            </p>
+            {card.escapeLink && (
+              <p class="home-fork__card-escape">
+                {card.escapePre}{' '}
+                <a href={card.escapeHref}>{card.escapeLink}</a>
+              </p>
+            )}
           </div>
         </article>
       ))}

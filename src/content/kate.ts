@@ -122,7 +122,7 @@ export const kateEn: KateContent = {
     title: 'Two ways to use the credential',
     founders: {
       title: "You're hiring",
-      body: 'Map your real bar and see calibrated candidates in under 4 weeks. Exact terms in a 20-minute call.',
+      body: 'Map your real bar and see calibrated candidates, each with evidence. Exact terms in a 20-minute call.',
       label: 'Book a 20-min call',
       href: FOUNDERS_CALENDLY,
     },
@@ -200,7 +200,7 @@ export const kateEs: KateContent = {
     title: 'Dos formas de usar la credencial',
     founders: {
       title: 'Estás contratando',
-      body: 'Mapea tu bar real y ve candidatos calibrados en menos de 4 semanas. Términos exactos en un call de 20 minutos.',
+      body: 'Mapea tu bar real y ve candidatos calibrados, cada uno con evidencia. Términos exactos en un call de 20 minutos.',
       label: 'Agenda un call de 20 min',
       href: FOUNDERS_CALENDLY,
     },
@@ -226,16 +226,16 @@ export interface KateStripContent {
 }
 
 export const kateStripEn: KateStripContent = {
-  title: 'We work both sides of the table.',
-  body: 'The talent we place trains against the same bar we use to evaluate for you. Kate Forero hires for YC-, a16z- and Sequoia-backed founders, and coaches senior talent against that exact standard.',
+  title: 'Meet the person behind the searches.',
+  body: 'Kate Forero hires for YC-, a16z- and Sequoia-backed founders.',
   label: 'Meet Kate →',
   href: '/kate',
   alt: 'Kate Forero',
 };
 
 export const kateStripEs: KateStripContent = {
-  title: 'Trabajamos las dos caras de la mesa.',
-  body: 'El talento que colocamos entrena contra el mismo bar con el que evaluamos para ti. Kate Forero contrata para founders respaldados por YC, a16z y Sequoia, y entrena talento senior contra ese mismo estándar.',
+  title: 'Conoce a quien lidera las búsquedas.',
+  body: 'Kate Forero contrata para founders respaldados por YC, a16z y Sequoia.',
   label: 'Conoce a Kate →',
   href: '/es/kate',
   alt: 'Kate Forero',
