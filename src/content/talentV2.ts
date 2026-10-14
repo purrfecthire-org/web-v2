@@ -21,7 +21,14 @@ export interface TalentV2Content {
     eyebrow: string;
     headline: string;
     note: string;
-    lead: { result: string; detail: string; photoNote: string };
+    lead: {
+      quote: string;
+      name: string;
+      role: string;
+      translationNote: string;
+      photoNote: string;
+      pending: string;
+    };
     slots: string[];
   };
   paths: { eyebrow: string; headline: string; items: { name: string; body: string; cta: string; href: string }[] };
@@ -86,10 +93,17 @@ export const talentV2En: TalentV2Content = {
     eyebrow: 'Proof',
     headline: 'What changed for them.',
     note: 'Each case shows level and scope, the company, the access that did not exist before, and compensation only where the person authorised it. Nothing is published without written permission.',
+    // Daniel Contreras: his own recommendation, published with his written
+    // permission, including the English translation. The reframe is the point:
+    // he did not arrive stuck, he arrived wanting to choose.
     lead: {
-      result: '[PROOF PENDING — headline result]',
-      detail: '[PROOF PENDING — role, level, company and what changed]',
-      photoNote: '[REAL TALENT PHOTO — working environment]',
+      quote:
+        'I did not join because I was struggling to find work. I joined because this time I wanted the job I took to be the one I chose, not the one the market chose for me.',
+      name: 'Daniel Contreras',
+      role: 'Product Designer, 10 years in technology and product',
+      translationNote: 'Translated from Spanish, approved by Daniel.',
+      photoNote: '[DANIEL PHOTO — pending]',
+      pending: 'Pending from Daniel: company, and role and level before and after, to turn this into a case.',
     },
     slots: [
       '[PROOF PENDING — level or scope change]',

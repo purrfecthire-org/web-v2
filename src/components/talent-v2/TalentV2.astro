@@ -109,8 +109,13 @@ const t = getTalentV2(lang);
           <h2 class="h3-h2 h3-h2--on-dark tv-proof__h2">{t.proof.headline}</h2>
           <article class="tv-case">
             <div class="tv-case__text">
-              <p class="tv-case__result">{t.proof.lead.result}</p>
-              <p class="tv-case__detail">{t.proof.lead.detail}</p>
+              <blockquote class="tv-case__quote">“{t.proof.lead.quote}”</blockquote>
+              <p class="tv-case__who">
+                <span class="tv-case__name">{t.proof.lead.name}</span>
+                <span class="tv-case__role">{t.proof.lead.role}</span>
+                <span class="tv-case__role">{t.proof.lead.translationNote}</span>
+              </p>
+              <p class="tv-note" data-internal>{t.proof.lead.pending}</p>
             </div>
             <figure class="h3-ph h3-ph--case h3-ph--on-dark">
               <span class="h3-ph__label">{t.proof.lead.photoNote}</span>
@@ -370,6 +375,13 @@ const t = getTalentV2(lang);
     font-family: var(--h-serif); font-size: clamp(1.75rem, 3vw, 2.75rem);
     line-height: 1.1; color: var(--on-dark);
   }
+  .tv-case__quote {
+    font-family: var(--h-serif); font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    line-height: 1.2; color: var(--on-dark); max-width: 24ch;
+  }
+  .tv-case__who { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9375rem; }
+  .tv-case__name { font-weight: 500; color: var(--on-dark); }
+  .tv-case__role { color: var(--on-dark-muted); }
   .tv-case__detail { margin-top: 1rem; font-size: 1.0625rem; line-height: 1.65; color: var(--on-dark-muted); max-width: 30rem; }
   .h3-ph--case { aspect-ratio: 4 / 3; }
 
