@@ -105,7 +105,7 @@ export const pricingEn: PricingContent = {
     // around training talent to clear the client's bar: read from the
     // founder's side, the latter invites a conflict-of-interest reading.
     flywheel:
-      'The people we place walk in understanding how your team actually operates. Onboarding is shorter, and 80% are still in the seat two years later.',
+      'The people we place walk in understanding how your team actually operates. Onboarding is shorter.',
   },
 
   b2c: {
@@ -225,7 +225,7 @@ export const pricingEs: PricingContent = {
     // oferta (arranque más corto, retención), no entrenar al talento para
     // pasar la vara del cliente.
     flywheel:
-      'Las personas que colocamos llegan entendiendo cómo opera tu equipo de verdad. El onboarding es más corto y el 80% sigue en su rol dos años después.',
+      'Las personas que colocamos llegan entendiendo cómo opera tu equipo de verdad. El onboarding es más corto.',
   },
 
   b2c: {
