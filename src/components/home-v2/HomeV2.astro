@@ -166,16 +166,16 @@ const clients = [
       <!-- 6 · Kate -->
       <section class="h3-kate">
         <div class="h3-wrap h3-kate__grid">
-          <figure class="h3-ph h3-ph--kate h3-ph--on-dark">
+          <figure class="h3-ph h3-ph--kate">
             <figcaption>{t.kate.photoNote}</figcaption>
           </figure>
           <div>
-            <p class="h3-eyebrow h3-eyebrow--on-dark">{t.kate.eyebrow}</p>
-            <h2 class="h3-h2 h3-h2--on-dark">{t.kate.headline}</h2>
-            <p class="h3-body h3-body--on-dark">{t.kate.body}</p>
+            <p class="h3-eyebrow">{t.kate.eyebrow}</p>
+            <h2 class="h3-h2">{t.kate.headline}</h2>
+            <p class="h3-body">{t.kate.body}</p>
             <div class="h3-kate__ctas">
               <a href={`${p}/for-founders`} class="h3-btn">{t.kate.ctaCompanies}</a>
-              <a href={`${p}/for-talent`} class="h3-link h3-link--on-dark">
+              <a href={`${p}/for-talent`} class="h3-link">
                 {t.kate.ctaTalent} <span aria-hidden="true">→</span>
               </a>
             </div>
@@ -227,8 +227,8 @@ const clients = [
   :where(.h3) :where(ul, ol) { list-style: none; }
   .h3 a:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; border-radius: 3px; }
 
-  .h3-wrap { max-width: 74rem; margin-inline: auto; padding-inline: 1.5rem; }
-  @media (min-width: 64rem) { .h3-wrap { padding-inline: 2.5rem; } }
+  .h3-wrap { max-width: 80rem; margin-inline: auto; padding-inline: 1.5rem; }
+  @media (min-width: 64rem) { .h3-wrap { padding-inline: 3rem; } }
 
   .h3-eyebrow {
     font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em;
@@ -257,13 +257,13 @@ const clients = [
 
   .h3-h2 {
     font-family: var(--h-serif); font-weight: 400;
-    font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.08; letter-spacing: -0.012em;
+    font-size: clamp(1.875rem, 3.6vw, 3.5rem); line-height: 1.06; letter-spacing: -0.014em;
     margin-top: 0.9rem; text-wrap: balance;
   }
   .h3-h2--on-dark { color: var(--on-dark); }
-  .h3-lead { margin-top: 1.25rem; font-size: 1.125rem; line-height: 1.55; max-width: 32rem; }
+  .h3-lead { margin-top: 1.5rem; font-size: 1.25rem; line-height: 1.5; max-width: 30rem; }
   .h3-lead--on-dark { color: var(--on-dark); }
-  .h3-body { font-size: 1rem; line-height: 1.65; color: var(--muted); max-width: 34rem; }
+  .h3-body { font-size: 1.125rem; line-height: 1.7; color: var(--muted); max-width: 34rem; }
   .h3-body--on-dark { color: var(--on-dark-muted); }
   .h3-body + .h3-body { margin-top: 1.1rem; }
 
@@ -292,10 +292,10 @@ const clients = [
     border-bottom: 1px solid var(--line-dark);
   }
   .h3-nav__in {
-    max-width: 74rem; margin-inline: auto; padding: 0.9rem 1.5rem;
+    max-width: 80rem; margin-inline: auto; padding: 0.9rem 1.5rem;
     display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
   }
-  @media (min-width: 64rem) { .h3-nav__in { padding-inline: 2.5rem; } }
+  @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
   .h3-nav__logo img { height: 1.9rem; width: auto; display: block; filter: brightness(0) invert(1); }
   .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; color: var(--on-dark-muted); }
   .h3-nav__links a:hover { color: var(--on-dark); }
@@ -309,12 +309,12 @@ const clients = [
   .h3-hero__copy { min-width: 0; }
   .h3-hero__h1 {
     font-family: var(--h-serif); font-weight: 400;
-    font-size: clamp(2.5rem, 5.6vw, 4.25rem); line-height: 1.04; letter-spacing: -0.018em;
-    max-width: 16ch; text-wrap: balance;
+    font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.02; letter-spacing: -0.02em;
+    max-width: 15ch; text-wrap: balance;
   }
   .h3-hero__sub {
-    margin-top: 1.75rem; max-width: 42rem; font-size: 1.0625rem;
-    line-height: 1.6; color: var(--on-dark-muted);
+    margin-top: 2rem; max-width: 36rem; font-size: 1.1875rem;
+    line-height: 1.65; color: var(--on-dark-muted);
   }
 
   .h3-doors { margin-top: 2.75rem; border-top: 1px solid var(--line-dark); }
@@ -335,7 +335,7 @@ const clients = [
   .h3-door__arrow { color: var(--purple); font-size: 1.25rem; }
 
   /* 2 · Trust */
-  .h3-trust { background: var(--ivory); padding: 3.5rem 0; }
+  .h3-trust { background: var(--ivory); padding: 4rem 0 0; }
   .h3-trust__in { text-align: center; }
   .h3-trust__logos {
     margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center;
@@ -352,8 +352,8 @@ const clients = [
   }
 
   /* 3 · For companies */
-  .h3-co { background: #fff; padding: 5rem 0; }
-  @media (min-width: 56rem) { .h3-co { padding: 8rem 0; } }
+  .h3-co { background: var(--ivory); padding: 4.5rem 0 5rem; }
+  @media (min-width: 56rem) { .h3-co { padding: 7rem 0 8rem; } }
   .h3-co__grid { display: grid; gap: 3rem; align-items: start; }
   @media (min-width: 56rem) { .h3-co__grid { grid-template-columns: 1fr 1.1fr; gap: 5.5rem; } }
   .h3-co__left { min-width: 0; }
@@ -362,7 +362,7 @@ const clients = [
   .h3-co__right { min-width: 0; }
   .h3-co__evidence {
     margin-top: 1.75rem; padding: 1.1rem 1.25rem; border-radius: 10px;
-    background: var(--stone); font-size: 0.9375rem; font-weight: 500;
+    background: #fff; border: 1px solid var(--line); font-size: 1rem; font-weight: 500;
   }
   .h3-quote { margin-top: 2.75rem; padding-top: 2.25rem; border-top: 1px solid var(--line); }
   .h3-quote blockquote {
@@ -401,7 +401,7 @@ const clients = [
   @media (min-width: 56rem) { .h3-belief__split { grid-template-columns: 1fr 1fr; gap: 3.5rem; } }
 
   /* 6 · Kate */
-  .h3-kate { background: var(--midnight); color: var(--on-dark); padding: 5rem 0; }
+  .h3-kate { background: var(--ivory); padding: 5rem 0 6rem; }
   @media (min-width: 56rem) { .h3-kate { padding: 7rem 0; } }
   .h3-kate__grid { display: grid; gap: 2.75rem; align-items: center; }
   @media (min-width: 56rem) { .h3-kate__grid { grid-template-columns: 0.55fr 1.45fr; gap: 4.5rem; } }
