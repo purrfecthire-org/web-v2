@@ -38,8 +38,8 @@ export const companiesV2En: CompaniesV2Content = {
   hero: {
     eyebrow: 'For companies',
     headline: 'Build smaller, stronger teams.',
-    sub: 'We help early-stage founders hire senior people with the judgment, ownership and ability to grow as the company changes.',
-    credential: 'Early-stage · Engineering, Product, GTM and Leadership · US, Europe and Latin America',
+    sub: 'Senior and executive hires across engineering, product, go-to-market and leadership, for people with the judgment, ownership and ability to grow as the company changes.',
+    credential: 'VC-backed startups, seed to Series B · The search follows the market, working model and language of the role',
     cta: 'Start a search',
   },
   problem: {
@@ -52,12 +52,13 @@ export const companiesV2En: CompaniesV2Content = {
   },
   lenses: {
     eyebrow: 'What we look for',
-    headline: 'We look for evidence.',
-    sub: 'A résumé tells you where someone was standing. These three questions tell you what they did there.',
+    headline: 'Four things you get from working with us.',
+    sub: 'A résumé tells you where someone was standing. This is how we find out what they did there.',
     items: [
-      { title: 'What they actually owned', body: 'What they solved themselves, separated from what the team shipped around them.' },
-      { title: 'How they operate', body: 'How they make decisions, handle ambiguity and raise the bar around them.' },
-      { title: 'How far they can grow', body: 'Whether their slope matches where the company is going, not only the role as written today.' },
+      { title: 'Hires that grow with the company', body: 'We look at what they actually owned, how they decide, and whether they can grow as the company changes.' },
+      { title: 'A read on the search before sourcing', body: 'We review the problem and the stage of the company before we open the search.' },
+      { title: 'A read on the role, before any commitment', body: 'We tell you what the role actually requires, and what it will take to fill it, before anything is signed.' },
+      { title: 'Evidence on every candidate', body: 'We meet each person before presenting them, and the recommendation separates what we observed, what was stated and what we could not validate.' },
     ],
   },
   method: {
@@ -74,6 +75,7 @@ export const companiesV2En: CompaniesV2Content = {
     eyebrow: 'What you get',
     headline: 'Evidence on every candidate.',
     sub: 'For every candidate we present, you receive a written assessment of their experience, the evidence behind our recommendation and what remains unverified.',
+    pending: 'Pending before publishing: one real anonymised example, and the search lead approving the report and confirming the delivery standard. Until then this section stays in review.',
     items: [
       'What we saw',
       'What they owned',
@@ -95,13 +97,12 @@ export const companiesV2En: CompaniesV2Content = {
   },
   models: {
     eyebrow: 'Working together',
-    headline: 'Three ways to work together, depending on the search and the hiring volume.',
+    headline: 'Two ways to work together, depending on the search and the hiring volume.',
     items: [
       { name: 'Success fee', note: 'You pay only when you hire.' },
-      { name: 'All You Can Hire', note: 'Several urgent roles at once, on a monthly fee.' },
-      { name: 'Retained leadership search', note: 'Confidential CEO, CTO and VP searches.' },
+      { name: 'All You Can Hire', note: 'Several urgent roles at once, on a monthly fee instead of a percentage.' },
     ],
-    cta: 'Compare engagement models',
+    cta: 'Scope it on a call',
   },
   kate: {
     eyebrow: 'Who is behind the searches',

@@ -56,7 +56,7 @@ export const homeV2En: HomeV2Content = {
   },
   hero: {
     headline: 'Exceptional people build extraordinary things.',
-    sub: 'Purrfect Hire is a global talent boutique for early-stage companies. We run senior searches across the US, Europe and Latin America, matching exceptional people to the problem, stage and operating context of the company.',
+    sub: 'Senior and executive search for VC-backed startups, matching people to the problem, stage and operating context of the company.',
     companies: { label: 'For companies', promise: 'Build smaller, stronger teams.' },
     talent: { label: 'For talent', promise: 'Make your signal impossible to miss.' },
     photoNote: '[REAL TEAM PHOTO — Purrfect or a client team, candid, natural light]',
@@ -74,7 +74,7 @@ export const homeV2En: HomeV2Content = {
       'Early-stage roles change while you are hiring for them.',
     pov:
       'We look beyond whether someone can do the job today: what they actually owned, how they make decisions, how fast they learn and whether their slope matches where the company is going.',
-    evidence: 'Every candidate comes with evidence.',
+    evidence: 'Evidence on every candidate.',
     quoteLabel: 'A client, in his words',
     casePhotoNote: '[REAL CLIENT PHOTO — Head of Customer Operations, working environment]',
     cta: 'See how we work with companies',

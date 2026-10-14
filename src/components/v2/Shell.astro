@@ -30,6 +30,9 @@ const links = [
 
 <Layout title={title} description={description} lang={lang} noindex>
   <Fragment slot="head">
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-optical.svg" />
+    <link rel="apple-touch-icon" href="/favicon-180.png" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap"
@@ -41,10 +44,12 @@ const links = [
     <header class="h3-nav">
       <div class="h3-nav__in">
         <a href="/" class="h3-nav__logo" aria-label="Purrfect Hire">
-          <picture>
-            <source srcset="/logos/logo-desktop.webp" type="image/webp" />
-            <img src="/logos/logo-desktop.png" alt="Purrfect Hire" />
-          </picture>
+          <img
+            src={theme === 'dark' ? '/brand/logo/logo-horizontal-white.svg' : '/brand/logo/logo-horizontal-midnight.svg'}
+            alt="Purrfect Hire"
+            width="289"
+            height="60"
+          />
         </a>
 
         <nav class="h3-nav__links" aria-label="Main">
@@ -74,7 +79,7 @@ const links = [
 
     <footer class="h3-footer">
       <div class="h3-wrap h3-footer__in">
-        <span>© 2026 Purrfect Hire</span>
+        <span>© 2026 Purrfect Hire OÜ</span>
         <nav aria-label="Footer">
           <a href="/privacy-policy">Privacy</a>
           <a href="https://www.linkedin.com/company/purrfect-hire" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -99,8 +104,10 @@ const links = [
     --on-dark-muted: #b2b3bb;
     --line: rgba(20, 22, 31, 0.1);
     --line-dark: rgba(232, 231, 227, 0.16);
-    --purple: #6366F1;
-    --purple-deep: #4f46e5;
+    --signal: #6366F1;        /* brand accent: dots, rules, non-text marks */
+    --purple: #4F46E5;        /* actions and links on Ivory: AA with white text */
+    --purple-deep: #4338CA;
+    --charcoal: #1F2430;
     --h-serif: 'Fraunces', 'Canela', Georgia, serif;
     --h-sans: 'Inter', system-ui, -apple-system, sans-serif;
     background: var(--sand); color: var(--text);
@@ -123,7 +130,7 @@ const links = [
   .h3-eyebrow--on-dark { color: var(--on-dark-muted); }
   .h3-dot--end {
     display: inline-block; width: 0.34em; height: 0.34em; border-radius: 50%;
-    background: var(--purple); margin-left: 0.22em; vertical-align: 0.08em;
+    background: var(--signal); margin-left: 0.22em; vertical-align: 0.08em;
   }
 
   .h3-btn {
@@ -176,8 +183,7 @@ const links = [
     display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
   }
   @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
-  .h3-nav__logo img { height: 1.9rem; width: auto; display: block; }
-  .h3--dark .h3-nav__logo img { filter: brightness(0) invert(1); }
+  .h3-nav__logo img { height: 1.6rem; width: auto; display: block; }
   .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; }
   @media (min-width: 60rem) { .h3-nav__links { display: flex; } }
   .h3--dark .h3-nav__links { color: var(--on-dark-muted); }

@@ -105,6 +105,7 @@ const clients = [
         <p class="h3-eyebrow h3-eyebrow--on-dark">{t.evidence.eyebrow}</p>
         <h2 class="h3-h2 h3-h2--on-dark">{t.evidence.headline}</h2>
         <p class="h3-body h3-body--on-dark fc-evidence__sub">{t.evidence.sub}</p>
+        <p class="h3-note h3-note--on-dark" data-internal>{t.evidence.pending}</p>
       </div>
       <ul class="fc-evidence__list">
         {t.evidence.items.map((e) => <li>{e}</li>)}
@@ -224,7 +225,7 @@ const clients = [
   @media (min-width: 56rem) { .fc-lenses { margin-top: 7rem; } }
   .fc-lenses__sub { margin-top: 1.25rem; }
   .fc-lenses__grid { margin-top: 2.5rem; display: grid; gap: 1.25rem; }
-  @media (min-width: 56rem) { .fc-lenses__grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 56rem) { .fc-lenses__grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; } }
   .fc-lens {
     background: var(--white); border: 1px solid var(--line); border-radius: 14px;
     padding: 1.75rem; min-width: 0;

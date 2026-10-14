@@ -4,9 +4,10 @@
 // how long, what it costs, how to apply.
 //
 // Decisions still open, marked in the page as internal notes:
-//   · Price: one truth needed, USD 2,000 or from USD 2,000.
-//   · Scope after the eight core sessions.
-//   · Capacity: only state a limit if it is a real operating constraint.
+// Confirmed by Kate, 14 October 2026: USD 2,000 flat, eight sessions in
+// total, and process-specific support afterwards until the placement, while
+// the participant actively carries out the agreed plan. Response times and
+// an inactivity policy are not defined, so neither is published.
 // ─────────────────────────────────────────────────────────────────────────
 import type { Lang } from './index';
 
@@ -60,29 +61,31 @@ export const offerV2En: OfferV2Content = {
     limit: 'It does not mean buying access to Purrfect client searches.',
   },
   firewall: {
-    headline: 'Independent advice. Consistent evaluation.',
-    lead: 'Participation in Offer Accelerator does not give candidates preferential treatment in Purrfect-managed searches.',
-    more: 'How we keep the two sides apart',
+    headline: 'Confidential advisory. Consistent evaluation.',
+    lead: 'Advisory engagements are confidential. Participation in Offer Accelerator does not change how candidates are assessed in Purrfect client searches.',
+    more: 'What this means in practice',
     body: [
-      'If you enter a search we manage, we pause advisory on that specific process, including offer negotiation. We explain this upfront and agree with you on disclosure to the hiring company before presenting your candidacy.',
-      'Applications to our open roles are free. Offer Accelerator is never required.',
+      'You can apply to a real vacancy if you meet its requirements. The recommendation rests on the same role requirements and evidence standards that apply to everyone else.',
+      'We protect both sides: no private rubrics, no interview answers, no confidential client information and no private advisory notes are shared.',
+      'Applying to our open roles is free. Offer Accelerator is never required.',
     ],
-    status: 'Publish only once the internal practice is written and in use.',
+    status: 'Confirmed by Kate, 14 October 2026. Sales uses these exact words.',
   },
   includes: {
     eyebrow: 'What is included',
-    headline: 'Eight core sessions, and a team thinking with you.',
+    headline: 'Eight sessions, and a team with you until you land.',
     items: [
-      'Eight core 1:1 sessions, one diagnostic and seven with Kate',
+      'Eight 1:1 sessions in total, one diagnostic and seven with Kate',
       'Personalized material after each session',
       'A weekly check-in with the team',
       'Direct support over WhatsApp and email',
       'Opportunity validation before you commit your time to a process',
       'Decision support through active processes: understand what the role requires, which evidence to bring forward and whether the opportunity fits your priorities',
       'Support through final rounds, offers and negotiation',
+      'After the eight sessions, support through each new hiring process until you secure your next role, while you actively carry out the agreed plan',
     ],
-    closing: 'The value is not the eight sessions. It is having a team thinking with you through the decisions that matter.',
-    scopeNote: 'Pending before publishing, as three explicit lines on this list: how long the engagement lasts, what WhatsApp and email cover and in what response time, and what opportunity validation reviews and hands over. Do not publish open-ended accompaniment.',
+    closing: 'We review opportunities, prepare for interviews, assess feedback and support negotiations. You keep us informed as your search progresses.',
+    scopeNote: 'Not published because it is not defined: a response time, 24/7 availability and an inactivity policy. Opportunity validation still needs one line on what we review and what you receive.',
   },
   behind: {
     eyebrow: 'Where our read comes from',
@@ -106,14 +109,14 @@ export const offerV2En: OfferV2Content = {
     eyebrow: 'Investment',
     headline: 'A considered investment in your next move.',
     price: 'USD 2,000',
-    next: 'Every engagement starts with a diagnostic call, so we scope your situation before you commit.',
-    priceNote: 'Decision pending: one truth across the whole site, USD 2,000 flat or from USD 2,000. The Pricing page currently says from.',
+    next: 'Eight sessions, followed by support through each new hiring process until you secure your next role, while you actively carry out the agreed plan.',
+    priceNote: 'The Pricing page still says from USD 2,000 and has to be corrected in the same release.',
   },
   apply: {
     headline: 'Apply to Offer Accelerator.',
-    body: 'Tell us where you are and what the next move has to change. The diagnostic call comes first.',
+    body: 'Tell us where you are and what the next move has to change.',
     cta: 'Apply to Offer Accelerator',
-    capacityNote: 'Capacity line omitted on purpose. Add it only if the limit is a real operating constraint, and say why.',
+    capacityNote: 'No capacity or scarcity line, because no real limit has been defined.',
   },
   editorial: 'Your career has advisors too.',
 };

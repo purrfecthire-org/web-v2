@@ -63,14 +63,15 @@ export const talentV2En: TalentV2Content = {
     cta: 'Explore Offer Accelerator',
   },
   firewall: {
-    headline: 'Independent advice. Consistent evaluation.',
-    lead: 'Participation in Offer Accelerator does not give candidates preferential treatment in Purrfect-managed searches.',
-    more: 'How we keep the two sides apart',
+    headline: 'Confidential advisory. Consistent evaluation.',
+    lead: 'Advisory engagements are confidential. Participation in Offer Accelerator does not change how candidates are assessed in Purrfect client searches.',
+    more: 'What this means in practice',
     body: [
-      'If you enter a search we manage, we pause advisory on that specific process, including offer negotiation. We explain this upfront and agree with you on disclosure to the hiring company before presenting your candidacy.',
-      'Applications to our open roles are free. Offer Accelerator is never required.',
+      'You can apply to a real vacancy if you meet its requirements. The recommendation rests on the same role requirements and evidence standards that apply to everyone else.',
+      'We protect both sides: no private rubrics, no interview answers, no confidential client information and no private advisory notes are shared.',
+      'Applying to our open roles is free. Offer Accelerator is never required.',
     ],
-    status: 'Publish only once the internal practice is written and in use.',
+    status: 'Confirmed by Kate, 14 October 2026. Sales uses these exact words.',
   },
   proof: {
     eyebrow: 'Proof',
