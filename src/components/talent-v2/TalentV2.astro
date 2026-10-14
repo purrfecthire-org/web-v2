@@ -73,9 +73,13 @@ const t = getTalentV2(lang);
           </div>
 
           <!-- Firewall, right after Create access -->
-          <aside class="tv-firewall" aria-labelledby="tv-firewall-h">
-            <h2 class="tv-firewall__h" id="tv-firewall-h">{t.firewall.headline}</h2>
-            {t.firewall.body.map((b) => <p class="tv-firewall__p">{b}</p>)}
+          <aside class="fw" aria-labelledby="tv-firewall-h">
+            <h2 class="fw__h" id="tv-firewall-h">{t.firewall.headline}</h2>
+            <p class="fw__lead">{t.firewall.lead}</p>
+            <details class="fw__more">
+              <summary>{t.firewall.more}</summary>
+              <div>{t.firewall.body.map((b) => <p>{b}</p>)}</div>
+            </details>
             <p class="tv-note" data-internal>{t.firewall.status}</p>
           </aside>
         </div>
@@ -174,14 +178,22 @@ const t = getTalentV2(lang);
   .tv-work__note { margin-top: 1.75rem; font-size: 0.9375rem; color: var(--muted); }
   .tv-work__cta { display: inline-block; margin-top: 1.5rem; }
 
-  .tv-firewall {
-    margin-top: 4rem; max-width: 44rem;
-    padding-top: 2rem; border-top: 1px solid var(--line);
+  /* Easy to find, short to read, with the detail one click away. */
+  .fw { margin-top: 4rem; max-width: 44rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  .fw__h { font-size: 1.0625rem; font-weight: 500; letter-spacing: -0.005em; color: var(--text); }
+  .fw__lead { margin-top: 0.75rem; font-size: 1.0625rem; line-height: 1.6; color: var(--text); }
+  .fw__more { margin-top: 1rem; }
+  .fw__more > summary {
+    list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem;
+    font-size: 0.9375rem; font-weight: 500; color: var(--text);
+    border-bottom: 1px solid var(--line); padding-bottom: 2px;
   }
-  .tv-firewall__h {
-    font-size: 1.0625rem; font-weight: 500; letter-spacing: -0.005em; color: var(--text);
-  }
-  .tv-firewall__p { margin-top: 0.85rem; font-size: 1rem; line-height: 1.7; color: var(--muted); }
+  .fw__more > summary::-webkit-details-marker { display: none; }
+  .fw__more > summary::after { content: '+'; font-size: 1rem; line-height: 1; color: var(--purple); }
+  .fw__more[open] > summary::after { content: '–'; }
+  .fw__more > summary:hover { border-color: var(--text); }
+  .fw__more > div { margin-top: 1rem; display: grid; gap: 0.85rem; }
+  .fw__more p { font-size: 1rem; line-height: 1.7; color: var(--muted); }
 
   /* Internal annotations. Not part of the public page. */
   .tv-note {

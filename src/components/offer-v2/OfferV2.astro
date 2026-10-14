@@ -80,9 +80,13 @@ const t = getOfferV2(lang);
             <p class="oa-access__limit">{t.access.limit}</p>
           </div>
 
-          <aside class="oa-firewall" aria-labelledby="oa-fw">
-            <h2 class="oa-firewall__h" id="oa-fw">{t.firewall.headline}</h2>
-            {t.firewall.body.map((b) => <p class="oa-firewall__p">{b}</p>)}
+          <aside class="fw" aria-labelledby="oa-fw">
+            <h2 class="fw__h" id="oa-fw">{t.firewall.headline}</h2>
+            <p class="fw__lead">{t.firewall.lead}</p>
+            <details class="fw__more">
+              <summary>{t.firewall.more}</summary>
+              <div>{t.firewall.body.map((b) => <p>{b}</p>)}</div>
+            </details>
             <p class="h3-note" data-internal>{t.firewall.status}</p>
           </aside>
         </div>
@@ -187,9 +191,21 @@ const t = getOfferV2(lang);
   .oa-access__body { margin-top: 1rem; max-width: 44rem; }
   .oa-access__limit { margin-top: 1rem; font-size: 1rem; font-weight: 500; }
 
-  .oa-firewall { margin-top: 3.5rem; max-width: 44rem; padding-top: 2rem; border-top: 1px solid var(--line); }
-  .oa-firewall__h { font-size: 1.0625rem; font-weight: 500; letter-spacing: -0.005em; }
-  .oa-firewall__p { margin-top: 0.85rem; font-size: 1rem; line-height: 1.7; color: var(--muted); }
+  .fw { margin-top: 3.5rem; max-width: 44rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  .fw__h { font-size: 1.0625rem; font-weight: 500; letter-spacing: -0.005em; }
+  .fw__lead { margin-top: 0.75rem; font-size: 1.0625rem; line-height: 1.6; color: var(--text); }
+  .fw__more { margin-top: 1rem; }
+  .fw__more > summary {
+    list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem;
+    font-size: 0.9375rem; font-weight: 500; color: var(--text);
+    border-bottom: 1px solid var(--line); padding-bottom: 2px;
+  }
+  .fw__more > summary::-webkit-details-marker { display: none; }
+  .fw__more > summary::after { content: '+'; font-size: 1rem; line-height: 1; color: var(--purple); }
+  .fw__more[open] > summary::after { content: '–'; }
+  .fw__more > summary:hover { border-color: var(--text); }
+  .fw__more > div { margin-top: 1rem; display: grid; gap: 0.85rem; }
+  .fw__more p { font-size: 1rem; line-height: 1.7; color: var(--muted); }
 
   .oa-includes { background: var(--sand); border-top: 1px solid var(--line); padding: 5rem 0; }
   @media (min-width: 56rem) { .oa-includes { padding: 7rem 0; } }

@@ -38,7 +38,7 @@ export const companiesV2En: CompaniesV2Content = {
   hero: {
     eyebrow: 'For companies',
     headline: 'Build smaller, stronger teams.',
-    sub: 'We help early-stage founders hire people with the performance, judgment and slope to grow beyond the role they were hired for.',
+    sub: 'We help early-stage founders hire senior people with the judgment, ownership and ability to grow as the company changes.',
     credential: 'Early-stage · Engineering, Product, GTM and Leadership · US, Europe and Latin America',
     cta: 'Start a search',
   },
@@ -73,7 +73,7 @@ export const companiesV2En: CompaniesV2Content = {
   evidence: {
     eyebrow: 'What you get',
     headline: 'Evidence on every candidate.',
-    sub: 'For each person you meet, you get the same five things in writing. The fourth one is why you can trust the other four.',
+    sub: 'For every candidate we present, you receive a written assessment of their experience, the evidence behind our recommendation and what remains unverified.',
     items: [
       'What we saw',
       'What they owned',
@@ -99,7 +99,7 @@ export const companiesV2En: CompaniesV2Content = {
     items: [
       { name: 'Success fee', note: 'You pay only when you hire.' },
       { name: 'All You Can Hire', note: 'Several urgent roles at once, on a monthly fee.' },
-      { name: 'Retained search, C-level only', note: 'Confidential CEO, CTO and VP searches.' },
+      { name: 'Retained leadership search', note: 'Confidential CEO, CTO and VP searches.' },
     ],
     cta: 'Compare engagement models',
   },

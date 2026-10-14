@@ -16,7 +16,7 @@ export interface TalentV2Content {
   hero: { eyebrow: string; headline: string; sub: string; audience: string; cta: string; photoNote: string };
   problem: { eyebrow: string; headline: string; body: string };
   work: { eyebrow: string; headline: string; items: { title: string; body: string }[]; note: string; cta: string };
-  firewall: { headline: string; body: string[]; status: string };
+  firewall: { headline: string; lead: string; body: string[]; more: string; status: string };
   proof: {
     eyebrow: string;
     headline: string;
@@ -54,30 +54,19 @@ export const talentV2En: TalentV2Content = {
     eyebrow: 'What changes',
     headline: 'Four things we work on with you.',
     items: [
-      {
-        title: 'Calibrate your level',
-        body: 'Understand where your experience actually sits against the market you want to compete in.',
-      },
-      {
-        title: 'Surface the evidence',
-        body: 'Identify the ownership, judgment and outcomes that demonstrate your level, and be clear about where the evidence is still missing.',
-      },
-      {
-        title: 'Build your market strategy',
-        body: 'Identify the companies, problems and moments where your experience is unusually relevant.',
-      },
-      {
-        title: 'Create access',
-        body: 'Reach founders, hiring managers and decision makers with a credible reason to talk, including before a role is publicly open.',
-      },
+      { title: 'Calibrate your level', body: 'Where your experience sits against the market you want to compete in.' },
+      { title: 'Surface the evidence', body: 'What demonstrates your level, and what is still missing.' },
+      { title: 'Build your market strategy', body: 'The companies, problems and moments where your experience is unusually relevant.' },
+      { title: 'Create access', body: 'How to reach the people who decide, with a credible reason to talk.' },
     ],
-    note: 'The method, what is included and how to apply live on the Offer Accelerator page.',
+    note: 'The method, what is included, the scope and the price live on the Offer Accelerator page.',
     cta: 'Explore Offer Accelerator',
   },
   firewall: {
     headline: 'Independent advice. Consistent evaluation.',
+    lead: 'Participation in Offer Accelerator does not give candidates preferential treatment in Purrfect-managed searches.',
+    more: 'How we keep the two sides apart',
     body: [
-      'Offer Accelerator provides career advisory. Participation in Offer Accelerator does not give candidates preferential treatment in Purrfect-managed searches.',
       'If you enter a search we manage, we pause advisory on that specific process, including offer negotiation. We explain this upfront and agree with you on disclosure to the hiring company before presenting your candidacy.',
       'Applications to our open roles are free. Offer Accelerator is never required.',
     ],

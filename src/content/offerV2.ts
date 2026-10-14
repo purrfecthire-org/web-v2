@@ -16,7 +16,7 @@ export interface OfferV2Content {
   question: { eyebrow: string; headline: string; body: string; who: string };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
   access: { headline: string; body: string; limit: string };
-  firewall: { headline: string; body: string[]; status: string };
+  firewall: { headline: string; lead: string; body: string[]; more: string; status: string };
   includes: { eyebrow: string; headline: string; items: string[]; closing: string; scopeNote: string };
   behind: { eyebrow: string; headline: string; body: string[] };
   proof: { eyebrow: string; headline: string; quote: string; name: string; role: string; translationNote: string; pending: string };
@@ -40,7 +40,7 @@ export const offerV2En: OfferV2Content = {
   },
   question: {
     eyebrow: 'The real question',
-    headline: 'Find out what level the market can actually validate.',
+    headline: 'Find out what level the market can actually support.',
     body: 'You may be operating above the level the market is assigning you. Or the evidence may not support the move yet. We help you know the difference.',
     who: 'For senior professionals with real scope and results who are about to make a decision that sets the next few years: an offer, a negotiation, a market change, a move between IC and management, or a jump in level.',
   },
@@ -61,8 +61,9 @@ export const offerV2En: OfferV2Content = {
   },
   firewall: {
     headline: 'Independent advice. Consistent evaluation.',
+    lead: 'Participation in Offer Accelerator does not give candidates preferential treatment in Purrfect-managed searches.',
+    more: 'How we keep the two sides apart',
     body: [
-      'Offer Accelerator provides career advisory. Participation in Offer Accelerator does not give candidates preferential treatment in Purrfect-managed searches.',
       'If you enter a search we manage, we pause advisory on that specific process, including offer negotiation. We explain this upfront and agree with you on disclosure to the hiring company before presenting your candidacy.',
       'Applications to our open roles are free. Offer Accelerator is never required.',
     ],
@@ -77,7 +78,7 @@ export const offerV2En: OfferV2Content = {
       'A weekly check-in with the team',
       'Direct support over WhatsApp and email',
       'Opportunity validation before you commit your time to a process',
-      'Decision support through active processes: what the company is evaluating, what evidence matters, and whether the opportunity is right for you',
+      'Decision support through active processes: understand what the role requires, which evidence to bring forward and whether the opportunity fits your priorities',
       'Support through final rounds, offers and negotiation',
     ],
     closing: 'The value is not the eight sessions. It is having a team thinking with you through the decisions that matter.',
@@ -103,7 +104,7 @@ export const offerV2En: OfferV2Content = {
   },
   investment: {
     eyebrow: 'Investment',
-    headline: 'Your next move can change years of your career.',
+    headline: 'A considered investment in your next move.',
     price: 'USD 2,000',
     next: 'Every engagement starts with a diagnostic call, so we scope your situation before you commit.',
     priceNote: 'Decision pending: one truth across the whole site, USD 2,000 flat or from USD 2,000. The Pricing page currently says from.',
