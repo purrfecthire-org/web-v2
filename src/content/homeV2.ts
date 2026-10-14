@@ -78,7 +78,7 @@ export const homeV2En: HomeV2Content = {
     pov:
       'We look beyond whether someone can do the job today: what they actually owned, how they make decisions, how fast they learn and whether their slope matches where the company is going.',
     evidence: 'Every candidate comes with evidence.',
-    quoteLabel: 'A client, in her words',
+    quoteLabel: 'A client, in his words',
     casePhotoNote: '[REAL CLIENT PHOTO — Head of Customer Operations, working environment]',
     cta: 'See how we work with companies',
   },
@@ -142,7 +142,7 @@ export const homeV2Es: HomeV2Content = {
     pov:
       'Miramos más allá de si alguien puede hacer el trabajo hoy: qué fue realmente suyo, cómo toma decisiones, qué tan rápido aprende y si su pendiente acompaña hacia dónde va la compañía.',
     evidence: 'Cada candidato llega con evidencia.',
-    quoteLabel: 'Una clienta, con sus palabras',
+    quoteLabel: 'Un cliente, con sus palabras',
     casePhotoNote: '[REAL CLIENT PHOTO — Head of Customer Operations, entorno de trabajo]',
     cta: 'Cómo trabajamos con empresas',
   },

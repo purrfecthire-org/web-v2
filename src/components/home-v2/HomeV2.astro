@@ -15,7 +15,10 @@ interface Props { lang?: Lang }
 
 const { lang = 'en' } = Astro.props;
 const t = getHomeV2(lang);
-const featured = getContent(lang).testimonials.featured;
+const content = getContent(lang);
+// Fabián Torres: three years working together, his own recommendation, and a
+// photograph we can publish. The quote stays in his words.
+const featured = content.testimonials.grid.find((q) => q.name === 'Fabián Torres') ?? content.testimonials.featured;
 const p = lang === 'es' ? '/es' : '';
 
 const clients = [
@@ -131,9 +134,10 @@ const clients = [
             <p class="h3-co__evidence">{t.companies.evidence}</p>
             <figure class="h3-quote">
               <div class="h3-quote__portrait">
-                <div class="h3-ph h3-ph--portrait">
-                  <span class="h3-ph__label">{t.companies.casePhotoNote}</span>
-                </div>
+                <picture>
+                  <source srcset="/brand/fabian-torres.webp" type="image/webp" />
+                  <img src="/brand/fabian-torres.jpg" alt="Fabián Torres" width="900" height="1200" loading="lazy" />
+                </picture>
               </div>
               <div class="h3-quote__text">
                 <p class="h3-eyebrow">{t.companies.quoteLabel}</p>
@@ -440,7 +444,8 @@ const clients = [
     display: grid; gap: 1.5rem; align-items: start;
   }
   @media (min-width: 40rem) { .h3-quote { grid-template-columns: 11rem 1fr; gap: 2.25rem; } }
-  .h3-quote__portrait { max-width: 11rem; }
+  .h3-quote__portrait { max-width: 11rem; border-radius: 12px; overflow: hidden; }
+  .h3-quote__portrait img { display: block; width: 100%; height: auto; }
   .h3-quote__text { min-width: 0; }
   .h3-quote blockquote {
     margin-top: 0.85rem; font-family: var(--h-serif);
