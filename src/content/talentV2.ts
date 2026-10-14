@@ -13,9 +13,9 @@
 // remaining ways in stand on their own.
 // ─────────────────────────────────────────────────────────────────────────
 import type { Lang } from './index';
+import { SESSION_1_1, CONSIDERED_FREE } from './links';
 
-export const SESSION_MAILTO =
-  'mailto:hiring@purrfecthire.com?subject=1%3A1%20Strategic%20Session';
+export { SESSION_1_1 as SESSION_MAILTO, CONSIDERED_FREE } from './links';
 
 export interface TalentV2Content {
   meta: { title: string; description: string };
@@ -26,9 +26,13 @@ export interface TalentV2Content {
   proof: {
     eyebrow: string;
     headline: string;
-    voice: { quote: string; name: string; role: string; translationNote: string };
+    voice: { quote: string; name: string; role: string };
   };
-  paths: { eyebrow: string; headline: string; items: { name: string; body: string; cta: string; href: string; note?: string }[] };
+  paths: {
+    eyebrow: string; headline: string;
+    items: { name: string; body: string; cta: string; href: string; note?: string }[];
+    free: { body: string; cta: string; href: string };
+  };
   close: { headline: string; body: string; cta: string };
 }
 
@@ -82,7 +86,6 @@ export const talentV2En: TalentV2Content = {
         'I did not join because I was struggling to find work. I joined because this time I wanted the job I took to be the one I chose, not the one the market chose for me.',
       name: 'Daniel Contreras',
       role: 'Product Designer, 10 years in technology and product',
-      translationNote: 'Translated from Spanish, approved by Daniel.',
     },
   },
   paths: {
@@ -98,11 +101,16 @@ export const talentV2En: TalentV2Content = {
       {
         name: '1:1 Strategic Session',
         body: 'For an active process, a negotiation or a specific career decision. USD 300.',
-        cta: 'Book a session',
-        href: SESSION_MAILTO,
-        note: 'Sessions are booked by email. The button opens your email app, or write to hiring@purrfecthire.com.',
+        cta: 'Request a session',
+        href: SESSION_1_1,
+        note: 'Sessions are requested by email. The button opens your email app with the three things we need: your current role, your LinkedIn and the decision you want to work on.',
       },
     ],
+    free: {
+      body: 'Being considered in a Purrfect search is free, and Offer Accelerator is never required. Send us your profile and we will come back to you when a search fits.',
+      cta: 'Be considered for our searches',
+      href: CONSIDERED_FREE,
+    },
   },
   close: {
     headline: 'Let\'s assess your next move.',

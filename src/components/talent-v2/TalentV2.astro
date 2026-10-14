@@ -31,7 +31,7 @@ const t = getTalentV2(lang);
             <h1 class="h3-hero__h1 tv-h1">{t.hero.headline}</h1>
             <p class="h3-hero__sub">{t.hero.sub}</p>
             <p class="tv-audience">{t.hero.audience}</p>
-            <a href={PAGE_OFFER} class="h3-btn tv-hero__cta">
+            <a href={PAGE_OFFER} data-cta="talent-hero-offer" class="h3-btn tv-hero__cta">
               {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
           </div>
@@ -100,7 +100,6 @@ const t = getTalentV2(lang);
             <figcaption>
               <span class="tv-voice__name">{t.proof.voice.name}</span>
               <span class="tv-voice__role">{t.proof.voice.role}</span>
-              <span class="tv-voice__role">{t.proof.voice.translationNote}</span>
             </figcaption>
           </figure>
         </div>
@@ -116,11 +115,17 @@ const t = getTalentV2(lang);
               <li class={idx === 0 ? 'tv-path tv-path--flagship' : 'tv-path'}>
                 <h3 class="tv-path__name">{i.name}</h3>
                 <p class="tv-path__body">{i.body}</p>
-                <a href={i.href} class="h3-link tv-path__cta">{i.cta} <span class="h3-arrow" aria-hidden="true">→</span></a>
+                <a href={i.href} data-cta={`talent-path-${idx}`} class="h3-link tv-path__cta">{i.cta} <span class="h3-arrow" aria-hidden="true">→</span></a>
                 {i.note && <p class="tv-path__note">{i.note}</p>}
               </li>
             ))}
           </ul>
+          <div class="tv-free">
+            <p>{t.paths.free.body}</p>
+            <a href={t.paths.free.href} data-cta="talent-free" class="h3-link tv-free__cta">
+              {t.paths.free.cta} <span class="h3-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -129,7 +134,7 @@ const t = getTalentV2(lang);
         <div class="h3-wrap">
           <h2 class="h3-h2 tv-close__h2">{t.close.headline}</h2>
           <p class="h3-body tv-close__body">{t.close.body}</p>
-          <a href={PAGE_OFFER} class="h3-btn tv-close__cta">{t.close.cta}</a>
+          <a href={PAGE_OFFER} data-cta="talent-close-offer" class="h3-btn tv-close__cta">{t.close.cta}</a>
         </div>
       </section>
 
@@ -230,4 +235,10 @@ const t = getTalentV2(lang);
   @media (prefers-reduced-motion: reduce) { .h3 *, .tv-main * { transition: none !important; } }
 
   .tv-path__note, .tv-path__note a { overflow-wrap: anywhere; }
+
+  /* La ruta gratuita: /roles recibía candidaturas sin coste y ahora redirige
+     aquí, así que aquí tiene que existir una puerta sin coste. */
+  .tv-free { margin-top: 2rem; max-width: 44rem; }
+  .tv-free p { font-size: 0.9375rem; line-height: 1.7; color: var(--muted); }
+  .tv-free__cta { margin-top: 0.9rem; font-size: 0.9375rem; color: var(--text); }
 </style>

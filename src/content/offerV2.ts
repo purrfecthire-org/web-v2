@@ -31,7 +31,7 @@ export interface OfferV2Content {
   firewall: { headline: string; lead: string; body: string[]; more: string };
   includes: { eyebrow: string; headline: string; items: string[]; closing: string };
   behind: { eyebrow: string; headline: string; body: string[] };
-  proof: { eyebrow: string; headline: string; quote: string; name: string; role: string; translationNote: string };
+  proof: { eyebrow: string; headline: string; quote: string; name: string; role: string };
   investment: { eyebrow: string; headline: string; price: string; next: string };
   apply: { headline: string; body: string; cta: string; howNote: string };
   editorial: string;
@@ -47,7 +47,7 @@ export const offerV2En: OfferV2Content = {
     eyebrow: 'Offer Accelerator · Private market advisory',
     headline: 'Make your signal impossible to miss.',
     sub: 'Private market advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
-    cta: 'Apply to Offer Accelerator',
+    cta: 'Apply by email',
   },
   question: {
     eyebrow: 'The real question',
@@ -110,7 +110,6 @@ export const offerV2En: OfferV2Content = {
       'I did not join because I was struggling to find work. I joined because this time I wanted the job I took to be the one I chose, not the one the market chose for me.',
     name: 'Daniel Contreras',
     role: 'Product Designer, 10 years in technology and product',
-    translationNote: 'Translated from Spanish, approved by Daniel.',
   },
   investment: {
     eyebrow: 'Investment',
@@ -121,8 +120,8 @@ export const offerV2En: OfferV2Content = {
   apply: {
     headline: 'Apply to Offer Accelerator.',
     body: 'Tell us where you are and what the next move has to change.',
-    cta: 'Apply to Offer Accelerator',
-    howNote: 'Applications open in your email app. You can also write to hiring@purrfecthire.com.',
+    cta: 'Apply by email',
+    howNote: 'The button opens your email app with the three things we need: your current role, your LinkedIn and the decision you want to work on. You can also write to hiring@purrfecthire.com.',
   },
   editorial: 'Your career has advisors too.',
 };

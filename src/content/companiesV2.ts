@@ -91,7 +91,7 @@ export const companiesV2En: CompaniesV2Content = {
     headline: 'Two ways to work together, depending on the search and the hiring volume.',
     items: [
       { name: 'Success fee', note: 'You pay only when you hire.' },
-      { name: 'All You Can Hire', note: 'Several urgent roles at once, on a monthly fee instead of a percentage.' },
+      { name: 'All You Can Hire', note: 'Up to six roles open at the same time, any seniority, with two recruiters dedicated to the account. A monthly fee instead of a percentage.' },
     ],
     cta: 'Scope it on a call',
   },

@@ -40,7 +40,7 @@ const clients = [
         <h1 class="h3-hero__h1">{t.hero.headline}</h1>
         <p class="h3-hero__sub">{t.hero.sub}</p>
         <p class="fc-credential">{t.hero.credential}</p>
-        <a href={BOOKING_URL} target="_blank" rel="noopener" class="h3-btn h3-btn--ink h3-hero__cta">
+        <a href={BOOKING_URL} target="_blank" rel="noopener" data-cta="companies-hero-booking" class="h3-btn h3-btn--ink h3-hero__cta">
           {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
       </div>
@@ -156,7 +156,7 @@ const clients = [
           </li>
         ))}
       </ul>
-      <a href={BOOKING_URL} target="_blank" rel="noopener" class="h3-link fc-models__cta">
+      <a href={BOOKING_URL} target="_blank" rel="noopener" data-cta="companies-models-booking" class="h3-link fc-models__cta">
         {t.models.cta}<span class="h3-arrow" aria-hidden="true">→</span>
       </a>
     </div>
@@ -187,7 +187,7 @@ const clients = [
     <div class="h3-wrap">
       <h2 class="h3-h2 fc-close__h2">{t.close.headline}</h2>
       <p class="h3-body fc-close__body">{t.close.body}</p>
-      <a href={BOOKING_URL} target="_blank" rel="noopener" class="h3-btn h3-btn--ink fc-close__cta">
+      <a href={BOOKING_URL} target="_blank" rel="noopener" data-cta="companies-close-booking" class="h3-btn h3-btn--ink fc-close__cta">
         {t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span>
       </a>
       <p class="fc-close__mail"><a href={`mailto:${t.close.email}`}>{t.close.email}</a></p>

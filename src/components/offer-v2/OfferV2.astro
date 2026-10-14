@@ -20,7 +20,7 @@ const t = getOfferV2(lang);
   title={t.meta.title}
   description={t.meta.description}
   theme="dark"
-  navCta={{ label: "Apply to Offer Accelerator", href: APPLY_OFFER, external: true }}
+  navCta={{ label: "Apply by email", href: APPLY_OFFER, external: true }}
   journey="offer"
 >
 
@@ -31,7 +31,7 @@ const t = getOfferV2(lang);
             <p class="h3-eyebrow h3-eyebrow--on-dark">{t.hero.eyebrow}</p>
             <h1 class="h3-hero__h1">{t.hero.headline}</h1>
             <p class="h3-hero__sub">{t.hero.sub}</p>
-            <a href={APPLY_OFFER} class="h3-btn oa-hero__cta">
+            <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-hero__cta">
               {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
           </div>
@@ -131,7 +131,6 @@ const t = getOfferV2(lang);
             <figcaption>
               <span class="oa-quote__name">{t.proof.name}</span>
               <span class="oa-quote__role">{t.proof.role}</span>
-              <span class="oa-quote__role">{t.proof.translationNote}</span>
             </figcaption>
           </figure>
         </div>
@@ -156,7 +155,7 @@ const t = getOfferV2(lang);
         <div class="h3-wrap">
           <h2 class="h3-h2 oa-apply__h2">{t.apply.headline}</h2>
           <p class="h3-body oa-apply__body">{t.apply.body}</p>
-          <a href={APPLY_OFFER} class="h3-btn oa-apply__cta">
+          <a href={APPLY_OFFER} data-cta="offer-close-apply" class="h3-btn oa-apply__cta">
             {t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span>
           </a>
           <p class="oa-apply__how">{t.apply.howNote}</p>

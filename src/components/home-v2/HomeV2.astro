@@ -50,14 +50,14 @@ const clients = [
             <p class="h3-hero__sub">{t.hero.sub}</p>
 
             <div class="h3-doors">
-              <a href={PAGE_COMPANIES} class="h3-door">
+              <a href={PAGE_COMPANIES} data-cta="home-door-companies" class="h3-door">
                 <span class="h3-door__label">
   {t.hero.companies.label}
                 </span>
                 <span class="h3-door__promise">{t.hero.companies.promise}</span>
                 <span class="h3-door__arrow" aria-hidden="true">→</span>
               </a>
-              <a href={PAGE_TALENT} class="h3-door">
+              <a href={PAGE_TALENT} data-cta="home-door-talent" class="h3-door">
                 <span class="h3-door__label">
   {t.hero.talent.label}
                 </span>
@@ -97,7 +97,7 @@ const clients = [
               {t.companies.headline}<span class="h3-dot h3-dot--end" aria-hidden="true"></span>
             </h2>
             <p class="h3-lead">{t.companies.intro}</p>
-            <a href={PAGE_COMPANIES} class="h3-btn h3-btn--ink h3-co__cta">
+            <a href={PAGE_COMPANIES} data-cta="home-companies-block" class="h3-btn h3-btn--ink h3-co__cta">
               {t.companies.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
             <figure class="h3-co__scene">
@@ -146,7 +146,7 @@ const clients = [
             <h2 class="h3-h2 h3-h2--on-dark">{t.talent.headline}</h2>
             <p class="h3-lead h3-lead--on-dark">{t.talent.body}</p>
             <p class="h3-body h3-body--on-dark">{t.talent.sub}</p>
-            <a href={PAGE_OFFER} class="h3-btn h3-ta__cta">{t.talent.cta}</a>
+            <a href={PAGE_OFFER} data-cta="home-offer-block" class="h3-btn h3-ta__cta">{t.talent.cta}</a>
           </div>
         </div>
       </section>

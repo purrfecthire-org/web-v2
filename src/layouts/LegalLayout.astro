@@ -27,36 +27,21 @@ interface Props {
 const { title, description, lang, pageUrl, heading, lastUpdated, lastUpdatedLabel } = Astro.props;
 
 const c = getContent(lang);
-const otherLang = lang === 'en' ? 'es' : 'en';
 const homeHref = getRelativeLocaleUrl(lang, '/');
-// The localized counterpart of this very page (e.g. /privacy-policy ↔ /es/privacy-policy)
-const otherLangHref = getRelativeLocaleUrl(otherLang, '/privacy-policy');
 ---
 
-<Layout legacyFonts={false} hasAlternateLang title={title} description={description} lang={lang} canonicalUrl={pageUrl}>
+<Layout legacyFonts={false} title={title} description={description} lang={lang} canonicalUrl={pageUrl}>
   <header class="legal-nav">
     <div class="legal-nav__inner">
       <a href={homeHref} aria-label="Purrfect Hire home">
-        <picture>
-          <source srcset="/logos/logo-desktop.webp" type="image/webp" />
-          <img src="/logos/logo-desktop.png" class="legal-nav__logo" alt="Purrfect Hire" />
-        </picture>
+        <img
+          src="/brand/logo/logo-horizontal-midnight.svg"
+          class="legal-nav__logo"
+          alt="Purrfect Hire"
+          width="289"
+          height="60"
+        />
       </a>
-      <div class="legal-nav__lang">
-        {lang === 'en' ? (
-          <>
-            <span class="legal-nav__lang-active">EN</span>
-            <span class="legal-nav__lang-div">|</span>
-            <a href={otherLangHref} class="legal-nav__lang-link">ES</a>
-          </>
-        ) : (
-          <>
-            <a href={otherLangHref} class="legal-nav__lang-link">EN</a>
-            <span class="legal-nav__lang-div">|</span>
-            <span class="legal-nav__lang-active">ES</span>
-          </>
-        )}
-      </div>
     </div>
   </header>
 

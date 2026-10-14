@@ -437,7 +437,7 @@ export const content_en: LandingContent = {
       { label: 'Privacy', href: '/privacy-policy' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire' },
     ],
-    legal: '© 2026 Purrfect Hire',
+    legal: '© 2026 Purrfect Hire OÜ',
   },
 
   homeRouter: {
@@ -803,10 +803,10 @@ export const content_es: LandingContent = {
 
   footer: {
     links: [
-      { label: 'Privacidad', href: '/es/privacy-policy' },
+      { label: 'Privacidad', href: '/privacy-policy' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire' },
     ],
-    legal: '© 2026 Purrfect Hire',
+    legal: '© 2026 Purrfect Hire OÜ',
   },
 
   homeRouter: {

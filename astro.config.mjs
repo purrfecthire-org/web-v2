@@ -29,21 +29,21 @@ export default defineConfig({
     '/offer-acceleration/preguntas': '/offer-acceleration',
     '/offer-acceleration/te-suena': '/offer-acceleration',
     '/offer-acceleration/espejo': '/offer-acceleration',
-    // Spanish: the four launch pages are English. The privacy policy keeps
-    // its Spanish version.
+    // Spanish: the site is English only.
     '/es': '/',
     '/es/kate': '/#kate',
     '/es/pricing': '/',
     '/es/career-sessions': '/for-talent',
     '/es/career-momentum': '/for-talent',
+    '/es/privacy-policy': '/privacy-policy',
   },
   integrations: [
     sitemap({
-      // Six real pages: home, for-companies, for-talent, offer-acceleration
-      // and the privacy policy in both languages. Redirect stubs are not
-      // pages and never enter the sitemap.
+      // Five real pages: home, for-companies, for-talent, offer-acceleration
+      // and the privacy policy. Redirect stubs are not pages and never enter
+      // the sitemap.
       filter: (page) =>
-        /\/(for-companies|for-talent|offer-acceleration|privacy-policy|es\/privacy-policy)\/?$/.test(page) ||
+        /\/(for-companies|for-talent|offer-acceleration|privacy-policy)\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/$/.test(page),
     }),
   ],
