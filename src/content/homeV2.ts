@@ -13,7 +13,7 @@ export interface HomeV2Content {
   nav: { companies: string; talent: string; roles: string; kate: string; cta: string };
   hero: {
     headline: string;
-    headlineAccent: string;
+    sub: string;
     companies: { label: string; promise: string };
     talent: { label: string; promise: string };
     photoNote: string;
@@ -58,8 +58,8 @@ export const homeV2En: HomeV2Content = {
     cta: 'Start a search',
   },
   hero: {
-    headline: 'Skills get people hired.',
-    headlineAccent: 'Culture fit makes them stay.',
+    headline: 'Exceptional people build extraordinary things.',
+    sub: 'Purrfect Hire is a global talent boutique for early-stage companies. We run senior searches across the US, Europe and Latin America, matching exceptional people to the problem, stage and operating context of the company.',
     companies: { label: 'For companies', promise: 'Build smaller, stronger teams.' },
     talent: { label: 'For talent', promise: 'Make your signal impossible to miss.' },
     photoNote: '[REAL TEAM PHOTO — Purrfect or a client team, candid, natural light]',
@@ -72,21 +72,21 @@ export const homeV2En: HomeV2Content = {
     eyebrow: 'For companies',
     headline: 'Build smaller, stronger teams.',
     intro:
-      'Senior hires for startups between seed and Series B, in engineering, product, go-to-market and leadership.',
+      'Senior hires across engineering, product, go-to-market and leadership.',
     hard:
-      'These roles are hard because the job changes while you are hiring for it. The person has to solve what is in front of the company now, and keep up as the company stops being the one you described in the brief.',
+      'Early-stage roles change while you are hiring for them.',
     pov:
-      'So we look at which problem someone solved, how much ownership they really had, what evidence exists of their performance, how fast they learn and how they decide. The fit we look for is between the person, the problem and the moment of the company.',
+      'We look beyond whether someone can do the job today: what they actually owned, how they make decisions, how fast they learn and whether their slope matches where the company is going.',
     evidence: 'Every candidate comes with evidence.',
     quoteLabel: 'A client, in her words',
-    casePhotoNote: '[REAL FOUNDER PHOTO — client, working environment]',
+    casePhotoNote: '[REAL CLIENT PHOTO — Head of Customer Operations, working environment]',
     cta: 'See how we work with companies',
   },
   talent: {
     eyebrow: 'For talent',
     headline: 'Make your signal impossible to miss.',
-    body: 'You may already be operating at the next level. The question is whether the market can see it.',
-    sub: 'We help senior professionals understand how the market reads their experience, and strengthen the evidence behind their real level.',
+    body: 'You may be operating above the level the market is assigning you. Or the evidence may not support the move yet.',
+    sub: 'We help senior professionals understand how the market reads their experience, which level the evidence actually supports, and what is still missing.',
     cta: 'Explore Offer Accelerator',
     catNote: '[REAL TALENT PHOTO — Offer Accelerator outcome, working environment]',
     storyNote: 'Story pending. One real professional, with written permission. Level or scope change, not only compensation.',
@@ -96,12 +96,12 @@ export const homeV2En: HomeV2Content = {
     statement:
       'Better talent decisions come from better signal, deeper context and stronger judgment.',
     forCompanies: 'For companies: we help you tell real signal from noise.',
-    forTalent: 'For talent: we help you make the signal you already have visible.',
+    forTalent: 'For talent: we help you find what your evidence supports, and make it visible.',
   },
   kate: {
     eyebrow: 'Purrfect Hire',
     headline: 'Founded by Kate Forero.',
-    body: 'Kate led recruiting at Addi through two years of growth, to almost 500 people, post-Series B. Today Purrfect Hire hires for startups backed by YC, a16z and Sequoia.',
+    body: 'Kate led recruiting at Addi through two years of growth, to almost 500 people, post-Series B. Today Purrfect Hire runs senior searches globally for early-stage companies, including teams backed by YC, a16z and Sequoia.',
     ctaCompanies: 'For companies',
     ctaTalent: 'For talent',
     photoNote: '[REAL KATE PHOTO — documentary, not a corporate headshot]',
@@ -122,8 +122,8 @@ export const homeV2Es: HomeV2Content = {
     cta: 'Iniciar una búsqueda',
   },
   hero: {
-    headline: 'Las skills te contratan.',
-    headlineAccent: 'El fit cultural te hace quedarte.',
+    headline: 'Las personas excepcionales construyen cosas extraordinarias.',
+    sub: 'Purrfect Hire es una boutique de talento global para compañías early-stage. Hacemos búsquedas senior en US, Europa y Latinoamérica, conectando personas excepcionales con el problema, la etapa y el contexto operativo de la compañía.',
     companies: { label: 'Para empresas', promise: 'Equipos más pequeños y más fuertes.' },
     talent: { label: 'Para talento', promise: 'Haz que tu señal sea imposible de ignorar.' },
     photoNote: '[REAL TEAM PHOTO — Purrfect o equipo cliente, candid, luz natural]',
@@ -136,21 +136,21 @@ export const homeV2Es: HomeV2Content = {
     eyebrow: 'Para empresas',
     headline: 'Equipos más pequeños y más fuertes.',
     intro:
-      'Hires senior para startups entre seed y Serie B, en ingeniería, producto, go-to-market y liderazgo.',
+      'Hires senior en ingeniería, producto, go-to-market y liderazgo.',
     hard:
-      'Estos roles son difíciles porque el trabajo cambia mientras lo estás contratando. La persona tiene que resolver lo que la compañía tiene enfrente hoy, y seguir el ritmo cuando la compañía deje de ser la que describiste en el brief.',
+      'En early-stage, el rol cambia mientras lo estás contratando.',
     pov:
-      'Por eso miramos qué problema resolvió, cuánto ownership tuvo de verdad, qué evidencia existe de su desempeño, qué tan rápido aprende y cómo decide. El fit que buscamos es entre la persona, el problema y el momento de la compañía.',
+      'Miramos más allá de si alguien puede hacer el trabajo hoy: qué fue realmente suyo, cómo toma decisiones, qué tan rápido aprende y si su pendiente acompaña hacia dónde va la compañía.',
     evidence: 'Cada candidato llega con evidencia.',
     quoteLabel: 'Una clienta, con sus palabras',
-    casePhotoNote: '[REAL FOUNDER PHOTO — cliente, entorno de trabajo]',
+    casePhotoNote: '[REAL CLIENT PHOTO — Head of Customer Operations, entorno de trabajo]',
     cta: 'Cómo trabajamos con empresas',
   },
   talent: {
     eyebrow: 'Para talento',
     headline: 'Haz que tu señal sea imposible de ignorar.',
-    body: 'Quizás ya operas en el siguiente nivel. La pregunta es si el mercado puede verlo.',
-    sub: 'Ayudamos a profesionales senior a entender cómo lee el mercado su experiencia, y a fortalecer la evidencia detrás de su nivel real.',
+    body: 'Quizás operas por encima del nivel que el mercado te asigna. O quizás la evidencia todavía no sostiene el salto.',
+    sub: 'Ayudamos a profesionales senior a entender cómo lee el mercado su experiencia, qué nivel sostiene la evidencia hoy y qué falta por demostrar.',
     cta: 'Conoce Offer Accelerator',
     catNote: '[REAL TALENT PHOTO — resultado de Offer Accelerator, entorno de trabajo]',
     storyNote: 'Historia pendiente. Una persona real, con permiso escrito. Cambio de nivel o de scope, no solo compensación.',
@@ -160,12 +160,12 @@ export const homeV2Es: HomeV2Content = {
     statement:
       'Las mejores decisiones de talento salen de mejor señal, más contexto y mejor criterio.',
     forCompanies: 'Para empresas: te ayudamos a distinguir la señal real del ruido.',
-    forTalent: 'Para talento: te ayudamos a hacer visible la señal que ya tienes.',
+    forTalent: 'Para talento: te ayudamos a ver qué sostiene tu evidencia, y a hacerla visible.',
   },
   kate: {
     eyebrow: 'Purrfect Hire',
     headline: 'Fundada por Kate Forero.',
-    body: 'Kate lideró el recruiting de Addi durante dos años de crecimiento, hasta casi 500 personas, después de la Serie B. Hoy Purrfect Hire contrata para startups respaldadas por YC, a16z y Sequoia.',
+    body: 'Kate lideró el recruiting de Addi durante dos años de crecimiento, hasta casi 500 personas, después de la Serie B. Hoy Purrfect Hire hace búsquedas senior globalmente para compañías early-stage, incluidos equipos respaldados por YC, a16z y Sequoia.',
     ctaCompanies: 'Para empresas',
     ctaTalent: 'Para talento',
     photoNote: '[REAL KATE PHOTO — documental, no headshot corporativo]',

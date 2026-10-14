@@ -63,10 +63,8 @@ const clients = [
       <section class="h3-hero">
         <div class="h3-wrap h3-hero__grid">
           <div class="h3-hero__copy">
-            <h1 class="h3-hero__h1">
-              <span>{t.hero.headline}</span>
-              <span class="h3-hero__h1-accent">{t.hero.headlineAccent}</span>
-            </h1>
+            <h1 class="h3-hero__h1">{t.hero.headline}</h1>
+            <p class="h3-hero__sub">{t.hero.sub}</p>
 
             <div class="h3-doors">
               <a href={`${p}/for-founders`} class="h3-door">
@@ -311,12 +309,15 @@ const clients = [
   .h3-hero__copy { min-width: 0; }
   .h3-hero__h1 {
     font-family: var(--h-serif); font-weight: 400;
-    font-size: clamp(2.5rem, 6.2vw, 4.75rem); line-height: 1.02; letter-spacing: -0.018em;
-    display: flex; flex-direction: column;
+    font-size: clamp(2.5rem, 5.6vw, 4.25rem); line-height: 1.04; letter-spacing: -0.018em;
+    max-width: 16ch; text-wrap: balance;
   }
-  .h3-hero__h1-accent { color: var(--on-dark-muted); }
+  .h3-hero__sub {
+    margin-top: 1.75rem; max-width: 42rem; font-size: 1.0625rem;
+    line-height: 1.6; color: var(--on-dark-muted);
+  }
 
-  .h3-doors { margin-top: 3rem; border-top: 1px solid var(--line-dark); }
+  .h3-doors { margin-top: 2.75rem; border-top: 1px solid var(--line-dark); }
   .h3-door {
     display: grid; grid-template-columns: 1fr auto; align-items: baseline;
     gap: 0.35rem 1rem; padding: 1.5rem 0;
