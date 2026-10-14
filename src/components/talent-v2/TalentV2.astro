@@ -3,7 +3,7 @@
 // Same system as the home: Midnight for the hero and one weighted moment,
 // Ivory as the main surface, Stone for transitions, purple for action and
 // signal only. Entry point, not the Offer Accelerator product page.
-import Layout from '../../layouts/Layout.astro';
+import Shell from '../v2/Shell.astro';
 import type { Lang } from '../../content/index';
 import { getTalentV2 } from '../../content/talentV2';
 
@@ -12,35 +12,14 @@ const { lang = 'en' } = Astro.props;
 const t = getTalentV2(lang);
 ---
 
-<Layout title={t.meta.title} description={t.meta.description} lang={lang} noindex>
-  <Fragment slot="head">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap"
-      rel="stylesheet"
-    />
-  </Fragment>
+<Shell
+  lang={lang}
+  title={t.meta.title}
+  description={t.meta.description}
+  theme="light"
+  navCta={{ label: "Explore Offer Accelerator", href: "/offer-acceleration" }}
+>
 
-  <div class="h3">
-    <header class="h3-nav">
-      <div class="h3-nav__in">
-        <a href="/" class="h3-nav__logo" aria-label="Purrfect Hire">
-          <picture>
-            <source srcset="/logos/logo-desktop.webp" type="image/webp" />
-            <img src="/logos/logo-desktop.png" alt="Purrfect Hire" />
-          </picture>
-        </a>
-        <nav class="h3-nav__links" aria-label="Main">
-          <a href="/for-founders">For companies</a>
-          <a href="/for-talent">For talent</a>
-          <a href="/roles">Open roles</a>
-          <a href="/kate">Kate</a>
-        </nav>
-        <a href="/offer-acceleration" class="h3-btn h3-btn--sm">Explore Offer Accelerator</a>
-      </div>
-    </header>
-
-    <main>
       <!-- Hero -->
       <section class="h3-hero">
         <div class="h3-wrap h3-hero__grid">
@@ -107,28 +86,27 @@ const t = getTalentV2(lang);
         <div class="h3-wrap">
           <p class="h3-eyebrow h3-eyebrow--on-dark">{t.proof.eyebrow}</p>
           <h2 class="h3-h2 h3-h2--on-dark tv-proof__h2">{t.proof.headline}</h2>
-          <article class="tv-case">
-            <div class="tv-case__text">
-              <blockquote class="tv-case__quote">“{t.proof.lead.quote}”</blockquote>
-              <p class="tv-case__who">
-                <span class="tv-case__name">{t.proof.lead.name}</span>
-                <span class="tv-case__role">{t.proof.lead.role}</span>
-                <span class="tv-case__role">{t.proof.lead.translationNote}</span>
-              </p>
-              <p class="tv-note" data-internal>{t.proof.lead.pending}</p>
-            </div>
-            <figure class="h3-ph h3-ph--case h3-ph--on-dark">
-              <span class="h3-ph__label">{t.proof.lead.photoNote}</span>
-            </figure>
-          </article>
-
-          <div class="tv-proof__grid">
-            {t.proof.slots.map((slot) => (
-              <article class="tv-case tv-case--compact">
-                <p class="tv-case__result tv-case__result--sm">{slot}</p>
-              </article>
+          <ol class="tv-results">
+            {t.proof.results.map((r) => (
+              <li class="tv-result">
+                <p class="tv-result__arc">{r.arc}</p>
+                <p class="tv-result__detail">{r.detail}</p>
+                <p class="tv-note" data-internal>{r.pending}</p>
+              </li>
             ))}
-          </div>
+          </ol>
+
+          <figure class="tv-voice">
+            <p class="h3-eyebrow h3-eyebrow--on-dark">{t.proof.voiceLabel}</p>
+            <blockquote>“{t.proof.voice.quote}”</blockquote>
+            <figcaption>
+              <span class="tv-voice__name">{t.proof.voice.name}</span>
+              <span class="tv-voice__role">{t.proof.voice.role}</span>
+              <span class="tv-voice__role">{t.proof.voice.translationNote}</span>
+            </figcaption>
+            <p class="tv-note" data-internal>{t.proof.voice.pending}</p>
+          </figure>
+
           <p class="tv-note" data-internal>{t.proof.note}</p>
         </div>
       </section>
@@ -158,162 +136,10 @@ const t = getTalentV2(lang);
           <a href="/offer-acceleration" class="h3-btn h3-btn--ink tv-close__cta">{t.close.cta}</a>
         </div>
       </section>
-    </main>
 
-    <footer class="h3-footer">
-      <div class="h3-wrap h3-footer__in">
-        <span>© 2026 Purrfect Hire</span>
-        <nav aria-label="Footer">
-          <a href="/privacy-policy">Privacy</a>
-          <a href="https://www.linkedin.com/company/purrfect-hire" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="mailto:hiring@purrfecthire.com">hiring@purrfecthire.com</a>
-        </nav>
-      </div>
-    </footer>
-  </div>
-</Layout>
+    </Shell>
 
 <style lang="scss" is:global>
-  /* Shared tokens and primitives: same system as the home prototype. */
-  .h3 {
-    --midnight: #0A0B14;
-    --sand: #F7F6F3;
-    --stone: #E9EBF0;
-    --white: #FFFFFF;
-    --text: #14161f;
-    --muted: #63656f;
-    --on-dark: #e8e7e3;
-    --on-dark-muted: #9b9ca6;
-    --line: rgba(20, 22, 31, 0.1);
-    --line-dark: rgba(232, 231, 227, 0.14);
-    --purple: #6366F1;
-    --purple-deep: #4f46e5;
-    --h-serif: 'Fraunces', 'Canela', Georgia, serif;
-    --h-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    background: var(--sand); color: var(--text);
-    font-family: var(--h-sans); line-height: 1.6; -webkit-font-smoothing: antialiased;
-  }
-  body:has(.h3) { background: #0a0b14; }
-  :where(.h3) a { color: inherit; text-decoration: none; }
-  :where(.h3) :where(p, h1, h2, h3, ul, ol, figure, blockquote) { margin: 0; padding: 0; }
-  :where(.h3) :where(ul, ol) { list-style: none; }
-  .h3 a:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; border-radius: 3px; }
-
-  .h3-wrap { max-width: 80rem; margin-inline: auto; padding-inline: 1.5rem; }
-  @media (min-width: 64rem) { .h3-wrap { padding-inline: 3rem; } }
-
-  .h3-eyebrow {
-    font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--muted);
-  }
-  .h3-eyebrow--on-dark { color: var(--on-dark-muted); }
-  .h3-dot {
-    display: inline-block; width: 5px; height: 5px; border-radius: 50%;
-    background: rgba(20, 22, 31, 0.3); margin-top: 0.72rem; flex: none;
-  }
-  .h3-dot--end {
-    display: inline-block; width: 0.34em; height: 0.34em; border-radius: 50%;
-    background: var(--purple); margin-left: 0.22em; vertical-align: 0.08em;
-    margin-top: 0; flex: none;
-  }
-  /* Purple is the primary action on Midnight. On light surfaces the
-     primary action is Midnight, so the accent stays precise. */
-  .h3-btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    padding: 0.9rem 1.6rem; border-radius: 999px;
-    background: var(--purple); color: #fff !important;
-    font-size: 0.9375rem; font-weight: 500; line-height: 1;
-    transition: background-color 0.2s ease;
-  }
-  .h3-btn:hover { background: var(--purple-deep); }
-  .h3-btn--sm { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
-  .h3-btn--ink { background: var(--midnight); }
-  .h3-btn--ink:hover { background: #1b1d2b; }
-  .h3-btn--ghost {
-    background: transparent; color: var(--text) !important;
-    border: 1px solid rgba(20, 22, 31, 0.28);
-  }
-  .h3-btn--ghost:hover { border-color: var(--text); background: transparent; }
-  .h3-arrow { font-size: 0.9em; line-height: 1; }
-  .h3-link {
-    display: inline-flex; align-items: baseline; gap: 0.4rem;
-    font-size: 1rem; font-weight: 500;
-    border-bottom: 1px solid var(--line); padding-bottom: 2px;
-  }
-  .h3-link:hover { border-color: currentColor; }
-  .h3-h2 {
-    font-family: var(--h-serif); font-weight: 400;
-    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
-    font-size: clamp(1.875rem, 3.6vw, 3.5rem); line-height: 1.06;
-    letter-spacing: -0.014em; margin-top: 0.9rem; text-wrap: balance;
-  }
-  .h3-h2--on-dark { color: var(--on-dark); }
-  .h3-body { font-size: 1.125rem; line-height: 1.7; color: var(--muted); max-width: 34rem; }
-  .h3-h2 + .h3-body { margin-top: 1.5rem; }
-
-  .h3-ph {
-    display: flex; align-items: flex-end; border-radius: 14px;
-    background: var(--sand); border: 1px dashed rgba(20, 22, 31, 0.22);
-    padding: 1rem; max-width: 100%;
-  }
-  .h3-ph figcaption {
-    font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--muted); line-height: 1.5;
-  }
-  .h3-ph--on-dark { background: #161825; border-color: var(--line-dark); }
-  .h3-ph--on-dark figcaption { color: var(--on-dark-muted); }
-
-  .h3-ph__label {
-    font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--on-dark-muted); line-height: 1.5;
-  }
-  /* Portrait with as much weight as the message, cropped to keep the face. */
-  .h3-hero__media { position: relative; margin: 0; border-radius: 14px; overflow: hidden; }
-  .h3-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 62% 30%; }
-  @media (min-width: 56rem) { .h3-hero__media { aspect-ratio: 4 / 5; } }
-  @media (max-width: 56rem) { .h3-hero__media { aspect-ratio: 4 / 3; margin-top: 2.25rem; } }
-  .h3-ph--proof { aspect-ratio: 4 / 5; }
-
-  .h3-nav {
-    position: absolute; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20;
-    background: transparent; border-bottom: none;
-  }
-  .h3 { position: relative; }
-  .h3-nav__in {
-    max-width: 80rem; margin-inline: auto; padding: 0.9rem 1.5rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-  }
-  @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
-  .h3-nav__logo img { height: 1.9rem; width: auto; display: block; }
-  .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; color: var(--muted); }
-  .h3-nav__links a:hover { color: var(--text); }
-  @media (min-width: 56rem) { .h3-nav__links { display: flex; } }
-  .h3-nav .h3-btn--sm { display: none; }
-  @media (min-width: 56rem) { .h3-nav .h3-btn--sm { display: inline-flex; } }
-
-  .h3-hero { position: relative; overflow: hidden; background: var(--sand); color: var(--text); padding: 7rem 0 4.5rem; }
-  @media (min-width: 56rem) { .h3-hero { padding: 8.5rem 0 5rem; } }
-  .h3-hero__grid { display: grid; gap: 3.5rem; align-items: center; }
-  @media (min-width: 56rem) { .h3-hero__grid { grid-template-columns: 1fr 0.92fr; gap: 4.5rem; } }
-  .h3-hero__copy { min-width: 0; }
-  .h3-hero__h1 {
-    font-family: var(--h-serif); font-weight: 400;
-    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
-    font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.02;
-    letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance;
-  }
-  .h3-hero__sub {
-    margin-top: 1.75rem; max-width: 32rem; font-size: 1.1875rem;
-    line-height: 1.6; color: var(--muted);
-  }
-  .h3-footer {
-    background: var(--midnight); color: var(--on-dark-muted);
-    border-top: 1px solid var(--line-dark); padding: 2rem 0 2.5rem; font-size: 0.8125rem;
-  }
-  .h3-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
-  .h3-footer nav { display: flex; flex-wrap: wrap; gap: 1.5rem; }
-  .h3-footer a:hover { color: var(--on-dark); }
-
   /* ── Page-specific ───────────────────────────────────────────────── */
   .tv-h1 { margin-top: 1rem; }
   .tv-audience {
@@ -368,29 +194,23 @@ const t = getTalentV2(lang);
   .tv-proof { background: var(--midnight); color: var(--on-dark); padding: 5rem 0; }
   @media (min-width: 56rem) { .tv-proof { padding: 7rem 0; } }
   .tv-proof__h2 { max-width: 32ch; }
-  .tv-case { margin-top: 2.75rem; display: grid; gap: 1.5rem; align-items: center; }
-  @media (min-width: 56rem) { .tv-case { grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; } }
-  .tv-case__text { min-width: 0; order: -1; }
-  .tv-case__result {
-    font-family: var(--h-serif); font-size: clamp(1.75rem, 3vw, 2.75rem);
-    line-height: 1.1; color: var(--on-dark);
+  .tv-results { margin-top: 2.75rem; display: grid; gap: 0; border-top: 1px solid var(--line-dark); }
+  @media (min-width: 56rem) { .tv-results { grid-template-columns: 1fr 1fr; gap: 0 4rem; } }
+  .tv-result { padding: 1.75rem 0; border-bottom: 1px solid var(--line-dark); }
+  .tv-result__arc {
+    font-family: var(--h-serif); font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    line-height: 1.12; color: var(--on-dark);
   }
-  .tv-case__quote {
-    font-family: var(--h-serif); font-size: clamp(1.5rem, 2.5vw, 2.25rem);
-    line-height: 1.2; color: var(--on-dark); max-width: 24ch;
-  }
-  .tv-case__who { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9375rem; }
-  .tv-case__name { font-weight: 500; color: var(--on-dark); }
-  .tv-case__role { color: var(--on-dark-muted); }
-  .tv-case__detail { margin-top: 1rem; font-size: 1.0625rem; line-height: 1.65; color: var(--on-dark-muted); max-width: 30rem; }
-  .h3-ph--case { aspect-ratio: 4 / 3; }
+  .tv-result__detail { margin-top: 0.6rem; font-size: 1rem; line-height: 1.6; color: var(--on-dark-muted); }
 
-  .tv-proof__grid { margin-top: 1.75rem; display: grid; gap: 1.25rem; }
-  @media (min-width: 48rem) { .tv-proof__grid { grid-template-columns: 1fr 1fr; } }
-  .tv-case--compact {
-    margin-top: 0; display: block; padding: 1.5rem 0 0; border-top: 1px solid var(--line-dark);
+  .tv-voice { margin-top: 3rem; max-width: 44rem; }
+  .tv-voice blockquote {
+    margin-top: 0.85rem; font-family: var(--h-serif);
+    font-size: clamp(1.25rem, 2vw, 1.625rem); line-height: 1.3; color: var(--on-dark);
   }
-  .tv-case__result--sm { font-size: 1.25rem; line-height: 1.25; }
+  .tv-voice figcaption { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9375rem; }
+  .tv-voice__name { font-weight: 500; color: var(--on-dark); }
+  .tv-voice__role { color: var(--on-dark-muted); }
 
   .tv-paths { background: var(--stone); padding: 4.5rem 0 5rem; }
   @media (min-width: 56rem) { .tv-paths { padding: 6.5rem 0 7rem; } }

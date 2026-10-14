@@ -1,0 +1,273 @@
+---
+// ── Shared shell for the rebrand pages ───────────────────────────────────
+// One header and one footer for Home, For Companies, For Talent and Offer
+// Accelerator, plus the design system itself, so the four pages cannot
+// drift apart. The nav sits inside the hero: pass theme="dark" when the
+// hero is Midnight and theme="light" when it is Sand.
+//
+// The small-screen menu is a <details> disclosure: it needs no JavaScript,
+// it is keyboard reachable and it closes on Escape in every browser.
+import Layout from '../../layouts/Layout.astro';
+import type { Lang } from '../../content/index';
+
+interface Props {
+  lang?: Lang;
+  title: string;
+  description: string;
+  theme?: 'dark' | 'light';
+  navCta?: { label: string; href: string };
+}
+
+const { lang = 'en', title, description, theme = 'dark', navCta } = Astro.props;
+
+const links = [
+  { label: 'For companies', href: '/for-founders' },
+  { label: 'For talent', href: '/for-talent' },
+  { label: 'Open roles', href: '/roles' },
+  { label: 'Kate', href: '/kate' },
+];
+---
+
+<Layout title={title} description={description} lang={lang} noindex>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap"
+      rel="stylesheet"
+    />
+  </Fragment>
+
+  <div class:list={['h3', `h3--${theme}`]}>
+    <header class="h3-nav">
+      <div class="h3-nav__in">
+        <a href="/" class="h3-nav__logo" aria-label="Purrfect Hire">
+          <picture>
+            <source srcset="/logos/logo-desktop.webp" type="image/webp" />
+            <img src="/logos/logo-desktop.png" alt="Purrfect Hire" />
+          </picture>
+        </a>
+
+        <nav class="h3-nav__links" aria-label="Main">
+          {links.map((l) => <a href={l.href}>{l.label}</a>)}
+        </nav>
+
+        <div class="h3-nav__right">
+          {navCta && <a href={navCta.href} class="h3-btn h3-btn--sm h3-nav__cta">{navCta.label}</a>}
+
+          <details class="h3-menu">
+            <summary aria-label="Menu">
+              <span class="h3-menu__bars" aria-hidden="true"><i></i><i></i></span>
+              <span class="h3-menu__word">Menu</span>
+            </summary>
+            <div class="h3-menu__panel">
+              <nav aria-label="Main, small screens">
+                {links.map((l) => <a href={l.href}>{l.label}</a>)}
+              </nav>
+              {navCta && <a href={navCta.href} class="h3-btn h3-menu__cta">{navCta.label}</a>}
+            </div>
+          </details>
+        </div>
+      </div>
+    </header>
+
+    <main><slot /></main>
+
+    <footer class="h3-footer">
+      <div class="h3-wrap h3-footer__in">
+        <span>© 2026 Purrfect Hire</span>
+        <nav aria-label="Footer">
+          <a href="/privacy-policy">Privacy</a>
+          <a href="https://www.linkedin.com/company/purrfect-hire" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="mailto:hiring@purrfecthire.com">hiring@purrfecthire.com</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+</Layout>
+
+<style lang="scss" is:global>
+  .h3 {
+    position: relative;
+    --midnight: #0A0B14;
+    --sand: #F7F6F3;
+    --stone: #E9EBF0;
+    --white: #FFFFFF;
+    --text: #14161f;
+    --muted: #5a5c66;
+    --on-dark: #e8e7e3;
+    /* Lifted for contrast against Midnight: this grey is ~7:1 on #0A0B14. */
+    --on-dark-muted: #b2b3bb;
+    --line: rgba(20, 22, 31, 0.1);
+    --line-dark: rgba(232, 231, 227, 0.16);
+    --purple: #6366F1;
+    --purple-deep: #4f46e5;
+    --h-serif: 'Fraunces', 'Canela', Georgia, serif;
+    --h-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--sand); color: var(--text);
+    font-family: var(--h-sans); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  body:has(.h3) { background: #0A0B14; }
+  :where(.h3) a { color: inherit; text-decoration: none; }
+  :where(.h3) :where(p, h1, h2, h3, ul, ol, figure, blockquote) { margin: 0; padding: 0; }
+  :where(.h3) :where(ul, ol) { list-style: none; }
+  .h3 a:focus-visible,
+  .h3 summary:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; border-radius: 3px; }
+
+  .h3-wrap { max-width: 80rem; margin-inline: auto; padding-inline: 1.5rem; }
+  @media (min-width: 64rem) { .h3-wrap { padding-inline: 3rem; } }
+
+  .h3-eyebrow {
+    font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .h3-eyebrow--on-dark { color: var(--on-dark-muted); }
+  .h3-dot--end {
+    display: inline-block; width: 0.34em; height: 0.34em; border-radius: 50%;
+    background: var(--purple); margin-left: 0.22em; vertical-align: 0.08em;
+  }
+
+  .h3-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0.9rem 1.6rem; border-radius: 999px;
+    background: var(--purple); color: #fff !important;
+    font-size: 0.9375rem; font-weight: 500; line-height: 1;
+    transition: background-color 0.2s ease;
+  }
+  .h3-btn:hover { background: var(--purple-deep); }
+  .h3-btn--sm { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
+  .h3-btn--ink { background: var(--midnight); }
+  .h3-btn--ink:hover { background: #1b1d2b; }
+  .h3-arrow { font-size: 0.9em; line-height: 1; }
+  .h3-link {
+    display: inline-flex; align-items: baseline; gap: 0.4rem;
+    font-size: 1rem; font-weight: 500;
+    border-bottom: 1px solid var(--line); padding-bottom: 2px;
+  }
+  .h3-link:hover { border-color: currentColor; }
+  .h3-link--on-dark { color: var(--on-dark); border-color: var(--line-dark); }
+
+  .h3-h2 {
+    font-family: var(--h-serif); font-weight: 400;
+    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
+    font-size: clamp(1.875rem, 3.6vw, 3.5rem); line-height: 1.06;
+    letter-spacing: -0.014em; margin-top: 0.9rem; text-wrap: balance;
+  }
+  .h3-h2--on-dark { color: var(--on-dark); }
+  .h3-body { font-size: 1.125rem; line-height: 1.7; color: var(--muted); max-width: 34rem; }
+  .h3-body--on-dark { color: var(--on-dark-muted); }
+  .h3-body + .h3-body { margin-top: 1.1rem; }
+  .h3-h2 + .h3-body { margin-top: 1.5rem; }
+
+  /* Internal annotations. Stripped before publishing. */
+  .h3-note {
+    margin-top: 1.5rem; padding-left: 0.85rem; border-left: 2px dashed rgba(99, 102, 241, 0.55);
+    font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
+    line-height: 1.6; color: var(--muted); max-width: 34rem;
+  }
+  .h3-note--on-dark { color: var(--on-dark-muted); }
+
+  /* ── Nav ──────────────────────────────────────────────────────────── */
+  .h3-nav {
+    position: absolute; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 30;
+    background: transparent;
+  }
+  .h3-nav__in {
+    max-width: 80rem; margin-inline: auto; padding: 0.9rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  }
+  @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
+  .h3-nav__logo img { height: 1.9rem; width: auto; display: block; }
+  .h3--dark .h3-nav__logo img { filter: brightness(0) invert(1); }
+  .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; }
+  @media (min-width: 60rem) { .h3-nav__links { display: flex; } }
+  .h3--dark .h3-nav__links { color: var(--on-dark-muted); }
+  .h3--dark .h3-nav__links a:hover { color: var(--on-dark); }
+  .h3--light .h3-nav__links { color: var(--muted); }
+  .h3--light .h3-nav__links a:hover { color: var(--text); }
+  .h3-nav__right { display: flex; align-items: center; gap: 0.75rem; }
+  .h3-nav__cta { display: none; }
+  @media (min-width: 48rem) { .h3-nav__cta { display: inline-flex; } }
+
+  /* Small-screen menu */
+  .h3-menu { position: relative; }
+  @media (min-width: 60rem) { .h3-menu { display: none; } }
+  .h3-menu > summary {
+    list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 0.9rem; border-radius: 999px; font-size: 0.8125rem; font-weight: 500;
+  }
+  .h3-menu > summary::-webkit-details-marker { display: none; }
+  .h3--dark .h3-menu > summary { color: var(--on-dark); border: 1px solid var(--line-dark); }
+  .h3--light .h3-menu > summary { color: var(--text); border: 1px solid rgba(20, 22, 31, 0.22); }
+  .h3-menu__bars { display: inline-flex; flex-direction: column; gap: 3px; }
+  .h3-menu__bars i { display: block; width: 14px; height: 1.5px; background: currentColor; }
+  .h3-menu__panel {
+    position: absolute; right: 0; top: calc(100% + 0.5rem); z-index: 40;
+    min-width: 13rem; padding: 0.75rem;
+    background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(10, 11, 20, 0.22);
+    display: grid; gap: 0.25rem;
+  }
+  .h3-menu__panel nav { display: grid; }
+  .h3-menu__panel nav a {
+    padding: 0.6rem 0.65rem; border-radius: 9px; font-size: 0.9375rem; color: var(--text);
+  }
+  .h3-menu__panel nav a:hover { background: var(--sand); }
+  .h3-menu__cta { margin-top: 0.4rem; width: 100%; padding: 0.75rem 1rem; font-size: 0.875rem; }
+
+  /* ── Hero primitives ──────────────────────────────────────────────── */
+  .h3-hero { position: relative; overflow: hidden; padding: 6rem 0 3.5rem; }
+  @media (min-width: 56rem) { .h3-hero { padding: 7rem 0 7.5rem; } }
+  .h3--dark .h3-hero { background: var(--midnight); color: var(--on-dark); }
+  .h3--light .h3-hero { background: var(--sand); color: var(--text); }
+  .h3-hero__grid { display: grid; gap: 0; align-items: center; }
+  @media (min-width: 56rem) { .h3-hero__grid { grid-template-columns: minmax(0, 36rem) 1fr; gap: 4rem; } }
+  .h3-hero__copy { position: relative; z-index: 2; min-width: 0; }
+  .h3-hero__h1 {
+    font-family: var(--h-serif); font-weight: 400;
+    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
+    font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.02;
+    letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance; margin-top: 0.85rem;
+  }
+  .h3-hero__sub { margin-top: 1.5rem; max-width: 34rem; font-size: 1.125rem; line-height: 1.6; }
+  @media (min-width: 56rem) { .h3-hero__sub { margin-top: 2rem; font-size: 1.1875rem; line-height: 1.65; } }
+  .h3--dark .h3-hero__sub { color: var(--on-dark-muted); }
+  .h3--light .h3-hero__sub { color: var(--muted); }
+  .h3-hero__cta { margin-top: 1.75rem; }
+  @media (min-width: 56rem) { .h3-hero__cta { margin-top: 2.25rem; } }
+
+  .h3-hero__media { position: relative; margin: 0; }
+  .h3-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 56rem) {
+    .h3-hero__media { margin-top: 2rem; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; }
+  }
+  /* Dark heroes: the photograph runs to the edge and dissolves into Midnight. */
+  @media (min-width: 56rem) {
+    .h3--dark .h3-hero__media { position: absolute; inset: 0 0 0 50%; z-index: 0; }
+    .h3--light .h3-hero__media { aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; }
+  }
+  .h3-hero__scrim { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+  @media (min-width: 56rem) {
+    .h3--dark .h3-hero__scrim {
+      background:
+        linear-gradient(90deg, var(--midnight) 0%, rgba(10, 11, 20, 0.86) 18%, rgba(10, 11, 20, 0.28) 48%, rgba(10, 11, 20, 0.18) 100%),
+        linear-gradient(0deg, rgba(10, 11, 20, 0.55) 0%, rgba(10, 11, 20, 0) 35%);
+    }
+  }
+  @media (max-width: 56rem) {
+    .h3--dark .h3-hero__scrim {
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(10, 11, 20, 0.45) 0%, rgba(10, 11, 20, 0.05) 40%);
+    }
+  }
+
+  /* ── Footer ───────────────────────────────────────────────────────── */
+  .h3-footer {
+    background: var(--midnight); color: var(--on-dark-muted);
+    border-top: 1px solid var(--line-dark); padding: 2rem 0 2.5rem; font-size: 0.8125rem;
+  }
+  .h3-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+  .h3-footer nav { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  .h3-footer a:hover { color: var(--on-dark); }
+
+  @media (prefers-reduced-motion: reduce) { .h3 * { transition: none !important; } }
+</style>

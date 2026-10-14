@@ -62,7 +62,7 @@ export const offerV2En: OfferV2Content = {
   firewall: {
     headline: 'Independent advice. Consistent evaluation.',
     body: [
-      'Offer Accelerator provides career advisory. It does not provide preferential access to Purrfect searches or influence hiring decisions.',
+      'Offer Accelerator provides career advisory. Participation in Offer Accelerator does not give candidates preferential treatment in Purrfect-managed searches.',
       'If you enter a search we manage, we pause advisory on that specific process, including offer negotiation. We explain this upfront and agree with you on disclosure to the hiring company before presenting your candidacy.',
       'Applications to our open roles are free. Offer Accelerator is never required.',
     ],

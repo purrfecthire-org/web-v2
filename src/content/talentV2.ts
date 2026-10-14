@@ -21,15 +21,9 @@ export interface TalentV2Content {
     eyebrow: string;
     headline: string;
     note: string;
-    lead: {
-      quote: string;
-      name: string;
-      role: string;
-      translationNote: string;
-      photoNote: string;
-      pending: string;
-    };
-    slots: string[];
+    results: { arc: string; detail: string; pending: string }[];
+    voiceLabel: string;
+    voice: { quote: string; name: string; role: string; translationNote: string; pending: string };
   };
   paths: { eyebrow: string; headline: string; items: { name: string; body: string; cta: string; href: string }[] };
   close: { headline: string; body: string; cta: string };
@@ -83,7 +77,7 @@ export const talentV2En: TalentV2Content = {
   firewall: {
     headline: 'Independent advice. Consistent evaluation.',
     body: [
-      'Offer Accelerator provides career advisory. It does not provide preferential access to Purrfect searches or influence hiring decisions.',
+      'Offer Accelerator provides career advisory. Participation in Offer Accelerator does not give candidates preferential treatment in Purrfect-managed searches.',
       'If you enter a search we manage, we pause advisory on that specific process, including offer negotiation. We explain this upfront and agree with you on disclosure to the hiring company before presenting your candidacy.',
       'Applications to our open roles are free. Offer Accelerator is never required.',
     ],
@@ -93,22 +87,27 @@ export const talentV2En: TalentV2Content = {
     eyebrow: 'Proof',
     headline: 'What changed for them.',
     note: 'Each case shows level and scope, the company, the access that did not exist before, and compensation only where the person authorised it. Nothing is published without written permission.',
-    // Daniel Contreras: his own recommendation, published with his written
-    // permission, including the English translation. The reframe is the point:
-    // he did not arrive stuck, he arrived wanting to choose.
-    lead: {
+    results: [
+      {
+        arc: 'DevOps · $9k → $15k per month',
+        detail: 'Four months.',
+        pending: 'Pending: currency, whether the two figures are comparable, the conditions on both sides, and written permission.',
+      },
+      {
+        arc: 'Founder → Head of Product',
+        detail: 'Translated founder experience into a narrative the market read at executive level.',
+        pending: 'Pending: company, level and written permission.',
+      },
+    ],
+    voiceLabel: 'In their own words',
+    voice: {
       quote:
         'I did not join because I was struggling to find work. I joined because this time I wanted the job I took to be the one I chose, not the one the market chose for me.',
       name: 'Daniel Contreras',
       role: 'Product Designer, 10 years in technology and product',
       translationNote: 'Translated from Spanish, approved by Daniel.',
-      photoNote: '[DANIEL PHOTO — pending]',
-      pending: 'Pending from Daniel: company, and role and level before and after, to turn this into a case.',
+      pending: 'Pending from Daniel: company, role and level before and after, and his photo.',
     },
-    slots: [
-      '[PROOF PENDING — level or scope change]',
-      '[PROOF PENDING — scope increase in the same company]',
-    ],
   },
   paths: {
     eyebrow: 'Ways in',

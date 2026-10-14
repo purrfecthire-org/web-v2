@@ -1,0 +1,120 @@
+// ─────────────────────────────────────────────────────────────────────────
+// For Companies v2 (rebrand prototype). Same structure and method as the
+// approved restructure, moved onto the new system: light hero with a lateral
+// photograph, Midnight for the single weighted moment, Sand as the surface.
+// Nothing here carries a figure that is not verified.
+// ─────────────────────────────────────────────────────────────────────────
+import type { Lang } from './index';
+
+export interface CompaniesV2Content {
+  meta: { title: string; description: string };
+  hero: { eyebrow: string; headline: string; sub: string; credential: string; cta: string };
+  problem: { eyebrow: string; headline: string; body: string[] };
+  lenses: { eyebrow: string; headline: string; sub: string; items: { title: string; body: string }[] };
+  method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
+  evidence: { eyebrow: string; headline: string; sub: string; items: string[] };
+  proof: {
+    eyebrow: string;
+    arc: string;
+    meta: string;
+    body: string;
+    pending: string;
+    quote: string;
+    name: string;
+    role: string;
+    logosLabel: string;
+  };
+  models: { eyebrow: string; headline: string; items: { name: string; note: string }[]; cta: string };
+  kate: { eyebrow: string; headline: string; body: string; cta: string };
+  close: { headline: string; body: string; cta: string; email: string };
+}
+
+export const companiesV2En: CompaniesV2Content = {
+  meta: {
+    title: 'For companies. Build smaller, stronger teams | Purrfect Hire',
+    description:
+      'Senior hires for early-stage companies, with the performance, judgment and slope to grow beyond the role. Evidence on every candidate.',
+  },
+  hero: {
+    eyebrow: 'For companies',
+    headline: 'Build smaller, stronger teams.',
+    sub: 'We help early-stage founders hire people with the performance, judgment and slope to grow beyond the role they were hired for.',
+    credential: 'Early-stage · Engineering, Product, GTM and Leadership · US, Europe and Latin America',
+    cta: 'Start a search',
+  },
+  problem: {
+    eyebrow: 'Why this hire is hard',
+    headline: 'The wrong senior hire costs more than time. It changes what your company can build.',
+    body: [
+      'Having done the work before is the easy part to check. In a team of ten, what decides the hire is how someone decides, how much they take on without being asked, what they do when the context is missing, and whether they can grow at the speed the company is growing.',
+      'The job also changes while you are hiring for it. The person has to solve what is in front of the company now, and keep up as the company stops being the one you described in the brief.',
+    ],
+  },
+  lenses: {
+    eyebrow: 'What we look for',
+    headline: 'We look for evidence.',
+    sub: 'A résumé tells you where someone was standing. These three questions tell you what they did there.',
+    items: [
+      { title: 'What they actually owned', body: 'What they solved themselves, separated from what the team shipped around them.' },
+      { title: 'How they operate', body: 'How they make decisions, handle ambiguity and raise the bar around them.' },
+      { title: 'How far they can grow', body: 'Whether their slope matches where the company is going, not only the role as written today.' },
+    ],
+  },
+  method: {
+    eyebrow: 'How we work',
+    headline: 'Four steps.',
+    steps: [
+      { id: '01', title: 'Understand the company', body: 'We learn what the role actually needs to change, how your team operates and what success looks like six months from now.' },
+      { id: '02', title: 'Calibrate the bar', body: 'We define the evidence, behaviors and trade-offs that matter before opening the search.' },
+      { id: '03', title: 'Find and assess', body: 'We source globally and test candidates against the actual problem, not only the job description.' },
+      { id: '04', title: 'Learn from outcomes', body: 'Every hire, pass and miss improves how we calibrate the next search.' },
+    ],
+  },
+  evidence: {
+    eyebrow: 'What you get',
+    headline: 'Evidence on every candidate.',
+    sub: 'For each person you meet, you get the same five things in writing. The fourth one is why you can trust the other four.',
+    items: [
+      'What we saw',
+      'What they owned',
+      'Where the evidence is strongest',
+      'What we did not validate',
+      'Risks and open questions',
+    ],
+  },
+  proof: {
+    eyebrow: 'Built for what comes next',
+    arc: 'Product Lead → Director of Product',
+    meta: 'Two years · San Francisco startup',
+    body: 'We placed a Product Lead at an early-stage San Francisco startup. Within two years they had grown into Director of Product. That is the hire we look for: someone who solves the problem in front of them today and grows into what the company needs next.',
+    pending: 'Pending before publishing: confirm the facts and the written permission, including whether the city can be named.',
+    quote: 'Purrfect Hire adapted to our processes and to each specific role. They\'re a real search partner, not just a pipeline.',
+    name: 'Fabián Torres',
+    role: 'CEO, Trébol (CO)',
+    logosLabel: 'Trusted by founders at',
+  },
+  models: {
+    eyebrow: 'Working together',
+    headline: 'Three ways to work together, depending on the search and the hiring volume.',
+    items: [
+      { name: 'Success fee', note: 'You pay only when you hire.' },
+      { name: 'All You Can Hire', note: 'Several urgent roles at once, on a monthly fee.' },
+      { name: 'Retained search, C-level only', note: 'Confidential CEO, CTO and VP searches.' },
+    ],
+    cta: 'Compare engagement models',
+  },
+  kate: {
+    eyebrow: 'Who is behind the searches',
+    headline: 'Built from inside early-stage companies.',
+    body: 'Kate led recruiting through Addi\'s growth, from an early-stage team to almost 500 people, post-Series B. Purrfect Hire came out of seeing first hand which hires scale with a company and which ones stall.',
+    cta: 'Meet Kate',
+  },
+  close: {
+    headline: 'Tell us what this hire needs to change.',
+    body: 'We will tell you what we think the search actually requires.',
+    cta: 'Start a search',
+    email: 'hiring@purrfecthire.com',
+  },
+};
+
+export const getCompaniesV2 = (_lang: Lang): CompaniesV2Content => companiesV2En;

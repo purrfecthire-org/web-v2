@@ -7,7 +7,7 @@
 // decoration. Photography and cat illustrations are clearly marked
 // placeholders until the real assets land. Headline face is Instrument
 // Serif standing in for Canela; swap --h-serif when the license is in.
-import Layout from '../../layouts/Layout.astro';
+import Shell from '../v2/Shell.astro';
 import { getContent, type Lang } from '../../content/index';
 import { getHomeV2 } from '../../content/homeV2';
 
@@ -33,35 +33,14 @@ const clients = [
 ];
 ---
 
-<Layout title={t.meta.title} description={t.meta.description} lang={lang} noindex>
-  <Fragment slot="head">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap"
-      rel="stylesheet"
-    />
-  </Fragment>
+<Shell
+  lang={lang}
+  title={t.meta.title}
+  description={t.meta.description}
+  theme="dark"
+  navCta={{ label: "Start a search", href: "/for-founders" }}
+>
 
-  <div class="h3">
-    <header class="h3-nav">
-      <div class="h3-nav__in">
-        <a href={p || '/'} class="h3-nav__logo" aria-label="Purrfect Hire">
-          <picture>
-            <source srcset="/logos/logo-desktop.webp" type="image/webp" />
-            <img src="/logos/logo-desktop.png" alt="Purrfect Hire" />
-          </picture>
-        </a>
-        <nav class="h3-nav__links" aria-label="Main">
-          <a href={`${p}/for-founders`}>{t.nav.companies}</a>
-          <a href={`${p}/for-talent`}>{t.nav.talent}</a>
-          <a href="/roles">{t.nav.roles}</a>
-          <a href={`${p}/kate`}>{t.nav.kate}</a>
-        </nav>
-        <a href={`${p}/for-founders`} class="h3-btn h3-btn--sm">{t.nav.cta}</a>
-      </div>
-    </header>
-
-    <main>
       <!-- 1 · Hero: router with a brand layer -->
       <section class="h3-hero">
         <div class="h3-wrap h3-hero__grid">
@@ -155,8 +134,11 @@ const clients = [
       <!-- 4 · For talent -->
       <section class="h3-ta">
         <div class="h3-wrap h3-ta__grid">
-          <figure class="h3-ph h3-ph--cat h3-ph--on-dark">
-            <figcaption>{t.talent.catNote}</figcaption>
+          <figure class="h3-ta__media">
+            <picture>
+              <source srcset="/brand/listening.webp" type="image/webp" />
+              <img src="/brand/listening.jpg" alt="" aria-hidden="true" width="1600" height="1066" loading="lazy" />
+            </picture>
           </figure>
           <div class="h3-ta__copy">
             <p class="h3-eyebrow h3-eyebrow--on-dark">{t.talent.eyebrow}</p>
@@ -164,7 +146,6 @@ const clients = [
             <p class="h3-lead h3-lead--on-dark">{t.talent.body}</p>
             <p class="h3-body h3-body--on-dark">{t.talent.sub}</p>
             <a href={`${p}/for-talent`} class="h3-btn h3-ta__cta">{t.talent.cta}</a>
-            <p class="h3-note">{t.talent.storyNote}</p>
           </div>
         </div>
       </section>
@@ -205,198 +186,32 @@ const clients = [
           </div>
         </div>
       </section>
-    </main>
 
-    <footer class="h3-footer">
-      <div class="h3-wrap h3-footer__in">
-        <span>{t.footer.legal}</span>
-        <nav aria-label="Footer">
-          <a href="/privacy-policy">{t.footer.privacy}</a>
-          <a href="https://www.linkedin.com/company/purrfect-hire" target="_blank" rel="noopener noreferrer">{t.footer.linkedin}</a>
-          <a href="mailto:hiring@purrfecthire.com">hiring@purrfecthire.com</a>
-        </nav>
-      </div>
-    </footer>
-  </div>
-</Layout>
+    </Shell>
 
 <style lang="scss" is:global>
-  .h3 { position: relative; }
-  .h3 {
-    --midnight: #0A0B14;
-    --sand: #F7F6F3;
-    --stone: #E9EBF0;
-    --white: #FFFFFF;
-    --text: #14161f;
-    --muted: #63656f;
-    --on-dark: #e8e7e3;
-    --on-dark-muted: #9b9ca6;
-    --line: rgba(20, 22, 31, 0.1);
-    --line-dark: rgba(232, 231, 227, 0.14);
-    --purple: #6366F1;
-    --purple-deep: #4f46e5;
-    --h-serif: 'Fraunces', 'Canela', Georgia, serif;
-    --h-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
-    background: var(--sand);
-    color: var(--text);
-    font-family: var(--h-sans);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  body:has(.h3) { background: #0a0b14; }
-
-  :where(.h3) a { color: inherit; text-decoration: none; }
-  :where(.h3) :where(p, h1, h2, ul, ol, figure, blockquote) { margin: 0; padding: 0; }
-  :where(.h3) :where(ul, ol) { list-style: none; }
-  .h3 a:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; border-radius: 3px; }
-
-  .h3-wrap { max-width: 80rem; margin-inline: auto; padding-inline: 1.5rem; }
-  @media (min-width: 64rem) { .h3-wrap { padding-inline: 3rem; } }
-
-  .h3-eyebrow {
-    font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--muted);
-  }
-  .h3-eyebrow--on-dark { color: var(--on-dark-muted); }
-
-  /* The signal dot. Purple lives here and on buttons, nowhere else. */
-  /* Brand detail: one purple dot, closing a single headline per page. */
-  .h3-dot--end {
-    display: inline-block; width: 0.34em; height: 0.34em; border-radius: 50%;
-    background: var(--purple); margin-left: 0.22em; vertical-align: 0.08em;
-  }
-
-  /* Purple is the primary action on Midnight. On light surfaces the
-     primary action is Midnight, so the accent stays precise. */
-  .h3-btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    padding: 0.9rem 1.6rem; border-radius: 999px;
-    background: var(--purple); color: #fff !important;
-    font-size: 0.9375rem; font-weight: 500; line-height: 1;
-    transition: background-color 0.2s ease;
-  }
-  .h3-btn:hover { background: var(--purple-deep); }
-  .h3-btn--sm { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
-  .h3-btn--ink { background: var(--midnight); }
-  .h3-btn--ink:hover { background: #1b1d2b; }
-  .h3-btn--ghost {
-    background: transparent; color: var(--text) !important;
-    border: 1px solid rgba(20, 22, 31, 0.28);
-  }
-  .h3-btn--ghost:hover { border-color: var(--text); background: transparent; }
-  .h3-arrow { font-size: 0.9em; line-height: 1; }
-  .h3-link { font-weight: 500; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
-  .h3-link--on-dark { color: var(--on-dark); border-color: var(--line-dark); }
-  .h3-link:hover { border-color: currentColor; }
-
-  .h3-h2 {
-    font-family: var(--h-serif); font-weight: 400;
-    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
-    font-size: clamp(1.875rem, 3.6vw, 3.5rem); line-height: 1.06; letter-spacing: -0.014em;
-    margin-top: 0.9rem; text-wrap: balance;
-  }
-  .h3-h2--on-dark { color: var(--on-dark); }
-  .h3-lead { margin-top: 1.5rem; font-size: 1.25rem; line-height: 1.5; max-width: 30rem; }
-  .h3-lead--on-dark { color: var(--on-dark); }
-  .h3-body { font-size: 1.125rem; line-height: 1.7; color: var(--muted); max-width: 34rem; }
-  .h3-body--on-dark { color: var(--on-dark-muted); }
-  .h3-body + .h3-body { margin-top: 1.1rem; }
-  .h3-lead + .h3-body { margin-top: 1.15rem; }
-  .h3-h2 + .h3-body { margin-top: 1.5rem; }
-  .h3-h2 + .h3-lead { margin-top: 1.5rem; }
-
-  /* Clearly marked asset placeholders */
+  /* Asset placeholders, sized to the final proportions. */
   .h3-ph {
     display: flex; align-items: flex-end; border-radius: 14px;
-    background: var(--sand); border: 1px dashed rgba(20, 22, 31, 0.22);
-    padding: 1rem; max-width: 100%;
-  }
-  .h3-ph figcaption {
-    font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--muted); line-height: 1.5;
-  }
-  .h3-ph--on-dark { background: #161825; border-color: var(--line-dark); }
-  .h3-ph--on-dark figcaption { color: var(--on-dark-muted); }
-  /* The photograph is part of the dark field: it runs to the right edge and
-     dissolves into Midnight, so image and headline read as one composition. */
-  .h3-hero__media { position: relative; margin: 0; }
-  .h3-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  @media (min-width: 56rem) {
-    .h3-hero__media {
-      position: absolute; inset: 0 0 0 50%; z-index: 0;
-    }
-    .h3-hero__media img { object-position: 60% 40%; }
-  }
-  @media (max-width: 56rem) {
-    .h3-hero__media { margin-top: 2.5rem; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; }
-  }
-  /* The image reads as part of the dark field, not as a pasted rectangle. */
-  .h3-hero__scrim { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
-  @media (min-width: 56rem) {
-    .h3-hero__scrim {
-      background:
-        linear-gradient(90deg, var(--midnight) 0%, rgba(10, 11, 20, 0.86) 18%, rgba(10, 11, 20, 0.28) 48%, rgba(10, 11, 20, 0.18) 100%),
-        linear-gradient(0deg, rgba(10, 11, 20, 0.55) 0%, rgba(10, 11, 20, 0) 35%);
-    }
-  }
-  @media (max-width: 56rem) {
-    .h3-hero__scrim {
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(10, 11, 20, 0.45) 0%, rgba(10, 11, 20, 0.05) 40%);
-    }
-  }
-  .h3-ph--cat { aspect-ratio: 1 / 1; }
-  .h3-kate__portrait { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 14px; }
-  .h3-kate__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
-  .h3-ph--portrait {
-    aspect-ratio: 3 / 4; width: 100%; padding: 0.6rem; align-items: flex-end;
+    background: var(--stone); border: 1px dashed rgba(20, 22, 31, 0.22);
+    padding: 0.6rem; max-width: 100%;
   }
   .h3-ph__label {
     font-size: 0.5rem; letter-spacing: 0.04em; text-transform: uppercase;
     color: var(--muted); line-height: 1.45;
   }
+  .h3-ph--portrait { aspect-ratio: 3 / 4; width: 100%; }
 
-  /* Nav */
-  .h3-nav {
-    position: absolute; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20;
-    background: transparent; border-bottom: none;
-  }
-  .h3-nav__in {
-    max-width: 80rem; margin-inline: auto; padding: 0.9rem 1.5rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-  }
-  @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
-  .h3-nav__logo img { height: 1.9rem; width: auto; display: block; filter: brightness(0) invert(1); }
-  .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; color: var(--on-dark-muted); }
-  .h3-nav__links a:hover { color: var(--on-dark); }
-  @media (min-width: 56rem) { .h3-nav__links { display: flex; } }
-  .h3-nav .h3-btn--sm { display: none; }
-  @media (min-width: 48rem) { .h3-nav .h3-btn--sm { display: inline-flex; } }
-
-  /* 1 · Hero */
-  .h3-hero { position: relative; overflow: hidden; background: var(--midnight); color: var(--on-dark); padding: 4.5rem 0 5rem; }
-  @media (min-width: 56rem) { .h3-hero { padding: 7rem 0 8rem; } }
-  .h3-hero__grid { display: grid; gap: 0; align-items: center; }
-  @media (min-width: 56rem) { .h3-hero__grid { grid-template-columns: minmax(0, 36rem) 1fr; } }
-  .h3-hero__copy { position: relative; z-index: 2; min-width: 0; }
-  .h3-hero__h1 {
-    font-family: var(--h-serif); font-weight: 400;
-    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
-    font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.02; letter-spacing: -0.02em;
-    max-width: 15ch; text-wrap: balance;
-  }
-  .h3-hero__sub {
-    margin-top: 2rem; max-width: 36rem; font-size: 1.1875rem;
-    line-height: 1.65; color: var(--on-dark-muted);
-  }
-
-  .h3-doors { margin-top: 2.75rem; border-top: 1px solid var(--line-dark); }
+  /* Hero doors */
+  .h3-doors { margin-top: 2.25rem; border-top: 1px solid var(--line-dark); }
+  @media (min-width: 56rem) { .h3-doors { margin-top: 2.75rem; } }
   .h3-door {
     display: grid; grid-template-columns: 1fr auto; align-items: baseline;
-    gap: 0.35rem 1rem; padding: 1.5rem 0;
+    gap: 0.35rem 1rem; padding: 1.25rem 0;
     border-bottom: 1px solid var(--line-dark); transition: padding-left 0.25s ease;
   }
+  @media (min-width: 56rem) { .h3-door { padding: 1.5rem 0; } }
   .h3-door:hover { padding-left: 0.6rem; }
   .h3-door__label {
     grid-column: 1 / -1; font-size: 0.6875rem; font-weight: 500;
@@ -407,7 +222,6 @@ const clients = [
     line-height: 1.15; color: var(--on-dark);
   }
   .h3-door__arrow { color: var(--purple); font-size: 1.25rem; }
-
   /* 2 · Trust */
   .h3-trust { background: var(--sand); padding: 4rem 0 4.5rem; }
   .h3-co { border-top: 1px solid var(--line); }

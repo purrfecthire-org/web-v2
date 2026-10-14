@@ -35,8 +35,6 @@ export interface HomeV2Content {
     body: string;
     sub: string;
     cta: string;
-    catNote: string;
-    storyNote: string;
   };
   belief: { eyebrow: string; statement: string; forCompanies: string; forTalent: string };
   kate: { eyebrow: string; headline: string; body: string; ctaCompanies: string; ctaTalent: string; photoNote: string };
@@ -87,8 +85,6 @@ export const homeV2En: HomeV2Content = {
     body: 'You may be operating above the level the market is assigning you. Or the evidence may not support the move yet.',
     sub: 'We help senior professionals understand how the market reads their experience, which level the evidence actually supports, and what is still missing.',
     cta: 'Explore Offer Accelerator',
-    catNote: '[REAL TALENT PHOTO — Offer Accelerator outcome, working environment]',
-    storyNote: 'Story pending. One real professional, with written permission. Level or scope change, not only compensation.',
   },
   belief: {
     eyebrow: 'What we believe',
@@ -151,8 +147,6 @@ export const homeV2Es: HomeV2Content = {
     body: 'Quizás operas por encima del nivel que el mercado te asigna. O quizás la evidencia todavía no sostiene el salto.',
     sub: 'Ayudamos a profesionales senior a entender cómo lee el mercado su experiencia, qué nivel sostiene la evidencia hoy y qué falta por demostrar.',
     cta: 'Conoce Offer Accelerator',
-    catNote: '[REAL TALENT PHOTO — resultado de Offer Accelerator, entorno de trabajo]',
-    storyNote: 'Historia pendiente. Una persona real, con permiso escrito. Cambio de nivel o de scope, no solo compensación.',
   },
   belief: {
     eyebrow: 'En qué creemos',
