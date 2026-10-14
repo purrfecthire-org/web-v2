@@ -1,0 +1,409 @@
+---
+// ── Offer Accelerator v2 · rebrand prototype ─────────────────────────────
+// Product page. Same system as Home and For Talent: Sand as the main
+// surface, Midnight for the hero and one weighted moment, Stone for the
+// investment block, purple only for action and the single brand dot.
+// Internal notes carry data-internal so they can be stripped before publish.
+import Layout from '../../layouts/Layout.astro';
+import type { Lang } from '../../content/index';
+import { getOfferV2 } from '../../content/offerV2';
+
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props;
+const t = getOfferV2(lang);
+---
+
+<Layout title={t.meta.title} description={t.meta.description} lang={lang} noindex>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap"
+      rel="stylesheet"
+    />
+  </Fragment>
+
+  <div class="h3">
+    <header class="h3-nav">
+      <div class="h3-nav__in">
+        <a href="/" class="h3-nav__logo" aria-label="Purrfect Hire">
+          <picture>
+            <source srcset="/logos/logo-desktop.webp" type="image/webp" />
+            <img src="/logos/logo-desktop.png" alt="Purrfect Hire" />
+          </picture>
+        </a>
+        <nav class="h3-nav__links" aria-label="Main">
+          <a href="/for-founders">For companies</a>
+          <a href="/for-talent">For talent</a>
+          <a href="/roles">Open roles</a>
+          <a href="/kate">Kate</a>
+        </nav>
+        <a href="/offer-acceleration/apply" class="h3-btn h3-btn--sm">Apply</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="h3-hero">
+        <div class="h3-wrap h3-hero__grid">
+          <div class="h3-hero__copy">
+            <p class="h3-eyebrow h3-eyebrow--on-dark">{t.hero.eyebrow}</p>
+            <h1 class="h3-hero__h1">{t.hero.headline}</h1>
+            <p class="h3-hero__sub">{t.hero.sub}</p>
+            <a href="/offer-acceleration/apply" class="h3-btn oa-hero__cta">
+              {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+          <figure class="h3-hero__media">
+            <picture>
+              <source srcset="/brand/conversation.webp" type="image/webp" />
+              <img src="/brand/conversation.jpg" alt="" aria-hidden="true" width="1600" height="1066" />
+            </picture>
+            <span class="h3-hero__scrim" aria-hidden="true"></span>
+          </figure>
+        </div>
+      </section>
+
+      <!-- The real question + method + access + firewall, one Sand surface -->
+      <section class="oa-main">
+        <div class="h3-wrap">
+          <div class="oa-question">
+            <div>
+              <p class="h3-eyebrow">{t.question.eyebrow}</p>
+              <h2 class="h3-h2">
+                {t.question.headline}<span class="h3-dot--end" aria-hidden="true"></span>
+              </h2>
+            </div>
+            <div>
+              <p class="oa-question__body">{t.question.body}</p>
+              <p class="h3-body oa-question__who">{t.question.who}</p>
+            </div>
+          </div>
+
+          <div class="oa-method">
+            <p class="h3-eyebrow">{t.method.eyebrow}</p>
+            <h2 class="h3-h2 oa-method__h2">{t.method.headline}</h2>
+            <ol class="oa-steps">
+              {t.method.steps.map((s) => (
+                <li class="oa-step">
+                  <span class="oa-step__id">{s.id}</span>
+                  <div>
+                    <h3 class="oa-step__title">{s.title}</h3>
+                    <p class="oa-step__body">{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div class="oa-access">
+            <h2 class="oa-access__h2">{t.access.headline}</h2>
+            <p class="h3-body oa-access__body">{t.access.body}</p>
+            <p class="oa-access__limit">{t.access.limit}</p>
+          </div>
+
+          <aside class="oa-firewall" aria-labelledby="oa-fw">
+            <h2 class="oa-firewall__h" id="oa-fw">{t.firewall.headline}</h2>
+            {t.firewall.body.map((b) => <p class="oa-firewall__p">{b}</p>)}
+            <p class="oa-note" data-internal>{t.firewall.status}</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- What is included -->
+      <section class="oa-includes">
+        <div class="h3-wrap oa-includes__grid">
+          <div>
+            <p class="h3-eyebrow">{t.includes.eyebrow}</p>
+            <h2 class="h3-h2">{t.includes.headline}</h2>
+            <p class="oa-includes__closing">{t.includes.closing}</p>
+            <p class="oa-note" data-internal>{t.includes.scopeNote}</p>
+          </div>
+          <ul class="oa-list">
+            {t.includes.items.map((i) => <li>{i}</li>)}
+          </ul>
+        </div>
+      </section>
+
+      <!-- Where our read comes from (the one weighted dark moment) -->
+      <section class="oa-behind">
+        <div class="h3-wrap oa-behind__grid">
+          <div>
+            <p class="h3-eyebrow h3-eyebrow--on-dark">{t.behind.eyebrow}</p>
+            <h2 class="h3-h2 h3-h2--on-dark">{t.behind.headline}</h2>
+          </div>
+          <div class="oa-behind__body">
+            {t.behind.body.map((b) => <p>{b}</p>)}
+          </div>
+        </div>
+      </section>
+
+      <!-- Proof -->
+      <section class="oa-proof">
+        <div class="h3-wrap">
+          <p class="h3-eyebrow">{t.proof.eyebrow}</p>
+          <h2 class="h3-h2 oa-proof__h2">{t.proof.headline}</h2>
+          <figure class="oa-quote">
+            <blockquote>“{t.proof.quote}”</blockquote>
+            <figcaption>
+              <span class="oa-quote__name">{t.proof.name}</span>
+              <span class="oa-quote__role">{t.proof.role}</span>
+              <span class="oa-quote__role">{t.proof.translationNote}</span>
+            </figcaption>
+          </figure>
+          <p class="oa-note" data-internal>{t.proof.pending}</p>
+        </div>
+      </section>
+
+      <!-- Investment -->
+      <section class="oa-investment">
+        <div class="h3-wrap oa-investment__grid">
+          <div>
+            <p class="h3-eyebrow">{t.investment.eyebrow}</p>
+            <h2 class="h3-h2">{t.investment.headline}</h2>
+          </div>
+          <div>
+            <p class="oa-price">{t.investment.price}</p>
+            <p class="h3-body oa-investment__next">{t.investment.next}</p>
+            <p class="oa-note" data-internal>{t.investment.priceNote}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Apply -->
+      <section class="oa-apply">
+        <div class="h3-wrap">
+          <h2 class="h3-h2 oa-apply__h2">{t.apply.headline}</h2>
+          <p class="h3-body oa-apply__body">{t.apply.body}</p>
+          <a href="/offer-acceleration/apply" class="h3-btn h3-btn--ink oa-apply__cta">
+            {t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+          </a>
+          <p class="oa-note" data-internal>{t.apply.capacityNote}</p>
+          <p class="oa-editorial">{t.editorial}</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="h3-footer">
+      <div class="h3-wrap h3-footer__in">
+        <span>© 2026 Purrfect Hire</span>
+        <nav aria-label="Footer">
+          <a href="/privacy-policy">Privacy</a>
+          <a href="https://www.linkedin.com/company/purrfect-hire" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="mailto:hiring@purrfecthire.com">hiring@purrfecthire.com</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+</Layout>
+
+<style lang="scss" is:global>
+  .h3 {
+    position: relative;
+    --midnight: #0A0B14;
+    --sand: #F7F6F3;
+    --stone: #E9EBF0;
+    --white: #FFFFFF;
+    --text: #14161f;
+    --muted: #63656f;
+    --on-dark: #e8e7e3;
+    --on-dark-muted: #9b9ca6;
+    --line: rgba(20, 22, 31, 0.1);
+    --line-dark: rgba(232, 231, 227, 0.14);
+    --purple: #6366F1;
+    --purple-deep: #4f46e5;
+    --h-serif: 'Fraunces', 'Canela', Georgia, serif;
+    --h-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--sand); color: var(--text);
+    font-family: var(--h-sans); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  body:has(.h3) { background: #0A0B14; }
+  :where(.h3) a { color: inherit; text-decoration: none; }
+  :where(.h3) :where(p, h1, h2, h3, ul, ol, figure, blockquote) { margin: 0; padding: 0; }
+  :where(.h3) :where(ul, ol) { list-style: none; }
+  .h3 a:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; border-radius: 3px; }
+
+  .h3-wrap { max-width: 80rem; margin-inline: auto; padding-inline: 1.5rem; }
+  @media (min-width: 64rem) { .h3-wrap { padding-inline: 3rem; } }
+
+  .h3-eyebrow {
+    font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .h3-eyebrow--on-dark { color: var(--on-dark-muted); }
+  .h3-dot--end {
+    display: inline-block; width: 0.34em; height: 0.34em; border-radius: 50%;
+    background: var(--purple); margin-left: 0.22em; vertical-align: 0.08em;
+  }
+  .h3-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0.9rem 1.6rem; border-radius: 999px;
+    background: var(--purple); color: #fff !important;
+    font-size: 0.9375rem; font-weight: 500; line-height: 1;
+    transition: background-color 0.2s ease;
+  }
+  .h3-btn:hover { background: var(--purple-deep); }
+  .h3-btn--sm { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
+  .h3-btn--ink { background: var(--midnight); }
+  .h3-btn--ink:hover { background: #1b1d2b; }
+  .h3-arrow { font-size: 0.9em; line-height: 1; }
+  .h3-h2 {
+    font-family: var(--h-serif); font-weight: 400;
+    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
+    font-size: clamp(1.875rem, 3.6vw, 3.5rem); line-height: 1.06;
+    letter-spacing: -0.014em; margin-top: 0.9rem; text-wrap: balance;
+  }
+  .h3-h2--on-dark { color: var(--on-dark); }
+  .h3-body { font-size: 1.125rem; line-height: 1.7; color: var(--muted); max-width: 34rem; }
+
+  .h3-nav {
+    position: absolute; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20;
+    background: transparent; border-bottom: none;
+  }
+  .h3-nav__in {
+    max-width: 80rem; margin-inline: auto; padding: 0.9rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  }
+  @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
+  .h3-nav__logo img { height: 1.9rem; width: auto; display: block; filter: brightness(0) invert(1); }
+  .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; color: var(--on-dark-muted); }
+  .h3-nav__links a:hover { color: var(--on-dark); }
+  @media (min-width: 56rem) { .h3-nav__links { display: flex; } }
+  .h3-nav .h3-btn--sm { display: none; }
+  @media (min-width: 48rem) { .h3-nav .h3-btn--sm { display: inline-flex; } }
+
+  .h3-hero {
+    position: relative; overflow: hidden;
+    background: var(--midnight); color: var(--on-dark); padding: 4.5rem 0 5rem;
+  }
+  @media (min-width: 56rem) { .h3-hero { padding: 7rem 0 8rem; } }
+  .h3-hero__grid { display: grid; gap: 0; align-items: center; }
+  @media (min-width: 56rem) { .h3-hero__grid { grid-template-columns: minmax(0, 36rem) 1fr; } }
+  .h3-hero__copy { position: relative; z-index: 2; min-width: 0; }
+  .h3-hero__h1 {
+    font-family: var(--h-serif); font-weight: 400;
+    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
+    font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.02;
+    letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance; margin-top: 1rem;
+  }
+  .h3-hero__sub {
+    margin-top: 2rem; max-width: 34rem; font-size: 1.1875rem;
+    line-height: 1.65; color: var(--on-dark-muted);
+  }
+  .oa-hero__cta { margin-top: 2.25rem; }
+  .h3-hero__media { position: relative; margin: 0; }
+  .h3-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  @media (min-width: 56rem) {
+    .h3-hero__media { position: absolute; inset: 0 0 0 50%; z-index: 0; }
+    .h3-hero__media img { object-position: 55% 35%; }
+  }
+  @media (max-width: 56rem) {
+    .h3-hero__media { margin-top: 2.5rem; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; }
+  }
+  .h3-hero__scrim { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+  @media (min-width: 56rem) {
+    .h3-hero__scrim {
+      background:
+        linear-gradient(90deg, var(--midnight) 0%, rgba(10, 11, 20, 0.86) 18%, rgba(10, 11, 20, 0.28) 48%, rgba(10, 11, 20, 0.18) 100%),
+        linear-gradient(0deg, rgba(10, 11, 20, 0.55) 0%, rgba(10, 11, 20, 0) 35%);
+    }
+  }
+  @media (max-width: 56rem) {
+    .h3-hero__scrim {
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(10, 11, 20, 0.45) 0%, rgba(10, 11, 20, 0.05) 40%);
+    }
+  }
+
+  /* Internal annotations, stripped before publishing. */
+  .oa-note {
+    margin-top: 1.5rem; padding-left: 0.85rem; border-left: 2px dashed rgba(99, 102, 241, 0.5);
+    font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
+    line-height: 1.6; color: var(--muted); max-width: 34rem;
+  }
+
+  .oa-main { background: var(--sand); padding: 5rem 0 6rem; }
+  @media (min-width: 56rem) { .oa-main { padding: 6.5rem 0 7.5rem; } }
+  .oa-question { display: grid; gap: 1.75rem; align-items: start; }
+  @media (min-width: 56rem) { .oa-question { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
+  .oa-question__body { font-size: 1.25rem; line-height: 1.55; color: var(--text); max-width: 32rem; }
+  @media (min-width: 56rem) { .oa-question__body { padding-top: 1.9rem; } }
+  .oa-question__who { margin-top: 1.25rem; }
+
+  .oa-method { margin-top: 5rem; }
+  @media (min-width: 56rem) { .oa-method { margin-top: 7rem; } }
+  .oa-method__h2 { max-width: 30ch; }
+  .oa-steps { margin-top: 2.5rem; display: grid; gap: 0 3.5rem; border-top: 1px solid var(--line); }
+  @media (min-width: 56rem) { .oa-steps { grid-template-columns: 1fr 1fr; } }
+  .oa-step { display: grid; grid-template-columns: 2.75rem 1fr; gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+  .oa-step__id { font-size: 0.8125rem; font-weight: 500; color: var(--muted); padding-top: 0.25rem; }
+  .oa-step__title { font-size: 1.125rem; font-weight: 500; line-height: 1.3; }
+  .oa-step__body { margin-top: 0.4rem; color: var(--muted); }
+
+  .oa-access { margin-top: 4rem; max-width: 46rem; }
+  .oa-access__h2 { font-size: 1.0625rem; font-weight: 500; letter-spacing: -0.005em; }
+  .oa-access__body { margin-top: 1rem; max-width: 44rem; }
+  .oa-access__limit { margin-top: 1rem; font-size: 1rem; font-weight: 500; }
+
+  .oa-firewall { margin-top: 3.5rem; max-width: 44rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  .oa-firewall__h { font-size: 1.0625rem; font-weight: 500; letter-spacing: -0.005em; }
+  .oa-firewall__p { margin-top: 0.85rem; font-size: 1rem; line-height: 1.7; color: var(--muted); }
+
+  .oa-includes { background: var(--sand); border-top: 1px solid var(--line); padding: 5rem 0; }
+  @media (min-width: 56rem) { .oa-includes { padding: 7rem 0; } }
+  .oa-includes__grid { display: grid; gap: 3rem; align-items: start; }
+  @media (min-width: 56rem) { .oa-includes__grid { grid-template-columns: 1fr 1.05fr; gap: 5rem; } }
+  .oa-includes__closing { margin-top: 1.5rem; font-size: 1.25rem; line-height: 1.55; max-width: 28rem; }
+  .oa-list { border-top: 1px solid var(--line); }
+  .oa-list li { padding: 1.1rem 0; border-bottom: 1px solid var(--line); font-size: 1rem; line-height: 1.6; }
+
+  .oa-behind { background: var(--midnight); color: var(--on-dark); padding: 5rem 0; }
+  @media (min-width: 56rem) { .oa-behind { padding: 7rem 0; } }
+  .oa-behind__grid { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 56rem) { .oa-behind__grid { grid-template-columns: 1fr 1.1fr; gap: 5rem; } }
+  .oa-behind__body { display: grid; gap: 1.25rem; }
+  .oa-behind__body p { font-size: 1.0625rem; line-height: 1.7; color: var(--on-dark-muted); max-width: 36rem; }
+
+  .oa-proof { background: var(--sand); padding: 5rem 0; }
+  @media (min-width: 56rem) { .oa-proof { padding: 6.5rem 0; } }
+  .oa-proof__h2 { max-width: 20ch; }
+  .oa-quote { margin-top: 2.5rem; max-width: 46rem; }
+  .oa-quote blockquote {
+    font-family: var(--h-serif); font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    line-height: 1.22; max-width: 26ch;
+  }
+  .oa-quote figcaption { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9375rem; }
+  .oa-quote__name { font-weight: 500; }
+  .oa-quote__role { color: var(--muted); }
+
+  .oa-investment { background: var(--stone); padding: 4.5rem 0; }
+  @media (min-width: 56rem) { .oa-investment { padding: 6rem 0; } }
+  .oa-investment__grid { display: grid; gap: 2rem; align-items: start; }
+  @media (min-width: 56rem) { .oa-investment__grid { grid-template-columns: 1.1fr 1fr; gap: 4rem; } }
+  .oa-price {
+    font-family: var(--h-serif); font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1; letter-spacing: -0.02em;
+  }
+  @media (min-width: 56rem) { .oa-price { padding-top: 1.4rem; } }
+  .oa-investment__next { margin-top: 1.25rem; }
+
+  .oa-apply { background: var(--sand); padding: 5rem 0 6rem; }
+  @media (min-width: 56rem) { .oa-apply { padding: 7rem 0 8rem; } }
+  .oa-apply__h2 { max-width: 24ch; }
+  .oa-apply__body { margin-top: 1.25rem; }
+  .oa-apply__cta { margin-top: 2rem; }
+  .oa-editorial {
+    margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--line);
+    font-family: var(--h-serif); font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+    line-height: 1.25; color: var(--muted);
+  }
+
+  .h3-footer {
+    background: var(--midnight); color: var(--on-dark-muted);
+    border-top: 1px solid var(--line-dark); padding: 2rem 0 2.5rem; font-size: 0.8125rem;
+  }
+  .h3-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+  .h3-footer nav { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  .h3-footer a:hover { color: var(--on-dark); }
+
+  @media (prefers-reduced-motion: reduce) { .h3 * { transition: none !important; } }
+</style>
