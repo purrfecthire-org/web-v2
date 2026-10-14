@@ -42,7 +42,7 @@ const clients = [
           {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
       </div>
-      <figure class="h3-hero__media">
+      <figure class="h3-hero__media fc-hero__media">
         <picture>
           <source srcset="/brand/team-meeting.webp" type="image/webp" />
           <img src="/brand/team-meeting.jpg" alt="" aria-hidden="true" width="1600" height="1066" />
@@ -201,6 +201,12 @@ const clients = [
 </Shell>
 
 <style lang="scss" is:global>
+  /* The frame holds the whole conversation: a wider ratio and a crop that
+     keeps both people, instead of a portrait that cuts one at the edge. */
+  @media (min-width: 56rem) {
+    .h3--light .fc-hero__media { aspect-ratio: 5 / 4; }
+  }
+  .fc-hero__media img { object-position: 42% 42%; }
   .fc-credential {
     margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
     font-size: 0.9375rem; color: var(--muted); max-width: 30rem;
@@ -301,4 +307,33 @@ const clients = [
   .fc-close__cta { margin-top: 2rem; }
   .fc-close__mail { margin-top: 1.5rem; font-size: 0.9375rem; color: var(--muted); }
   .fc-close__mail a { color: var(--text); border-bottom: 1px solid var(--line); }
+
+  /* Small screens: one rhythm between blocks, so the page stops being a scroll. */
+  @media (max-width: 56rem) {
+    /* The three lenses read as a list, not as three padded cards. */
+    .fc-lenses__grid { gap: 0; border-top: 1px solid var(--line); }
+    .fc-lens {
+      background: transparent; border: 0; border-bottom: 1px solid var(--line);
+      border-radius: 0; padding: 1.1rem 0;
+    }
+    .fc-lens__body { margin-top: 0.35rem; }
+    .h3-hero { padding: 5.5rem 0 2.5rem; }
+    .h3-hero__media { margin-top: 1.5rem; }
+    .fc-credential { margin-top: 1.1rem; padding-top: 1rem; }
+    .fc-logos ul { gap: 1rem 2rem; }
+    .fc-logos img { height: 1.25rem; }
+    .fc-case__body, .fc-problem__body .h3-body { font-size: 1.0625rem; }
+    .fc-kate__portrait { max-width: 11rem; }
+    .fc-main { padding: 3rem 0 3.5rem; }
+    .fc-lenses, .fc-method { margin-top: 3rem; }
+    .fc-steps, .fc-models__list, .fc-evidence__list { margin-top: 1.75rem; }
+    .fc-lenses__grid { margin-top: 1.5rem; }
+    .fc-step, .fc-model, .fc-evidence__list li, .fc-logos ul { padding-block: 1rem; }
+    .fc-evidence, .fc-proof, .fc-models, .fc-kate, .fc-close { padding: 3.25rem 0; }
+    .fc-quote { margin-top: 2.25rem; padding-top: 1.75rem; }
+    .fc-logos { margin-top: 2rem; padding-top: 1.5rem; }
+    .fc-kate__grid { gap: 1.75rem; }
+    .fc-kate__portrait { max-width: 14rem; }
+    .fc-close { padding-bottom: 4rem; }
+  }
 </style>

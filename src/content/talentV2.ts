@@ -95,8 +95,8 @@ export const talentV2En: TalentV2Content = {
       },
       {
         arc: 'Founder → Head of Product',
-        detail: 'Translated founder experience into a narrative the market read at executive level.',
-        pending: 'Pending: company, level and written permission.',
+        detail: '[PENDING — the role, the company and what they became responsible for]',
+        pending: 'Pending: the actual change of role, company and responsibilities, plus written permission. Positioning is not a result.',
       },
     ],
     voiceLabel: 'In their own words',
@@ -134,8 +134,8 @@ export const talentV2En: TalentV2Content = {
     ],
   },
   close: {
-    headline: 'Tell us how you want the market to read you.',
-    body: 'We will tell you what we think it reads today.',
+    headline: 'Let\'s assess your next move.',
+    body: 'Understand what your experience supports, what is missing and where to focus next.',
     cta: 'Explore Offer Accelerator',
   },
 };

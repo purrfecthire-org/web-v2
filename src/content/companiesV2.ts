@@ -46,8 +46,8 @@ export const companiesV2En: CompaniesV2Content = {
     eyebrow: 'Why this hire is hard',
     headline: 'The wrong senior hire costs more than time. It changes what your company can build.',
     body: [
-      'Having done the work before is the easy part to check. In a team of ten, what decides the hire is how someone decides, how much they take on without being asked, what they do when the context is missing, and whether they can grow at the speed the company is growing.',
-      'The job also changes while you are hiring for it. The person has to solve what is in front of the company now, and keep up as the company stops being the one you described in the brief.',
+      'Having done the work before is the easy part to check. What decides the hire is how someone decides, how much they take on without being asked, what they do when the context is missing, and whether they can grow at the speed the company is growing.',
+      'The job also changes while you are hiring for it.',
     ],
   },
   lenses: {

@@ -77,11 +77,11 @@ export const offerV2En: OfferV2Content = {
       'A weekly check-in with the team',
       'Direct support over WhatsApp and email',
       'Opportunity validation before you commit your time to a process',
-      'Decision support through active processes. We help you read what the company is actually evaluating, decide what evidence matters, prepare for high-stakes conversations and evaluate the opportunity from your side too',
+      'Decision support through active processes: what the company is evaluating, what evidence matters, and whether the opportunity is right for you',
       'Support through final rounds, offers and negotiation',
     ],
     closing: 'The value is not the eight sessions. It is having a team thinking with you through the decisions that matter.',
-    scopeNote: 'Pending before publishing: what support looks like after the eight core sessions, and for how long. Do not publish open-ended accompaniment.',
+    scopeNote: 'Pending before publishing, as three explicit lines on this list: how long the engagement lasts, what WhatsApp and email cover and in what response time, and what opportunity validation reviews and hands over. Do not publish open-ended accompaniment.',
   },
   behind: {
     eyebrow: 'Where our read comes from',
