@@ -39,7 +39,12 @@ const {
 const siteUrl = 'https://purrfecthire.com';
 const currentUrl = canonicalUrl ?? `${siteUrl}${Astro.url.pathname}`;
 const alternateLang = lang === 'en' ? 'es' : 'en';
-const alternateUrl = lang === 'en' ? `${siteUrl}/es/` : siteUrl;
+// Point at the same document in the other language, not at the other home page.
+const path = Astro.url.pathname;
+const alternateUrl =
+  lang === 'en'
+    ? `${siteUrl}/es${path}`
+    : `${siteUrl}${path.replace(/^\/es/, '') || '/'}`;
 ---
 
 <!doctype html>

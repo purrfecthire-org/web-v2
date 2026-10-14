@@ -1,4 +1,5 @@
 ---
+import '@fontsource-variable/inter/wght.css';
 // ── LegalLayout ─────────────────────────────────────────────────────────────
 // Shared shell for long-form legal documents (privacy policy, future terms).
 // Self-contained header (logo → home + language toggle) instead of V6Nav,
@@ -32,7 +33,7 @@ const homeHref = getRelativeLocaleUrl(lang, '/');
 const otherLangHref = getRelativeLocaleUrl(otherLang, '/privacy-policy');
 ---
 
-<Layout title={title} description={description} lang={lang} canonicalUrl={pageUrl}>
+<Layout legacyFonts={false} hasAlternateLang title={title} description={description} lang={lang} canonicalUrl={pageUrl}>
   <header class="legal-nav">
     <div class="legal-nav__inner">
       <a href={homeHref} aria-label="Purrfect Hire home">
