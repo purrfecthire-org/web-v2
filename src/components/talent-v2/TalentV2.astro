@@ -45,17 +45,19 @@ const t = getTalentV2(lang);
       <section class="h3-hero">
         <div class="h3-wrap h3-hero__grid">
           <div class="h3-hero__copy">
-            <p class="h3-eyebrow h3-eyebrow--on-dark">{t.hero.eyebrow}</p>
+            <p class="h3-eyebrow">{t.hero.eyebrow}</p>
             <h1 class="h3-hero__h1 tv-h1">{t.hero.headline}</h1>
             <p class="h3-hero__sub">{t.hero.sub}</p>
             <p class="tv-audience">{t.hero.audience}</p>
-            <a href="/offer-acceleration" class="h3-btn tv-hero__cta">{t.hero.cta}</a>
+            <a href="/offer-acceleration" class="h3-btn tv-hero__cta">
+              {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+            </a>
           </div>
           <figure class="h3-hero__media">
-            <div class="h3-ph h3-ph--hero h3-ph--on-dark">
-              <span class="h3-ph__label">{t.hero.photoNote}</span>
-            </div>
-            <span class="h3-hero__scrim" aria-hidden="true"></span>
+            <picture>
+              <source srcset="/brand/talent-desk.webp" type="image/webp" />
+              <img src="/brand/talent-desk.jpg" alt="" aria-hidden="true" width="1600" height="1066" />
+            </picture>
           </figure>
         </div>
       </section>
@@ -111,7 +113,7 @@ const t = getTalentV2(lang);
               <p class="tv-case__detail">{t.proof.lead.detail}</p>
             </div>
             <figure class="h3-ph h3-ph--case h3-ph--on-dark">
-              <figcaption>{t.proof.lead.photoNote}</figcaption>
+              <span class="h3-ph__label">{t.proof.lead.photoNote}</span>
             </figure>
           </article>
 
@@ -170,9 +172,9 @@ const t = getTalentV2(lang);
   /* Shared tokens and primitives: same system as the home prototype. */
   .h3 {
     --midnight: #0A0B14;
-    --ivory: #F7F6F3;
+    --sand: #F7F6F3;
     --stone: #E9EBF0;
-    --sand: #EFEAE1;
+    --white: #FFFFFF;
     --text: #14161f;
     --muted: #63656f;
     --on-dark: #e8e7e3;
@@ -183,7 +185,7 @@ const t = getTalentV2(lang);
     --purple-deep: #4f46e5;
     --h-serif: 'Fraunces', 'Canela', Georgia, serif;
     --h-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    background: var(--ivory); color: var(--text);
+    background: var(--sand); color: var(--text);
     font-family: var(--h-sans); line-height: 1.6; -webkit-font-smoothing: antialiased;
   }
   body:has(.h3) { background: #0a0b14; }
@@ -255,47 +257,39 @@ const t = getTalentV2(lang);
   }
   .h3-ph--on-dark { background: #161825; border-color: var(--line-dark); }
   .h3-ph--on-dark figcaption { color: var(--on-dark-muted); }
-  .h3-ph--hero { aspect-ratio: 4 / 5; align-items: flex-end; }
+
   .h3-ph__label {
     font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--on-dark-muted); line-height: 1.5;
   }
-  .h3-hero__media { position: relative; }
-  /* Keep the slot label readable above the scrim while the photo is pending. */
-  .h3-hero__media .h3-ph { position: relative; z-index: 2; }
-  .h3-hero__media .h3-ph__label { position: relative; z-index: 3; }
-  .h3-hero__scrim {
-    position: absolute; inset: 0; border-radius: 14px; pointer-events: none; z-index: 1;
-    background: linear-gradient(100deg, var(--midnight) 0%, rgba(10, 11, 20, 0.55) 26%, rgba(10, 11, 20, 0) 62%);
-  }
-  @media (max-width: 56rem) {
-    .h3-hero__scrim {
-      background: linear-gradient(180deg, rgba(10, 11, 20, 0.55) 0%, rgba(10, 11, 20, 0) 45%);
-    }
-  }
+  /* Portrait with as much weight as the message, cropped to keep the face. */
+  .h3-hero__media { position: relative; margin: 0; border-radius: 14px; overflow: hidden; }
+  .h3-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 62% 30%; }
+  @media (min-width: 56rem) { .h3-hero__media { aspect-ratio: 4 / 5; } }
+  @media (max-width: 56rem) { .h3-hero__media { aspect-ratio: 4 / 3; margin-top: 2.25rem; } }
   .h3-ph--proof { aspect-ratio: 4 / 5; }
 
   .h3-nav {
-    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
-    background: rgba(10, 11, 20, 0.86); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--line-dark);
+    position: absolute; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20;
+    background: transparent; border-bottom: none;
   }
+  .h3 { position: relative; }
   .h3-nav__in {
     max-width: 80rem; margin-inline: auto; padding: 0.9rem 1.5rem;
     display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
   }
   @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
-  .h3-nav__logo img { height: 1.9rem; width: auto; display: block; filter: brightness(0) invert(1); }
-  .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; color: var(--on-dark-muted); }
-  .h3-nav__links a:hover { color: var(--on-dark); }
+  .h3-nav__logo img { height: 1.9rem; width: auto; display: block; }
+  .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; color: var(--muted); }
+  .h3-nav__links a:hover { color: var(--text); }
   @media (min-width: 56rem) { .h3-nav__links { display: flex; } }
   .h3-nav .h3-btn--sm { display: none; }
   @media (min-width: 56rem) { .h3-nav .h3-btn--sm { display: inline-flex; } }
 
-  .h3-hero { background: var(--midnight); color: var(--on-dark); padding: 4.5rem 0 5rem; }
-  @media (min-width: 56rem) { .h3-hero { padding: 6.5rem 0 7.5rem; } }
+  .h3-hero { position: relative; overflow: hidden; background: var(--sand); color: var(--text); padding: 7rem 0 4.5rem; }
+  @media (min-width: 56rem) { .h3-hero { padding: 8.5rem 0 5rem; } }
   .h3-hero__grid { display: grid; gap: 3.5rem; align-items: center; }
-  @media (min-width: 56rem) { .h3-hero__grid { grid-template-columns: 1.35fr 1fr; gap: 5rem; } }
+  @media (min-width: 56rem) { .h3-hero__grid { grid-template-columns: 1fr 0.92fr; gap: 4.5rem; } }
   .h3-hero__copy { min-width: 0; }
   .h3-hero__h1 {
     font-family: var(--h-serif); font-weight: 400;
@@ -304,8 +298,8 @@ const t = getTalentV2(lang);
     letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance;
   }
   .h3-hero__sub {
-    margin-top: 2rem; max-width: 36rem; font-size: 1.1875rem;
-    line-height: 1.65; color: var(--on-dark-muted);
+    margin-top: 1.75rem; max-width: 32rem; font-size: 1.1875rem;
+    line-height: 1.6; color: var(--muted);
   }
   .h3-footer {
     background: var(--midnight); color: var(--on-dark-muted);
@@ -318,14 +312,14 @@ const t = getTalentV2(lang);
   /* ── Page-specific ───────────────────────────────────────────────── */
   .tv-h1 { margin-top: 1rem; }
   .tv-audience {
-    margin-top: 1.5rem; font-size: 0.9375rem; color: var(--on-dark-muted);
-    max-width: 30rem; padding-top: 1.25rem; border-top: 1px solid var(--line-dark);
+    margin-top: 1.5rem; font-size: 0.9375rem; color: var(--muted);
+    max-width: 30rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
   }
   .tv-hero__cta { margin-top: 2rem; }
 
   /* One ivory surface carries problem, the four things, and the firewall. */
   .tv-main { background: var(--sand); padding: 5rem 0 6rem; }
-  @media (min-width: 56rem) { .tv-main { padding: 7.5rem 0 8rem; } }
+  @media (min-width: 56rem) { .tv-main { padding: 6rem 0 7.5rem; } }
   .tv-problem { display: grid; gap: 1.75rem; align-items: start; }
   @media (min-width: 56rem) { .tv-problem { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
   .tv-problem__head { min-width: 0; }
@@ -390,15 +384,17 @@ const t = getTalentV2(lang);
   @media (min-width: 56rem) { .tv-paths { padding: 6.5rem 0 7rem; } }
   .tv-paths__h2 { max-width: 32ch; }
   .tv-paths__list { margin-top: 2.5rem; display: grid; gap: 1.25rem; }
-  @media (min-width: 56rem) { .tv-paths__list { grid-template-columns: 1.4fr 1fr 1fr; align-items: start; } }
+  @media (min-width: 56rem) { .tv-paths__list { grid-template-columns: 1.3fr 1fr 1fr; align-items: stretch; } }
   .tv-path {
+    display: flex; flex-direction: column; height: 100%;
     background: var(--sand); border: 1px solid var(--line); border-radius: 14px;
     padding: 1.75rem; min-width: 0;
   }
-  .tv-path--flagship { background: #fff; border-color: rgba(99, 102, 241, 0.35); }
+  .tv-path--flagship { background: var(--white); border-color: rgba(99, 102, 241, 0.4); }
   .tv-path__name { font-size: 1.125rem; font-weight: 500; line-height: 1.3; letter-spacing: -0.005em; }
   .tv-path__body { margin-top: 0.75rem; font-size: 1rem; line-height: 1.6; color: var(--muted); }
-  .tv-path__cta { display: inline-block; margin-top: 1.5rem; font-size: 0.9375rem; }
+  .tv-path__body { flex: 1; }
+  .tv-path__cta { align-self: flex-start; margin-top: 1.75rem; font-size: 0.9375rem; }
 
   .tv-close { background: var(--sand); padding: 5rem 0 6rem; }
   @media (min-width: 56rem) { .tv-close { padding: 7rem 0 8rem; } }
