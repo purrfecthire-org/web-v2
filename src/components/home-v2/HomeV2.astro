@@ -180,8 +180,11 @@ const clients = [
       <!-- 6 · Kate -->
       <section class="h3-kate">
         <div class="h3-wrap h3-kate__grid">
-          <figure class="h3-ph h3-ph--kate">
-            <figcaption>{t.kate.photoNote}</figcaption>
+          <figure class="h3-kate__portrait">
+            <picture>
+              <source srcset="/brand/kate.webp" type="image/webp" />
+              <img src="/brand/kate.jpg" alt="Kate Forero" width="1200" height="1525" loading="lazy" />
+            </picture>
           </figure>
           <div>
             <p class="h3-eyebrow">{t.kate.eyebrow}</p>
@@ -340,7 +343,8 @@ const clients = [
     }
   }
   .h3-ph--cat { aspect-ratio: 1 / 1; }
-  .h3-ph--kate { aspect-ratio: 3 / 4; }
+  .h3-kate__portrait { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 14px; }
+  .h3-kate__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
   .h3-ph--portrait {
     aspect-ratio: 3 / 4; width: 100%; padding: 0.6rem; align-items: flex-end;
   }
