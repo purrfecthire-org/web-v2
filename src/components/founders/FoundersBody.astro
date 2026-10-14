@@ -68,17 +68,19 @@ const quotes = [testimonials.grid[0], testimonials.grid[2]];
 <!-- ── Metrics ─────────────────────────────────────────────────────────── -->
 <section id="metrics" class="ff-metrics">
   <div class="ff-metrics__container">
-    <div class="ff-metrics__strip reveal">
-      {hero.stats.map((stat, i) => (
-        <>
-          {i > 0 && <div class="ff-metrics__divider" />}
-          <div class="ff-metrics__item">
-            <div class="ff-metrics__value">{stat.suffixLeft}{stat.value}{stat.suffix}</div>
-            <p class="ff-metrics__label">{stat.label}</p>
-          </div>
-        </>
-      ))}
-    </div>
+    {hero.stats.length > 0 && (
+      <div class="ff-metrics__strip reveal">
+        {hero.stats.map((stat, i) => (
+          <>
+            {i > 0 && <div class="ff-metrics__divider" />}
+            <div class="ff-metrics__item">
+              <div class="ff-metrics__value">{stat.suffixLeft}{stat.value}{stat.suffix}</div>
+              <p class="ff-metrics__label">{stat.label}</p>
+            </div>
+          </>
+        ))}
+      </div>
+    )}
 
     <!-- Client wall -->
     <div class="ff-metrics__clients reveal reveal-delay-1">
@@ -104,9 +106,8 @@ const quotes = [testimonials.grid[0], testimonials.grid[2]];
         you have burned four months of runway and the goodwill of the team.
       </p>
       <p class="ff-why__a body1">
-        We have run 160+ searches inside early-stage startups, and we track what happens
-        after the offer, not just up to it. 80% of the people we place are still in seat
-        past two years. That number is the whole argument.
+        We run searches inside early-stage startups, and we track what happens
+        after the offer, not just up to it.
       </p>
       {culture.quotes.length > 0 && (
         <div class="ff-why__quote-row">
@@ -196,8 +197,7 @@ const quotes = [testimonials.grid[0], testimonials.grid[2]];
         <span class="ff-models__video-glyph" aria-hidden="true">▶</span>
         <p class="ff-models__video-caption">
           Video pending (60 seconds): Kate, founder-to-founder, on how we map your real bar
-          before opening the pipeline, and why 80% of our placements are still in the seat
-          after two years.
+          before opening the pipeline.
         </p>
       </div>
     )}

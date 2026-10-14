@@ -15,7 +15,7 @@ export const oaContent = {
   meta: {
     title: 'Offer Acceleration · Private Career Advisory | Purrfect Hire',
     description:
-      'Private Career Advisory para profesionales senior. Un equipo que se sienta en ambos lados de la mesa de contratación: 160+ placements con startups de YC, a16z y Sequoia. Inversión: USD 2,000.',
+      'Private Career Advisory para profesionales senior. Un equipo que se sienta en ambos lados de la mesa de contratación, con startups de YC, a16z y Sequoia. Inversión: USD 2,000.',
   },
 
   hero: {
@@ -58,7 +58,7 @@ export const oaContent = {
       ],
     },
     proof: [
-      '160+ placements en US, Europa y LATAM',
+      'Placements en US, Europa y LATAM',
       'Startups respaldadas por YC, a16z y Sequoia',
       '3+ años del lado que contrata',
     ],
@@ -227,7 +227,7 @@ export const oaContent = {
     kate: {
       name: 'Katerine Forero.',
       role: 'Founder, Purrfect Hire · Advisor',
-      bio: '10+ años en talento y recruiting. Entró a ADDI cuando eran 15 personas y lideró la operación de talento hasta +400. Opera entre LATAM, US y Europa, y conecta cada advisory con las decisiones de contratación que ve cada semana.',
+      bio: '10+ años en talento y recruiting. Lideró el recruiting de Addi durante dos años de crecimiento, hasta casi 500 personas, después de la Serie B. Opera entre LATAM, US y Europa, y conecta cada advisory con las decisiones de contratación que ve cada semana.',
     },
   },
 

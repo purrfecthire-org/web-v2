@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────────────────
 // /kate — the living credential (Jul 2026 architecture doc).
-// The arc: Colombia → ADDI 15→400 → Purrfect Hire → hiring today for YC-,
+// The arc: Colombia → Addi, post-Series B → Purrfect Hire → hiring today for YC-,
 // a16z- and Sequoia-backed founders. The most photographic page of the
 // site; until the shoot delivers the rest of the shot list, every image
 // slot (hero + all chapters) reuses the one approved photo we have
@@ -64,7 +64,7 @@ export const kateEn: KateContent = {
   meta: {
     title: 'Kate Forero · The person founders trust with the hire | Purrfect Hire',
     description:
-      'Kate Forero scaled ADDI from 15 to 400 people, founded Purrfect Hire, and hires today for YC-, a16z- and Sequoia-backed founders. 160+ senior placements, 80% still in the role after 2 years. 297K people follow how she evaluates.',
+      'Kate Forero led recruiting at Addi to almost 500 people, founded Purrfect Hire, and hires today for YC-, a16z- and Sequoia-backed founders. 297K people follow how she evaluates.',
   },
 
   hero: {
@@ -75,8 +75,6 @@ export const kateEn: KateContent = {
   },
 
   stats: [
-    { value: '160+', label: 'senior placements' },
-    { value: '80%', label: 'still in the role after 2 years' },
     { value: '10+', label: 'years reading how founders evaluate' },
     { value: '297K', label: 'LinkedIn followers' },
   ],
@@ -93,8 +91,8 @@ export const kateEn: KateContent = {
     },
     {
       tag: '02 · ADDI',
-      title: '15 people to 400',
-      body: 'At ADDI, one of LATAM\'s fastest-scaling startups, Kate helped take the team from 15 to 400. Scaling at that speed forces the question every founder eventually asks: why do skilled hires fail? The answer, culture fit read early, became her method.',
+      title: 'To almost 500 people',
+      body: 'At Addi, one of LATAM\'s fastest-scaling startups, Kate led recruiting through two years of growth, to almost 500 people, post-Series B. Scaling at that speed forces the question every founder eventually asks: why do skilled hires fail? The answer, culture fit read early, became her method.',
       image: KATE_PHOTO,
       caption:
         'Photo pending: Kate teaching a public session, a virtual course where she shares the criteria in the open.',
@@ -102,7 +100,7 @@ export const kateEn: KateContent = {
     {
       tag: '03 · Purrfect Hire',
       title: 'Hiring today for YC, a16z and Sequoia founders',
-      body: 'She founded Purrfect Hire to run that method as a closed loop: map the founder\'s real bar, place against it, and train senior talent against the same standard. 160+ placements later, 80% are still in the seat after two years.',
+      body: 'She founded Purrfect Hire to run that method as a closed loop: map the founder\'s real bar, place against it, and train senior talent against the same standard.',
       image: KATE_PHOTO,
       caption: 'Kate at work, the same person founders call and candidates train with.',
     },
@@ -142,7 +140,7 @@ export const kateEs: KateContent = {
   meta: {
     title: 'Kate Forero · La persona a la que los founders le confían el hire | Purrfect Hire',
     description:
-      'Kate Forero escaló ADDI de 15 a 400 personas, fundó Purrfect Hire y hoy contrata para founders respaldados por YC, a16z y Sequoia. 160+ placements senior, 80% sigue en el rol a los 2 años. 297K personas siguen cómo evalúa.',
+      'Kate Forero lideró el recruiting de Addi hasta casi 500 personas, fundó Purrfect Hire y hoy contrata para founders respaldados por YC, a16z y Sequoia. 297K personas siguen cómo evalúa.',
   },
 
   hero: {
@@ -153,8 +151,6 @@ export const kateEs: KateContent = {
   },
 
   stats: [
-    { value: '160+', label: 'placements senior' },
-    { value: '80%', label: 'sigue en el rol a los 2 años' },
     { value: '10+', label: 'años leyendo cómo evalúan los founders' },
     { value: '297K', label: 'seguidores en LinkedIn' },
   ],
@@ -171,8 +167,8 @@ export const kateEs: KateContent = {
     },
     {
       tag: '02 · ADDI',
-      title: 'De 15 personas a 400',
-      body: 'En ADDI, una de las startups que más rápido escaló en LATAM, Kate ayudó a llevar el equipo de 15 a 400. Escalar a esa velocidad obliga a la pregunta que todo founder termina haciéndose: ¿por qué fallan los hires con skills? La respuesta, leer el culture fit temprano, se volvió su método.',
+      title: 'Hasta casi 500 personas',
+      body: 'En Addi, una de las startups que más rápido escaló en LATAM, Kate lideró el recruiting durante dos años de crecimiento, hasta casi 500 personas, después de la Serie B. Escalar a esa velocidad obliga a la pregunta que todo founder termina haciéndose: ¿por qué fallan los hires con skills? La respuesta, leer el culture fit temprano, se volvió su método.',
       image: KATE_PHOTO,
       caption:
         'Foto pendiente: Kate dando una sesión pública, un curso virtual donde comparte los criterios en abierto.',
@@ -180,7 +176,7 @@ export const kateEs: KateContent = {
     {
       tag: '03 · Purrfect Hire',
       title: 'Hoy contrata para founders de YC, a16z y Sequoia',
-      body: 'Fundó Purrfect Hire para operar ese método como un circuito cerrado: mapear el bar real del founder, colocar contra ese bar y entrenar talento senior contra el mismo estándar. 160+ placements después, el 80% sigue en la silla a los dos años.',
+      body: 'Fundó Purrfect Hire para operar ese método como un circuito cerrado: mapear el bar real del founder, colocar contra ese bar y entrenar talento senior contra el mismo estándar.',
       image: KATE_PHOTO,
       caption: 'Kate trabajando, la misma persona a la que llaman los founders y con la que entrenan los candidatos.',
     },
