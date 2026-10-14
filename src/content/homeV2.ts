@@ -27,6 +27,7 @@ export interface HomeV2Content {
     pov: string;
     evidence: string;
     quoteLabel: string;
+    casePhotoNote: string;
     cta: string;
   };
   talent: {
@@ -61,7 +62,7 @@ export const homeV2En: HomeV2Content = {
     headlineAccent: 'Culture fit makes them stay.',
     companies: { label: 'For companies', promise: 'Build smaller, stronger teams.' },
     talent: { label: 'For talent', promise: 'Make your signal impossible to miss.' },
-    photoNote: 'Photo pending. Real team, documentary, natural light.',
+    photoNote: '[REAL TEAM PHOTO — Purrfect or a client team, candid, natural light]',
   },
   trust: {
     label: 'Trusted by founders at',
@@ -78,6 +79,7 @@ export const homeV2En: HomeV2Content = {
       'So we look at which problem someone solved, how much ownership they really had, what evidence exists of their performance, how fast they learn and how they decide. The fit we look for is between the person, the problem and the moment of the company.',
     evidence: 'Every candidate comes with evidence.',
     quoteLabel: 'A client, in her words',
+    casePhotoNote: '[REAL FOUNDER PHOTO — client, working environment]',
     cta: 'See how we work with companies',
   },
   talent: {
@@ -86,8 +88,8 @@ export const homeV2En: HomeV2Content = {
     body: 'You may already be operating at the next level. The question is whether the market can see it.',
     sub: 'We help senior professionals understand how the market reads their experience, and strengthen the evidence behind their real level.',
     cta: 'Explore Offer Accelerator',
-    catNote: 'Illustration pending. Cat, observe pose.',
-    storyNote: 'Story pending. One real professional, with written permission, no invented figures.',
+    catNote: '[REAL TALENT PHOTO — Offer Accelerator outcome, working environment]',
+    storyNote: 'Story pending. One real professional, with written permission. Level or scope change, not only compensation.',
   },
   belief: {
     eyebrow: 'What we believe',
@@ -102,7 +104,7 @@ export const homeV2En: HomeV2Content = {
     body: 'Kate led recruiting at Addi through two years of growth, to almost 500 people, post-Series B. Today Purrfect Hire hires for startups backed by YC, a16z and Sequoia.',
     ctaCompanies: 'For companies',
     ctaTalent: 'For talent',
-    photoNote: 'Photo pending. Kate, real, documentary.',
+    photoNote: '[REAL KATE PHOTO — documentary, not a corporate headshot]',
   },
   footer: { legal: '© 2026 Purrfect Hire', privacy: 'Privacy', linkedin: 'LinkedIn' },
 };
@@ -124,7 +126,7 @@ export const homeV2Es: HomeV2Content = {
     headlineAccent: 'El fit cultural te hace quedarte.',
     companies: { label: 'Para empresas', promise: 'Equipos más pequeños y más fuertes.' },
     talent: { label: 'Para talento', promise: 'Haz que tu señal sea imposible de ignorar.' },
-    photoNote: 'Foto pendiente. Equipo real, documental, luz natural.',
+    photoNote: '[REAL TEAM PHOTO — Purrfect o equipo cliente, candid, luz natural]',
   },
   trust: {
     label: 'Confían en nosotros founders de',
@@ -141,6 +143,7 @@ export const homeV2Es: HomeV2Content = {
       'Por eso miramos qué problema resolvió, cuánto ownership tuvo de verdad, qué evidencia existe de su desempeño, qué tan rápido aprende y cómo decide. El fit que buscamos es entre la persona, el problema y el momento de la compañía.',
     evidence: 'Cada candidato llega con evidencia.',
     quoteLabel: 'Una clienta, con sus palabras',
+    casePhotoNote: '[REAL FOUNDER PHOTO — cliente, entorno de trabajo]',
     cta: 'Cómo trabajamos con empresas',
   },
   talent: {
@@ -149,8 +152,8 @@ export const homeV2Es: HomeV2Content = {
     body: 'Quizás ya operas en el siguiente nivel. La pregunta es si el mercado puede verlo.',
     sub: 'Ayudamos a profesionales senior a entender cómo lee el mercado su experiencia, y a fortalecer la evidencia detrás de su nivel real.',
     cta: 'Conoce Offer Accelerator',
-    catNote: 'Ilustración pendiente. Gato, pose observe.',
-    storyNote: 'Historia pendiente. Una persona real, con permiso escrito, sin cifras inventadas.',
+    catNote: '[REAL TALENT PHOTO — resultado de Offer Accelerator, entorno de trabajo]',
+    storyNote: 'Historia pendiente. Una persona real, con permiso escrito. Cambio de nivel o de scope, no solo compensación.',
   },
   belief: {
     eyebrow: 'En qué creemos',
@@ -165,7 +168,7 @@ export const homeV2Es: HomeV2Content = {
     body: 'Kate lideró el recruiting de Addi durante dos años de crecimiento, hasta casi 500 personas, después de la Serie B. Hoy Purrfect Hire contrata para startups respaldadas por YC, a16z y Sequoia.',
     ctaCompanies: 'Para empresas',
     ctaTalent: 'Para talento',
-    photoNote: 'Foto pendiente. Kate, real, documental.',
+    photoNote: '[REAL KATE PHOTO — documental, no headshot corporativo]',
   },
   footer: { legal: '© 2026 Purrfect Hire', privacy: 'Privacidad', linkedin: 'LinkedIn' },
 };
