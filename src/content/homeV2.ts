@@ -27,7 +27,6 @@ export interface HomeV2Content {
     pov: string;
     evidence: string;
     quoteLabel: string;
-    casePhotoNote: string;
     cta: string;
   };
   talent: {
