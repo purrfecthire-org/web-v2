@@ -16,7 +16,7 @@ const t = getTalentV2(lang);
   <Fragment slot="head">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap"
       rel="stylesheet"
     />
   </Fragment>
@@ -51,8 +51,11 @@ const t = getTalentV2(lang);
             <p class="tv-audience">{t.hero.audience}</p>
             <a href="/offer-acceleration" class="h3-btn tv-hero__cta">{t.hero.cta}</a>
           </div>
-          <figure class="h3-ph h3-ph--hero h3-ph--on-dark">
-            <figcaption>{t.hero.photoNote}</figcaption>
+          <figure class="h3-hero__media">
+            <div class="h3-ph h3-ph--hero h3-ph--on-dark">
+              <span class="h3-ph__label">{t.hero.photoNote}</span>
+            </div>
+            <span class="h3-hero__scrim" aria-hidden="true"></span>
           </figure>
         </div>
       </section>
@@ -63,7 +66,9 @@ const t = getTalentV2(lang);
           <div class="tv-problem">
             <div class="tv-problem__head">
               <p class="h3-eyebrow">{t.problem.eyebrow}</p>
-              <h2 class="h3-h2">{t.problem.headline}</h2>
+              <h2 class="h3-h2">
+                {t.problem.headline}<span class="h3-dot h3-dot--end" aria-hidden="true"></span>
+              </h2>
             </div>
             <p class="h3-body tv-problem__body">{t.problem.body}</p>
           </div>
@@ -83,7 +88,7 @@ const t = getTalentV2(lang);
               ))}
             </ol>
             <p class="tv-work__note">{t.work.note}</p>
-            <a href="/offer-acceleration" class="h3-link tv-work__cta">{t.work.cta} <span aria-hidden="true">→</span></a>
+            <a href="/offer-acceleration" class="h3-link tv-work__cta">{t.work.cta} <span class="h3-arrow" aria-hidden="true">→</span></a>
           </div>
 
           <!-- Firewall, right after Create access -->
@@ -131,7 +136,7 @@ const t = getTalentV2(lang);
               <li class={idx === 0 ? 'tv-path tv-path--flagship' : 'tv-path'}>
                 <h3 class="tv-path__name">{i.name}</h3>
                 <p class="tv-path__body">{i.body}</p>
-                <a href={i.href} class="h3-link tv-path__cta">{i.cta} <span aria-hidden="true">→</span></a>
+                <a href={i.href} class="h3-link tv-path__cta">{i.cta} <span class="h3-arrow" aria-hidden="true">→</span></a>
               </li>
             ))}
           </ul>
@@ -143,7 +148,7 @@ const t = getTalentV2(lang);
         <div class="h3-wrap">
           <h2 class="h3-h2 tv-close__h2">{t.close.headline}</h2>
           <p class="h3-body tv-close__body">{t.close.body}</p>
-          <a href="/offer-acceleration" class="h3-btn tv-close__cta">{t.close.cta}</a>
+          <a href="/offer-acceleration" class="h3-btn h3-btn--ink tv-close__cta">{t.close.cta}</a>
         </div>
       </section>
     </main>
@@ -164,19 +169,19 @@ const t = getTalentV2(lang);
 <style lang="scss" is:global>
   /* Shared tokens and primitives: same system as the home prototype. */
   .h3 {
-    --midnight: #0a0b14;
-    --ivory: #f7f6f3;
-    --stone: #e9ebf0;
-    --sand: #efece5;
+    --midnight: #0A0B14;
+    --ivory: #F7F6F3;
+    --stone: #E9EBF0;
+    --sand: #EFEAE1;
     --text: #14161f;
     --muted: #63656f;
     --on-dark: #e8e7e3;
     --on-dark-muted: #9b9ca6;
     --line: rgba(20, 22, 31, 0.1);
     --line-dark: rgba(232, 231, 227, 0.14);
-    --purple: #6366f1;
+    --purple: #6366F1;
     --purple-deep: #4f46e5;
-    --h-serif: 'Instrument Serif', 'Canela', Georgia, serif;
+    --h-serif: 'Fraunces', 'Canela', Georgia, serif;
     --h-sans: 'Inter', system-ui, -apple-system, sans-serif;
     background: var(--ivory); color: var(--text);
     font-family: var(--h-sans); line-height: 1.6; -webkit-font-smoothing: antialiased;
@@ -196,11 +201,18 @@ const t = getTalentV2(lang);
   }
   .h3-eyebrow--on-dark { color: var(--on-dark-muted); }
   .h3-dot {
-    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--purple); margin-top: 0.7rem; flex: none;
+    display: inline-block; width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(20, 22, 31, 0.3); margin-top: 0.72rem; flex: none;
   }
+  .h3-dot--end {
+    display: inline-block; width: 0.34em; height: 0.34em; border-radius: 50%;
+    background: var(--purple); margin-left: 0.22em; vertical-align: 0.08em;
+    margin-top: 0; flex: none;
+  }
+  /* Purple is the primary action on Midnight. On light surfaces the
+     primary action is Midnight, so the accent stays precise. */
   .h3-btn {
-    display: inline-flex; align-items: center; justify-content: center;
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
     padding: 0.9rem 1.6rem; border-radius: 999px;
     background: var(--purple); color: #fff !important;
     font-size: 0.9375rem; font-weight: 500; line-height: 1;
@@ -208,13 +220,23 @@ const t = getTalentV2(lang);
   }
   .h3-btn:hover { background: var(--purple-deep); }
   .h3-btn--sm { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
+  .h3-btn--ink { background: var(--midnight); }
+  .h3-btn--ink:hover { background: #1b1d2b; }
+  .h3-btn--ghost {
+    background: transparent; color: var(--text) !important;
+    border: 1px solid rgba(20, 22, 31, 0.28);
+  }
+  .h3-btn--ghost:hover { border-color: var(--text); background: transparent; }
+  .h3-arrow { font-size: 0.9em; line-height: 1; }
   .h3-link {
+    display: inline-flex; align-items: baseline; gap: 0.4rem;
     font-size: 1rem; font-weight: 500;
     border-bottom: 1px solid var(--line); padding-bottom: 2px;
   }
   .h3-link:hover { border-color: currentColor; }
   .h3-h2 {
     font-family: var(--h-serif); font-weight: 400;
+    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
     font-size: clamp(1.875rem, 3.6vw, 3.5rem); line-height: 1.06;
     letter-spacing: -0.014em; margin-top: 0.9rem; text-wrap: balance;
   }
@@ -233,7 +255,24 @@ const t = getTalentV2(lang);
   }
   .h3-ph--on-dark { background: #161825; border-color: var(--line-dark); }
   .h3-ph--on-dark figcaption { color: var(--on-dark-muted); }
-  .h3-ph--hero { aspect-ratio: 4 / 5; }
+  .h3-ph--hero { aspect-ratio: 4 / 5; align-items: flex-end; }
+  .h3-ph__label {
+    font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--on-dark-muted); line-height: 1.5;
+  }
+  .h3-hero__media { position: relative; }
+  /* Keep the slot label readable above the scrim while the photo is pending. */
+  .h3-hero__media .h3-ph { position: relative; z-index: 2; }
+  .h3-hero__media .h3-ph__label { position: relative; z-index: 3; }
+  .h3-hero__scrim {
+    position: absolute; inset: 0; border-radius: 14px; pointer-events: none; z-index: 1;
+    background: linear-gradient(100deg, var(--midnight) 0%, rgba(10, 11, 20, 0.55) 26%, rgba(10, 11, 20, 0) 62%);
+  }
+  @media (max-width: 56rem) {
+    .h3-hero__scrim {
+      background: linear-gradient(180deg, rgba(10, 11, 20, 0.55) 0%, rgba(10, 11, 20, 0) 45%);
+    }
+  }
   .h3-ph--proof { aspect-ratio: 4 / 5; }
 
   .h3-nav {
@@ -260,6 +299,7 @@ const t = getTalentV2(lang);
   .h3-hero__copy { min-width: 0; }
   .h3-hero__h1 {
     font-family: var(--h-serif); font-weight: 400;
+    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
     font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.02;
     letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance;
   }
@@ -284,7 +324,7 @@ const t = getTalentV2(lang);
   .tv-hero__cta { margin-top: 2rem; }
 
   /* One ivory surface carries problem, the four things, and the firewall. */
-  .tv-main { background: var(--ivory); padding: 5rem 0 6rem; }
+  .tv-main { background: var(--sand); padding: 5rem 0 6rem; }
   @media (min-width: 56rem) { .tv-main { padding: 7.5rem 0 8rem; } }
   .tv-problem { display: grid; gap: 1.75rem; align-items: start; }
   @media (min-width: 56rem) { .tv-problem { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
@@ -352,7 +392,7 @@ const t = getTalentV2(lang);
   .tv-paths__list { margin-top: 2.5rem; display: grid; gap: 1.25rem; }
   @media (min-width: 56rem) { .tv-paths__list { grid-template-columns: 1.4fr 1fr 1fr; align-items: start; } }
   .tv-path {
-    background: var(--ivory); border: 1px solid var(--line); border-radius: 14px;
+    background: var(--sand); border: 1px solid var(--line); border-radius: 14px;
     padding: 1.75rem; min-width: 0;
   }
   .tv-path--flagship { background: #fff; border-color: rgba(99, 102, 241, 0.35); }
@@ -360,7 +400,7 @@ const t = getTalentV2(lang);
   .tv-path__body { margin-top: 0.75rem; font-size: 1rem; line-height: 1.6; color: var(--muted); }
   .tv-path__cta { display: inline-block; margin-top: 1.5rem; font-size: 0.9375rem; }
 
-  .tv-close { background: var(--ivory); padding: 5rem 0 6rem; }
+  .tv-close { background: var(--sand); padding: 5rem 0 6rem; }
   @media (min-width: 56rem) { .tv-close { padding: 7rem 0 8rem; } }
   .tv-close__h2 { max-width: 34ch; }
   .tv-close__body { margin-top: 1.25rem; font-size: 1.25rem; }

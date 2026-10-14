@@ -34,7 +34,7 @@ const clients = [
   <Fragment slot="head">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap"
       rel="stylesheet"
     />
   </Fragment>
@@ -69,14 +69,14 @@ const clients = [
             <div class="h3-doors">
               <a href={`${p}/for-founders`} class="h3-door">
                 <span class="h3-door__label">
-                  <span class="h3-dot" aria-hidden="true"></span>{t.hero.companies.label}
+  {t.hero.companies.label}
                 </span>
                 <span class="h3-door__promise">{t.hero.companies.promise}</span>
                 <span class="h3-door__arrow" aria-hidden="true">→</span>
               </a>
               <a href={`${p}/for-talent`} class="h3-door">
                 <span class="h3-door__label">
-                  <span class="h3-dot" aria-hidden="true"></span>{t.hero.talent.label}
+  {t.hero.talent.label}
                 </span>
                 <span class="h3-door__promise">{t.hero.talent.promise}</span>
                 <span class="h3-door__arrow" aria-hidden="true">→</span>
@@ -84,8 +84,11 @@ const clients = [
             </div>
           </div>
 
-          <figure class="h3-ph h3-ph--hero h3-ph--on-dark">
-            <figcaption>{t.hero.photoNote}</figcaption>
+          <figure class="h3-hero__media">
+            <div class="h3-ph h3-ph--hero h3-ph--on-dark">
+              <span class="h3-ph__label">{t.hero.photoNote}</span>
+            </div>
+            <span class="h3-hero__scrim" aria-hidden="true"></span>
           </figure>
         </div>
       </section>
@@ -97,9 +100,7 @@ const clients = [
           <ul class="h3-trust__logos">
             {clients.map((c) => <li><img src={c.logo} alt={c.name} loading="lazy" /></li>)}
           </ul>
-          <p class="h3-trust__evidence">
-            <span class="h3-dot" aria-hidden="true"></span>{t.trust.evidence}
-          </p>
+          <p class="h3-trust__evidence">{t.trust.evidence}</p>
         </div>
       </section>
 
@@ -108,9 +109,16 @@ const clients = [
         <div class="h3-wrap h3-co__grid">
           <div class="h3-co__left">
             <p class="h3-eyebrow">{t.companies.eyebrow}</p>
-            <h2 class="h3-h2">{t.companies.headline}</h2>
+            <h2 class="h3-h2">
+              {t.companies.headline}<span class="h3-dot h3-dot--end" aria-hidden="true"></span>
+            </h2>
             <p class="h3-lead">{t.companies.intro}</p>
-            <a href={`${p}/for-founders`} class="h3-btn h3-co__cta">{t.companies.cta}</a>
+            <a href={`${p}/for-founders`} class="h3-btn h3-btn--ink h3-co__cta">
+              {t.companies.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+            </a>
+            <div class="h3-ph h3-ph--work">
+              <span class="h3-ph__label">[REAL TEAM PHOTO — client team at work, candid, natural light]</span>
+            </div>
           </div>
 
           <div class="h3-co__right">
@@ -177,10 +185,10 @@ const clients = [
             <p class="h3-body">{t.kate.body}</p>
             <div class="h3-kate__ctas">
               <a href={`${p}/for-founders`} class="h3-link">
-                {t.kate.ctaCompanies} <span aria-hidden="true">→</span>
+                {t.kate.ctaCompanies} <span class="h3-arrow" aria-hidden="true">→</span>
               </a>
               <a href={`${p}/for-talent`} class="h3-link">
-                {t.kate.ctaTalent} <span aria-hidden="true">→</span>
+                {t.kate.ctaTalent} <span class="h3-arrow" aria-hidden="true">→</span>
               </a>
             </div>
           </div>
@@ -203,19 +211,19 @@ const clients = [
 
 <style lang="scss" is:global>
   .h3 {
-    --midnight: #0a0b14;
-    --ivory: #f7f6f3;
-    --stone: #e9ebf0;
-    --sand: #efece5;
+    --midnight: #0A0B14;
+    --ivory: #F7F6F3;
+    --stone: #E9EBF0;
+    --sand: #EFEAE1;
     --text: #14161f;
     --muted: #63656f;
     --on-dark: #e8e7e3;
     --on-dark-muted: #9b9ca6;
     --line: rgba(20, 22, 31, 0.1);
     --line-dark: rgba(232, 231, 227, 0.14);
-    --purple: #6366f1;
+    --purple: #6366F1;
     --purple-deep: #4f46e5;
-    --h-serif: 'Instrument Serif', 'Canela', Georgia, serif;
+    --h-serif: 'Fraunces', 'Canela', Georgia, serif;
     --h-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
     background: var(--ivory);
@@ -241,13 +249,16 @@ const clients = [
   .h3-eyebrow--on-dark { color: var(--on-dark-muted); }
 
   /* The signal dot. Purple lives here and on buttons, nowhere else. */
-  .h3-dot {
-    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--purple); margin-right: 0.6rem; vertical-align: 1px;
+  /* Brand detail: one purple dot, closing a single headline per page. */
+  .h3-dot--end {
+    display: inline-block; width: 0.34em; height: 0.34em; border-radius: 50%;
+    background: var(--purple); margin-left: 0.22em; vertical-align: 0.08em;
   }
 
+  /* Purple is the primary action on Midnight. On light surfaces the
+     primary action is Midnight, so the accent stays precise. */
   .h3-btn {
-    display: inline-flex; align-items: center; justify-content: center;
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
     padding: 0.9rem 1.6rem; border-radius: 999px;
     background: var(--purple); color: #fff !important;
     font-size: 0.9375rem; font-weight: 500; line-height: 1;
@@ -255,12 +266,21 @@ const clients = [
   }
   .h3-btn:hover { background: var(--purple-deep); }
   .h3-btn--sm { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
+  .h3-btn--ink { background: var(--midnight); }
+  .h3-btn--ink:hover { background: #1b1d2b; }
+  .h3-btn--ghost {
+    background: transparent; color: var(--text) !important;
+    border: 1px solid rgba(20, 22, 31, 0.28);
+  }
+  .h3-btn--ghost:hover { border-color: var(--text); background: transparent; }
+  .h3-arrow { font-size: 0.9em; line-height: 1; }
   .h3-link { font-weight: 500; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
   .h3-link--on-dark { color: var(--on-dark); border-color: var(--line-dark); }
   .h3-link:hover { border-color: currentColor; }
 
   .h3-h2 {
     font-family: var(--h-serif); font-weight: 400;
+    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
     font-size: clamp(1.875rem, 3.6vw, 3.5rem); line-height: 1.06; letter-spacing: -0.014em;
     margin-top: 0.9rem; text-wrap: balance;
   }
@@ -286,7 +306,21 @@ const clients = [
   }
   .h3-ph--on-dark { background: #161825; border-color: var(--line-dark); }
   .h3-ph--on-dark figcaption { color: var(--on-dark-muted); }
-  .h3-ph--hero { aspect-ratio: 4 / 5; }
+  .h3-ph--hero { aspect-ratio: 4 / 5; align-items: flex-end; }
+  .h3-hero__media { position: relative; }
+  /* Keep the slot label readable above the scrim while the photo is pending. */
+  .h3-hero__media .h3-ph { position: relative; z-index: 2; }
+  .h3-hero__media .h3-ph__label { position: relative; z-index: 3; }
+  /* The image reads as part of the dark field, not as a pasted rectangle. */
+  .h3-hero__scrim {
+    position: absolute; inset: 0; border-radius: 14px; pointer-events: none; z-index: 1;
+    background: linear-gradient(100deg, var(--midnight) 0%, rgba(10, 11, 20, 0.55) 26%, rgba(10, 11, 20, 0) 62%);
+  }
+  @media (max-width: 56rem) {
+    .h3-hero__scrim {
+      background: linear-gradient(180deg, rgba(10, 11, 20, 0.55) 0%, rgba(10, 11, 20, 0) 45%);
+    }
+  }
   .h3-ph--cat { aspect-ratio: 1 / 1; }
   .h3-ph--kate { aspect-ratio: 3 / 4; }
   .h3-ph--portrait {
@@ -323,6 +357,7 @@ const clients = [
   .h3-hero__copy { min-width: 0; }
   .h3-hero__h1 {
     font-family: var(--h-serif); font-weight: 400;
+    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
     font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.02; letter-spacing: -0.02em;
     max-width: 15ch; text-wrap: balance;
   }
@@ -349,7 +384,7 @@ const clients = [
   .h3-door__arrow { color: var(--purple); font-size: 1.25rem; }
 
   /* 2 · Trust */
-  .h3-trust { background: var(--ivory); padding: 4rem 0 0; }
+  .h3-trust { background: var(--ivory); padding: 4rem 0 4.5rem; }
   .h3-trust__in { text-align: center; }
   .h3-trust__logos {
     margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center;
@@ -366,13 +401,15 @@ const clients = [
   }
 
   /* 3 · For companies */
-  .h3-co { background: var(--ivory); padding: 4.5rem 0 5rem; }
+  .h3-co { background: var(--sand); padding: 4.5rem 0 5rem; }
   @media (min-width: 56rem) { .h3-co { padding: 7rem 0 8rem; } }
   .h3-co__grid { display: grid; gap: 3rem; align-items: start; }
   @media (min-width: 56rem) { .h3-co__grid { grid-template-columns: 1fr 1.1fr; gap: 5.5rem; } }
   .h3-co__left { min-width: 0; }
   @media (min-width: 56rem) { .h3-co__left { position: sticky; top: 7rem; } }
   .h3-co__cta { margin-top: 2rem; }
+  .h3-ph--work { aspect-ratio: 5 / 4; margin-top: 2.75rem; align-items: flex-end; }
+  @media (min-width: 56rem) { .h3-co__left { position: static; } }
   .h3-co__right { min-width: 0; }
   .h3-co__evidence { margin-top: 1.5rem; font-size: 1.125rem; font-weight: 500; }
   .h3-quote {
