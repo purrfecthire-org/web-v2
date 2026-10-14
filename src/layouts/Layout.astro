@@ -99,16 +99,19 @@ const alternateUrl =
   <body>
     <slot />
     <script>
-      // Analytics — flag-gated by PUBLIC_ANALYTICS_SRC, same pattern as the
-      // error reporter. Unset (the default) means this block does nothing and
-      // the site keeps making zero network calls.
+      // Analytics — flag-gated by PUBLIC_ANALYTICS_SRC. Unset (the default)
+      // means this block does nothing and the site makes zero network calls.
       //
-      // Built for a cookieless, no-personal-data tool (Plausible, Fathom,
-      // Simple Analytics and friends all take a script URL plus a domain).
-      // That choice is deliberate: no cookies means no consent banner, and
-      // the privacy policy can keep saying the site sets none.
+      // Plausible now issues a snippet per site, so the script URL comes from
+      // Site Installation in the account and is pasted into the env var: it
+      // cannot be hardcoded here. The newer script also exposes plausible.init()
+      // and no longer documents data-domain, while the older one reads
+      // data-domain and drains a window.plausible queue. This handles both:
+      // init() is called when it exists, data-domain is only set when the env
+      // var provides one, and queued clicks are flushed by us on script load
+      // rather than relying on the provider draining them.
       //
-      // Pageviews come from the tool itself. On top of that, every primary
+      // Pageviews are captured by the script. On top of that, every primary
       // action carries data-cta and every page carries data-journey, so
       // Companies, Talent and Offer are counted apart. Only those two values
       // are ever sent: no emails, no form fields, no advisory data.
@@ -116,26 +119,38 @@ const alternateUrl =
       const A_DOMAIN = import.meta.env.PUBLIC_ANALYTICS_DOMAIN;
       if (A_SRC) {
         try {
+          type Ev = [string, { props: Record<string, string> }];
+          const pending: Ev[] = [];
+          const w = window as unknown as {
+            plausible?: { (...a: unknown[]): void; init?: (o?: unknown) => void; q?: unknown[] };
+          };
+
+          const send = (...e: Ev) => {
+            if (typeof w.plausible === 'function') w.plausible(...e);
+            else pending.push(e);
+          };
+
           const el = document.createElement('script');
           el.defer = true;
           el.src = String(A_SRC);
           if (A_DOMAIN) el.setAttribute('data-domain', String(A_DOMAIN));
+          el.addEventListener('load', () => {
+            try {
+              // Present on the per-site script, absent on the older one.
+              w.plausible?.init?.();
+            } catch {
+              /* init is optional */
+            }
+            try {
+              while (pending.length) w.plausible?.(...(pending.shift() as Ev));
+            } catch {
+              /* a dropped metric is not worth an error */
+            }
+          });
           document.head.appendChild(el);
 
           const journey =
             document.querySelector('[data-journey]')?.getAttribute('data-journey') ?? 'unknown';
-
-          // Standard queueing stub: clicks that happen before the provider's
-          // script finishes loading are held and drained by it on arrival.
-          const w = window as unknown as {
-            plausible?: { (...args: unknown[]): void; q?: unknown[] };
-          };
-          if (!w.plausible) {
-            const stub = function (...args: unknown[]) {
-              (stub.q = stub.q || []).push(args);
-            } as { (...args: unknown[]): void; q?: unknown[] };
-            w.plausible = stub;
-          }
 
           document.addEventListener('click', (e) => {
             try {
@@ -143,7 +158,7 @@ const alternateUrl =
               if (!a) return;
               const name = a.getAttribute('data-cta');
               if (!name) return;
-              w.plausible?.('cta', { props: { cta: name, journey } });
+              send('cta', { props: { cta: name, journey } });
             } catch {
               /* measurement must never break a click */
             }
