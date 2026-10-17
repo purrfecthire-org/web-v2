@@ -1,0 +1,163 @@
+---
+import { roleCardHTML, apiBase } from '../../lib/roles';
+import { getRolesSnapshot } from './snapshot';
+import { rolesCopy as t } from './copy';
+
+const { roles, unavailable } = await getRolesSnapshot();
+---
+
+<section class="rl" data-built-slugs={JSON.stringify(roles.map((role) => role.slug))} data-configured={Boolean(apiBase())}>
+  <div class="h3-wrap">
+    <header class="rl__header">
+      <p class="h3-eyebrow">{t.eyebrow}</p>
+      <h1 class="h3-hero__h1 rl__title">{t.headline}</h1>
+      <p class="h3-lead">{t.intro}</p>
+      <p class="rl__free">{t.free}</p>
+    </header>
+
+    <div class="rl__list-head">
+      <h2 class="rl__list-title">{t.count}<span id="rl-count" hidden={unavailable}> · {roles.length}</span></h2>
+      <p>{t.confidentiality}</p>
+    </div>
+    <p class="rl__notice" id="rl-refresh-error" role="status" hidden>{t.refreshError}</p>
+    <div class="rl__grid" id="rl-grid" hidden={roles.length === 0} set:html={roles.map(roleCardHTML).join('')}></div>
+
+    <div class="rl__state" id="rl-empty" hidden={unavailable || roles.length > 0}>
+      <h3>{t.emptyTitle}</h3>
+      <p>{t.emptyBody}</p>
+      <a class="h3-link" href={t.profileHref} data-cta="roles-empty-profile">{t.profileCta} →</a>
+    </div>
+    <div class="rl__state" id="rl-error" hidden={!unavailable}>
+      <h3>{t.errorTitle}</h3>
+      <p>{t.errorBody}</p>
+      <div class="rl__state-actions">
+        <button class="h3-btn h3-btn--ink" id="rl-retry" type="button">{t.retry}</button>
+        <a class="h3-link" href={`mailto:${t.email}`}>{t.email}</a>
+      </div>
+    </div>
+
+    <aside class="rl__profile">
+      <div>
+        <h2 class="h3-h2">{t.profileTitle}</h2>
+        <p class="h3-body">{t.profileBody}</p>
+      </div>
+      <a class="h3-btn h3-btn--ink" href={t.profileHref} data-cta="roles-profile">{t.profileCta} →</a>
+    </aside>
+  </div>
+</section>
+
+<script>
+  import { fetchRoles, roleCardHTML, reportClientError } from '../../lib/roles';
+
+  const root = document.querySelector<HTMLElement>('.rl');
+  if (root) {
+    const built = new Set<string>(JSON.parse(root.dataset.builtSlugs || '[]'));
+    const grid = document.getElementById('rl-grid')!;
+    const empty = document.getElementById('rl-empty')!;
+    const error = document.getElementById('rl-error')!;
+    const notice = document.getElementById('rl-refresh-error')!;
+    const count = document.getElementById('rl-count')!;
+    const retry = document.getElementById('rl-retry') as HTMLButtonElement;
+    let refreshing = false;
+
+    function preserveAttribution() {
+      const campaign = new URLSearchParams(location.search);
+      const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+      const incomingEntry = campaign.get('entry_path');
+      // Keep only the original same-site pathname, never a query string,
+      // form field, cross-origin URL or fragment.
+      const entry = incomingEntry?.startsWith('/') && !incomingEntry.startsWith('//')
+        ? new URL(incomingEntry, location.origin).pathname.slice(0, 250)
+        : location.pathname;
+      for (const link of grid.querySelectorAll<HTMLAnchorElement>('a[href]')) {
+        const url = new URL(link.href);
+        if (url.origin !== location.origin) continue;
+        for (const key of keys) {
+          const value = campaign.get(key);
+          if (value && /^[a-zA-Z0-9_. -]{1,100}$/.test(value)) url.searchParams.set(key, value);
+        }
+        url.searchParams.set('entry_path', entry);
+        link.href = url.href;
+      }
+    }
+
+    async function refresh() {
+      if (refreshing) return;
+      refreshing = true;
+      retry.disabled = true;
+      grid.setAttribute('aria-busy', 'true');
+      notice.hidden = true;
+      try {
+        const current = await fetchRoles();
+        // GitHub Pages cannot render a new dynamic slug at request time.
+        // New roles enter this list after their detail page is deployed by
+        // the existing role-published workflow; never create a dead link.
+        const available = current.filter((role) => built.has(role.slug));
+        grid.innerHTML = available.map(roleCardHTML).join('');
+        preserveAttribution();
+        grid.hidden = available.length === 0;
+        count.textContent = ` · ${available.length}`;
+        count.hidden = false;
+        error.hidden = true;
+        empty.hidden = current.length !== 0;
+        if (current.length > 0 && available.length === 0) {
+          // There is demand, but its new pages are not deployed yet. Do not
+          // describe this as "no open roles".
+          error.hidden = false;
+          count.hidden = true;
+        }
+      } catch (err) {
+        const hasSnapshot = grid.querySelector('.rl__card') !== null;
+        if (hasSnapshot) notice.hidden = false;
+        else { error.hidden = false; empty.hidden = true; count.hidden = true; }
+        reportClientError(`roles list refresh failed: ${(err as Error).message}`, { stage: 'roles_index_refresh' });
+      } finally {
+        refreshing = false;
+        retry.disabled = false;
+        grid.removeAttribute('aria-busy');
+      }
+    }
+    retry.addEventListener('click', refresh);
+    if (root.dataset.configured === 'true') refresh();
+  }
+</script>
+
+<style is:global>
+  .rl { padding: 7rem 0 5rem; }
+  .rl [hidden] { display: none !important; }
+  .rl__header { padding-bottom: 3.5rem; max-width: 58rem; }
+  .rl__title { max-width: 16ch; }
+  .rl__free { margin-top: 1.5rem !important; font-size: .9375rem; color: var(--muted); max-width: 42rem; }
+  .rl__list-head { border-top: 1px solid var(--line); padding: 1.5rem 0; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .75rem 2rem; }
+  .rl__list-title { font-size: 1.125rem; font-weight: 500; }
+  .rl__list-head p { color: var(--muted); font-size: .875rem; max-width: 29rem; }
+  .rl__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .rl__card { display: flex; flex-direction: column; position: relative; min-width: 0; padding: 1.75rem; border: 1px solid var(--line); border-radius: 14px; background: var(--white); transition: border-color .2s; }
+  .rl__card:hover { border-color: var(--muted); }
+  .rl__card-top { display: flex; justify-content: space-between; gap: 1rem; font-size: .75rem; color: var(--muted); }
+  .rl__card-company { font-weight: 500; }
+  .rl__card-posted { white-space: nowrap; }
+  .rl__card-title { font-size: clamp(1.25rem, 2vw, 1.625rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.2; margin-top: 1rem !important; }
+  .rl__card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .65rem; margin-top: 1rem; color: var(--muted); font-size: .8125rem; }
+  .rl__meta { display: inline-flex; align-items: center; gap: .3rem; }
+  .rl__meta svg { flex-shrink: 0; }
+  .rl__meta--salary { color: var(--text); }
+  .rl__meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); }
+  .rl__tags { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1.25rem 0 1.5rem; }
+  .rl__tag { padding: .2rem .55rem; border: 1px solid var(--line); border-radius: 5px; font-size: .75rem; color: var(--muted); }
+  .rl__card-foot { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-top: auto; padding-top: 1rem; }
+  .rl__badges { display: flex; flex-wrap: wrap; gap: .5rem; color: var(--muted); font-size: .75rem; }
+  .rl__yc, .rl__english { display: inline-flex; gap: .4rem; align-items: center; }
+  .rl__yc-mark { font-weight: 600; }
+  .rl__view { display: inline-flex; align-items: center; gap: .4rem; color: var(--purple); font-size: .875rem; font-weight: 500; }
+  .rl__state { padding: 3rem 0; border-block: 1px solid var(--line); }
+  .rl__state h3 { font-family: var(--h-serif); font-weight: 400; font-size: clamp(1.5rem, 3vw, 2rem); }
+  .rl__state p { margin: 1rem 0 1.5rem; color: var(--muted); max-width: 36rem; }
+  .rl__state-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  .rl__state button { cursor: pointer; border: 0; font-family: inherit; }
+  .rl__notice { color: var(--muted); margin-bottom: 1.25rem !important; }
+  .rl__profile { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem; border-top: 1px solid var(--line); margin-top: 4rem; padding-top: 3rem; }
+  .rl__profile .h3-h2 { max-width: 22ch; }
+  @media (min-width: 56rem) { .rl { padding-top: 9rem; padding-bottom: 7rem; } .rl__header { padding-bottom: 5rem; } }
+  @media (max-width: 47.99rem) { .rl__grid { grid-template-columns: 1fr; } .rl__card { padding: 1.35rem; } }
+</style>

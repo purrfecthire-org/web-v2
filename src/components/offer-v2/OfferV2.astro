@@ -6,6 +6,7 @@
 // Every apply button opens the same destination, and the line under the
 // button says what happens when it does.
 import Shell from '../v2/Shell.astro';
+import ClientPortrait from '../v2/ClientPortrait.astro';
 import type { Lang } from '../../content/index';
 import { getOfferV2 } from '../../content/offerV2';
 import { APPLY_OFFER } from '../../content/links';
@@ -20,7 +21,7 @@ const t = getOfferV2(lang);
   title={t.meta.title}
   description={t.meta.description}
   theme="dark"
-  navCta={{ label: "Apply by email", href: APPLY_OFFER, external: true }}
+  navCta={{ label: t.hero.cta, href: APPLY_OFFER, external: true }}
   journey="offer"
 >
 
@@ -31,6 +32,10 @@ const t = getOfferV2(lang);
             <p class="h3-eyebrow h3-eyebrow--on-dark">{t.hero.eyebrow}</p>
             <h1 class="h3-hero__h1">{t.hero.headline}</h1>
             <p class="h3-hero__sub">{t.hero.sub}</p>
+            <div class="oa-hero__package">
+              <p class="oa-hero__price">{t.investment.price}</p>
+              <p>{t.hero.package}</p>
+            </div>
             <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-hero__cta">
               {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
@@ -60,6 +65,32 @@ const t = getOfferV2(lang);
             <div>
               <p class="oa-question__body">{t.question.body}</p>
               <p class="h3-body oa-question__who">{t.question.who}</p>
+            </div>
+          </div>
+
+          <div class="oa-deliverables" aria-labelledby="oa-deliverables-title">
+            <p class="h3-eyebrow">{t.deliverables.eyebrow}</p>
+            <h2 class="h3-h2" id="oa-deliverables-title">{t.deliverables.headline}</h2>
+            <p class="h3-body oa-deliverables__intro">{t.deliverables.body}</p>
+            <ul class="oa-deliverables__grid">
+              {t.deliverables.items.map((item) => (
+                <li class="oa-deliverable">
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="oa-fit">
+            <div>
+              <p class="h3-eyebrow">{t.fit.eyebrow}</p>
+              <h2 class="h3-h2">{t.fit.headline}</h2>
+              <p class="h3-body oa-fit__body">{t.fit.body}</p>
+            </div>
+            <div class="oa-fit__commitment">
+              <h3>{t.fit.commitmentTitle}</h3>
+              <p class="h3-body">{t.fit.commitment}</p>
             </div>
           </div>
 
@@ -129,6 +160,9 @@ const t = getOfferV2(lang);
           <p class="h3-eyebrow">{t.proof.eyebrow}</p>
           <h2 class="h3-h2 oa-proof__h2">{t.proof.headline}</h2>
           <figure class="oa-quote">
+            <div class="oa-quote__photo">
+              <ClientPortrait alt={t.proof.name} />
+            </div>
             <blockquote>“{t.proof.quote}”</blockquote>
             <figcaption>
               <span class="oa-quote__name">{t.proof.name}</span>
@@ -152,11 +186,39 @@ const t = getOfferV2(lang);
         </div>
       </section>
 
+      <!-- Questions that help the reader decide -->
+      <section class="oa-faq" aria-labelledby="oa-faq-title">
+        <div class="h3-wrap oa-faq__grid">
+          <div>
+            <p class="h3-eyebrow">{t.faq.eyebrow}</p>
+            <h2 class="h3-h2" id="oa-faq-title">{t.faq.headline}</h2>
+          </div>
+          <div class="oa-faq__items">
+            {t.faq.items.map((item) => (
+              <details class="oa-faq__item">
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <!-- Apply -->
       <section class="oa-apply">
         <div class="h3-wrap">
           <h2 class="h3-h2 oa-apply__h2">{t.apply.headline}</h2>
           <p class="h3-body oa-apply__body">{t.apply.body}</p>
+          <ol class="oa-apply__steps">
+            {t.apply.steps.map((step, index) => (
+              <li>
+                <span class="oa-apply__step-id" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))}
+          </ol>
+          <p class="oa-apply__price">{t.investment.price}</p>
           <a href={APPLY_OFFER} data-cta="offer-close-apply" class="h3-btn oa-apply__cta">
             {t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span>
           </a>
@@ -168,6 +230,10 @@ const t = getOfferV2(lang);
     </Shell>
 
 <style lang="scss" is:global>
+  .oa-hero__package { margin-top: 1.75rem; max-width: 34rem; display: grid; gap: 0.5rem; }
+  .oa-hero__package > p { font-size: 0.9375rem; line-height: 1.6; color: var(--on-dark-muted); }
+  .oa-hero__package > .oa-hero__price { font-size: 1.5rem; line-height: 1.2; font-weight: 500; color: var(--on-dark); }
+  .oa-hero__cta { margin-top: 1.5rem; }
   .oa-main { background: var(--sand); padding: 5rem 0 6rem; }
   @media (min-width: 56rem) { .oa-main { padding: 6.5rem 0 7.5rem; } }
   .oa-question { display: grid; gap: 1.75rem; align-items: start; }
@@ -175,6 +241,25 @@ const t = getOfferV2(lang);
   .oa-question__body { font-size: 1.25rem; line-height: 1.55; color: var(--text); max-width: 32rem; }
   @media (min-width: 56rem) { .oa-question__body { padding-top: 1.9rem; } }
   .oa-question__who { margin-top: 1.25rem; }
+
+  .oa-deliverables { margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--line); }
+  .oa-deliverables .h3-h2 { max-width: 28ch; }
+  .oa-deliverables__intro { margin-top: 1.25rem; max-width: 43rem; }
+  .oa-deliverables__grid { margin-top: 2rem; display: grid; gap: 0 2rem; }
+  .oa-deliverable { border-top: 1px solid var(--line); padding: 1.5rem 0; }
+  .oa-deliverable h3 { font-size: 1.0625rem; font-weight: 500; line-height: 1.4; }
+  .oa-deliverable p { margin-top: 0.6rem; color: var(--muted); font-size: 1rem; line-height: 1.65; }
+  @media (min-width: 40rem) { .oa-deliverables__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 72rem) { .oa-deliverables__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 2.75rem; } }
+
+  .oa-fit { margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--line); display: grid; gap: 2rem; align-items: start; }
+  .oa-fit__body { margin-top: 1.25rem; }
+  .oa-fit__commitment h3 { font-size: 1.125rem; font-weight: 500; line-height: 1.4; }
+  .oa-fit__commitment p { margin-top: 0.75rem; }
+  @media (min-width: 56rem) {
+    .oa-fit { grid-template-columns: 1.05fr 1fr; gap: 4rem; }
+    .oa-fit__commitment { padding-top: 2.25rem; }
+  }
 
   .oa-method { margin-top: 5rem; }
   @media (min-width: 56rem) { .oa-method { margin-top: 7rem; } }
@@ -225,14 +310,21 @@ const t = getOfferV2(lang);
   .oa-proof { background: var(--sand); padding: 5rem 0; }
   @media (min-width: 56rem) { .oa-proof { padding: 6.5rem 0; } }
   .oa-proof__h2 { max-width: 20ch; }
-  .oa-quote { margin-top: 2.5rem; max-width: 60rem; }
+  .oa-quote { margin-top: 2.5rem; display: grid; gap: 1.25rem; align-items: start; }
+  .oa-quote__photo { aspect-ratio: 3 / 2; overflow: hidden; border-radius: 12px; background: var(--stone); margin-bottom: 0.75rem; }
+  .oa-quote__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .oa-quote blockquote {
     font-family: var(--h-serif); font-size: clamp(1.5rem, 2.8vw, 2.5rem);
     line-height: 1.2; max-width: 34ch;
   }
-  .oa-quote figcaption { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9375rem; }
+  .oa-quote figcaption { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9375rem; }
   .oa-quote__name { font-weight: 500; }
   .oa-quote__role { color: var(--muted); }
+  @media (min-width: 56rem) {
+    .oa-quote { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); column-gap: 3rem; row-gap: 1.5rem; }
+    .oa-quote__photo { grid-row: 1 / span 2; margin-bottom: 0; }
+    .oa-quote blockquote, .oa-quote figcaption { grid-column: 2; }
+  }
 
   .oa-investment { background: var(--stone); padding: 4.5rem 0; }
   @media (min-width: 56rem) { .oa-investment { padding: 6rem 0; } }
@@ -245,11 +337,30 @@ const t = getOfferV2(lang);
   @media (min-width: 56rem) { .oa-price { padding-top: 1.4rem; } }
   .oa-investment__next { margin-top: 1.25rem; }
 
+  .oa-faq { background: var(--sand); padding: 4.5rem 0 0; }
+  .oa-faq__grid { display: grid; gap: 2rem; align-items: start; }
+  .oa-faq__items { border-top: 1px solid var(--line); }
+  .oa-faq__item { border-bottom: 1px solid var(--line); }
+  .oa-faq__item > summary { padding: 1.25rem 0; display: flex; justify-content: space-between; gap: 1.5rem; cursor: pointer; list-style: none; font-size: 1rem; font-weight: 500; line-height: 1.5; }
+  .oa-faq__item > summary::-webkit-details-marker { display: none; }
+  .oa-faq__item > summary::after { content: '+'; flex: 0 0 auto; color: var(--purple); }
+  .oa-faq__item[open] > summary::after { content: '−'; }
+  .oa-faq__item > p { margin: 0 0 1.5rem; max-width: 44rem; font-size: 1rem; line-height: 1.7; color: var(--muted); }
+  .oa-faq__item > summary:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; border-radius: 2px; }
+  @media (min-width: 56rem) { .oa-faq { padding-top: 6rem; } .oa-faq__grid { grid-template-columns: 0.8fr 1.2fr; gap: 4rem; } }
+
   .oa-apply { background: var(--sand); padding: 5rem 0 6rem; }
   @media (min-width: 56rem) { .oa-apply { padding: 7rem 0 8rem; } }
   .oa-apply__h2 { max-width: 24ch; }
   .oa-apply__body { margin-top: 1.25rem; }
-  .oa-apply__cta { margin-top: 2rem; }
+  .oa-apply__steps { margin-top: 2.5rem; display: grid; gap: 1.5rem 2rem; }
+  .oa-apply__steps li { padding-top: 1.25rem; border-top: 1px solid var(--line); }
+  .oa-apply__step-id { display: block; color: var(--muted); font-size: 0.8125rem; margin-bottom: 0.75rem; }
+  .oa-apply__steps h3 { font-size: 1.0625rem; line-height: 1.4; font-weight: 500; }
+  .oa-apply__steps p { margin-top: 0.6rem; font-size: 1rem; line-height: 1.6; color: var(--muted); max-width: 32rem; }
+  @media (min-width: 56rem) { .oa-apply__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .oa-apply__price { margin-top: 2rem; font-size: 1.25rem; line-height: 1.4; font-weight: 500; }
+  .oa-apply__cta { margin-top: 1rem; }
   /* Says what the button does before it is pressed. */
   .oa-apply__how {
     margin-top: 1rem; max-width: 30rem;

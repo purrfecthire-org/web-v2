@@ -1,0 +1,129 @@
+---
+import Shell from '../v2/Shell.astro';
+import { FOUNDERS_CALENDAR, CONTACT_EMAIL } from '../../content/links';
+const endpoint = import.meta.env.PUBLIC_B2B_LEAD_ENDPOINT || '';
+---
+<Shell title="Get a read on your search | Purrfect Hire" description="Tell us the role and the problem behind it. Book a 20-minute founders call to discuss what the search requires." theme="light" journey="companies">
+  <section class="sr" data-endpoint={endpoint} data-calendar={FOUNDERS_CALENDAR}>
+    <div class="h3-wrap sr__grid">
+      <div class="sr__intro">
+        <p class="h3-eyebrow">Before the search</p>
+        <h1 class="h3-hero__h1 sr__title">Get a read on your search.</h1>
+        <p class="h3-lead">Tell us the role and what this person needs to change.</p>
+        <p class="h3-body">We’ll use the call to pressure-test the role, the relevant market and the evidence a candidate should bring.</p>
+        <p class="sr__note">20 minutes. No deck or commitment required.</p>
+        <a class="h3-link sr__sample" href="/search-calibration" data-cta="search-read-sample">See a Search Calibration example →</a>
+        <p class="sr__email">Prefer email? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+      </div>
+      <div>
+        {endpoint ? (
+          <form class="sr__form" id="search-read-form">
+            <label for="sr-email">Work email<input id="sr-email" name="work_email" type="email" autocomplete="email" maxlength="254" required /></label>
+            <label for="sr-company"><span id="sr-company-label">Company</span><input id="sr-company" name="company" autocomplete="organization" maxlength="200" required /></label>
+            <label for="sr-role"><span id="sr-role-label">Role</span><input id="sr-role" name="role" maxlength="200" required /></label>
+            <label for="sr-change">What does this hire need to change?<textarea id="sr-change" name="hire_change" rows="4" maxlength="2000" required></textarea></label>
+            <label for="sr-needed">When do you need this person in seat? <span class="sr__optional">Optional</span><input id="sr-needed" name="needed_by" maxlength="200" /></label>
+            <div class="sr__trap" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off" /></label></div>
+            <p class="sr__privacy">We use this context to assess your request and prepare the conversation. <a href="/privacy-policy">Privacy</a></p>
+            <button class="h3-btn h3-btn--ink" id="sr-submit" type="submit" disabled>Continue to scheduling →</button>
+            <p id="sr-error" class="sr__error" role="alert" hidden></p>
+            <a id="sr-error-calendar" class="h3-link" href={FOUNDERS_CALENDAR} data-cta="search-read-error-calendar" hidden>Continue directly to the founders calendar →</a>
+            <noscript><p>Please enable JavaScript to send this form, or use the calendar below. Nothing has been submitted.</p><a href={FOUNDERS_CALENDAR}>Open the founders calendar →</a></noscript>
+          </form>
+        ) : (
+          <div class="sr__direct">
+            <h2 class="h3-h2">Choose a time to talk.</h2>
+            <p class="h3-body">Bring the company, the role and the problem behind it. We’ll work through that context on the call.</p>
+            <a class="h3-btn h3-btn--ink" href={FOUNDERS_CALENDAR} data-cta="search-read-direct-calendar">Continue to scheduling →</a>
+          </div>
+        )}
+        <div id="sr-calendar" hidden>
+          <h2 class="h3-h2">Your context is received. Choose a time.</h2>
+          <p class="h3-body">Your request is saved. A call is booked only when Cal.com confirms it.</p>
+          <iframe id="sr-calendar-frame" title="Book a 20-minute founders call with Purrfect Hire" loading="lazy"></iframe>
+          <a class="h3-link" href={FOUNDERS_CALENDAR} data-cta="search-read-calendar-external">Open the calendar in a new page →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Shell>
+<script>
+  import { submitSearchRead, SearchReadError } from '../../lib/searchRead';
+  import { reportClientError } from '../../lib/roles';
+  const root = document.querySelector<HTMLElement>('.sr')!;
+  const form = document.getElementById('search-read-form') as HTMLFormElement | null;
+  const params = new URLSearchParams(location.search);
+  const emit = (name: string) => window.dispatchEvent(new CustomEvent('purrfect:funnel', { detail: { name } }));
+  const audience = params.get('audience') === 'investors' ? 'investor' : 'founder';
+  for (const link of root.querySelectorAll<HTMLAnchorElement>('a[href]')) {
+    const url = new URL(link.href);
+    if (url.origin !== new URL(root.dataset.calendar!).origin) continue;
+    for (const key of ['utm_source', 'utm_medium', 'utm_campaign']) { const value = params.get(key); if (value && /^[a-zA-Z0-9_. -]{1,100}$/.test(value)) url.searchParams.set(key, value); }
+    link.href = url.href;
+  }
+  if (form) {
+    const button = document.getElementById('sr-submit') as HTMLButtonElement;
+    const error = document.getElementById('sr-error')!;
+    const errorCalendar = document.getElementById('sr-error-calendar')!;
+    let started = false;
+    let requestId = crypto.randomUUID();
+    button.disabled = false;
+    const role = form.elements.namedItem('role') as HTMLInputElement;
+    const roleNames: Record<string, string> = { 'founding-engineer': 'Founding Engineer', 'head-of-engineering': 'Head of Engineering', 'forward-deployed-engineer': 'Forward Deployed Engineer' };
+    role.value = roleNames[params.get('role') || ''] || '';
+    if (audience === 'investor') {
+      document.getElementById('sr-company-label')!.textContent = 'Fund';
+      document.getElementById('sr-role-label')!.textContent = 'Role or portfolio hiring need';
+    }
+    form.addEventListener('input', () => { requestId = crypto.randomUUID(); if (!started) { started = true; emit('search_form_started'); } });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (button.disabled || !form.reportValidity()) return;
+      const fields = new FormData(form);
+      if (String(fields.get('website') || '')) return;
+      const value = (name: string) => String(fields.get(name) || '').trim();
+      const attribution: Record<string, string> = { landing_page: params.get('entry_path')?.startsWith('/') ? params.get('entry_path')!.split('?')[0].slice(0, 250) : location.pathname };
+      for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) { const v = params.get(key); if (v && /^[a-zA-Z0-9_. -]{1,100}$/.test(v)) attribution[key] = v; }
+      button.disabled = true; button.textContent = 'Sending…'; error.hidden = true; errorCalendar.hidden = true;
+      try {
+        await submitSearchRead(root.dataset.endpoint || '', { work_email: value('work_email'), company: value('company'), role: value('role'), hire_change: value('hire_change'), needed_by: value('needed_by') || undefined, audience, attribution }, requestId);
+        emit('search_form_submitted');
+        form.hidden = true;
+        const calendar = document.getElementById('sr-calendar')!;
+        calendar.hidden = false;
+        const frame = document.getElementById('sr-calendar-frame') as HTMLIFrameElement;
+        const booking = new URL(root.dataset.calendar!);
+        for (const key of ['utm_source', 'utm_medium', 'utm_campaign']) { const v = attribution[key]; if (v) booking.searchParams.set(key, v); }
+        frame.addEventListener('load', () => emit('calendar_viewed'), { once: true });
+        frame.src = booking.href;
+        calendar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (err) {
+        error.textContent = err instanceof SearchReadError && err.code === 'validation' ? 'Please check your details and try again. Your request has not been confirmed.' : 'We could not confirm receipt. Please try again or use the founders calendar below.';
+        error.hidden = false;
+        errorCalendar.hidden = false;
+        reportClientError('B2B intake was not confirmed', { stage: 'b2b_intake', code: err instanceof SearchReadError ? err.code : 'network' });
+        button.disabled = false; button.textContent = 'Continue to scheduling →';
+      }
+    });
+  }
+</script>
+<style>
+  .sr { padding: 8rem 0 6rem; }
+  .sr [hidden] { display: none !important; }
+  .sr__grid { display: grid; gap: 3rem; align-items: start; }
+  .sr__title { max-width: 13ch; }
+  .sr__note, .sr__email { margin-top: 1.5rem; color: var(--muted); font-size: .9375rem; }
+  .sr__sample { margin-top: 1.5rem; }
+  .sr__form { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 1.75rem; display: grid; gap: 1.1rem; }
+  .sr__form label { display: grid; gap: .45rem; font-size: .9375rem; font-weight: 500; }
+  .sr__form input, .sr__form textarea { width: 100%; box-sizing: border-box; border: 1px solid #8a8d99; border-radius: 6px; padding: .75rem; font: inherit; background: white; color: var(--text); }
+  .sr__form input:focus-visible, .sr__form textarea:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
+  .sr__optional, .sr__privacy { color: var(--muted); font-size: .8125rem; font-weight: 400; line-height: 1.7; }
+  .sr__privacy a, .sr__email a { text-decoration: underline; text-underline-offset: 3px; }
+  .sr__trap { position: absolute; left: -9999px; }
+  .sr__error { color: #9f1c15; font-size: .9375rem; }
+  .sr__direct { padding: 2rem; border: 1px solid var(--line); border-radius: 14px; background: white; }
+  .sr__direct .h3-btn { margin-top: 2rem; }
+  #sr-calendar-frame { width: 100%; height: 760px; border: 0; margin: 1.5rem 0; }
+  @media (min-width: 64rem) { .sr__grid { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+</style>

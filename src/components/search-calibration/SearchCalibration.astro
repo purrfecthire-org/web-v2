@@ -1,0 +1,184 @@
+---
+import Shell from '../v2/Shell.astro';
+import type { Lang } from '../../content/index';
+import { getSearchCalibration, SEARCH_CALIBRATION_CTA } from '../../content/searchCalibration';
+
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props;
+const t = getSearchCalibration(lang);
+const sample = t.sample;
+---
+
+<Shell
+  lang={lang}
+  title={t.meta.title}
+  description={t.meta.description}
+  theme="light"
+  navCta={{ label: t.hero.cta, href: SEARCH_CALIBRATION_CTA }}
+  journey="companies"
+>
+  <div class="sc-page" data-product="search-calibration">
+    <section class="h3-hero sc-hero" aria-labelledby="sc-title">
+      <div class="h3-wrap">
+        <p class="h3-eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="h3-hero__h1 sc-hero__title" id="sc-title">{t.hero.headline}</h1>
+        <p class="h3-hero__sub sc-hero__body">{t.hero.body}</p>
+        <a href={SEARCH_CALIBRATION_CTA} data-cta="search-calibration-hero-search-read" class="h3-btn h3-btn--ink sc-hero__cta">
+          {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="sc-note">{t.hero.note}</p>
+      </div>
+    </section>
+
+    <section class="sc-deliverables" aria-labelledby="sc-deliverables-title">
+      <div class="h3-wrap">
+        <p class="h3-eyebrow">{t.deliverables.eyebrow}</p>
+        <h2 class="h3-h2 sc-wide-title" id="sc-deliverables-title">{t.deliverables.headline}</h2>
+        <dl class="sc-deliverables__list">
+          {t.deliverables.items.map((item) => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="sc-example" aria-labelledby="sc-example-title">
+      <div class="h3-wrap">
+        <p class="h3-eyebrow">{sample.eyebrow}</p>
+        <h2 class="h3-h2 sc-wide-title" id="sc-example-title">{sample.headline}</h2>
+        <p class="sc-disclosure">{sample.disclosure}</p>
+
+        <article class="sc-document" aria-labelledby="sc-document-title">
+          <header class="sc-document__header">
+            <h3 id="sc-document-title">{sample.title}</h3>
+            <p>{sample.context}</p>
+            <dl class="sc-facts">
+              {sample.facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+            </dl>
+          </header>
+
+          <div class="sc-document__body">
+            <section class="sc-entry" aria-labelledby="sc-problem-title">
+              <h4 id="sc-problem-title">{sample.problem.label}</h4>
+              <p>{sample.problem.body}</p>
+            </section>
+            <section class="sc-entry" aria-labelledby="sc-role-title">
+              <h4 id="sc-role-title">{sample.role.label}</h4>
+              <p>{sample.role.body}</p>
+            </section>
+            <section class="sc-entry" aria-labelledby="sc-market-title">
+              <h4 id="sc-market-title">{sample.market.label}</h4>
+              <p>{sample.market.body}</p>
+            </section>
+            <section class="sc-entry sc-compensation" aria-labelledby="sc-compensation-title">
+              <h4 id="sc-compensation-title">{sample.compensation.label}</h4>
+              <p class="sc-compensation__range">{sample.compensation.range}</p>
+              <p>{sample.compensation.body}</p>
+              <p class="sc-compensation__date">{sample.compensation.date}</p>
+              <ul class="sc-sources">
+                {sample.compensation.sources.map((source) => (
+                  <li>
+                    <a href={source.href} data-cta="search-calibration-public-salary-source" target="_blank" rel="noopener noreferrer">{source.label}</a>
+                    <p>{source.note}</p>
+                  </li>
+                ))}
+              </ul>
+              <p class="sc-compensation__relationship">{sample.compensation.relationship}</p>
+            </section>
+            <section class="sc-entry" aria-labelledby="sc-evidence-title">
+              <h4 id="sc-evidence-title">{sample.evidence.label}</h4>
+              <ul class="sc-bullets">{sample.evidence.items.map((item) => <li>{item}</li>)}</ul>
+            </section>
+            <section class="sc-entry" aria-labelledby="sc-questions-title">
+              <h4 id="sc-questions-title">{sample.questions.label}</h4>
+              <ol class="sc-questions">{sample.questions.items.map((question) => <li>{question}</li>)}</ol>
+            </section>
+            <section class="sc-entry" aria-labelledby="sc-risks-title">
+              <h4 id="sc-risks-title">{sample.risks.label}</h4>
+              <ul class="sc-bullets">{sample.risks.items.map((risk) => <li>{risk}</li>)}</ul>
+            </section>
+            <section class="sc-recommendation" aria-labelledby="sc-recommendation-title">
+              <p class="h3-eyebrow">{sample.recommendation.label}</p>
+              <h4 id="sc-recommendation-title">{sample.recommendation.title}</h4>
+              <p>{sample.recommendation.body}</p>
+              <p class="sc-recommendation__limit">{sample.recommendation.limit}</p>
+            </section>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="sc-close" aria-labelledby="sc-close-title">
+      <div class="h3-wrap">
+        <h2 class="h3-h2 sc-wide-title" id="sc-close-title">{t.next.headline}</h2>
+        <p class="h3-body sc-close__body">{t.next.body}</p>
+        <a href={SEARCH_CALIBRATION_CTA} data-cta="search-calibration-close-search-read" class="h3-btn h3-btn--ink sc-close__cta">
+          {t.next.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href={t.next.secondaryHref} data-cta="search-calibration-candidate-brief" class="h3-link sc-close__secondary">
+          {t.next.secondary}<span class="h3-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</Shell>
+
+<style lang="scss">
+  .sc-page { --sc-space: clamp(3.5rem, 6vw, 6.5rem); }
+  .sc-hero__title { max-width: 18ch; }
+  .sc-hero__body { max-width: 43rem; }
+  .sc-hero__cta, .sc-close__cta { margin-top: 2rem; max-width: 100%; line-height: 1.35; text-align: center; }
+  .sc-note { margin-top: 1rem; max-width: 36rem; font-size: 0.875rem; line-height: 1.65; color: var(--muted); }
+  .sc-deliverables, .sc-example, .sc-close { padding-block: var(--sc-space); border-top: 1px solid var(--line); }
+  .sc-deliverables { background: var(--sand); }
+  .sc-wide-title { max-width: 25ch; }
+  .sc-deliverables__list { display: grid; gap: 0 3.5rem; margin: 2.5rem 0 0; }
+  .sc-deliverables__list > div { padding: 1.5rem 0; border-top: 1px solid var(--line); }
+  .sc-deliverables__list dt { font-size: 1.125rem; font-weight: 500; }
+  .sc-deliverables__list dd { margin: 0.75rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 35rem; }
+  .sc-example { background: var(--stone); }
+  .sc-disclosure { margin-top: 1.75rem; max-width: 50rem; padding: 1rem 1.25rem; border: 1px solid var(--line); border-radius: 10px; font-size: 0.9375rem; font-weight: 500; line-height: 1.65; background: var(--sand); }
+  .sc-document { margin-top: 2rem; max-width: 62rem; border: 1px solid var(--line); border-radius: 14px; background: var(--white); overflow: hidden; }
+  .sc-document__header, .sc-document__body { padding: clamp(1.5rem, 4vw, 3.5rem); }
+  .sc-document__header { border-bottom: 1px solid var(--line); }
+  .sc-document__header h3 { font-family: var(--h-serif); font-size: clamp(1.65rem, 3vw, 2.5rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.015em; }
+  .sc-document__header > p { margin-top: 1rem; color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 45rem; }
+  .sc-facts { display: grid; gap: 1.25rem 2rem; margin: 2rem 0 0; }
+  .sc-facts dt { font-size: 0.75rem; font-weight: 500; color: var(--muted); }
+  .sc-facts dd { margin: 0.35rem 0 0; font-size: 0.9375rem; line-height: 1.5; }
+  .sc-document__body { padding-top: 0; }
+  .sc-entry { padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--line); }
+  .sc-entry:first-child { border-top: 0; margin-top: 0; }
+  .sc-entry h4 { margin: 0; font-size: 1.125rem; font-weight: 500; line-height: 1.4; }
+  .sc-entry > p { margin-top: 0.8rem; color: var(--muted); font-size: 1rem; line-height: 1.75; }
+  .sc-entry .sc-compensation__range { font-size: clamp(1.15rem, 2vw, 1.5rem); color: var(--text); font-weight: 500; line-height: 1.4; }
+  .sc-entry .sc-compensation__date, .sc-entry .sc-compensation__relationship { font-size: 0.8125rem; line-height: 1.65; }
+  .sc-sources { display: grid; gap: 1.1rem; margin-top: 1.25rem; }
+  .sc-sources li { padding-left: 1rem; border-left: 2px solid var(--line); }
+  .sc-sources a { font-size: 0.875rem; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+  .sc-sources p { margin-top: 0.4rem; color: var(--muted); font-size: 0.8125rem; line-height: 1.65; }
+  .sc-bullets { margin-top: 1rem; list-style: disc; padding-left: 1.25rem; }
+  .sc-bullets li { padding-left: 0.25rem; color: var(--muted); font-size: 1rem; line-height: 1.75; }
+  .sc-bullets li + li { margin-top: 0.75rem; }
+  .sc-questions { margin-top: 1rem; list-style: decimal; padding-left: 1.4rem; }
+  .sc-questions li { padding-left: 0.4rem; font-size: 1rem; line-height: 1.75; }
+  .sc-questions li + li { margin-top: 1rem; }
+  .sc-recommendation { margin-top: 2rem; padding: 1.5rem; border-radius: 10px; background: var(--sand); }
+  .sc-recommendation h4 { margin: 0.75rem 0 0; font-size: 1.25rem; font-weight: 500; line-height: 1.35; }
+  .sc-recommendation > p:not(.h3-eyebrow) { margin-top: 1rem; font-size: 1rem; line-height: 1.75; }
+  .sc-recommendation .sc-recommendation__limit { color: var(--muted); font-size: 0.8125rem !important; }
+  .sc-close { background: var(--sand); }
+  .sc-close__body { margin-top: 1.5rem; max-width: 40rem; }
+  .sc-close__secondary { display: flex; width: fit-content; max-width: 100%; margin-top: 1.5rem; line-height: 1.6; }
+  @media (min-width: 48rem) {
+    .sc-deliverables__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sc-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media print {
+    .sc-hero, .sc-deliverables, .sc-close { display: none; }
+    .sc-example { background: white; padding: 0; border: 0; }
+    .sc-example > div { padding: 0; }
+    .sc-document { margin-top: 1rem; max-width: none; border-radius: 0; }
+    .sc-document__header, .sc-document__body { padding: 1rem; }
+    .sc-entry { break-inside: avoid; margin-top: 1rem; padding-top: 1rem; }
+    .sc-disclosure { padding: 0.75rem; }
+  }
+</style>

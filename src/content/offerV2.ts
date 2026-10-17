@@ -13,19 +13,19 @@
 // published. No internal review notes on the page: pendings live in the
 // team doc.
 //
-// Applications: there is no confirmed application URL for launch, so the
-// four buttons open an email application, flagged next to the button. Swap
-// APPLY_HREF for the form URL the day it exists.
+// Applications use the confirmed go@purrfecthire.com inbox. The shared
+// APPLY_OFFER destination in links.ts supplies the email subject and body.
+// Release verification: preserve Daniel's existing quote; confirm its
+// original source, English wording, attribution and written permission.
 // ─────────────────────────────────────────────────────────────────────────
 import type { Lang } from './index';
 
-export const APPLY_HREF =
-  'mailto:hiring@purrfecthire.com?subject=Offer%20Accelerator%20application';
-
 export interface OfferV2Content {
   meta: { title: string; description: string };
-  hero: { eyebrow: string; headline: string; sub: string; cta: string };
+  hero: { eyebrow: string; headline: string; sub: string; cta: string; package: string };
   question: { eyebrow: string; headline: string; body: string; who: string };
+  deliverables: { eyebrow: string; headline: string; body: string; items: { title: string; body: string }[] };
+  fit: { eyebrow: string; headline: string; body: string; commitmentTitle: string; commitment: string };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
   access: { headline: string; body: string; limit: string };
   firewall: { headline: string; lead: string; body: string[]; more: string };
@@ -33,7 +33,8 @@ export interface OfferV2Content {
   behind: { eyebrow: string; headline: string; body: string[] };
   proof: { eyebrow: string; headline: string; quote: string; name: string; role: string };
   investment: { eyebrow: string; headline: string; price: string; next: string };
-  apply: { headline: string; body: string; cta: string; howNote: string };
+  faq: { eyebrow: string; headline: string; items: { question: string; answer: string }[] };
+  apply: { headline: string; body: string; cta: string; howNote: string; steps: { title: string; body: string }[] };
   editorial: string;
 }
 
@@ -48,6 +49,7 @@ export const offerV2En: OfferV2Content = {
     headline: 'Make your signal impossible to miss.',
     sub: 'Private market advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
     cta: 'Apply by email',
+    package: 'Fixed fee · Eight 1:1 sessions, followed by support through each new hiring process until you secure your next role, while you actively carry out the agreed plan.',
   },
   question: {
     eyebrow: 'The real question',
@@ -55,9 +57,29 @@ export const offerV2En: OfferV2Content = {
     body: 'You may be operating above the level the market is assigning you. Or the evidence may not support the move yet. We help you know the difference.',
     who: 'For senior professionals with real scope and results who are about to make a decision that sets the next few years: an offer, a negotiation, a market change, a move between IC and management, or a jump in level.',
   },
+  deliverables: {
+    eyebrow: 'The work you can use',
+    headline: 'A strategy you can put to work in a real process.',
+    body: 'Your private Career Journal brings together the decisions, evidence and materials we build with you. The priorities follow your diagnostic and the opportunities you are pursuing.',
+    items: [
+      { title: 'Criteria for your next move', body: 'A written view of the role, responsibility, market and compensation you are aiming for, with the conditions that matter to your decision.' },
+      { title: 'Evidence of your contribution', body: 'Specific accounts of what you owned, how you made decisions and what changed because of your work, translated into your profile and professional conversations.' },
+      { title: 'A focused company map', body: 'Companies and problems where your experience could be relevant, the people to understand and a credible reason to start a conversation.' },
+      { title: 'One workspace for each process', body: 'Company research, role requirements, preparation, feedback and decisions together in a private folder for that opportunity.' },
+      { title: 'Interview practice with feedback', body: '1:1 role plays and preparation for the conversations and cases ahead, with specific feedback on your reasoning, evidence and gaps.' },
+      { title: 'An offer and negotiation decision', body: 'A clear assessment of scope, compensation, conditions and fit, plus a negotiation approach grounded in the opportunity in front of you.' },
+    ],
+  },
+  fit: {
+    eyebrow: 'Who this is for',
+    headline: 'You have experience to examine and a move to make.',
+    body: 'Senior ICs, leaders and former founders considering a change in company, market, level or responsibility. You may already have an interview or offer, or need to decide where to focus your search.',
+    commitmentTitle: 'Your part of the work',
+    commitment: 'Come prepared, share accurate evidence, carry out the actions we agree and keep us informed about your processes. You contact companies, apply and attend interviews. We challenge your assumptions, prepare with you and help you use what the market tells you.',
+  },
   method: {
     eyebrow: 'How we work',
-    headline: 'Four steps.',
+    headline: 'From a diagnostic to active decisions.',
     steps: [
       { id: '01', title: 'Diagnose', body: 'How the market reads you today, and whether the gap is visibility or evidence.' },
       { id: '02', title: 'Clarify the signal', body: 'Make the strongest evidence of your scope, judgment and outcomes visible, and identify what is still missing.' },
@@ -68,7 +90,7 @@ export const offerV2En: OfferV2Content = {
   access: {
     headline: 'What creating access means.',
     body: 'Identify the companies where your experience is unusually relevant. Spot the problems before a role is posted. Reach founders, hiring managers and decision makers with a credible reason to talk. Turn real evidence of your work into conversations. Use introductions where they legitimately exist.',
-    limit: 'It does not mean buying access to Purrfect client searches.',
+    limit: 'Introductions depend on relevance and the consent of the people involved.',
   },
   firewall: {
     headline: 'Confidential advisory. Consistent evaluation.',
@@ -85,22 +107,19 @@ export const offerV2En: OfferV2Content = {
     headline: 'Eight sessions, and a team with you until you land.',
     items: [
       'Eight 1:1 sessions in total, one diagnostic and seven with Kate',
-      'Personalized material after each session',
+      'Personalized materials and agreed next actions in your private Career Journal',
       'A weekly check-in with the team',
       'Direct support over WhatsApp and email',
-      'Opportunity validation before you commit your time to a process',
-      'Decision support through active processes: understand what the role requires, which evidence to bring forward and whether the opportunity fits your priorities',
-      'Support through final rounds, offers and negotiation',
       'After the eight sessions, support through each new hiring process until you secure your next role, while you actively carry out the agreed plan',
     ],
-    closing: 'We review opportunities, prepare for interviews, assess feedback and support negotiations. You keep us informed as your search progresses.',
+    closing: 'The sessions establish the strategy and prepare you to act. Support continues as real opportunities develop, from reviewing a role to interpreting feedback and deciding on an offer.',
   },
   behind: {
     eyebrow: 'Where our read comes from',
     headline: 'Built from the market as it is hiring today.',
     body: [
       'Purrfect works every week with early-stage companies and senior talent across the US, Europe and Latin America. Our perspective comes from current searches, compensation conversations, hiring processes and direct exposure to how senior talent is evaluated.',
-      'We use that market context to advise you. We never share confidential client information, and paying for Offer Accelerator never changes the bar in a Purrfect search.',
+      'That experience helps us examine the scope a role actually carries, the evidence a company needs and the questions worth asking before you commit.',
     ],
   },
   proof: {
@@ -117,11 +136,29 @@ export const offerV2En: OfferV2Content = {
     price: 'USD 2,000',
     next: 'Eight sessions, followed by support through each new hiring process until you secure your next role, while you actively carry out the agreed plan.',
   },
+  faq: {
+    eyebrow: 'Before you decide',
+    headline: 'The practical questions.',
+    items: [
+      { question: 'How are the eight sessions divided?', answer: 'Eight 1:1 sessions in total: one initial diagnostic and seven with Kate. We choose the work from your goals, evidence and active processes. The six areas above describe what we can build together; they are not a fixed curriculum or one module per session.' },
+      { question: 'What happens after the eighth session?', answer: 'Support continues through each new hiring process until you secure your next role, while you actively carry out the agreed plan and keep us informed. We help review opportunities, prepare for interviews, interpret feedback and assess offers. This follow-up does not add another set of eight sessions or unlimited calls.' },
+      { question: 'What does the USD 2,000 cover?', answer: 'The fixed fee covers the eight sessions, personalized materials, team check-ins, WhatsApp and email support, and the continued process support described here. We confirm the scope and how to begin with you before payment.' },
+      { question: 'Can I take part while working full-time?', answer: 'Yes. We plan the work around your situation. You need time between sessions to research companies, contact people, prepare materials and carry out the actions we agree.' },
+      { question: 'Can I join if I already have an interview or offer?', answer: 'Yes. Tell us the stage you are at and any decision deadline in your first email. We review whether the engagement fits the decision you need to make before confirming how to proceed.' },
+      { question: 'Is a job or salary increase guaranteed?', answer: 'No. We commit to the agreed preparation, feedback and follow-up. Hiring decisions rest with companies, and progress also depends on your execution and the opportunities available in the market.' },
+      { question: 'How do I get support between sessions?', answer: 'Use WhatsApp and email to share updates, questions and materials, alongside the weekly team check-in. We agree priorities around the processes you are working on. Support does not mean 24/7 availability.' },
+    ],
+  },
   apply: {
     headline: 'Apply to Offer Accelerator.',
     body: 'Tell us where you are and what the next move has to change.',
     cta: 'Apply by email',
-    howNote: 'The button opens your email app with the three things we need: your current role, your LinkedIn and the decision you want to work on. You can also write to hiring@purrfecthire.com.',
+    howNote: 'The button opens your email app. You can also write directly to go@purrfecthire.com.',
+    steps: [
+      { title: 'Send the context', body: 'Your current role, LinkedIn profile and the decision you want to work on. Include any interview or offer deadline.' },
+      { title: 'We review the fit', body: 'The team reviews your situation and asks for the context needed to assess whether Offer Accelerator fits your next move.' },
+      { title: 'Agree how to begin', body: 'If there is a fit, we confirm the scope, USD 2,000 fixed fee and next steps with you before payment and scheduling.' },
+    ],
   },
   editorial: 'Your career has advisors too.',
 };

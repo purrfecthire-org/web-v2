@@ -14,7 +14,7 @@ import '@fontsource-variable/fraunces/opsz.css';
 import '@fontsource-variable/inter/wght.css';
 import Layout from '../../layouts/Layout.astro';
 import type { Lang } from '../../content/index';
-import { PAGE_COMPANIES, PAGE_TALENT, KATE, PRIVACY, CONTACT_EMAIL } from '../../content/links';
+import { PAGE_COMPANIES, PAGE_TALENT, PAGE_ROLES, PAGE_CAREER_COMPOUNDING, KATE, PRIVACY, CONTACT_EMAIL } from '../../content/links';
 
 interface Props {
   lang?: Lang;
@@ -34,12 +34,26 @@ interface Props {
 
 const { lang = 'en', title, description, theme = 'dark', navCta, journey = 'home' } = Astro.props;
 
-// Open roles is out of this release: there is no live destination with real
-// vacancies to send anyone to. Restore it here when there is one.
 const links = [
   { label: 'For companies', href: PAGE_COMPANIES },
   { label: 'For talent', href: PAGE_TALENT },
+  { label: 'Open roles', href: PAGE_ROLES },
   { label: 'Kate', href: KATE },
+];
+
+const footerLinks = journey === 'companies' ? [
+  { label: 'For investors', href: '/for-investors' },
+  { label: 'Search Calibration', href: '/search-calibration' },
+  { label: 'Founding Engineer', href: '/search/founding-engineer' },
+  { label: 'Head of Engineering', href: '/search/head-of-engineering' },
+  { label: 'Forward Deployed Engineer', href: '/search/forward-deployed-engineer' },
+] : journey === 'talent' || journey === 'offer' ? [
+  { label: 'Offer Accelerator', href: '/offer-acceleration' },
+  { label: 'Career Compounding', href: PAGE_CAREER_COMPOUNDING },
+  { label: 'Open roles', href: PAGE_ROLES },
+] : [
+  { label: 'For companies', href: PAGE_COMPANIES },
+  { label: 'For talent', href: PAGE_TALENT },
 ];
 
 const ctaRel = navCta?.external ? { target: '_blank', rel: 'noopener' } : {};
@@ -91,6 +105,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
       <div class="h3-wrap h3-footer__in">
         <span>© 2026 Purrfect Hire OÜ</span>
         <nav aria-label="Footer">
+          {footerLinks.map((link) => <a href={link.href} data-cta={`${journey}-footer-${link.label.toLowerCase().replace(/\s+/g, '-')}`}>{link.label}</a>)}
           <a href={PRIVACY}>Privacy</a>
           <a href="https://www.linkedin.com/company/purrfect-hire" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
@@ -204,8 +219,8 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   }
   @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
   .h3-nav__logo img { height: 1.6rem; width: auto; display: block; }
-  .h3-nav__links { display: none; gap: 2rem; font-size: 0.9375rem; }
-  @media (min-width: 60rem) { .h3-nav__links { display: flex; } }
+  .h3-nav__links { display: none; gap: 1.35rem; font-size: 0.9375rem; }
+  @media (min-width: 72rem) { .h3-nav__links { display: flex; } }
   .h3--dark .h3-nav__links { color: var(--on-dark-muted); }
   .h3--dark .h3-nav__links a:hover { color: var(--on-dark); }
   .h3--light .h3-nav__links { color: var(--muted); }
@@ -216,7 +231,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
 
   /* Small-screen menu */
   .h3-menu { position: relative; }
-  @media (min-width: 60rem) { .h3-menu { display: none; } }
+  @media (min-width: 72rem) { .h3-menu { display: none; } }
   .h3-menu > summary {
     list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.55rem 0.9rem; border-radius: 999px; font-size: 0.8125rem; font-weight: 500;
