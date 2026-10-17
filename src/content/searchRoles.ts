@@ -1,3 +1,5 @@
+import { BOOKING_B2B } from './links';
+
 // Role-specific search pages. These describe how to frame a search, not
 // vacancies or completed client engagements. Keep salary ranges, candidate
 // availability and claims of placements out until supported by a source.
@@ -18,8 +20,8 @@ export interface SearchRoleContent {
 
 export const searchRoleShared = {
   eyebrow: 'For founders · Role design and search',
-  cta: 'Get Search Calibration',
-  ctaNote: 'Share the role, company stage and the problem this person needs to solve.',
+  cta: 'Book a 20-minute founders call',
+  ctaNote: 'A free 20-minute introductory call. No commitment.',
   contextTitle: 'Before you start sourcing',
   stageLabel: 'Company context',
   needLabel: 'The work ahead',
@@ -35,7 +37,7 @@ export const searchRoleShared = {
   risksHeadline: 'Resolve these before asking candidates to commit.',
   preparationEyebrow: 'Bring the context',
   preparationHeadline: 'What to share for an initial search read.',
-  sampleLabel: 'See a sample Search Calibration',
+  sampleLabel: 'See how we calibrate a search',
   sampleHref: '/search-calibration',
   selectedLabel: 'Selected searches',
   selectedHref: '/for-companies#selected-searches',
@@ -49,7 +51,7 @@ export const searchRoles: SearchRoleContent[] = [
     role: 'Founding Engineer',
     meta: {
       title: 'Founding Engineer search for startups | Purrfect Hire',
-      description: 'Define your Founding Engineer search around product decisions, hands-on delivery and the evidence your early team needs. Get Search Calibration from Purrfect Hire.',
+      description: 'Define your Founding Engineer search around product decisions, hands-on delivery and the evidence your early team needs. Get an initial read on your search with Purrfect Hire.',
     },
     hero: {
       headline: 'Hire a Founding Engineer for the product you still need to discover.',
@@ -185,4 +187,4 @@ export const searchRoles: SearchRoleContent[] = [
 ];
 
 export const getRoleSearchHref = (role: SearchRoleContent['slug']) =>
-  `/search-read?role=${encodeURIComponent(role)}`;
+  BOOKING_B2B;

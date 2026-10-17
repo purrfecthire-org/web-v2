@@ -39,7 +39,7 @@ export default defineConfig({
     sitemap({
       // Commercial pages and live role details. Redirect stubs stay out.
       filter: (page) =>
-        /\/(for-companies|for-talent|offer-acceleration(?:\/apply)?|career-compounding|for-investors|search-read|search-calibration|candidate-brief-sample|privacy-policy)\/?$/.test(page) ||
+        /\/(for-companies|for-talent|offer-acceleration(?:\/apply)?|career-compounding|for-investors|search-read|search-calibration|candidate-brief-sample|privacy-policy|work-with-us)\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/search\/(founding-engineer|head-of-engineering|forward-deployed-engineer)\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/roles(?:\/[^/]+)?\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/$/.test(page),

@@ -112,16 +112,16 @@ const endpoint = import.meta.env.PUBLIC_B2B_LEAD_ENDPOINT || '';
   .sr [hidden] { display: none !important; }
   .sr__grid { display: grid; gap: 3rem; align-items: start; }
   .sr__title { max-width: 13ch; }
-  .sr__note, .sr__email { margin-top: 1.5rem; color: var(--muted); font-size: .9375rem; }
+  .sr__note, .sr__email { margin-top: 1.5rem; color: var(--muted); font-size: var(--type-ui); }
   .sr__sample { margin-top: 1.5rem; }
   .sr__form { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 1.75rem; display: grid; gap: 1.1rem; }
-  .sr__form label { display: grid; gap: .45rem; font-size: .9375rem; font-weight: 500; }
+  .sr__form label { display: grid; gap: .45rem; font-size: var(--type-ui); font-weight: 500; }
   .sr__form input, .sr__form textarea { width: 100%; box-sizing: border-box; border: 1px solid #8a8d99; border-radius: 6px; padding: .75rem; font: inherit; background: white; color: var(--text); }
   .sr__form input:focus-visible, .sr__form textarea:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
-  .sr__optional, .sr__privacy { color: var(--muted); font-size: .8125rem; font-weight: 400; line-height: 1.7; }
+  .sr__optional, .sr__privacy { color: var(--muted); font-size: var(--type-caption); font-weight: 400; line-height: 1.7; }
   .sr__privacy a, .sr__email a { text-decoration: underline; text-underline-offset: 3px; }
   .sr__trap { position: absolute; left: -9999px; }
-  .sr__error { color: #9f1c15; font-size: .9375rem; }
+  .sr__error { color: #9f1c15; font-size: var(--type-ui); }
   .sr__direct { padding: 2rem; border: 1px solid var(--line); border-radius: 14px; background: white; }
   .sr__direct .h3-btn { margin-top: 2rem; }
   #sr-calendar-frame { width: 100%; height: 760px; border: 0; margin: 1.5rem 0; }

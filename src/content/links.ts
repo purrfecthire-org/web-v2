@@ -1,6 +1,8 @@
 // Destinations confirmed by Kate, 17 October 2026.
 export const FOUNDERS_CALENDAR = 'https://cal.com/purrfect-hire/founders-call';
-export const BOOKING_B2B = '/search-read';
+// Founders can book directly; /search-read remains an optional explanatory route.
+export const BOOKING_B2B = FOUNDERS_CALENDAR;
+export const WHATSAPP_B2B = 'https://wa.me/18312245188?text=Hi%20Kate%2C%20I%27d%20like%20to%20discuss%20a%20senior%20hire%20for%20my%20company.';
 
 /** Single inbox for the whole site. */
 export const CONTACT_EMAIL = 'go@purrfecthire.com';

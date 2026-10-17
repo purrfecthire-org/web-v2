@@ -10,8 +10,9 @@ import type { Lang } from './index';
 //   technical product example is Series A energy infrastructure.
 // - Keep the existing Fabian testimonial. Additional testimonials need a
 //   verified author and source before joining proof.voices.
-// - No ADDI headcount figure, calendar duration, fee percentage or performance
-//   metric is asserted. The booking destination is managed in content/links.ts.
+// - No ADDI headcount figure, fee percentage or performance metric is asserted.
+//   The approved initial read is a free 20-minute introductory call.
+//   The booking destination is managed in content/links.ts.
 
 export interface CompanySearchCase {
   title: string;
@@ -26,13 +27,13 @@ export interface CompanySearchCase {
 
 export interface CompaniesV2Content {
   meta: { title: string; description: string };
-  hero: { eyebrow: string; headline: string; sub: string; credential: string; cta: string; microcopy: string };
+  hero: { eyebrow: string; headline: string; sub: string; credential: string; cta: string; whatsappCta: string; microcopy: string };
   situations: { eyebrow: string; headline: string; items: { title: string; body: string }[] };
   read: { eyebrow: string; headline: string; body: string; items: string[]; cta: string; microcopy: string };
   evidence: { eyebrow: string; headline: string; body: string; label: string; items: { title: string; body: string }[]; cta: string };
   selectedSearches: { eyebrow: string; headline: string; problemLabel: string; interventionLabel: string; outcomeLabel: string; items: CompanySearchCase[] };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
-  proof: { eyebrow: string; headline: string; voices: { quote: string; name: string; role: string; photo: string; photoWebp: string }[]; logosLabel: string; markets: string };
+  proof: { eyebrow: string; headline: string; voices: { quote: string; name: string; role: string; context?: string; photo?: string; photoWebp?: string }[]; logosLabel: string; markets: string };
   models: { eyebrow: string; headline: string; items: { name: string; note: string }[]; recommendation: string; cta: string };
   kate: { eyebrow: string; headline: string; body: string[]; cta: string };
   close: { headline: string; body: string; cta: string; email: string; emailLabel: string; howNote: string };
@@ -49,8 +50,9 @@ export const companiesV2En: CompaniesV2Content = {
     headline: 'Hire someone who chooses to build with you.',
     sub: 'Senior and executive search for venture-backed companies. We assess what people can build, why they choose your company and the evidence for both.',
     credential: 'Searches across the US, Europe and Latin America.',
-    cta: 'Get a read on your search',
-    microcopy: 'Tell us the role and what needs to change. We’ll give you our read.',
+    whatsappCta: 'Message us on WhatsApp',
+    cta: 'Book a 20-minute founders call',
+    microcopy: 'A free 20-minute introductory call. No commitment.',
   },
   situations: {
     eyebrow: 'When founders bring us in',
@@ -65,7 +67,7 @@ export const companiesV2En: CompaniesV2Content = {
   },
   read: {
     eyebrow: 'Before the search',
-    headline: 'Search Calibration. Before you commit.',
+    headline: 'Search Calibration. Part of defining the search.',
     body: 'Before you open the search, we help you define what this person must solve, what evidence proves they can do it and where that talent sits.',
     items: [
       'Where the profile sits',
@@ -73,8 +75,8 @@ export const companiesV2En: CompaniesV2Content = {
       'What may move them',
       'Three questions to test the requirements',
     ],
-    cta: 'Get a Search Calibration',
-    microcopy: 'No deck or commitment required. We’ll pressure-test what the role and search need.',
+    cta: 'Book a 20-minute founders call',
+    microcopy: 'Included in search definition, with no separate purchase.',
   },
   evidence: {
     eyebrow: 'What you receive',
@@ -85,14 +87,14 @@ export const companiesV2En: CompaniesV2Content = {
       { title: 'Evidence observed', body: 'What they demonstrated, solved independently or needed a hint to complete.' },
       { title: 'What they owned', body: 'Their decisions, work and outcomes, in context.' },
       { title: 'Strongest signal', body: 'The evidence most relevant to your problem, and why.' },
-      { title: 'Why this company', body: 'Why they choose your company, how they understand the work and what makes the decision mutual.' },
+      { title: 'Why this company', body: 'Ask them to explain your constraints, the work they would do themselves and their conditions for joining. Separate stated motives from observed evidence.' },
       { title: 'Risk', body: 'Uncertainty about their fit for your next stage.' },
       { title: 'Still to validate', body: 'What remains untested, and the next questions to ask.' },
     ],
     cta: 'See a sample candidate brief',
   },
   selectedSearches: {
-    eyebrow: 'Selected searches',
+    eyebrow: 'Real searches · anonymized',
     headline: 'What the search looked like from the inside.',
     problemLabel: 'The problem',
     interventionLabel: 'Search approach',
@@ -131,8 +133,8 @@ export const companiesV2En: CompaniesV2Content = {
     ],
   },
   proof: {
-    eyebrow: 'From the founders we work with',
-    headline: 'A search partner who understands the role.',
+    eyebrow: 'Client feedback',
+    headline: 'Clearer decisions. People who contribute.',
     voices: [
       {
         quote: "Purrfect Hire adapted to our processes and to each specific role. They're a real search partner, not just a pipeline.",
@@ -140,6 +142,22 @@ export const companiesV2En: CompaniesV2Content = {
         role: 'CEO, Trébol (CO)',
         photo: '/brand/fabian-torres.jpg',
         photoWebp: '/brand/fabian-torres.webp',
+      },
+      {
+        // Original feedback: Notion 3f988cc78f96812db8d0e67567c41bd7.
+        // Exact excerpt; do not infer a job title that the source does not give.
+        quote: 'made it really easy for me to focus on why this would be a suitable candidate',
+        name: 'Michelle Paredes',
+        role: 'Viva',
+        context: 'On the explanation accompanying a candidate · November 2023',
+      },
+      {
+        // Original post-hire feedback: 3f988cc78f968139b5f8cf9784bac87e.
+        // The named hire is deliberately omitted from this exact excerpt.
+        quote: 'integrated to the team and is productive, we’re pleased with him',
+        name: 'Chen Atlas',
+        role: 'Co-founder & CTO, Optery',
+        context: 'After a Purrfect hire joined the team · February 2025',
       },
     ],
     logosLabel: 'Trusted by founders at',
@@ -150,10 +168,10 @@ export const companiesV2En: CompaniesV2Content = {
     headline: 'The model follows your hiring plan.',
     items: [
       { name: 'Success fee', note: 'For a specific search. No upfront fee. You pay only when you hire.' },
-      { name: 'Dedicated hiring partnership', note: 'A dedicated team for several roles, paid monthly instead of a percentage per hire.' },
+      { name: 'Dedicated hiring partnership', note: 'A dedicated team for several roles, paid monthly.' },
     ],
     recommendation: 'We recommend a model after reviewing your hiring plan.',
-    cta: 'Discuss the right model',
+    cta: 'Book a 20-minute founders call',
   },
   kate: {
     eyebrow: 'Who is behind the search',
@@ -167,10 +185,10 @@ export const companiesV2En: CompaniesV2Content = {
   close: {
     headline: 'What does this hire need to change?',
     body: 'Tell us the role, company stage and where the search is stuck. We’ll give you our read.',
-    cta: 'Get a read on your search',
+    cta: 'Book a 20-minute founders call',
     email: 'go@purrfecthire.com',
     emailLabel: 'Prefer email? Write to',
-    howNote: '20 minutes. No deck or commitment required.',
+    howNote: 'A free 20-minute introductory call. No commitment.',
   },
   photo: {
     heroAlt: 'People discussing work at a table in an office.',

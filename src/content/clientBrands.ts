@@ -41,4 +41,8 @@ export const CLIENT_BRANDS: ClientBrand[] = [
   { id: 'konta', name: 'Konta', logo: '/clients/konta.png', href: 'https://konta.com/', width: 1080, height: 195 },
   { id: 'infolaft', name: 'Infolaft', logo: '/clients/infolaft.png', href: 'https://www.infolaft.com/', width: 1080, height: 423 },
   { id: 'ponte', name: 'Ponte', logo: '/clients/ponte.png', href: 'https://www.pontelabor.com/', width: 1080, height: 360 },
+  { id: 'minka', name: 'Minka', logo: '/clients/minka.svg', href: 'https://minka.io/', width: 1060, height: 280 },
+  { id: 'stori', name: 'Stori', logo: '/clients/stori.svg', href: 'https://www.storicard.com/', width: 127, height: 48 },
+  { id: 'prosights', name: 'ProSights', logo: '/clients/prosights.svg', href: 'https://www.prosights.co/', width: 194, height: 40 },
+  { id: 'examen', name: 'Examen', logo: '/clients/examen.svg', href: 'https://examen.ai/', width: 90, height: 14 },
 ];

@@ -1,6 +1,7 @@
 import type { Lang } from './index';
+import { BOOKING_B2B } from './links';
 
-export const SEARCH_CALIBRATION_CTA = '/search-read';
+export const SEARCH_CALIBRATION_CTA = BOOKING_B2B;
 
 // The planning exercise and candidate below are explicitly fictional. The
 // salary references alone come from the linked public job advertisements,
@@ -11,11 +12,11 @@ export const searchCalibrationEn = {
     description: 'Before you open the search, define the problem, the evidence and the relevant talent market. See an illustrative Search Calibration and discuss your role with Purrfect Hire.',
   },
   hero: {
-    eyebrow: 'Before the search',
+    eyebrow: 'How we define a search',
     headline: 'Search Calibration.',
     body: 'Before you open the search, we help you define what this person must solve, what evidence proves they can do it and where that talent sits.',
-    cta: 'Get a Search Calibration',
-    note: 'Bring the role and the problem behind it. We agree the scope before work begins.',
+    cta: 'Book a 20-minute founders call',
+    note: 'Part of search definition, with no separate purchase. Start with a free 20-minute introductory call; no commitment.',
   },
   deliverables: {
     eyebrow: 'What we work through',
@@ -103,8 +104,8 @@ export const searchCalibrationEn = {
   },
   next: {
     headline: 'What should your next hire actually solve?',
-    body: 'Tell us about the role, the stage of the company and the decision you need to make. We will discuss the right scope for a Search Calibration.',
-    cta: 'Get a Search Calibration',
+    body: 'Start with a free 20-minute initial read. If we work together, Search Calibration defines the search before sourcing begins.',
+    cta: 'Book a 20-minute founders call',
     secondary: 'See an illustrative candidate brief',
     secondaryHref: '/candidate-brief-sample',
   },
@@ -148,7 +149,7 @@ export const candidateBriefSampleEn = {
       },
       {
         title: 'Why this company',
-        body: 'In this fictional conversation, the candidate connects the company’s customer problem with work they want to own. That is stated interest. Validate their understanding of the constraints, the work they would choose to do and the conditions behind a mutual commitment.',
+        body: 'In this fictional conversation, the candidate connects the customer problem with work they want to own. This is stated interest. Ask them to explain the actual constraints, work they would do themselves and conditions for joining. Keep their motives separate from observed assessment evidence.',
       },
       {
         title: 'Risks',
@@ -168,8 +169,8 @@ export const candidateBriefSampleEn = {
   close: {
     headline: 'Which evidence would make your hiring decision clearer?',
     body: 'Bring the role and what it needs to change. We can discuss how the search and assessment should work.',
-    cta: 'Discuss a candidate brief',
-    back: 'Explore Search Calibration',
+    cta: 'Book a 20-minute founders call',
+    back: 'See how we calibrate a search',
     backHref: '/search-calibration',
   },
 };
