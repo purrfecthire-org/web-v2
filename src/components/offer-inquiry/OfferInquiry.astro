@@ -1,0 +1,151 @@
+---
+import Shell from '../v2/Shell.astro';
+import { CONTACT_EMAIL, PAGE_OFFER, PRIVACY } from '../../content/links';
+import { OFFER_INQUIRY_GOALS } from '../../lib/offerInquiry';
+
+const endpoint = String(import.meta.env.PUBLIC_API_ENDPOINT ?? '').trim();
+const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry`;
+---
+<Shell title="Ask about Offer Accelerator | Purrfect Hire" description="Tell us what you want from your next career move. Send an Offer Accelerator inquiry directly to Purrfect Hire." theme="light" journey="offer">
+  <section class="oi" data-endpoint={endpoint}>
+    <div class="h3-wrap oi__grid">
+      <div class="oi__intro">
+        <p class="h3-eyebrow">Offer Accelerator</p>
+        <h1 class="h3-hero__h1 oi__title">What’s your next move?</h1>
+        <p class="h3-lead">Share your profile and what you want to change.</p>
+        <p class="h3-body">This starts a conversation about Offer Accelerator. Sending an inquiry creates no payment commitment.</p>
+        <a class="h3-link oi__back" href={PAGE_OFFER} data-cta="offer-inquiry-program">See what the program includes →</a>
+        <p class="oi__note">Offer Accelerator is separate from our client searches. Paying for it gives no priority or special access to roles.</p>
+      </div>
+
+      <div class="oi__panel">
+        {endpoint ? (
+          <form id="offer-inquiry-form" class="oi__form" method="post">
+            <label for="oi-linkedin">LinkedIn profile
+              <input id="oi-linkedin" name="linkedin" type="text" inputmode="url" autocomplete="url" placeholder="linkedin.com/in/your-name" maxlength="500" required />
+            </label>
+            <label for="oi-email">Email
+              <input id="oi-email" name="email" type="email" autocomplete="email" maxlength="320" required />
+            </label>
+            <label for="oi-objective">What do you want to change?
+              <select id="oi-objective" name="objective" required>
+                <option value="" disabled selected>Choose your main goal</option>
+                {OFFER_INQUIRY_GOALS.map((goal) => <option value={goal.key}>{goal.label}</option>)}
+              </select>
+            </label>
+            <div class="oi__trap" aria-hidden="true">
+              <label for="oi-website">Website<input id="oi-website" name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <p class="oi__privacy">We use these details to respond to your inquiry. <a href={PRIVACY}>Privacy</a></p>
+            <button id="oi-submit" type="submit" class="h3-btn" data-cta="offer-inquiry-submit" disabled>Send inquiry →</button>
+            <p id="oi-error" class="oi__error" role="alert" hidden></p>
+            <div id="oi-fallback" class="oi__fallback" hidden>
+              <p>You can also email us at <a href={emailHref}>{CONTACT_EMAIL}</a>.</p>
+              <p>If your email app does not open, copy the address into your inbox.</p>
+            </div>
+            <noscript><p class="oi__fallback">JavaScript is needed to send this form. You can email <a href={emailHref}>{CONTACT_EMAIL}</a> instead. Nothing has been submitted.</p></noscript>
+          </form>
+        ) : (
+          <div class="oi__unavailable">
+            <h2 class="h3-h2">Send us a note.</h2>
+            <p class="h3-body">The form is temporarily unavailable. Email your LinkedIn profile and your main career goal to <a href={emailHref}>{CONTACT_EMAIL}</a>.</p>
+            <p class="oi__note">If your email app does not open, copy the address into your inbox.</p>
+          </div>
+        )}
+        <div id="oi-received" class="oi__received" hidden>
+          <p class="h3-eyebrow">Inquiry received</p>
+          <h2 id="oi-received-title" class="h3-h2" tabindex="-1">We have your details.</h2>
+          <p class="h3-body">Your Offer Accelerator inquiry has been received. This is not confirmation of a place in the program.</p>
+          <a class="h3-link oi__back" href={PAGE_OFFER} data-cta="offer-inquiry-return">Back to Offer Accelerator →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Shell>
+
+<script>
+  import { submitOfferInquiry, OfferInquiryError } from '../../lib/offerInquiry';
+  import { reportClientError } from '../../lib/roles';
+
+  const root = document.querySelector<HTMLElement>('.oi');
+  const form = document.getElementById('offer-inquiry-form') as HTMLFormElement | null;
+  if (root && form) {
+    const button = document.getElementById('oi-submit') as HTMLButtonElement;
+    const error = document.getElementById('oi-error')!;
+    const fallback = document.getElementById('oi-fallback')!;
+    const received = document.getElementById('oi-received')!;
+    const renderedAt = Date.now();
+    let requestId: string | undefined;
+    let started = false;
+    const emit = (name: string) => window.dispatchEvent(new CustomEvent('purrfect:funnel', { detail: { name } }));
+    button.disabled = false;
+
+    form.addEventListener('input', () => {
+      requestId = undefined;
+      if (!started) { started = true; emit('offer_inquiry_started'); }
+    });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (button.disabled || !form.reportValidity()) return;
+      const data = new FormData(form);
+      const value = (name: string) => String(data.get(name) || '').trim();
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      error.hidden = true;
+      fallback.hidden = true;
+      try {
+        requestId ??= crypto.randomUUID();
+        await submitOfferInquiry(root.dataset.endpoint || '', {
+          linkedin: value('linkedin'), email: value('email'), objective: value('objective'),
+          fill_time_ms: Math.max(0, Date.now() - renderedAt), website: value('website'),
+        }, requestId);
+        form.hidden = true;
+        received.hidden = false;
+        emit('offer_inquiry_submitted');
+        document.getElementById('oi-received-title')!.focus({ preventScroll: true });
+        received.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (err) {
+        error.textContent = err instanceof OfferInquiryError && err.code === 'validation'
+          ? 'Please check your details and try again. Receipt has not been confirmed.'
+          : 'We could not confirm receipt. Your answers are still here. Try again or email us below.';
+        error.hidden = false;
+        fallback.hidden = false;
+        reportClientError('OA inquiry receipt was not confirmed', {
+          stage: 'oa_inquiry', code: err instanceof OfferInquiryError ? err.code : 'unavailable', request_id: requestId,
+        });
+        button.disabled = false;
+        button.textContent = 'Send inquiry →';
+      }
+    });
+  }
+</script>
+
+<style>
+  .oi { padding: 8rem 0 6rem; }
+  .oi [hidden] { display: none !important; }
+  .oi__grid { display: grid; gap: 2.75rem; align-items: start; }
+  .oi__title { max-width: 12ch; }
+  .oi__back { margin-top: 1.75rem; }
+  .oi__note { margin-top: 1.75rem; max-width: 34rem; color: var(--muted); font-size: .875rem; line-height: 1.7; }
+  .oi__form, .oi__unavailable, .oi__received { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 1.5rem; }
+  .oi__form { display: grid; gap: 1.25rem; }
+  .oi__form label { display: grid; gap: .5rem; font-size: .9375rem; font-weight: 500; }
+  .oi__form input, .oi__form select { width: 100%; min-width: 0; box-sizing: border-box; padding: .8rem; border: 1px solid #8a8d99; border-radius: 6px; background: var(--white); color: var(--text); font: inherit; }
+  .oi__form input:focus-visible, .oi__form select:focus-visible, .oi__received h2:focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
+  .oi__form .h3-btn { min-height: 48px; border: 0; cursor: pointer; font-family: inherit; }
+  .oi__form .h3-btn:disabled { opacity: .65; cursor: wait; }
+  .oi__form .h3-btn:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; }
+  .oi__privacy { color: var(--muted); font-size: .8125rem; }
+  .oi__privacy a, .oi__fallback a, .oi__unavailable a { text-decoration: underline; text-underline-offset: 3px; }
+  .oi__trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .oi__error { color: #9f1c15; font-size: .9375rem; }
+  .oi__fallback { color: var(--muted); font-size: .875rem; line-height: 1.7; }
+  .oi__fallback p + p { margin-top: .5rem; }
+  .oi__unavailable .h3-h2 { margin-top: 0; }
+  .oi__received .h3-body { margin-top: 1.5rem; }
+  @media (min-width: 64rem) {
+    .oi__grid { grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .oi__form, .oi__unavailable, .oi__received { padding: 2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .oi { scroll-behavior: auto; } }
+</style>

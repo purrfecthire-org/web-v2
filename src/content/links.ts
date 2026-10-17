@@ -6,12 +6,10 @@ export const BOOKING_B2B = '/search-read';
 export const CONTACT_EMAIL = 'go@purrfecthire.com';
 
 /**
- * Offer Accelerator application. The body asks for the three things we need to
- * reply usefully, so the first email is not an empty "I'm interested".
- * Swap for the form URL the day it exists.
+ * Offer Accelerator inquiry. Its public OA intake stores a receipt;
+ * receipt is not acceptance or a promise of review timing.
  */
-export const APPLY_OFFER =
-  'mailto:go@purrfecthire.com?subject=Offer%20Accelerator%20application&body=Hi%20Kate%2C%0A%0AI%20would%20like%20to%20apply%20to%20Offer%20Accelerator.%0A%0ACurrent%20role%20and%20company%3A%0ALinkedIn%3A%0AThe%20decision%20I%20want%20to%20work%20on%3A%0A%0AThanks%2C%0A';
+export const APPLY_OFFER = '/offer-acceleration/apply';
 
 /** 1:1 Strategic Session request, same three questions. */
 export const SESSION_1_1 =

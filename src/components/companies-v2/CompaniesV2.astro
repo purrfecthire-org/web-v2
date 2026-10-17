@@ -43,6 +43,22 @@ const t = getCompaniesV2(lang);
     </div>
   </section>
 
+  <section class="fc-client-strip" aria-label="Selected clients"><div class="h3-wrap">
+      <div class="fc-logos">
+        <p class="h3-eyebrow">{t.proof.logosLabel}</p>
+        <ul>
+          {clients.map((client) => (
+            <li>
+              <a href={client.href} target="_blank" rel="noopener noreferrer" aria-label={`${client.name}, official website (opens in a new tab)`} data-cta={`companies-client-${client.id}`}>
+                <img src={client.logo} alt={client.name} width={client.width} height={client.height} loading="lazy" decoding="async" />
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="fc-logos__markets">{t.proof.markets}</p>
+      </div>
+  </div></section>
+
   <section class="fc-situations" aria-labelledby="fc-situations-title">
     <div class="h3-wrap">
       <p class="h3-eyebrow">{t.situations.eyebrow}</p>
@@ -113,12 +129,15 @@ const t = getCompaniesV2(lang);
             <article class="fc-search">
               <p class="h3-eyebrow">{[search.company, search.stage, search.role].filter(Boolean).join(' · ')}</p>
               <h3>{search.title}</h3>
-              <dl>
-                <div><dt>{t.selectedSearches.problemLabel}</dt><dd>{search.problem}</dd></div>
-                <div><dt>{t.selectedSearches.interventionLabel}</dt><dd>{search.intervention}</dd></div>
-                {search.evidence && <div><dt>Evidence to examine</dt><dd>{search.evidence}</dd></div>}
-                {search.outcome && <div><dt>{t.selectedSearches.outcomeLabel}</dt><dd>{search.outcome}</dd></div>}
-              </dl>
+              <p class="fc-search__problem">{search.problem}</p>
+              <details class="fc-search__detail">
+                <summary>Read the search <span aria-hidden="true">+</span></summary>
+                <dl>
+                  <div><dt>{t.selectedSearches.interventionLabel}</dt><dd>{search.intervention}</dd></div>
+                  {search.evidence && <div><dt>Evidence to examine</dt><dd>{search.evidence}</dd></div>}
+                  {search.outcome && <div><dt>{t.selectedSearches.outcomeLabel}</dt><dd>{search.outcome}</dd></div>}
+                </dl>
+              </details>
             </article>
           ))}
         </div>
@@ -163,19 +182,7 @@ const t = getCompaniesV2(lang);
           </div>
         </figure>
       ))}
-      <div class="fc-logos">
-        <p class="h3-eyebrow">{t.proof.logosLabel}</p>
-        <ul>
-          {clients.map((client) => (
-            <li>
-              <a href={client.href} target="_blank" rel="noopener noreferrer" aria-label={`${client.name}, official website (opens in a new tab)`} data-cta={`companies-client-${client.id}`}>
-                <img src={client.logo} alt={client.name} width={client.width} height={client.height} loading="lazy" decoding="async" />
-              </a>
-            </li>
-          ))}
-        </ul>
-        <p class="fc-logos__markets">{t.proof.markets}</p>
-      </div>
+
     </div>
   </section>
 
@@ -265,6 +272,11 @@ const t = getCompaniesV2(lang);
   .fc-searches__list { display: grid; gap: 2rem; margin-top: 2.5rem; }
   .fc-search { padding-top: 1.5rem; border-top: 1px solid var(--line); }
   .fc-search h3 { margin-top: 1rem; font-size: 1.25rem; font-weight: 500; line-height: 1.4; }
+  .fc-search__problem { margin-top: 1rem; color: var(--muted); font-size: 1rem; line-height: 1.65; }
+  .fc-search__detail { margin-top: 1.25rem; }
+  .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; padding-block: .5rem; font-size: .9375rem; font-weight: 500; list-style: none; }
+  .fc-search__detail summary::-webkit-details-marker { display: none; }
+  .fc-search__detail[open] summary span { transform: rotate(45deg); }
   .fc-search dl { margin-top: 1.5rem; }
   .fc-search dl > div + div { margin-top: 1.25rem; }
   .fc-search dt { font-size: 0.875rem; font-weight: 500; }
@@ -285,11 +297,19 @@ const t = getCompaniesV2(lang);
   .fc-quote figcaption { margin-top: 1rem; display: flex; flex-direction: column; font-size: 0.9375rem; }
   .fc-quote__name { font-weight: 500; }
   .fc-quote__role { color: var(--muted); }
-  .fc-logos { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--line); }
-  .fc-logos ul { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; align-items: center; }
-  .fc-logos a { display: inline-flex; align-items: center; min-height: 44px; }
-  .fc-logos img { height: 1.45rem; width: auto; display: block; filter: grayscale(1); opacity: 0.5; }
-  .fc-logos a:hover img, .fc-logos a:focus-visible img { opacity: 0.85; }
+  .fc-client-strip { padding: 2rem 0 2.5rem; background: var(--sand); border-top: 1px solid var(--line); }
+  .fc-logos { margin: 0; }
+  .fc-logos ul { margin-top: 1.5rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; align-items: center; }
+  .fc-logos li { min-width: 0; }
+  .fc-logos a { display: flex; align-items: center; justify-content: center; min-height: 64px; padding: 0.75rem; border-radius: 6px; }
+  .fc-logos img { display: block; width: auto; height: auto; max-width: min(100%, 132px); max-height: 36px; object-fit: contain; filter: none; opacity: 1; }
+  /* Match visual weight while preserving the proportions of the supplied artwork. */
+  .fc-logos img[alt='Addi'] { width: 100px; max-height: 50px; }
+  .fc-logos img[alt='Hera'] { width: 112px; max-height: 39px; }
+  .fc-logos img[alt='Nue'] { width: 92px; }
+  .fc-logos a:hover { background: var(--white); }
+  @media (min-width: 40rem) { .fc-logos ul { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (min-width: 64rem) { .fc-logos ul { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
   .fc-logos__markets { margin-top: 1.5rem; color: var(--muted); font-size: 0.9375rem; }
   .fc-models { background: var(--stone); padding-block: clamp(3.5rem, 6vw, 6rem); }
   .fc-models__h2 { max-width: 26ch; }
@@ -322,8 +342,6 @@ const t = getCompaniesV2(lang);
     .fc-hero { padding: 5.5rem 0 2.5rem; }
     .fc-hero__media { margin-top: 1.5rem; }
     .fc-credential { margin-top: 1.1rem; }
-    .fc-logos ul { gap: 1rem 2rem; }
-    .fc-logos img { height: 1.25rem; }
     .fc-kate__portrait { max-width: 14rem; }
   }
 </style>

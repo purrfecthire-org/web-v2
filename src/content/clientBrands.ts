@@ -11,6 +11,9 @@
 // - getcometa.com now redirects to cometaedu.com.
 // - Mercai's current official site is mercai.ai (same founders as mercai.mx).
 // Keep link destinations explicit; do not infer a domain from the name.
+// Visual audit: the supplied Hera, Heron Power and MAVI wordmarks match
+// their official live headers. The provided assets use dark/color artwork
+// on transparent or light backgrounds; show them at full opacity on Ivory.
 
 export interface ClientBrand {
   id: string;
