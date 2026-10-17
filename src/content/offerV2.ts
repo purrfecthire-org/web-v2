@@ -14,7 +14,7 @@
 // team doc.
 //
 // Applications use the confirmed go@purrfecthire.com inbox. The shared
-// APPLY_OFFER destination in links.ts supplies the email subject and body.
+// APPLY_OFFER in links.ts opens the public OA inquiry form.
 // Release verification: preserve Daniel's existing quote; confirm its
 // original source, English wording, attribution and written permission.
 // ─────────────────────────────────────────────────────────────────────────
@@ -48,7 +48,7 @@ export const offerV2En: OfferV2Content = {
     eyebrow: 'Offer Accelerator · Private market advisory',
     headline: 'Make your signal impossible to miss.',
     sub: 'Private market advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
-    cta: 'Apply by email',
+    cta: 'Apply to Offer Accelerator',
     package: 'Fixed fee · Eight 1:1 sessions, followed by support through each new hiring process until you secure your next role, while you actively carry out the agreed plan.',
   },
   question: {
@@ -60,22 +60,22 @@ export const offerV2En: OfferV2Content = {
   deliverables: {
     eyebrow: 'The work you can use',
     headline: 'A strategy you can put to work in a real process.',
-    body: 'Your private Career Journal brings together the decisions, evidence and materials we build with you. The priorities follow your diagnostic and the opportunities you are pursuing.',
+    body: 'Your private Career Journal holds the strategy, evidence and materials we build around your diagnostic and active opportunities.',
     items: [
-      { title: 'Criteria for your next move', body: 'A written view of the role, responsibility, market and compensation you are aiming for, with the conditions that matter to your decision.' },
-      { title: 'Evidence of your contribution', body: 'Specific accounts of what you owned, how you made decisions and what changed because of your work, translated into your profile and professional conversations.' },
-      { title: 'A focused company map', body: 'Companies and problems where your experience could be relevant, the people to understand and a credible reason to start a conversation.' },
-      { title: 'One workspace for each process', body: 'Company research, role requirements, preparation, feedback and decisions together in a private folder for that opportunity.' },
-      { title: 'Interview practice with feedback', body: '1:1 role plays and preparation for the conversations and cases ahead, with specific feedback on your reasoning, evidence and gaps.' },
-      { title: 'An offer and negotiation decision', body: 'A clear assessment of scope, compensation, conditions and fit, plus a negotiation approach grounded in the opportunity in front of you.' },
+      { title: 'Criteria for your next move', body: 'Define your target role, scope, market, compensation and conditions.' },
+      { title: 'Evidence of your contribution', body: 'Make your decisions, contribution and results specific enough to examine.' },
+      { title: 'A focused company map', body: 'Identify relevant companies, decision makers and reasons to start a conversation.' },
+      { title: 'One workspace for each process', body: 'Keep research, preparation, feedback and decisions together for each opportunity.' },
+      { title: 'Interview practice with feedback', body: 'Prepare for real interviews and cases. Get specific feedback on reasoning and evidence.' },
+      { title: 'An offer and negotiation decision', body: 'Assess scope, compensation and fit. Build a negotiation approach for the actual offer.' },
     ],
   },
   fit: {
     eyebrow: 'Who this is for',
     headline: 'You have experience to examine and a move to make.',
-    body: 'Senior ICs, leaders and former founders considering a change in company, market, level or responsibility. You may already have an interview or offer, or need to decide where to focus your search.',
+    body: 'Senior ICs, leaders and former founders changing company, market or scope. Join with an active process or a search to define.',
     commitmentTitle: 'Your part of the work',
-    commitment: 'Come prepared, share accurate evidence, carry out the actions we agree and keep us informed about your processes. You contact companies, apply and attend interviews. We challenge your assumptions, prepare with you and help you use what the market tells you.',
+    commitment: 'Bring accurate evidence and carry out the agreed plan: research, outreach, applications and interviews. We prepare with you and use market feedback to refine the approach.',
   },
   method: {
     eyebrow: 'How we work',
@@ -89,7 +89,7 @@ export const offerV2En: OfferV2Content = {
   },
   access: {
     headline: 'What creating access means.',
-    body: 'Identify the companies where your experience is unusually relevant. Spot the problems before a role is posted. Reach founders, hiring managers and decision makers with a credible reason to talk. Turn real evidence of your work into conversations. Use introductions where they legitimately exist.',
+    body: 'Identify companies where your experience solves a relevant problem. Use evidence to start conversations with decision makers, including before a role is posted.',
     limit: 'Introductions depend on relevance and the consent of the people involved.',
   },
   firewall: {
@@ -144,7 +144,7 @@ export const offerV2En: OfferV2Content = {
       { question: 'What happens after the eighth session?', answer: 'Support continues through each new hiring process until you secure your next role, while you actively carry out the agreed plan and keep us informed. We help review opportunities, prepare for interviews, interpret feedback and assess offers. This follow-up does not add another set of eight sessions or unlimited calls.' },
       { question: 'What does the USD 2,000 cover?', answer: 'The fixed fee covers the eight sessions, personalized materials, team check-ins, WhatsApp and email support, and the continued process support described here. We confirm the scope and how to begin with you before payment.' },
       { question: 'Can I take part while working full-time?', answer: 'Yes. We plan the work around your situation. You need time between sessions to research companies, contact people, prepare materials and carry out the actions we agree.' },
-      { question: 'Can I join if I already have an interview or offer?', answer: 'Yes. Tell us the stage you are at and any decision deadline in your first email. We review whether the engagement fits the decision you need to make before confirming how to proceed.' },
+      { question: 'Can I join if I already have an interview or offer?', answer: 'Yes. Tell us the stage you are at and any decision deadline in your application. We review whether the engagement fits the decision you need to make before confirming how to proceed.' },
       { question: 'Is a job or salary increase guaranteed?', answer: 'No. We commit to the agreed preparation, feedback and follow-up. Hiring decisions rest with companies, and progress also depends on your execution and the opportunities available in the market.' },
       { question: 'How do I get support between sessions?', answer: 'Use WhatsApp and email to share updates, questions and materials, alongside the weekly team check-in. We agree priorities around the processes you are working on. Support does not mean 24/7 availability.' },
     ],
@@ -152,8 +152,8 @@ export const offerV2En: OfferV2Content = {
   apply: {
     headline: 'Apply to Offer Accelerator.',
     body: 'Tell us where you are and what the next move has to change.',
-    cta: 'Apply by email',
-    howNote: 'The button opens your email app. You can also write directly to go@purrfecthire.com.',
+    cta: 'Apply to Offer Accelerator',
+    howNote: 'Send your context through the short form. No payment is taken when you apply.',
     steps: [
       { title: 'Send the context', body: 'Your current role, LinkedIn profile and the decision you want to work on. Include any interview or offer deadline.' },
       { title: 'We review the fit', body: 'The team reviews your situation and asks for the context needed to assess whether Offer Accelerator fits your next move.' },

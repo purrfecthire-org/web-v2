@@ -163,7 +163,7 @@ const alternateUrl =
           if (journey === 'companies') send('company_page_view', { props: { journey } });
           window.addEventListener('purrfect:funnel', (event) => {
             const name = (event as CustomEvent<{ name: string }>).detail?.name;
-            if (['search_form_started', 'search_form_submitted', 'calendar_viewed'].includes(name)) send(name, { props: { journey } });
+            if (['search_form_started', 'search_form_submitted', 'calendar_viewed', 'offer_inquiry_started', 'offer_inquiry_submitted'].includes(name)) send(name, { props: { journey } });
           });
 
           document.addEventListener('click', (e) => {

@@ -24,7 +24,6 @@ export default defineConfig({
     '/oa': '/offer-acceleration',
     // The long application form is withdrawn: with no backend configured it
     // showed applicants an accepted screen and sent the application nowhere.
-    '/offer-acceleration/apply': '/offer-acceleration',
     '/offer-acceleration/preguntas': '/offer-acceleration',
     '/offer-acceleration/te-suena': '/offer-acceleration',
     '/offer-acceleration/espejo': '/offer-acceleration',
@@ -40,7 +39,7 @@ export default defineConfig({
     sitemap({
       // Commercial pages and live role details. Redirect stubs stay out.
       filter: (page) =>
-        /\/(for-companies|for-talent|offer-acceleration|career-compounding|for-investors|search-read|search-calibration|candidate-brief-sample|privacy-policy)\/?$/.test(page) ||
+        /\/(for-companies|for-talent|offer-acceleration(?:\/apply)?|career-compounding|for-investors|search-read|search-calibration|candidate-brief-sample|privacy-policy)\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/search\/(founding-engineer|head-of-engineering|forward-deployed-engineer)\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/roles(?:\/[^/]+)?\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/$/.test(page),

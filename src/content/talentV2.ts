@@ -39,27 +39,27 @@ export const talentV2En: TalentV2Content = {
     headline: 'Make your signal impossible to miss.',
     sub: 'You may be operating above the level the market is assigning you. Or the evidence may not support the move yet. We help you know the difference.',
     audience:
-      'For senior professionals making their next move or growing inside a demanding role, across the US, Europe and Latin America.',
-    cta: 'Find the right support',
-    href: '#ways-in',
-    secondary: { label: 'Looking for an open role? Browse current searches', href: '/roles' },
+      'For senior professionals across the US, Europe and Latin America.',
+    cta: 'Explore Offer Accelerator',
+    href: '/offer-acceleration',
+    secondary: { label: 'Explore Career Compounding', href: '/career-compounding' },
   },
   problem: {
     eyebrow: 'The real question',
     headline: 'Experience and market signal are not the same thing.',
     body:
-      'You can have the scope, judgment and results of a senior leader and still be read one level below. Sometimes the gap is what the market can see. Sometimes the evidence itself is not strong enough yet. We help you find out which one it is.',
+      'We examine the decisions you owned and the results you can substantiate. Then we test which level and opportunities that evidence supports.',
   },
   work: {
     eyebrow: 'The Offer Accelerator method',
     headline: 'Start with a diagnostic. Work on the decision ahead.',
     items: [
-      { title: 'Diagnose the next move', body: 'Examine your experience, the decision you face and the market you want to compete in. Set the priorities from that evidence.' },
-      { title: 'Make your contribution assessable', body: 'Work through what you owned, the decisions you made and the outcomes you can substantiate. Identify what still needs to be tested.' },
-      { title: 'Build your market strategy', body: 'Identify companies, problems and people where your experience could be relevant. Develop a credible reason to start each conversation.' },
-      { title: 'Work through real processes', body: 'Prepare for interviews, examine feedback and assess offers against the scope, conditions and direction you want.' },
+      { title: 'Diagnose the next move', body: 'Examine your experience, target market and the decision ahead. Set the priorities.' },
+      { title: 'Make your contribution assessable', body: 'Show what you owned, what changed and what still needs to be tested.' },
+      { title: 'Build your market strategy', body: 'Find companies where your experience solves a relevant problem. Build a reason to start the conversation.' },
+      { title: 'Work through real processes', body: 'Prepare for interviews, examine feedback and assess offers against your goals.' },
     ],
-    note: 'The method, what is included, the scope and the price live on the Offer Accelerator page.',
+    note: 'See the full scope and application on the Offer Accelerator page.',
     cta: 'Explore Offer Accelerator',
     example: {
       label: 'Illustrative exercise',
@@ -67,7 +67,7 @@ export const talentV2En: TalentV2Content = {
       steps: [
         { title: 'The starting point', body: '“I led a cross-functional launch.”' },
         { title: 'The questions', body: 'Which decision was yours? What did others own? What changed, and which part can you substantiate?' },
-        { title: 'The work you leave with', body: 'A specific account of your contribution, its context and the limits of the evidence, ready to examine in a professional conversation.' },
+        { title: 'The work you leave with', body: 'A specific account of your contribution, its context and the limits of the evidence.' },
       ],
     },
   },
@@ -97,14 +97,14 @@ export const talentV2En: TalentV2Content = {
     items: [
       {
         name: 'Offer Accelerator',
-        body: 'For your next move: understand your level, choose the right market, work through hiring processes and negotiate an offer. Eight 1:1 sessions in total, including the initial diagnostic, followed by support through each new process until you land, while you carry out the agreed plan.',
+        body: 'For your next career move. Assess your level, choose your market and work through interviews and offers. Eight sessions, then process support while you execute the agreed plan.',
         price: 'USD 2,000',
         cta: 'Explore Offer Accelerator',
         href: '/offer-acceleration',
       },
       {
         name: 'Career Compounding',
-        body: 'For growth inside your current role: work through real business decisions, build influence and create evidence of the impact that supports greater responsibility.',
+        body: 'Grow inside your current role. Work on business impact, influence and decisions that support greater responsibility.',
         price: 'USD 5,000',
         cta: 'Explore Career Compounding',
         href: '/career-compounding',
@@ -113,13 +113,13 @@ export const talentV2En: TalentV2Content = {
         name: '1:1 Strategic Session',
         body: 'For one active process, a negotiation or a specific career decision.',
         price: 'USD 300',
-        cta: 'Request a session',
+        cta: 'Email to request a session',
         href: SESSION_1_1,
-        note: 'Sessions are requested by email. The button opens your email app with the three things we need: your current role, your LinkedIn and the decision you want to work on.',
+        note: 'Opens your email app. Include your role, LinkedIn and decision.',
       },
     ],
     free: {
-      body: 'Explore active searches and apply directly to the roles that fit. Applying is free. Paid advisory is never required and does not change how you are assessed.',
+      body: 'Apply to open roles for free. Paid advisory is never required and does not change how you are assessed.',
       cta: 'Browse open roles',
       href: '/roles',
     },
@@ -127,8 +127,8 @@ export const talentV2En: TalentV2Content = {
   close: {
     headline: 'Choose the support your next decision needs.',
     body: 'Compare support for a career move, growth in your current role or one specific decision.',
-    cta: 'Compare advisory options',
-    href: '#ways-in',
+    cta: 'Explore Offer Accelerator',
+    href: '/offer-acceleration',
   },
 };
 

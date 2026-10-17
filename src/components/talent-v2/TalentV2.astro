@@ -31,10 +31,11 @@ const t = getTalentV2(lang);
             <h1 class="h3-hero__h1 tv-h1">{t.hero.headline}</h1>
             <p class="h3-hero__sub">{t.hero.sub}</p>
             <p class="tv-audience">{t.hero.audience}</p>
-            <a href={t.hero.href} data-cta="talent-hero-options" class="h3-btn tv-hero__cta">
+            <a href={t.hero.href} data-cta="talent-hero-offer" class="h3-btn tv-hero__cta">
               {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
-            <a href={t.hero.secondary.href} data-cta="talent-hero-roles" class="h3-link tv-hero__secondary">{t.hero.secondary.label} <span aria-hidden="true">→</span></a>
+            <a href={t.hero.secondary.href} data-cta="talent-hero-compounding" class="h3-link tv-hero__secondary">{t.hero.secondary.label} <span aria-hidden="true">→</span></a>
+            <a href={t.paths.free.href} class="tv-hero__free" data-cta="talent-hero-roles">{t.paths.free.cta} <span aria-hidden="true">→</span></a>
           </div>
           <figure class="h3-hero__media" style={{ "--photo-desktop": "4 / 3", "--photo-mobile": "4 / 3" }}>
 <picture>
@@ -152,7 +153,7 @@ const t = getTalentV2(lang);
         <div class="h3-wrap">
           <h2 class="h3-h2 tv-close__h2">{t.close.headline}</h2>
           <p class="h3-body tv-close__body">{t.close.body}</p>
-          <a href={t.close.href} data-cta="talent-close-options" class="h3-btn tv-close__cta">{t.close.cta}</a>
+          <a href={t.close.href} data-cta="talent-close-offer" class="h3-btn tv-close__cta">{t.close.cta}</a>
         </div>
       </section>
 
@@ -242,6 +243,7 @@ const t = getTalentV2(lang);
   .tv-voice__name { font-weight: 500; color: var(--on-dark); }
   .tv-voice__role { color: var(--on-dark-muted); }
 
+  .tv-hero__free { display: block; width: fit-content; margin-top: 1rem; font-size: .875rem; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 3px; }
   .tv-paths { background: var(--stone); padding: 4.5rem 0 5rem; scroll-margin-top: 5rem; }
   @media (min-width: 56rem) { .tv-paths { padding: 6.5rem 0 7rem; } }
   .tv-paths__h2 { max-width: 32ch; }
