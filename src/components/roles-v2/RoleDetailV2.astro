@@ -11,7 +11,7 @@
 //
 // The apply form POSTs multipart/form-data to {PUBLIC_API_ENDPOINT}{apply_path}.
 //
-// Chrome (nav + footer) is provided by the page (global v6). This component
+// Chrome (nav + footer) is provided by the current brand Shell. This component
 // renders only the two-column body and uses the shared brand tokens.
 // ─────────────────────────────────────────────────────────────────────────────
 import {
@@ -50,6 +50,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       All open roles
     </a>
   </div>
+  <p class="rv2__refresh-note" id="rv2-refresh-note" role="status" hidden>We could not refresh this role. The details below were available when the page was last updated. You can confirm its status at <a href="mailto:go@purrfecthire.com">go@purrfecthire.com</a>.</p>
 
   <!-- ── Loading skeleton ─────────────────────────────────────────────
        Hidden by default (no-JS / static fallback shows the real content
@@ -100,7 +101,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     </aside>
 
     <!-- ── Scrollable content ───────────────────────────────────────── -->
-    <main class="rv2__content">
+    <div class="rv2__content">
       <!-- Company + Role sections — rendered from the single-source-of-truth
            renderer (shared build-time + client-refresh). Never includes the
            apply form, which stays static below and is never replaced. -->
@@ -110,7 +111,8 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       <section class="rv2__block rv2__apply-block" id="apply">
         <span class="rv2__eyebrow">Apply</span>
         <h2 class="rv2__apply-title">Apply for this role</h2>
-        <p class="rv2__apply-sub">Apply once. We match you with the roles where you fit best.</p>
+        <p class="rv2__apply-sub">Applying is free. Offer Accelerator is never required and does not change how you are assessed.</p>
+        <noscript><p class="rv2__apply-sub">Enable JavaScript to use the form, or send your profile and this role title to <a href="mailto:go@purrfecthire.com">go@purrfecthire.com</a>.</p></noscript>
 
         <form class="rv2__form" id="rv2-form" data-apply-url={applyUrl} novalidate>
           <div class="rv2__form-grid">
@@ -152,7 +154,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
               <span class="rv2__f-err" data-err-for="rv2-des"></span>
             </div>
             <div class="rv2__f rv2__f--full">
-              <label for="rv2-cv">CV — PDF, max 3 MB *</label>
+              <label for="rv2-cv">CV, PDF up to 3 MB *</label>
               <input type="file" id="rv2-cv" name="cv" accept="application/pdf,.pdf" required />
               <span class="rv2__f-err" data-err-for="rv2-cv"></span>
             </div>
@@ -174,7 +176,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
           </div>
 
           <div class="rv2__form-foot">
-            <button type="submit" class="rv2__apply rv2__apply--submit" id="rv2-submit">
+            <button type="submit" class="rv2__apply rv2__apply--submit" id="rv2-submit" disabled data-cta="roles-submit">
               Submit application
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -188,7 +190,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
         <div class="rv2__result rv2__result--ok" id="rv2-ok" hidden>
           <h3 class="rv2__result-title">Application received</h3>
           <p class="rv2__result-body">
-            Thanks — we've got your application. If there's a fit we'll reach out by email.
+            Thanks, we've got your application. If there's a fit we'll contact you by email.
           </p>
         </div>
 
@@ -200,8 +202,9 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
           </p>
           <button type="button" class="rv2__apply rv2__apply--submit" id="rv2-retry">Try again</button>
         </div>
+        <p class="rv2__support">Questions or trouble applying? Email <a href="mailto:go@purrfecthire.com">go@purrfecthire.com</a>. Read our <a href="/privacy-policy">privacy policy</a>.</p>
       </section>
-    </main>
+    </div>
   </div>
 </div>
 
@@ -250,6 +253,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       } else {
         // Network error or misconfiguration — keep the prerendered content.
         layout?.removeAttribute('hidden');
+        document.getElementById('rv2-refresh-note')?.removeAttribute('hidden');
         reportClientError(`role detail refresh failed: ${(err as Error)?.message ?? err}`, {
           stage: 'role_detail_refresh',
           slug,
@@ -267,6 +271,9 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     const mountTime = Date.now(); // → fill_time_ms
 
     const submitBtn = document.getElementById('rv2-submit') as HTMLButtonElement;
+    // Keep the static form disabled so a no-JavaScript browser never submits
+    // candidate information as a GET query string to this public page.
+    submitBtn.disabled = false;
     const note = document.getElementById('rv2-formnote') as HTMLElement;
     const okCard = document.getElementById('rv2-ok') as HTMLElement;
     const failCard = document.getElementById('rv2-fail') as HTMLElement;
@@ -315,7 +322,9 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       if (!phone) { setErr('rv2-phone', 'Please enter a phone number.'); ok = false; }
       if (!linkedin) { setErr('rv2-linkedin', 'Please add your LinkedIn profile.'); ok = false; }
       if (!english) { setErr('rv2-english', 'Please select your English level.'); ok = false; }
-      if (!desired) { setErr('rv2-des', 'Please enter your desired salary.'); ok = false; }
+      if (!desired || !Number.isFinite(Number(desired)) || Number(desired) < 0) {
+        setErr('rv2-des', 'Please enter a valid desired annual salary.'); ok = false;
+      }
       if (!cv) {
         setErr('rv2-cv', 'Please attach your CV (PDF).'); ok = false;
       } else {
@@ -333,7 +342,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
         // No backend configured — cannot submit.
         resetFailCard();
         retryBtn.hidden = true;
-        failBody.textContent = 'Applications are not open yet. Please check back soon.';
+        failBody.textContent = 'The application form is unavailable. Please email your profile and this role title to go@purrfecthire.com.';
         form!.hidden = true;
         failCard.hidden = false;
         return;
@@ -356,12 +365,13 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       const cv = $('rv2-cv').files?.[0];
       if (cv) fd.append('cv', cv, cv.name);
 
-      const requestId = crypto.randomUUID();
+      const requestId = globalThis.crypto?.randomUUID?.() || `role-${Date.now()}`;
       try {
         const res = await fetch(APPLY_URL, {
           method: 'POST',
           headers: { 'X-Request-Id': requestId }, // let the browser set multipart Content-Type
           body: fd,
+          signal: AbortSignal.timeout(25_000),
         });
         const json = await res.json().catch(() => null);
         const respId = res.headers.get('X-Request-Id') || json?.error?.details?.request_id || requestId;
@@ -442,30 +452,35 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
      (client refresh) and never receive Astro's scoped attribute. */
   @use '../../styles/breakpoints' as *;
 
-  // Brand tokens (Kate's 2026 system) — navy ink, white canvas, 12px radius.
-  $ink: #29285F;      // single brand color (navy)
-  $text: #1C1C1C;
-  $muted: #6B6B6B;
-  $subtle: #9A9A9A;
-  $line: rgba(0, 0, 0, 0.08);
-  $surface: #FFFFFF;
-  $soft: #FCFCFB;
-  $tint: #ECECF3;     // light navy tint for subtle fills
+  // Inherit the active brand system from Shell rather than restoring the
+  // previous Schibsted/navy design along with the portal functionality.
+  $ink: var(--midnight);
+  $text: var(--text);
+  $muted: var(--muted);
+  $subtle: var(--muted);
+  $line: var(--line);
+  $surface: var(--white);
+  $soft: var(--sand);
+  $tint: var(--stone);
 
   .rv2 {
     position: relative;
     z-index: 1;
-    font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+    --radius: 14px;
+    font-family: var(--h-sans);
     color: $text;
     max-width: 78rem;
     margin-inline: auto;
-    padding: 5.5rem clamp(1.25rem, 4vw, 2.5rem) 4rem;
+    padding: 7rem clamp(1.5rem, 4vw, 3rem) 5rem;
 
-    @include max-lg { padding-top: 5rem; }
+    @include max-lg { padding-top: 7rem; }
   }
+  .rv2 [hidden] { display: none !important; }
 
   // ── Back crumb ───────────────────────────────────────────────────
   .rv2__crumb { margin-bottom: 1.5rem; }
+  .rv2__refresh-note { padding: 1rem 0; margin-bottom: 1.5rem !important; border-block: 1px solid $line; font-size: .875rem; color: $muted; }
+  .rv2__refresh-note a { text-decoration: underline; overflow-wrap: anywhere; }
 
   .rv2__back {
     display: inline-flex;
@@ -518,8 +533,9 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   }
 
   .rv2__title {
+    font-family: var(--h-serif);
     font-size: clamp(1.6rem, 3vw, 2rem);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.12;
     letter-spacing: -0.025em;
     margin: -0.5rem 0 0;
@@ -560,8 +576,8 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     align-self: flex-start;
     align-items: center;
     gap: 7px;
-    background: #FF6B00;
-    color: #fff;
+    background: $tint;
+    color: $text;
     border-radius: 999px;
     padding: 6px 14px 6px 7px;
     font-size: 0.8125rem;
@@ -576,7 +592,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     height: 20px;
     border-radius: 5px;
     background: #fff;
-    color: #FF6B00;
+    color: $ink;
     font-weight: 800;
     font-size: 0.875rem;
   }
@@ -590,15 +606,15 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     color: #fff;
     border: none;
     cursor: pointer;
-    font-family: 'Schibsted Grotesk', system-ui, sans-serif;
-    border-radius: var(--radius);
+    font-family: var(--h-sans);
+    border-radius: 999px;
     padding: 14px 26px;
     font-size: 0.9375rem;
     font-weight: 500;
     text-decoration: none;
     transition: background-color 0.2s ease;
     svg { transition: transform 0.2s ease; }
-    &:hover { background: #1E1D47; }
+    &:hover { background: #1b1d2b; }
     &:hover svg { transform: translateX(3px); }
     &:focus-visible { outline: 2px solid $ink; outline-offset: 2px; }
     &:disabled { opacity: 0.55; cursor: default; }
@@ -747,7 +763,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     label { font-size: 0.875rem; font-weight: 500; color: $text; }
 
     input, select {
-      font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+      font-family: var(--h-sans);
       font-size: 0.9375rem;
       color: $text;
       background: #fff;
@@ -792,6 +808,8 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   }
 
   .rv2__form-note { margin: 0; font-size: 0.875rem; color: $muted; }
+  .rv2__support { margin-top: 1.5rem !important; font-size: .875rem; color: $muted; }
+  .rv2__support a, .rv2__apply-sub a { text-decoration: underline; overflow-wrap: anywhere; }
 
   .rv2__result {
     margin-top: 1.5rem;

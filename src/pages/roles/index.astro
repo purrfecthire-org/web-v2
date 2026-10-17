@@ -1,0 +1,9 @@
+---
+import Shell from '../../components/v2/Shell.astro';
+import RolesList from '../../components/roles-v2/RolesList.astro';
+import { rolesCopy } from '../../components/roles-v2/copy';
+---
+
+<Shell title={rolesCopy.title} description={rolesCopy.description} theme="light" journey="talent">
+  <RolesList />
+</Shell>

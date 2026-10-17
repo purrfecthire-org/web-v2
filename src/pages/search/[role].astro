@@ -1,0 +1,12 @@
+---
+import RoleSearchPage from '../../components/search-role/RoleSearchPage.astro';
+import { searchRoles } from '../../content/searchRoles';
+
+export function getStaticPaths() {
+  return searchRoles.map((role) => ({ params: { role: role.slug }, props: { role } }));
+}
+
+const { role } = Astro.props;
+---
+
+<RoleSearchPage role={role} />

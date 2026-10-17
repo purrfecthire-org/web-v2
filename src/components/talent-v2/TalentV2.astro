@@ -1,10 +1,10 @@
 ---
 // ── For Talent ───────────────────────────────────────────────────────────
-// Same system as the home: Midnight for the hero and one weighted moment,
-// Ivory as the main surface, Stone for transitions, purple for action and
-// signal only. Entry point, not the Offer Accelerator product page.
-// Every action here points at Offer, so every action here is purple.
+// Talent entry: compare paid advisory paths or find free client searches.
+// Ivory hero and a single Midnight testimonial moment. Purple for Talent
+// actions; the founder journey uses its own conversion in the shared shell.
 import Shell from '../v2/Shell.astro';
+import ClientPortrait from '../v2/ClientPortrait.astro';
 import type { Lang } from '../../content/index';
 import { getTalentV2 } from '../../content/talentV2';
 import { PAGE_OFFER } from '../../content/links';
@@ -19,7 +19,7 @@ const t = getTalentV2(lang);
   title={t.meta.title}
   description={t.meta.description}
   theme="light"
-  navCta={{ label: "Explore Offer Accelerator", href: PAGE_OFFER }}
+  navCta={{ label: t.hero.cta, href: t.hero.href }}
   journey="talent"
 >
 
@@ -31,20 +31,47 @@ const t = getTalentV2(lang);
             <h1 class="h3-hero__h1 tv-h1">{t.hero.headline}</h1>
             <p class="h3-hero__sub">{t.hero.sub}</p>
             <p class="tv-audience">{t.hero.audience}</p>
-            <a href={PAGE_OFFER} data-cta="talent-hero-offer" class="h3-btn tv-hero__cta">
+            <a href={t.hero.href} data-cta="talent-hero-options" class="h3-btn tv-hero__cta">
               {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
+            <a href={t.hero.secondary.href} data-cta="talent-hero-roles" class="h3-link tv-hero__secondary">{t.hero.secondary.label} <span aria-hidden="true">→</span></a>
           </div>
-          <figure class="h3-hero__media" style={{ "--photo-desktop": "4 / 3", "--photo-mobile": "4 / 5" }}>
+          <figure class="h3-hero__media" style={{ "--photo-desktop": "4 / 3", "--photo-mobile": "4 / 3" }}>
 <picture>
               <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/talent-mobile.webp" />
               <source media="(max-width: 55.99rem)" srcset="/photos/web/talent-mobile.png" />
               <source type="image/webp" srcset="/photos/web/talent-desktop.webp" />
-              <img src="/photos/web/talent-desktop.png" alt="A person working on a laptop in a café." width="1200" height="900" decoding="async" fetchpriority="high" />
+              <img src="/photos/web/talent-desktop.png" alt="Two people having a conversation at a desk." width="1200" height="900" decoding="async" fetchpriority="high" />
             </picture>
           </figure>
         </div>
       </section>
+
+      <!-- Paths -->
+      <section class="tv-paths" id="ways-in">
+        <div class="h3-wrap">
+          <p class="h3-eyebrow">{t.paths.eyebrow}</p>
+          <h2 class="h3-h2 tv-paths__h2">{t.paths.headline}</h2>
+          <ul class="tv-paths__list">
+            {t.paths.items.map((i, idx) => (
+              <li class={idx === 0 ? 'tv-path tv-path--flagship' : 'tv-path'}>
+                <h3 class="tv-path__name">{i.name}</h3>
+                {i.price && <p class="tv-path__price">{i.price}</p>}
+                <p class="tv-path__body">{i.body}</p>
+                <a href={i.href} data-cta={`talent-path-${idx}`} class="h3-link tv-path__cta">{i.cta} <span class="h3-arrow" aria-hidden="true">→</span></a>
+                {i.note && <p class="tv-path__note">{i.note}</p>}
+              </li>
+            ))}
+          </ul>
+          <div class="tv-free">
+            <p>{t.paths.free.body}</p>
+            <a href={t.paths.free.href} data-cta="talent-free" class="h3-link tv-free__cta">
+              {t.paths.free.cta} <span class="h3-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
 
       <!-- Problem + what changes, one ivory surface -->
       <section class="tv-main">
@@ -75,6 +102,16 @@ const t = getTalentV2(lang);
             </ol>
             <p class="tv-work__note">{t.work.note}</p>
             <a href={PAGE_OFFER} class="h3-link tv-work__cta">{t.work.cta} <span class="h3-arrow" aria-hidden="true">→</span></a>
+
+            <aside class="tv-exercise" aria-labelledby="tv-exercise-title">
+              <p class="h3-eyebrow">{t.work.example.label}</p>
+              <h3 id="tv-exercise-title">{t.work.example.headline}</h3>
+              <dl>
+                {t.work.example.steps.map((step) => (
+                  <div><dt>{step.title}</dt><dd>{step.body}</dd></div>
+                ))}
+              </dl>
+            </aside>
           </div>
 
           <!-- Firewall, right after Create access -->
@@ -98,36 +135,15 @@ const t = getTalentV2(lang);
           <h2 class="h3-h2 h3-h2--on-dark tv-proof__h2">{t.proof.headline}</h2>
 
           <figure class="tv-voice tv-voice--solo">
+            <ClientPortrait alt={t.proof.voice.name} />
+            <div class="tv-voice__copy">
             <blockquote>“{t.proof.voice.quote}”</blockquote>
             <figcaption>
               <span class="tv-voice__name">{t.proof.voice.name}</span>
               <span class="tv-voice__role">{t.proof.voice.role}</span>
             </figcaption>
+            </div>
           </figure>
-        </div>
-      </section>
-
-      <!-- Paths -->
-      <section class="tv-paths">
-        <div class="h3-wrap">
-          <p class="h3-eyebrow">{t.paths.eyebrow}</p>
-          <h2 class="h3-h2 tv-paths__h2">{t.paths.headline}</h2>
-          <ul class="tv-paths__list">
-            {t.paths.items.map((i, idx) => (
-              <li class={idx === 0 ? 'tv-path tv-path--flagship' : 'tv-path'}>
-                <h3 class="tv-path__name">{i.name}</h3>
-                <p class="tv-path__body">{i.body}</p>
-                <a href={i.href} data-cta={`talent-path-${idx}`} class="h3-link tv-path__cta">{i.cta} <span class="h3-arrow" aria-hidden="true">→</span></a>
-                {i.note && <p class="tv-path__note">{i.note}</p>}
-              </li>
-            ))}
-          </ul>
-          <div class="tv-free">
-            <p>{t.paths.free.body}</p>
-            <a href={t.paths.free.href} data-cta="talent-free" class="h3-link tv-free__cta">
-              {t.paths.free.cta} <span class="h3-arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
         </div>
       </section>
 
@@ -136,7 +152,7 @@ const t = getTalentV2(lang);
         <div class="h3-wrap">
           <h2 class="h3-h2 tv-close__h2">{t.close.headline}</h2>
           <p class="h3-body tv-close__body">{t.close.body}</p>
-          <a href={PAGE_OFFER} data-cta="talent-close-offer" class="h3-btn tv-close__cta">{t.close.cta}</a>
+          <a href={t.close.href} data-cta="talent-close-options" class="h3-btn tv-close__cta">{t.close.cta}</a>
         </div>
       </section>
 
@@ -150,6 +166,8 @@ const t = getTalentV2(lang);
     max-width: 30rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
   }
   .tv-hero__cta { margin-top: 2rem; }
+  .tv-hero__secondary { margin-top: 1.25rem; font-size: 0.875rem; max-width: 31rem; line-height: 1.6; }
+  .tv-path__price { margin-top: 0.75rem; font-size: 1.0625rem; font-weight: 500; color: var(--text); }
 
   /* One ivory surface carries problem, the four things, and the firewall. */
   .tv-main { background: var(--sand); padding: 5rem 0 6rem; }
@@ -176,6 +194,13 @@ const t = getTalentV2(lang);
   .tv-work__body { margin-top: 0.4rem; color: var(--muted); max-width: 36rem; }
   .tv-work__note { margin-top: 1.75rem; font-size: 0.9375rem; color: var(--muted); }
   .tv-work__cta { display: inline-block; margin-top: 1.5rem; }
+  .tv-exercise { margin-top: 2.5rem; padding: 1.75rem; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+  .tv-exercise h3 { margin-top: 0.75rem; font-family: var(--h-serif); font-weight: 400; font-size: 1.75rem; line-height: 1.2; }
+  .tv-exercise dl { margin: 1.5rem 0 0; display: grid; gap: 1.25rem; }
+  .tv-exercise dl > div { padding-top: 1rem; border-top: 1px solid var(--line); min-width: 0; }
+  .tv-exercise dt { font-size: 0.8125rem; font-weight: 500; }
+  .tv-exercise dd { margin: 0.5rem 0 0; font-size: 1rem; line-height: 1.65; color: var(--muted); }
+  @media (min-width: 56rem) { .tv-exercise dl { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; } }
 
   /* Easy to find, short to read, with the detail one click away. */
   .fw { margin-top: 4rem; max-width: 44rem; padding-top: 2rem; border-top: 1px solid var(--line); }
@@ -202,6 +227,12 @@ const t = getTalentV2(lang);
     margin-top: 2.5rem; padding-top: 2.25rem; max-width: 46rem;
     border-top: 1px solid var(--line-dark);
   }
+  .tv-voice--solo .client-portrait { margin-bottom: 1.5rem; max-width: 32rem; }
+  @media (min-width: 56rem) {
+    .tv-voice--solo { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); align-items: center; gap: 3rem; max-width: none; }
+    .tv-voice--solo .client-portrait { margin-bottom: 0; }
+    .tv-voice__copy { min-width: 0; }
+  }
   .tv-voice--solo blockquote { font-size: clamp(1.4rem, 2.5vw, 2rem); line-height: 1.32; }
   .tv-voice blockquote {
     margin-top: 0.85rem; font-family: var(--h-serif);
@@ -211,11 +242,11 @@ const t = getTalentV2(lang);
   .tv-voice__name { font-weight: 500; color: var(--on-dark); }
   .tv-voice__role { color: var(--on-dark-muted); }
 
-  .tv-paths { background: var(--stone); padding: 4.5rem 0 5rem; }
+  .tv-paths { background: var(--stone); padding: 4.5rem 0 5rem; scroll-margin-top: 5rem; }
   @media (min-width: 56rem) { .tv-paths { padding: 6.5rem 0 7rem; } }
   .tv-paths__h2 { max-width: 32ch; }
   .tv-paths__list { margin-top: 2.5rem; display: grid; gap: 1.25rem; }
-  @media (min-width: 56rem) { .tv-paths__list { grid-template-columns: 1.25fr 1fr; gap: 1.5rem; align-items: stretch; } }
+  @media (min-width: 56rem) { .tv-paths__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; align-items: stretch; } }
   .tv-path {
     display: flex; flex-direction: column; height: 100%;
     background: var(--sand); border: 1px solid var(--line); border-radius: 14px;
@@ -238,8 +269,7 @@ const t = getTalentV2(lang);
 
   .tv-path__note, .tv-path__note a { overflow-wrap: anywhere; }
 
-  /* La ruta gratuita: /roles recibía candidaturas sin coste y ahora redirige
-     aquí, así que aquí tiene que existir una puerta sin coste. */
+  /* Free applications have their own destination, independent of advisory. */
   .tv-free { margin-top: 2rem; max-width: 44rem; }
   .tv-free p { font-size: 0.9375rem; line-height: 1.7; color: var(--muted); }
   .tv-free__cta { margin-top: 0.9rem; font-size: 0.9375rem; color: var(--text); }

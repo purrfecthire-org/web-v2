@@ -92,10 +92,13 @@ export async function fetchRoles(): Promise<PublicRoleListItem[]> {
   if (!base) throw new Error('PUBLIC_API_ENDPOINT is not set');
   const res = await fetch(`${base}/public/roles`, {
     headers: { 'X-Request-Id': requestId() },
+    signal: AbortSignal.timeout(15_000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const json = await res.json();
-  return Array.isArray(json?.data) ? (json.data as PublicRoleListItem[]) : [];
+  // An unavailable or malformed response is different from zero vacancies.
+  if (!Array.isArray(json?.data)) throw new Error('Malformed roles response');
+  return json.data as PublicRoleListItem[];
 }
 
 /** Error thrown by fetchRole() on a non-2xx response; carries the HTTP status
@@ -116,6 +119,7 @@ export async function fetchRole(slug: string): Promise<PublicRoleDetail> {
   if (!base) throw new Error('PUBLIC_API_ENDPOINT is not set');
   const res = await fetch(`${base}/public/roles/${encodeURIComponent(slug)}`, {
     headers: { 'X-Request-Id': requestId() },
+    signal: AbortSignal.timeout(15_000),
   });
   if (!res.ok) throw new FetchRoleError(res.status);
   const json = await res.json();
@@ -343,7 +347,7 @@ export function roleRailHTML(role: PublicRoleDetail): string {
     `<ul class="rv2__facts">${facts.join('')}</ul>` +
     ycHtml +
     `<a href="#apply" class="rv2__apply">Apply for this role${ARROW_SVG}</a>` +
-    '<p class="rv2__rail-note">Company details are shared after your intro call.</p>'
+    '<p class="rv2__rail-note">Company information is limited to what is published for this search.</p>'
   );
 }
 

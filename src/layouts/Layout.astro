@@ -39,6 +39,13 @@ const {
 const siteUrl = 'https://purrfecthire.com';
 const currentUrl = canonicalUrl ?? `${siteUrl}${Astro.url.pathname}`;
 const alternateLang = lang === 'en' ? 'es' : 'en';
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Purrfect Hire', legalName: 'Purrfect Hire OÜ', url: siteUrl, email: 'go@purrfecthire.com', logo: `${siteUrl}/brand/logo/logo-horizontal-midnight.svg`, sameAs: ['https://www.linkedin.com/company/purrfect-hire'] },
+    { '@type': 'ProfessionalService', '@id': `${siteUrl}/#search-service`, name: 'Purrfect Hire Search', url: `${siteUrl}/for-companies`, parentOrganization: { '@id': `${siteUrl}/#organization` }, description: 'Senior and executive search for venture-backed companies.', areaServed: ['United States', 'Europe', 'Latin America'] },
+  ],
+};
 // Point at the same document in the other language, not at the other home page.
 const path = Astro.url.pathname;
 const alternateUrl =
@@ -63,7 +70,7 @@ const alternateUrl =
         <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
       </Fragment>
     )}
-    <link rel="alternate" hreflang="x-default" href={siteUrl} />
+    {hasAlternateLang && <link rel="alternate" hreflang="x-default" href={lang === 'en' ? currentUrl : alternateUrl} />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -93,6 +100,7 @@ const alternateUrl =
         />
       </Fragment>
     )}
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema).replace(/</g, '\\u003c')} />
     <title>{title}</title>
     <slot name="head" />
   </head>
@@ -100,7 +108,7 @@ const alternateUrl =
     <slot />
     <script>
       // Analytics — flag-gated by PUBLIC_ANALYTICS_SRC. Unset (the default)
-      // means this block does nothing and the site makes zero network calls.
+      // means no analytics script or measurement requests are added.
       //
       // Plausible now issues a snippet per site, so the script URL comes from
       // Site Installation in the account and is pasted into the env var: it
@@ -152,6 +160,12 @@ const alternateUrl =
           const journey =
             document.querySelector('[data-journey]')?.getAttribute('data-journey') ?? 'unknown';
 
+          if (journey === 'companies') send('company_page_view', { props: { journey } });
+          window.addEventListener('purrfect:funnel', (event) => {
+            const name = (event as CustomEvent<{ name: string }>).detail?.name;
+            if (['search_form_started', 'search_form_submitted', 'calendar_viewed'].includes(name)) send(name, { props: { journey } });
+          });
+
           document.addEventListener('click', (e) => {
             try {
               const a = (e.target as HTMLElement)?.closest?.('[data-cta]');
@@ -159,6 +173,7 @@ const alternateUrl =
               const name = a.getAttribute('data-cta');
               if (!name) return;
               send('cta', { props: { cta: name, journey } });
+              if (a instanceof HTMLAnchorElement && new URL(a.href).pathname === '/search-read') send('search_read_cta_click', { props: { cta: name, journey } });
             } catch {
               /* measurement must never break a click */
             }
@@ -166,6 +181,18 @@ const alternateUrl =
         } catch {
           /* analytics must never break the page */
         }
+      }
+    </script>
+    <script>
+      const campaign = new URLSearchParams(location.search);
+      const allowed = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+      for (const link of document.querySelectorAll<HTMLAnchorElement>('a[href]')) {
+        const url = new URL(link.href);
+        if (url.origin !== location.origin || url.pathname === location.pathname) continue;
+        let copied = false;
+        for (const key of allowed) { const value = campaign.get(key); if (value && /^[a-zA-Z0-9_. -]{1,100}$/.test(value)) { url.searchParams.set(key, value); copied = true; } }
+        if (copied) url.searchParams.set('entry_path', campaign.get('entry_path') || location.pathname);
+        if (copied) link.href = url.href;
       }
     </script>
     <script>
@@ -210,7 +237,7 @@ const alternateUrl =
                   level: 'error',
                   message: msg,
                   source: 'portal',
-                  url: location.href,
+                  url: `${location.origin}${location.pathname}`,
                   occurred_at: new Date().toISOString(),
                   context: { ...context, userAgent: navigator.userAgent },
                 },

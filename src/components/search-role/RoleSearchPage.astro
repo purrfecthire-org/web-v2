@@ -1,0 +1,172 @@
+---
+import Shell from '../v2/Shell.astro';
+import { getRoleSearchHref, searchRoles, searchRoleShared as t, type SearchRoleContent } from '../../content/searchRoles';
+
+interface Props { role: SearchRoleContent }
+const { role } = Astro.props;
+const calibrationHref = getRoleSearchHref(role.slug);
+const relatedRoles = searchRoles.filter((item) => item.slug !== role.slug);
+---
+
+<Shell
+  title={role.meta.title}
+  description={role.meta.description}
+  theme="light"
+  journey="companies"
+  navCta={{ label: t.cta, href: calibrationHref }}
+>
+  <section class="rs-hero">
+    <div class="h3-wrap rs-hero__grid">
+      <div>
+        <p class="h3-eyebrow">{t.eyebrow}</p>
+        <p class="rs-role">{role.role}</p>
+        <h1>{role.hero.headline}</h1>
+        <p class="rs-hero__body">{role.hero.body}</p>
+        <a class="h3-btn h3-btn--ink rs-hero__cta" href={calibrationHref} data-cta={`search-${role.slug}-hero`}>
+          {t.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="rs-cta-note">{t.ctaNote}</p>
+      </div>
+      <aside class="rs-context" aria-labelledby="rs-context-title">
+        <h2 id="rs-context-title">{t.contextTitle}</h2>
+        <dl>
+          <div><dt>{t.stageLabel}</dt><dd>{role.context.stage}</dd></div>
+          <div><dt>{t.needLabel}</dt><dd>{role.context.need}</dd></div>
+          <div><dt>{t.decisionLabel}</dt><dd>{role.context.decision}</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="rs-section rs-problem">
+    <div class="h3-wrap rs-section__grid">
+      <div>
+        <p class="h3-eyebrow">{t.problemEyebrow}</p>
+        <h2 class="h3-h2">{role.problem.headline}</h2>
+      </div>
+      <p class="h3-body rs-problem__body">{role.problem.body}</p>
+    </div>
+  </section>
+
+  <section class="rs-section rs-evidence">
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.evidenceEyebrow}</p>
+      <h2 class="h3-h2 rs-section__title">{t.evidenceHeadline}</h2>
+      <p class="h3-body rs-section__intro">{t.evidenceIntro}</p>
+      <ul class="rs-card-grid">
+        {role.evidence.map((item) => (
+          <li class="rs-card"><h3>{item.title}</h3><p>{item.body}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="rs-section rs-questions">
+    <div class="h3-wrap rs-section__grid">
+      <div>
+        <p class="h3-eyebrow">{t.questionsEyebrow}</p>
+        <h2 class="h3-h2">{t.questionsHeadline}</h2>
+        <p class="h3-body rs-section__intro">{t.questionsIntro}</p>
+      </div>
+      <ol class="rs-question-list">
+        {role.questions.map((item, index) => (
+          <li>
+            <span class="rs-question-list__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <div><h3>{item.question}</h3><p>{item.reason}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="rs-section rs-risks">
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.risksEyebrow}</p>
+      <h2 class="h3-h2 rs-section__title">{t.risksHeadline}</h2>
+      <ul class="rs-card-grid">
+        {role.risks.map((item) => (
+          <li class="rs-card"><h3>{item.title}</h3><p>{item.body}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="rs-section rs-close">
+    <div class="h3-wrap rs-section__grid">
+      <div>
+        <p class="h3-eyebrow">{t.preparationEyebrow}</p>
+        <h2 class="h3-h2">{t.preparationHeadline}</h2>
+        <ul class="rs-preparation">
+          {role.preparation.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="rs-close__action">
+        <h3>{role.close.headline}</h3>
+        <p class="h3-body">{role.close.body}</p>
+        <a class="h3-btn h3-btn--ink" href={calibrationHref} data-cta={`search-${role.slug}-close`}>
+          {t.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="h3-link" href={t.sampleHref}>{t.sampleLabel}<span aria-hidden="true">→</span></a>
+        <a class="h3-link" href={t.selectedHref}>{t.selectedLabel}<span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="rs-related" aria-label={t.relatedLabel}>
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.relatedLabel}</p>
+      <ul>
+        {relatedRoles.map((item) => <li><a class="h3-link" href={`/search/${item.slug}`}>{item.role}<span aria-hidden="true">→</span></a></li>)}
+      </ul>
+      <p class="rs-page-note">{t.pageNote}</p>
+    </div>
+  </nav>
+</Shell>
+
+<style lang="scss">
+  .rs-hero { padding: 7rem 0 4rem; }
+  .rs-hero__grid, .rs-section__grid { display: grid; gap: 2.5rem; align-items: start; }
+  .rs-role { margin-top: 1.5rem; font-size: 0.9375rem; font-weight: 500; }
+  .rs-hero h1 { margin-top: 0.75rem; font-family: var(--h-serif); font-weight: 400; font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0; font-size: clamp(2.625rem, 4.6vw, 4.75rem); line-height: 1.06; letter-spacing: -0.025em; max-width: 20ch; text-wrap: balance; }
+  .rs-hero__body { margin-top: 1.5rem; font-size: 1.125rem; line-height: 1.7; color: var(--muted); max-width: 38rem; }
+  .rs-hero__cta { margin-top: 1.75rem; min-height: 3rem; }
+  .rs-cta-note { margin-top: 0.9rem; font-size: 0.875rem; line-height: 1.6; color: var(--muted); max-width: 31rem; }
+  .rs-context { padding: 1.75rem; background: var(--white); border: 1px solid var(--line); border-radius: 12px; }
+  .rs-context h2 { font-size: 1.0625rem; font-weight: 500; line-height: 1.4; }
+  .rs-context dl { margin: 1.25rem 0 0; }
+  .rs-context dl > div { padding: 1rem 0; border-top: 1px solid var(--line); }
+  .rs-context dl > div:last-child { padding-bottom: 0; }
+  .rs-context dt { font-size: 0.8125rem; color: var(--muted); }
+  .rs-context dd { margin: 0.35rem 0 0; font-size: 1rem; line-height: 1.6; }
+  .rs-section { padding: 4rem 0; border-top: 1px solid var(--line); }
+  .rs-section__title { max-width: 26ch; }
+  .rs-section__intro { margin-top: 1.25rem; max-width: 42rem; }
+  .rs-card-grid { display: grid; gap: 1.75rem; margin-top: 2.5rem; }
+  .rs-card { padding-top: 1.25rem; border-top: 1px solid var(--line); min-width: 0; }
+  .rs-card h3 { font-size: 1.125rem; font-weight: 500; line-height: 1.4; }
+  .rs-card p { margin-top: 0.75rem; font-size: 1rem; line-height: 1.7; color: var(--muted); }
+  .rs-questions { background: var(--stone); }
+  .rs-question-list { border-top: 1px solid var(--line); }
+  .rs-question-list li { display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+  .rs-question-list__number { color: var(--muted); font-size: 0.8125rem; padding-top: 0.15rem; }
+  .rs-question-list h3 { font-size: 1.125rem; font-weight: 500; line-height: 1.5; }
+  .rs-question-list p { margin-top: 0.75rem; color: var(--muted); font-size: 1rem; line-height: 1.65; }
+  .rs-preparation { margin-top: 2rem; border-top: 1px solid var(--line); }
+  .rs-preparation li { padding: 1rem 0; border-bottom: 1px solid var(--line); font-size: 1rem; line-height: 1.65; color: var(--muted); }
+  .rs-close__action { padding: 2rem; background: var(--white); border: 1px solid var(--line); border-radius: 12px; display: flex; flex-direction: column; align-items: start; gap: 1.25rem; }
+  .rs-close__action h3 { font-family: var(--h-serif); font-weight: 400; font-size: clamp(1.75rem, 2.7vw, 2.5rem); line-height: 1.15; text-wrap: balance; }
+  .rs-close__action .h3-btn { margin-top: 0.5rem; max-width: 100%; }
+  .rs-close__action .h3-link { font-size: 0.9375rem; }
+  .rs-related { padding: 2.5rem 0 3rem; border-top: 1px solid var(--line); }
+  .rs-related ul { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 1rem; }
+  .rs-page-note { margin-top: 1.75rem; font-size: 0.8125rem; line-height: 1.6; color: var(--muted); }
+  @media (min-width: 56rem) {
+    .rs-hero { padding-top: 8.5rem; padding-bottom: 5.5rem; }
+    .rs-hero__grid { grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.8fr); gap: 4rem; align-items: center; }
+    .rs-section { padding: 5.5rem 0; }
+    .rs-section__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 4rem; }
+    .rs-problem__body { margin-top: 2rem; }
+    .rs-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+  }
+  @media (max-width: 25rem) { .rs-close__action { padding: 1.5rem; } }
+</style>

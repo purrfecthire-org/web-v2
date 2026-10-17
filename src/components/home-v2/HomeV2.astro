@@ -1,312 +1,80 @@
 ---
-// ── Home v3 · rebrand ────────────────────────────────────────────────────
-// Six blocks: hero (Midnight) → trust strip (ivory) → For Companies (white,
-// primary audience) → For Talent (Midnight, four lines) → shared belief
-// (stone) → Kate (Midnight close). Dark and light alternate on purpose.
-// Purple is reserved for action and signal: buttons and signal dots. Never
-// decoration. Photography and cat illustrations are clearly marked
-// placeholders until the real assets land. Headline face is Instrument
-// Serif standing in for Canela; swap --h-serif when the license is in.
 import Shell from '../v2/Shell.astro';
-import { getContent, type Lang } from '../../content/index';
+import type { Lang } from '../../content/index';
 import { getHomeV2 } from '../../content/homeV2';
-import { BOOKING_B2B, PAGE_COMPANIES, PAGE_TALENT, PAGE_OFFER } from '../../content/links';
-
+import { PAGE_COMPANIES, PAGE_TALENT } from '../../content/links';
 interface Props { lang?: Lang }
-
 const { lang = 'en' } = Astro.props;
 const t = getHomeV2(lang);
-const content = getContent(lang);
-// Fabián Torres: three years working together, his own recommendation, and a
-// photograph we can publish. The quote stays in his words.
-const featured = content.testimonials.grid.find((q) => q.name === 'Fabián Torres') ?? content.testimonials.featured;
-
-const clients = [
-  { name: 'Addi', logo: '/clients/addi.png' },
-  { name: 'PayJoy', logo: '/clients/payjoy.png' },
-  { name: 'Heron', logo: '/clients/heron.png' },
-  { name: 'Optery', logo: '/clients/optery.png' },
-  { name: 'Trébol', logo: '/clients/trebol.png' },
-  { name: 'Cheaf', logo: '/clients/cheaf.png' },
-  { name: 'Mavi', logo: '/clients/mavi.png' },
-  { name: 'Hera', logo: '/clients/hera.png' },
-];
 ---
 
-<Shell
-  lang={lang}
-  title={t.meta.title}
-  description={t.meta.description}
-  theme="dark"
-  navCta={{ label: "Discuss your hire", href: BOOKING_B2B }}
-  journey="home"
->
+<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="dark" navCta={{ label: t.hero.choose, href: '#choose-your-path' }} journey="home">
+  <section class="h3-hero home-entry" aria-labelledby="home-title">
+    <div class="h3-wrap h3-hero__grid">
+      <div class="h3-hero__copy">
+        <p class="h3-eyebrow h3-eyebrow--on-dark">{t.hero.eyebrow}</p>
+        <h1 class="h3-hero__h1" id="home-title">{t.hero.headline}</h1>
+        <p class="h3-hero__sub">{t.hero.sub}</p>
+        <nav class="home-paths" id="choose-your-path" aria-label={t.hero.choose}>
+          <a class="home-path" href={PAGE_COMPANIES} data-cta="home-choose-companies">
+            <span class="home-path__label">{t.hero.companies.label}</span>
+            <span class="home-path__promise">{t.hero.companies.promise}</span>
+            <span class="home-path__detail">{t.hero.companies.detail}</span>
+            <span class="home-path__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="home-path" href={PAGE_TALENT} data-cta="home-choose-talent">
+            <span class="home-path__label">{t.hero.talent.label}</span>
+            <span class="home-path__promise">{t.hero.talent.promise}</span>
+            <span class="home-path__detail">{t.hero.talent.detail}</span>
+            <span class="home-path__arrow" aria-hidden="true">→</span>
+          </a>
+        </nav>
+      </div>
+      <figure class="h3-hero__media" style={{ '--photo-desktop': '8 / 5', '--photo-mobile': '4 / 3' }}>
+        <picture>
+          <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/library/home-editorial-mobile.webp" />
+          <source media="(max-width: 55.99rem)" srcset="/photos/library/home-editorial-mobile.png" />
+          <source type="image/webp" srcset="/photos/library/home-editorial-desktop.webp" />
+          <img src="/photos/library/home-editorial-desktop.png" alt={t.hero.photoAlt} width="1200" height="750" decoding="async" fetchpriority="high" />
+        </picture>
+        <span class="h3-hero__scrim" aria-hidden="true"></span>
+      </figure>
+    </div>
+  </section>
 
-      <!-- 1 · Hero: router with a brand layer -->
-      <section class="h3-hero">
-        <div class="h3-wrap h3-hero__grid">
-          <div class="h3-hero__copy">
-            <h1 class="h3-hero__h1">{t.hero.headline}</h1>
-            <p class="h3-hero__sub">{t.hero.sub}</p>
-
-            <div class="h3-doors">
-              <a href={PAGE_COMPANIES} data-cta="home-door-companies" class="h3-door">
-                <span class="h3-door__label">
-  {t.hero.companies.label}
-                </span>
-                <span class="h3-door__promise">{t.hero.companies.promise}</span>
-                <span class="h3-door__arrow" aria-hidden="true">→</span>
-              </a>
-              <a href={PAGE_TALENT} data-cta="home-door-talent" class="h3-door">
-                <span class="h3-door__label">
-  {t.hero.talent.label}
-                </span>
-                <span class="h3-door__promise">{t.hero.talent.promise}</span>
-                <span class="h3-door__arrow" aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-
-          <figure class="h3-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
-<picture>
-              <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/library/home-editorial-mobile.webp" />
-              <source media="(max-width: 55.99rem)" srcset="/photos/library/home-editorial-mobile.png" />
-              <source type="image/webp" srcset="/photos/library/home-editorial-desktop.webp" />
-              <img src="/photos/library/home-editorial-desktop.png" alt="Three people discussing work around a table." width="1200" height="750" decoding="async" fetchpriority="high" />
-            </picture>
-            <span class="h3-hero__scrim" aria-hidden="true"></span>
-          </figure>
+  <section class="home-kate" id="kate" aria-labelledby="kate-title">
+    <div class="h3-wrap home-kate__grid">
+      <figure class="home-kate__portrait">
+        <picture>
+          <source srcset="/brand/kate.webp" type="image/webp" />
+          <img src="/brand/kate.jpg" alt="Kate Forero" width="900" height="1124" loading="lazy" />
+        </picture>
+      </figure>
+      <div>
+        <p class="h3-eyebrow">{t.kate.eyebrow}</p>
+        <h2 class="h3-h2" id="kate-title">{t.kate.headline}</h2>
+        <p class="h3-body">{t.kate.body}</p>
+        <div class="home-kate__links">
+          <a href={PAGE_COMPANIES} class="h3-link" data-cta="home-kate-companies">{t.kate.ctaCompanies} <span aria-hidden="true">→</span></a>
+          <a href={PAGE_TALENT} class="h3-link" data-cta="home-kate-talent">{t.kate.ctaTalent} <span aria-hidden="true">→</span></a>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
+</Shell>
 
-      <!-- 2 · Trust strip -->
-      <section class="h3-trust">
-        <div class="h3-wrap h3-trust__in">
-          <p class="h3-eyebrow">{t.trust.label}</p>
-          <ul class="h3-trust__logos">
-            {clients.map((c) => <li><img src={c.logo} alt={c.name} loading="lazy" /></li>)}
-          </ul>
-          <p class="h3-trust__evidence">{t.trust.evidence}</p>
-        </div>
-      </section>
-
-      <!-- 3 · For companies -->
-      <section class="h3-co">
-        <div class="h3-wrap h3-co__grid">
-          <div class="h3-co__left">
-            <p class="h3-eyebrow">{t.companies.eyebrow}</p>
-            <h2 class="h3-h2">
-              {t.companies.headline}<span class="h3-dot h3-dot--end" aria-hidden="true"></span>
-            </h2>
-            <p class="h3-lead">{t.companies.intro}</p>
-            <a href={PAGE_COMPANIES} data-cta="home-companies-block" class="h3-btn h3-btn--ink h3-co__cta">
-              {t.companies.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
-
-          <div class="h3-co__right">
-            <p class="h3-body">{t.companies.hard}</p>
-            <p class="h3-body">{t.companies.pov}</p>
-            <p class="h3-co__evidence">{t.companies.evidence}</p>
-            <figure class="h3-quote">
-              <div class="h3-quote__portrait">
-                <picture>
-                  <source srcset="/brand/fabian-torres.webp" type="image/webp" />
-                  <img src="/brand/fabian-torres.jpg" alt="Fabián Torres" width="480" height="480" />
-                </picture>
-              </div>
-              <div class="h3-quote__text">
-                <p class="h3-eyebrow">{t.companies.quoteLabel}</p>
-                <blockquote>“{featured.quote}”</blockquote>
-                <figcaption>
-                  <span class="h3-quote__name">{featured.name}</span>
-                  <span class="h3-quote__role">{featured.role}</span>
-                </figcaption>
-              </div>
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4 · For talent -->
-      <section class="h3-ta">
-        <div class="h3-wrap h3-ta__grid">
-          <div class="h3-ta__head">
-            <p class="h3-eyebrow h3-eyebrow--on-dark">{t.talent.eyebrow}</p>
-            <h2 class="h3-h2 h3-h2--on-dark">{t.talent.headline}</h2>
-          </div>
-          <div class="h3-ta__copy">
-            <p class="h3-lead h3-lead--on-dark">{t.talent.body}</p>
-            <p class="h3-body h3-body--on-dark">{t.talent.sub}</p>
-            <a href={PAGE_OFFER} data-cta="home-offer-block" class="h3-btn h3-ta__cta">{t.talent.cta}</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5 · Shared point of view -->
-      <section class="h3-belief">
-        <div class="h3-wrap">
-          <p class="h3-eyebrow">{t.belief.eyebrow}</p>
-          <p class="h3-belief__statement">{t.belief.statement}</p>
-          <div class="h3-belief__split">
-            <p>{t.belief.forCompanies}</p>
-            <p>{t.belief.forTalent}</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 6 · Kate -->
-      <section class="h3-kate" id="kate">
-        <div class="h3-wrap h3-kate__grid">
-          <figure class="h3-kate__portrait">
-            <picture>
-              <source srcset="/brand/kate.webp" type="image/webp" />
-              <img src="/brand/kate.jpg" alt="Kate Forero" width="900" height="1124" />
-            </picture>
-          </figure>
-          <div>
-            <p class="h3-eyebrow">{t.kate.eyebrow}</p>
-            <h2 class="h3-h2">{t.kate.headline}</h2>
-            <p class="h3-body">{t.kate.body}</p>
-            <div class="h3-kate__ctas">
-              <a href={PAGE_COMPANIES} class="h3-link">
-                {t.kate.ctaCompanies} <span class="h3-arrow" aria-hidden="true">→</span>
-              </a>
-              <a href={PAGE_TALENT} class="h3-link">
-                {t.kate.ctaTalent} <span class="h3-arrow" aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </Shell>
-
-<style lang="scss" is:global>
-
-  /* Asset placeholders, sized to the final proportions. */
-  .h3-ph {
-    display: flex; align-items: flex-end; border-radius: 14px;
-    background: var(--stone); border: 1px dashed rgba(20, 22, 31, 0.22);
-    padding: 0.6rem; max-width: 100%;
-  }
-  .h3-ph__label {
-    font-size: 0.5rem; letter-spacing: 0.04em; text-transform: uppercase;
-    color: var(--muted); line-height: 1.45;
-  }
-  .h3-ph--portrait { aspect-ratio: 3 / 4; width: 100%; }
-
-  /* Hero doors */
-  .h3-doors { margin-top: 2.25rem; border-top: 1px solid var(--line-dark); }
-  @media (min-width: 56rem) { .h3-doors { margin-top: 2.75rem; } }
-  .h3-door {
-    display: grid; grid-template-columns: 1fr auto; align-items: baseline;
-    gap: 0.35rem 1rem; padding: 1.25rem 0;
-    border-bottom: 1px solid var(--line-dark); transition: padding-left 0.25s ease;
-  }
-  @media (min-width: 56rem) { .h3-door { padding: 1.5rem 0; } }
-  .h3-door:hover { padding-left: 0.6rem; }
-  .h3-door__label {
-    grid-column: 1 / -1; font-size: 0.6875rem; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--on-dark-muted);
-  }
-  .h3-door__promise {
-    font-family: var(--h-serif); font-size: clamp(1.375rem, 2.2vw, 1.75rem);
-    line-height: 1.15; color: var(--on-dark);
-  }
-  /* Was --purple, which reads at 3.1:1 on Midnight. The signal dots keep the
-     brand colour; the arrow needs to be legible. */
-  .h3-door__arrow { color: var(--on-dark); font-size: 1.25rem; }
-  /* 2 · Trust */
-  .h3-trust { background: var(--sand); padding: 4rem 0 4.5rem; }
-  .h3-co { border-top: 1px solid var(--line); }
-  .h3-trust__in { text-align: center; }
-  .h3-trust__logos {
-    margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center;
-    gap: 1.5rem 3rem; align-items: center;
-  }
-  .h3-trust__logos img {
-    height: 1.45rem; width: auto; display: block;
-    filter: grayscale(1); opacity: 0.5; transition: opacity 0.2s ease;
-  }
-  .h3-trust__logos img:hover { opacity: 1; }
-  .h3-trust__evidence {
-    margin-top: 2.25rem; padding-top: 1.75rem; border-top: 1px solid var(--line);
-    font-size: 1rem; font-weight: 500;
-  }
-
-  /* 3 · For companies */
-  .h3-co { background: var(--sand); padding: 4.5rem 0 5rem; }
-  @media (min-width: 56rem) { .h3-co { padding: 7rem 0 8rem; } }
-  .h3-co__grid { display: grid; gap: 3rem; align-items: start; }
-  @media (min-width: 56rem) { .h3-co__grid { grid-template-columns: 0.9fr 1.1fr; gap: 5rem; } }
-  .h3-co__left { min-width: 0; }
-  @media (min-width: 56rem) { .h3-co__left { position: sticky; top: 7rem; } }
-  .h3-co__cta { margin-top: 2rem; }
-  @media (min-width: 56rem) { .h3-co__left { position: static; } }
-  .h3-co__right { min-width: 0; }
-  .h3-co__evidence { margin-top: 1.5rem; font-size: 1.125rem; font-weight: 500; }
-  .h3-quote {
-    margin-top: 3rem; padding-top: 2.25rem; border-top: 1px solid var(--line);
-    display: grid; gap: 1.5rem; align-items: start;
-  }
-  @media (min-width: 40rem) { .h3-quote { grid-template-columns: 11rem 1fr; gap: 2.25rem; align-items: center; } }
-  .h3-quote__portrait { max-width: 11rem; border-radius: 12px; overflow: hidden; }
-  .h3-quote__portrait img { display: block; width: 100%; height: auto; }
-  .h3-quote__text { min-width: 0; }
-  .h3-quote blockquote {
-    margin-top: 0.85rem; font-family: var(--h-serif);
-    font-size: clamp(1.375rem, 2.2vw, 1.75rem); line-height: 1.3;
-  }
-  .h3-quote figcaption { margin-top: 1.1rem; display: flex; flex-direction: column; font-size: 0.9375rem; }
-  .h3-quote__name { font-weight: 500; }
-  .h3-quote__role { color: var(--muted); }
-
-  /* 4 · For talent */
-  .h3-ta { background: var(--midnight); color: var(--on-dark); padding: 5rem 0; }
-  @media (min-width: 56rem) { .h3-ta { padding: 8rem 0; } }
-  /* Sin la fotografía, el bloque reparte titular y cuerpo en dos columnas,
-     como el de empresas, en lugar de dejar media banda vacía. */
-  .h3-ta__grid { display: grid; gap: 2rem; align-items: start; }
-  @media (min-width: 56rem) { .h3-ta__grid { grid-template-columns: 1fr 1.05fr; gap: 5rem; } }
-  .h3-ta__head, .h3-ta__copy { min-width: 0; }
-  .h3-ta__copy .h3-lead { margin-top: 0; }
-  .h3-ta__cta { margin-top: 2rem; }
-  .h3-note {
-    margin-top: 1.75rem; font-size: 0.6875rem; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--on-dark-muted);
-    border-left: 1px dashed var(--line-dark); padding-left: 0.85rem; line-height: 1.6;
-  }
-
-  /* 5 · Belief */
-  .h3-belief { background: var(--stone); padding: 4.5rem 0; }
-  @media (min-width: 56rem) { .h3-belief { padding: 7rem 0; } }
-  .h3-belief__statement {
-    margin-top: 1.25rem; max-width: 30ch; font-family: var(--h-serif);
-    font-size: clamp(1.875rem, 3.6vw, 3rem); line-height: 1.1; letter-spacing: -0.01em;
-    text-wrap: balance;
-  }
-  .h3-belief__split {
-    margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--line);
-    display: grid; gap: 1rem; color: var(--muted); font-size: 1rem;
-  }
-  @media (min-width: 56rem) { .h3-belief__split { grid-template-columns: 1fr 1fr; gap: 3.5rem; } }
-
-  /* 6 · Kate */
-  .h3-kate { background: var(--sand); padding: 5rem 0 6rem; border-top: 1px solid var(--line); }
-  @media (min-width: 56rem) { .h3-kate { padding: 7rem 0; } }
-  .h3-kate__grid { display: grid; gap: 2.75rem; align-items: center; }
-  @media (min-width: 56rem) { .h3-kate__grid { grid-template-columns: 0.55fr 1.45fr; gap: 4.5rem; } }
-  .h3-kate__ctas { margin-top: 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1.75rem; }
-
-  /* Footer */
-  .h3-footer {
-    background: var(--midnight); color: var(--on-dark-muted);
-    border-top: 1px solid var(--line-dark); padding: 2rem 0 2.5rem; font-size: 0.8125rem;
-  }
-  .h3-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
-  .h3-footer nav { display: flex; flex-wrap: wrap; gap: 1.5rem; }
-  .h3-footer a:hover { color: var(--on-dark); }
-
-  @media (prefers-reduced-motion: reduce) { .h3 * { transition: none !important; } }
+<style>
+  .home-paths { margin-top: 2rem; border-top: 1px solid var(--line-dark); scroll-margin-top: 2rem; }
+  .home-path { position: relative; display: grid; gap: .5rem; padding: 1.25rem 2rem 1.25rem 0; border-bottom: 1px solid var(--line-dark); transition: border-color .2s; }
+  .home-path:hover { border-color: var(--on-dark); }
+  .home-path__label { color: var(--on-dark); font-size: .8125rem; font-weight: 500; }
+  .home-path__promise { font-family: var(--h-serif); color: var(--on-dark); font-size: clamp(1.3rem, 2vw, 1.75rem); line-height: 1.2; }
+  .home-path__detail { color: var(--on-dark-muted); font-size: .8125rem; }
+  .home-path__arrow { position: absolute; right: 0; top: 50%; font-size: 1.5rem; color: var(--on-dark); transform: translateY(-50%); }
+  .home-kate { background: var(--sand); padding: 4.5rem 0; border-top: 1px solid var(--line); }
+  .home-kate__grid { display: grid; gap: 2.75rem; align-items: center; }
+  .home-kate__portrait { max-width: 21rem; border-radius: 14px; overflow: hidden; }
+  .home-kate__portrait img { display: block; width: 100%; height: auto; }
+  .home-kate__links { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  @media (min-width: 56rem) { .home-kate { padding: 7rem 0; } .home-kate__grid { grid-template-columns: .55fr 1.45fr; gap: 4.5rem; } }
 </style>

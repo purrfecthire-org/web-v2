@@ -1,0 +1,13 @@
+---
+import { Image } from 'astro:assets';
+import daniel from '../../assets/daniel-contreras.png';
+
+interface Props { alt?: string }
+const { alt = 'Daniel Contreras' } = Astro.props;
+---
+
+<Image src={daniel} alt={alt} width={768} format="webp" quality={85} loading="lazy" decoding="async" class="client-portrait" />
+
+<style>
+  .client-portrait { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; }
+</style>

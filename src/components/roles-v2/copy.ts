@@ -1,0 +1,22 @@
+/** Public copy shared by the restored roles portal. */
+export const rolesCopy = {
+  title: 'Open roles | Purrfect Hire',
+  description: 'Explore active searches from Purrfect Hire. Read the scope, location, working model and requirements of each role, then apply directly.',
+  eyebrow: 'Active searches from Purrfect Hire',
+  headline: 'Find the work you can grow with.',
+  intro: 'Explore the roles we are searching for today. Each brief shows the work, the requirements and the context available for that search.',
+  free: 'Applying is free. Offer Accelerator is never required and does not change how you are assessed.',
+  confidentiality: 'Some searches are confidential. We show only the company information released for each role.',
+  emptyTitle: 'No public roles are open right now.',
+  emptyBody: 'You can still send us your profile and the kind of role you are looking for.',
+  errorTitle: 'We could not load the open roles.',
+  errorBody: 'Please try again in a moment, or email us to ask about current searches.',
+  refreshError: 'We could not refresh the list. The roles below were available when this page was last updated.',
+  retry: 'Try again',
+  count: 'Open roles',
+  profileTitle: 'Keep your next move in view.',
+  profileBody: 'If these roles do not fit, tell us what you are looking for. We can consider your profile when a relevant search opens.',
+  profileCta: 'Send your profile',
+  email: 'go@purrfecthire.com',
+  profileHref: 'mailto:go@purrfecthire.com?subject=Considered%20for%20Purrfect%20searches&body=Hi%20Purrfect%20team%2C%0A%0ACurrent%20role%20and%20company%3A%0ALinkedIn%3A%0AThe%20kind%20of%20role%20I%20am%20looking%20for%3A%0A',
+};

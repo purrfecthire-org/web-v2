@@ -20,7 +20,6 @@ export default defineConfig({
     '/career-sessions': '/for-talent',
     '/career-momentum': '/for-talent',
     '/momentum': '/for-talent',
-    '/roles': '/for-talent',
     // Offer Accelerator
     '/oa': '/offer-acceleration',
     // The long application form is withdrawn: with no backend configured it
@@ -39,11 +38,11 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      // Five real pages: home, for-companies, for-talent, offer-acceleration
-      // and the privacy policy. Redirect stubs are not pages and never enter
-      // the sitemap.
+      // Commercial pages and live role details. Redirect stubs stay out.
       filter: (page) =>
-        /\/(for-companies|for-talent|offer-acceleration|privacy-policy)\/?$/.test(page) ||
+        /\/(for-companies|for-talent|offer-acceleration|career-compounding|for-investors|search-read|search-calibration|candidate-brief-sample|privacy-policy)\/?$/.test(page) ||
+        /^https:\/\/purrfecthire\.com\/search\/(founding-engineer|head-of-engineering|forward-deployed-engineer)\/?$/.test(page) ||
+        /^https:\/\/purrfecthire\.com\/roles(?:\/[^/]+)?\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/$/.test(page),
     }),
   ],

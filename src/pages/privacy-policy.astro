@@ -5,11 +5,11 @@
 // WhatsApp/Meta messaging. This is the URL to register in Meta's WhatsApp
 // Business onboarding. English only: the site has no Spanish version.
 import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_EMAIL } from '../content/links';
 
 const siteUrl = 'https://purrfecthire.com';
-const pageUrl = `${siteUrl}/privacy-policy`;
-// hiring@ is the verified inbox; privacy@ has never received a message.
-const contactEmail = 'hiring@purrfecthire.com';
+const pageUrl = `${siteUrl}/privacy-policy/`;
+const contactEmail = CONTACT_EMAIL;
 
 // This section is driven by the same flag that turns measurement on, so the
 // policy cannot say one thing while the site does another. Set
@@ -30,7 +30,7 @@ const meta = {
   lang="en"
   pageUrl={pageUrl}
   heading="Privacy Policy"
-  lastUpdated="October 14, 2026"
+  lastUpdated="October 17, 2026"
   lastUpdatedLabel="Last updated"
 >
   <p class="legal-intro">
@@ -53,9 +53,9 @@ const meta = {
   <ul>
     <li><strong>Search</strong>, for companies that are hiring ("Companies") and the
       candidates we consider for those roles ("Talent").</li>
-    <li><strong>Offer Accelerator</strong>, a private market advisory for senior
-      professionals making a career decision. It is a paid engagement with us, and it is
-      not a route into a client search.</li>
+    <li><strong>Private advisory</strong>, including Offer Accelerator, Career Compounding
+      and individual strategic sessions for senior professionals. These are paid
+      engagements separate from consideration in a client search.</li>
   </ul>
   <p>
     Purrfect Hire OÜ is the data controller responsible for your personal information.
@@ -67,7 +67,7 @@ const meta = {
   <h3>Information you provide</h3>
   <ul>
     <li><strong>Contact details</strong> — name, email address, phone number, and country or city.</li>
-    <li><strong>Professional information</strong> — resume/CV, work history, skills, portfolio or profile links (e.g. LinkedIn, GitHub), and compensation expectations.</li>
+    <li><strong>Professional information</strong> — resume/CV, work history, skills, portfolio or profile links (e.g. LinkedIn, GitHub), English level, and current or expected compensation where requested on a role application.</li>
     <li><strong>Application and advisory data</strong> — answers you submit when applying to a role or enrolling in Offer Accelerator, including interview notes and progress.</li>
     <li><strong>Company and hiring details</strong> — for Companies, information about your company, open roles, and hiring requirements.</li>
     <li><strong>Communications</strong> — messages you send us by email, web form, social media, or WhatsApp, and any files you share.</li>
@@ -75,9 +75,11 @@ const meta = {
 
   <h3>Information collected automatically</h3>
   <p>
-    This website sets no cookies, stores nothing in your browser and loads
-    nothing from third parties. There is no advertising, no tracking pixel and
-    no cross-site profiling, which is why you are not asked to accept cookies.
+    This website does not use advertising cookies or cross-site profiling.
+    The open roles pages request published vacancy information from our recruiting
+    service. When you submit a role application, that service receives the information
+    and files you choose to send. The founders booking link opens Cal.com, which
+    provides its own privacy information before you submit a booking.
   </p>
   {analyticsOn ? (
     <Fragment>
