@@ -3,7 +3,7 @@ import Shell from '../v2/Shell.astro';
 import type { Lang } from '../../content/index';
 import { getCompaniesV2 } from '../../content/companiesV2';
 import { CLIENT_BRANDS as clients } from '../../content/clientBrands';
-import { BOOKING_B2B as BOOKING_URL, KATE } from '../../content/links';
+import { BOOKING_B2B as BOOKING_URL, WHATSAPP_B2B, KATE } from '../../content/links';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
@@ -29,7 +29,7 @@ const t = getCompaniesV2(lang);
         <div class="fc-hero__actions"><a href={BOOKING_URL} data-cta="companies-hero-booking" class="h3-btn h3-btn--ink h3-hero__cta fc-hero__cta">
           {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
-        <a href="#selected-searches" data-cta="companies-selected-searches" class="h3-link fc-hero__secondary">See selected searches <span aria-hidden="true">→</span></a></div>
+        <a href={WHATSAPP_B2B} data-cta="companies-hero-whatsapp" class="h3-link fc-hero__secondary">{t.hero.whatsappCta} <span aria-hidden="true">↗</span></a></div>
         <p class="fc-microcopy">{t.hero.microcopy}</p>
       </div>
       <figure class="h3-hero__media fc-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
@@ -56,6 +56,7 @@ const t = getCompaniesV2(lang);
           ))}
         </ul>
         <p class="fc-logos__markets">{t.proof.markets}</p>
+        <a href="#selected-searches" data-cta="companies-selected-searches" class="h3-link fc-hero__secondary">See selected searches <span aria-hidden="true">→</span></a>
       </div>
   </div></section>
 
@@ -83,7 +84,7 @@ const t = getCompaniesV2(lang);
         <a href={BOOKING_URL} data-cta="companies-search-read-booking" class="h3-btn h3-btn--ink fc-read__cta">
           {t.read.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
-        <a href="/search-calibration" data-cta="companies-calibration-example" class="h3-link fc-hero__secondary">See the one-page example →</a>
+        <a href="/search-calibration" data-cta="companies-calibration-example" class="h3-link fc-hero__secondary">See how we calibrate a search →</a>
         <p class="fc-microcopy">{t.read.microcopy}</p>
       </div>
       <ul class="fc-read__list">
@@ -166,18 +167,19 @@ const t = getCompaniesV2(lang);
       <p class="h3-eyebrow">{t.proof.eyebrow}</p>
       <h2 class="h3-h2 fc-proof__h2" id="fc-proof-title">{t.proof.headline}</h2>
       {t.proof.voices.map((voice) => (
-        <figure class="fc-quote">
-          <div class="fc-quote__portrait">
+        <figure class:list={['fc-quote', { 'fc-quote--text': !voice.photo }]}>
+          {voice.photo && <div class="fc-quote__portrait">
             <picture>
-              <source srcset={voice.photoWebp} type="image/webp" />
+              {voice.photoWebp && <source srcset={voice.photoWebp} type="image/webp" />}
               <img src={voice.photo} alt={voice.name} width="480" height="480" loading="lazy" decoding="async" />
             </picture>
-          </div>
+          </div>}
           <div>
             <blockquote>“{voice.quote}”</blockquote>
             <figcaption>
               <span class="fc-quote__name">{voice.name}</span>
               <span class="fc-quote__role">{voice.role}</span>
+              {voice.context && <span class="fc-quote__context">{voice.context}</span>}
             </figcaption>
           </div>
         </figure>
@@ -232,6 +234,7 @@ const t = getCompaniesV2(lang);
         {t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span>
       </a>
       <p class="fc-microcopy">{t.close.howNote}</p>
+      <a href={WHATSAPP_B2B} data-cta="companies-close-whatsapp" class="h3-link fc-hero__secondary">{t.hero.whatsappCta} <span aria-hidden="true">↗</span></a>
       <p class="fc-close__mail">{t.close.emailLabel} <a href={`mailto:${t.close.email}`} data-cta="companies-secondary-email">{t.close.email}</a>.</p>
     </div>
   </section>
@@ -240,63 +243,64 @@ const t = getCompaniesV2(lang);
 <style lang="scss">
   .fc-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; margin-top: 1.75rem; }
   .fc-hero__actions .h3-hero__cta { margin-top: 0; }
-  .fc-hero__secondary { margin-top: 1.25rem; font-size: 0.9375rem; }
+  .fc-hero__secondary { margin-top: 1.25rem; font-size: var(--type-ui); }
   .fc-hero__media img { object-position: 42% 42%; }
-  .fc-credential { margin-top: 1.5rem; font-size: 0.9375rem; color: var(--muted); max-width: 30rem; }
+  .fc-credential { margin-top: 1.5rem; font-size: var(--type-ui); color: var(--muted); max-width: 30rem; }
   .fc-hero__cta, .fc-read__cta, .fc-close__cta { margin-top: 2rem; max-width: 100%; text-align: center; line-height: 1.35; }
-  .fc-microcopy { margin-top: 1rem; max-width: 32rem; font-size: 0.875rem; line-height: 1.65; color: var(--muted); }
+  .fc-microcopy { margin-top: 1rem; max-width: 32rem; font-size: var(--type-caption); line-height: 1.65; color: var(--muted); }
   .fc-situations, .fc-method, .fc-searches, .fc-kate { padding-block: clamp(3.5rem, 6vw, 6.5rem); background: var(--sand); border-top: 1px solid var(--line); }
   .fc-situations__h2 { max-width: 25ch; }
   .fc-situations__list { display: grid; gap: 0 3.5rem; margin-top: 2.5rem; }
   .fc-situation { padding: 1.5rem 0; border-top: 1px solid var(--line); }
-  .fc-situation h3 { font-size: 1.125rem; font-weight: 500; line-height: 1.35; }
-  .fc-situation p { margin-top: 0.7rem; max-width: 34rem; font-size: 1rem; line-height: 1.7; color: var(--muted); }
+  .fc-situation h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .fc-situation p { margin-top: 0.7rem; max-width: 34rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .fc-read { padding-block: clamp(3.5rem, 6vw, 6.5rem); background: var(--stone); }
   .fc-read__grid, .fc-evidence__grid { display: grid; gap: 2.5rem; align-items: start; }
   .fc-read__h2 { max-width: 18ch; }
   .fc-read__body { margin-top: 1.5rem; }
   .fc-read__list { border-top: 1px solid var(--line); }
-  .fc-read__list li { display: flex; align-items: baseline; gap: 1rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line); font-size: 1.0625rem; line-height: 1.6; }
+  .fc-read__list li { display: flex; align-items: baseline; gap: 1rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line); font-size: var(--type-body); line-height: 1.6; }
   .fc-signal { flex: 0 0 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--signal); }
   .fc-evidence { scroll-margin-top: 2rem; background: var(--midnight); color: var(--on-dark); padding-block: clamp(3.5rem, 6vw, 7rem); }
   .fc-evidence__sub { margin-top: 1.5rem; }
   .fc-evidence__cta { margin-top: 2rem; }
   .fc-evidence a:focus-visible { outline-color: var(--on-dark); }
   .fc-brief { padding: clamp(1.5rem, 3vw, 2.5rem); background: var(--sand); color: var(--text); border-radius: 14px; }
-  .fc-brief__label { margin-bottom: 1.25rem; font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .fc-brief__label { margin-bottom: 1.25rem; font-size: var(--type-eyebrow); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
   .fc-brief__fields { margin: 0; }
   .fc-brief__fields > div { padding-block: 1.15rem; border-top: 1px solid var(--line); }
-  .fc-brief__fields dt { font-size: 1rem; font-weight: 500; line-height: 1.4; }
-  .fc-brief__fields dd { margin: 0.6rem 0 0; color: var(--muted); font-size: 0.9375rem; line-height: 1.65; }
+  .fc-brief__fields dt { font-size: var(--type-body); font-weight: 500; line-height: 1.4; }
+  .fc-brief__fields dd { margin: 0.6rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
   .fc-searches__h2 { max-width: 26ch; }
   .fc-searches__list { display: grid; gap: 2rem; margin-top: 2.5rem; }
   .fc-search { padding-top: 1.5rem; border-top: 1px solid var(--line); }
-  .fc-search h3 { margin-top: 1rem; font-size: 1.25rem; font-weight: 500; line-height: 1.4; }
-  .fc-search__problem { margin-top: 1rem; color: var(--muted); font-size: 1rem; line-height: 1.65; }
+  .fc-search h3 { margin-top: 1rem; font-size: var(--type-subheading); font-weight: 500; line-height: 1.4; }
+  .fc-search__problem { margin-top: 1rem; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
   .fc-search__detail { margin-top: 1.25rem; }
-  .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; padding-block: .5rem; font-size: .9375rem; font-weight: 500; list-style: none; }
+  .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; padding-block: .5rem; font-size: var(--type-ui); font-weight: 500; list-style: none; }
   .fc-search__detail summary::-webkit-details-marker { display: none; }
   .fc-search__detail[open] summary span { transform: rotate(45deg); }
   .fc-search dl { margin-top: 1.5rem; }
   .fc-search dl > div + div { margin-top: 1.25rem; }
-  .fc-search dt { font-size: 0.875rem; font-weight: 500; }
-  .fc-search dd { margin: 0.5rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.7; }
+  .fc-search dt { font-size: var(--type-caption); font-weight: 500; }
+  .fc-search dd { margin: 0.5rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .fc-method__h2 { max-width: 25ch; }
   .fc-steps { margin-top: 2.5rem; display: grid; gap: 2rem; }
   .fc-step { min-width: 0; padding-top: 1.25rem; border-top: 1px solid var(--line); }
-  .fc-step__id { font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .fc-step__title { margin-top: 1rem; font-size: 1.125rem; font-weight: 500; line-height: 1.4; }
-  .fc-step__body { margin-top: 0.7rem; color: var(--muted); font-size: 1rem; line-height: 1.7; }
+  .fc-step__id { font-size: var(--type-caption); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .fc-step__title { margin-top: 1rem; font-size: var(--type-subheading); font-weight: 500; line-height: 1.4; }
+  .fc-step__body { margin-top: 0.7rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .fc-proof { background: var(--sand); padding-block: clamp(3.5rem, 6vw, 6.5rem); border-top: 1px solid var(--line); }
   .fc-proof__h2 { max-width: 26ch; }
   .fc-quote { margin-top: 2.5rem; display: grid; gap: 1.5rem; align-items: center; max-width: 58rem; }
   .fc-quote + .fc-quote { padding-top: 2.5rem; border-top: 1px solid var(--line); }
   .fc-quote__portrait { max-width: 9rem; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 14px; }
   .fc-quote__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .fc-quote blockquote { font-family: var(--h-serif); font-size: clamp(1.35rem, 2.4vw, 1.75rem); line-height: 1.38; }
-  .fc-quote figcaption { margin-top: 1rem; display: flex; flex-direction: column; font-size: 0.9375rem; }
+  .fc-quote blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.55; }
+  .fc-quote figcaption { margin-top: 1rem; display: flex; flex-direction: column; font-size: var(--type-caption); }
   .fc-quote__name { font-weight: 500; }
   .fc-quote__role { color: var(--muted); }
+  .fc-quote__context { margin-top: .5rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
   .fc-client-strip { padding: 2rem 0 2.5rem; background: var(--sand); border-top: 1px solid var(--line); }
   .fc-logos { margin: 0; }
   .fc-logos ul { margin-top: 1.5rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; align-items: center; }
@@ -310,14 +314,14 @@ const t = getCompaniesV2(lang);
   .fc-logos a:hover { background: var(--white); }
   @media (min-width: 40rem) { .fc-logos ul { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   @media (min-width: 64rem) { .fc-logos ul { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
-  .fc-logos__markets { margin-top: 1.5rem; color: var(--muted); font-size: 0.9375rem; }
+  .fc-logos__markets { margin-top: 1.5rem; color: var(--muted); font-size: var(--type-ui); }
   .fc-models { background: var(--stone); padding-block: clamp(3.5rem, 6vw, 6rem); }
   .fc-models__h2 { max-width: 26ch; }
   .fc-models__list { margin-top: 2.5rem; display: grid; gap: 1.5rem; }
   .fc-model { padding: 1.75rem; border: 1px solid var(--line); border-radius: 14px; background: var(--sand); }
-  .fc-model__name { font-size: 1.125rem; font-weight: 500; line-height: 1.35; }
-  .fc-model__note { margin-top: 0.75rem; color: var(--muted); font-size: 1rem; line-height: 1.7; }
-  .fc-models__recommendation { margin-top: 1.75rem; max-width: 40rem; font-size: 1rem; line-height: 1.7; }
+  .fc-model__name { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .fc-model__note { margin-top: 0.75rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .fc-models__recommendation { margin-top: 1.75rem; max-width: 40rem; font-size: var(--type-body); line-height: 1.7; }
   .fc-models__cta { margin-top: 1.25rem; }
   .fc-kate__grid { display: grid; gap: 2.5rem; align-items: center; }
   .fc-kate__portrait { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 14px; max-width: 20rem; }
@@ -326,10 +330,11 @@ const t = getCompaniesV2(lang);
   .fc-close { background: var(--sand); border-top: 1px solid var(--line); padding: clamp(3.5rem, 6vw, 6.5rem) 0 clamp(4rem, 7vw, 7.5rem); }
   .fc-close__h2 { max-width: 24ch; }
   .fc-close__body { margin-top: 1.25rem; }
-  .fc-close__mail { margin-top: 1rem; color: var(--muted); font-size: 0.9375rem; overflow-wrap: anywhere; }
+  .fc-close__mail { margin-top: 1rem; color: var(--muted); font-size: var(--type-ui); overflow-wrap: anywhere; }
   .fc-close__mail a { color: var(--text); border-bottom: 1px solid var(--line); }
   @media (min-width: 40rem) {
     .fc-quote { grid-template-columns: 9rem 1fr; gap: 2.25rem; }
+    .fc-quote--text { grid-template-columns: 1fr; max-width: 48rem; }
   }
   @media (min-width: 56rem) {
     .fc-situations__list, .fc-models__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }

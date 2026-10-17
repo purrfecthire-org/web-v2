@@ -1,168 +1,49 @@
 ---
-import '@fontsource-variable/inter/wght.css';
-// ── LegalLayout ─────────────────────────────────────────────────────────────
-// Shared shell for long-form legal documents (privacy policy, future terms).
-// Self-contained header (logo → home + language toggle) instead of V6Nav,
-// which depends on a hero-scroll observer that legal pages don't have.
-// Renders an <article> reading column on the warm-cream canvas and reuses the
-// shared Footer. Body copy is passed in via the default <slot />.
-import Layout from './Layout.astro';
-import Footer from '../components/Footer.astro';
-import { getContent } from '../content/index';
-import { getRelativeLocaleUrl } from 'astro:i18n';
+// Legal documents use the same navigation, fonts and footer as the main site.
+import Shell from '../components/v2/Shell.astro';
 
 interface Props {
   title: string;
   description: string;
   lang: 'en' | 'es';
   pageUrl: string;
-  /** Human-readable heading shown at the top of the document */
   heading: string;
-  /** e.g. "June 15, 2026" — rendered under the heading */
   lastUpdated: string;
-  /** Localized "Last updated" label */
   lastUpdatedLabel: string;
 }
 
 const { title, description, lang, pageUrl, heading, lastUpdated, lastUpdatedLabel } = Astro.props;
-
-const c = getContent(lang);
-const homeHref = getRelativeLocaleUrl(lang, '/');
 ---
 
-<Layout legacyFonts={false} title={title} description={description} lang={lang} canonicalUrl={pageUrl}>
-  <header class="legal-nav">
-    <div class="legal-nav__inner">
-      <a href={homeHref} aria-label="Purrfect Hire home">
-        <img
-          src="/brand/logo/logo-horizontal-midnight.svg"
-          class="legal-nav__logo"
-          alt="Purrfect Hire"
-          width="289"
-          height="60"
-        />
-      </a>
-    </div>
-  </header>
-
-  <main class="legal">
+<Shell title={title} description={description} lang={lang} canonicalUrl={pageUrl} theme="light" journey="home">
+  <section class="legal">
     <article class="legal__doc">
-      <h1 class="legal__title">{heading}</h1>
+      <h1 class="h3-hero__h1 legal__title">{heading}</h1>
       <p class="legal__updated">{lastUpdatedLabel}: {lastUpdated}</p>
       <slot />
     </article>
-  </main>
-
-  <Footer content={c.footer} />
-</Layout>
+  </section>
+</Shell>
 
 <style lang="scss">
-  .legal-nav {
-    background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+  .legal { padding-block: 8rem 6rem; background: var(--sand); }
+  .legal__doc { max-width: 46rem; margin-inline: auto; padding-inline: 1.5rem; color: var(--text); }
+  .legal__title { max-width: none; margin: 0 0 1rem; }
+  .legal__updated { font-size: var(--type-caption); color: var(--muted); margin-bottom: 3rem; }
 
-    &__inner {
-      max-width: 80rem;
-      margin-inline: auto;
-      padding: 1.25rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    &__logo { width: 8rem; }
-
-    &__lang {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.875rem;
-    }
-
-    &__lang-active { color: var(--color-text); font-weight: 500; }
-    &__lang-div { color: var(--color-border); }
-    &__lang-link {
-      color: var(--color-muted);
-      text-decoration: none;
-      transition: color 0.15s ease;
-      &:hover { color: var(--color-text); }
-    }
-  }
-
-  .legal {
-    background: var(--color-bg);
-    padding-block: 4rem 6rem;
-  }
-
-  .legal__doc {
-    max-width: 44rem;
-    margin-inline: auto;
-    padding-inline: 2rem;
-    color: var(--color-text);
-  }
-
-  .legal__title {
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin: 0 0 0.75rem;
-  }
-
-  .legal__updated {
-    font-size: 0.9375rem;
-    color: var(--color-tertiary);
-    margin: 0 0 3rem;
-  }
-
-  // Styling for the slotted document body (global so it reaches <slot /> content)
   :global(.legal__doc h2) {
-    font-size: 1.375rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    margin: 2.75rem 0 0.75rem;
-    line-height: 1.25;
+    font-family: var(--h-serif); font-size: var(--type-section); font-weight: 400;
+    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
+    line-height: 1.15; letter-spacing: -0.014em; margin: 3rem 0 1rem;
   }
-
-  :global(.legal__doc h3) {
-    font-size: 1.0625rem;
-    font-weight: 600;
-    margin: 1.75rem 0 0.5rem;
-  }
-
-  :global(.legal__doc p),
-  :global(.legal__doc li) {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--color-muted);
-  }
-
-  :global(.legal__doc p) { margin: 0 0 1rem; }
-
-  :global(.legal__doc ul) {
-    margin: 0 0 1.25rem;
-    padding-left: 1.25rem;
-    list-style: disc;
-  }
-
-  :global(.legal__doc li) { margin-bottom: 0.4rem; }
-
-  :global(.legal__doc a) {
-    color: var(--color-accent);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  :global(.legal__doc strong) { color: var(--color-text); font-weight: 600; }
-
-  :global(.legal__doc .legal-intro) {
-    font-size: 1.0625rem;
-    color: var(--color-text);
-  }
-
-  @media (max-width: 640px) {
-    .legal { padding-block: 2.5rem 4rem; }
-    .legal__doc { padding-inline: 1.25rem; }
-    .legal-nav__inner { padding-inline: 1.25rem; }
-  }
+  :global(.legal__doc h3) { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; margin: 1.75rem 0 .75rem; }
+  :global(.legal__doc p), :global(.legal__doc li) { font-size: var(--type-body); line-height: 1.75; color: var(--muted); }
+  :global(.legal__doc p) { margin-bottom: 1rem; }
+  :global(.legal__doc ul) { margin: 0 0 1.25rem; padding-left: 1.25rem; list-style: disc; }
+  :global(.legal__doc li) { margin-bottom: .5rem; }
+  :global(.legal__doc a) { color: var(--purple); text-decoration: underline; text-underline-offset: 3px; }
+  :global(.legal__doc strong) { color: var(--text); font-weight: 500; }
+  :global(.legal__doc .legal-intro) { font-size: var(--type-body); color: var(--text); }
+  @media (min-width: 64rem) { .legal__doc { padding-inline: 2rem; } }
+  @media (max-width: 40rem) { .legal { padding-block: 7rem 4rem; } }
 </style>

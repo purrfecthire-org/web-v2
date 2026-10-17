@@ -1,9 +1,10 @@
 import type { Lang } from './index';
+import { BOOKING_B2B } from './links';
 
 // Portfolio support is a proposed engagement format, not a claim of an
 // existing fund partnership. Confirm scope, fees and cadence per engagement.
 // Do not add partner logos, portfolio results or case studies without sources.
-export const INVESTORS_SEARCH_READ = '/search-read?audience=investors';
+export const INVESTORS_SEARCH_READ = BOOKING_B2B;
 
 export interface InvestorsV2Content {
   meta: { title: string; description: string };
@@ -38,8 +39,8 @@ export const investorsV2En: InvestorsV2Content = {
     eyebrow: 'For investors · Portfolio hiring',
     headline: 'Help your founders make the hire the company needs next.',
     body: 'Senior and executive hiring support for funds, platform teams and talent partners. Start with the business problem behind the role.',
-    cta: 'Discuss portfolio hiring',
-    note: 'Bring the companies and hiring decisions you want to support.',
+    cta: 'Book a 20-minute founders call',
+    note: 'A free 20-minute introductory call. No commitment.',
     prompt: {
       label: 'Start here',
       title: 'What does this hire need to change?',
@@ -63,9 +64,9 @@ export const investorsV2En: InvestorsV2Content = {
       {
         id: '01',
         title: 'Search Calibration',
-        body: 'Pressure-test the role against the company’s stage, problem and talent market.',
+        body: 'Part of defining a search: pressure-test the role against the company’s stage, problem and talent market.',
         outcomeLabel: 'The founder gets',
-        outcome: 'A read on the profile, candidate expectations, reasons to move and assessment questions.',
+        outcome: 'Role, market and assessment questions defined within the search engagement, with no separate Calibration purchase.',
       },
       {
         id: '02',
@@ -122,7 +123,7 @@ export const investorsV2En: InvestorsV2Content = {
       {
         title: 'Search Calibration',
         body: 'How we examine the role, market and assessment questions.',
-        label: 'Explore Search Calibration',
+        label: 'See how we calibrate a search',
         href: '/search-calibration',
         ctaId: 'investors-search-calibration',
       },
@@ -145,7 +146,7 @@ export const investorsV2En: InvestorsV2Content = {
       },
       {
         question: 'Who pays for the work?',
-        answer: 'Agree scope, fees and who commissions the work upfront. Portfolio support and individual company searches can have different terms.',
+        answer: 'The initial 20-minute read is free. Search engagements use a success fee or a monthly team. Agree portfolio support scope and fees separately.',
       },
       {
         question: 'What information is shared with the fund?',
@@ -156,8 +157,8 @@ export const investorsV2En: InvestorsV2Content = {
   close: {
     headline: 'Which portfolio hiring decision needs a clearer read?',
     body: 'Bring the companies, roles and hiring obstacles. We’ll discuss where to start.',
-    cta: 'Discuss portfolio hiring',
-    note: 'Agree scope and terms before an engagement begins.',
+    cta: 'Book a 20-minute founders call',
+    note: 'Start with a free initial read. Agree scope and terms before an engagement.',
   },
 };
 

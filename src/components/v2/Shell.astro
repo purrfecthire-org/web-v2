@@ -20,6 +20,7 @@ interface Props {
   lang?: Lang;
   title: string;
   description: string;
+  canonicalUrl?: string;
   theme?: 'dark' | 'light';
   /** Opens in a new tab: the nav CTA leaves the site (a calendar, an email). */
   navCta?: { label: string; href: string; external?: boolean };
@@ -29,10 +30,10 @@ interface Props {
    * Talent and Offer can be counted separately the day an analytics tool is
    * chosen. Nothing is loaded and nothing is sent from here.
    */
-  journey?: 'home' | 'companies' | 'talent' | 'offer';
+  journey?: 'home' | 'companies' | 'talent' | 'offer' | 'careers';
 }
 
-const { lang = 'en', title, description, theme = 'dark', navCta, journey = 'home' } = Astro.props;
+const { lang = 'en', title, description, canonicalUrl, theme = 'dark', navCta, journey = 'home' } = Astro.props;
 
 const links = [
   { label: 'For companies', href: PAGE_COMPANIES },
@@ -59,11 +60,11 @@ const footerLinks = journey === 'companies' ? [
 const ctaRel = navCta?.external ? { target: '_blank', rel: 'noopener' } : {};
 // B2B buttons are Midnight, or white when they sit on Midnight. Offer keeps
 // its own purple on both surfaces.
-const isB2B = journey === 'home' || journey === 'companies';
+const isB2B = journey === 'home' || journey === 'companies' || journey === 'careers';
 const ctaTone = isB2B ? 'h3-btn--ink' : '';
 ---
 
-<Layout title={title} description={description} lang={lang} legacyFonts={false}>
+<Layout title={title} description={description} canonicalUrl={canonicalUrl} lang={lang} legacyFonts={false}>
   <div class:list={['h3', `h3--${theme}`]} data-journey={journey}>
     <header class="h3-nav">
       <div class="h3-nav__in">
@@ -106,6 +107,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
         <span>© 2026 Purrfect Hire OÜ</span>
         <nav aria-label="Footer">
           {footerLinks.map((link) => <a href={link.href} data-cta={`${journey}-footer-${link.label.toLowerCase().replace(/\s+/g, '-')}`}>{link.label}</a>)}
+          <a href="/work-with-us" data-cta={`${journey}-footer-work-with-us`}>Work with us</a>
           <a href={PRIVACY}>Privacy</a>
           <a href="https://www.linkedin.com/company/purrfect-hire" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
@@ -137,8 +139,17 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
        its web files and license are in. */
     --h-serif: 'Fraunces Variable', Georgia, serif;
     --h-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
+    --type-display: clamp(2.5rem, 4.5vw, 4.25rem);
+    --type-section: clamp(1.875rem, 3vw, 2.75rem);
+    --type-quote: clamp(1.125rem, 1.7vw, 1.5rem);
+    --type-subheading: 1.25rem;
+    --type-body: 1.0625rem;
+    --type-lead: 1.125rem;
+    --type-ui: 0.9375rem;
+    --type-caption: 0.875rem;
+    --type-eyebrow: 0.75rem;
     background: var(--sand); color: var(--text);
-    font-family: var(--h-sans); line-height: 1.6; -webkit-font-smoothing: antialiased;
+    font-family: var(--h-sans); font-size: var(--type-body); line-height: 1.6; -webkit-font-smoothing: antialiased;
     /* Only bites when a word genuinely cannot fit, which at 200% zoom is the
        email address and the longest headline words. */
     overflow-wrap: break-word;
@@ -147,6 +158,8 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   :where(.h3) a { color: inherit; text-decoration: none; }
   :where(.h3) :where(p, h1, h2, h3, ul, ol, figure, blockquote) { margin: 0; padding: 0; }
   :where(.h3) :where(ul, ol) { list-style: none; }
+  .h3 :where(h3, h4, blockquote, button, input, select, textarea) { font-family: var(--h-sans); }
+  .h3 :where(h3, h4) { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .h3 a:focus-visible,
   .h3 summary:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; border-radius: 3px; }
   /* Purple sits at 3.1:1 on Midnight, which is thin for a focus ring. */
@@ -158,7 +171,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   @media (min-width: 64rem) { .h3-wrap { padding-inline: 3rem; } }
 
   .h3-eyebrow {
-    font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em;
+    font-size: var(--type-eyebrow); font-weight: 500; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--muted);
   }
   .h3-eyebrow--on-dark { color: var(--on-dark-muted); }
@@ -171,11 +184,11 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
     padding: 0.9rem 1.6rem; border-radius: 999px;
     background: var(--purple); color: #fff !important;
-    font-size: 0.9375rem; font-weight: 500; line-height: 1;
+    font-size: var(--type-ui); font-weight: 500; line-height: 1;
     transition: background-color 0.2s ease;
   }
   .h3-btn:hover { background: var(--purple-deep); }
-  .h3-btn--sm { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
+  .h3-btn--sm { padding: 0.6rem 1.1rem; font-size: var(--type-caption); }
   .h3-btn--ink { background: var(--midnight); }
   .h3-btn--ink:hover { background: #1b1d2b; }
   /* Midnight on a Midnight hero: the nav button sits over the photograph,
@@ -184,7 +197,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   .h3-arrow { font-size: 0.9em; line-height: 1; }
   .h3-link {
     display: inline-flex; align-items: baseline; gap: 0.4rem;
-    font-size: 1rem; font-weight: 500;
+    font-size: var(--type-body); font-weight: 500;
     border-bottom: 1px solid var(--line); padding-bottom: 2px;
   }
   .h3-link:hover { border-color: currentColor; }
@@ -193,17 +206,17 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   .h3-h2 {
     font-family: var(--h-serif); font-weight: 400;
     font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
-    font-size: clamp(1.875rem, 3.6vw, 3.5rem); line-height: 1.06;
+    font-size: var(--type-section); line-height: 1.12;
     letter-spacing: -0.014em; margin-top: 0.9rem; text-wrap: balance;
   }
   .h3-h2--on-dark { color: var(--on-dark); }
-  .h3-body { font-size: 1.125rem; line-height: 1.7; color: var(--muted); max-width: 34rem; }
+  .h3-body { font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 34rem; }
   .h3-body--on-dark { color: var(--on-dark-muted); }
   .h3-body + .h3-body { margin-top: 1.1rem; }
   .h3-h2 + .h3-body { margin-top: 1.5rem; }
   .h3-lead {
     margin-top: 1.5rem; max-width: 34rem;
-    font-size: 1.1875rem; line-height: 1.6; color: var(--text);
+    font-size: var(--type-lead); line-height: 1.6; color: var(--text);
   }
   .h3-lead--on-dark { color: var(--on-dark); }
   .h3-lead + .h3-body { margin-top: 1.1rem; }
@@ -219,7 +232,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   }
   @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
   .h3-nav__logo img { height: 1.6rem; width: auto; display: block; }
-  .h3-nav__links { display: none; gap: 1.35rem; font-size: 0.9375rem; }
+  .h3-nav__links { display: none; gap: 1.35rem; font-size: var(--type-ui); }
   @media (min-width: 72rem) { .h3-nav__links { display: flex; } }
   .h3--dark .h3-nav__links { color: var(--on-dark-muted); }
   .h3--dark .h3-nav__links a:hover { color: var(--on-dark); }
@@ -234,7 +247,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   @media (min-width: 72rem) { .h3-menu { display: none; } }
   .h3-menu > summary {
     list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.55rem 0.9rem; border-radius: 999px; font-size: 0.8125rem; font-weight: 500;
+    padding: 0.55rem 0.9rem; border-radius: 999px; font-size: var(--type-caption); font-weight: 500;
   }
   .h3-menu > summary::-webkit-details-marker { display: none; }
   .h3--dark .h3-menu > summary { color: var(--on-dark); border: 1px solid var(--line-dark); }
@@ -250,10 +263,10 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   }
   .h3-menu__panel nav { display: grid; }
   .h3-menu__panel nav a {
-    padding: 0.6rem 0.65rem; border-radius: 9px; font-size: 0.9375rem; color: var(--text);
+    padding: 0.6rem 0.65rem; border-radius: 9px; font-size: var(--type-ui); color: var(--text);
   }
   .h3-menu__panel nav a:hover { background: var(--sand); }
-  .h3-menu__cta { margin-top: 0.4rem; width: 100%; padding: 0.75rem 1rem; font-size: 0.875rem; }
+  .h3-menu__cta { margin-top: 0.4rem; width: 100%; padding: 0.75rem 1rem; font-size: var(--type-caption); }
 
   /* ── Hero primitives ──────────────────────────────────────────────── */
   .h3-hero { position: relative; overflow: hidden; padding: 6rem 0 3.5rem; }
@@ -266,11 +279,11 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   .h3-hero__h1 {
     font-family: var(--h-serif); font-weight: 400;
     font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
-    font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1.02;
+    font-size: var(--type-display); line-height: 1.08;
     letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance; margin-top: 0.85rem;
   }
-  .h3-hero__sub { margin-top: 1.5rem; max-width: 34rem; font-size: 1.125rem; line-height: 1.6; }
-  @media (min-width: 56rem) { .h3-hero__sub { margin-top: 2rem; font-size: 1.1875rem; line-height: 1.65; } }
+  .h3-hero__sub { margin-top: 1.5rem; max-width: 34rem; font-size: var(--type-lead); line-height: 1.65; }
+  @media (min-width: 56rem) { .h3-hero__sub { margin-top: 2rem; } }
   .h3--dark .h3-hero__sub { color: var(--on-dark-muted); }
   .h3--light .h3-hero__sub { color: var(--muted); }
   .h3-hero__cta { margin-top: 1.75rem; }
@@ -314,7 +327,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   /* ── Footer ───────────────────────────────────────────────────────── */
   .h3-footer {
     background: var(--midnight); color: var(--on-dark-muted);
-    border-top: 1px solid var(--line-dark); padding: 2rem 0 2.5rem; font-size: 0.8125rem;
+    border-top: 1px solid var(--line-dark); padding: 2rem 0 2.5rem; font-size: var(--type-caption);
   }
   .h3-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; min-width: 0; }
   .h3-footer nav { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; min-width: 0; }

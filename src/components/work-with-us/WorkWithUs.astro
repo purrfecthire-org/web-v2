@@ -1,0 +1,136 @@
+---
+import Shell from '../v2/Shell.astro';
+import { workWithUs as t } from '../../content/workWithUs';
+---
+
+<Shell
+  title={t.meta.title}
+  description={t.meta.description}
+  theme="light"
+  journey="careers"
+  navCta={{ label: t.applicationCta, href: '#introduce-yourself' }}
+>
+  <div class="wwu">
+    <section class="wwu-hero" aria-labelledby="wwu-title">
+      <div class="h3-wrap">
+        <p class="h3-eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="wwu-hero__title" id="wwu-title">{t.hero.headline}</h1>
+        <p class="wwu-hero__body">{t.hero.body}</p>
+        <p class="wwu-hero__standard">{t.hero.standard}</p>
+        <a class="h3-btn h3-btn--ink" href="#introduce-yourself" data-cta="careers-hero-introduce">
+          {t.applicationCta}<span aria-hidden="true">→</span>
+        </a>
+        <p class="wwu-client-path">{t.hero.secondary} <a href={t.hero.secondaryHref} data-cta="careers-client-searches">{t.hero.secondaryCta} <span aria-hidden="true">→</span></a></p>
+      </div>
+    </section>
+
+    <section class="wwu-section" aria-labelledby="wwu-work-title">
+      <div class="h3-wrap">
+        <p class="h3-eyebrow">{t.work.eyebrow}</p>
+        <h2 class="h3-h2 wwu-heading" id="wwu-work-title">{t.work.headline}</h2>
+        <dl class="wwu-three">
+          {t.work.items.map((item) => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="wwu-section wwu-values" aria-labelledby="wwu-values-title">
+      <div class="h3-wrap wwu-split">
+        <div>
+          <p class="h3-eyebrow">{t.values.eyebrow}</p>
+          <h2 class="h3-h2 wwu-heading" id="wwu-values-title">{t.values.headline}</h2>
+        </div>
+        <dl class="wwu-values__list">
+          {t.values.items.map((item) => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="wwu-section" aria-labelledby="wwu-support-title">
+      <div class="h3-wrap">
+        <p class="h3-eyebrow">{t.support.eyebrow}</p>
+        <h2 class="h3-h2 wwu-heading" id="wwu-support-title">{t.support.headline}</h2>
+        <dl class="wwu-three wwu-three--support">
+          {t.support.items.map((item) => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
+        </dl>
+      </div>
+    </section>
+
+    <section class="wwu-name" aria-labelledby="wwu-name-title">
+      <div class="h3-wrap wwu-name__grid">
+        <img src="/brand/logo/cat-observe.svg" width="160" height="160" alt="" aria-hidden="true" loading="lazy" />
+        <div>
+          <p class="h3-eyebrow">{t.name.eyebrow}</p>
+          <h2 class="h3-h2 wwu-heading" id="wwu-name-title">{t.name.headline}</h2>
+          <p>{t.name.body}</p>
+          <p>{t.name.meaning}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wwu-section wwu-apply" id="introduce-yourself" aria-labelledby="wwu-apply-title">
+      <div class="h3-wrap wwu-split">
+        <div>
+          <p class="h3-eyebrow">{t.application.eyebrow}</p>
+          <h2 class="h3-h2 wwu-heading" id="wwu-apply-title">{t.application.headline}</h2>
+          <p class="wwu-apply__body">{t.application.body}</p>
+          <a class="h3-btn h3-btn--ink" href={t.applicationHref} data-cta="careers-spontaneous-application">
+            {t.applicationCta}<span aria-hidden="true">→</span>
+          </a>
+          <p class="wwu-apply__note">{t.application.note}</p>
+        </div>
+        <div class="wwu-apply__details">
+          <h3>{t.application.detailsTitle}</h3>
+          <ul>{t.application.details.map((detail) => <li>{detail}</li>)}</ul>
+          <p>{t.application.next}</p>
+          <a class="h3-link" href={t.application.privacyHref} data-cta="careers-privacy">{t.application.privacyLabel}<span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Shell>
+
+<style>
+  .wwu-hero { padding-block: 8rem 4rem; }
+  .wwu-hero__title {
+    max-width: 17ch; margin-top: 1.3rem; font-family: var(--h-serif);
+    font-size: var(--type-display); font-weight: 400;
+    line-height: 1.07; letter-spacing: -.025em; text-wrap: balance;
+    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
+  }
+  .wwu-hero__body { max-width: 44rem; margin-top: 1.6rem; color: var(--muted); font-size: 1.125rem; line-height: 1.7; }
+  .wwu-hero__standard { margin-block: 1.5rem 1.8rem; font-size: 1rem; font-weight: 500; }
+  .wwu-client-path { max-width: 42rem; margin-top: 1.5rem; color: var(--muted); font-size: .875rem; line-height: 1.6; }
+  .wwu-client-path a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+  .wwu-section { padding-block: 3.75rem; border-top: 1px solid var(--line); }
+  .wwu-heading { max-width: 23ch; font-size: var(--type-section); line-height: 1.12; }
+  .wwu-three { display: grid; gap: 1.75rem; margin-top: 2.5rem; }
+  .wwu-three dt, .wwu-values dt, .wwu-apply__details h3 { font-size: 1.0625rem; font-weight: 500; line-height: 1.4; }
+  .wwu-three dd, .wwu-values dd { margin: .65rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.7; }
+  .wwu-three--support > div { border-left: 2px solid var(--signal); padding-left: 1rem; }
+  .wwu-values { background: var(--white); }
+  .wwu-split { display: grid; gap: 2.5rem; }
+  .wwu-values__list { display: grid; gap: 1.4rem; }
+  .wwu-values__list > div + div { border-top: 1px solid var(--line); padding-top: 1.4rem; }
+  .wwu-name { padding-block: 3.5rem; background: var(--stone); }
+  .wwu-name__grid { display: grid; gap: 1.5rem; align-items: center; }
+  .wwu-name img { width: 6rem; height: 6rem; object-fit: contain; }
+  .wwu-name p:not(.h3-eyebrow) { max-width: 42rem; margin-top: 1.2rem; font-size: 1rem; line-height: 1.7; color: var(--muted); }
+  .wwu-apply { scroll-margin-top: 2rem; }
+  .wwu-apply__body { margin-block: 1.5rem; max-width: 34rem; color: var(--muted); font-size: 1.0625rem; line-height: 1.7; }
+  .wwu-apply__note { max-width: 34rem; margin-top: 1.1rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.65; }
+  .wwu-apply__details { border: 1px solid var(--line); border-radius: 1rem; padding: 1.5rem; align-self: start; }
+  .wwu-apply__details ul { margin-top: 1rem; padding-left: 1.2rem; list-style: disc; }
+  .wwu-apply__details li, .wwu-apply__details p { color: var(--muted); font-size: .9375rem; line-height: 1.7; }
+  .wwu-apply__details li + li { margin-top: .5rem; }
+  .wwu-apply__details p { margin-top: 1.5rem; }
+  .wwu-apply__details a { margin-top: 1.25rem; font-size: .875rem; }
+  @media (min-width: 48rem) {
+    .wwu-three { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+    .wwu-split { grid-template-columns: 1fr 1.2fr; gap: 4rem; }
+    .wwu-name__grid { grid-template-columns: 10rem minmax(0, 1fr); gap: 3rem; }
+    .wwu-name img { width: 10rem; height: 10rem; }
+    .wwu-section { padding-block: 4.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .wwu * { scroll-behavior: auto; } }
+</style>
