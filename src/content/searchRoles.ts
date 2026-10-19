@@ -28,7 +28,7 @@ export const searchRoleShared = {
   decisionLabel: 'The decision to make',
   problemEyebrow: 'Define the problem',
   evidenceEyebrow: 'What to assess',
-  evidenceHeadline: 'The evidence this search should produce.',
+  evidenceHeadline: 'What candidates should be able to show.',
   evidenceIntro: 'For each example, separate what the person demonstrated, what they described and what still needs to be tested.',
   questionsEyebrow: 'Questions to start with',
   questionsHeadline: 'Make the interview specific to your company.',

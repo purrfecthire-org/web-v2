@@ -308,7 +308,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       note.textContent = '';
       submitBtn.disabled = false;
       failTitle.focus({ preventScroll: true });
-      failCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      failCard.scrollIntoView({ behavior: 'auto', block: 'center' });
     }
 
     function validate(): boolean {
@@ -397,7 +397,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
           form!.hidden = true;
           okCard.hidden = false;
           document.getElementById('rv2-ok-title')?.focus({ preventScroll: true });
-          okCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          okCard.scrollIntoView({ behavior: 'auto', block: 'center' });
           return;
         }
 
@@ -415,7 +415,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
           failCard.hidden = false;
           okCard.hidden = true;
           failTitle.focus({ preventScroll: true });
-          failCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          failCard.scrollIntoView({ behavior: 'auto', block: 'center' });
           reportClientError('role application: role no longer open (HTTP 404)', {
             stage: 'role_application_submit',
             status: 404,
@@ -457,7 +457,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       form!.hidden = false;
       const firstInvalid = fieldIds.find((id) => $(id)?.getAttribute('aria-invalid') === 'true');
       $(firstInvalid ?? fieldIds[0])?.focus({ preventScroll: true });
-      form!.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      form!.scrollIntoView({ behavior: 'auto', block: 'center' });
     });
   }
 </script>
@@ -788,17 +788,13 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       font-size: var(--type-body); line-height: 1.7;
       color: $text;
       background: #fff;
-      border: 1px solid $line;
+      border: 1px solid #8a8d99;
       border-radius: var(--radius-input);
       padding: 0.75rem 1rem;
       width: 100%;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
-      &:focus {
-        outline: none;
-        border-color: $ink;
-        box-shadow: 0 0 0 3px rgba(41, 40, 95, 0.12);
-      }
+      &:focus-visible { border-color: var(--purple); }
       &.is-invalid {
         border-color: #d14343;
         box-shadow: 0 0 0 3px rgba(209, 67, 67, 0.1);

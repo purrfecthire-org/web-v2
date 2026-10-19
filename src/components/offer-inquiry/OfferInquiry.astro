@@ -115,7 +115,7 @@ const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry
         received.hidden = false;
         emit('offer_inquiry_submitted');
         document.getElementById('oi-received-title')!.focus({ preventScroll: true });
-        received.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        received.scrollIntoView({ behavior: 'auto', block: 'center' });
       } catch (err) {
         error.textContent = err instanceof OfferInquiryError && err.code === 'validation'
           ? 'Please check your details and try again. Receipt has not been confirmed.'

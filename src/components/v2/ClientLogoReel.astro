@@ -6,7 +6,7 @@ const { id } = Astro.props;
 <div class="client-reel" id={id}>
   <div class="client-reel__window" aria-hidden="true">
     <div class="client-reel__track">
-      {[0, 1].map(() => <div class="client-reel__set">{CLIENT_BRANDS.map(client => <a class="client-reel__tile" href={client.href} target="_blank" rel="noopener noreferrer" tabindex="-1" data-cta={`client-${client.id}`}><img src={`/clients/neutral/${client.id}.png`} width="480" height="192" alt="" loading="eager" decoding="async" /></a>)}</div>)}
+      {[0, 1].map(() => <div class="client-reel__set">{CLIENT_BRANDS.map(client => <a class="client-reel__tile" href={client.href} target="_blank" rel="noopener noreferrer" tabindex="-1" data-cta={`client-${client.id}`}><img src={`/clients/neutral/${client.id}.png`} width="480" height="192" alt="" loading="lazy" fetchpriority="low" decoding="async" /></a>)}</div>)}
     </div>
   </div>
   <div class="client-reel__controls">
