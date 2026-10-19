@@ -14,6 +14,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { normalizePublicText, renderMarkdown } from './markdown';
+import { readPublicRoleJson, readPublicRolePages } from './publicRoleRead';
 
 export interface PublicSalary {
   min: number | null;
@@ -90,15 +91,9 @@ function requestId(): string {
 export async function fetchRoles(): Promise<PublicRoleListItem[]> {
   const base = apiBase();
   if (!base) throw new Error('PUBLIC_API_ENDPOINT is not set');
-  const res = await fetch(`${base}/public/roles`, {
+  return readPublicRolePages<PublicRoleListItem>(`${base}/public/roles`, {
     headers: { 'X-Request-Id': requestId() },
-    signal: AbortSignal.timeout(15_000),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const json = await res.json();
-  // An unavailable or malformed response is different from zero vacancies.
-  if (!Array.isArray(json?.data)) throw new Error('Malformed roles response');
-  return json.data as PublicRoleListItem[];
 }
 
 /** Error thrown by fetchRole() on a non-2xx response; carries the HTTP status
@@ -117,12 +112,11 @@ export class FetchRoleError extends Error {
 export async function fetchRole(slug: string): Promise<PublicRoleDetail> {
   const base = apiBase();
   if (!base) throw new Error('PUBLIC_API_ENDPOINT is not set');
-  const res = await fetch(`${base}/public/roles/${encodeURIComponent(slug)}`, {
+  const res = await readPublicRoleJson(`${base}/public/roles/${encodeURIComponent(slug)}`, {
     headers: { 'X-Request-Id': requestId() },
-    signal: AbortSignal.timeout(15_000),
   });
   if (!res.ok) throw new FetchRoleError(res.status);
-  const json = await res.json();
+  const json = res.json as { data?: PublicRoleDetail } | null;
   if (!json?.data) throw new Error('Malformed response envelope');
   return json.data as PublicRoleDetail;
 }

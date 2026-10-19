@@ -57,7 +57,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
       All open roles
     </a>
   </div>
-  <p class="rv2__refresh-note" id="rv2-refresh-note" role="status" hidden>We could not refresh this role. The details below were available when the page was last updated. You can confirm its status at <a href="mailto:go@purrfecthire.com">go@purrfecthire.com</a>.</p>
+  <p class="rv2__refresh-note" id="rv2-refresh-note" role="status" hidden></p>
 
   <!-- ── Loading skeleton ─────────────────────────────────────────────
        Hidden by default (no-JS / static fallback shows the real content
@@ -92,13 +92,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
        or closed since this page was built). Replaces the WHOLE page body
        — not just the apply form — reusing the same friendly messaging as
        the apply form's own 404 case. -->
-  <div class="rv2__closed" id="rv2-closed" hidden>
-    <h2 class="rv2__closed-title">This role is no longer open</h2>
-    <p class="rv2__closed-body">
-      It may have been filled or closed since you opened this page.
-      <a class="rv2__result-link" href="/roles">Browse our other open roles →</a>
-    </p>
-  </div>
+  <div class="rv2__closed" id="rv2-closed" hidden></div>
 
   <div class="rv2__layout" id="rv2-layout">
     <!-- ── Sticky left rail ─────────────────────────────────────────── -->
@@ -122,7 +116,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
         <noscript><p class="rv2__apply-sub">Enable JavaScript to use the form, or send your profile and this role title to <a href="mailto:go@purrfecthire.com">go@purrfecthire.com</a>.</p></noscript>
 
         <form class="rv2__form" id="rv2-form" data-apply-url={applyUrl} novalidate>
-          <p class="rv2__form-summary" id="rv2-validation-summary" role="alert" hidden>Please check the highlighted fields.</p>
+          <p class="rv2__form-summary" id="rv2-validation-summary" role="alert" hidden></p>
           <div class="rv2__form-grid">
             <div class="rv2__f">
               <label for="rv2-name">Full name *</label>
@@ -194,18 +188,14 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
 
         <!-- Success -->
         <div class="rv2__result rv2__result--ok" id="rv2-ok" hidden>
-          <h3 class="rv2__result-title" id="rv2-ok-title" tabindex="-1">Application received</h3>
-          <p class="rv2__result-body">
-            Thanks, we've got your application. If there's a fit we'll contact you by email.
-          </p>
+          <h3 class="rv2__result-title" id="rv2-ok-title" tabindex="-1"></h3>
+          <p class="rv2__result-body" id="rv2-ok-body"></p>
         </div>
 
         <!-- Error -->
         <div class="rv2__result rv2__result--err" id="rv2-fail" role="alert" hidden>
-          <h3 class="rv2__result-title" id="rv2-fail-title" tabindex="-1">We could not confirm receipt</h3>
-          <p class="rv2__result-body" id="rv2-fail-body">
-            We couldn't submit your application. Please try again in a moment.
-          </p>
+          <h3 class="rv2__result-title" id="rv2-fail-title" tabindex="-1"></h3>
+          <p class="rv2__result-body" id="rv2-fail-body"></p>
           <button type="button" class="rv2__apply rv2__apply--submit" id="rv2-retry">Try again</button>
         </div>
         <p class="rv2__support">Questions or trouble applying? Email <a href="mailto:go@purrfecthire.com">go@purrfecthire.com</a>. Read our <a href="/privacy-policy">privacy policy</a>.</p>
@@ -231,6 +221,20 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
   import { fetchRole, roleRailHTML, roleReadOnlyContentHTML, reportClientError, FetchRoleError } from '../../lib/roles';
   import { createRoleApplicationAttempts, receivedRoleApplicationId, roleApplicationFieldErrors } from '../../lib/roleApplication';
   import { lockSubmissionFields } from '../../lib/submissionState';
+
+  // A closed search has no application form in the document. Inactive state
+  // copy is not prerendered into an active vacancy or exposed to text readers.
+  function closeRolePage() {
+    const closed = document.getElementById('rv2-closed');
+    if (!closed) return;
+    document.getElementById('rv2-layout')?.remove();
+    closed.innerHTML = '<h1 class="rv2__closed-title" id="rv2-closed-title" tabindex="-1">This role is no longer open</h1>' +
+      '<p class="rv2__closed-body">It may have been filled or closed since you opened this page. ' +
+      '<a class="rv2__result-link" href="/roles/">Browse our other open roles →</a></p>';
+    closed.hidden = false;
+    document.getElementById('rv2-closed-title')?.focus({ preventScroll: true });
+    closed.scrollIntoView({ behavior: 'auto', block: 'center' });
+  }
 
   (async () => {
     const root = document.getElementById('rv2-root') as HTMLElement | null;
@@ -266,8 +270,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
       layout?.removeAttribute('hidden');
     } catch (err) {
       if (err instanceof FetchRoleError && err.status === 404) {
-        layout?.setAttribute('hidden', '');
-        closed?.removeAttribute('hidden');
+        closeRolePage();
         reportClientError('role detail refresh: role no longer open (HTTP 404)', {
           stage: 'role_detail_refresh',
           status: 404,
@@ -276,7 +279,12 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
       } else {
         // Network error or misconfiguration — keep the prerendered content.
         layout?.removeAttribute('hidden');
-        document.getElementById('rv2-refresh-note')?.removeAttribute('hidden');
+        const refreshNote = document.getElementById('rv2-refresh-note');
+        if (refreshNote) {
+          refreshNote.innerHTML = 'We could not refresh this role. The details below were available when the page was last updated. ' +
+            'You can confirm its status at <a href="mailto:go@purrfecthire.com">go@purrfecthire.com</a>.';
+          refreshNote.hidden = false;
+        }
         reportClientError(`role detail refresh failed: ${(err as Error)?.message ?? err}`, {
           stage: 'role_detail_refresh',
           slug,
@@ -378,6 +386,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
         else if (cv.size > MAX_BYTES) { setErr('rv2-cv', 'CV must be 3 MB or smaller.'); ok = false; }
       }
       if (!ok) {
+        summary.textContent = 'Please check the highlighted fields.';
         summary.hidden = false;
         const firstInvalid = fieldIds.find((id) => $(id)?.getAttribute('aria-invalid') === 'true');
         if (firstInvalid) $(firstInvalid).focus();
@@ -429,6 +438,10 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
 
         if (res.ok && receivedRoleApplicationId(json)) {
           form!.hidden = true;
+          const title = document.getElementById('rv2-ok-title');
+          if (title) title.textContent = 'Application received';
+          const body = document.getElementById('rv2-ok-body');
+          if (body) body.textContent = "Thanks, we've got your application. If there's a fit we'll contact you by email.";
           okCard.hidden = false;
           document.getElementById('rv2-ok-title')?.focus({ preventScroll: true });
           okCard.scrollIntoView({ behavior: 'auto', block: 'center' });
@@ -438,18 +451,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
         // The role was unpublished/closed since this page was prerendered — the
         // backend answers 404. Show a friendly, distinct message (no retry).
         if (res.status === 404) {
-          failTitle.textContent = 'This role is no longer open';
-          failBody.innerHTML =
-            'It may have been filled or closed since you opened this page. ' +
-            '<a class="rv2__result-link" href="/roles">Browse our other open roles →</a>';
-          retryBtn.hidden = true;
-          note.textContent = '';
-          submitBtn.disabled = false;
-          form!.hidden = true;
-          failCard.hidden = false;
-          okCard.hidden = true;
-          failTitle.focus({ preventScroll: true });
-          failCard.scrollIntoView({ behavior: 'auto', block: 'center' });
+          closeRolePage();
           reportClientError('role application: role no longer open (HTTP 404)', {
             stage: 'role_application_submit',
             status: 404,
@@ -468,7 +470,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
           const errors = roleApplicationFieldErrors(json);
           for (const [id, message] of Object.entries(errors)) setErr(id, message);
           const firstInvalid = fieldIds.find((id) => id in errors);
-          if (firstInvalid) { summary.hidden = false; $(firstInvalid).focus(); }
+          if (firstInvalid) { summary.textContent = 'Please check the highlighted fields.'; summary.hidden = false; $(firstInvalid).focus(); }
         }
         reportClientError(`role application submit failed (HTTP ${res.status})`, {
           stage: 'role_application_submit',
