@@ -17,17 +17,13 @@ const t = getCareerCompoundingV2(lang);
           <p class="h3-eyebrow">{t.hero.eyebrow}</p>
           <h1 class="h3-hero__h1 cc-hero__title" id="cc-title">{t.hero.headline}</h1>
           <p class="h3-hero__sub">{t.hero.body}</p>
+          <p class="cc-hero__audience">{t.hero.audience}</p>
           <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-hero-email" class="h3-btn cc-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
           <p class="cc-hero__note">{t.hero.note}</p>
         </div>
-        <nav class="cc-prompt" aria-label={t.work.headline}>
-          <p class="h3-eyebrow">{t.work.eyebrow}</p>
-          <ul class="cc-prompt__list">
-            {t.work.areas.map((area) => (
-              <li><a href={"#cc-area-" + area.id}>{area.title}<span aria-hidden="true">→</span></a></li>
-            ))}
-          </ul>
-        </nav>
+        <dl class="cc-facts" aria-label="Program at a glance">
+          {t.hero.facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+        </dl>
       </div>
     </section>
 
@@ -52,12 +48,11 @@ const t = getCareerCompoundingV2(lang);
           ))}
         </ol>
         <details class="cc-method cc-question">
-          <summary>{t.approach.eyebrow}<span aria-hidden="true">+</span></summary>
-          <ol>
-            {t.approach.steps.map((step) => (
-              <li><h3>{step.title}</h3><p>{step.body}</p></li>
-            ))}
-          </ol>
+          <summary>{t.progress.title}<span aria-hidden="true">+</span></summary>
+          <div class="cc-progress">
+            <p>{t.progress.body}</p>
+            <dl>{t.progress.dimensions.map((dimension) => <div><dt>{dimension.title}</dt><dd>{dimension.body}</dd></div>)}</dl>
+          </div>
         </details>
       </div>
     </section>
@@ -65,18 +60,22 @@ const t = getCareerCompoundingV2(lang);
     <section class="cc-scope" aria-labelledby="cc-scope-title">
       <div class="h3-wrap cc-scope__grid">
         <div>
-          <p class="h3-eyebrow">{t.questions.eyebrow}</p>
-          <h2 class="h3-h2" id="cc-scope-title">{t.questions.headline}</h2>
-          <p class="h3-body cc-scope__terms">{t.approach.scope}</p>
-          <p class="cc-scope__privacy">{t.approach.privacy}</p>
+          <p class="h3-eyebrow">{t.scope.eyebrow}</p>
+          <h2 class="h3-h2" id="cc-scope-title">{t.scope.headline}</h2>
+          <p class="cc-scope__price">{t.scope.price}</p>
+          <p class="h3-body cc-scope__terms">{t.scope.summary}</p>
+          <p class="cc-scope__privacy">{t.scope.privacy}</p>
         </div>
-        <div class="cc-questions">
+        <div>
+          <ol class="cc-inclusions">{t.scope.items.map((item) => <li><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
+          <div class="cc-questions">
           {t.questions.items.map((item) => (
             <details class="cc-question">
               <summary>{item.question}<span aria-hidden="true">+</span></summary>
               <p>{item.answer}</p>
             </details>
           ))}
+          </div>
         </div>
       </div>
     </section>
@@ -99,11 +98,11 @@ const t = getCareerCompoundingV2(lang);
   .cc-hero__title { max-width: 15ch; }
   .cc-hero__cta, .cc-close__cta { margin-top: var(--space-4); max-width: 100%; text-align: center; line-height: 1.4; }
   .cc-hero__note, .cc-close__note, .cc-close__email { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 34rem; }
-  .cc-prompt { padding-block: var(--space-4); border-block: 1px solid var(--line); }
-  .cc-prompt__list { margin-top: var(--space-3); }
-  .cc-prompt__list li { border-top: 1px solid var(--line); }
-  .cc-prompt__list a { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); padding-block: var(--space-2); font-size: var(--type-body); line-height: 1.7; }
-  .cc-prompt__list a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .cc-hero__audience { margin-top: var(--space-3); max-width: 34rem; color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
+  .cc-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); margin: 0; padding-block: var(--space-4); border-block: 1px solid var(--line); }
+  .cc-facts > div { min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+  .cc-facts dt { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
+  .cc-facts dd { order: -1; margin: 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .cc-work, .cc-scope, .cc-close { padding-block: var(--space-section); background: var(--sand); border-top: 1px solid var(--line); }
   .cc-work .h3-h2, .cc-scope .h3-h2, .cc-close .h3-h2 { max-width: 28ch; }
   .cc-work__intro { margin-top: var(--space-3); max-width: 44rem; }
@@ -115,9 +114,16 @@ const t = getCareerCompoundingV2(lang);
   .cc-area > p, .cc-area__output p { font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .cc-area__output .cc-area__output-label { margin-bottom: var(--space-1); color: var(--text); font-size: var(--type-ui); line-height: 1.5; font-weight: 500; }
   .cc-method { margin-top: 0; }
-  .cc-method > ol { display: grid; gap: var(--space-3); padding-bottom: var(--space-3); max-width: 44rem; }
-  .cc-method h3 { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; }
-  .cc-method li p { margin-top: var(--space-1); color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .cc-progress { padding-bottom: var(--space-3); max-width: 44rem; color: var(--muted); }
+  .cc-progress dl { display: grid; gap: var(--space-3); margin-top: var(--space-3); }
+  .cc-progress dt { color: var(--text); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
+  .cc-progress dd { margin: var(--space-1) 0 0; }
+  .cc-inclusions { display: grid; gap: var(--space-3); padding-bottom: var(--space-4); }
+  .cc-inclusions li { padding-top: var(--space-3); border-top: 1px solid var(--line); }
+  .cc-inclusions li:first-child { padding-top: 0; border-top: 0; }
+  .cc-inclusions h3 { font-size: var(--type-subheading); line-height: 1.35; }
+  .cc-inclusions p { margin-top: var(--space-1); color: var(--muted); }
+  .cc-scope__price { margin-top: var(--space-3); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .cc-scope__grid { display: grid; gap: var(--space-grid); align-items: start; }
   .cc-scope__terms { margin-top: var(--space-3); }
   .cc-scope__privacy { margin-top: var(--space-3); max-width: 34rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }

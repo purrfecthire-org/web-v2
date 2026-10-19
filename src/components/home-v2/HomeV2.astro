@@ -12,8 +12,8 @@ const t = getHomeV2(lang);
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light" journey="home">
   <section class="h3-hero home-entry" aria-labelledby="home-title">
     <picture class="home-entry__background">
-      <source media="(max-width: 55.99rem)" srcset="/photos/editorial/city-courtyard-mobile.webp" type="image/webp" />
-      <img src="/photos/editorial/city-courtyard-desktop.webp" alt={t.hero.photoAlt} width="1536" height="1024" decoding="async" fetchpriority="high" />
+      <source media="(max-width: 55.99rem)" srcset="/photos/editorial/timber-courtyard-mobile.webp" type="image/webp" />
+      <img src="/photos/editorial/timber-courtyard-desktop.webp" alt={t.hero.photoAlt} width="1536" height="1024" decoding="async" fetchpriority="high" />
     </picture>
     <div class="h3-wrap">
       <div class="home-entry__intro h3-hero__copy">
@@ -70,7 +70,7 @@ const t = getHomeV2(lang);
   .home-entry::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(rgba(247,246,243,.65),rgba(247,246,243,.5) 48%,transparent 72%); }
   .home-entry::after { content: ''; position: absolute; inset: 0 0 auto; height: 9rem; z-index: -1; background: linear-gradient(rgba(247,246,243,.96),rgba(247,246,243,.76) 50%,transparent); }
   .home-entry__intro { max-width: 40rem; }
-  .home-entry .h3-hero__h1 { max-width: 18ch; margin-top: 0; }
+  .home-entry .h3-hero__h1 { max-width: 15ch; margin-top: 0; }
   .home-entry .h3-hero__sub { max-width: 43ch; margin-top: var(--space-stack); color: var(--text); }
   .home-entry .h3-eyebrow { color: var(--text); }
   .home-paths { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); scroll-margin-top: var(--space-stack); }
@@ -91,7 +91,7 @@ const t = getHomeV2(lang);
   .home-kate__meet { margin-top: var(--space-stack); }
   @media (min-width: 56rem) {
     .home-entry { min-height: 54rem; padding-top: calc(var(--space-hero-top) + var(--space-8)); }
-    .home-entry::before { background: linear-gradient(90deg,rgba(247,246,243,.7),rgba(247,246,243,.38) 37%,transparent 63%); }
+    .home-entry::before { background: linear-gradient(90deg,rgba(247,246,243,.9),rgba(247,246,243,.82) 42%,rgba(247,246,243,.55) 50%,transparent 62%); }
     .home-proof__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-section); }
     .home-kate__grid { grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); }
     .home-kate__portrait { justify-self: center; }

@@ -2,7 +2,8 @@
 // Culture and values: Notion 3e388cc78f968134b342f1b03d08056b,
 // 3e388cc78f9681f5ae54ebce78faf6fc and 3e388cc78f9681be919cc7166f1f2c69.
 // Remote work, mental health support and learning were reconfirmed by Kate
-// on 17 October 2026. Do not add quantities, vendors or historic PTO terms.
+// on 17 October 2026. Kate confirmed the exact psychologist benefit on
+// 19 October 2026. Do not add other quantities, vendors or historic PTO terms.
 // The name explanation is editorial wording based on the purr/perfect wordplay,
 // not a claim about a documented founding story. Cat behavior is defined in
 // Notion 3d488cc78f96818686c0d1f7ddf999aa.
@@ -42,7 +43,7 @@ export const workWithUs = {
     headline: 'Room to work well and keep growing.',
     items: [
       { title: 'Remote work', body: 'Contribute as part of a distributed team.' },
-      { title: 'Mental health support', body: 'Support for your wellbeing alongside the work.' },
+      { title: 'Mental health support', body: 'One-on-one sessions every two weeks with an experienced psychologist from Universidad de los Andes, fully covered by Purrfect.' },
       { title: 'Learning and development', body: 'Keep developing your skills and share what you learn.' },
     ],
   },

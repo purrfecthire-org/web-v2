@@ -42,7 +42,7 @@ export const talentV2En: TalentV2Content = {
       },
       {
         name: 'Career Compounding',
-        body: 'Grow inside your current role. Work on business impact, influence and decisions that support greater responsibility.',
+        body: 'Six months and nine sessions with Kate, focused on real business challenges in your current role. Offer Accelerator is optional.',
         price: 'USD 5,000',
         cta: 'Explore Career Compounding',
         href: '/career-compounding',

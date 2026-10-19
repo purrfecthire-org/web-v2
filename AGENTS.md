@@ -49,8 +49,17 @@ existing Markdown utilities without changing URLs or code literals.
 - OA: USD 2,000, one diagnostic and seven sessions with Kate; follow-up per
   process while actively executing the agreed plan. No job, salary, unlimited-call
   or 24/7 guarantee.
-- Career Compounding: USD 5,000; duration and scope agreed before purchase.
-  Six months and nine sessions are not confirmed terms.
+- Career Compounding: USD 5,000 over six months; nine private sessions with Kate:
+  one 90-minute diagnostic, seven 75-minute execution sessions approximately
+  three weeks apart, one 90-minute final review. Eight asynchronous checkpoints,
+  one between each pair of sessions, receive feedback within two business days.
+  Includes a private personalized hub and real work inside the participant's
+  organization. Independent entry; Offer Accelerator is not a prerequisite.
+  No promotion, pay increase or third-party outcome guarantee. The two-business-day
+  commitment applies to checkpoint feedback, not all messages or unlimited access.
+- Internal team mental health benefit: one-on-one sessions every two weeks with
+  an experienced psychologist from Universidad de los Andes, fully covered by
+  Purrfect. This is not a benefit for advisory clients.
 - Strategic session: USD 300, requested by email.
 - B2B has no public numeric prices or fee percentages.
 - Contact: go@purrfecthire.com.

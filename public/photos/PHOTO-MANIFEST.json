@@ -604,7 +604,7 @@
       "bytes": 236504,
       "sha256": "3694d2a1e76ff48a9b867104b2555c26ab9b924ffaf0690bf73cf095cdf79db4",
       "category": "editorial_scene",
-      "optionalUseOnly": false,
+      "optionalUseOnly": true,
       "provenance": "Imagen original generada con imagegen para la dirección aprobada por la usuaria el19Oct2026; encuadre móvil derivado mediante edición. No representa personas del equipo ni clientes."
     },
     {
@@ -612,7 +612,7 @@
       "bytes": 210464,
       "sha256": "11a49db2c79d48b11d76f1808fb9d7569bc0dc7f56947d2897150c85198fb1d7",
       "category": "editorial_scene",
-      "optionalUseOnly": false,
+      "optionalUseOnly": true,
       "provenance": "Imagen original generada con imagegen para la dirección aprobada por la usuaria el19Oct2026; encuadre móvil derivado mediante edición. No representa personas del equipo ni clientes."
     },
     {
@@ -622,11 +622,27 @@
       "category": "editorial_scene",
       "optionalUseOnly": false,
       "provenance": "Escena suministrada por la usuaria el14Oct2026. Identidades no atribuidas; optimización de formato únicamente."
+    },
+    {
+      "file": "editorial/timber-courtyard-desktop.webp",
+      "bytes": 213768,
+      "sha256": "aec01297cab6f5d24090f7a42aaf794c01e8b24330a85e813f52ec7e32a4ce7f",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Generada con imagegen el19Oct2026 para la nueva referencia de Kate. Imagen original distinta de la referencia; sin atribución de identidades reales. Versión móvil recompuesta con edición generativa."
+    },
+    {
+      "file": "editorial/timber-courtyard-mobile.webp",
+      "bytes": 192630,
+      "sha256": "3638b443eddf92ed6e31766aad6d3cf9731333d6660000213a90be8ecd834a32",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Generada con imagegen el19Oct2026 para la nueva referencia de Kate. Imagen original distinta de la referencia; sin atribución de identidades reales. Versión móvil recompuesta con edición generativa."
     }
   ],
   "updated": "2026-10-19",
   "currentUsage": {
-    "home": "editorial/city-courtyard-desktop.webp y variante mobile, fondo ilustrativo original generado; no representa equipo o clientes.",
+    "home": "editorial/timber-courtyard-desktop.webp y variante mobile. Nueva dirección de arquitectura contemporánea de madera, vegetación y cuatro personas caminando. Escena ilustrativa original generada, no representa equipo o clientes.",
     "companies": "editorial/walking-conversation.webp, escena ilustrativa suministrada por Kate.",
     "talent": "Selector sin fotografía de oficina.",
     "offer": "Hero tipográfico con precio y alcance; fotografía identificada de Daniel solo en evidencia.",
