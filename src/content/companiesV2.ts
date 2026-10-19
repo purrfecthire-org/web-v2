@@ -33,7 +33,7 @@ export interface CompaniesV2Content {
   evidence: { eyebrow: string; headline: string; body: string; label: string; items: { title: string; body: string }[]; cta: string };
   selectedSearches: { eyebrow: string; headline: string; problemLabel: string; interventionLabel: string; outcomeLabel: string; items: CompanySearchCase[] };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
-  proof: { eyebrow: string; headline: string; voices: { quote: string; name: string; role: string; context?: string; photo?: string; photoWebp?: string }[]; logosLabel: string; markets: string };
+  proof: { eyebrow: string; headline: string; voices: { quote: string; name: string; role: string; excerptLabel?: string; context?: string; photo?: string; photoWebp?: string }[]; logosLabel: string; markets: string };
   models: { eyebrow: string; headline: string; items: { name: string; note: string }[]; cta: string };
   kate: { eyebrow: string; headline: string; body: string[]; cta: string };
   close: { headline: string; body: string; cta: string; email: string; emailLabel: string };
@@ -56,7 +56,7 @@ export const companiesV2En: CompaniesV2Content = {
   },
   situations: {
     eyebrow: 'When founders bring us in',
-    headline: 'An open role. An unclear hiring bar.',
+    headline: 'When a search needs a closer look.',
     items: [
       { title: 'The role keeps changing', body: 'The company is changing faster than the job description. The hire must keep up.' },
       { title: 'Inbound is producing résumés, not conviction', body: 'Applicants meet the requirements. You still lack conviction about building with them.' },
@@ -158,6 +158,7 @@ export const companiesV2En: CompaniesV2Content = {
         quote: 'integrated to the team and is productive, we’re pleased with him',
         name: 'Chen Atlas',
         role: 'Co-founder & CTO, Optery',
+        excerptLabel: 'Excerpt from client feedback',
         context: 'After a Purrfect hire joined the team · February 2025',
       },
     ],

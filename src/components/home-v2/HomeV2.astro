@@ -17,7 +17,6 @@ const t = getHomeV2(lang);
     </picture>
     <div class="h3-wrap">
       <div class="home-entry__intro h3-hero__copy">
-          <p class="h3-eyebrow">{t.hero.eyebrow}</p>
           <h1 class="h3-hero__h1" id="home-title">{t.hero.headline}</h1>
           <p class="h3-hero__sub">{t.hero.sub}</p>
         <nav class="home-paths" id="choose-your-path" aria-label={t.hero.choose}>
@@ -36,7 +35,10 @@ const t = getHomeV2(lang);
 
   <section class="home-proof" id="clients" aria-labelledby="home-proof-label">
     <div class="h3-wrap home-proof__grid">
-      <h2 class="h3-h2" id="home-proof-label">{t.proof.eyebrow}</h2>
+      <div>
+        <h2 class="h3-h2" id="home-proof-label">{t.proof.eyebrow}</h2>
+        <p class="home-proof__geography">{t.hero.eyebrow}</p>
+      </div>
         <ClientLogoReel id="home-clients" />
     </div>
   </section>
@@ -68,7 +70,7 @@ const t = getHomeV2(lang);
   .home-entry::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(rgba(247,246,243,.65),rgba(247,246,243,.5) 48%,transparent 72%); }
   .home-entry::after { content: ''; position: absolute; inset: 0 0 auto; height: 9rem; z-index: -1; background: linear-gradient(rgba(247,246,243,.96),rgba(247,246,243,.76) 50%,transparent); }
   .home-entry__intro { max-width: 40rem; }
-  .home-entry .h3-hero__h1 { max-width: 18ch; }
+  .home-entry .h3-hero__h1 { max-width: 18ch; margin-top: 0; }
   .home-entry .h3-hero__sub { max-width: 43ch; margin-top: var(--space-stack); color: var(--text); }
   .home-entry .h3-eyebrow { color: var(--text); }
   .home-paths { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); scroll-margin-top: var(--space-stack); }
@@ -80,6 +82,7 @@ const t = getHomeV2(lang);
   .home-proof, .home-kate { background: var(--sand); padding-block: var(--space-section); }
   .home-proof__grid { display: grid; align-items: center; gap: var(--space-grid); }
   .home-proof .h3-h2 { max-width: 18ch; }
+  .home-proof__geography { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .home-kate__grid { display: grid; gap: var(--space-grid); align-items: center; }
   .home-kate__portrait { width: 100%; max-width: 10rem; margin: 0; border-radius: var(--radius-card); overflow: hidden; }
   .home-kate__portrait img { display: block; width: 100%; height: auto; }

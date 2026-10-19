@@ -92,12 +92,12 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
                 <p class="h3-eyebrow">{[search.company, search.stage, search.role].filter(Boolean).join(' · ')}</p>
                 <h3>{search.title}</h3>
                 <p class="fc-search__problem">{search.problem}</p>
+                {search.outcome && <dl><div><dt>{t.selectedSearches.outcomeLabel}</dt><dd>{search.outcome}</dd></div></dl>}
                 <details class="fc-search__detail">
-                  <summary>Read the search <span aria-hidden="true">+</span></summary>
+                  <summary>Read the search approach <span aria-hidden="true">+</span></summary>
                   <dl>
                     <div><dt>{t.selectedSearches.interventionLabel}</dt><dd>{search.intervention}</dd></div>
                     {search.evidence && <div><dt>Evidence to examine</dt><dd>{search.evidence}</dd></div>}
-                    {search.outcome && <div><dt>{t.selectedSearches.outcomeLabel}</dt><dd>{search.outcome}</dd></div>}
                   </dl>
                 </details>
               </div>
@@ -120,6 +120,7 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
           </a>
           </div>
           <div class="fc-quote__body">
+            {voice.excerptLabel && <p class="h3-eyebrow fc-quote__excerpt">{voice.excerptLabel}</p>}
             <blockquote>“{voice.quote}”</blockquote>
             <figcaption>
               <span class="fc-quote__name">{voice.name}</span>
@@ -185,6 +186,7 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
   .fc-quote { margin: 0; display: flex; flex-direction: column; padding-top: var(--space-stack); }
   .fc-quote__identity { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-stack); }
   .fc-quote__body { display: flex; flex-direction: column; flex: 1; }
+  .fc-quote__excerpt { margin-bottom: var(--space-2); }
   .fc-quote blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.5; }
   .fc-quote figcaption { padding-top: var(--space-stack); margin-top: auto; display: flex; flex-direction: column; font-size: var(--type-caption); line-height: 1.5; }
   .fc-quote__name { font-weight: 500; }
