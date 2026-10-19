@@ -127,31 +127,31 @@ const { roles, unavailable } = await getRolesSnapshot();
   .rl [hidden] { display: none !important; }
   .rl__header { padding-bottom: var(--space-section); max-width: 58rem; }
   .rl__title { max-width: 16ch; }
-  .rl__free { margin-top: var(--space-stack) !important; font-size: var(--type-ui); color: var(--muted); max-width: 38rem; }
+  .rl__free { margin-top: var(--space-stack) !important; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); max-width: 38rem; }
   .rl__list-head { border-top: 1px solid var(--line); padding: var(--space-stack) 0; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem var(--space-grid); }
-  .rl__list-title { font-size: var(--type-subheading); font-weight: 500; font-family: var(--h-sans); }
-  .rl__list-head p { color: var(--muted); font-size: var(--type-caption); max-width: 29rem; }
+  .rl__list-title { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; font-family: var(--h-sans); }
+  .rl__list-head p { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 29rem; }
   .rl__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-stack); }
   .rl__card { display: flex; flex-direction: column; position: relative; min-width: 0; padding: var(--space-stack); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); transition: border-color .2s; }
   .rl__card:hover, .rl__card:focus-within { border-color: var(--muted); }
-  .rl__card-top { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--type-caption); color: var(--muted); }
+  .rl__card-top { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .rl__card-company { font-weight: 500; }
   .rl__card-posted { white-space: nowrap; }
   .rl__card-title { font-size: var(--type-subheading); font-weight: 500; letter-spacing: -.02em; line-height: 1.35; margin-top: 1rem !important; font-family: var(--h-sans); }
-  .rl__card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: 1rem; color: var(--muted); font-size: var(--type-caption); }
-  .rl__meta { display: inline-flex; align-items: center; gap: .5rem; }
+  .rl__card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: 1rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .rl__meta { display: inline-flex; align-items: center; gap: 0.5rem; }
   .rl__meta svg { flex-shrink: 0; }
   .rl__meta--salary { color: var(--text); }
   .rl__meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); }
-  .rl__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin: var(--space-stack) 0; }
-  .rl__tag { padding: .25rem .5rem; border: 1px solid var(--line); border-radius: var(--radius-input); font-size: var(--type-caption); color: var(--muted); }
+  .rl__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: var(--space-stack) 0; }
+  .rl__tag { padding: 0.25rem 0.5rem; border: 1px solid var(--line); border-radius: var(--radius-input); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .rl__card-foot { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-top: auto; padding-top: 1rem; }
-  .rl__badges { display: flex; flex-wrap: wrap; gap: .5rem; color: var(--muted); font-size: var(--type-caption); }
-  .rl__yc, .rl__english { display: inline-flex; gap: .5rem; align-items: center; }
+  .rl__badges { display: flex; flex-wrap: wrap; gap: 0.5rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .rl__yc, .rl__english { display: inline-flex; gap: 0.5rem; align-items: center; }
   .rl__yc-mark { font-weight: 500; }
-  .rl__view { display: inline-flex; align-items: center; gap: .5rem; min-height: 3rem; padding-block: .75rem; color: var(--purple); font-size: var(--type-caption); font-weight: 500; }
+  .rl__view { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3rem; padding-block: 0.75rem; color: var(--purple); font-size: var(--type-caption); line-height: 1.5; font-weight: 500; }
   .rl__state { padding: var(--space-section) 0; border-block: 1px solid var(--line); }
-  .rl__state h3 { font-family: var(--h-sans); font-weight: 500; font-size: var(--type-subheading); }
+  .rl__state h3 { font-family: var(--h-sans); font-weight: 500; font-size: var(--type-subheading); line-height: 1.35; }
   .rl__state p { margin: 1rem 0 var(--space-stack); color: var(--muted); max-width: 36rem; }
   .rl__state-actions { display: flex; flex-wrap: wrap; gap: var(--space-stack); align-items: center; }
   .rl__state button { cursor: pointer; border: 0; font-family: inherit; }

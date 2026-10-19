@@ -173,15 +173,15 @@ const voices = t.proof.voices.filter(({ name }) => ['Fabián Torres', 'Chen Atla
   .fc-hero__actions .h3-hero__cta { margin-top: 0; }
   .fc-hero__media { margin: 0; border-radius: 12px; overflow: hidden; }
   .fc-hero__media img { object-position: 42% 42%; }
-  .fc-credential, .fc-microcopy { margin-top: 1rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.6; max-width: 34rem; }
+  .fc-credential, .fc-microcopy { margin-top: 1rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 34rem; }
   .fc-situations, .fc-method, .fc-searches, .fc-proof, .fc-models { padding-block: var(--space-section); background: var(--sand); }
   .fc-situations__h2, .fc-method__h2, .fc-searches__h2, .fc-proof__h2, .fc-models__h2 { max-width: 26ch; }
   .fc-situations__list, .fc-steps, .fc-searches__list, .fc-proof__voices, .fc-models__list { display: grid; gap: var(--space-grid); margin-top: var(--space-stack); }
   .fc-situation, .fc-step, .fc-search, .fc-quote, .fc-model { min-width: 0; }
   .fc-situation, .fc-step { padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
   .fc-situation h3, .fc-step__title, .fc-search h3, .fc-model__name { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .fc-situation p, .fc-step__body, .fc-search__problem, .fc-model__note { margin-top: .75rem; max-width: 40rem; font-size: var(--type-body); line-height: 1.65; color: var(--muted); }
-  .fc-step__id { display: block; margin-bottom: 1rem; font-size: var(--type-caption); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .fc-situation p, .fc-step__body, .fc-search__problem, .fc-model__note { margin-top: .75rem; max-width: 40rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .fc-step__id { display: block; margin-bottom: 1rem; font-size: var(--type-caption); color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
   .fc-method__links { margin-top: var(--space-stack); display: flex; flex-wrap: wrap; column-gap: var(--space-grid); row-gap: 1rem; }
   .fc-method__links a { max-width: 100%; }
   .fc-search { display: grid; gap: var(--space-grid); padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
@@ -189,21 +189,21 @@ const voices = t.proof.voices.filter(({ name }) => ['Fabián Torres', 'Chen Atla
   .fc-search__result { display: flex; flex-direction: column; justify-content: center; padding: var(--space-stack); border-radius: 12px; background: var(--stone); }
   .fc-search__signal { display: block; width: .5rem; height: .5rem; border-radius: 50%; background: var(--text); }
   .fc-search h3 { margin-top: 1rem; }
-  .fc-search__outcome { margin-top: var(--space-stack); font-size: var(--type-body); line-height: 1.65; color: var(--muted); max-width: 40rem; }
-  .fc-search__outcome span { display: block; margin-bottom: .5rem; font-size: var(--type-caption); font-weight: 500; color: var(--text); }
+  .fc-search__outcome { margin-top: var(--space-stack); font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 40rem; }
+  .fc-search__outcome span { display: block; margin-bottom: .5rem; font-size: var(--type-caption); font-weight: 500; color: var(--text); line-height: 1.5; }
   .fc-search__detail { margin-top: var(--space-stack); }
-  .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; padding-block: .5rem; font-size: var(--type-ui); font-weight: 500; list-style: none; }
+  .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; padding-block: .5rem; font-size: var(--type-ui); font-weight: 500; list-style: none; line-height: 1.5; }
   .fc-search__detail summary::-webkit-details-marker { display: none; }
   .fc-search__detail[open] summary span { transform: rotate(45deg); }
   .fc-search dl { margin-top: var(--space-stack); display: grid; gap: var(--space-stack); }
-  .fc-search dt { font-size: var(--type-caption); font-weight: 500; line-height: 1.4; }
-  .fc-search dd { margin: .5rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
+  .fc-search dt { font-size: var(--type-caption); font-weight: 500; line-height: 1.5; }
+  .fc-search dd { margin: .5rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .fc-proof__logos { margin-top: var(--space-stack); }
   .fc-proof__logos > .h3-eyebrow { margin-bottom: 1rem; }
   .fc-quote { margin: 0; display: flex; flex-direction: column; padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
   .fc-quote__body { display: flex; flex-direction: column; flex: 1; }
   .fc-quote blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.5; }
-  .fc-quote figcaption { padding-top: var(--space-stack); margin-top: auto; display: flex; flex-direction: column; font-size: var(--type-caption); line-height: 1.6; }
+  .fc-quote figcaption { padding-top: var(--space-stack); margin-top: auto; display: flex; flex-direction: column; font-size: var(--type-caption); line-height: 1.5; }
   .fc-quote__name { font-weight: 500; }
   .fc-quote__role, .fc-quote__context { color: var(--muted); }
   .fc-quote__context { margin-top: .5rem; }
@@ -213,7 +213,7 @@ const voices = t.proof.voices.filter(({ name }) => ['Fabián Torres', 'Chen Atla
   .fc-quote__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
   .fc-quote__brand img { display: block; width: auto; max-width: 112px; max-height: 32px; object-fit: contain; filter: grayscale(1); opacity: .75; }
   .fc-model { padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
-  .fc-models__recommendation { margin-top: var(--space-stack); max-width: 40rem; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
+  .fc-models__recommendation { margin-top: var(--space-stack); max-width: 40rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .fc-models__close { margin-top: var(--space-stack); }
   .fc-models__close > .h3-body { margin: 0 0 var(--space-stack); }
   @media (min-width: 56rem) {

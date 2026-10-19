@@ -161,7 +161,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     --radius-card: 12px;
     --radius-input: 8px;
     background: var(--sand); color: var(--text);
-    font-family: var(--h-sans); font-size: var(--type-body); line-height: 1.6; -webkit-font-smoothing: antialiased;
+    font-family: var(--h-sans); font-size: var(--type-body); line-height: 1.7; -webkit-font-smoothing: antialiased;
     /* Only bites when a word genuinely cannot fit, which at 200% zoom is the
        email address and the longest headline words. */
     overflow-wrap: break-word;
@@ -197,15 +197,15 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
 
   .h3-btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    min-height: 3rem; box-sizing: border-box; padding: .75rem 1.5rem; border: 1px solid transparent; border-radius: 999px; text-align: center; cursor: pointer;
+    min-height: 3rem; box-sizing: border-box; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 999px; text-align: center; cursor: pointer;
     background: var(--purple); color: #fff !important;
-    font-size: var(--type-ui); font-weight: 500; line-height: 1.4;
+    font-size: var(--type-ui); font-weight: 500; line-height: 1.5;
     transition: background-color 0.2s ease, opacity 0.2s ease;
   }
   .h3-btn:hover { background: var(--purple-deep); }
   .h3-btn:active { opacity: .8; }
   .h3-btn:disabled, .h3-btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
-  .h3-btn--sm { min-height: 2.75rem; padding: .5rem 1rem; font-size: var(--type-caption); }
+  .h3-btn--sm { min-height: 2.75rem; padding: 0.5rem 1rem; font-size: var(--type-caption); line-height: 1.5; }
   .h3-btn--ink { background: var(--midnight); }
   .h3-btn--ink:hover { background: #1b1d2b; }
   /* Midnight on a Midnight hero: the nav button sits over the photograph,
@@ -213,8 +213,8 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   .h3--dark .h3-nav__cta.h3-btn--ink { border: 1px solid rgba(255, 255, 255, 0.38); }
   .h3-arrow { font-size: 0.9em; line-height: 1; }
   .h3-link {
-    display: inline-flex; align-items: baseline; gap: 0.4rem;
-    font-size: var(--type-body); font-weight: 500;
+    display: inline-flex; align-items: baseline; gap: 0.5rem;
+    font-size: var(--type-body); line-height: 1.7; font-weight: 500;
     border-bottom: 1px solid var(--line); padding-bottom: 2px;
   }
   .h3-link:hover { border-color: currentColor; }
@@ -249,7 +249,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   }
   @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
   .h3-nav__logo img { height: 1.6rem; width: auto; display: block; }
-  .h3-nav__links { display: none; gap: 1.5rem; font-size: var(--type-ui); }
+  .h3-nav__links { display: none; gap: 1.5rem; font-size: var(--type-ui); line-height: 1.5; }
   @media (min-width: 72rem) { .h3-nav__links { display: flex; } }
   .h3--dark .h3-nav__links { color: var(--on-dark-muted); }
   .h3--dark .h3-nav__links a:hover { color: var(--on-dark); }
@@ -264,7 +264,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   @media (min-width: 72rem) { .h3-menu { display: none; } }
   .h3-menu > summary {
     list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
-    min-height: 2.75rem; padding: .5rem 1rem; border-radius: 999px; font-size: var(--type-caption); font-weight: 500;
+    min-height: 2.75rem; padding: 0.5rem 1rem; border-radius: 999px; font-size: var(--type-caption); line-height: 1.5; font-weight: 500;
   }
   .h3-menu > summary::-webkit-details-marker { display: none; }
   .h3--dark .h3-menu > summary { color: var(--on-dark); border: 1px solid var(--line-dark); }
@@ -280,10 +280,11 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   }
   .h3-menu__panel nav { display: grid; }
   .h3-menu__panel nav a {
-    padding: 0.6rem 0.65rem; border-radius: var(--radius-input); font-size: var(--type-ui); color: var(--text);
+    display: flex; align-items: center; min-height: 2.75rem;
+    padding: 0.5rem 0.75rem; border-radius: var(--radius-input); font-size: var(--type-ui); line-height: 1.5; color: var(--text);
   }
   .h3-menu__panel nav a:hover { background: var(--sand); }
-  .h3-menu__cta { margin-top: 0.4rem; width: 100%; padding: 0.75rem 1rem; font-size: var(--type-caption); }
+  .h3-menu__cta { margin-top: 0.5rem; width: 100%; padding: 0.75rem 1rem; font-size: var(--type-caption); line-height: 1.5; }
 
   /* ── Hero primitives ──────────────────────────────────────────────── */
   .h3-hero { position: relative; overflow: hidden; padding: var(--space-hero-top) 0 var(--space-section); }
@@ -298,7 +299,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     font-size: var(--type-display); line-height: 1.08;
     letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance; margin-top: var(--space-2);
   }
-  .h3-hero__sub { margin-top: 1.5rem; max-width: 34rem; font-size: var(--type-lead); line-height: 1.65; }
+  .h3-hero__sub { margin-top: 1.5rem; max-width: 34rem; font-size: var(--type-lead); line-height: 1.6; }
   @media (min-width: 56rem) { .h3-hero__sub { margin-top: 2rem; } }
   .h3--dark .h3-hero__sub { color: var(--on-dark-muted); }
   .h3--light .h3-hero__sub { color: var(--muted); }
@@ -320,7 +321,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   /* ── Footer ───────────────────────────────────────────────────────── */
   .h3-footer {
     background: var(--midnight); color: var(--on-dark-muted);
-    border-top: 1px solid var(--line-dark); padding: 2rem 0 2.5rem; font-size: var(--type-caption);
+    border-top: 1px solid var(--line-dark); padding: 2rem 0 2rem; font-size: var(--type-caption); line-height: 1.5;
   }
   .h3-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; min-width: 0; }
   .h3-footer nav { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; min-width: 0; }

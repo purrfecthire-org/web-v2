@@ -474,14 +474,14 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
 
   // ── Back crumb ───────────────────────────────────────────────────
   .rv2__crumb { margin-bottom: 1.5rem; }
-  .rv2__refresh-note { padding: 1rem 0; margin-bottom: 1.5rem !important; border-block: 1px solid $line; font-size: var(--type-caption); color: $muted; }
+  .rv2__refresh-note { padding: 1rem 0; margin-bottom: 1.5rem !important; border-block: 1px solid $line; font-size: var(--type-caption); line-height: 1.5; color: $muted; }
   .rv2__refresh-note a { text-decoration: underline; overflow-wrap: anywhere; }
 
   .rv2__back {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     color: $muted;
     text-decoration: none;
@@ -551,7 +551,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   }
 
   .rv2__fact-key {
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -560,7 +560,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   }
 
   .rv2__fact-val {
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     color: $text;
     text-align: right;
@@ -576,7 +576,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     color: $text;
     border-radius: 999px;
     padding: 0.25rem 0.75rem 0.25rem 0.5rem;
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
   }
 
@@ -590,7 +590,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     background: #fff;
     color: $ink;
     font-weight: 500;
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
   }
 
   .rv2__apply {
@@ -607,7 +607,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     padding: 0.75rem 1.5rem;
     min-height: 3rem;
     font-size: var(--type-ui);
-    line-height: 1.4;
+    line-height: 1.5;
     font-weight: 500;
     text-decoration: none;
     transition: background-color 0.2s ease;
@@ -637,7 +637,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     &--role { color: $ink; }
   }
 
-  .rv2__industry { margin: 0; font-size: var(--type-caption); font-weight: 500; color: $muted; }
+  .rv2__industry { margin: 0; font-size: var(--type-caption); line-height: 1.5; font-weight: 500; color: $muted; }
 
   .rv2__awards { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
 
@@ -650,7 +650,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     color: $text;
     border-radius: 999px;
     padding: 0.25rem 0.75rem;
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     svg { color: #F59E0B; }
   }
@@ -666,7 +666,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     color: $text;
     border-radius: 999px;
     padding: 0.25rem 0.75rem;
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     svg { color: $ink; }
   }
@@ -679,14 +679,14 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     border: 1px solid transparent;
     border-radius: 999px;
     padding: 0.25rem 0.75rem;
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
   }
 
   // ── JD prose (rendered markdown) ─────────────────────────────────
   .rv2__prose {
     font-size: var(--type-body);
-    line-height: 1.75;
+    line-height: 1.7;
     color: #374151;
 
     h1, h2, h3 {
@@ -694,16 +694,16 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       font-weight: 500;
       letter-spacing: -0.01em;
       line-height: 1.3;
-      margin: 1.75rem 0 0.75rem;
+      margin: 1.5rem 0 0.75rem;
     }
-    h1 { font-size: var(--type-subheading); }
-    h2 { font-size: var(--type-subheading); }
-    h3 { font-size: var(--type-subheading); }
+    h1 { font-size: var(--type-subheading); line-height: 1.35; }
+    h2 { font-size: var(--type-subheading); line-height: 1.35; }
+    h3 { font-size: var(--type-subheading); line-height: 1.35; }
     p { margin: 0 0 1rem; }
-    ul, ol { margin: 0 0 1rem; padding-left: 1.35rem; }
+    ul, ol { margin: 0 0 1rem; padding-left: 1.5rem; }
     ul { list-style: disc; }
     ol { list-style: decimal; }
-    li { margin: 0.35rem 0; }
+    li { margin: 0.25rem 0; }
     strong { color: $text; font-weight: 500; }
     a { color: $ink; text-decoration: underline; }
     code {
@@ -725,7 +725,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     border: 1px solid transparent;
     border-radius: var(--radius);
     padding: 12px 16px;
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     color: $text;
     svg { color: $ink; flex-shrink: 0; }
     strong { color: $ink; font-weight: 500; }
@@ -744,7 +744,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     margin: 0;
   }
 
-  .rv2__apply-sub { font-size: var(--type-body); color: $muted; margin: 0.4rem 0 1.75rem; }
+  .rv2__apply-sub { font-size: var(--type-body); line-height: 1.7; color: $muted; margin: 0.5rem 0 1.5rem; }
 
   .rv2__form-grid {
     display: grid;
@@ -760,11 +760,11 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
 
     &--full { grid-column: 1 / -1; }
 
-    label { font-size: var(--type-caption); font-weight: 500; color: $text; }
+    label { font-size: var(--type-caption); line-height: 1.5; font-weight: 500; color: $text; }
 
     input, select {
       font-family: var(--h-sans);
-      font-size: var(--type-body);
+      font-size: var(--type-body); line-height: 1.7;
       color: $text;
       background: #fff;
       border: 1px solid $line;
@@ -787,7 +787,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     input[type='file'] { padding: 0.75rem 1rem; }
   }
 
-  .rv2__f-err { font-size: var(--type-caption); color: #d14343; min-height: 1em; }
+  .rv2__f-err { font-size: var(--type-caption); line-height: 1.5; color: #d14343; min-height: 1em; }
 
   // Honeypot — off-screen (NOT display:none so bots still fill it)
   .rv2__hp {
@@ -804,11 +804,11 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     align-items: center;
     gap: var(--space-stack);
     flex-wrap: wrap;
-    margin-top: 1.75rem;
+    margin-top: 1.5rem;
   }
 
-  .rv2__form-note { margin: 0; font-size: var(--type-caption); color: $muted; }
-  .rv2__support { margin-top: 1.5rem !important; font-size: var(--type-caption); color: $muted; }
+  .rv2__form-note { margin: 0; font-size: var(--type-caption); line-height: 1.5; color: $muted; }
+  .rv2__support { margin-top: 1.5rem !important; font-size: var(--type-caption); line-height: 1.5; color: $muted; }
   .rv2__support a, .rv2__apply-sub a { text-decoration: underline; overflow-wrap: anywhere; }
 
   .rv2__result {
@@ -822,9 +822,9 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     &--err { border-color: #eec4c4; background: #fdf6f6; }
   }
 
-  .rv2__result-title { font-size: var(--type-subheading); font-weight: 500; margin: 0 0 0.5rem; color: $ink; }
+  .rv2__result-title { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; margin: 0 0 0.5rem; color: $ink; }
 
-  .rv2__result-body { font-size: var(--type-body); line-height: 1.6; color: $muted; margin: 0 0 1rem; }
+  .rv2__result-body { font-size: var(--type-body); line-height: 1.7; color: $muted; margin: 0 0 1rem; }
   .rv2__result--ok .rv2__result-body { margin-bottom: 0; }
 
   .rv2__result-body .rv2__result-link {

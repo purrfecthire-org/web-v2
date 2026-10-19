@@ -28,10 +28,10 @@ const { id } = Astro.props;
 </script>
 <style>
   .client-reel { width: 12rem; max-width: 100%; color: var(--text); }
-  .client-reel__window { height: 13.5rem; overflow: hidden; mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent); }
+  .client-reel__window { height: 10rem; overflow: hidden; mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent); }
   .client-reel__track { animation: clients-vertical 60s linear infinite; }
   .client-reel__set { display: grid; }
-  .client-reel__tile { height: 4.5rem; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .client-reel__tile { height: 4rem; display: flex; align-items: center; justify-content: center; padding: 0; }
   .client-reel__tile img { display: block; width: 10rem; height: 4rem; max-width: 100%; object-fit: contain; }
   .client-reel__pause, .client-reel__all summary { font: 500 var(--type-caption)/1.5 var(--h-sans); color: var(--muted); background: none; border: 0; padding: .5rem 0; cursor: pointer; }
   .client-reel__pause { min-height: 2.75rem; text-decoration: underline; text-underline-offset: .25rem; }

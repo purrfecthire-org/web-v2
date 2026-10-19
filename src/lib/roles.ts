@@ -201,6 +201,7 @@ export function roleCardHTML(r: PublicRoleListItem): string {
   const metaRow = segs.join('<span class="rl__meta-dot" aria-hidden="true"></span>');
 
   const tags = (r.tags ?? [])
+    .slice(0, 4)
     .map((t) => `<span class="rl__tag">${escapeHtml(t)}</span>`)
     .join('');
 
@@ -380,6 +381,7 @@ export function roleReadOnlyContentHTML(role: PublicRoleDetail): string {
   }
 
   const tags = (role.tags ?? [])
+    .slice(0, 6)
     .map((t) => `<span class="rv2__skill">${escapeHtml(t)}</span>`)
     .join('');
 
