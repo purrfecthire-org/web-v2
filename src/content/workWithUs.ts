@@ -53,7 +53,7 @@ export const workWithUs = {
   application: {
     eyebrow: 'Join the team',
     headline: 'Show us what you would bring.',
-    body: 'Introduce yourself for future opportunities at Purrfect Hire. Share where you could contribute and one piece of work that helps us understand how you think.',
+    body: 'Introduce yourself for future opportunities at Purrfect Hire.',
     note: 'This is an expression of interest in joining our own team. It does not apply you to a client vacancy or enrol you in advisory.',
     detailsTitle: 'What to share',
     details: ['Your background and where you would contribute.', 'Your LinkedIn or portfolio.', 'An example of your work, your contribution and what changed.'],

@@ -34,9 +34,9 @@ export interface CompaniesV2Content {
   selectedSearches: { eyebrow: string; headline: string; problemLabel: string; interventionLabel: string; outcomeLabel: string; items: CompanySearchCase[] };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
   proof: { eyebrow: string; headline: string; voices: { quote: string; name: string; role: string; context?: string; photo?: string; photoWebp?: string }[]; logosLabel: string; markets: string };
-  models: { eyebrow: string; headline: string; items: { name: string; note: string }[]; recommendation: string; cta: string };
+  models: { eyebrow: string; headline: string; items: { name: string; note: string }[]; cta: string };
   kate: { eyebrow: string; headline: string; body: string[]; cta: string };
-  close: { headline: string; body: string; cta: string; email: string; emailLabel: string; howNote: string };
+  close: { headline: string; body: string; cta: string; email: string; emailLabel: string };
   photo: { heroAlt: string; kateAlt: string };
 }
 
@@ -126,7 +126,7 @@ export const companiesV2En: CompaniesV2Content = {
   },
   method: {
     eyebrow: 'How we work',
-    headline: 'A search that gets clearer as we learn.',
+    headline: 'From role definition to recommendation.',
     steps: [
       { id: '01', title: 'Define the real bar', body: 'Define what must change, success six months in and the role’s constraints.' },
       { id: '02', title: 'Reach and assess', body: 'Approach the relevant market. Assess candidates against the business problem.' },
@@ -171,7 +171,6 @@ export const companiesV2En: CompaniesV2Content = {
       { name: 'Success fee', note: 'For a specific search. No upfront fee. You pay only when you hire.' },
       { name: 'Dedicated hiring partnership', note: 'A dedicated team for several roles, paid monthly.' },
     ],
-    recommendation: 'We recommend a model after reviewing your hiring plan.',
     cta: 'Book a 20-minute founders call',
   },
   kate: {
@@ -189,7 +188,6 @@ export const companiesV2En: CompaniesV2Content = {
     cta: 'Book a 20-minute founders call',
     email: 'go@purrfecthire.com',
     emailLabel: 'Prefer email? Write to',
-    howNote: 'A free 20-minute introductory call. No commitment.',
   },
   photo: {
     heroAlt: 'People discussing work at a table in an office.',

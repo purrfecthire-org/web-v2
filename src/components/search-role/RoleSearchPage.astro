@@ -1,11 +1,10 @@
 ---
 import Shell from '../v2/Shell.astro';
-import { getRoleSearchHref, searchRoles, searchRoleShared as t, type SearchRoleContent } from '../../content/searchRoles';
+import { getRoleSearchHref, searchRoleShared as t, type SearchRoleContent } from '../../content/searchRoles';
 
 interface Props { role: SearchRoleContent }
 const { role } = Astro.props;
 const bookingHref = getRoleSearchHref(role.slug);
-const relatedRoles = searchRoles.filter((item) => item.slug !== role.slug);
 ---
 
 <Shell
@@ -75,34 +74,21 @@ const relatedRoles = searchRoles.filter((item) => item.slug !== role.slug);
   </section>
 
   <section class="rs-section rs-close" aria-labelledby="rs-close-title">
-    <div class="h3-wrap rs-section__grid">
-      <div>
-        <p class="h3-eyebrow">{t.preparationEyebrow}</p>
-        <h2 class="h3-h2 rs-section__title" id="rs-close-title">{t.preparationHeadline}</h2>
-        <ul class="rs-preparation">
-          {role.preparation.map((item) => <li>{item}</li>)}
-        </ul>
-      </div>
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.preparationEyebrow}</p>
+      <h2 class="h3-h2 rs-section__title" id="rs-close-title">{role.close.headline}</h2>
+      <ul class="rs-preparation">
+        {role.preparation.map((item) => <li>{item}</li>)}
+      </ul>
       <div class="rs-close__action">
-        <h3>{role.close.headline}</h3>
-        <p class="h3-body">{role.close.body}</p>
         <a class="h3-btn h3-btn--ink" href={bookingHref} data-cta={`search-${role.slug}-close`}>
           {t.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <a class="h3-link" href={t.sampleHref}>{t.sampleLabel}<span aria-hidden="true">→</span></a>
       </div>
-    </div>
-  </section>
-
-  <nav class="rs-related" aria-label={t.relatedLabel}>
-    <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.relatedLabel}</p>
-      <ul>
-        {relatedRoles.map((item) => <li><a class="h3-link" href={`/search/${item.slug}`}>{item.role}<span aria-hidden="true">→</span></a></li>)}
-      </ul>
       <p class="rs-page-note">{t.pageNote} <a href="/roles/">{t.openRolesLabel}<span aria-hidden="true"> →</span></a></p>
     </div>
-  </nav>
+  </section>
 </Shell>
 
 <style lang="scss">
@@ -135,20 +121,18 @@ const relatedRoles = searchRoles.filter((item) => item.slug !== role.slug);
   .rs-number { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); font-variant-numeric: tabular-nums; }
   .rs-risks__list { border-top: 1px solid var(--line); }
   .rs-risks__list li { padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
-  .rs-preparation { margin-top: var(--space-stack); border-top: 1px solid var(--line); }
-  .rs-preparation li { padding-block: var(--space-2); border-bottom: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .rs-preparation { margin-top: var(--space-stack); }
+  .rs-preparation li { padding-block: var(--space-2); border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .rs-close { border-top: 1px solid var(--line); }
   .rs-close__action { display: flex; flex-direction: column; align-items: start; gap: var(--space-stack); padding-top: var(--space-stack); }
-  .rs-close__action h3 { font-family: var(--h-sans); font-weight: 500; font-size: var(--type-subheading); line-height: 1.35; text-wrap: balance; }
   .rs-close__action .h3-btn { max-width: 100%; }
   .rs-close__action .h3-link { font-size: var(--type-ui); line-height: 1.5; }
-  .rs-related { padding-bottom: var(--space-section); }
-  .rs-related ul { display: flex; flex-wrap: wrap; column-gap: var(--space-grid); row-gap: var(--space-2); margin-top: var(--space-2); }
   .rs-page-note { margin-top: var(--space-stack); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .rs-page-note a { text-decoration: underline; text-underline-offset: 3px; }
   @media (min-width: 56rem) {
     .rs-hero__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: center; }
     .rs-section__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .rs-assessment__row { grid-template-columns: var(--space-4) minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-grid); }
+    .rs-preparation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-grid); }
   }
 </style>

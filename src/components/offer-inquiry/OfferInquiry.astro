@@ -40,17 +40,17 @@ const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry
             </div>
             <p class="oi__privacy">We use these details to respond to your inquiry. <a href={PRIVACY}>Privacy</a></p>
             <button id="oi-submit" type="submit" class="h3-btn" data-cta="offer-inquiry-submit" disabled>Send inquiry →</button>
-            <ol class="oi__steps">
-              {applicationSteps.map((step) => (
-                <li><strong>{step.title}</strong><p>{step.body}</p></li>
-              ))}
-            </ol>
-            <p id="oi-error" class="oi__error" role="alert" hidden></p>
+            <p id="oi-error" class="oi__error" role="alert" aria-atomic="true" tabindex="-1" hidden></p>
             <div id="oi-fallback" class="oi__fallback" hidden>
               <p>You can also email us at <a href={emailHref}>{CONTACT_EMAIL}</a>.</p>
               <p>If your email app does not open, copy the address into your inbox.</p>
             </div>
             <noscript><p class="oi__fallback">JavaScript is needed to send this form. You can email <a href={emailHref}>{CONTACT_EMAIL}</a> instead. Nothing has been submitted.</p></noscript>
+            <ol class="oi__steps">
+              {applicationSteps.map((step) => (
+                <li><strong>{step.title}</strong><p>{step.body}</p></li>
+              ))}
+            </ol>
           </form>
         ) : (
           <div class="oi__unavailable">
@@ -73,6 +73,7 @@ const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry
 <script>
   import { submitOfferInquiry, OfferInquiryError } from '../../lib/offerInquiry';
   import { reportClientError } from '../../lib/roles';
+  import { createSubmissionAttempts, lockSubmissionFields } from '../../lib/submissionState';
 
   const root = document.querySelector<HTMLElement>('.oi');
   const form = document.getElementById('offer-inquiry-form') as HTMLFormElement | null;
@@ -82,30 +83,34 @@ const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry
     const fallback = document.getElementById('oi-fallback')!;
     const received = document.getElementById('oi-received')!;
     const renderedAt = Date.now();
-    let requestId: string | undefined;
+    const attempts = createSubmissionAttempts();
     let started = false;
     const emit = (name: string) => window.dispatchEvent(new CustomEvent('purrfect:funnel', { detail: { name } }));
     button.disabled = false;
 
     form.addEventListener('input', () => {
-      requestId = undefined;
+      if (button.disabled) return;
+      attempts.invalidate();
       if (!started) { started = true; emit('offer_inquiry_started'); }
     });
+    form.addEventListener('change', () => { if (!button.disabled) attempts.invalidate(); });
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (button.disabled || !form.reportValidity()) return;
       const data = new FormData(form);
       const value = (name: string) => String(data.get(name) || '').trim();
+      const attempt = attempts.current(Date.now() - renderedAt);
       button.disabled = true;
+      form.setAttribute('aria-busy', 'true');
       button.textContent = 'Sending…';
       error.hidden = true;
       fallback.hidden = true;
+      const restoreFields = lockSubmissionFields(form);
       try {
-        requestId ??= crypto.randomUUID();
         await submitOfferInquiry(root.dataset.endpoint || '', {
           linkedin: value('linkedin'), email: value('email'), objective: value('objective'),
-          fill_time_ms: Math.max(0, Date.now() - renderedAt), website: value('website'),
-        }, requestId);
+          fill_time_ms: attempt.fillTimeMs, website: value('website'),
+        }, attempt.requestId);
         form.hidden = true;
         received.hidden = false;
         emit('offer_inquiry_submitted');
@@ -118,10 +123,14 @@ const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry
         error.hidden = false;
         fallback.hidden = false;
         reportClientError('OA inquiry receipt was not confirmed', {
-          stage: 'oa_inquiry', code: err instanceof OfferInquiryError ? err.code : 'unavailable', request_id: requestId,
+          stage: 'oa_inquiry', code: err instanceof OfferInquiryError ? err.code : 'unavailable', request_id: attempt.requestId,
         });
         button.disabled = false;
         button.textContent = 'Send inquiry →';
+        error.focus();
+      } finally {
+        restoreFields();
+        form.removeAttribute('aria-busy');
       }
     });
   }

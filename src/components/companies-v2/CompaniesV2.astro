@@ -37,12 +37,7 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
         <p class="fc-microcopy">{t.hero.microcopy}</p>
       </div>
       <figure class="h3-hero__media fc-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
-        <picture>
-          <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/companies-mobile.webp" />
-          <source media="(max-width: 55.99rem)" srcset="/photos/web/companies-mobile.png" />
-          <source type="image/webp" srcset="/photos/web/companies-desktop.webp" />
-          <img src="/photos/web/companies-desktop.png" alt={t.photo.heroAlt} width="1200" height="750" decoding="async" fetchpriority="high" />
-        </picture>
+        <img src="/photos/editorial/walking-conversation.webp" alt="Illustrative scene of three people in conversation while walking through the city." width="1200" height="800" decoding="async" fetchpriority="high" />
       </figure>
     </div>
   </section>
@@ -102,13 +97,10 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
                   <dl>
                     <div><dt>{t.selectedSearches.interventionLabel}</dt><dd>{search.intervention}</dd></div>
                     {search.evidence && <div><dt>Evidence to examine</dt><dd>{search.evidence}</dd></div>}
+                    {search.outcome && <div><dt>{t.selectedSearches.outcomeLabel}</dt><dd>{search.outcome}</dd></div>}
                   </dl>
                 </details>
               </div>
-              {search.outcome && <div class="fc-search__result">
-                <span class="fc-search__signal" aria-hidden="true"></span>
-                <p class="fc-search__outcome"><span>{t.selectedSearches.outcomeLabel}</span>{search.outcome}</p>
-              </div>}
             </article>
           ))}
         </div>
@@ -153,11 +145,9 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
           </li>
         ))}
       </ul>
-      <p class="fc-models__recommendation">{t.models.recommendation}</p>
       <div class="fc-models__close">
         <p class="h3-body">{t.close.body}</p>
         <a href={BOOKING_URL} data-cta="companies-close-booking" class="h3-btn h3-btn--ink">{t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
-        <p class="fc-microcopy">{t.close.howNote}</p>
       </div>
     </div>
   </section>
@@ -181,13 +171,9 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
   .fc-method__links a { max-width: 100%; }
   .fc-searches { margin-top: var(--space-grid); }
   .fc-searches__list { margin-top: var(--space-stack); }
-  .fc-search { display: grid; gap: var(--space-grid); padding-block: var(--space-stack); border-block: 1px solid var(--line); }
-  .fc-search__narrative, .fc-search__result { min-width: 0; }
-  .fc-search__result { padding: var(--space-stack); border-radius: var(--radius-card); background: var(--stone); display: flex; align-items: center; }
-  .fc-search__signal { display: none; }
+  .fc-search { padding-block: var(--space-stack); border-block: 1px solid var(--line); }
+  .fc-search__narrative { min-width: 0; }
   .fc-search h3 { margin-top: var(--space-2); }
-  .fc-search__outcome { font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 40rem; }
-  .fc-search__outcome span { display: block; margin-bottom: var(--space-1); font-size: var(--type-caption); font-weight: 500; color: var(--text); line-height: 1.5; }
   .fc-search__detail { margin-top: var(--space-stack); }
   .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: var(--space-2); padding-block: var(--space-1); font-size: var(--type-ui); font-weight: 500; list-style: none; line-height: 1.5; }
   .fc-search__detail summary::-webkit-details-marker { display: none; }
@@ -210,12 +196,10 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
   .fc-quote__brand { display: flex; width: 10rem; min-height: var(--space-8); align-items: center; }
   .fc-quote__brand img { display: block; width: 100%; height: auto; }
   .fc-models { border-top: 1px solid var(--line); }
-  .fc-models__recommendation { margin-top: var(--space-stack); max-width: 40rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .fc-models__close { margin-top: var(--space-grid); }
   .fc-models__close > .h3-body { margin: 0 0 var(--space-stack); }
   @media (min-width: 56rem) {
     .fc-situations__list, .fc-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .fc-proof__voices, .fc-models__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .fc-search { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
   }
 </style>

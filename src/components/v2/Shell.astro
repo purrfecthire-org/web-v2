@@ -81,7 +81,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
         </a>
 
         <nav class="h3-nav__links" aria-label="Main">
-          {links.map((l) => <a href={l.href}>{l.label}</a>)}
+          {links.map((l) => <a href={l.href} aria-current={Astro.url.pathname.replace(/\/$/, '') === l.href.replace(/\/$/, '') ? 'page' : undefined}>{l.label}</a>)}
         </nav>
 
         <div class="h3-nav__right">
@@ -94,7 +94,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
             </summary>
             <div class="h3-menu__panel">
               <nav aria-label="Main, small screens">
-                {links.map((l) => <a href={l.href}>{l.label}</a>)}
+                {links.map((l) => <a href={l.href} aria-current={Astro.url.pathname.replace(/\/$/, '') === l.href.replace(/\/$/, '') ? 'page' : undefined}>{l.label}</a>)}
               </nav>
               {navCta && <a href={navCta.href} {...ctaRel} data-cta={`${journey}-menu`} class:list={['h3-btn', 'h3-menu__cta', ctaTone]}>{navCta.label}</a>}
             </div>
@@ -251,13 +251,16 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
   }
   @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
-  .h3-nav__logo img { height: 1.6rem; width: auto; display: block; }
+  .h3-nav__logo img { height: var(--space-4); width: auto; display: block; }
   .h3-nav__links { display: none; gap: 1.5rem; font-size: var(--type-ui); line-height: 1.5; }
   @media (min-width: 72rem) { .h3-nav__links { display: flex; } }
   .h3--dark .h3-nav__links { color: var(--on-dark-muted); }
   .h3--dark .h3-nav__links a:hover { color: var(--on-dark); }
   .h3--light .h3-nav__links { color: var(--muted); }
   .h3--light .h3-nav__links a:hover { color: var(--text); }
+  .h3-nav__links a[aria-current="page"] { color: var(--text); text-decoration: underline; text-underline-offset: .3em; }
+  .h3[data-journey="home"] .h3-nav__links { margin-left: auto; color: var(--text); }
+  @media (min-width: 72rem) { .h3[data-journey="home"] .h3-nav__right { display: none; } }
   .h3-nav__right { display: flex; align-items: center; gap: 0.75rem; }
   .h3-nav__cta { display: none; }
   @media (min-width: 48rem) { .h3-nav__cta { display: inline-flex; } }

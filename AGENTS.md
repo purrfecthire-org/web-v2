@@ -8,6 +8,10 @@ navy-only and bilingual components are historical and are not the current
 visual reference. Follow the user's current instructions over older references.
 
 - Home presents the brand and routes visitors to Companies or Talent.
+- Home uses a warm full-background editorial city scene with a separate mobile
+  composition. Generated editorial imagery is illustrative, never client or team
+  evidence. Talent compares products immediately; Offer uses an editorial
+  text-and-scope hero instead of repeating an office conversation photograph.
 - Companies explains critical hiring and books directly at
   https://cal.com/purrfect-hire/founders-call.
 - Talent compares Offer Accelerator, Career Compounding and a strategic session.
@@ -66,6 +70,10 @@ pages are generated. Do not publish an empty snapshot after an API failure.
 Run the existing tests in tests/*.test.ts. Check internal links, anchors,
 redirects and assets. Inspect complete pages at 375, 768, 1280 and 1920px.
 Respect reduced motion, keyboard focus and the original portrait assets.
+Both intake forms require a valid UUID and received status before confirmation.
+Capture and lock the draft while sending, restore its original editable state on
+failure, and retain request ID and timing for an unchanged retry. These client
+behaviors do not prove backend deduplication.
 Do not send real applications or book meetings as routine QA.
 
 When publication is authorized, use a PR and the existing GitHub Pages workflow.

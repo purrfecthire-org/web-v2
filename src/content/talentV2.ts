@@ -8,7 +8,7 @@ export interface TalentV2Content {
   hero: { eyebrow: string; headline: string; sub: string; audience: string; cta: string; href: string };
   paths: {
     eyebrow: string; headline: string;
-    items: { name: string; body: string; price: string; cta: string; href: string; note?: string }[];
+    items: { name: string; body: string; price: string; cta: string; href: string; note?: string; proof?: { label: string; href: string } }[];
     free: { body: string; cta: string; href: string };
   };
   firewall: { headline: string; lead: string };
@@ -38,6 +38,7 @@ export const talentV2En: TalentV2Content = {
         price: 'USD 2,000',
         cta: 'Explore Offer Accelerator',
         href: '/offer-acceleration',
+        proof: { label: 'Read participant experiences', href: '/offer-acceleration/#voices' },
       },
       {
         name: 'Career Compounding',

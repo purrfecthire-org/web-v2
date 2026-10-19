@@ -1,150 +1,25 @@
-PURRFECT HIRE · FOTOGRAFÍA PARA LA WEB
-Guía de implementación · 14 de octubre de 2026
+PURRFECT HIRE · FOTOGRAFÍA VIGENTE
+Actualizado: 19 de octubre de 2026
 
-Esta entrega prepara los archivos y su uso. No publica cambios en la web.
+HOME
+Fondo protagonista: editorial/city-courtyard-desktop.webp.
+Mobile: editorial/city-courtyard-mobile.webp.
+Escena editorial ilustrativa generada para Purrfect. No representa al equipo, clientes ni una sesión real. No usar como testimonio.
+La foto original de Kate de negro permanece una sola vez y pequeña (máximo160px), sin retoque.
 
-DECISIÓN PRIORITARIA DE LA USUARIA
-preserveExistingHomeKate: true
-Conservar EXACTAMENTE la fotografía actual de Kate vestida de negro en la página principal. Mantener su archivo, su edición, su encuadre y su presentación actuales. No sustituirla, retocarla, filtrarla ni cambiar su recorte. Esta instrucción prevalece sobre cualquier selección editorial de esta guía.
-La referencia suficiente para el equipo web es la foto actual de Kate de negro. No intentar identificarla por parecido con otros rostros ni elegir otra imagen en su lugar.
+COMPANIES
+Escena callejera: editorial/walking-conversation.webp.
+Suministrada por Kate. No identificar a los personajes por semejanza ni presentarlos como clientes.
 
-1. SELECCIÓN PARA PUBLICAR
+TALENT Y OFFER
+Se retiraron los heroes de oficina para evitar repetición y clichés.
+Daniel Contreras aparece solo en su testimonio, identificado expresamente por Kate.
 
-Home
-Foto de Kate: preservar la fotografía actual de negro en su ubicación existente, sin cambios.
-Las variantes siguientes son una alternativa editorial opcional para otro espacio de Home. No reemplazan la fotografía actual de Kate.
-Alternativa de biblioteca desktop: library/home-editorial-desktop.webp
-Alternativa de biblioteca móvil: library/home-editorial-mobile.webp
-Respaldo: library/home-editorial-desktop.png y library/home-editorial-mobile.png
-Original: scenes/scene-08.png
-Uso: una imagen opcional de conversación de trabajo en una sección editorial distinta. No se incluye como sustitución automática de Home. Conservar a las tres personas; evitar un recorte vertical que elimine a un interlocutor. No ocupar con esta escena el lugar de la foto actual de Kate.
-Alt EN: Three people discussing work around a table.
+WORK WITH US
+Se conservan los seis retratos originales y sus nombres suministrados por Kate.
+El retrato verde de Kate pertenece a esta galería; no sustituye el negro de Home.
+No retocar rostros ni homogeneizar artificialmente identidades. Los encuadres de presentación pueden ajustarse para equilibrio óptico.
 
-For Companies
-Archivo desktop preferido: web/companies-desktop.webp
-Archivo móvil preferido: web/companies-mobile.webp
-Respaldo: web/companies-desktop.png y web/companies-mobile.png
-Original: scenes/scene-11.png
-Uso: conversación de trabajo; el encuadre reduce la pared vacía y conserva la interacción. Una imagen editorial principal por página es suficiente.
-Alt EN: People discussing work at a table in an office.
-
-For Talent
-Archivo desktop preferido: web/talent-desktop.webp
-Archivo móvil preferido: web/talent-mobile.webp
-Respaldo: web/talent-desktop.png y web/talent-mobile.png
-Original: scenes/scene-07.png
-Uso: una persona trabajando en un café. Mantener el contexto de trabajo y la expresión; no presentarla como participante identificada del programa.
-Alt EN: A person working on a laptop in a café.
-
-Offer Accelerator
-Archivo desktop preferido: web/offer-desktop.webp
-Archivo móvil preferido: web/offer-mobile.webp
-Respaldo: web/offer-desktop.png y web/offer-mobile.png
-Original: scenes/scene-02.png
-Uso: conversación entre dos personas. Mantener a ambas en el encuadre. No acompañar la imagen con una cita, resultado o nombre que le atribuya una experiencia real en Offer.
-Alt EN: Two people having a conversation at a desk.
-
-Equipo
-Kate: reutilizar la fotografía actual de negro, conservada en el proyecto. Mantener su archivo y recorte actuales. El paquete no incluye team/kate.png ni una sustitución automática para Kate.
-Juanca: team/juanca.webp y team/juanca-320.webp
-Nico: team/nico.webp y team/nico-320.webp
-Ana: team/ana.webp y team/ana-320.webp
-Rich: team/rich.webp y team/rich-320.webp
-Dave: team/dave.webp y team/dave-320.webp
-Cada variante de los cinco nuevos retratos dispone de respaldo PNG con el mismo nombre base.
-Esos archivos sin sufijo están previstos como cuadrados de 640 px; las alternativas tienen 320 px. Esta regla no modifica la foto actual de Kate.
-Alt EN: Kate / Juanca / Nico / Ana / Rich / Dave, según la tarjeta correspondiente.
-Los nombres proceden de las etiquetas de la usuaria. Kate puede figurar como Founder. No añadir un cargo a Rich ni a los demás sin comprobarlo en una fuente oficial del negocio.
-Dar a los seis el mismo tamaño de tarjeta, jerarquía de nombre y espacio alrededor. Mantener sus fondos y expresiones originales. La coherencia de la presentación no requiere que parezcan fotografiados en el mismo lugar.
-La bio de Kate en Home conserva exactamente su foto actual de negro. No reemplazarla por el adjunto KATE.png de ropa verde ni por un rostro de las escenas editoriales.
-
-Biblioteca opcional de Kate
-El adjunto KATE.png de ropa verde se archiva como library/kate-alternative.png y library/kate-alternative.webp, con versiones library/kate-alternative-320.png y library/kate-alternative-320.webp.
-Estos archivos son únicamente una alternativa de biblioteca. No se usan para sustituir la foto principal ni se añaden automáticamente al bloque equipo. La instrucción de publicación es conservar la foto actual de negro.
-
-2. ARCHIVO DE ESCENAS
-
-Los doce masters se entregan como scenes/scene-01.png a scenes/scene-12.png.
-Son una biblioteca, no una instrucción de publicar las doce fotos.
-
-Mapa de originales:
-01 — ChatGPT Image 14 Oct 2026, 11_04_00.png
-02 — pag web 3.png
-03 — ChatGPT Image 14 Oct 2026, 10_21_07.png
-04 — pag web 2.png
-05 — Collaborative Startup Team Meeting.png
-06 — 5.png
-07 — pag web1 .png
-08 — ChatGPT Image 14 Oct 2026, 04_36_47.png
-09 — ChatGPT Image 14 Oct 2026, 04_36_59.png
-10 — ChatGPT Image 14 Oct 2026, 04_37_09.png
-11 — ChatGPT Image 14 Oct 2026, 04_37_17.png
-12 — ChatGPT Image 14 Oct 2026, 04_37_23.png
-
-Para el lanzamiento, usar 11, 07 y 02 en las páginas indicadas. La 08 queda como opción editorial adicional de Home, únicamente si existe un espacio distinto que no sustituya la fotografía actual de Kate. La 04 queda como otra alternativa de archivo para Home. Reservar las demás: añadirlas todas vuelve repetitivo el sitio y debilita la presencia del equipo identificado.
-
-3. TRATAMIENTO Y PROCEDENCIA
-
-Luz natural, color contenido y piel con su textura. Conservar asimetrías, expresiones y detalles del entorno. No reconstruir caras, cambiar rasgos, borrar señales de edad ni añadir nitidez generativa.
-
-Una edición de color no convierte una escena generada en una fotografía real. Las escenas cuya procedencia no está verificada son material ilustrativo. No describirlas como fotos del equipo, sesiones reales, clientes o resultados de Purrfect Hire. No identificar personas de esas escenas por parecido con los retratos.
-
-Los retratos del equipo están asociados a nombres porque la usuaria los identificó explícitamente. Esa asociación no autoriza a inventar cargos, testimonios ni experiencias.
-
-No añadir grano, desenfoque, tonos de marca, filtros, capas de color o texto superpuesto mediante CSS. El texto vive junto a la fotografía, con contraste accesible sobre el fondo de la página.
-
-4. COMPONENTES Y RESPONSIVE
-
-Usar photography.css como referencia de componentes, adaptando las rutas al proyecto. Los recortes se entregan preparados: seleccionar el archivo móvil mediante <picture>, no volver a recortar a ciegas con object-position ni ampliar la imagen para llenar un formato distinto.
-No aplicar estos componentes ni sus reglas de proporción a la fotografía actual de Kate en Home. Conservar el componente y la presentación que ya tiene.
-
-Proporciones previstas:
-Escena editorial opcional de Home: desktop 16:10; móvil 4:3. La foto actual de Kate mantiene su formato existente.
-For Companies: desktop 16:10; móvil 4:3.
-For Talent: desktop 4:3; móvil 4:5.
-Offer Accelerator: desktop 16:10; móvil 4:3.
-Cinco nuevos retratos del equipo: 1:1 en ambos tamaños de pantalla. Kate mantiene su recorte existente.
-
-Ejemplo editorial:
-<picture class="ph-photo ph-photo--companies">
-  <source media="(max-width: 767px)" type="image/webp" srcset="/photos/web/companies-mobile.webp">
-  <source media="(max-width: 767px)" srcset="/photos/web/companies-mobile.png">
-  <source type="image/webp" srcset="/photos/web/companies-desktop.webp">
-  <img src="/photos/web/companies-desktop.png" alt="People discussing work at a table in an office." width="1280" height="800" decoding="async" fetchpriority="high">
-</picture>
-
-Ejemplo de tarjeta:
-<figure class="ph-team-card">
-  <div class="ph-team-card__photo">
-    <picture>
-      <source type="image/webp" srcset="/photos/team/juanca-320.webp 320w, /photos/team/juanca.webp 640w" sizes="(max-width: 767px) 44vw, 320px">
-      <img src="/photos/team/juanca.png" srcset="/photos/team/juanca-320.png 320w, /photos/team/juanca.png 640w" sizes="(max-width: 767px) 44vw, 320px" alt="Juanca" width="640" height="640" loading="lazy" decoding="async">
-    </picture>
-  </div>
-  <figcaption>
-    <p class="ph-team-card__name">Juanca</p>
-  </figcaption>
-</figure>
-
-Estos ejemplos no presuponen las dimensiones exactas de una exportación final. Al incorporar los archivos, comprobar sus dimensiones y ajustar width/height si corresponden. Mantener las proporciones del componente evita saltos de diseño.
-
-En una página con fotografía de hero, solo esa imagen lleva fetchpriority="high". Las imágenes que aparecen después usan loading="lazy". No precargar simultáneamente desktop y móvil.
-
-WebP es la opción preferida cuando esté disponible en la entrega; conserva la edición y el encuadre del PNG con una codificación más ligera. Los PNG son el respaldo. No cambiar la imagen al cambiar el formato y comparar visualmente la compresión contra el PNG. Si una variante WebP no se incluye, omitir su <source> y usar el PNG correspondiente hasta exportarla. No generar versiones más grandes que la fuente. Para el equipo, 320 y 640 px cubren tarjetas de hasta 320 px de ancho a distintas densidades de pantalla.
-
-Si una imagen repite exactamente la información del texto inmediato y es puramente decorativa, usar alt="". Nunca añadir atributos alt que conviertan una escena ilustrativa en prueba del servicio.
-
-5. COMPROBACIÓN ANTES DE PUBLICAR
-
-— Confirmar preserveExistingHomeKate: true: la foto actual de Kate de negro conserva el mismo archivo, edición, encuadre y presentación en Home.
-— Confirmar que KATE.png de ropa verde y library/kate-alternative no reemplazan esa fotografía ni se publican automáticamente.
-— Confirmar las nuevas imágenes de For Companies, For Talent y Offer. En Home, cualquier escena nueva es adicional y respeta la fotografía conservada.
-— Comprobar cada selección en una pantalla estrecha y en desktop: caras completas, interacción comprensible y manos sin recortes accidentales importantes.
-— Verificar que el bloque equipo tiene seis nombres correctos y únicamente cargos confirmados.
-— Comprobar que ninguna escena editorial se presenta como cliente, sesión o equipo real.
-— Verificar que las imágenes cargan sin errores y no provocan saltos de diseño.
-— Revisar el peso de las variantes de producción y evitar descargar las doce escenas en páginas que solo usan una.
-— Confirmar que no hay filtros, capas de color ni grano añadidos en el sitio.
-— Revisar los recortes de Nico y Dave a su tamaño real de tarjeta; conservar su calidad original y no aplicar reconstrucción generativa.
-
-El objetivo es una presencia humana consistente: pocas imágenes bien utilizadas y un equipo claramente identificado.
+BIBLIOTECA
+Los archivos library/ y web/ anteriores se conservan como biblioteca histórica. No son una instrucción de reemplazo ni la selección vigente.
+La procedencia, hashes y usos vigentes están en PHOTO-MANIFEST.json.

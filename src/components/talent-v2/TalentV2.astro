@@ -8,98 +8,74 @@ const { lang = 'en' } = Astro.props;
 const t = getTalentV2(lang);
 ---
 
-<Shell
-  lang={lang}
-  title={t.meta.title}
-  description={t.meta.description}
-  theme="light"
-  navCta={{ label: t.hero.cta, href: t.hero.href }}
-  journey="talent"
->
+<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light"
+  navCta={{ label: t.hero.cta, href: t.hero.href }} journey="talent">
   <section class="h3-hero">
-    <div class="h3-wrap h3-hero__grid">
-      <div class="h3-hero__copy">
+    <div class="h3-wrap tv-entry">
+      <div class="h3-hero__copy tv-entry__copy">
         <p class="h3-eyebrow">{t.hero.eyebrow}</p>
-        <h1 class="h3-hero__h1 tv-h1">{t.hero.headline}</h1>
+        <h1 class="h3-hero__h1">{t.hero.headline}</h1>
         <p class="h3-hero__sub">{t.hero.sub}</p>
         <p class="tv-audience">{t.hero.audience}</p>
-        <a href={t.hero.href} data-cta="talent-hero-paths" class="h3-btn tv-hero__cta">
-          {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-        </a>
       </div>
-      <figure class="h3-hero__media" style={{ "--photo-desktop": "4 / 3", "--photo-mobile": "4 / 3" }}>
-        <picture>
-          <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/talent-mobile.webp" />
-          <source media="(max-width: 55.99rem)" srcset="/photos/web/talent-mobile.png" />
-          <source type="image/webp" srcset="/photos/web/talent-desktop.webp" />
-          <img src="/photos/web/talent-desktop.png" alt="Two people having a conversation at a desk." width="1200" height="900" decoding="async" fetchpriority="high" />
-        </picture>
-      </figure>
+
+      <div class="tv-paths" id="ways-in" aria-labelledby="tv-paths-title">
+        <h2 class="h3-eyebrow" id="tv-paths-title">{t.paths.eyebrow}</h2>
+        <ul class="tv-paths__list">
+          {t.paths.items.map((item, index) => (
+            <li class="tv-path">
+              <div>
+                <h3 class="tv-path__name">{item.name}</h3>
+                <p class="tv-path__price">{item.price}</p>
+              </div>
+              <p class="tv-path__body">{item.body}</p>
+              <div class="tv-path__action">
+                <a href={item.href} data-cta={"talent-path-" + index} class="h3-link">{item.cta}<span aria-hidden="true">→</span></a>
+                {item.proof && <a href={item.proof.href} data-cta="talent-participant-voices" class="tv-path__proof">{item.proof.label}<span aria-hidden="true">→</span></a>}
+                {item.note && <p class="tv-path__note">{item.note}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div class="tv-free">
+          <p>{t.paths.free.body}</p>
+          <a href={t.paths.free.href} data-cta="talent-free" class="h3-link">{t.paths.free.cta}<span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <section class="tv-paths" id="ways-in" aria-labelledby="tv-paths-title">
+  <aside class="tv-principle" aria-label={t.firewall.headline}>
     <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.paths.eyebrow}</p>
-      <h2 class="h3-h2" id="tv-paths-title">{t.paths.headline}</h2>
-      <ul class="tv-paths__list">
-        {t.paths.items.map((item, index) => (
-          <li class="tv-path">
-            <div>
-              <h3 class="tv-path__name">{item.name}</h3>
-              <p class="tv-path__price">{item.price}</p>
-            </div>
-            <p class="tv-path__body">{item.body}</p>
-            <div class="tv-path__action">
-              <a href={item.href} data-cta={"talent-path-" + index} class="h3-link">{item.cta}<span aria-hidden="true">→</span></a>
-              {item.note && <p class="tv-path__note">{item.note}</p>}
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div class="tv-free">
-        <p>{t.paths.free.body}</p>
-        <a href={t.paths.free.href} data-cta="talent-free" class="h3-link">{t.paths.free.cta}<span aria-hidden="true">→</span></a>
-      </div>
+      <p><strong>{t.firewall.headline}</strong> {t.firewall.lead}</p>
     </div>
-  </section>
-
-  <section class="tv-principle" aria-labelledby="tv-firewall-title">
-    <div class="h3-wrap tv-principle__grid">
-      <h2 class="tv-principle__title" id="tv-firewall-title">{t.firewall.headline}</h2>
-      <div>
-        <p class="h3-body">{t.firewall.lead}</p>
-        <a href="/offer-acceleration/#voices" data-cta="talent-participant-voices" class="h3-link tv-principle__link">{t.proof.headline}<span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </section>
+  </aside>
 </Shell>
 
 <style lang="scss" is:global>
-  .tv-h1 { margin-top: var(--space-2); }
-  .tv-audience { margin-top: var(--space-3); max-width: 34rem; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
-  .tv-hero__cta { margin-top: var(--space-4); }
-  .tv-paths, .tv-principle { background: var(--sand); padding-block: var(--space-section); }
+  .tv-entry { display: grid; gap: var(--space-grid); }
+  .tv-entry__copy { max-width: 48rem; }
   .tv-paths { scroll-margin-top: var(--space-hero-top); }
-  .tv-paths .h3-h2 { max-width: 28ch; }
-  .tv-paths__list { margin-top: var(--space-4); }
-  .tv-path { display: grid; align-items: start; gap: var(--space-3); min-width: 0; padding-block: var(--space-4); border-top: 1px solid var(--line); }
+  .tv-audience { margin-top: var(--space-3); max-width: 34rem; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .tv-paths__list { margin-top: var(--space-3); }
+  .tv-path { display: grid; align-items: start; gap: var(--space-3); min-width: 0; padding-block: var(--space-3); border-top: 1px solid var(--line); }
   .tv-path:last-child { border-bottom: 1px solid var(--line); }
   .tv-path__name { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .tv-path__price { margin-top: var(--space-1); font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
   .tv-path__body { font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 34rem; }
   .tv-path__action { min-width: 0; }
   .tv-path__action .h3-link { font-size: var(--type-ui); line-height: 1.5; }
+  .tv-path__proof { display: inline-flex; align-items: baseline; gap: var(--space-1); margin-top: var(--space-2); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
+  .tv-path__proof:hover { text-decoration: underline; text-underline-offset: 3px; }
   .tv-path__note { margin-top: var(--space-2); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); max-width: 26ch; }
   .tv-free { margin-top: var(--space-4); max-width: 44rem; }
   .tv-free p { font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
   .tv-free .h3-link { margin-top: var(--space-2); font-size: var(--type-ui); line-height: 1.5; }
-  .tv-principle { border-top: 1px solid var(--line); }
-  .tv-principle__grid { display: grid; gap: var(--space-grid); align-items: start; }
-  .tv-principle__title { font-family: var(--h-sans); font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; max-width: 24ch; }
-  .tv-principle__link { margin-top: var(--space-3); font-size: var(--type-ui); line-height: 1.5; }
+  .tv-principle { padding-block: var(--space-4); border-top: 1px solid var(--line); background: var(--sand); }
+  .tv-principle p { max-width: 64rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
+  .tv-principle strong { font-weight: 500; color: var(--text); }
   @media (min-width: 56rem) {
     .tv-path { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr) minmax(0, .8fr); gap: var(--space-grid); }
-    .tv-principle__grid { grid-template-columns: 1fr 1.5fr; }
   }
 </style>

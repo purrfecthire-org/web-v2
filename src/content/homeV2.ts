@@ -11,13 +11,13 @@ export const homeV2En = {
   hero: {
     eyebrow: 'US, Europe and Latin America',
     headline: 'We know what to look for before the value is obvious.',
-    sub: 'For companies making a critical hire, and senior professionals making a high-stakes career move.',
+    sub: 'For companies making a critical hire, and senior professionals deciding what comes next.',
     companies: { label: 'For companies', promise: 'Reduce the risk of a critical hire.', detail: 'Senior and executive search.' },
     talent: { label: 'For talent', promise: 'Compete for your next senior opportunity.', detail: 'Private career advisory.' },
     choose: 'Choose your path',
     bookingCta: 'Book a founders call',
     whatsappCta: 'WhatsApp',
-    photoAlt: 'Three people discussing work around a table.',
+    photoAlt: 'Illustrative scene of people walking through a sunlit city courtyard.',
   },
   proof: { eyebrow: 'Trusted by founders at' },
   kate: {

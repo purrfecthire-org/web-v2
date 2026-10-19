@@ -24,7 +24,7 @@ export interface OfferV2Content {
   meta: { title: string; description: string };
   hero: { eyebrow: string; headline: string; sub: string; cta: string; package: string };
   question: { eyebrow: string; headline: string; body: string; who: string };
-  deliverables: { eyebrow: string; headline: string; body: string; items: { title: string; body: string }[] };
+  deliverables: { eyebrow: string; headline: string; body: string; items: { title: string; body: string; note?: string }[] };
   fit: { eyebrow: string; headline: string; body: string; commitmentTitle: string; commitment: string };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
   access: { headline: string; body: string; limit: string };
@@ -64,7 +64,7 @@ export const offerV2En: OfferV2Content = {
     items: [
       { title: 'Criteria for your next move', body: 'Define your target role, scope, market, compensation and conditions.' },
       { title: 'Evidence of your contribution', body: 'Make your decisions, contribution and results specific enough to examine.' },
-      { title: 'A focused company map', body: 'Identify relevant companies, decision makers and reasons to start a conversation.' },
+      { title: 'A focused company map', body: 'Identify relevant companies, decision makers and reasons to start a conversation, including before a role is posted.', note: 'Introductions depend on relevance and the consent of the people involved.' },
       { title: 'One workspace for each process', body: 'Keep research, preparation, feedback and decisions together for each opportunity.' },
       { title: 'Interview practice with feedback', body: 'Prepare for real interviews and cases. Get specific feedback on reasoning and evidence.' },
       { title: 'An offer and negotiation decision', body: 'Assess scope, compensation and fit. Build a negotiation approach for the actual offer.' },
@@ -152,7 +152,6 @@ export const offerV2En: OfferV2Content = {
     cta: 'Apply to Offer Accelerator',
     howNote: 'Send your context through the short form. No payment is taken when you apply.',
     steps: [
-      { title: 'Send the context', body: 'Your LinkedIn profile, email and what you want to change.' },
       { title: 'We review the fit', body: 'The team reviews your situation and asks for the context needed to assess whether Offer Accelerator fits your next move.' },
       { title: 'Agree how to begin', body: 'If there is a fit, we confirm the scope, USD 2,000 fixed fee and next steps with you before payment and scheduling.' },
     ],

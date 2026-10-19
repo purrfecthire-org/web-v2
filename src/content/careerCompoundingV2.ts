@@ -107,7 +107,7 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
     steps: [
       {
         title: 'Choose the situation',
-        body: 'Bring Kate a live problem. Identify what needs to change and the evidence needed to decide.',
+        body: 'Identify what needs to change and the evidence needed to decide.',
       },
       {
         title: 'Put the decision to work',
@@ -123,15 +123,11 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
   },
   questions: {
     eyebrow: 'Before you decide',
-    headline: 'Which support fits?',
+    headline: 'Scope and fit.',
     items: [
       {
         question: 'How does this relate to Offer Accelerator?',
         answer: 'Offer Accelerator supports your next move: market strategy, hiring processes, offers and negotiation. Career Compounding develops your impact in your current role. Previous OA participation is optional.',
-      },
-      {
-        question: 'What should I bring to the first conversation?',
-        answer: 'Your responsibilities, what you want to become capable of and one live situation. A short outline is enough.',
       },
       {
         question: 'What does progress look like?',

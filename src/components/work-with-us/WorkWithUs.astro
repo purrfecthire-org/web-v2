@@ -30,7 +30,6 @@ import { workWithUs as t } from '../../content/workWithUs';
           <p class="h3-eyebrow">{t.values.eyebrow}</p>
           <h2 class="h3-h2 wwu-heading" id="wwu-values-title">{t.values.headline}</h2>
           <p class="wwu-culture__standard">{t.hero.standard}</p>
-          <p class="h3-body">{t.values.intro}</p>
           <div class="wwu-culture__name">
             <img src="/brand/logo/cat-observe.svg" width="64" height="64" alt="" aria-hidden="true" loading="lazy" />
             <div>
@@ -82,35 +81,35 @@ import { workWithUs as t } from '../../content/workWithUs';
 <style>
   .wwu-hero { padding-block: var(--space-hero-top) var(--space-section); }
   .wwu-hero__title {
-    max-width: 17ch; margin-top: 1rem; font-family: var(--h-serif);
+    max-width: 17ch; margin-top: var(--space-2); font-family: var(--h-serif);
     font-size: var(--type-display); font-weight: 400;
     line-height: 1.08; letter-spacing: -.02em; text-wrap: balance;
     font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
   }
-  .wwu-hero__body { max-width: 38rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-lead); line-height: 1.65; }
+  .wwu-hero__body { max-width: 38rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-lead); line-height: 1.6; }
   .wwu-hero__cta { margin-top: var(--space-stack); }
-  .wwu-client-path { max-width: 38rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
+  .wwu-client-path { max-width: 38rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .wwu-client-path a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
   .wwu-team { margin-top: var(--space-grid); }
   .wwu-section { padding-block: var(--space-section); border-top: 1px solid var(--line); }
   .wwu-heading { max-width: 23ch; font-size: var(--type-section); line-height: 1.12; }
   .wwu-benefits { display: grid; gap: var(--space-grid); margin-top: var(--space-grid); }
   .wwu-benefits dt, .wwu-values__list dt, .wwu-apply__details h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .wwu-benefits dd, .wwu-values__list dd { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
+  .wwu-benefits dd, .wwu-values__list dd { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .wwu-split { display: grid; gap: var(--space-grid); }
   .wwu-values__list { display: grid; gap: var(--space-stack); }
   .wwu-values__list > div + div { border-top: 1px solid var(--line); padding-top: var(--space-stack); }
-  .wwu-culture__standard { margin-top: var(--space-stack); margin-bottom: var(--space-1); max-width: 34rem; font-size: var(--type-body); font-weight: 500; line-height: 1.65; }
+  .wwu-culture__standard { margin-top: var(--space-stack); margin-bottom: var(--space-1); max-width: 34rem; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
   .wwu-culture__name { margin-top: var(--space-grid); display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: var(--space-stack); align-items: start; max-width: 34rem; }
   .wwu-culture__name img { display: block; width: 4rem; height: 4rem; object-fit: contain; }
-  .wwu-culture__name p:not(.h3-eyebrow) { margin-top: var(--space-1); color: var(--muted); font-size: var(--type-ui); line-height: 1.65; }
-  .wwu-apply { scroll-margin-top: 2rem; }
-  .wwu-apply__body { margin-block: var(--space-stack); max-width: 34rem; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
-  .wwu-apply__note { max-width: 34rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.65; }
-  .wwu-apply__email-note { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.65; }
+  .wwu-culture__name p:not(.h3-eyebrow) { margin-top: var(--space-1); color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
+  .wwu-apply { scroll-margin-top: var(--space-4); }
+  .wwu-apply__body { margin-block: var(--space-stack); max-width: 34rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .wwu-apply__note { max-width: 34rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .wwu-apply__email-note { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .wwu-apply__details { align-self: start; }
   .wwu-apply__details ul { margin-top: var(--space-2); display: grid; gap: var(--space-2); }
-  .wwu-apply__details li, .wwu-apply__details p { color: var(--muted); font-size: var(--type-ui); line-height: 1.65; }
+  .wwu-apply__details li, .wwu-apply__details p { color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
   .wwu-apply__details p { margin-top: var(--space-stack); }
   .wwu-apply__details a { margin-top: var(--space-stack); font-size: var(--type-caption); }
   @media (min-width: 48rem) {
