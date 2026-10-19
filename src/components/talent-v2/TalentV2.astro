@@ -1,11 +1,5 @@
 ---
-// ── For Talent ───────────────────────────────────────────────────────────
-// Talent entry: compare paid advisory paths or find free client searches.
-// Ivory hero and a single Midnight testimonial moment. Purple for Talent
-// actions; the founder journey uses its own conversion in the shared shell.
 import Shell from '../v2/Shell.astro';
-import ClientPortrait from '../v2/ClientPortrait.astro';
-import { talentTestimonials } from '../../content/talentTestimonials';
 import type { Lang } from '../../content/index';
 import { getTalentV2 } from '../../content/talentV2';
 
@@ -22,201 +16,90 @@ const t = getTalentV2(lang);
   navCta={{ label: t.hero.cta, href: t.hero.href }}
   journey="talent"
 >
+  <section class="h3-hero">
+    <div class="h3-wrap h3-hero__grid">
+      <div class="h3-hero__copy">
+        <p class="h3-eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="h3-hero__h1 tv-h1">{t.hero.headline}</h1>
+        <p class="h3-hero__sub">{t.hero.sub}</p>
+        <p class="tv-audience">{t.hero.audience}</p>
+        <a href={t.hero.href} data-cta="talent-hero-paths" class="h3-btn tv-hero__cta">
+          {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <figure class="h3-hero__media" style={{ "--photo-desktop": "4 / 3", "--photo-mobile": "4 / 3" }}>
+        <picture>
+          <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/talent-mobile.webp" />
+          <source media="(max-width: 55.99rem)" srcset="/photos/web/talent-mobile.png" />
+          <source type="image/webp" srcset="/photos/web/talent-desktop.webp" />
+          <img src="/photos/web/talent-desktop.png" alt="Two people having a conversation at a desk." width="1200" height="900" decoding="async" fetchpriority="high" />
+        </picture>
+      </figure>
+    </div>
+  </section>
 
-      <!-- Hero -->
-      <section class="h3-hero">
-        <div class="h3-wrap h3-hero__grid">
-          <div class="h3-hero__copy">
-            <p class="h3-eyebrow">{t.hero.eyebrow}</p>
-            <h1 class="h3-hero__h1 tv-h1">{t.hero.headline}</h1>
-            <p class="h3-hero__sub">{t.hero.sub}</p>
-            <p class="tv-audience">{t.hero.audience}</p>
-            <a href={t.hero.href} data-cta="talent-hero-offer" class="h3-btn tv-hero__cta">
-              {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
-          <figure class="h3-hero__media" style={{ "--photo-desktop": "4 / 3", "--photo-mobile": "4 / 3" }}>
-            <picture>
-              <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/talent-mobile.webp" />
-              <source media="(max-width: 55.99rem)" srcset="/photos/web/talent-mobile.png" />
-              <source type="image/webp" srcset="/photos/web/talent-desktop.webp" />
-              <img src="/photos/web/talent-desktop.png" alt="Two people having a conversation at a desk." width="1200" height="900" decoding="async" fetchpriority="high" />
-            </picture>
-          </figure>
-        </div>
-      </section>
-
-      <!-- Paths -->
-      <section class="tv-paths" id="ways-in">
-        <div class="h3-wrap">
-          <p class="h3-eyebrow">{t.paths.eyebrow}</p>
-          <h2 class="h3-h2 tv-paths__h2">{t.paths.headline}</h2>
-          <ul class="tv-paths__list">
-            {t.paths.items.map((i, idx) => (
-              <li class={idx === 0 ? 'tv-path tv-path--flagship' : 'tv-path'}>
-                <h3 class="tv-path__name">{i.name}</h3>
-                {i.price && <p class="tv-path__price">{i.price}</p>}
-                <p class="tv-path__body">{i.body}</p>
-                <a href={i.href} data-cta={`talent-path-${idx}`} class="h3-link tv-path__cta">{i.cta} <span class="h3-arrow" aria-hidden="true">→</span></a>
-                {i.note && <p class="tv-path__note">{i.note}</p>}
-              </li>
-            ))}
-          </ul>
-          <div class="tv-free">
-            <p>{t.paths.free.body}</p>
-            <a href={t.paths.free.href} data-cta="talent-free" class="h3-link tv-free__cta">
-              {t.paths.free.cta} <span class="h3-arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-
-      <!-- Problem + what changes, one ivory surface -->
-      <section class="tv-main">
-        <div class="h3-wrap">
-          <div class="tv-problem">
-            <div class="tv-problem__head">
-              <p class="h3-eyebrow">{t.problem.eyebrow}</p>
-              <h2 class="h3-h2">
-                {t.problem.headline}
-              </h2>
+  <section class="tv-paths" id="ways-in" aria-labelledby="tv-paths-title">
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.paths.eyebrow}</p>
+      <h2 class="h3-h2" id="tv-paths-title">{t.paths.headline}</h2>
+      <ul class="tv-paths__list">
+        {t.paths.items.map((item, index) => (
+          <li class="tv-path">
+            <div>
+              <h3 class="tv-path__name">{item.name}</h3>
+              <p class="tv-path__price">{item.price}</p>
             </div>
-            <p class="h3-body tv-problem__body">{t.problem.body}</p>
-          </div>
-
-          <aside class="tv-confidentiality" aria-labelledby="tv-firewall-h">
-            <h3 id="tv-firewall-h">{t.firewall.headline}</h3>
-            <p>{t.firewall.lead}</p>
-          </aside>
-        </div>
-      </section>
-
-      <!-- One shared proof surface, with the existing participant words. -->
-      <section class="tv-proof">
-        <div class="h3-wrap">
-          <p class="h3-eyebrow h3-eyebrow--on-dark">{t.proof.eyebrow}</p>
-          <h2 class="h3-h2 h3-h2--on-dark tv-proof__h2">{t.proof.headline}</h2>
-
-          <figure class="tv-voice tv-voice--solo">
-            <ClientPortrait alt={t.proof.voice.name} shape="circle" />
-            <div class="tv-voice__copy">
-            <blockquote>“{t.proof.voice.quote}”</blockquote>
-            <figcaption>
-              <span class="tv-voice__name">{t.proof.voice.name}</span>
-              <span class="tv-voice__role">{t.proof.voice.role}</span>
-              <span class="tv-voice__role">Translated from Spanish</span>
-            </figcaption>
+            <p class="tv-path__body">{item.body}</p>
+            <div class="tv-path__action">
+              <a href={item.href} data-cta={"talent-path-" + index} class="h3-link">{item.cta}<span aria-hidden="true">→</span></a>
+              {item.note && <p class="tv-path__note">{item.note}</p>}
             </div>
-          </figure>
-          <div class="tv-voices">
-            {talentTestimonials.map((voice) => (
-              <figure class="tv-voice-card">
-                <blockquote>“{voice.quote}”</blockquote>
-                <figcaption>
-                  <strong>{voice.name}</strong>
-                  <span>{voice.context}</span>
-                  <span>Translated from Spanish</span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
+          </li>
+        ))}
+      </ul>
+      <div class="tv-free">
+        <p>{t.paths.free.body}</p>
+        <a href={t.paths.free.href} data-cta="talent-free" class="h3-link">{t.paths.free.cta}<span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
 
-      <!-- Close -->
-      <section class="tv-close">
-        <div class="h3-wrap">
-          <h2 class="h3-h2 tv-close__h2">{t.close.headline}</h2>
-          <p class="h3-body tv-close__body">{t.close.body}</p>
-          <a href="#ways-in" data-cta="talent-close-paths" class="h3-btn tv-close__cta">{t.paths.eyebrow}<span class="h3-arrow" aria-hidden="true">→</span></a>
-        </div>
-      </section>
-
-    </Shell>
+  <section class="tv-principle" aria-labelledby="tv-firewall-title">
+    <div class="h3-wrap tv-principle__grid">
+      <h2 class="tv-principle__title" id="tv-firewall-title">{t.firewall.headline}</h2>
+      <div>
+        <p class="h3-body">{t.firewall.lead}</p>
+        <a href="/offer-acceleration/#voices" data-cta="talent-participant-voices" class="h3-link tv-principle__link">{t.proof.headline}<span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+</Shell>
 
 <style lang="scss" is:global>
-  .tv-h1 { margin-top: 1rem; }
-  .tv-audience {
-    margin-top: 1.5rem;
-    max-width: 34rem;
-    font-size: var(--type-ui);
-    line-height: 1.5;
-    color: var(--muted);
-  }
-  .tv-hero__cta { margin-top: 2rem; }
-
-  /* Shared section rhythm and a single Ivory canvas outside proof. */
-  .tv-paths, .tv-main, .tv-close { background: var(--sand); padding-block: var(--space-section); }
-  .tv-paths { scroll-margin-top: 5rem; }
-  .tv-paths__h2, .tv-close__h2 { max-width: 28ch; }
-  .tv-paths__list { margin-top: 2rem; display: grid; gap: var(--space-grid); }
-  .tv-path {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    padding: 2rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-card, 12px);
-  }
-  .tv-path--flagship { border-color: var(--purple); }
+  .tv-h1 { margin-top: var(--space-2); }
+  .tv-audience { margin-top: var(--space-3); max-width: 34rem; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .tv-hero__cta { margin-top: var(--space-4); }
+  .tv-paths, .tv-principle { background: var(--sand); padding-block: var(--space-section); }
+  .tv-paths { scroll-margin-top: var(--space-hero-top); }
+  .tv-paths .h3-h2 { max-width: 28ch; }
+  .tv-paths__list { margin-top: var(--space-4); }
+  .tv-path { display: grid; align-items: start; gap: var(--space-3); min-width: 0; padding-block: var(--space-4); border-top: 1px solid var(--line); }
+  .tv-path:last-child { border-bottom: 1px solid var(--line); }
   .tv-path__name { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .tv-path__price { margin-top: 1rem; font-size: var(--type-body); font-weight: 500; color: var(--text); line-height: 1.7; }
-  .tv-path__body { flex: 1; margin-top: 1rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .tv-path__cta { align-self: flex-start; margin-top: 2rem; font-size: var(--type-ui); line-height: 1.5; }
-  .tv-path__note { margin-top: 1rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
-  .tv-free { margin-top: 2rem; max-width: 44rem; }
+  .tv-path__price { margin-top: var(--space-1); font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .tv-path__body { font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 34rem; }
+  .tv-path__action { min-width: 0; }
+  .tv-path__action .h3-link { font-size: var(--type-ui); line-height: 1.5; }
+  .tv-path__note { margin-top: var(--space-2); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); max-width: 26ch; }
+  .tv-free { margin-top: var(--space-4); max-width: 44rem; }
   .tv-free p { font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
-  .tv-free__cta { margin-top: 1rem; font-size: var(--type-ui); line-height: 1.5; }
-
-  .tv-problem { display: grid; gap: var(--space-grid); align-items: start; }
-  .tv-problem__head { min-width: 0; }
-  .tv-problem__head .h3-h2 { max-width: 20ch; }
-  .tv-problem__body { max-width: 34rem; font-size: var(--type-lead); color: var(--text); line-height: 1.6; }
-  .tv-confidentiality { margin-top: 2rem; max-width: 44rem; }
-  .tv-confidentiality h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .tv-confidentiality p { margin-top: 1rem; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
-
-  .tv-proof { background: var(--midnight); color: var(--on-dark); padding-block: var(--space-section); }
-  .tv-proof__h2 { max-width: 28ch; }
-  .tv-voice--solo {
-    margin-top: 2rem;
-    display: grid;
-    gap: var(--space-grid);
-    align-items: center;
-    padding: 2rem;
-    border-radius: var(--radius-card, 12px);
-    background: var(--sand);
-    color: var(--text);
-  }
-  .tv-voice__copy { min-width: 0; }
-  .tv-voice blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.5; color: var(--text); }
-  .tv-voice figcaption { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: var(--type-caption); line-height: 1.5; }
-  .tv-voice__name { font-weight: 500; color: var(--text); }
-  .tv-voice__role { color: var(--muted); }
-  .tv-voices { display: grid; gap: var(--space-grid); margin-top: 2rem; }
-  .tv-voice-card {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    padding: 2rem;
-    border-radius: var(--radius-card, 12px);
-    background: var(--sand);
-    color: var(--text);
-  }
-  .tv-voice-card blockquote { flex: 1; font-size: var(--type-body); line-height: 1.7; }
-  .tv-voice-card figcaption { display: grid; gap: 0.5rem; margin-top: 1.5rem; font-size: var(--type-caption); line-height: 1.5; }
-  .tv-voice-card strong { font-weight: 500; }
-  .tv-voice-card figcaption span { color: var(--muted); }
-
-  .tv-close__body { margin-top: 1.5rem; font-size: var(--type-lead); line-height: 1.6; }
-  .tv-close__cta { margin-top: 2rem; }
-
+  .tv-free .h3-link { margin-top: var(--space-2); font-size: var(--type-ui); line-height: 1.5; }
+  .tv-principle { border-top: 1px solid var(--line); }
+  .tv-principle__grid { display: grid; gap: var(--space-grid); align-items: start; }
+  .tv-principle__title { font-family: var(--h-sans); font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; max-width: 24ch; }
+  .tv-principle__link { margin-top: var(--space-3); font-size: var(--type-ui); line-height: 1.5; }
   @media (min-width: 56rem) {
-    .tv-paths__list { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
-    .tv-problem { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .tv-problem__body { padding-top: 2rem; }
-    .tv-voice--solo { grid-template-columns: 8rem minmax(0, 1fr); }
-    .tv-voices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tv-path { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr) minmax(0, .8fr); gap: var(--space-grid); }
+    .tv-principle__grid { grid-template-columns: 1fr 1.5fr; }
   }
 </style>

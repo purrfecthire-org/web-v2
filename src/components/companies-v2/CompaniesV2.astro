@@ -2,7 +2,7 @@
 import Shell from '../v2/Shell.astro';
 import type { Lang } from '../../content/index';
 import { getCompaniesV2 } from '../../content/companiesV2';
-import ClientLogoReel from '../v2/ClientLogoReel.astro';
+import { CLIENT_BRANDS } from '../../content/clientBrands';
 import { BOOKING_B2B as BOOKING_URL } from '../../content/links';
 
 interface Props { lang?: Lang }
@@ -11,6 +11,7 @@ const t = getCompaniesV2(lang);
 const situations = t.situations.items.filter(({ title }) => ['The role keeps changing', 'The people you want are not applying', 'The hire has to outgrow the role'].includes(title));
 const searches = t.selectedSearches.items.filter((search) => search.outcome).slice(0, 2);
 const voices = t.proof.voices.filter(({ name }) => ['Fabián Torres', 'Chen Atlas'].includes(name)).slice(0, 2);
+const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name === 'Fabián Torres' ? 'trebol' : 'optery'))!;
 
 ---
 
@@ -75,19 +76,20 @@ const voices = t.proof.voices.filter(({ name }) => ['Fabián Torres', 'Chen Atla
         ))}
       </ol>
       <div class="fc-method__links" id="candidate-brief">
-        <a href="/search-calibration" data-cta="companies-calibration-example" class="h3-link">{t.read.headline}<span class="h3-arrow" aria-hidden="true">→</span></a>
+        <a href="/search-calibration" data-cta="companies-calibration-example" class="h3-link">{t.read.sampleLabel}<span class="h3-arrow" aria-hidden="true">→</span></a>
         <a href="/candidate-brief-sample" data-cta="companies-candidate-brief-sample" class="h3-link">{t.evidence.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
 
-  <!-- Publish only complete, sourced search cases. The content file records
-       the missing evidence; an empty collection never creates a public stub. -->
-  {searches.length > 0 && (
-    <section class="fc-searches" id="selected-searches" aria-labelledby="fc-searches-title">
-      <div class="h3-wrap">
+  <section class="fc-proof" aria-labelledby="fc-proof-title">
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.proof.eyebrow}</p>
+      <h2 class="h3-h2 fc-proof__h2" id="fc-proof-title">{t.proof.headline}</h2>
+      <!-- Keep the anonymous search separate from named feedback. It is not
+           attributed to either speaker or counted as an additional outcome. -->
+      {searches.length > 0 && <div class="fc-searches" id="selected-searches">
         <p class="h3-eyebrow">{t.selectedSearches.eyebrow}</p>
-        <h2 class="h3-h2 fc-searches__h2" id="fc-searches-title">{t.selectedSearches.headline}</h2>
         <div class="fc-searches__list">
           {searches.map((search) => (
             <article class="fc-search">
@@ -110,27 +112,21 @@ const voices = t.proof.voices.filter(({ name }) => ['Fabián Torres', 'Chen Atla
             </article>
           ))}
         </div>
-      </div>
-    </section>
-  )}
-
-  <section class="fc-proof" aria-labelledby="fc-proof-title">
-    <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.proof.eyebrow}</p>
-      <h2 class="h3-h2 fc-proof__h2" id="fc-proof-title">{t.proof.headline}</h2>
-      <div class="fc-proof__logos">
-        <p class="h3-eyebrow">{t.proof.logosLabel}</p>
-        <ClientLogoReel id="companies-clients" />
-      </div>
+      </div>}
       <div class="fc-proof__voices">
       {voices.map((voice) => (
-        <figure class:list={['fc-quote', { 'fc-quote--text': !voice.photo }]}>
-          {voice.photo ? <div class="fc-quote__portrait">
+        <figure class="fc-quote">
+          <div class="fc-quote__identity">
+          {voice.photo && <div class="fc-quote__portrait">
             <picture>
               {voice.photoWebp && <source srcset={voice.photoWebp} type="image/webp" />}
               <img src={voice.photo} alt={voice.name} width="480" height="480" loading="lazy" decoding="async" />
             </picture>
-          </div> : <div class="fc-quote__brand" aria-hidden="true"><img src="/clients/optery.png" alt="" width="666" height="158" loading="lazy" decoding="async" /></div>}
+          </div>}
+          <a class="fc-quote__brand" href={voiceBrand(voice.name).href} target="_blank" rel="noopener noreferrer" aria-label={voiceBrand(voice.name).name}>
+            <img src={`/clients/neutral/${voiceBrand(voice.name).id}.png`} alt={voiceBrand(voice.name).name} width="480" height="192" loading="lazy" decoding="async" />
+          </a>
+          </div>
           <div class="fc-quote__body">
             <blockquote>“{voice.quote}”</blockquote>
             <figcaption>
@@ -168,58 +164,58 @@ const voices = t.proof.voices.filter(({ name }) => ['Fabián Torres', 'Chen Atla
 </Shell>
 
 <style lang="scss">
-  .fc-hero { padding-block: var(--space-section); }
   .fc-hero__actions { display: flex; margin-top: var(--space-stack); }
   .fc-hero__actions .h3-hero__cta { margin-top: 0; }
-  .fc-hero__media { margin: 0; border-radius: 12px; overflow: hidden; }
+  .fc-hero__media { margin: 0; border-radius: var(--radius-card); overflow: hidden; }
   .fc-hero__media img { object-position: 42% 42%; }
-  .fc-credential, .fc-microcopy { margin-top: 1rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 34rem; }
-  .fc-situations, .fc-method, .fc-searches, .fc-proof, .fc-models { padding-block: var(--space-section); background: var(--sand); }
-  .fc-situations__h2, .fc-method__h2, .fc-searches__h2, .fc-proof__h2, .fc-models__h2 { max-width: 26ch; }
-  .fc-situations__list, .fc-steps, .fc-searches__list, .fc-proof__voices, .fc-models__list { display: grid; gap: var(--space-grid); margin-top: var(--space-stack); }
+  .fc-credential, .fc-microcopy { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 34rem; }
+  .fc-situations, .fc-method, .fc-proof, .fc-models { padding-block: var(--space-section); }
+  .fc-situations__h2, .fc-method__h2, .fc-proof__h2, .fc-models__h2 { max-width: 26ch; }
+  .fc-situations__list, .fc-steps, .fc-proof__voices, .fc-models__list { display: grid; gap: var(--space-grid); margin-top: var(--space-stack); }
   .fc-situation, .fc-step, .fc-search, .fc-quote, .fc-model { min-width: 0; }
-  .fc-situation, .fc-step { padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
+  .fc-situation, .fc-step, .fc-model { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .fc-situation h3, .fc-step__title, .fc-search h3, .fc-model__name { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .fc-situation p, .fc-step__body, .fc-search__problem, .fc-model__note { margin-top: .75rem; max-width: 40rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .fc-step__id { display: block; margin-bottom: 1rem; font-size: var(--type-caption); color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
-  .fc-method__links { margin-top: var(--space-stack); display: flex; flex-wrap: wrap; column-gap: var(--space-grid); row-gap: 1rem; }
+  .fc-situation p, .fc-step__body, .fc-search__problem, .fc-model__note { margin-top: var(--space-2); max-width: 40rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .fc-step__id { display: block; margin-bottom: var(--space-2); font-size: var(--type-caption); color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
+  .fc-method__links { margin-top: var(--space-stack); display: flex; flex-wrap: wrap; column-gap: var(--space-grid); row-gap: var(--space-2); }
   .fc-method__links a { max-width: 100%; }
-  .fc-search { display: grid; gap: var(--space-grid); padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
+  .fc-searches { margin-top: var(--space-grid); }
+  .fc-searches__list { margin-top: var(--space-stack); }
+  .fc-search { display: grid; gap: var(--space-grid); padding-block: var(--space-stack); border-block: 1px solid var(--line); }
   .fc-search__narrative, .fc-search__result { min-width: 0; }
-  .fc-search__result { display: flex; flex-direction: column; justify-content: center; padding: var(--space-stack); border-radius: 12px; background: var(--stone); }
-  .fc-search__signal { display: block; width: .5rem; height: .5rem; border-radius: 50%; background: var(--text); }
-  .fc-search h3 { margin-top: 1rem; }
-  .fc-search__outcome { margin-top: var(--space-stack); font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 40rem; }
-  .fc-search__outcome span { display: block; margin-bottom: .5rem; font-size: var(--type-caption); font-weight: 500; color: var(--text); line-height: 1.5; }
+  .fc-search__result { padding: var(--space-stack); border-radius: var(--radius-card); background: var(--stone); display: flex; align-items: center; }
+  .fc-search__signal { display: none; }
+  .fc-search h3 { margin-top: var(--space-2); }
+  .fc-search__outcome { font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 40rem; }
+  .fc-search__outcome span { display: block; margin-bottom: var(--space-1); font-size: var(--type-caption); font-weight: 500; color: var(--text); line-height: 1.5; }
   .fc-search__detail { margin-top: var(--space-stack); }
-  .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; padding-block: .5rem; font-size: var(--type-ui); font-weight: 500; list-style: none; line-height: 1.5; }
+  .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: var(--space-2); padding-block: var(--space-1); font-size: var(--type-ui); font-weight: 500; list-style: none; line-height: 1.5; }
   .fc-search__detail summary::-webkit-details-marker { display: none; }
   .fc-search__detail[open] summary span { transform: rotate(45deg); }
   .fc-search dl { margin-top: var(--space-stack); display: grid; gap: var(--space-stack); }
   .fc-search dt { font-size: var(--type-caption); font-weight: 500; line-height: 1.5; }
-  .fc-search dd { margin: .5rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .fc-proof__logos { margin-top: var(--space-stack); }
-  .fc-proof__logos > .h3-eyebrow { margin-bottom: 1rem; }
-  .fc-quote { margin: 0; display: flex; flex-direction: column; padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
+  .fc-search dd { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .fc-proof__voices { margin-top: var(--space-grid); }
+  .fc-quote { margin: 0; display: flex; flex-direction: column; padding-top: var(--space-stack); }
+  .fc-quote__identity { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-stack); }
   .fc-quote__body { display: flex; flex-direction: column; flex: 1; }
   .fc-quote blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.5; }
   .fc-quote figcaption { padding-top: var(--space-stack); margin-top: auto; display: flex; flex-direction: column; font-size: var(--type-caption); line-height: 1.5; }
   .fc-quote__name { font-weight: 500; }
   .fc-quote__role, .fc-quote__context { color: var(--muted); }
-  .fc-quote__context { margin-top: .5rem; }
-  .fc-quote__portrait, .fc-quote__brand { display: flex; align-items: center; margin-bottom: var(--space-stack); height: 64px; }
-  .fc-quote__portrait { width: 64px; overflow: hidden; border-radius: 50%; }
-  .fc-quote__portrait picture { display: block; width: 100%; height: 100%; }
-  .fc-quote__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
-  .fc-quote__brand img { display: block; width: auto; max-width: 112px; max-height: 32px; object-fit: contain; filter: grayscale(1); opacity: .75; }
-  .fc-model { padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
+  .fc-quote__context { margin-top: var(--space-1); }
+  .fc-quote__portrait { width: var(--space-8); height: var(--space-8); overflow: hidden; border-radius: 50%; flex: 0 0 auto; }
+  .fc-quote__portrait picture, .fc-quote__portrait img { display: block; width: 100%; height: 100%; }
+  .fc-quote__portrait img { object-fit: cover; object-position: 50% 35%; }
+  .fc-quote__brand { display: flex; width: 10rem; min-height: var(--space-8); align-items: center; }
+  .fc-quote__brand img { display: block; width: 100%; height: auto; }
+  .fc-models { border-top: 1px solid var(--line); }
   .fc-models__recommendation { margin-top: var(--space-stack); max-width: 40rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .fc-models__close { margin-top: var(--space-stack); }
+  .fc-models__close { margin-top: var(--space-grid); }
   .fc-models__close > .h3-body { margin: 0 0 var(--space-stack); }
   @media (min-width: 56rem) {
     .fc-situations__list, .fc-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .fc-proof__voices, .fc-models__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .fc-searches__list { grid-template-columns: minmax(0, 1fr); }
-    .fc-search { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .fc-search { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
   }
 </style>

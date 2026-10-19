@@ -144,7 +144,7 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
     headline: 'What problem do you want to grow into?',
     body: 'Share your role and one live situation. We’ll discuss fit and the scope of the work.',
     cta: 'Discuss Career Compounding',
-    note: 'USD 5,000. Opens your email app to discuss fit, scope and duration before you commit.',
+    note: 'Opens your email app to discuss fit, scope and duration before you commit.',
     emailLabel: 'Or email',
   },
 };

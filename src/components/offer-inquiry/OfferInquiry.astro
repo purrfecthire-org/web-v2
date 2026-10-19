@@ -2,7 +2,9 @@
 import Shell from '../v2/Shell.astro';
 import { CONTACT_EMAIL, PAGE_OFFER, PRIVACY } from '../../content/links';
 import { OFFER_INQUIRY_GOALS } from '../../lib/offerInquiry';
+import { getOfferV2 } from '../../content/offerV2';
 
+const applicationSteps = getOfferV2('en').apply.steps;
 const endpoint = String(import.meta.env.PUBLIC_API_ENDPOINT ?? '').trim();
 const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry`;
 ---
@@ -38,6 +40,11 @@ const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry
             </div>
             <p class="oi__privacy">We use these details to respond to your inquiry. <a href={PRIVACY}>Privacy</a></p>
             <button id="oi-submit" type="submit" class="h3-btn" data-cta="offer-inquiry-submit" disabled>Send inquiry →</button>
+            <ol class="oi__steps">
+              {applicationSteps.map((step) => (
+                <li><strong>{step.title}</strong><p>{step.body}</p></li>
+              ))}
+            </ol>
             <p id="oi-error" class="oi__error" role="alert" hidden></p>
             <div id="oi-fallback" class="oi__fallback" hidden>
               <p>You can also email us at <a href={emailHref}>{CONTACT_EMAIL}</a>.</p>
@@ -135,6 +142,10 @@ const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry
   .oi__form .h3-btn { min-height: 48px; border: 0; cursor: pointer; font-family: inherit; }
   .oi__form .h3-btn:disabled { opacity: .65; cursor: wait; }
   .oi__form .h3-btn:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; }
+  .oi__steps { display: grid; margin: 0; padding: 0; list-style: none; }
+  .oi__steps li { padding-block: var(--space-2); border-top: 1px solid var(--line); }
+  .oi__steps strong { font-size: var(--type-ui); line-height: 1.5; font-weight: 500; }
+  .oi__steps p { margin-top: var(--space-1); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .oi__privacy { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .oi__privacy a, .oi__fallback a, .oi__unavailable a { text-decoration: underline; text-underline-offset: 3px; }
   .oi__trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

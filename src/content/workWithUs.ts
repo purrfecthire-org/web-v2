@@ -25,18 +25,10 @@ export const workWithUs = {
     secondaryCta: 'Explore client searches',
     secondaryHref: PAGE_ROLES,
   },
-  work: {
-    eyebrow: 'How we work',
-    headline: 'Understand the problem. Own the next move.',
-    items: [
-      { title: 'Context before action', body: 'Learn the business, the person and the decision ahead. Ask until the problem is clear.' },
-      { title: 'Responsibility across the team', body: 'Share context early. Make the next step clear. Raise a risk while there is still time to act.' },
-      { title: 'Better with every attempt', body: 'Use feedback in the next version. Share what you learn. Use AI for speed and check the facts yourself.' },
-    ],
-  },
   values: {
-    eyebrow: 'What we protect',
+    eyebrow: 'How we work',
     headline: 'Values you can see in the work.',
+    intro: 'Understand the problem. Own the next move. Share what you learn.',
     items: [
       { title: 'Excellence', body: 'Check the facts, the evidence and the details before your work reaches someone else.' },
       { title: 'Authenticity', body: 'Say what you see. Be clear about the strengths, the risks and what you still need to understand.' },
@@ -56,9 +48,7 @@ export const workWithUs = {
   },
   name: {
     eyebrow: 'The name and the cat',
-    headline: 'Observe closely. Choose carefully. Move with intent.',
-    body: 'Purrfect plays on “perfect” and “purr”, the sound a cat makes. Our cat expresses attention, curiosity, independence and quiet confidence.',
-    meaning: 'You see it in how we work: understand the context, form a view and act with care for the people involved.',
+    body: 'Purrfect plays on “perfect” and “purr”, the sound a cat makes. Our cat expresses attention, curiosity and quiet confidence.',
   },
   application: {
     eyebrow: 'Join the team',
@@ -67,6 +57,7 @@ export const workWithUs = {
     note: 'This is an expression of interest in joining our own team. It does not apply you to a client vacancy or enrol you in advisory.',
     detailsTitle: 'What to share',
     details: ['Your background and where you would contribute.', 'Your LinkedIn or portfolio.', 'An example of your work, your contribution and what changed.'],
+    emailNote: 'Opens your email app. You can also write to go@purrfecthire.com.',
     next: 'We review introductions against the needs of our team. If there is a relevant opportunity, we will contact you to discuss it.',
     privacyLabel: 'How we handle your information',
     privacyHref: '/privacy-policy',

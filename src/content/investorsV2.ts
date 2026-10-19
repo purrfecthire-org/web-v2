@@ -23,7 +23,7 @@ export interface InvestorsV2Content {
     areas: { id: string; title: string; body: string; outcomeLabel: string; outcome: string }[];
   };
   founders: { eyebrow: string; headline: string; body: string; items: { title: string; body: string }[] };
-  officeHours: { eyebrow: string; headline: string; body: string; points: string[]; note: string };
+  officeHours: { eyebrow: string; headline: string; body: string; detailLabel: string; points: string[]; note: string };
   approach: { eyebrow: string; headline: string; steps: { title: string; body: string }[] };
   evidence: { eyebrow: string; headline: string; body: string; links: { title: string; body: string; label: string; href: string; ctaId: string }[] };
   questions: { eyebrow: string; headline: string; items: { question: string; answer: string }[] };
@@ -39,7 +39,7 @@ export const investorsV2En: InvestorsV2Content = {
     eyebrow: 'For investors · Portfolio hiring',
     headline: 'Help your founders make the hire the company needs next.',
     body: 'Senior and executive hiring support for funds, platform teams and talent partners. Start with the business problem behind the role.',
-    cta: 'Book a 20-minute founders call',
+    cta: 'Discuss portfolio hiring',
     note: 'A free 20-minute introductory call. No commitment.',
     prompt: {
       label: 'Start here',
@@ -96,6 +96,7 @@ export const investorsV2En: InvestorsV2Content = {
     ],
   },
   officeHours: {
+    detailLabel: 'How office hours work',
     eyebrow: 'An agreed format',
     headline: 'Office hours around a real hiring question.',
     body: 'We can design office hours for your portfolio. Agree eligibility, schedule and scope with Purrfect before introducing the format to founders.',
@@ -146,7 +147,7 @@ export const investorsV2En: InvestorsV2Content = {
       },
       {
         question: 'Who pays for the work?',
-        answer: 'The initial 20-minute read is free. Search engagements use a success fee or a monthly team. Agree portfolio support scope and fees separately.',
+        answer: 'Search engagements use a success fee or a monthly team. Agree portfolio support scope and fees separately.',
       },
       {
         question: 'What information is shared with the fund?',
@@ -157,7 +158,7 @@ export const investorsV2En: InvestorsV2Content = {
   close: {
     headline: 'Which portfolio hiring decision needs a clearer read?',
     body: 'Bring the companies, roles and hiring obstacles. We’ll discuss where to start.',
-    cta: 'Book a 20-minute founders call',
+    cta: 'Discuss portfolio hiring',
     note: 'Start with a free initial read. Agree scope and terms before an engagement.',
   },
 };

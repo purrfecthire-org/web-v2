@@ -4,7 +4,7 @@ import { getRoleSearchHref, searchRoles, searchRoleShared as t, type SearchRoleC
 
 interface Props { role: SearchRoleContent }
 const { role } = Astro.props;
-const calibrationHref = getRoleSearchHref(role.slug);
+const bookingHref = getRoleSearchHref(role.slug);
 const relatedRoles = searchRoles.filter((item) => item.slug !== role.slug);
 ---
 
@@ -13,89 +13,72 @@ const relatedRoles = searchRoles.filter((item) => item.slug !== role.slug);
   description={role.meta.description}
   theme="light"
   journey="companies"
-  navCta={{ label: t.cta, href: calibrationHref }}
+  navCta={{ label: t.cta, href: bookingHref }}
 >
-  <section class="rs-hero">
+  <section class="rs-hero" aria-labelledby="rs-title">
     <div class="h3-wrap rs-hero__grid">
       <div>
         <p class="h3-eyebrow">{t.eyebrow}</p>
         <p class="rs-role">{role.role}</p>
-        <h1>{role.hero.headline}</h1>
+        <h1 id="rs-title">{role.hero.headline}</h1>
         <p class="rs-hero__body">{role.hero.body}</p>
-        <a class="h3-btn h3-btn--ink rs-hero__cta" href={calibrationHref} data-cta={`search-${role.slug}-hero`}>
+        <a class="h3-btn h3-btn--ink rs-hero__cta" href={bookingHref} data-cta={`search-${role.slug}-hero`}>
           {t.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <p class="rs-cta-note">{t.ctaNote}</p>
       </div>
       <aside class="rs-context" aria-labelledby="rs-context-title">
-        <h2 id="rs-context-title">{t.contextTitle}</h2>
-        <dl>
-          <div><dt>{t.stageLabel}</dt><dd>{role.context.stage}</dd></div>
-          <div><dt>{t.needLabel}</dt><dd>{role.context.need}</dd></div>
-          <div><dt>{t.decisionLabel}</dt><dd>{role.context.decision}</dd></div>
-        </dl>
+        <h2 id="rs-context-title">{role.problem.headline}</h2>
+        <p class="rs-context__body">{role.problem.body}</p>
+        <details>
+          <summary>{t.contextTitle}<span aria-hidden="true">+</span></summary>
+          <dl>
+            <div><dt>{t.stageLabel}</dt><dd>{role.context.stage}</dd></div>
+            <div><dt>{t.needLabel}</dt><dd>{role.context.need}</dd></div>
+            <div><dt>{t.decisionLabel}</dt><dd>{role.context.decision}</dd></div>
+          </dl>
+        </details>
       </aside>
     </div>
   </section>
 
-  <section class="rs-section rs-problem">
-    <div class="h3-wrap rs-section__grid">
-      <div>
-        <p class="h3-eyebrow">{t.problemEyebrow}</p>
-        <h2 class="h3-h2">{role.problem.headline}</h2>
-      </div>
-      <p class="h3-body rs-problem__body">{role.problem.body}</p>
-    </div>
-  </section>
-
-  <section class="rs-section rs-evidence">
+  <section class="rs-section rs-assessment" aria-labelledby="rs-assessment-title">
     <div class="h3-wrap">
       <p class="h3-eyebrow">{t.evidenceEyebrow}</p>
-      <h2 class="h3-h2 rs-section__title">{t.evidenceHeadline}</h2>
+      <h2 class="h3-h2 rs-section__title" id="rs-assessment-title">{t.evidenceHeadline}</h2>
       <p class="h3-body rs-section__intro">{t.evidenceIntro}</p>
-      <ul class="rs-card-grid">
-        {role.evidence.map((item) => (
-          <li class="rs-card"><h3>{item.title}</h3><p>{item.body}</p></li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section class="rs-section rs-questions">
-    <div class="h3-wrap rs-section__grid">
-      <div>
-        <p class="h3-eyebrow">{t.questionsEyebrow}</p>
-        <h2 class="h3-h2">{t.questionsHeadline}</h2>
-        <p class="h3-body rs-section__intro">{t.questionsIntro}</p>
-      </div>
-      <ol class="rs-question-list">
-        {role.questions.map((item, index) => (
-          <li>
-            <span class="rs-question-list__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            <div><h3>{item.question}</h3><p>{item.reason}</p></div>
+      <ol class="rs-assessment__list">
+        {role.evidence.map((item, index) => (
+          <li class="rs-assessment__row">
+            <span class="rs-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <div><h3>{item.title}</h3><p>{item.body}</p></div>
+            <details class="rs-question">
+              <summary>{role.questions[index].question}<span aria-hidden="true">+</span></summary>
+              <p>{role.questions[index].reason}</p>
+            </details>
           </li>
         ))}
       </ol>
     </div>
   </section>
 
-  <section class="rs-section rs-risks">
-    <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.risksEyebrow}</p>
-      <h2 class="h3-h2 rs-section__title">{t.risksHeadline}</h2>
-      <ul class="rs-card-grid">
-        {role.risks.map((item) => (
-          <li class="rs-card"><h3>{item.title}</h3><p>{item.body}</p></li>
-        ))}
+  <section class="rs-section rs-risks" aria-labelledby="rs-risks-title">
+    <div class="h3-wrap rs-section__grid">
+      <div>
+        <p class="h3-eyebrow">{t.risksEyebrow}</p>
+        <h2 class="h3-h2 rs-section__title" id="rs-risks-title">{t.risksHeadline}</h2>
+      </div>
+      <ul class="rs-risks__list">
+        {role.risks.map((item) => <li><h3>{item.title}</h3><p>{item.body}</p></li>)}
       </ul>
     </div>
   </section>
 
-  <section class="rs-section rs-close">
+  <section class="rs-section rs-close" aria-labelledby="rs-close-title">
     <div class="h3-wrap rs-section__grid">
       <div>
         <p class="h3-eyebrow">{t.preparationEyebrow}</p>
-        <h2 class="h3-h2">{t.preparationHeadline}</h2>
+        <h2 class="h3-h2 rs-section__title" id="rs-close-title">{t.preparationHeadline}</h2>
         <ul class="rs-preparation">
           {role.preparation.map((item) => <li>{item}</li>)}
         </ul>
@@ -103,11 +86,10 @@ const relatedRoles = searchRoles.filter((item) => item.slug !== role.slug);
       <div class="rs-close__action">
         <h3>{role.close.headline}</h3>
         <p class="h3-body">{role.close.body}</p>
-        <a class="h3-btn h3-btn--ink" href={calibrationHref} data-cta={`search-${role.slug}-close`}>
+        <a class="h3-btn h3-btn--ink" href={bookingHref} data-cta={`search-${role.slug}-close`}>
           {t.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <a class="h3-link" href={t.sampleHref}>{t.sampleLabel}<span aria-hidden="true">→</span></a>
-        <a class="h3-link" href={t.selectedHref}>{t.selectedLabel}<span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -118,7 +100,7 @@ const relatedRoles = searchRoles.filter((item) => item.slug !== role.slug);
       <ul>
         {relatedRoles.map((item) => <li><a class="h3-link" href={`/search/${item.slug}`}>{item.role}<span aria-hidden="true">→</span></a></li>)}
       </ul>
-      <p class="rs-page-note">{t.pageNote}</p>
+      <p class="rs-page-note">{t.pageNote} <a href="/roles/">{t.openRolesLabel}<span aria-hidden="true"> →</span></a></p>
     </div>
   </nav>
 </Shell>
@@ -127,43 +109,46 @@ const relatedRoles = searchRoles.filter((item) => item.slug !== role.slug);
   .rs-hero { padding: var(--space-hero-top) 0 var(--space-section); }
   .rs-hero__grid, .rs-section__grid { display: grid; gap: var(--space-grid); align-items: start; }
   .rs-role { margin-top: var(--space-stack); font-size: var(--type-ui); line-height: 1.5; font-weight: 500; }
-  .rs-hero h1 { margin-top: 1rem; font-family: var(--h-serif); font-weight: 400; font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0; font-size: var(--type-display); line-height: 1.08; letter-spacing: -0.02em; max-width: 20ch; text-wrap: balance; }
+  .rs-hero h1 { margin-top: var(--space-2); font-family: var(--h-serif); font-weight: 400; font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0; font-size: var(--type-display); line-height: 1.08; letter-spacing: -0.02em; max-width: 20ch; text-wrap: balance; }
   .rs-hero__body { margin-top: var(--space-stack); font-size: var(--type-lead); line-height: 1.6; color: var(--muted); max-width: 38rem; }
   .rs-hero__cta { margin-top: var(--space-stack); }
-  .rs-cta-note { margin-top: 1rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); max-width: 31rem; }
-  .rs-context { padding: var(--space-stack); background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); }
-  .rs-context h2 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; font-family: var(--h-sans); }
-  .rs-context dl { margin: var(--space-stack) 0 0; }
-  .rs-context dl > div { padding: 1rem 0; border-top: 1px solid var(--line); }
-  .rs-context dl > div:last-child { padding-bottom: 0; }
+  .rs-cta-note { margin-top: var(--space-2); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); max-width: 31rem; }
+  .rs-context { padding-top: var(--space-stack); border-top: 1px solid var(--line); min-width: 0; }
+  .rs-context h2, .rs-assessment h3, .rs-risks h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; font-family: var(--h-sans); }
+  .rs-context__body, .rs-assessment__row p, .rs-risks__list p { margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .rs-context details { margin-top: var(--space-stack); }
+  .rs-context summary, .rs-question summary { display: flex; justify-content: space-between; gap: var(--space-2); padding-block: var(--space-1); cursor: pointer; list-style: none; font-size: var(--type-ui); line-height: 1.5; font-weight: 500; }
+  .rs-question summary { font-size: var(--type-body); line-height: 1.7; padding-top: 0; }
+  .rs-question summary span { flex: 0 0 auto; }
+  .rs-context summary::-webkit-details-marker, .rs-question summary::-webkit-details-marker { display: none; }
+  .rs-context details[open] summary span, .rs-question[open] summary span { transform: rotate(45deg); }
+  .rs-context dl { margin-top: var(--space-2); }
+  .rs-context dl > div { padding-block: var(--space-2); border-top: 1px solid var(--line); }
   .rs-context dt { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
-  .rs-context dd { margin: 0.5rem 0 0; font-size: var(--type-body); line-height: 1.7; }
-  .rs-section { padding: var(--space-section) 0; border-top: 1px solid var(--line); }
+  .rs-context dd { margin: var(--space-1) 0 0; font-size: var(--type-body); line-height: 1.7; }
+  .rs-section { padding-block: var(--space-section); }
   .rs-section__title { max-width: 26ch; }
-  .rs-section__intro { margin-top: var(--space-stack); max-width: 38rem; }
-  .rs-card-grid { display: grid; gap: var(--space-grid); margin-top: var(--space-grid); }
-  .rs-card { padding-top: var(--space-stack); border-top: 1px solid var(--line); min-width: 0; }
-  .rs-card h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .rs-card p { margin-top: 0.75rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .rs-questions { background: var(--sand); }
-  .rs-question-list { border-top: 1px solid var(--line); }
-  .rs-question-list li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: 1rem; padding: var(--space-stack) 0; border-bottom: 1px solid var(--line); }
-  .rs-question-list__number { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .rs-question-list h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .rs-question-list p { margin-top: 0.75rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .rs-preparation { margin-top: var(--space-grid); border-top: 1px solid var(--line); }
-  .rs-preparation li { padding: 1rem 0; border-bottom: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .rs-close__action { padding: var(--space-stack); background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); display: flex; flex-direction: column; align-items: start; gap: var(--space-stack); }
+  .rs-section__intro { margin-top: var(--space-stack); max-width: 42rem; }
+  .rs-assessment__list { margin-top: var(--space-grid); border-top: 1px solid var(--line); }
+  .rs-assessment__row { display: grid; gap: var(--space-stack); padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
+  .rs-assessment__row > div, .rs-question { min-width: 0; }
+  .rs-number { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .rs-risks__list { border-top: 1px solid var(--line); }
+  .rs-risks__list li { padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
+  .rs-preparation { margin-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .rs-preparation li { padding-block: var(--space-2); border-bottom: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .rs-close { border-top: 1px solid var(--line); }
+  .rs-close__action { display: flex; flex-direction: column; align-items: start; gap: var(--space-stack); padding-top: var(--space-stack); }
   .rs-close__action h3 { font-family: var(--h-sans); font-weight: 500; font-size: var(--type-subheading); line-height: 1.35; text-wrap: balance; }
-  .rs-close__action .h3-btn { margin-top: 0.5rem; max-width: 100%; }
+  .rs-close__action .h3-btn { max-width: 100%; }
   .rs-close__action .h3-link { font-size: var(--type-ui); line-height: 1.5; }
-  .rs-related { padding: var(--space-section) 0; border-top: 1px solid var(--line); }
-  .rs-related ul { display: flex; flex-wrap: wrap; gap: 1rem var(--space-grid); margin-top: 1rem; }
+  .rs-related { padding-bottom: var(--space-section); }
+  .rs-related ul { display: flex; flex-wrap: wrap; column-gap: var(--space-grid); row-gap: var(--space-2); margin-top: var(--space-2); }
   .rs-page-note { margin-top: var(--space-stack); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
+  .rs-page-note a { text-decoration: underline; text-underline-offset: 3px; }
   @media (min-width: 56rem) {
     .rs-hero__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: center; }
     .rs-section__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .rs-problem__body { margin-top: var(--space-grid); }
-    .rs-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .rs-assessment__row { grid-template-columns: var(--space-4) minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-grid); }
   }
 </style>
