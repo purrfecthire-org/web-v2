@@ -3,12 +3,12 @@
   "created": "2026-10-14",
   "preserveExistingHomeKate": true,
   "existingHomeKate": {
-    "instruction": "Conservar exactamente la fotografía actual de Kate vestida de negro en Home, con su archivo, edición, recorte y presentación actuales.",
+    "instruction": "Conservar archivo original sin retoques. Una sola aparición, pequeña, máximo160px en Home.",
     "replacementIncluded": false
   },
   "kateGreenPortrait": {
     "publishAutomatically": false,
-    "use": "Alternativa de biblioteca. No sustituye la fotografía actual de negro."
+    "use": "Retrato original distinto en la galería del equipo de Work with us; no sustituye el retrato negro de Home."
   },
   "teamNames": {
     "juanca": "Juanca",
@@ -598,6 +598,38 @@
       "category": "editorial_scene",
       "optionalUseOnly": false,
       "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
+    },
+    {
+      "file": "editorial/city-courtyard-desktop.webp",
+      "bytes": 236504,
+      "sha256": "3694d2a1e76ff48a9b867104b2555c26ab9b924ffaf0690bf73cf095cdf79db4",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen original generada con imagegen para la dirección aprobada por la usuaria el19Oct2026; encuadre móvil derivado mediante edición. No representa personas del equipo ni clientes."
+    },
+    {
+      "file": "editorial/city-courtyard-mobile.webp",
+      "bytes": 210464,
+      "sha256": "11a49db2c79d48b11d76f1808fb9d7569bc0dc7f56947d2897150c85198fb1d7",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Imagen original generada con imagegen para la dirección aprobada por la usuaria el19Oct2026; encuadre móvil derivado mediante edición. No representa personas del equipo ni clientes."
+    },
+    {
+      "file": "editorial/walking-conversation.webp",
+      "bytes": 109736,
+      "sha256": "7f4ed8bd1c423ccb8c890a3323ba26b40a3a299a648ecd42bac9e9cb5b59d6cd",
+      "category": "editorial_scene",
+      "optionalUseOnly": false,
+      "provenance": "Escena suministrada por la usuaria el14Oct2026. Identidades no atribuidas; optimización de formato únicamente."
     }
-  ]
+  ],
+  "updated": "2026-10-19",
+  "currentUsage": {
+    "home": "editorial/city-courtyard-desktop.webp y variante mobile, fondo ilustrativo original generado; no representa equipo o clientes.",
+    "companies": "editorial/walking-conversation.webp, escena ilustrativa suministrada por Kate.",
+    "talent": "Selector sin fotografía de oficina.",
+    "offer": "Hero tipográfico con precio y alcance; fotografía identificada de Daniel solo en evidencia.",
+    "workWithUs": "Retratos originales del equipo."
+  }
 }

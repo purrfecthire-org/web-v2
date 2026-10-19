@@ -13,7 +13,7 @@ import { team } from '../../content/team';
           height={person.height}
           loading="lazy"
           decoding="async"
-          style={{ objectPosition: person.position }}
+          style={{ objectPosition: person.position, transform: `scale(${person.scale ?? 1})`, transformOrigin: person.position }}
         />
       </div>
       <figcaption>{person.name}</figcaption>
@@ -41,7 +41,7 @@ import { team } from '../../content/team';
     object-fit: cover;
   }
   .team-gallery figcaption {
-    margin-top: 0.75rem;
+    margin-top: var(--space-2);
     font-size: var(--type-ui);
     font-weight: 500;
     line-height: 1.5;

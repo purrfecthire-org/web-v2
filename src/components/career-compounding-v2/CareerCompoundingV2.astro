@@ -20,12 +20,14 @@ const t = getCareerCompoundingV2(lang);
           <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-hero-email" class="h3-btn cc-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
           <p class="cc-hero__note">{t.hero.note}</p>
         </div>
-        <aside class="cc-prompt" aria-labelledby="cc-prompt-title">
-          <p class="h3-eyebrow">{t.hero.prompt.eyebrow}</p>
-          <h2 class="cc-prompt__title" id="cc-prompt-title">{t.hero.prompt.title}</h2>
-          <ul class="cc-prompt__list">{t.hero.prompt.items.map((item) => <li>{item}</li>)}</ul>
-          <p class="cc-prompt__closing">{t.hero.prompt.closing}</p>
-        </aside>
+        <nav class="cc-prompt" aria-label={t.work.headline}>
+          <p class="h3-eyebrow">{t.work.eyebrow}</p>
+          <ul class="cc-prompt__list">
+            {t.work.areas.map((area) => (
+              <li><a href={"#cc-area-" + area.id}>{area.title}<span aria-hidden="true">→</span></a></li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </section>
 
@@ -36,7 +38,7 @@ const t = getCareerCompoundingV2(lang);
         <p class="h3-body cc-work__intro">{t.work.intro}</p>
         <ol class="cc-work__list">
           {t.work.areas.map((area) => (
-            <li class="cc-area">
+            <li class="cc-area" id={"cc-area-" + area.id}>
               <div class="cc-area__heading">
                 <span class="cc-area__id" aria-hidden="true">{area.id}</span>
                 <h3>{area.title}</h3>
@@ -98,21 +100,21 @@ const t = getCareerCompoundingV2(lang);
   .cc-hero__cta, .cc-close__cta { margin-top: var(--space-4); max-width: 100%; text-align: center; line-height: 1.4; }
   .cc-hero__note, .cc-close__note, .cc-close__email { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 34rem; }
   .cc-prompt { padding-block: var(--space-4); border-block: 1px solid var(--line); }
-  .cc-prompt__title { margin-top: var(--space-2); font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .cc-prompt__list { margin-top: var(--space-3); }
-  .cc-prompt__list li { padding-block: var(--space-2); border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; }
-  .cc-prompt__closing { margin-top: var(--space-3); color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
+  .cc-prompt__list li { border-top: 1px solid var(--line); }
+  .cc-prompt__list a { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); padding-block: var(--space-2); font-size: var(--type-body); line-height: 1.7; }
+  .cc-prompt__list a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .cc-work, .cc-scope, .cc-close { padding-block: var(--space-section); background: var(--sand); border-top: 1px solid var(--line); }
   .cc-work .h3-h2, .cc-scope .h3-h2, .cc-close .h3-h2 { max-width: 28ch; }
   .cc-work__intro { margin-top: var(--space-3); max-width: 44rem; }
   .cc-work__list { margin-top: var(--space-4); }
-  .cc-area { display: grid; align-items: baseline; gap: var(--space-3); min-width: 0; padding-block: var(--space-4); border-top: 1px solid var(--line); }
+  .cc-area { display: grid; align-items: baseline; gap: var(--space-3); min-width: 0; padding-block: var(--space-3); scroll-margin-top: var(--space-hero-top); border-top: 1px solid var(--line); }
   .cc-area__heading { display: flex; align-items: baseline; gap: var(--space-2); min-width: 0; }
   .cc-area__id { flex-shrink: 0; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; font-variant-numeric: tabular-nums; }
   .cc-area h3 { margin-top: 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .cc-area > p, .cc-area__output p { font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .cc-area__output .cc-area__output-label { margin-bottom: var(--space-1); color: var(--text); font-size: var(--type-ui); line-height: 1.5; font-weight: 500; }
-  .cc-method { margin-top: var(--space-4); }
+  .cc-method { margin-top: 0; }
   .cc-method > ol { display: grid; gap: var(--space-3); padding-bottom: var(--space-3); max-width: 44rem; }
   .cc-method h3 { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; }
   .cc-method li p { margin-top: var(--space-1); color: var(--muted); font-size: var(--type-body); line-height: 1.7; }

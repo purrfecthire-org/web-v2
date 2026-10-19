@@ -30,7 +30,7 @@ export const searchCalibrationEn = {
   },
   sample: {
     eyebrow: 'See the thinking',
-    headline: 'An illustrative Search Calibration.',
+    headline: 'A worked example.',
     disclosure: 'Illustrative example. Fictional company; this is a planning exercise, not a client case.',
     title: 'Founding Engineer · Seed-stage startup',
     context: 'A fictional software startup needs a hands-on engineer to ship its product and customer integrations in San Francisco.',
@@ -104,7 +104,6 @@ export const searchCalibrationEn = {
   },
   next: {
     headline: 'What should your next hire actually solve?',
-    body: 'Start with a free 20-minute initial read. If we work together, Search Calibration defines the search before sourcing begins.',
     cta: 'Book a 20-minute founders call',
     secondary: 'See an illustrative candidate brief',
     secondaryHref: '/candidate-brief-sample',
@@ -119,7 +118,7 @@ export const candidateBriefSampleEn = {
   hero: {
     eyebrow: 'The recommendation format',
     headline: 'A candidate brief you can question.',
-    body: 'See how a recommendation can connect the role, the evidence and the next assessment. The company, candidate and assessment below are fictional.',
+    body: 'See how a recommendation can connect the role, the evidence and the next assessment.',
     disclosure: 'Illustrative example. Fictional candidate and company. No real person, client search or hiring outcome is represented.',
   },
   document: {
@@ -133,11 +132,11 @@ export const candidateBriefSampleEn = {
     sections: [
       {
         title: 'Why this person',
-        body: 'The fictional role needs a leader who can stay close to product and architecture while giving a small engineering team clearer direction. This candidate’s account describes that combination in an early-stage environment.',
+        body: 'The role needs a hands-on leader across product and architecture who can give a small team clearer direction.',
       },
       {
         title: 'Evidence observed',
-        body: 'In the fictional assessment, the candidate traced a production issue from customer symptoms to a diagnosis, explained the decision to simplify an integration and identified which implementation work they completed personally. They also described an architectural choice they would now change.',
+        body: 'During the assessment, the candidate traced a production issue from customer symptoms to a diagnosis, explained the decision to simplify an integration and identified which implementation work they completed personally. They also described an architectural choice they would now change.',
       },
       {
         title: 'What they owned',
@@ -145,11 +144,11 @@ export const candidateBriefSampleEn = {
       },
       {
         title: 'Relevant pattern',
-        body: 'They appear comfortable moving between technical detail and the product problem. Their reasoning favours a small solution that can be tested, with explicit attention to what the team can maintain.',
+        body: 'The candidate’s early-stage account favours small, testable solutions with attention to what the team can maintain.',
       },
       {
         title: 'Why this company',
-        body: 'In this fictional conversation, the candidate connects the customer problem with work they want to own. This is stated interest. Ask them to explain the actual constraints, work they would do themselves and conditions for joining. Keep their motives separate from observed assessment evidence.',
+        body: 'The candidate connects the customer problem with work they want to own. This is stated interest. Ask them to explain the actual constraints, work they would do themselves and conditions for joining. Keep their motives separate from observed assessment evidence.',
       },
       {
         title: 'Risks',

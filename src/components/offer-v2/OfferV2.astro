@@ -19,6 +19,8 @@ const t = getOfferV2(lang);
         <p class="h3-eyebrow">{t.hero.eyebrow}</p>
         <h1 class="h3-hero__h1">{t.hero.headline}</h1>
         <p class="h3-hero__sub">{t.hero.sub}</p>
+      </div>
+      <div class="oa-hero__offer">
         <p class="oa-hero__fit">{t.fit.body}</p>
         <div class="oa-hero__package">
           <p class="oa-hero__price">{t.investment.price}</p>
@@ -26,14 +28,6 @@ const t = getOfferV2(lang);
         </div>
         <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
       </div>
-      <figure class="h3-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
-        <picture>
-          <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/offer-mobile.webp" />
-          <source media="(max-width: 55.99rem)" srcset="/photos/web/offer-mobile.png" />
-          <source type="image/webp" srcset="/photos/web/offer-desktop.webp" />
-          <img src="/photos/web/offer-desktop.png" alt="Two people having a conversation at a desk." width="1200" height="750" decoding="async" fetchpriority="high" />
-        </picture>
-      </figure>
     </div>
   </section>
 
@@ -42,23 +36,22 @@ const t = getOfferV2(lang);
       <p class="h3-eyebrow">{t.deliverables.eyebrow}</p>
       <h2 class="h3-h2" id="oa-work-title">{t.deliverables.headline}</h2>
       <div class="oa-work__intro">
-        <p class="h3-body">{t.question.body}</p>
         <p class="h3-body">{t.deliverables.body}</p>
       </div>
       <ol class="oa-outputs">
         {t.deliverables.items.map((item, index) => (
           <li class="oa-output">
-            <span class="oa-output__id" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
+            <div class="oa-output__heading">
+              <span class="oa-output__id" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.title}</h3>
+            </div>
+            <div class="oa-output__body">
+              <p>{item.body}</p>
+              {item.note && <p class="oa-output__note">{item.note}</p>}
+            </div>
           </li>
         ))}
       </ol>
-      <div class="oa-work__access">
-        <h3>{t.access.headline}</h3>
-        <p class="h3-body">{t.access.body}</p>
-        <p class="oa-work__limit">{t.access.limit}</p>
-      </div>
     </div>
   </section>
 
@@ -95,25 +88,25 @@ const t = getOfferV2(lang);
             <h3>{t.fit.commitmentTitle}</h3>
             <p class="h3-body">{t.fit.commitment}</p>
           </div>
-        </div>
-      </div>
-      <aside class="oa-firewall" aria-labelledby="oa-firewall-title">
-        <h3 id="oa-firewall-title">{t.firewall.headline}</h3>
-        <p class="h3-body">{t.firewall.lead}</p>
-        <details class="oa-detail">
-          <summary>{t.firewall.more}</summary>
-          <div>{t.firewall.body.map((paragraph) => <p>{paragraph}</p>)}</div>
-        </details>
-      </aside>
-      <div class="oa-questions">
-        <p class="h3-eyebrow">{t.faq.eyebrow}</p>
-        <div class="oa-questions__list">
-          {t.faq.items.map((item) => (
+          <aside class="oa-firewall" aria-labelledby="oa-firewall-title">
+            <h3 id="oa-firewall-title">{t.firewall.headline}</h3>
+            <p class="h3-body">{t.firewall.lead}</p>
             <details class="oa-detail">
-              <summary>{item.question}</summary>
-              <p>{item.answer}</p>
+              <summary>{t.firewall.more}</summary>
+              <div>{t.firewall.body.map((paragraph) => <p>{paragraph}</p>)}</div>
             </details>
-          ))}
+          </aside>
+          <div class="oa-questions">
+            <p class="h3-eyebrow">{t.faq.eyebrow}</p>
+            <div class="oa-questions__list">
+              {t.faq.items.map((item) => (
+                <details class="oa-detail">
+                  <summary>{item.question}</summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -130,7 +123,8 @@ const t = getOfferV2(lang);
 </Shell>
 
 <style lang="scss" is:global>
-  .oa-hero__fit { margin-top: var(--space-3); max-width: 34rem; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .oa-hero__offer { padding-block: var(--space-4); border-block: 1px solid var(--line); }
+  .oa-hero__fit { max-width: 34rem; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
   .oa-hero__package { margin-top: var(--space-4); max-width: 34rem; display: grid; gap: var(--space-1); }
   .oa-hero__package > p { font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
   .oa-hero__package > .oa-hero__price { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; color: var(--text); }
@@ -140,13 +134,12 @@ const t = getOfferV2(lang);
   .oa-work .h3-h2, .oa-proof .h3-h2, .oa-scope .h3-h2, .oa-apply .h3-h2 { max-width: 28ch; }
   .oa-work__intro { margin-top: var(--space-3); max-width: 44rem; }
   .oa-outputs { margin-top: var(--space-4); }
-  .oa-output { display: grid; min-width: 0; gap: var(--space-2); padding-block: var(--space-3); border-top: 1px solid var(--line); }
-  .oa-output__id { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; font-variant-numeric: tabular-nums; }
+  .oa-output { display: grid; align-items: baseline; min-width: 0; gap: var(--space-2); padding-block: var(--space-3); border-top: 1px solid var(--line); }
+  .oa-output__heading { display: flex; align-items: baseline; gap: var(--space-2); min-width: 0; }
+  .oa-output__id { flex-shrink: 0; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; font-variant-numeric: tabular-nums; }
   .oa-output h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .oa-output p { max-width: 34rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .oa-work__access { margin-top: var(--space-4); max-width: 44rem; }
-  .oa-work__access .h3-body { margin-top: var(--space-2); }
-  .oa-work__limit { margin-top: var(--space-2); font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .oa-output__body > p { max-width: 34rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .oa-output__body > .oa-output__note { margin-top: var(--space-2); font-size: var(--type-ui); line-height: 1.5; }
   .oa-proof { scroll-margin-top: var(--space-hero-top); }
   .oa-quote { margin-top: var(--space-4); display: grid; gap: var(--space-grid); align-items: start; }
   .oa-quote__copy { min-width: 0; }
@@ -162,7 +155,8 @@ const t = getOfferV2(lang);
   .oa-firewall { margin-top: var(--space-6); max-width: 44rem; }
   .oa-firewall > .h3-body { margin-top: var(--space-2); }
   .oa-firewall .oa-detail { margin-top: var(--space-2); }
-  .oa-questions { display: grid; gap: var(--space-3); margin-top: var(--space-6); }
+  .oa-questions { margin-top: var(--space-6); }
+  .oa-questions > .h3-eyebrow { margin-bottom: var(--space-2); }
   .oa-detail { border-bottom: 1px solid var(--line); }
   .oa-detail summary { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); padding-block: var(--space-3); cursor: pointer; list-style: none; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
   .oa-detail summary::-webkit-details-marker { display: none; }
@@ -174,9 +168,8 @@ const t = getOfferV2(lang);
   .oa-apply__cta { margin-top: var(--space-4); }
   .oa-apply__how { margin-top: var(--space-2); max-width: 34rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   @media (min-width: 56rem) {
-    .oa-output { grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1.5fr); gap: var(--space-grid); align-items: baseline; }
+    .oa-output { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: var(--space-grid); }
     .oa-quote { grid-template-columns: 8rem minmax(0, 1fr); }
     .oa-scope__grid { grid-template-columns: 1fr 1.25fr; }
-    .oa-questions { grid-template-columns: 1fr 1.25fr; gap: var(--space-grid); }
   }
 </style>

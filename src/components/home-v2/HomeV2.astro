@@ -9,36 +9,28 @@ const { lang = 'en' } = Astro.props;
 const t = getHomeV2(lang);
 ---
 
-<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light" navCta={{ label: t.hero.choose, href: '#choose-your-path' }} journey="home">
+<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light" journey="home">
   <section class="h3-hero home-entry" aria-labelledby="home-title">
+    <picture class="home-entry__background">
+      <source media="(max-width: 55.99rem)" srcset="/photos/editorial/city-courtyard-mobile.webp" type="image/webp" />
+      <img src="/photos/editorial/city-courtyard-desktop.webp" alt={t.hero.photoAlt} width="1536" height="1024" decoding="async" fetchpriority="high" />
+    </picture>
     <div class="h3-wrap">
-      <div class="home-entry__intro">
-        <div class="h3-hero__copy">
+      <div class="home-entry__intro h3-hero__copy">
           <p class="h3-eyebrow">{t.hero.eyebrow}</p>
           <h1 class="h3-hero__h1" id="home-title">{t.hero.headline}</h1>
           <p class="h3-hero__sub">{t.hero.sub}</p>
-        </div>
         <nav class="home-paths" id="choose-your-path" aria-label={t.hero.choose}>
           <a class="home-path" href={PAGE_COMPANIES} data-cta="home-choose-companies">
-            <span class="home-path__label">{t.hero.companies.label}</span>
-            <span class="home-path__promise">{t.hero.companies.promise}</span>
-            <span class="home-path__detail">{t.hero.companies.detail}</span>
+            <span>{t.hero.companies.label}</span>
             <span class="home-path__arrow" aria-hidden="true">→</span>
           </a>
           <a class="home-path" href={PAGE_TALENT} data-cta="home-choose-talent">
-            <span class="home-path__label">{t.hero.talent.label}</span>
-            <span class="home-path__promise">{t.hero.talent.promise}</span>
-            <span class="home-path__detail">{t.hero.talent.detail}</span>
+            <span>{t.hero.talent.label}</span>
             <span class="home-path__arrow" aria-hidden="true">→</span>
           </a>
         </nav>
       </div>
-      <figure class="home-entry__scene">
-        <picture>
-          <source media="(max-width: 55.99rem)" srcset="/photos/library/home-editorial-mobile.webp" type="image/webp" />
-          <img src="/photos/library/home-editorial-desktop.webp" alt={t.hero.photoAlt} width="1200" height="750" decoding="async" fetchpriority="high" />
-        </picture>
-      </figure>
     </div>
   </section>
 
@@ -70,21 +62,21 @@ const t = getHomeV2(lang);
 </Shell>
 
 <style>
-  .home-entry { padding-bottom: var(--space-section); }
-  .home-entry__intro { display: grid; gap: var(--space-grid); align-items: end; }
-  .home-entry .h3-hero__h1 { max-width: 21ch; }
-  .home-entry .h3-hero__sub { max-width: 48ch; margin-top: var(--space-stack); }
-  .home-paths { display: grid; gap: var(--space-2); scroll-margin-top: var(--space-stack); }
-  .home-path { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-1) var(--space-2); padding: var(--space-stack); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); transition: border-color .2s ease, background-color .2s ease; }
-  .home-path:hover { border-color: var(--muted); background: var(--sand); }
-  .home-path:active { border-color: var(--text); }
-  .home-path__label { grid-column: 1; font-size: var(--type-caption); color: var(--muted); font-weight: 500; line-height: 1.5; }
-  .home-path__promise { grid-column: 1; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; color: var(--text); }
-  .home-path__detail { grid-column: 1; font-size: var(--type-caption); color: var(--muted); line-height: 1.5; }
-  .home-path__arrow { grid-column: 2; grid-row: 1/4; align-self: center; color: var(--text); }
-  .home-entry__scene { margin: var(--space-grid) 0 0; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-card); background: var(--stone); }
-  .home-entry__scene picture, .home-entry__scene img { display: block; width: 100%; height: 100%; }
-  .home-entry__scene img { object-fit: cover; object-position: 50% 50%; }
+  .home-entry { isolation: isolate; min-height: 56rem; padding-top: var(--space-hero-top); }
+  .home-entry__background { display: block; position: absolute; inset: 0; z-index: -3; }
+  .home-entry__background img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+  .home-entry::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(rgba(247,246,243,.65),rgba(247,246,243,.5) 48%,transparent 72%); }
+  .home-entry::after { content: ''; position: absolute; inset: 0 0 auto; height: 9rem; z-index: -1; background: linear-gradient(rgba(247,246,243,.96),rgba(247,246,243,.76) 50%,transparent); }
+  .home-entry__intro { max-width: 40rem; }
+  .home-entry .h3-hero__h1 { max-width: 18ch; }
+  .home-entry .h3-hero__sub { max-width: 43ch; margin-top: var(--space-stack); color: var(--text); }
+  .home-entry .h3-eyebrow { color: var(--text); }
+  .home-paths { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); scroll-margin-top: var(--space-stack); }
+  .home-path { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--space-stack); min-height: 3rem; padding: .75rem var(--space-stack); border: 1px solid rgba(20,22,31,.55); border-radius: 999px; background: rgba(247,246,243,.94); font-size: var(--type-ui); font-weight: 500; line-height: 1.4; transition: color .2s ease, background-color .2s ease; }
+  .home-path:hover { background: var(--midnight); color: var(--sand); }
+  .home-path:active { opacity: .8; }
+  .home-path__arrow { font-size: var(--type-subheading); line-height: 1; }
+  @media (max-width: 37.49rem) { .home-path { width: 100%; } }
   .home-proof, .home-kate { background: var(--sand); padding-block: var(--space-section); }
   .home-proof__grid { display: grid; align-items: center; gap: var(--space-grid); }
   .home-proof .h3-h2 { max-width: 18ch; }
@@ -95,11 +87,13 @@ const t = getHomeV2(lang);
   .home-kate__copy .h3-body { max-width: 52ch; }
   .home-kate__meet { margin-top: var(--space-stack); }
   @media (min-width: 56rem) {
-    .home-entry__intro { grid-template-columns: minmax(0, 1.35fr) minmax(0, .85fr); }
-    .home-entry__scene { aspect-ratio: 21 / 9; }
-    .home-entry__scene img { object-position: 50% 22%; }
+    .home-entry { min-height: 54rem; padding-top: calc(var(--space-hero-top) + var(--space-8)); }
+    .home-entry::before { background: linear-gradient(90deg,rgba(247,246,243,.7),rgba(247,246,243,.38) 37%,transparent 63%); }
     .home-proof__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-section); }
     .home-kate__grid { grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); }
     .home-kate__portrait { justify-self: center; }
   }
+  @media (min-width: 90rem) { .home-entry__intro { max-width: 42.5rem; } }
+  @media (min-width: 112rem) { .home-entry { min-height: 60rem; } }
+  @media (prefers-reduced-motion: reduce) { .home-path { transition: none; } }
 </style>

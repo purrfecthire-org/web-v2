@@ -20,11 +20,11 @@ export interface InvestorsV2Content {
   support: {
     eyebrow: string;
     headline: string;
-    areas: { id: string; title: string; body: string; outcomeLabel: string; outcome: string }[];
+    areas: { id: string; title: string; body: string }[];
   };
   founders: { eyebrow: string; headline: string; body: string; items: { title: string; body: string }[] };
   officeHours: { eyebrow: string; headline: string; body: string; detailLabel: string; points: string[]; note: string };
-  approach: { eyebrow: string; headline: string; steps: { title: string; body: string }[] };
+  approach: { eyebrow: string; headline: string; body: string };
   evidence: { eyebrow: string; headline: string; body: string; links: { title: string; body: string; label: string; href: string; ctaId: string }[] };
   questions: { eyebrow: string; headline: string; items: { question: string; answer: string }[] };
   close: { headline: string; body: string; cta: string; note: string };
@@ -64,23 +64,17 @@ export const investorsV2En: InvestorsV2Content = {
       {
         id: '01',
         title: 'Search Calibration',
-        body: 'Part of defining a search: pressure-test the role against the company’s stage, problem and talent market.',
-        outcomeLabel: 'The founder gets',
-        outcome: 'Role, market and assessment questions defined within the search engagement, with no separate Calibration purchase.',
+        body: 'Define the role, relevant market and assessment questions against the company’s stage and problem. Included in the search engagement, with no separate Calibration purchase.',
       },
       {
         id: '02',
         title: 'Critical senior searches',
-        body: 'Senior and executive searches across engineering, product, go-to-market and leadership, assessed against the business problem.',
-        outcomeLabel: 'The founder gets',
-        outcome: 'Candidate recommendations with clear evidence and open questions.',
+        body: 'Senior and executive searches across engineering, product, go-to-market and leadership, with candidate recommendations showing evidence and open questions.',
       },
       {
         id: '03',
         title: 'Founder office hours',
-        body: 'Agree a format for founders bringing a changing role, uncertain assessment or stalled search.',
-        outcomeLabel: 'The founder gets',
-        outcome: 'A focused conversation and next step, within the scope agreed with your team.',
+        body: 'Focused conversations for founders facing a changing role, uncertain assessment or stalled search, with a next step within the scope agreed with your team.',
       },
     ],
   },
@@ -109,12 +103,8 @@ export const investorsV2En: InvestorsV2Content = {
   },
   approach: {
     eyebrow: 'Working with your team',
-    headline: 'Agree the format and the next decision.',
-    steps: [
-      { title: 'Understand the portfolio need', body: 'Identify the stages, roles and recurring questions where a clearer read would help.' },
-      { title: 'Set the scope', body: 'Agree responsibilities, fees and introductions. Tell founders what is included before starting.' },
-      { title: 'Work with the company', body: 'Examine the problem with the founder. Agree any search directly with the company and keep it involved.' },
-    ],
+    headline: 'Scope and responsibilities.',
+    body: 'Agree responsibilities, fees and introductions with your team. Tell founders what is included before starting; any search is agreed directly with the company.',
   },
   evidence: {
     eyebrow: 'Look at the work',
@@ -129,9 +119,9 @@ export const investorsV2En: InvestorsV2Content = {
         ctaId: 'investors-search-calibration',
       },
       {
-        title: 'Selected searches',
-        body: 'The context and work behind selected searches.',
-        label: 'See selected searches',
+        title: 'A search example',
+        body: 'An anonymized backend search and its documented follow-up.',
+        label: 'See the search example',
         href: '/for-companies#selected-searches',
         ctaId: 'investors-selected-searches',
       },
@@ -143,7 +133,7 @@ export const investorsV2En: InvestorsV2Content = {
     items: [
       {
         question: 'Is this an exclusive portfolio arrangement?',
-        answer: 'We agree the arrangement with your team. Each company decides whether to commission a search; an introduction creates no obligation.',
+        answer: 'Each company decides whether to commission a search; an introduction creates no obligation.',
       },
       {
         question: 'Who pays for the work?',
