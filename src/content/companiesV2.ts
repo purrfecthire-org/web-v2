@@ -129,7 +129,7 @@ export const companiesV2En: CompaniesV2Content = {
     headline: 'From role definition to recommendation.',
     steps: [
       { id: '01', title: 'Define the real bar', body: 'Define what must change, success six months in and the role’s constraints.' },
-      { id: '02', title: 'Reach and assess', body: 'Approach the relevant market. Assess candidates against the business problem.' },
+      { id: '02', title: 'Reach and assess', body: 'Approach the relevant market. Ask what they would build here, how they would work within your constraints and why they would choose to join.' },
       { id: '03', title: 'Calibrate until the evidence is clear', body: 'Each assessment informs the search. You see what we learn and recommend changing.' },
     ],
   },

@@ -20,19 +20,19 @@ const { roles, unavailable } = await getRolesSnapshot();
       <p>{t.confidentiality}</p>
     </div>
     <div class="rl__notice" id="rl-refresh-error" hidden>
-      <p id="rl-refresh-message" role="status">{t.refreshError}</p>
+      <p id="rl-refresh-message" role="status"></p>
       <button class="h3-btn h3-btn--sm h3-btn--ink" id="rl-refresh-retry" type="button" aria-describedby="rl-refresh-message" aria-controls="rl-grid rl-empty rl-error">{t.retry}</button>
     </div>
     <div class="rl__grid" id="rl-grid" hidden={roles.length === 0} set:html={roles.map(roleCardHTML).join('')}></div>
 
     <div class="rl__state" id="rl-empty" hidden={unavailable || roles.length > 0}>
-      <h3>{t.emptyTitle}</h3>
-      <p>{t.emptyBody}</p>
+      <h3 id="rl-empty-title">{!unavailable && roles.length === 0 ? t.emptyTitle : ''}</h3>
+      <p id="rl-empty-body">{!unavailable && roles.length === 0 ? t.emptyBody : ''}</p>
       <a class="h3-link" href={t.profileHref} data-cta="roles-empty-profile">{t.profileCta} →</a>
     </div>
     <div class="rl__state" id="rl-error" hidden={!unavailable}>
-      <h3>{t.errorTitle}</h3>
-      <p>{t.errorBody}</p>
+      <h3 id="rl-error-title">{unavailable ? t.errorTitle : ''}</h3>
+      <p id="rl-error-body">{unavailable ? t.errorBody : ''}</p>
       <div class="rl__state-actions">
         <button class="h3-btn h3-btn--ink" id="rl-retry" type="button">{t.retry}</button>
         <a class="h3-link" href={`mailto:${t.email}`}>{t.email}</a>
@@ -51,6 +51,7 @@ const { roles, unavailable } = await getRolesSnapshot();
 
 <script>
   import { fetchRoles, roleCardHTML, reportClientError } from '../../lib/roles';
+  import { rolesCopy as t } from './copy';
 
   const root = document.querySelector<HTMLElement>('.rl');
   if (root) {
@@ -63,6 +64,14 @@ const { roles, unavailable } = await getRolesSnapshot();
     const retry = document.getElementById('rl-retry') as HTMLButtonElement;
     const refreshRetry = document.getElementById('rl-refresh-retry') as HTMLButtonElement;
     let refreshing = false;
+
+    function setStateCopy(state: 'open' | 'empty' | 'error' | 'stale') {
+      document.getElementById('rl-empty-title')!.textContent = state === 'empty' ? t.emptyTitle : '';
+      document.getElementById('rl-empty-body')!.textContent = state === 'empty' ? t.emptyBody : '';
+      document.getElementById('rl-error-title')!.textContent = state === 'error' ? t.errorTitle : '';
+      document.getElementById('rl-error-body')!.textContent = state === 'error' ? t.errorBody : '';
+      document.getElementById('rl-refresh-message')!.textContent = state === 'stale' ? t.refreshError : '';
+    }
 
     function preserveAttribution() {
       const campaign = new URLSearchParams(location.search);
@@ -101,6 +110,7 @@ const { roles, unavailable } = await getRolesSnapshot();
         grid.innerHTML = available.map(roleCardHTML).join('');
         preserveAttribution();
         notice.hidden = true;
+        setStateCopy(current.length === 0 ? 'empty' : 'open');
         grid.hidden = available.length === 0;
         count.textContent = ` · ${available.length}`;
         count.hidden = false;
@@ -109,13 +119,14 @@ const { roles, unavailable } = await getRolesSnapshot();
         if (current.length > 0 && available.length === 0) {
           // There is demand, but its new pages are not deployed yet. Do not
           // describe this as "no open roles".
+          setStateCopy('error');
           error.hidden = false;
           count.hidden = true;
         }
       } catch (err) {
         const hasSnapshot = grid.querySelector('.rl__card') !== null;
-        if (hasSnapshot) notice.hidden = false;
-        else { error.hidden = false; empty.hidden = true; count.hidden = true; }
+        if (hasSnapshot) { setStateCopy('stale'); notice.hidden = false; error.hidden = true; empty.hidden = true; }
+        else { setStateCopy('error'); notice.hidden = true; error.hidden = false; empty.hidden = true; count.hidden = true; }
         reportClientError(`roles list refresh failed: ${(err as Error).message}`, { stage: 'roles_index_refresh' });
       } finally {
         refreshing = false;

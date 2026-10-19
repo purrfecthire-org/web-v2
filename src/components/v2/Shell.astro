@@ -21,6 +21,8 @@ interface Props {
   title: string;
   description: string;
   canonicalUrl?: string;
+  /** Error and non-public utility pages stay out of search results. */
+  noindex?: boolean;
   theme?: 'dark' | 'light';
   /** Opens in a new tab: the nav CTA leaves the site (a calendar, an email). */
   navCta?: { label: string; href: string; external?: boolean };
@@ -33,7 +35,7 @@ interface Props {
   journey?: 'home' | 'companies' | 'talent' | 'offer' | 'careers' | 'roles';
 }
 
-const { lang = 'en', title, description, canonicalUrl, theme = 'dark', navCta, journey = 'home' } = Astro.props;
+const { lang = 'en', title, description, canonicalUrl, noindex = false, theme = 'dark', navCta, journey = 'home' } = Astro.props;
 
 const links = [
   { label: 'For companies', href: PAGE_COMPANIES },
@@ -67,7 +69,7 @@ const isB2B = journey === 'home' || journey === 'companies' || journey === 'care
 const ctaTone = isB2B ? 'h3-btn--ink' : '';
 ---
 
-<Layout title={title} description={description} canonicalUrl={canonicalUrl} lang={lang} legacyFonts={false} noindex={Astro.url.pathname.replace(/\/$/, '') === '/search-read'}>
+<Layout title={title} description={description} canonicalUrl={canonicalUrl} lang={lang} legacyFonts={false} noindex={noindex || Astro.url.pathname.replace(/\/$/, '') === '/search-read'}>
   <div class:list={['h3', `h3--${theme}`]} data-journey={journey}>
     <a class="h3-skip" href="#main-content">Skip to content</a>
     <header class="h3-nav">
