@@ -3,13 +3,13 @@ import Shell from '../v2/Shell.astro';
 import type { Lang } from '../../content/index';
 import { getHomeV2 } from '../../content/homeV2';
 import ClientLogoReel from '../v2/ClientLogoReel.astro';
-import { PAGE_COMPANIES, PAGE_TALENT, BOOKING_B2B } from '../../content/links';
+import { PAGE_COMPANIES, PAGE_TALENT } from '../../content/links';
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getHomeV2(lang);
 ---
 
-<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light" navCta={{ label: t.hero.bookingCta, href: BOOKING_B2B }} journey="home">
+<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light" navCta={{ label: t.hero.choose, href: '#choose-your-path' }} journey="home">
   <section class="h3-hero home-entry" aria-labelledby="home-title">
     <div class="h3-wrap">
       <div class="home-entry__intro">
@@ -42,32 +42,10 @@ const t = getHomeV2(lang);
     </div>
   </section>
 
-  <section class="home-belief" aria-labelledby="home-belief-title">
-    <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.belief.eyebrow}</p>
-      <h2 class="h3-h2 home-belief__headline" id="home-belief-title">{t.belief.headline}</h2>
-      <ul class="home-principles">
-        {t.belief.principles.map((principle, index) => <li class="home-principle">
-          <span class:list={['home-principle__mark', `home-principle__mark--${index + 1}`]} aria-hidden="true"><i></i><i></i><i></i></span>
-          <h3>{principle}</h3>
-        </li>)}
-      </ul>
-    </div>
-  </section>
-
-  <section class="home-proof" aria-labelledby="home-proof-label">
-    <div class="h3-wrap">
-      <p class="h3-eyebrow" id="home-proof-label">{t.proof.eyebrow}</p>
-      <div class="home-proof__grid">
+  <section class="home-proof" id="clients" aria-labelledby="home-proof-label">
+    <div class="h3-wrap home-proof__grid">
+      <h2 class="h3-h2" id="home-proof-label">{t.proof.eyebrow}</h2>
         <ClientLogoReel id="home-clients" />
-        <figure class="home-proof__voice">
-          <blockquote>“{t.proof.quote}”</blockquote>
-          <figcaption>
-            <picture><source srcset="/brand/fabian-torres.webp" type="image/webp" /><img src="/brand/fabian-torres.jpg" alt="" width="480" height="480" loading="lazy" decoding="async" /></picture>
-            <span class="home-proof__credit"><span>{t.proof.name}</span><span>{t.proof.role}</span></span>
-          </figcaption>
-        </figure>
-      </div>
     </div>
   </section>
 
@@ -87,10 +65,6 @@ const t = getHomeV2(lang);
           <a href="https://www.linkedin.com/in/kathforero/" target="_blank" rel="noopener noreferrer" class="h3-link home-kate__meet" data-cta="home-meet-kate">Meet Kate <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <nav class="home-final-paths" aria-label={t.hero.choose}>
-        <a href={PAGE_COMPANIES} data-cta="home-footer-companies">{t.hero.companies.label}<span aria-hidden="true">→</span></a>
-        <a href={PAGE_TALENT} data-cta="home-footer-talent">{t.hero.talent.label}<span aria-hidden="true">→</span></a>
-      </nav>
     </div>
   </section>
 </Shell>
@@ -111,47 +85,20 @@ const t = getHomeV2(lang);
   .home-entry__scene { margin: var(--space-grid) 0 0; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-card); background: var(--stone); }
   .home-entry__scene picture, .home-entry__scene img { display: block; width: 100%; height: 100%; }
   .home-entry__scene img { object-fit: cover; object-position: 50% 50%; }
-  .home-belief, .home-proof, .home-kate { background: var(--sand); padding-block: var(--space-section); }
-  .home-belief__headline { max-width: 30ch; }
-  .home-principles { display: grid; gap: var(--space-stack); margin-top: var(--space-grid); }
-  .home-principle { min-width: 0; padding: var(--space-stack); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); }
-  .home-principle h3 { margin-top: var(--space-stack); font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .home-principle__mark { position: relative; display: block; width: var(--space-8); height: var(--space-4); color: var(--muted); }
-  .home-principle__mark i { position: absolute; display: block; width: var(--space-4); height: var(--space-4); border: 1px solid currentColor; border-radius: 50%; }
-  .home-principle__mark--1 i:nth-child(2) { left: var(--space-2); }
-  .home-principle__mark--1 i:nth-child(3) { display: none; }
-  .home-principle__mark--2 i { width: var(--space-2); height: var(--space-2); top: var(--space-1); border-radius: var(--radius-input); }
-  .home-principle__mark--2 i:nth-child(2) { left: var(--space-stack); }
-  .home-principle__mark--2 i:nth-child(3) { left: var(--space-6); background: var(--muted); }
-  .home-principle__mark--3 i:first-child { width: var(--space-6); height: 1px; border: 0; background: currentColor; top: var(--space-2); }
-  .home-principle__mark--3 i:nth-child(2) { left: var(--space-4); background: var(--sand); }
-  .home-principle__mark--3 i:nth-child(3) { display: none; }
-  .home-proof__grid { display: grid; align-items: center; gap: var(--space-grid); margin-top: var(--space-stack); }
-  .home-proof__voice { margin: 0; padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); }
-  .home-proof__voice blockquote { max-width: 48ch; font-size: var(--type-quote); line-height: 1.5; color: var(--text); }
-  .home-proof__voice figcaption { margin-top: var(--space-stack); display: flex; align-items: center; gap: var(--space-2); font-size: var(--type-caption); color: var(--muted); line-height: 1.5; }
-  .home-proof__voice figcaption picture { display: block; flex: 0 0 var(--space-6); width: var(--space-6); height: var(--space-6); border-radius: 50%; overflow: hidden; }
-  .home-proof__voice figcaption img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
-  .home-proof__credit { display: grid; gap: var(--space-1); }
-  .home-proof__credit > span:first-child { font-weight: 500; color: var(--text); }
+  .home-proof, .home-kate { background: var(--sand); padding-block: var(--space-section); }
+  .home-proof__grid { display: grid; align-items: center; gap: var(--space-grid); }
+  .home-proof .h3-h2 { max-width: 18ch; }
   .home-kate__grid { display: grid; gap: var(--space-grid); align-items: center; }
   .home-kate__portrait { width: 100%; max-width: 10rem; margin: 0; border-radius: var(--radius-card); overflow: hidden; }
   .home-kate__portrait img { display: block; width: 100%; height: auto; }
   .home-kate__copy { min-width: 0; }
   .home-kate__copy .h3-body { max-width: 52ch; }
   .home-kate__meet { margin-top: var(--space-stack); }
-  .home-final-paths { display: grid; gap: var(--space-stack); margin-top: var(--space-section); padding-top: var(--space-stack); border-top: 1px solid var(--line); }
-  .home-final-paths a { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: var(--space-6); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
-  .home-final-paths a:hover { text-decoration: underline; text-underline-offset: var(--space-1); }
-  @media (min-width: 48rem) {
-    .home-principles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .home-final-paths { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-grid); }
-  }
   @media (min-width: 56rem) {
     .home-entry__intro { grid-template-columns: minmax(0, 1.35fr) minmax(0, .85fr); }
     .home-entry__scene { aspect-ratio: 21 / 9; }
     .home-entry__scene img { object-position: 50% 22%; }
-    .home-proof__grid { grid-template-columns: 12rem minmax(0,1fr); gap: var(--space-section); }
+    .home-proof__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-section); }
     .home-kate__grid { grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); }
     .home-kate__portrait { justify-self: center; }
   }

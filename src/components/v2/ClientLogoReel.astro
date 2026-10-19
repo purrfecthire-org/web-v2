@@ -6,7 +6,7 @@ const { id } = Astro.props;
 <div class="client-reel" id={id}>
   <div class="client-reel__window" aria-hidden="true">
     <div class="client-reel__track">
-      {[0, 1].map(() => <div class="client-reel__set">{CLIENT_BRANDS.map(client => <div class="client-reel__tile"><img src={`/clients/neutral/${client.id}.png`} width="480" height="192" alt="" loading="eager" decoding="async" /></div>)}</div>)}
+      {[0, 1].map(() => <div class="client-reel__set">{CLIENT_BRANDS.map(client => <a class="client-reel__tile" href={client.href} target="_blank" rel="noopener noreferrer" tabindex="-1" data-cta={`client-${client.id}`}><img src={`/clients/neutral/${client.id}.png`} width="480" height="192" alt="" loading="eager" decoding="async" /></a>)}</div>)}
     </div>
   </div>
   <button class="client-reel__pause" type="button" aria-pressed="false" aria-label="Pause client logos">Pause logos</button>
@@ -27,10 +27,10 @@ const { id } = Astro.props;
   }
 </script>
 <style>
-  .client-reel { width: 12rem; max-width: 100%; color: var(--text); }
+  .client-reel { width: 100%; max-width: 28rem; color: var(--text); }
   .client-reel__window { height: 10rem; overflow: hidden; mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent); }
   .client-reel__track { animation: clients-vertical 60s linear infinite; }
-  .client-reel__set { display: grid; }
+  .client-reel__set { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .client-reel__tile { height: 4rem; display: flex; align-items: center; justify-content: center; padding: 0; }
   .client-reel__tile img { display: block; width: 10rem; height: 4rem; max-width: 100%; object-fit: contain; }
   .client-reel__pause, .client-reel__all summary { font: 500 var(--type-caption)/1.5 var(--h-sans); color: var(--muted); background: none; border: 0; padding: .5rem 0; cursor: pointer; }

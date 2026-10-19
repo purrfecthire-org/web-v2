@@ -22,6 +22,6 @@ const excerpt = normalizePublicText(role.public_description)
 const description = excerpt.length > 180 ? `${excerpt.slice(0, 177).trimEnd()}…` : excerpt;
 ---
 
-<Shell title={`${displayTitle} | Purrfect Hire`} description={description || `Read the requirements and apply for ${displayTitle} through Purrfect Hire.`} theme="light" journey="talent">
+<Shell title={`${displayTitle} | Purrfect Hire`} description={description || `Read the requirements and apply for ${displayTitle} through Purrfect Hire.`} theme="light" journey="roles">
   <RoleDetailV2 role={role} />
 </Shell>

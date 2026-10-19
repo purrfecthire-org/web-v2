@@ -30,7 +30,7 @@ interface Props {
    * Talent and Offer can be counted separately the day an analytics tool is
    * chosen. Nothing is loaded and nothing is sent from here.
    */
-  journey?: 'home' | 'companies' | 'talent' | 'offer' | 'careers';
+  journey?: 'home' | 'companies' | 'talent' | 'offer' | 'careers' | 'roles';
 }
 
 const { lang = 'en', title, description, canonicalUrl, theme = 'dark', navCta, journey = 'home' } = Astro.props;
@@ -48,6 +48,8 @@ const footerLinks = journey === 'companies' ? [
   { label: 'Founding Engineer', href: '/search/founding-engineer' },
   { label: 'Head of Engineering', href: '/search/head-of-engineering' },
   { label: 'Forward Deployed Engineer', href: '/search/forward-deployed-engineer' },
+] : journey === 'roles' ? [
+  { label: 'Open roles', href: PAGE_ROLES },
 ] : journey === 'talent' || journey === 'offer' ? [
   { label: 'Offer Accelerator', href: '/offer-acceleration' },
   { label: 'Career Compounding', href: PAGE_CAREER_COMPOUNDING },
@@ -57,14 +59,15 @@ const footerLinks = journey === 'companies' ? [
   { label: 'For talent', href: PAGE_TALENT },
 ];
 
-const ctaRel = navCta?.external ? { target: '_blank', rel: 'noopener' } : {};
+const ctaRel = navCta?.external && !navCta.href.startsWith('/') && !navCta.href.startsWith('#')
+  ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 // B2B buttons are Midnight, or white when they sit on Midnight. Offer keeps
 // its own purple on both surfaces.
 const isB2B = journey === 'home' || journey === 'companies' || journey === 'careers';
 const ctaTone = isB2B ? 'h3-btn--ink' : '';
 ---
 
-<Layout title={title} description={description} canonicalUrl={canonicalUrl} lang={lang} legacyFonts={false}>
+<Layout title={title} description={description} canonicalUrl={canonicalUrl} lang={lang} legacyFonts={false} noindex={Astro.url.pathname.replace(/\/$/, '') === '/search-read'}>
   <div class:list={['h3', `h3--${theme}`]} data-journey={journey}>
     <header class="h3-nav">
       <div class="h3-nav__in">
@@ -170,7 +173,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     .h3 { --type-display: 3.5rem; --type-section: 2.5rem; --type-quote: 1.5rem; --space-section: var(--space-8); --space-grid: var(--space-6); --space-hero-top: 7rem; }
   }
   @media (min-width: 90rem) { .h3 { --type-display: 4rem; } }
-  body:has(.h3) { background: #0A0B14; }
+  body:has(.h3) { background: #F7F6F3; }
   :where(.h3) a { color: inherit; text-decoration: none; }
   :where(.h3) :where(p, h1, h2, h3, ul, ol, figure, blockquote) { margin: 0; padding: 0; }
   :where(.h3) :where(ul, ol) { list-style: none; }

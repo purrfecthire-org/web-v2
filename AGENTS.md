@@ -1,89 +1,72 @@
-# Purrfect Hire V2 — Landing Page
+# Purrfect Hire web
 
-## Project Overview
+## Current architecture
 
-Purrfect Hire is a closed-loop hiring engine for YC and a16z startups. This is the marketing landing page — bilingual (EN/ES), built with Astro 6, Tailwind CSS 4, and SCSS.
+The public site is English-only. Active pages use Astro and the shared
+src/components/v2/Shell.astro with Fraunces and Inter. Older Schibsted,
+navy-only and bilingual components are historical and are not the current
+visual reference. Follow the user's current instructions over older references.
 
-## Tech Stack
+- Home presents the brand and routes visitors to Companies or Talent.
+- Companies explains critical hiring and books directly at
+  https://cal.com/purrfect-hire/founders-call.
+- Talent compares Offer Accelerator, Career Compounding and a strategic session.
+- Offer owns its methodology, participant evidence and commercial conditions.
+- Career Compounding supports growth inside the participant's current role.
+- Calibration and Candidate Brief are optional fictional work samples.
+- /search/* describes hiring criteria; /roles/* contains actual vacancies.
+- Applications are free; Roles does not promote paid advisory in its footer.
+- Work with us receives expressions of interest by email, not an ATS form.
 
-- **Framework:** Astro 6.1.6 (SSR, static output)
-- **Styling:** Tailwind CSS 4.2 + SCSS (component-scoped)
-- **Font:** Inter (via @fontsource/inter) — weight 400, 500, 700
-- **i18n:** Astro built-in routing (`/` = EN, `/es/` = ES) + centralized content in `src/content/index.ts`
-- **Node:** >=22.12.0
-- **Package manager:** pnpm
+The product name is Offer Accelerator. Preserve /offer-acceleration and the
+legacy redirects in astro.config.mjs. Keep B2B and B2C narratives separate.
 
-## Architecture
+## Design and evidence
 
-```
-src/
-├── components/     # Astro components (one per section)
-├── content/        # i18n content objects (index.ts)
-├── layouts/        # Layout.astro (meta, fonts, global styles)
-├── pages/          # index.astro (EN) + es/index.astro (ES)
-└── styles/         # tailwind.css, global.scss, typography.scss, breakpoints.scss
-public/
-├── logos/          # Brand logo
-└── carrousel/     # Client logo SVGs/PNGs
-```
+Use Shell tokens: Ivory canvas, Midnight text/contrast, small Stone surfaces
+and contained purple actions. Prefer editorial rows and photography to repeated
+card grids. Do not introduce ad hoc font or spacing values. Display sizes are
+40/56/64px; sections 30/40px; body 17px; UI 15px. Containers are 80rem with
+24/48px gutters; legal content is intentionally narrower.
 
-## Key Commands
+Keep the original black Kate portrait once in Home, at most 160px wide, without
+retouching its files. The full linked client collection lives in Home, in neutral
+ink, moving vertically with pause and reduced-motion support. Client history
+does not mean that every company is hiring now.
 
-```sh
-pnpm dev          # Dev server at localhost:4321
-pnpm build        # Production build to ./dist/
-pnpm preview      # Preview production build
-```
+Never invent clients, outcomes, salary uplifts, endorsements or testimonials.
+Do not reintroduce 160+/80% claims or unsupported Addi headcounts. Preserve
+attribution, confidentiality, fictional-example labels and source dates.
+Public prose has no em or en dashes. Normalize incoming role text through the
+existing Markdown utilities without changing URLs or code literals.
 
-## Content System
+## Conditions and intake
 
-All text lives in `src/content/index.ts`. Components receive content via props — no hardcoded strings. The `getContent(lang)` function returns the correct language object.
+- OA: USD 2,000, one diagnostic and seven sessions with Kate; follow-up per
+  process while actively executing the agreed plan. No job, salary, unlimited-call
+  or 24/7 guarantee.
+- Career Compounding: USD 5,000; duration and scope agreed before purchase.
+  Six months and nine sessions are not confirmed terms.
+- Strategic session: USD 300, requested by email.
+- B2B has no public numeric prices or fee percentages.
+- Contact: go@purrfecthire.com.
+- Advisory provides no preference in client searches. Participation and private
+  notes remain confidential. Applying to vacancies is free.
 
-## Design System
+The public ATS API is https://ats-backend-mu.vercel.app. Roles and OA inquiry
+use existing contracts. Do not claim B2B, internal applications, Slack, Notion or
+analytics integrations without evidence. Receipt screens require a validated
+persisted receipt, not a generic 2xx. Preserve X-Request-Id, endpoint validation
+and non-PII error reporting. Keep secrets out of code and PUBLIC_* variables.
 
-See `DESIGN.md` for the complete design specification. Key points (Kate's 2026 system — single navy ink, white canvas, no accent):
-- Font: Schibsted Grotesk (weights 400/500 only; sentence case)
-- Background: `#FFFFFF` flat white for all sections (no gradients, no auroras); `#FCFCFB` for optional alternating sections
-- Cards: white with `rgba(0,0,0,0.08)` hairline border, 12px radius, **no shadows** (use borders for elevation)
-- Buttons: 12px radius (not pills), navy bg `#29285F` with darker-navy hover `#1E1D47`
-- Brand ink: `#29285F` navy — the single brand color, used sparingly. The old electric-blue accent `#3C2BDC` is removed.
-- One dark section max per page: navy bg `#29285F` with cream text `#F3EFE6`
-- Tokens live in `src/styles/tailwind.css` (`@theme`) + `src/styles/global.scss` (`:root` bare-name aliases: `--ink`, `--bg`, `--bg-soft`, `--line`, `--dark`, `--on-dark`, `--radius`)
+## Verification and publication
 
-## Page Sections (in order)
+Use pnpm and Node >=22.12. Build with the current public API so vacancy detail
+pages are generated. Do not publish an empty snapshot after an API failure.
+Run the existing tests in tests/*.test.ts. Check internal links, anchors,
+redirects and assets. Inspect complete pages at 375, 768, 1280 and 1920px.
+Respect reduced motion, keyboard focus and the original portrait assets.
+Do not send real applications or book meetings as routine QA.
 
-1. **Nav** — Sticky, logo left, links center, language toggle + CTA right
-2. **Hero** — H1 headline, subheadline, metrics (plain text + dividers), dual CTAs, trust logos
-3. **Why 2026 is Different** — Positioning against AI tools (Prism, Contra, Metaview)
-4. **Two Sides, One Engine** — Dual cards: For Founders / For Talent
-5. **Offer Acceleration** — 8-session coaching program for talent (with application form)
-6. **The Engine** — 4-step process (01-04) with pills
-7. **Why Culture Fit** — Stats + a16z/YC quotes in cards
-8. **Testimonials** — Featured + grid of 3 + candidate testimonial
-9. **Active Searches** — Role cards (anonymous companies)
-10. **Final CTA** — Dual buttons: hire / get placed
-11. **Footer** — Logo, links, copyright
-
-## Performance
-
-- **Animations must use `client:visible`** — never load animation libraries (GSAP, Lottie, Framer Motion) eagerly. Wrap them in Astro islands with `client:visible` so they only load when the section scrolls into view. This keeps LCP fast, especially on mobile.
-- **Test every screen on all breakpoints before reporting it done** — mobile (375px), tablet (768px), desktop (1280px), and wide/2K (1920px+). Verify that animations, gradients, and layout all render correctly and perform smoothly on each.
-- **Prefer CSS animations over JS animations** — CSS transforms and transitions are GPU-accelerated and don't block the main thread. Only reach for JS-based animation libraries when CSS can't achieve the effect.
-- **Lazy-load heavy assets** — images below the fold should use `loading="lazy"`. SVGs in carousels should be inlined only if small; otherwise use `<img>`.
-
-## Conventions
-
-- BEM CSS naming inside component `<style>` tags
-- SCSS mixins for responsive breakpoints (`@include max-sm`, `@include max-md`, etc.)
-- CSS custom properties for design tokens
-- Scroll-reveal animations use the shared `.reveal` class (+ optional `.reveal-delay-1/2/3`) defined in `src/styles/global.scss`, toggled by a **single** IntersectionObserver in `Layout.astro`. Do not add per-component observers — just add the `.reveal` class to the element.
-
-## Logging & error tracking
-
-- A tiny client-side error reporter lives in `src/layouts/Layout.astro` (inline `<script>`, same pattern as the shared scroll-reveal observer). It listens for `window` `error` / `unhandledrejection` events and POSTs them to `{PUBLIC_LOG_ENDPOINT}/logs/client` (ATS backend contract: `{ entries: [{ level, message, source: "portal", context?, url?, occurred_at? }] }`, max 20 entries/request, fire-and-forget via `sendBeacon` with `fetch keepalive` fallback).
-- **Gated by `PUBLIC_LOG_ENDPOINT`** (see `.env.example`): when unset/empty — the default, since the backend is not publicly deployed yet — the reporter no-ops and the site makes **zero** network calls. Throttled to 5 reports per page load, dedups identical messages, fully wrapped in try/catch so it can never break the page.
-- **Any FUTURE network call added to this site** (e.g. when the offer-acceleration apply form in `src/pages/offer-acceleration/apply.astro` gets wired to a real endpoint) must: (a) send an `X-Request-Id` UUID header, and (b) report failures through the shared reporter / `logs/client` endpoint with `source: "portal"`.
-- **Never log or transmit form PII in error reports** — only error metadata (message, stack, url, userAgent). No cookies. Keep the site fully static: no adapters, no SSR.
-
-## Considerations
-- When a new page is created, always update the sitemap and OpenA Graph (OA)
+When publication is authorized, use a PR and the existing GitHub Pages workflow.
+Preserve the previous deployment for recovery.

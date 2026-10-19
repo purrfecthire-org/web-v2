@@ -1,10 +1,4 @@
 ---
-// ── Offer Accelerator ────────────────────────────────────────────────────
-// Product page. Same system as Home and For Talent: Ivory as the main
-// surface, Midnight for the hero and one weighted moment, Stone for the
-// investment block, purple only for action and the single brand dot.
-// Every apply button opens the same destination, and the line under the
-// button says what happens when it does.
 import Shell from '../v2/Shell.astro';
 import ClientPortrait from '../v2/ClientPortrait.astro';
 import ParticipantVoices from '../v2/ParticipantVoices.astro';
@@ -17,369 +11,172 @@ const { lang = 'en' } = Astro.props;
 const t = getOfferV2(lang);
 ---
 
-<Shell
-  lang={lang}
-  title={t.meta.title}
-  description={t.meta.description}
-  theme="dark"
-  navCta={{ label: t.hero.cta, href: APPLY_OFFER, external: true }}
-  journey="offer"
->
-
-      <!-- Hero -->
-      <section class="h3-hero">
-        <div class="h3-wrap h3-hero__grid">
-          <div class="h3-hero__copy">
-            <p class="h3-eyebrow h3-eyebrow--on-dark">{t.hero.eyebrow}</p>
-            <h1 class="h3-hero__h1">{t.hero.headline}</h1>
-            <p class="h3-hero__sub">{t.hero.sub}</p>
-            <div class="oa-hero__package">
-              <p class="oa-hero__price">{t.investment.price}</p>
-              <p>{t.hero.package}</p>
-            </div>
-            <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-hero__cta">
-              {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
-          <figure class="h3-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
-<picture>
-              <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/offer-mobile.webp" />
-              <source media="(max-width: 55.99rem)" srcset="/photos/web/offer-mobile.png" />
-              <source type="image/webp" srcset="/photos/web/offer-desktop.webp" />
-              <img src="/photos/web/offer-desktop.png" alt="Two people having a conversation at a desk." width="1200" height="750" decoding="async" fetchpriority="high" />
-            </picture>
-            <span class="h3-hero__scrim" aria-hidden="true"></span>
-          </figure>
+<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light"
+  navCta={{ label: t.hero.cta, href: APPLY_OFFER }} journey="offer">
+  <section class="h3-hero">
+    <div class="h3-wrap h3-hero__grid">
+      <div class="h3-hero__copy">
+        <p class="h3-eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="h3-hero__h1">{t.hero.headline}</h1>
+        <p class="h3-hero__sub">{t.hero.sub}</p>
+        <p class="oa-hero__fit">{t.fit.body}</p>
+        <div class="oa-hero__package">
+          <p class="oa-hero__price">{t.investment.price}</p>
+          <p>{t.hero.package}</p>
         </div>
-      </section>
+        <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+      </div>
+      <figure class="h3-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
+        <picture>
+          <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/offer-mobile.webp" />
+          <source media="(max-width: 55.99rem)" srcset="/photos/web/offer-mobile.png" />
+          <source type="image/webp" srcset="/photos/web/offer-desktop.webp" />
+          <img src="/photos/web/offer-desktop.png" alt="Two people having a conversation at a desk." width="1200" height="750" decoding="async" fetchpriority="high" />
+        </picture>
+      </figure>
+    </div>
+  </section>
 
-      <!-- The real question + method + access + firewall, one Sand surface -->
-      <section class="oa-main">
-        <div class="h3-wrap">
-          <div class="oa-question">
-            <div>
-              <p class="h3-eyebrow">{t.question.eyebrow}</p>
-              <h2 class="h3-h2">
-                {t.question.headline}<span class="h3-dot--end" aria-hidden="true"></span>
-              </h2>
-            </div>
-            <div>
-              <p class="oa-question__body">{t.question.body}</p>
-              <p class="h3-body oa-question__who">{t.question.who}</p>
-            </div>
+  <section class="oa-work" aria-labelledby="oa-work-title">
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.deliverables.eyebrow}</p>
+      <h2 class="h3-h2" id="oa-work-title">{t.deliverables.headline}</h2>
+      <div class="oa-work__intro">
+        <p class="h3-body">{t.question.body}</p>
+        <p class="h3-body">{t.deliverables.body}</p>
+      </div>
+      <ol class="oa-outputs">
+        {t.deliverables.items.map((item, index) => (
+          <li class="oa-output">
+            <span class="oa-output__id" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="oa-work__access">
+        <h3>{t.access.headline}</h3>
+        <p class="h3-body">{t.access.body}</p>
+        <p class="oa-work__limit">{t.access.limit}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="oa-proof" id="voices" aria-labelledby="oa-proof-title">
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.proof.eyebrow}</p>
+      <h2 class="h3-h2" id="oa-proof-title">{t.proof.headline}</h2>
+      <figure class="oa-quote">
+        <ClientPortrait alt={t.proof.name} shape="circle" />
+        <div class="oa-quote__copy">
+          <blockquote>“{t.proof.quote}”</blockquote>
+          <figcaption>
+            <strong>{t.proof.name}</strong>
+            <span>{t.proof.role}</span>
+            <span>Translated from Spanish</span>
+          </figcaption>
+        </div>
+      </figure>
+      <ParticipantVoices />
+    </div>
+  </section>
+
+  <section class="oa-scope" aria-labelledby="oa-scope-title">
+    <div class="h3-wrap">
+      <div class="oa-scope__grid">
+        <div>
+          <p class="h3-eyebrow">{t.includes.eyebrow}</p>
+          <h2 class="h3-h2" id="oa-scope-title">{t.includes.headline}</h2>
+          <p class="oa-price">{t.investment.price}</p>
+        </div>
+        <div>
+          <ul class="oa-inclusions">{t.includes.items.map((item) => <li>{item}</li>)}</ul>
+          <div class="oa-commitment">
+            <h3>{t.fit.commitmentTitle}</h3>
+            <p class="h3-body">{t.fit.commitment}</p>
           </div>
-
-          <div class="oa-deliverables" aria-labelledby="oa-deliverables-title">
-            <p class="h3-eyebrow">{t.deliverables.eyebrow}</p>
-            <h2 class="h3-h2" id="oa-deliverables-title">{t.deliverables.headline}</h2>
-            <p class="h3-body oa-deliverables__intro">{t.deliverables.body}</p>
-            <ul class="oa-deliverables__grid">
-              {t.deliverables.items.map((item) => (
-                <li class="oa-deliverable">
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div class="oa-fit">
-            <div>
-              <p class="h3-eyebrow">{t.fit.eyebrow}</p>
-              <h2 class="h3-h2">{t.fit.headline}</h2>
-              <p class="h3-body oa-fit__body">{t.fit.body}</p>
-            </div>
-            <div class="oa-fit__commitment">
-              <h3>{t.fit.commitmentTitle}</h3>
-              <p class="h3-body">{t.fit.commitment}</p>
-            </div>
-          </div>
-
-          <div class="oa-method">
-            <p class="h3-eyebrow">{t.method.eyebrow}</p>
-            <h2 class="h3-h2 oa-method__h2">{t.method.headline}</h2>
-            <ol class="oa-steps">
-              {t.method.steps.map((s) => (
-                <li class="oa-step">
-                  <span class="oa-step__id">{s.id}</span>
-                  <div>
-                    <h3 class="oa-step__title">{s.title}</h3>
-                    <p class="oa-step__body">{s.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div class="oa-access">
-            <h2 class="oa-access__h2">{t.access.headline}</h2>
-            <p class="h3-body oa-access__body">{t.access.body}</p>
-            <p class="oa-access__limit">{t.access.limit}</p>
-          </div>
-
-          <aside class="fw" aria-labelledby="oa-fw">
-            <h2 class="fw__h" id="oa-fw">{t.firewall.headline}</h2>
-            <p class="fw__lead">{t.firewall.lead}</p>
-            <details class="fw__more">
-              <summary>{t.firewall.more}</summary>
-              <div>{t.firewall.body.map((b) => <p>{b}</p>)}</div>
+        </div>
+      </div>
+      <aside class="oa-firewall" aria-labelledby="oa-firewall-title">
+        <h3 id="oa-firewall-title">{t.firewall.headline}</h3>
+        <p class="h3-body">{t.firewall.lead}</p>
+        <details class="oa-detail">
+          <summary>{t.firewall.more}</summary>
+          <div>{t.firewall.body.map((paragraph) => <p>{paragraph}</p>)}</div>
+        </details>
+      </aside>
+      <div class="oa-questions">
+        <p class="h3-eyebrow">{t.faq.eyebrow}</p>
+        <div class="oa-questions__list">
+          {t.faq.items.map((item) => (
+            <details class="oa-detail">
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
             </details>
-          </aside>
+          ))}
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <!-- What is included -->
-      <section class="oa-includes">
-        <div class="h3-wrap oa-includes__grid">
-          <div>
-            <p class="h3-eyebrow">{t.includes.eyebrow}</p>
-            <h2 class="h3-h2">{t.includes.headline}</h2>
-            <p class="oa-includes__closing">{t.includes.closing}</p>
-          </div>
-          <ul class="oa-list">
-            {t.includes.items.map((i) => <li>{i}</li>)}
-          </ul>
-        </div>
-      </section>
-
-      <!-- Where our read comes from (the one weighted dark moment) -->
-      <section class="oa-behind">
-        <div class="h3-wrap oa-behind__grid">
-          <div>
-            <p class="h3-eyebrow">{t.behind.eyebrow}</p>
-            <h2 class="h3-h2">{t.behind.headline}</h2>
-          </div>
-          <div class="oa-behind__body">
-            {t.behind.body.map((b) => <p>{b}</p>)}
-          </div>
-        </div>
-      </section>
-
-      <!-- Proof -->
-      <section class="oa-proof">
-        <div class="h3-wrap">
-          <p class="h3-eyebrow">{t.proof.eyebrow}</p>
-          <h2 class="h3-h2 oa-proof__h2">{t.proof.headline}</h2>
-          <figure class="oa-quote">
-            <div class="oa-quote__photo">
-              <ClientPortrait alt={t.proof.name} />
-            </div>
-            <blockquote>“{t.proof.quote}”</blockquote>
-            <figcaption>
-              <span class="oa-quote__name">{t.proof.name}</span>
-              <span class="oa-quote__role">{t.proof.role}</span>
-              <span class="oa-quote__role">Translated from Spanish</span>
-            </figcaption>
-          </figure>
-          <ParticipantVoices />
-        </div>
-      </section>
-
-      <!-- Investment -->
-      <section class="oa-investment">
-        <div class="h3-wrap oa-investment__grid">
-          <div>
-            <p class="h3-eyebrow">{t.investment.eyebrow}</p>
-            <h2 class="h3-h2">{t.investment.headline}</h2>
-          </div>
-          <div>
-            <p class="oa-price">{t.investment.price}</p>
-            <p class="h3-body oa-investment__next">{t.investment.next}</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Questions that help the reader decide -->
-      <section class="oa-faq" aria-labelledby="oa-faq-title">
-        <div class="h3-wrap oa-faq__grid">
-          <div>
-            <p class="h3-eyebrow">{t.faq.eyebrow}</p>
-            <h2 class="h3-h2" id="oa-faq-title">{t.faq.headline}</h2>
-          </div>
-          <div class="oa-faq__items">
-            {t.faq.items.map((item) => (
-              <details class="oa-faq__item">
-                <summary>{item.question}</summary>
-                <p>{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <!-- Apply -->
-      <section class="oa-apply">
-        <div class="h3-wrap">
-          <h2 class="h3-h2 oa-apply__h2">{t.apply.headline}</h2>
-          <p class="h3-body oa-apply__body">{t.apply.body}</p>
-          <ol class="oa-apply__steps">
-            {t.apply.steps.map((step, index) => (
-              <li>
-                <span class="oa-apply__step-id" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </li>
-            ))}
-          </ol>
-          <p class="oa-apply__price">{t.investment.price}</p>
-          <a href={APPLY_OFFER} data-cta="offer-close-apply" class="h3-btn oa-apply__cta">
-            {t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-          </a>
-          <p class="oa-apply__how">{t.apply.howNote}</p>
-          <p class="oa-editorial">{t.editorial}</p>
-        </div>
-      </section>
-
-    </Shell>
+  <section class="oa-apply" aria-labelledby="oa-apply-title">
+    <div class="h3-wrap">
+      <h2 class="h3-h2" id="oa-apply-title">{t.apply.headline}</h2>
+      <p class="h3-body">{t.apply.body}</p>
+      <a href={APPLY_OFFER} data-cta="offer-close-apply" class="h3-btn oa-apply__cta">{t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+      <p class="oa-apply__how">{t.apply.howNote}</p>
+    </div>
+  </section>
+</Shell>
 
 <style lang="scss" is:global>
-  .oa-hero__package { margin-top: 2rem; max-width: 34rem; display: grid; gap: 0.5rem; }
-  .oa-hero__package > p { font-size: var(--type-ui); line-height: 1.5; color: var(--on-dark-muted); }
-  .oa-hero__package > .oa-hero__price { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; color: var(--on-dark); font-family: var(--h-sans); }
-  .oa-hero__cta { margin-top: 1.5rem; }
-  .oa-main { background: var(--sand); padding: var(--space-section) 0; }
-  @media (min-width: 56rem) { .oa-main { padding: var(--space-section) 0; } }
-  .oa-question { display: grid; gap: 2rem; align-items: start; }
-  @media (min-width: 56rem) { .oa-question { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
-  .oa-question__body { font-size: var(--type-lead); line-height: 1.6; color: var(--text); max-width: 32rem; }
-  @media (min-width: 56rem) { .oa-question__body { padding-top: 2rem; } }
-  .oa-question__who { margin-top: 1.5rem; }
-
-  .oa-deliverables { margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--line); }
-  .oa-deliverables .h3-h2 { max-width: 28ch; }
-  .oa-deliverables__intro { margin-top: 1.5rem; max-width: 43rem; }
-  .oa-deliverables__grid { margin-top: 2rem; display: grid; gap: 0 2rem; }
-  .oa-deliverable { border-top: 1px solid var(--line); padding: 1.5rem 0; }
-  .oa-deliverable h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .oa-deliverable p { margin-top: 0.5rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  @media (min-width: 40rem) { .oa-deliverables__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 72rem) { .oa-deliverables__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 3rem; } }
-
-  .oa-fit { margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--line); display: grid; gap: 2rem; align-items: start; }
-  .oa-fit__body { margin-top: 1.5rem; }
-  .oa-fit__commitment h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .oa-fit__commitment p { margin-top: 0.5rem; }
+  .oa-hero__fit { margin-top: var(--space-3); max-width: 34rem; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .oa-hero__package { margin-top: var(--space-4); max-width: 34rem; display: grid; gap: var(--space-1); }
+  .oa-hero__package > p { font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .oa-hero__package > .oa-hero__price { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; color: var(--text); }
+  .oa-hero__cta { margin-top: var(--space-3); }
+  .oa-work, .oa-proof, .oa-scope, .oa-apply { padding-block: var(--space-section); background: var(--sand); }
+  .oa-work, .oa-scope, .oa-apply { border-top: 1px solid var(--line); }
+  .oa-work .h3-h2, .oa-proof .h3-h2, .oa-scope .h3-h2, .oa-apply .h3-h2 { max-width: 28ch; }
+  .oa-work__intro { margin-top: var(--space-3); max-width: 44rem; }
+  .oa-outputs { margin-top: var(--space-4); }
+  .oa-output { display: grid; min-width: 0; gap: var(--space-2); padding-block: var(--space-3); border-top: 1px solid var(--line); }
+  .oa-output__id { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; font-variant-numeric: tabular-nums; }
+  .oa-output h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .oa-output p { max-width: 34rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .oa-work__access { margin-top: var(--space-4); max-width: 44rem; }
+  .oa-work__access .h3-body { margin-top: var(--space-2); }
+  .oa-work__limit { margin-top: var(--space-2); font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .oa-proof { scroll-margin-top: var(--space-hero-top); }
+  .oa-quote { margin-top: var(--space-4); display: grid; gap: var(--space-grid); align-items: start; }
+  .oa-quote__copy { min-width: 0; }
+  .oa-quote blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.5; max-width: 46ch; font-weight: 400; }
+  .oa-quote figcaption { margin-top: var(--space-3); display: grid; gap: var(--space-1); font-size: var(--type-caption); line-height: 1.5; }
+  .oa-quote figcaption strong { font-weight: 500; }
+  .oa-quote figcaption span { color: var(--muted); }
+  .oa-scope__grid { display: grid; gap: var(--space-grid); align-items: start; }
+  .oa-price { margin-top: var(--space-4); font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; }
+  .oa-inclusions li { padding-block: var(--space-2); border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; }
+  .oa-commitment { margin-top: var(--space-4); }
+  .oa-commitment .h3-body { margin-top: var(--space-2); }
+  .oa-firewall { margin-top: var(--space-6); max-width: 44rem; }
+  .oa-firewall > .h3-body { margin-top: var(--space-2); }
+  .oa-firewall .oa-detail { margin-top: var(--space-2); }
+  .oa-questions { display: grid; gap: var(--space-3); margin-top: var(--space-6); }
+  .oa-detail { border-bottom: 1px solid var(--line); }
+  .oa-detail summary { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); padding-block: var(--space-3); cursor: pointer; list-style: none; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
+  .oa-detail summary::-webkit-details-marker { display: none; }
+  .oa-detail summary::after { content: '+'; flex-shrink: 0; color: var(--purple); }
+  .oa-detail[open] summary::after { content: '×'; }
+  .oa-detail > p, .oa-detail > div { padding-bottom: var(--space-3); max-width: 44rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .oa-detail > div { display: grid; gap: var(--space-2); }
+  .oa-apply .h3-body { margin-top: var(--space-3); }
+  .oa-apply__cta { margin-top: var(--space-4); }
+  .oa-apply__how { margin-top: var(--space-2); max-width: 34rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   @media (min-width: 56rem) {
-    .oa-fit { grid-template-columns: 1.05fr 1fr; gap: 4rem; }
-    .oa-fit__commitment { padding-top: 2rem; }
+    .oa-output { grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1.5fr); gap: var(--space-grid); align-items: baseline; }
+    .oa-quote { grid-template-columns: 8rem minmax(0, 1fr); }
+    .oa-scope__grid { grid-template-columns: 1fr 1.25fr; }
+    .oa-questions { grid-template-columns: 1fr 1.25fr; gap: var(--space-grid); }
   }
-
-  .oa-method { margin-top: 4rem; }
-  @media (min-width: 56rem) { .oa-method { margin-top: 7rem; } }
-  .oa-method__h2 { max-width: 30ch; }
-  .oa-steps { margin-top: 3rem; display: grid; gap: 0 4rem; border-top: 1px solid var(--line); }
-  @media (min-width: 56rem) { .oa-steps { grid-template-columns: 1fr 1fr; } }
-  .oa-step { display: grid; grid-template-columns: 2.75rem 1fr; gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
-  .oa-step__id { font-size: var(--type-caption); line-height: 1.5; font-weight: 500; color: var(--muted); padding-top: 0.25rem; }
-  .oa-step__title { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .oa-step__body { margin-top: 0.5rem; color: var(--muted); }
-
-  .oa-access { margin-top: 4rem; max-width: 46rem; }
-  .oa-access__h2 { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; letter-spacing: -0.005em; font-family: var(--h-sans); }
-  .oa-access__body { margin-top: 1rem; max-width: 44rem; }
-  .oa-access__limit { margin-top: 1rem; font-size: var(--type-body); line-height: 1.7; font-weight: 500; }
-
-  .fw { margin-top: 4rem; max-width: 44rem; padding-top: 2rem; border-top: 1px solid var(--line); }
-  .fw__h { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; letter-spacing: -0.005em; font-family: var(--h-sans); }
-  .fw__lead { margin-top: 0.5rem; font-size: var(--type-body); line-height: 1.7; color: var(--text); }
-  .fw__more { margin-top: 1rem; }
-  .fw__more > summary {
-    list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
-    font-size: var(--type-ui); line-height: 1.5; font-weight: 500; color: var(--text);
-    border-bottom: 1px solid var(--line); padding-bottom: 2px;
-  }
-  .fw__more > summary::-webkit-details-marker { display: none; }
-  .fw__more > summary::after { content: '+'; font-size: var(--type-body); line-height: 1.7; color: var(--purple); }
-  .fw__more[open] > summary::after { content: '×'; }
-  .fw__more > summary:hover { border-color: var(--text); }
-  .fw__more > div { margin-top: 1rem; display: grid; gap: 0.75rem; }
-  .fw__more p { font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-
-  .oa-includes { background: var(--sand); border-top: 1px solid var(--line); padding: var(--space-section) 0; }
-  @media (min-width: 56rem) { .oa-includes { padding: var(--space-section) 0; } }
-  .oa-includes__grid { display: grid; gap: 3rem; align-items: start; }
-  @media (min-width: 56rem) { .oa-includes__grid { grid-template-columns: 1fr 1.05fr; gap: 4rem; } }
-  .oa-includes__closing { margin-top: 1.5rem; font-size: var(--type-lead); line-height: 1.6; max-width: 28rem; }
-  .oa-list { border-top: 1px solid var(--line); }
-  .oa-list li { padding: 1rem 0; border-bottom: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; }
-
-  .oa-behind { background: var(--sand); color: var(--text); padding: var(--space-section) 0; }
-  @media (min-width: 56rem) { .oa-behind { padding: var(--space-section) 0; } }
-  .oa-behind__grid { display: grid; gap: 3rem; align-items: start; }
-  @media (min-width: 56rem) { .oa-behind__grid { grid-template-columns: 1fr 1.1fr; gap: 4rem; } }
-  .oa-behind__body { display: grid; gap: 1.5rem; }
-  .oa-behind__body p { font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 36rem; }
-
-  .oa-proof { background: var(--sand); padding: var(--space-section) 0; }
-  @media (min-width: 56rem) { .oa-proof { padding: var(--space-section) 0; } }
-  .oa-proof__h2 { max-width: 20ch; }
-  .oa-quote { margin-top: 3rem; display: grid; gap: 1.5rem; align-items: start; }
-  .oa-quote__photo { aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--radius-card); background: var(--stone); margin-bottom: 0.5rem; }
-  .oa-quote__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .oa-quote blockquote {
-    font-family: var(--h-sans); font-size: var(--type-quote);
-    line-height: 1.5; max-width: 34ch; font-weight: 400; }
-  .oa-quote figcaption { display: flex; flex-direction: column; gap: 0.25rem; font-size: var(--type-caption); line-height: 1.5; }
-  .oa-quote__name { font-weight: 500; }
-  .oa-quote__role { color: var(--muted); }
-  @media (min-width: 56rem) {
-    .oa-quote { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); column-gap: 3rem; row-gap: 1.5rem; }
-    .oa-quote__photo { grid-row: 1 / span 2; margin-bottom: 0; }
-    .oa-quote blockquote, .oa-quote figcaption { grid-column: 2; }
-  }
-
-  .oa-investment { background: var(--sand); padding: var(--space-section) 0; }
-  @media (min-width: 56rem) { .oa-investment { padding: var(--space-section) 0; } }
-  .oa-investment__grid { display: grid; gap: 2rem; align-items: start; }
-  @media (min-width: 56rem) { .oa-investment__grid { grid-template-columns: 1.1fr 1fr; gap: 4rem; } }
-  .oa-price {
-    font-family: var(--h-sans); font-size: var(--type-section);
-    line-height: 1.12; letter-spacing: -0.02em; font-weight: 500; }
-  @media (min-width: 56rem) { .oa-price { padding-top: 1.5rem; } }
-  .oa-investment__next { margin-top: 1.5rem; }
-
-  .oa-faq { background: var(--sand); padding: 4rem 0 0; }
-  .oa-faq__grid { display: grid; gap: 2rem; align-items: start; }
-  .oa-faq__items { border-top: 1px solid var(--line); }
-  .oa-faq__item { border-bottom: 1px solid var(--line); }
-  .oa-faq__item > summary { padding: 1.5rem 0; display: flex; justify-content: space-between; gap: 1.5rem; cursor: pointer; list-style: none; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
-  .oa-faq__item > summary::-webkit-details-marker { display: none; }
-  .oa-faq__item > summary::after { content: '+'; flex: 0 0 auto; color: var(--purple); }
-  .oa-faq__item[open] > summary::after { content: '−'; }
-  .oa-faq__item > p { margin: 0 0 1.5rem; max-width: 44rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .oa-faq__item > summary:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; }
-  @media (min-width: 56rem) { .oa-faq { padding-top: var(--space-section); } .oa-faq__grid { grid-template-columns: 0.8fr 1.2fr; gap: 4rem; } }
-
-  .oa-apply { background: var(--sand); padding: var(--space-section) 0; }
-  @media (min-width: 56rem) { .oa-apply { padding: var(--space-section) 0; } }
-  .oa-apply__h2 { max-width: 24ch; }
-  .oa-apply__body { margin-top: 1.5rem; }
-  .oa-apply__steps { margin-top: 3rem; display: grid; gap: 1.5rem 2rem; }
-  .oa-apply__steps li { padding-top: 1.5rem; border-top: 1px solid var(--line); }
-  .oa-apply__step-id { display: block; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; margin-bottom: 0.5rem; }
-  .oa-apply__steps h3 { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; }
-  .oa-apply__steps p { margin-top: 0.5rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 32rem; }
-  @media (min-width: 56rem) { .oa-apply__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .oa-apply__price { margin-top: 2rem; font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; }
-  .oa-apply__cta { margin-top: 1rem; }
-  /* Says what the button does before it is pressed. */
-  .oa-apply__how {
-    margin-top: 1rem; max-width: 30rem;
-    font-size: var(--type-caption); line-height: 1.5; color: var(--muted);
-  }
-  .oa-editorial {
-    margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--line);
-    font-family: var(--h-sans); font-size: var(--type-lead);
-    line-height: 1.6; color: var(--muted);
-  }
-
-  .h3-footer {
-    background: var(--midnight); color: var(--on-dark-muted);
-    border-top: 1px solid var(--line-dark); padding: 2rem 0 3rem; font-size: var(--type-caption); line-height: 1.5;
-  }
-  .h3-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
-  .h3-footer nav { display: flex; flex-wrap: wrap; gap: 1.5rem; }
-  .h3-footer a:hover { color: var(--on-dark); }
-
-  @media (prefers-reduced-motion: reduce) { .h3 * { transition: none !important; } }
 </style>

@@ -43,6 +43,7 @@ export const searchRoleShared = {
   selectedHref: '/for-companies#selected-searches',
   relatedLabel: 'Other roles you may be defining',
   pageNote: 'This page describes a search approach. Find current vacancies under Open roles.',
+  openRolesLabel: 'See open roles',
 };
 
 export const searchRoles: SearchRoleContent[] = [

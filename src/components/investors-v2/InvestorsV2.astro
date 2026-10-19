@@ -18,38 +18,18 @@ const t = getInvestorsV2(lang);
 >
   <div class="iv-page" data-audience="investors">
     <section class="h3-hero iv-hero" aria-labelledby="iv-title">
-      <div class="h3-wrap iv-hero__grid">
-        <div>
-          <p class="h3-eyebrow">{t.hero.eyebrow}</p>
-          <h1 class="h3-hero__h1 iv-hero__title" id="iv-title">{t.hero.headline}</h1>
-          <p class="h3-hero__sub">{t.hero.body}</p>
-          <a href={INVESTORS_SEARCH_READ} data-cta="investors-hero-search-read" class="h3-btn h3-btn--ink iv-hero__cta">
-            {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-          </a>
-          <p class="iv-note">{t.hero.note}</p>
-        </div>
-        <aside class="iv-prompt" aria-labelledby="iv-prompt-title">
-          <p class="h3-eyebrow">{t.hero.prompt.label}</p>
-          <h2 class="iv-prompt__title" id="iv-prompt-title">{t.hero.prompt.title}</h2>
-          <p class="iv-prompt__body">{t.hero.prompt.body}</p>
-          <ul class="iv-prompt__list">
-            {t.hero.prompt.items.map((item) => <li><span class="iv-dot" aria-hidden="true"></span>{item}</li>)}
-          </ul>
-        </aside>
+      <div class="h3-wrap">
+        <p class="h3-eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="h3-hero__h1 iv-hero__title" id="iv-title">{t.hero.headline}</h1>
+        <p class="h3-hero__sub iv-hero__body">{t.hero.body}</p>
+        <a href={INVESTORS_SEARCH_READ} data-cta="investors-hero-search-read" class="h3-btn h3-btn--ink iv-hero__cta">
+          {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="iv-note">{t.hero.note}</p>
       </div>
     </section>
 
-    <section class="iv-audience iv-section" aria-labelledby="iv-audience-title">
-      <div class="h3-wrap iv-split">
-        <div>
-          <p class="h3-eyebrow">{t.audience.eyebrow}</p>
-          <h2 class="h3-h2 iv-section__title" id="iv-audience-title">{t.audience.headline}</h2>
-        </div>
-        <p class="h3-body iv-audience__body">{t.audience.body}</p>
-      </div>
-    </section>
-
-    <section class="iv-support iv-section" aria-labelledby="iv-support-title">
+    <section class="iv-section iv-support" aria-labelledby="iv-support-title">
       <div class="h3-wrap">
         <p class="h3-eyebrow">{t.support.eyebrow}</p>
         <h2 class="h3-h2 iv-wide-title" id="iv-support-title">{t.support.headline}</h2>
@@ -57,72 +37,30 @@ const t = getInvestorsV2(lang);
           {t.support.areas.map((area) => (
             <li class="iv-area">
               <span class="iv-area__id" aria-hidden="true">{area.id}</span>
-              <h3>{area.title}</h3>
-              <p class="iv-area__body">{area.body}</p>
-              <div class="iv-area__outcome"><p class="iv-area__label">{area.outcomeLabel}</p><p>{area.outcome}</p></div>
+              <div><h3>{area.title}</h3><p>{area.body}</p></div>
+              <div class="iv-area__outcome">
+                <p class="iv-area__label">{area.outcomeLabel}</p>
+                <p>{area.outcome}</p>
+                {area.id === '03' && <details class="iv-format">
+                  <summary>{t.officeHours.detailLabel}<span aria-hidden="true">+</span></summary>
+                  <ul>{t.officeHours.points.map((point) => <li>{point}</li>)}</ul>
+                  <p class="iv-note">{t.officeHours.note}</p>
+                </details>}
+              </div>
             </li>
           ))}
         </ol>
       </div>
     </section>
 
-    <section class="iv-founders iv-section" aria-labelledby="iv-founders-title">
-      <div class="h3-wrap">
-        <p class="h3-eyebrow">{t.founders.eyebrow}</p>
-        <h2 class="h3-h2 iv-wide-title" id="iv-founders-title">{t.founders.headline}</h2>
-        <p class="h3-body iv-section__body">{t.founders.body}</p>
-        <dl class="iv-founders__list">
-          {t.founders.items.map((item) => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
-        </dl>
-      </div>
-    </section>
-
-    <section class="iv-hours iv-section" aria-labelledby="iv-hours-title">
+    <section class="iv-section iv-agreement" aria-labelledby="iv-agreement-title">
       <div class="h3-wrap iv-split">
         <div>
-          <p class="h3-eyebrow">{t.officeHours.eyebrow}</p>
-          <h2 class="h3-h2 iv-section__title" id="iv-hours-title">{t.officeHours.headline}</h2>
-        </div>
-        <div>
-          <p class="h3-body">{t.officeHours.body}</p>
-          <ul class="iv-hours__list">{t.officeHours.points.map((point) => <li>{point}</li>)}</ul>
-          <p class="iv-note">{t.officeHours.note}</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="iv-approach iv-section" aria-labelledby="iv-approach-title">
-      <div class="h3-wrap">
-        <p class="h3-eyebrow">{t.approach.eyebrow}</p>
-        <h2 class="h3-h2 iv-wide-title" id="iv-approach-title">{t.approach.headline}</h2>
-        <ol class="iv-approach__list">
-          {t.approach.steps.map((step) => <li><h3>{step.title}</h3><p>{step.body}</p></li>)}
-        </ol>
-      </div>
-    </section>
-
-    <section class="iv-evidence iv-section" aria-labelledby="iv-evidence-title">
-      <div class="h3-wrap">
-        <p class="h3-eyebrow">{t.evidence.eyebrow}</p>
-        <h2 class="h3-h2 iv-wide-title" id="iv-evidence-title">{t.evidence.headline}</h2>
-        <p class="h3-body iv-section__body">{t.evidence.body}</p>
-        <div class="iv-evidence__links">
-          {t.evidence.links.map((link) => (
-            <article>
-              <h3>{link.title}</h3>
-              <p>{link.body}</p>
-              <a href={link.href} data-cta={link.ctaId} class="h3-link">{link.label}<span class="h3-arrow" aria-hidden="true">→</span></a>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section class="iv-questions iv-section" aria-labelledby="iv-questions-title">
-      <div class="h3-wrap iv-split">
-        <div>
-          <p class="h3-eyebrow">{t.questions.eyebrow}</p>
-          <h2 class="h3-h2 iv-section__title" id="iv-questions-title">{t.questions.headline}</h2>
+          <p class="h3-eyebrow">{t.approach.eyebrow}</p>
+          <h2 class="h3-h2 iv-wide-title" id="iv-agreement-title">{t.approach.headline}</h2>
+          <ol class="iv-approach__list">
+            {t.approach.steps.map((step) => <li><h3>{step.title}</h3><p>{step.body}</p></li>)}
+          </ol>
         </div>
         <div class="iv-questions__list">
           {t.questions.items.map((item) => (
@@ -135,70 +73,73 @@ const t = getInvestorsV2(lang);
       </div>
     </section>
 
-    <section class="iv-close iv-section" aria-labelledby="iv-close-title">
+    <section class="iv-section iv-evidence" aria-labelledby="iv-evidence-title">
+      <div class="h3-wrap iv-split">
+        <div>
+          <p class="h3-eyebrow">{t.evidence.eyebrow}</p>
+          <h2 class="h3-h2 iv-wide-title" id="iv-evidence-title">{t.evidence.headline}</h2>
+        </div>
+        <div class="iv-evidence__links">
+          {t.evidence.links.map((link) => (
+            <a href={link.href} data-cta={link.ctaId} class="iv-evidence__link">
+              <span><span class="iv-evidence__label">{link.title}</span><span class="iv-evidence__body">{link.body}</span></span>
+              <span class="h3-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="iv-section iv-close" aria-labelledby="iv-close-title">
       <div class="h3-wrap">
-        <h2 class="h3-h2 iv-wide-title" id="iv-close-title">{t.close.headline}<span class="h3-dot--end" aria-hidden="true"></span></h2>
+        <h2 class="h3-h2 iv-wide-title" id="iv-close-title">{t.close.headline}</h2>
         <p class="h3-body iv-section__body">{t.close.body}</p>
         <a href={INVESTORS_SEARCH_READ} data-cta="investors-close-search-read" class="h3-btn h3-btn--ink iv-close__cta">
           {t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
-        <p class="iv-note">{t.close.note}</p>
       </div>
     </section>
   </div>
 </Shell>
 
 <style lang="scss">
-  .iv-page { --iv-space: var(--space-section); }
-  .iv-section { padding-block: var(--iv-space); border-top: 1px solid var(--line); background: var(--sand); }
-  .iv-hero__grid, .iv-split { display: grid; gap: 3rem; align-items: start; }
-  .iv-hero__grid { align-items: center; }
-  .iv-hero__title { max-width: 16ch; }
-  .iv-hero__cta, .iv-close__cta { margin-top: 2rem; max-width: 100%; text-align: center; line-height: 1.4; }
-  .iv-note { margin-top: 1rem; max-width: 34rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .iv-prompt { padding: var(--space-grid); background: var(--stone); border-radius: var(--radius-card); }
-  .iv-prompt__title { margin-top: 1rem; font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; letter-spacing: -0.014em; }
-  .iv-prompt__body { margin-top: 1.5rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .iv-prompt__list { margin-top: 1.5rem; }
-  .iv-prompt__list li { display: flex; gap: 1rem; align-items: baseline; padding: 1rem 0; border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; }
-  .iv-dot { flex: 0 0 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--signal); }
-  .iv-section__title { max-width: 19ch; }
+  .iv-section { padding-block: var(--space-section); }
+  .iv-hero__title { max-width: 23ch; }
+  .iv-hero__body { max-width: 43rem; }
+  .iv-hero__cta, .iv-close__cta { margin-top: var(--space-stack); max-width: 100%; text-align: center; line-height: 1.4; }
+  .iv-note { margin-top: var(--space-2); max-width: 34rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .iv-wide-title { max-width: 26ch; }
-  .iv-section__body { margin-top: 1.5rem; max-width: 42rem; }
-  .iv-support { background: var(--sand); }
-  .iv-support__list, .iv-approach__list { display: grid; gap: 2rem; margin-top: 3rem; }
-  .iv-area, .iv-approach__list li { min-width: 0; padding-top: 1.5rem; border-top: 1px solid var(--line); }
-  .iv-area { display: flex; flex-direction: column; }
+  .iv-section__body { margin-top: var(--space-stack); max-width: 42rem; }
+  .iv-support__list { margin-top: var(--space-grid); border-top: 1px solid var(--line); }
+  .iv-area { display: grid; gap: var(--space-stack); padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
+  .iv-area > div { min-width: 0; }
   .iv-area__id { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .iv-area h3 { margin-top: 1rem; }
-  .iv-area h3, .iv-approach__list h3, .iv-evidence__links h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .iv-area__body, .iv-approach__list p, .iv-evidence__links p { margin-top: 1rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .iv-area__outcome { padding-top: 2rem; margin-top: auto; font-size: var(--type-body); line-height: 1.7; }
-  .iv-area__label { margin-bottom: 0.5rem; font-weight: 500; }
-  .iv-founders__list { display: grid; gap: 0 4rem; margin: 3rem 0 0; }
-  .iv-founders__list > div { padding: 1.5rem 0; border-top: 1px solid var(--line); }
-  .iv-founders__list dt { font-size: var(--type-lead); line-height: 1.6; font-weight: 500; }
-  .iv-founders__list dd { margin: 0.5rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .iv-hours { background: var(--sand); }
-  .iv-hours__list { margin-top: 1.5rem; }
-  .iv-hours__list li { padding: 1rem 0; border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; }
-  .iv-evidence { background: var(--sand); }
-  .iv-evidence__links { display: grid; gap: 2rem; margin-top: 3rem; }
-  .iv-evidence__links article { padding-top: 1.5rem; border-top: 1px solid var(--line); }
-  .iv-evidence__links a { margin-top: 1.5rem; }
+  .iv-area h3, .iv-approach__list h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .iv-area p:not(.iv-area__label), .iv-approach__list p, .iv-format li { margin-top: var(--space-1); max-width: 40rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .iv-area .iv-area__outcome > p { font-size: var(--type-ui); line-height: 1.5; }
+  .iv-area__label { font-weight: 500; }
+  .iv-format { margin-top: var(--space-stack); }
+  .iv-format summary { display: flex; justify-content: space-between; gap: var(--space-2); padding-block: var(--space-1); font-size: var(--type-ui); line-height: 1.5; cursor: pointer; list-style: none; }
+  .iv-format summary::-webkit-details-marker { display: none; }
+  .iv-format ul { margin-top: var(--space-2); padding-left: var(--space-stack); list-style: disc; }
+  .iv-format .iv-note { font-size: var(--type-caption); line-height: 1.5; }
+  .iv-split { display: grid; gap: var(--space-grid); align-items: start; }
+  .iv-approach__list { display: grid; gap: var(--space-stack); margin-top: var(--space-stack); }
   .iv-questions__list { min-width: 0; border-top: 1px solid var(--line); }
   .iv-question { border-bottom: 1px solid var(--line); }
-  .iv-question summary { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; padding: 1.5rem 0; list-style: none; cursor: pointer; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
+  .iv-question summary { display: flex; justify-content: space-between; gap: var(--space-2); align-items: baseline; padding-block: var(--space-stack); list-style: none; cursor: pointer; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
   .iv-question summary::-webkit-details-marker { display: none; }
-  .iv-question summary span { flex-shrink: 0; font-size: var(--type-subheading); line-height: 1.35; }
-  .iv-question[open] summary span { transform: rotate(45deg); }
-  .iv-question p { padding-bottom: 1.5rem; max-width: 36rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .iv-close { background: var(--sand); }
+  .iv-question summary span { flex-shrink: 0; }
+  .iv-question[open] summary span, .iv-format[open] summary span { transform: rotate(45deg); }
+  .iv-question p { padding-bottom: var(--space-stack); max-width: 36rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .iv-evidence__links { border-top: 1px solid var(--line); }
+  .iv-evidence__link { display: flex; justify-content: space-between; gap: var(--space-stack); padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
+  .iv-evidence__label { display: block; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .iv-evidence__body { display: block; margin-top: var(--space-1); color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .iv-evidence__link:hover .iv-evidence__label { text-decoration: underline; text-underline-offset: 4px; }
+  .iv-close { border-top: 1px solid var(--line); }
   @media (min-width: 56rem) {
-    .iv-hero__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 4rem; }
-    .iv-split { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4rem; }
-    .iv-audience__body { padding-top: 2rem; }
-    .iv-support__list, .iv-approach__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; }
-    .iv-founders__list, .iv-evidence__links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .iv-area { grid-template-columns: var(--space-4) minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-grid); }
+    .iv-split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 </style>

@@ -30,16 +30,6 @@ const sample = t.sample;
       </div>
     </section>
 
-    <section class="sc-deliverables" aria-labelledby="sc-deliverables-title">
-      <div class="h3-wrap">
-        <p class="h3-eyebrow">{t.deliverables.eyebrow}</p>
-        <h2 class="h3-h2 sc-wide-title" id="sc-deliverables-title">{t.deliverables.headline}</h2>
-        <dl class="sc-deliverables__list">
-          {t.deliverables.items.map((item) => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
-        </dl>
-      </div>
-    </section>
-
     <section class="sc-example" aria-labelledby="sc-example-title">
       <div class="h3-wrap">
         <p class="h3-eyebrow">{sample.eyebrow}</p>
@@ -122,21 +112,15 @@ const sample = t.sample;
 </Shell>
 
 <style lang="scss">
-  .sc-page { --sc-space: var(--space-section); }
   .sc-hero__title { max-width: 18ch; }
   .sc-hero__body { max-width: 43rem; }
   .sc-hero__cta, .sc-close__cta { margin-top: 2rem; max-width: 100%; line-height: 1.4; text-align: center; }
   .sc-note { margin-top: 1rem; max-width: 36rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
-  .sc-deliverables, .sc-example, .sc-close { padding-block: var(--sc-space); border-top: 1px solid var(--line); }
-  .sc-deliverables { background: var(--sand); }
+  .sc-example, .sc-close { padding-block: var(--space-section); }
   .sc-wide-title { max-width: 25ch; }
-  .sc-deliverables__list { display: grid; gap: 0 4rem; margin: 3rem 0 0; }
-  .sc-deliverables__list > div { padding: 1.5rem 0; border-top: 1px solid var(--line); }
-  .sc-deliverables__list dt { font-size: var(--type-lead); line-height: 1.6; font-weight: 500; }
-  .sc-deliverables__list dd { margin: 0.5rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; max-width: 35rem; }
   .sc-example { background: var(--sand); }
-  .sc-disclosure { margin-top: 2rem; max-width: 50rem; padding: 1rem 1.5rem; border: 1px solid var(--line); border-radius: var(--radius-card); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; background: var(--sand); }
-  .sc-document { margin-top: 2rem; max-width: 62rem; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); overflow: hidden; }
+  .sc-disclosure { margin-top: var(--space-stack); max-width: 50rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .sc-document { margin-top: 2rem; max-width: 64rem; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); overflow: hidden; }
   .sc-document__header, .sc-document__body { padding: var(--space-grid); }
   .sc-document__header { border-bottom: 1px solid var(--line); }
   .sc-document__header h3 { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; letter-spacing: -0.015em; }
@@ -165,15 +149,18 @@ const sample = t.sample;
   .sc-recommendation h4 { margin: 0.5rem 0 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .sc-recommendation > p:not(.h3-eyebrow) { margin-top: 1rem; font-size: var(--type-body); line-height: 1.7; }
   .sc-recommendation .sc-recommendation__limit { color: var(--muted); font-size: var(--type-caption) !important; line-height: 1.5; }
-  .sc-close { background: var(--sand); }
+  .sc-close { border-top: 1px solid var(--line); }
   .sc-close__body { margin-top: 1.5rem; max-width: 40rem; }
   .sc-close__secondary { display: flex; width: fit-content; max-width: 100%; margin-top: 1.5rem; line-height: 1.6; }
   @media (min-width: 48rem) {
-    .sc-deliverables__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sc-entry { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: var(--space-grid); }
+    .sc-entry > h4 { grid-column: 1; grid-row: 1; }
+    .sc-entry > :not(h4) { grid-column: 2; }
+    .sc-entry > p:first-of-type, .sc-entry > ul, .sc-entry > ol { margin-top: 0; }
     .sc-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
   @media print {
-    .sc-hero, .sc-deliverables, .sc-close { display: none; }
+    .sc-hero, .sc-close { display: none; }
     .sc-example { background: white; padding: 0; border: 0; }
     .sc-example > div { padding: 0; }
     .sc-document { margin-top: 1rem; max-width: none; border-radius: 0; }

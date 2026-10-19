@@ -29,7 +29,7 @@ export interface CompaniesV2Content {
   meta: { title: string; description: string };
   hero: { eyebrow: string; headline: string; sub: string; credential: string; cta: string; whatsappCta: string; microcopy: string };
   situations: { eyebrow: string; headline: string; items: { title: string; body: string }[] };
-  read: { eyebrow: string; headline: string; body: string; items: string[]; cta: string; microcopy: string };
+  read: { eyebrow: string; headline: string; sampleLabel: string; body: string; items: string[]; cta: string; microcopy: string };
   evidence: { eyebrow: string; headline: string; body: string; label: string; items: { title: string; body: string }[]; cta: string };
   selectedSearches: { eyebrow: string; headline: string; problemLabel: string; interventionLabel: string; outcomeLabel: string; items: CompanySearchCase[] };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
@@ -43,7 +43,7 @@ export interface CompaniesV2Content {
 export const companiesV2En: CompaniesV2Content = {
   meta: {
     title: 'Senior and executive search for startups | Purrfect Hire',
-    description: 'Senior and executive search for seed to Series B startups. Get an initial read on the role, the market and the evidence your search needs before you commit.',
+    description: 'Senior and executive search for venture-backed companies. Get an initial read on the role, the market and the evidence your search needs before you commit.',
   },
   hero: {
     eyebrow: 'For founders',
@@ -68,6 +68,7 @@ export const companiesV2En: CompaniesV2Content = {
   read: {
     eyebrow: 'Before the search',
     headline: 'Search Calibration. Part of defining the search.',
+    sampleLabel: 'See a Search Calibration',
     body: 'Before you open the search, we help you define what this person must solve, what evidence proves they can do it and where that talent sits.',
     items: [
       'Where the profile sits',
