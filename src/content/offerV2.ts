@@ -40,14 +40,14 @@ export interface OfferV2Content {
 
 export const offerV2En: OfferV2Content = {
   meta: {
-    title: 'Offer Accelerator · Private market advisory | Purrfect Hire',
+    title: 'Offer Accelerator · Private career advisory | Purrfect Hire',
     description:
-      'Private market advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
+      'Private career advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
   },
   hero: {
-    eyebrow: 'Offer Accelerator · Private market advisory',
+    eyebrow: 'Offer Accelerator · Private career advisory',
     headline: 'Make your signal impossible to miss.',
-    sub: 'Private market advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
+    sub: 'Private career advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
     cta: 'Apply to Offer Accelerator',
     package: 'Eight 1:1 sessions: one diagnostic and seven with Kate. Continued process support while you execute the agreed plan.',
   },

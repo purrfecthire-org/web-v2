@@ -25,11 +25,11 @@ export const talentV2En: TalentV2Content = {
     headline: 'Make your next career decision with clarity.',
     sub: 'Compare support for a career move, growth in your current role or one specific decision.',
     audience: 'For senior professionals across the US, Europe and Latin America.',
-    cta: 'Find the right support',
+    cta: 'Compare options',
     href: '#ways-in',
   },
   paths: {
-    eyebrow: 'Ways in',
+    eyebrow: 'Choose your support',
     headline: 'Support for the decision in front of you.',
     items: [
       {

@@ -11,7 +11,7 @@ export const homeV2En = {
   hero: {
     eyebrow: 'US, Europe and Latin America',
     headline: 'We know what to look for before the value is obvious.',
-    sub: 'For companies making a critical hire, and senior professionals deciding what comes next.',
+    sub: 'Senior and executive search for companies. Private career advisory for senior professionals.',
     companies: { label: 'For companies', promise: 'Reduce the risk of a critical hire.', detail: 'Senior and executive search.' },
     talent: { label: 'For talent', promise: 'Compete for your next senior opportunity.', detail: 'Private career advisory.' },
     choose: 'Choose your path',
