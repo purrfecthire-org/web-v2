@@ -12,12 +12,17 @@ export const homeV2En = {
     eyebrow: 'US, Europe and Latin America',
     headline: 'We know what to look for before the value is obvious.',
     sub: 'For companies making a critical hire, and senior professionals making a high-stakes career move.',
-    companies: { label: 'For companies', promise: 'Reduce the risk of a critical hire.', detail: 'Senior and executive search.' },
+    companies: { label: 'For founders', promise: 'Reduce the risk of a critical hire.', detail: 'Senior and executive search.' },
     talent: { label: 'For talent', promise: 'Compete for your next senior opportunity.', detail: 'Private career advisory.' },
     choose: 'Choose your path',
     bookingCta: 'Book a founders call',
     whatsappCta: 'WhatsApp',
     photoAlt: 'Three people discussing work around a table.',
+  },
+  belief: {
+    eyebrow: 'How Purrfect thinks',
+    headline: 'Exceptional people are often underestimated before they become undeniable.',
+    principles: ['Context before credentials.', 'Evidence before confidence.', 'A decision worth making.'],
   },
   proof: {
     eyebrow: 'Trusted by founders at',

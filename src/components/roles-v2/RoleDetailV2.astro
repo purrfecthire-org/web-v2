@@ -461,27 +461,27 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   .rv2 {
     position: relative;
     z-index: 1;
-    --radius: 14px;
+    --radius: var(--radius-card);
     font-family: var(--h-sans);
     color: $text;
-    max-width: 78rem;
+    max-width: 80rem;
     margin-inline: auto;
-    padding: 7rem clamp(1.5rem, 4vw, 3rem) 5rem;
+    padding: var(--space-hero-top) 1.5rem var(--space-section);
 
-    @include max-lg { padding-top: 7rem; }
+    @media (min-width: 64rem) { padding-inline: 3rem; }
   }
   .rv2 [hidden] { display: none !important; }
 
   // ── Back crumb ───────────────────────────────────────────────────
   .rv2__crumb { margin-bottom: 1.5rem; }
-  .rv2__refresh-note { padding: 1rem 0; margin-bottom: 1.5rem !important; border-block: 1px solid $line; font-size: var(--type-caption); color: $muted; }
+  .rv2__refresh-note { padding: 1rem 0; margin-bottom: 1.5rem !important; border-block: 1px solid $line; font-size: var(--type-caption); line-height: 1.5; color: $muted; }
   .rv2__refresh-note a { text-decoration: underline; overflow-wrap: anywhere; }
 
   .rv2__back {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    font-size: var(--type-caption);
+    gap: 0.5rem;
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     color: $muted;
     text-decoration: none;
@@ -495,10 +495,10 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   .rv2__layout {
     display: grid;
     grid-template-columns: 340px 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
+    gap: var(--space-grid);
     align-items: start;
 
-    @include max-lg { grid-template-columns: 1fr; gap: 2rem; }
+    @include max-lg { grid-template-columns: 1fr; }
   }
 
   // ── Left rail ────────────────────────────────────────────────────
@@ -513,10 +513,10 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     border: 1px solid $line;
     border-top: 4px solid $ink;
     border-radius: var(--radius);
-    padding: clamp(1.5rem, 3vw, 2rem);
+    padding: var(--space-stack);
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: var(--space-stack);
   }
 
   .rv2__company {
@@ -529,6 +529,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
 
   .rv2__title {
     font-family: var(--h-serif);
+    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
     font-size: var(--type-section);
     font-weight: 400;
     line-height: 1.12;
@@ -544,13 +545,13 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    padding: 11px 0;
+    padding: 0.75rem 0;
     border-bottom: 1px solid $line;
     &:last-child { border-bottom: none; }
   }
 
   .rv2__fact-key {
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -559,7 +560,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   }
 
   .rv2__fact-val {
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     color: $text;
     text-align: right;
@@ -570,12 +571,12 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     display: inline-flex;
     align-self: flex-start;
     align-items: center;
-    gap: 7px;
+    gap: 0.5rem;
     background: $tint;
     color: $text;
     border-radius: 999px;
-    padding: 6px 14px 6px 7px;
-    font-size: var(--type-caption);
+    padding: 0.25rem 0.75rem 0.25rem 0.5rem;
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
   }
 
@@ -589,7 +590,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     background: #fff;
     color: $ink;
     font-weight: 500;
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
   }
 
   .rv2__apply {
@@ -603,8 +604,10 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     cursor: pointer;
     font-family: var(--h-sans);
     border-radius: 999px;
-    padding: 14px 26px;
+    padding: 0.75rem 1.5rem;
+    min-height: 3rem;
     font-size: var(--type-ui);
+    line-height: 1.5;
     font-weight: 500;
     text-decoration: none;
     transition: background-color 0.2s ease;
@@ -619,7 +622,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   .rv2__rail-note { margin: 0; font-size: var(--type-caption); line-height: 1.5; color: $subtle; text-align: center; }
 
   // ── Content column ───────────────────────────────────────────────
-  .rv2__content { min-width: 0; display: flex; flex-direction: column; gap: 2.25rem; }
+  .rv2__content { min-width: 0; display: flex; flex-direction: column; gap: var(--space-grid); }
 
   .rv2__rule { height: 1px; background: $line; }
 
@@ -634,7 +637,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     &--role { color: $ink; }
   }
 
-  .rv2__industry { margin: 0; font-size: var(--type-caption); font-weight: 500; color: $muted; }
+  .rv2__industry { margin: 0; font-size: var(--type-caption); line-height: 1.5; font-weight: 500; color: $muted; }
 
   .rv2__awards { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
 
@@ -646,8 +649,8 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     border: 1px solid $line;
     color: $text;
     border-radius: 999px;
-    padding: 6px 14px;
-    font-size: var(--type-caption);
+    padding: 0.25rem 0.75rem;
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     svg { color: #F59E0B; }
   }
@@ -662,8 +665,8 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     border: 1px solid $line;
     color: $text;
     border-radius: 999px;
-    padding: 7px 14px;
-    font-size: var(--type-caption);
+    padding: 0.25rem 0.75rem;
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
     svg { color: $ink; }
   }
@@ -675,15 +678,15 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     color: $ink;
     border: 1px solid transparent;
     border-radius: 999px;
-    padding: 5px 13px;
-    font-size: var(--type-caption);
+    padding: 0.25rem 0.75rem;
+    font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
   }
 
   // ── JD prose (rendered markdown) ─────────────────────────────────
   .rv2__prose {
     font-size: var(--type-body);
-    line-height: 1.75;
+    line-height: 1.7;
     color: #374151;
 
     h1, h2, h3 {
@@ -691,16 +694,16 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       font-weight: 500;
       letter-spacing: -0.01em;
       line-height: 1.3;
-      margin: 1.75rem 0 0.75rem;
+      margin: 1.5rem 0 0.75rem;
     }
-    h1 { font-size: var(--type-subheading); }
-    h2 { font-size: var(--type-subheading); }
-    h3 { font-size: var(--type-subheading); }
+    h1 { font-size: var(--type-subheading); line-height: 1.35; }
+    h2 { font-size: var(--type-subheading); line-height: 1.35; }
+    h3 { font-size: var(--type-subheading); line-height: 1.35; }
     p { margin: 0 0 1rem; }
-    ul, ol { margin: 0 0 1rem; padding-left: 1.35rem; }
+    ul, ol { margin: 0 0 1rem; padding-left: 1.5rem; }
     ul { list-style: disc; }
     ol { list-style: decimal; }
-    li { margin: 0.35rem 0; }
+    li { margin: 0.25rem 0; }
     strong { color: $text; font-weight: 500; }
     a { color: $ink; text-decoration: underline; }
     code {
@@ -722,7 +725,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     border: 1px solid transparent;
     border-radius: var(--radius);
     padding: 12px 16px;
-    font-size: var(--type-caption);
+    font-size: var(--type-caption); line-height: 1.5;
     color: $text;
     svg { color: $ink; flex-shrink: 0; }
     strong { color: $ink; font-weight: 500; }
@@ -741,32 +744,32 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     margin: 0;
   }
 
-  .rv2__apply-sub { font-size: var(--type-body); color: $muted; margin: 0.4rem 0 1.75rem; }
+  .rv2__apply-sub { font-size: var(--type-body); line-height: 1.7; color: $muted; margin: 0.5rem 0 1.5rem; }
 
   .rv2__form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+    gap: var(--space-stack);
     @include max-md { grid-template-columns: 1fr; }
   }
 
   .rv2__f {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.5rem;
 
     &--full { grid-column: 1 / -1; }
 
-    label { font-size: var(--type-caption); font-weight: 500; color: $text; }
+    label { font-size: var(--type-caption); line-height: 1.5; font-weight: 500; color: $text; }
 
     input, select {
       font-family: var(--h-sans);
-      font-size: var(--type-ui);
+      font-size: var(--type-body); line-height: 1.7;
       color: $text;
       background: #fff;
       border: 1px solid $line;
-      border-radius: 10px;
-      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-input);
+      padding: 0.75rem 1rem;
       width: 100%;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
@@ -781,10 +784,10 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       }
     }
 
-    input[type='file'] { padding: 0.6rem 0.9rem; }
+    input[type='file'] { padding: 0.75rem 1rem; }
   }
 
-  .rv2__f-err { font-size: var(--type-caption); color: #d14343; min-height: 1em; }
+  .rv2__f-err { font-size: var(--type-caption); line-height: 1.5; color: #d14343; min-height: 1em; }
 
   // Honeypot — off-screen (NOT display:none so bots still fill it)
   .rv2__hp {
@@ -799,29 +802,29 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   .rv2__form-foot {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
+    gap: var(--space-stack);
     flex-wrap: wrap;
-    margin-top: 1.75rem;
+    margin-top: 1.5rem;
   }
 
-  .rv2__form-note { margin: 0; font-size: var(--type-caption); color: $muted; }
-  .rv2__support { margin-top: 1.5rem !important; font-size: var(--type-caption); color: $muted; }
+  .rv2__form-note { margin: 0; font-size: var(--type-caption); line-height: 1.5; color: $muted; }
+  .rv2__support { margin-top: 1.5rem !important; font-size: var(--type-caption); line-height: 1.5; color: $muted; }
   .rv2__support a, .rv2__apply-sub a { text-decoration: underline; overflow-wrap: anywhere; }
 
   .rv2__result {
     margin-top: 1.5rem;
     border: 1px solid $line;
     border-radius: var(--radius);
-    padding: 1.75rem 2rem;
+    padding: var(--space-stack);
     background: $surface;
 
     &--ok { border-color: #b6e0c8; background: #f4fbf7; }
     &--err { border-color: #eec4c4; background: #fdf6f6; }
   }
 
-  .rv2__result-title { font-size: var(--type-subheading); font-weight: 500; margin: 0 0 0.5rem; color: $ink; }
+  .rv2__result-title { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; margin: 0 0 0.5rem; color: $ink; }
 
-  .rv2__result-body { font-size: var(--type-body); line-height: 1.6; color: $muted; margin: 0 0 1rem; }
+  .rv2__result-body { font-size: var(--type-body); line-height: 1.7; color: $muted; margin: 0 0 1rem; }
   .rv2__result--ok .rv2__result-body { margin-bottom: 0; }
 
   .rv2__result-body .rv2__result-link {
@@ -840,7 +843,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     text-align: center;
     border: 1px solid $line;
     border-radius: var(--radius);
-    padding: clamp(2.5rem, 6vw, 3.5rem) 2rem;
+    padding: var(--space-grid);
     background: $soft;
 
     &[hidden] { display: none; }
@@ -860,21 +863,21 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   .rv2__skeleton-layout {
     display: grid;
     grid-template-columns: 340px 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
+    gap: var(--space-grid);
     align-items: start;
 
-    @include max-lg { grid-template-columns: 1fr; gap: 2rem; }
+    @include max-lg { grid-template-columns: 1fr; }
   }
 
   .rv2__skeleton-rail {
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
+    gap: 1rem;
     background: $surface;
     border: 1px solid $line;
     border-top: 4px solid $line;
     border-radius: var(--radius);
-    padding: clamp(1.5rem, 3vw, 2rem);
+    padding: var(--space-stack);
   }
 
   .rv2__skeleton-content {
@@ -885,7 +888,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   }
 
   .rv2-sk {
-    border-radius: 6px;
+    border-radius: var(--radius-input);
     background: linear-gradient(90deg, $soft 25%, $line 37%, $soft 63%);
     background-size: 400% 100%;
     animation: rv2-shimmer 1.4s ease infinite;

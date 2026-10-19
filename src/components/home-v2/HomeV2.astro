@@ -2,43 +2,29 @@
 import Shell from '../v2/Shell.astro';
 import type { Lang } from '../../content/index';
 import { getHomeV2 } from '../../content/homeV2';
-import { CLIENT_BRANDS } from '../../content/clientBrands';
-import { PAGE_COMPANIES, PAGE_TALENT, BOOKING_B2B, WHATSAPP_B2B } from '../../content/links';
+import ClientLogoReel from '../v2/ClientLogoReel.astro';
+import { PAGE_COMPANIES, PAGE_TALENT, BOOKING_B2B } from '../../content/links';
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getHomeV2(lang);
-const proofClients = CLIENT_BRANDS.slice(0, 8);
 ---
 
-<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="dark" navCta={{ label: t.hero.bookingCta, href: BOOKING_B2B }} journey="home">
+<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light" navCta={{ label: t.hero.bookingCta, href: BOOKING_B2B }} journey="home">
   <section class="h3-hero home-entry" aria-labelledby="home-title">
-    <div class="h3-wrap h3-hero__grid">
-      <div class="h3-hero__copy">
-        <p class="h3-eyebrow h3-eyebrow--on-dark">{t.hero.eyebrow}</p>
-        <h1 class="h3-hero__h1" id="home-title">{t.hero.headline}</h1>
-        <p class="h3-hero__sub">{t.hero.sub}</p>
-      </div>
-      <figure class="h3-hero__media home-entry__media" style={{ '--photo-desktop': '8 / 5', '--photo-mobile': '4 / 3' }}>
-        <picture>
-          <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/library/home-editorial-mobile.webp" />
-          <source media="(max-width: 55.99rem)" srcset="/photos/library/home-editorial-mobile.png" />
-          <source type="image/webp" srcset="/photos/library/home-editorial-desktop.webp" />
-          <img src="/photos/library/home-editorial-desktop.png" alt={t.hero.photoAlt} width="1200" height="750" decoding="async" fetchpriority="high" />
-        </picture>
-      </figure>
+    <div class="h3-wrap">
+      <div class="home-entry__intro">
+        <div class="h3-hero__copy">
+          <p class="h3-eyebrow">{t.hero.eyebrow}</p>
+          <h1 class="h3-hero__h1" id="home-title">{t.hero.headline}</h1>
+          <p class="h3-hero__sub">{t.hero.sub}</p>
+        </div>
         <nav class="home-paths" id="choose-your-path" aria-label={t.hero.choose}>
-          <div class="home-path-group">
           <a class="home-path" href={PAGE_COMPANIES} data-cta="home-choose-companies">
             <span class="home-path__label">{t.hero.companies.label}</span>
             <span class="home-path__promise">{t.hero.companies.promise}</span>
             <span class="home-path__detail">{t.hero.companies.detail}</span>
             <span class="home-path__arrow" aria-hidden="true">→</span>
           </a>
-          <div class="home-path__contact">
-            <a href={BOOKING_B2B} data-cta="home-founders-direct-booking" class="h3-link">{t.hero.bookingCta} →</a>
-            <a href={WHATSAPP_B2B} data-cta="home-founders-whatsapp" class="h3-link">{t.hero.whatsappCta} ↗</a>
-          </div>
-          </div>
           <a class="home-path" href={PAGE_TALENT} data-cta="home-choose-talent">
             <span class="home-path__label">{t.hero.talent.label}</span>
             <span class="home-path__promise">{t.hero.talent.promise}</span>
@@ -46,103 +32,127 @@ const proofClients = CLIENT_BRANDS.slice(0, 8);
             <span class="home-path__arrow" aria-hidden="true">→</span>
           </a>
         </nav>
+      </div>
+      <figure class="home-entry__scene">
+        <picture>
+          <source media="(max-width: 55.99rem)" srcset="/photos/library/home-editorial-mobile.webp" type="image/webp" />
+          <img src="/photos/library/home-editorial-desktop.webp" alt={t.hero.photoAlt} width="1200" height="750" decoding="async" fetchpriority="high" />
+        </picture>
+      </figure>
+    </div>
+  </section>
+
+  <section class="home-belief" aria-labelledby="home-belief-title">
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.belief.eyebrow}</p>
+      <h2 class="h3-h2 home-belief__headline" id="home-belief-title">{t.belief.headline}</h2>
+      <ul class="home-principles">
+        {t.belief.principles.map((principle, index) => <li class="home-principle">
+          <span class:list={['home-principle__mark', `home-principle__mark--${index + 1}`]} aria-hidden="true"><i></i><i></i><i></i></span>
+          <h3>{principle}</h3>
+        </li>)}
+      </ul>
     </div>
   </section>
 
   <section class="home-proof" aria-labelledby="home-proof-label">
     <div class="h3-wrap">
       <p class="h3-eyebrow" id="home-proof-label">{t.proof.eyebrow}</p>
-      <ul class="home-proof__logos">
-        {proofClients.map((client) => (
-          <li>
-            <a href={client.href} target="_blank" rel="noopener noreferrer" aria-label={`${client.name}, official website (opens in a new tab)`} data-cta={`home-client-${client.id}`}>
-              <img src={client.logo} alt={client.name} width={client.width} height={client.height} loading="lazy" decoding="async" />
-            </a>
-          </li>
-        ))}
-      </ul>
-      <div class="home-proof__voice">
-        <figure>
+      <div class="home-proof__grid">
+        <ClientLogoReel id="home-clients" />
+        <figure class="home-proof__voice">
           <blockquote>“{t.proof.quote}”</blockquote>
-          <figcaption><span>{t.proof.name}</span><span>{t.proof.role}</span></figcaption>
+          <figcaption>
+            <picture><source srcset="/brand/fabian-torres.webp" type="image/webp" /><img src="/brand/fabian-torres.jpg" alt="" width="480" height="480" loading="lazy" decoding="async" /></picture>
+            <span class="home-proof__credit"><span>{t.proof.name}</span><span>{t.proof.role}</span></span>
+          </figcaption>
         </figure>
-        <a href={t.proof.href} class="h3-link home-proof__cta" data-cta="home-proof-assessment">{t.proof.cta}<span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
 
   <section class="home-kate" id="kate" aria-labelledby="kate-title">
-    <div class="h3-wrap home-kate__grid">
-      <figure class="home-kate__portrait">
-        <picture>
-          <source srcset="/brand/kate.webp" type="image/webp" />
-          <img src="/brand/kate.jpg" alt="Kate Forero" width="900" height="1124" loading="lazy" />
-        </picture>
-      </figure>
-      <div>
-        <p class="h3-eyebrow">{t.kate.eyebrow}</p>
-        <h2 class="h3-h2" id="kate-title">{t.kate.headline}</h2>
-        <p class="h3-body">{t.kate.body}</p>
-        <figure class="home-kate__recommendation">
-          <blockquote>“{t.kate.recommendation.quote}”</blockquote>
-          <figcaption>{t.kate.recommendation.name} · {t.kate.recommendation.context}</figcaption>
-          <a href={t.kate.recommendation.href} target="_blank" rel="noopener noreferrer" class="h3-link">{t.kate.recommendation.cta} <span aria-hidden="true">↗</span></a>
+    <div class="h3-wrap">
+      <div class="home-kate__grid">
+        <figure class="home-kate__portrait">
+          <picture>
+            <source srcset="/brand/kate.webp" type="image/webp" />
+            <img src="/brand/kate.jpg" alt="Kate Forero" width="900" height="1124" loading="lazy" decoding="async" />
+          </picture>
         </figure>
-        <div class="home-kate__links">
-          <a href={PAGE_COMPANIES} class="h3-link" data-cta="home-kate-companies">{t.kate.ctaCompanies} <span aria-hidden="true">→</span></a>
-          <a href={PAGE_TALENT} class="h3-link" data-cta="home-kate-talent">{t.kate.ctaTalent} <span aria-hidden="true">→</span></a>
+        <div class="home-kate__copy">
+          <p class="h3-eyebrow">{t.kate.eyebrow}</p>
+          <h2 class="h3-h2" id="kate-title">{t.kate.headline}</h2>
+          <p class="h3-body">{t.kate.body}</p>
+          <a href="https://www.linkedin.com/in/kathforero/" target="_blank" rel="noopener noreferrer" class="h3-link home-kate__meet" data-cta="home-meet-kate">Meet Kate <span aria-hidden="true">↗</span></a>
         </div>
       </div>
+      <nav class="home-final-paths" aria-label={t.hero.choose}>
+        <a href={PAGE_COMPANIES} data-cta="home-footer-companies">{t.hero.companies.label}<span aria-hidden="true">→</span></a>
+        <a href={PAGE_TALENT} data-cta="home-footer-talent">{t.hero.talent.label}<span aria-hidden="true">→</span></a>
+      </nav>
     </div>
   </section>
 </Shell>
 
 <style>
-  .home-entry { padding-bottom: 3rem; }
-  .home-entry .h3-hero__grid { align-items: start; gap: 2rem; }
-  .home-entry .home-entry__media { position: relative; inset: auto; transform: none; width: 100%; margin-top: 0; border-radius: 14px; overflow: hidden; order: 2; }
-  .home-entry .h3-hero__h1 { max-width: 18ch; }
-  .home-paths { display: grid; order: 1; border-top: 1px solid var(--line-dark); scroll-margin-top: 2rem; }
-  .home-path { position: relative; display: grid; gap: .5rem; padding: 1.25rem 2rem 1.25rem 0; border-bottom: 1px solid var(--line-dark); transition: border-color .2s; }
-  .home-path__contact { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; padding-top: 1rem; }
-  .home-path__contact a { color: var(--on-dark); font-size: var(--type-caption); border-color: var(--line-dark); }
-  .home-paths > .home-path { align-self: start; }
-  .home-path:hover { border-color: var(--on-dark); }
-  .home-path__label { color: var(--on-dark); font-size: var(--type-caption); font-weight: 500; }
-  .home-path__promise { color: var(--on-dark); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; font-family: var(--h-sans); }
-  .home-path__detail { color: var(--on-dark-muted); font-size: var(--type-caption); }
-  .home-path__arrow { position: absolute; right: 0; top: 50%; font-size: var(--type-subheading); color: var(--on-dark); transform: translateY(-50%); }
-  .home-proof { padding: 2.75rem 0; background: var(--sand); border-top: 1px solid var(--line); }
-  .home-proof__logos { margin-top: 1rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem 1rem; align-items: center; }
-  .home-proof__logos li { min-width: 0; }
-  .home-proof__logos a { display: flex; align-items: center; justify-content: center; min-height: 64px; padding: 0.75rem; border-radius: 6px; }
-  .home-proof__logos img { display: block; width: auto; height: auto; max-width: min(100%, 132px); max-height: 36px; object-fit: contain; }
-  .home-proof__logos img[alt='Addi'] { width: 100px; max-height: 50px; }
-  .home-proof__logos img[alt='Hera'] { width: 112px; max-height: 39px; }
-  .home-proof__logos a:hover { background: var(--white); }
-  .home-proof__voice { display: grid; gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.75rem; border-top: 1px solid var(--line); }
-  .home-proof__voice blockquote { max-width: 60ch; font-size: var(--type-quote); line-height: 1.55; color: var(--text); font-family: var(--h-sans); }
-  .home-proof__voice figcaption { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; font-size: var(--type-caption); color: var(--muted); }
-  .home-proof__voice figcaption span:first-child { font-weight: 500; color: var(--text); }
-  .home-proof__cta { justify-self: start; align-self: center; font-size: var(--type-ui); line-height: 1.5; }
-  @media (min-width: 40rem) { .home-proof__logos { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  @media (min-width: 64rem) {
-    .home-proof__logos { grid-template-columns: repeat(8, minmax(0, 1fr)); }
-    .home-proof__voice { grid-template-columns: minmax(0, 1fr) auto; gap: 3rem; }
-  }
-  .home-kate { background: var(--sand); padding: 4.5rem 0; border-top: 1px solid var(--line); }
-  .home-kate__grid { display: grid; gap: 2.75rem; align-items: center; }
-  .home-kate__portrait { max-width: 21rem; border-radius: 14px; overflow: hidden; }
+  .home-entry { padding-bottom: var(--space-section); }
+  .home-entry__intro { display: grid; gap: var(--space-grid); align-items: end; }
+  .home-entry .h3-hero__h1 { max-width: 21ch; }
+  .home-entry .h3-hero__sub { max-width: 48ch; margin-top: var(--space-stack); }
+  .home-paths { display: grid; gap: var(--space-2); scroll-margin-top: var(--space-stack); }
+  .home-path { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-1) var(--space-2); padding: var(--space-stack); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); transition: border-color .2s ease, background-color .2s ease; }
+  .home-path:hover { border-color: var(--muted); background: var(--sand); }
+  .home-path:active { border-color: var(--text); }
+  .home-path__label { grid-column: 1; font-size: var(--type-caption); color: var(--muted); font-weight: 500; line-height: 1.5; }
+  .home-path__promise { grid-column: 1; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; color: var(--text); }
+  .home-path__detail { grid-column: 1; font-size: var(--type-caption); color: var(--muted); line-height: 1.5; }
+  .home-path__arrow { grid-column: 2; grid-row: 1/4; align-self: center; color: var(--text); }
+  .home-entry__scene { margin: var(--space-grid) 0 0; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-card); background: var(--stone); }
+  .home-entry__scene picture, .home-entry__scene img { display: block; width: 100%; height: 100%; }
+  .home-entry__scene img { object-fit: cover; object-position: 50% 50%; }
+  .home-belief, .home-proof, .home-kate { background: var(--sand); padding-block: var(--space-section); }
+  .home-belief__headline { max-width: 30ch; }
+  .home-principles { display: grid; gap: var(--space-stack); margin-top: var(--space-grid); }
+  .home-principle { min-width: 0; padding: var(--space-stack); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); }
+  .home-principle h3 { margin-top: var(--space-stack); font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .home-principle__mark { position: relative; display: block; width: var(--space-8); height: var(--space-4); color: var(--muted); }
+  .home-principle__mark i { position: absolute; display: block; width: var(--space-4); height: var(--space-4); border: 1px solid currentColor; border-radius: 50%; }
+  .home-principle__mark--1 i:nth-child(2) { left: var(--space-2); }
+  .home-principle__mark--1 i:nth-child(3) { display: none; }
+  .home-principle__mark--2 i { width: var(--space-2); height: var(--space-2); top: var(--space-1); border-radius: var(--radius-input); }
+  .home-principle__mark--2 i:nth-child(2) { left: var(--space-stack); }
+  .home-principle__mark--2 i:nth-child(3) { left: var(--space-grid); background: var(--muted); }
+  .home-principle__mark--3 i:first-child { width: var(--space-6); height: 1px; border: 0; background: currentColor; top: var(--space-2); }
+  .home-principle__mark--3 i:nth-child(2) { left: var(--space-4); background: var(--sand); }
+  .home-principle__mark--3 i:nth-child(3) { display: none; }
+  .home-proof__grid { display: grid; align-items: center; gap: var(--space-grid); margin-top: var(--space-stack); }
+  .home-proof__voice { margin: 0; padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); }
+  .home-proof__voice blockquote { max-width: 48ch; font-size: var(--type-quote); line-height: 1.5; color: var(--text); }
+  .home-proof__voice figcaption { margin-top: var(--space-stack); display: flex; align-items: center; gap: var(--space-2); font-size: var(--type-caption); color: var(--muted); line-height: 1.5; }
+  .home-proof__voice figcaption picture { display: block; flex: 0 0 var(--space-6); width: var(--space-6); height: var(--space-6); border-radius: 50%; overflow: hidden; }
+  .home-proof__voice figcaption img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
+  .home-proof__credit { display: grid; gap: var(--space-1); }
+  .home-proof__credit > span:first-child { font-weight: 500; color: var(--text); }
+  .home-kate__grid { display: grid; gap: var(--space-grid); align-items: center; }
+  .home-kate__portrait { width: 100%; max-width: 10rem; margin: 0; border-radius: var(--radius-card); overflow: hidden; }
   .home-kate__portrait img { display: block; width: 100%; height: auto; }
-  .home-kate__links { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem; }
-  .home-kate__recommendation { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
-  .home-kate__recommendation blockquote { font-size: var(--type-lead); line-height: 1.6; }
-  .home-kate__recommendation figcaption { margin-top: .75rem; font-size: var(--type-caption); color: var(--muted); }
-  .home-kate__recommendation a { margin-top: .75rem; font-size: var(--type-caption); }
+  .home-kate__copy { min-width: 0; }
+  .home-kate__copy .h3-body { max-width: 52ch; }
+  .home-kate__meet { margin-top: var(--space-stack); }
+  .home-final-paths { display: grid; gap: var(--space-stack); margin-top: var(--space-section); padding-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .home-final-paths a { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: var(--space-6); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
+  .home-final-paths a:hover { text-decoration: underline; text-underline-offset: var(--space-1); }
+  @media (min-width: 48rem) {
+    .home-principles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .home-final-paths { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-grid); }
+  }
   @media (min-width: 56rem) {
-    .home-entry .h3-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
-    .home-entry .home-entry__media { order: 0; }
-    .home-paths { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
-    .home-kate { padding: 7rem 0; } .home-kate__grid { grid-template-columns: .55fr 1.45fr; gap: 4.5rem; }
+    .home-entry__intro { grid-template-columns: minmax(0, 1.35fr) minmax(0, .85fr); }
+    .home-entry__scene { aspect-ratio: 21 / 9; }
+    .home-entry__scene img { object-position: 50% 22%; }
+    .home-proof__grid { grid-template-columns: 12rem minmax(0,1fr); gap: var(--space-section); }
+    .home-kate__grid { grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); }
+    .home-kate__portrait { justify-self: center; }
   }
 </style>

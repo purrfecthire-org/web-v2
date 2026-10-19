@@ -1,0 +1,47 @@
+---
+import { CLIENT_BRANDS } from '../../content/clientBrands';
+interface Props { id: string }
+const { id } = Astro.props;
+---
+<div class="client-reel" id={id}>
+  <div class="client-reel__window" aria-hidden="true">
+    <div class="client-reel__track">
+      {[0, 1].map(() => <div class="client-reel__set">{CLIENT_BRANDS.map(client => <div class="client-reel__tile"><img src={`/clients/neutral/${client.id}.png`} width="480" height="192" alt="" loading="eager" decoding="async" /></div>)}</div>)}
+    </div>
+  </div>
+  <button class="client-reel__pause" type="button" aria-pressed="false" aria-label="Pause client logos">Pause logos</button>
+  <details class="client-reel__all">
+    <summary>View all clients <span aria-hidden="true">+</span></summary>
+    <ul>{CLIENT_BRANDS.map(client => <li><a href={client.href} target="_blank" rel="noopener noreferrer" data-cta={`client-${client.id}`}>{client.name} <span aria-hidden="true">↗</span></a></li>)}</ul>
+  </details>
+</div>
+<script>
+  for (const reel of document.querySelectorAll<HTMLElement>('.client-reel')) {
+    const button = reel.querySelector<HTMLButtonElement>('button')!;
+    const media = matchMedia('(prefers-reduced-motion: reduce)');
+    let paused = media.matches;
+    const update = () => { reel.classList.toggle('is-paused', paused); button.setAttribute('aria-pressed', String(paused)); button.setAttribute('aria-label', paused ? 'Play client logos' : 'Pause client logos'); button.textContent = paused ? 'Play logos' : 'Pause logos'; };
+    button.addEventListener('click', () => { paused = !paused; update(); });
+    media.addEventListener('change', () => { paused = media.matches; update(); });
+    update();
+  }
+</script>
+<style>
+  .client-reel { width: 12rem; max-width: 100%; color: var(--text); }
+  .client-reel__window { height: 10rem; overflow: hidden; mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent); }
+  .client-reel__track { animation: clients-vertical 60s linear infinite; }
+  .client-reel__set { display: grid; }
+  .client-reel__tile { height: 4rem; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .client-reel__tile img { display: block; width: 10rem; height: 4rem; max-width: 100%; object-fit: contain; }
+  .client-reel__pause, .client-reel__all summary { font: 500 var(--type-caption)/1.5 var(--h-sans); color: var(--muted); background: none; border: 0; padding: .5rem 0; cursor: pointer; }
+  .client-reel__pause { min-height: 2.75rem; text-decoration: underline; text-underline-offset: .25rem; }
+  .client-reel__all summary { display: flex; justify-content: space-between; gap: 1rem; list-style: none; }
+  .client-reel__all summary::-webkit-details-marker { display: none; }
+  .client-reel__all[open] summary span { transform: rotate(45deg); }
+  .client-reel__all ul { display: grid; gap: .5rem; padding-top: .5rem; }
+  .client-reel__all a { display: flex; justify-content: space-between; gap: .5rem; padding-block: .5rem; font-size: var(--type-caption); }
+  .client-reel__all a:hover { text-decoration: underline; }
+  .is-paused .client-reel__track, .client-reel:hover .client-reel__track, .client-reel:focus-within .client-reel__track { animation-play-state: paused; }
+  @keyframes clients-vertical { to { transform: translateY(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .client-reel__track { animation: none; } .client-reel__pause { display: none; } }
+</style>

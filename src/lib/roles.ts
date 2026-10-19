@@ -13,7 +13,7 @@
 // company-adjacent string ever shown.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { renderMarkdown } from './markdown';
+import { normalizePublicText, renderMarkdown } from './markdown';
 
 export interface PublicSalary {
   min: number | null;
@@ -130,7 +130,7 @@ export async function fetchRole(slug: string): Promise<PublicRoleDetail> {
 // ── Formatters ───────────────────────────────────────────────────────────────
 
 export function escapeHtml(s: string): string {
-  return String(s)
+  return normalizePublicText(s)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -152,14 +152,14 @@ export function workContractLine(r: {
   return parts.length ? parts.join(' · ') : null;
 }
 
-/** Salary → "80,000–120,000 USD"; null ⇒ null (never a placeholder). */
+/** Salary → "80,000 to 120,000 USD"; null ⇒ null (never a placeholder). */
 export function formatSalary(s: PublicSalary | null | undefined): string | null {
   if (!s) return null;
   const { min, max, currency } = s;
   if (min == null && max == null) return null;
   const cur = currency ? ` ${currency}` : '';
   const n = (v: number) => v.toLocaleString('en-US');
-  if (min != null && max != null) return `${n(min)}–${n(max)}${cur}`;
+  if (min != null && max != null) return `${n(min)} to ${n(max)}${cur}`;
   if (min != null) return `From ${n(min)}${cur}`;
   return `Up to ${n(max as number)}${cur}`;
 }
@@ -201,6 +201,7 @@ export function roleCardHTML(r: PublicRoleListItem): string {
   const metaRow = segs.join('<span class="rl__meta-dot" aria-hidden="true"></span>');
 
   const tags = (r.tags ?? [])
+    .slice(0, 4)
     .map((t) => `<span class="rl__tag">${escapeHtml(t)}</span>`)
     .join('');
 
@@ -254,7 +255,7 @@ export function v6RoleTeaserHTML(r: PublicRoleListItem): string {
 
   return (
     `<a href="/roles/${encodeURIComponent(r.slug)}" class="v6-talent__role" ` +
-    `aria-label="${escapeHtml(r.title)} — View role">` +
+    `aria-label="${escapeHtml(r.title)}, View role">` +
     top +
     `<h4 class="v6-talent__role-title">${escapeHtml(r.title)}</h4>` +
     stage +
@@ -380,6 +381,7 @@ export function roleReadOnlyContentHTML(role: PublicRoleDetail): string {
   }
 
   const tags = (role.tags ?? [])
+    .slice(0, 6)
     .map((t) => `<span class="rv2__skill">${escapeHtml(t)}</span>`)
     .join('');
 
