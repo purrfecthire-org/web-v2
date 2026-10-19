@@ -135,7 +135,7 @@ export const companiesV2En: CompaniesV2Content = {
   },
   proof: {
     eyebrow: 'Client feedback',
-    headline: 'Clearer decisions. People who contribute.',
+    headline: 'What clients say about the work.',
     voices: [
       {
         quote: "Purrfect Hire adapted to our processes and to each specific role. They're a real search partner, not just a pipeline.",

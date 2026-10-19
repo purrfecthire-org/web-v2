@@ -3,6 +3,8 @@ export const FOUNDERS_CALENDAR = 'https://cal.com/purrfect-hire/founders-call';
 // Founders can book directly; /search-read remains an optional explanatory route.
 export const BOOKING_B2B = FOUNDERS_CALENDAR;
 export const WHATSAPP_B2B = 'https://wa.me/18312245188?text=Hi%20Kate%2C%20I%27d%20like%20to%20discuss%20a%20senior%20hire%20for%20my%20company.';
+// Kate confirmed this business number for advisory enquiries on 19 October 2026.
+export const WHATSAPP_CAREER_COMPOUNDING = `https://wa.me/18312245188?text=${encodeURIComponent('Hi Kate, I would like to discuss Career Compounding. My current role and company: \nThe business challenge I want to work on: ')}`;
 
 /** Single inbox for the whole site. */
 export const CONTACT_EMAIL = 'go@purrfecthire.com';
@@ -13,9 +15,9 @@ export const CONTACT_EMAIL = 'go@purrfecthire.com';
  */
 export const APPLY_OFFER = '/offer-acceleration/apply';
 
-/** 1:1 Strategic Session request, same three questions. */
+/** Request a 1:1 session directly; the email inbox remains an alternative. */
 export const SESSION_1_1 =
-  'mailto:go@purrfecthire.com?subject=1%3A1%20Strategic%20Session&body=Hi%20Kate%2C%0A%0AI%20would%20like%20to%20request%20a%201%3A1%20Strategic%20Session.%0A%0ACurrent%20role%20and%20company%3A%0ALinkedIn%3A%0AThe%20decision%20I%20want%20to%20work%20on%3A%0A%0AThanks%2C%0A';
+  `https://wa.me/18312245188?text=${encodeURIComponent('Hi Kate, I would like to request a 1:1 Strategic Session. My current role: \nMy LinkedIn: \nThe question I want to work on: ')}`;
 
 /** Free consideration when no published role fits. */
 export const CONSIDERED_FREE =

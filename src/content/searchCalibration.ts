@@ -166,7 +166,7 @@ export const candidateBriefSampleEn = {
     footer: 'Fictional example throughout. It demonstrates the structure of an assessment, not a verified person or result.',
   },
   close: {
-    headline: 'Which evidence would make your hiring decision clearer?',
+    headline: 'What still needs testing before you make an offer?',
     body: 'Bring the role and what it needs to change. We can discuss how the search and assessment should work.',
     cta: 'Book a 20-minute founders call',
     back: 'See how we calibrate a search',

@@ -59,7 +59,7 @@ export const investorsV2En: InvestorsV2Content = {
   },
   support: {
     eyebrow: 'Ways to support your portfolio',
-    headline: 'Start with the hiring decision.',
+    headline: 'From defining the role to running the search.',
     areas: [
       {
         id: '01',
@@ -146,7 +146,7 @@ export const investorsV2En: InvestorsV2Content = {
     ],
   },
   close: {
-    headline: 'Which portfolio hiring decision needs a clearer read?',
+    headline: 'Which portfolio company is preparing a critical hire?',
     body: 'Bring the companies, roles and hiring obstacles. We’ll discuss where to start.',
     cta: 'Discuss portfolio hiring',
     note: 'Start with a free initial read. Agree scope and terms before an engagement.',

@@ -59,7 +59,7 @@ export const offerV2En: OfferV2Content = {
   },
   deliverables: {
     eyebrow: 'The work you can use',
-    headline: 'A strategy you can put to work in a real process.',
+    headline: 'Prepare for the search, the interviews and the offer.',
     body: 'Your private Career Journal holds the strategy, evidence and materials we build around your diagnostic and active opportunities.',
     items: [
       { title: 'Criteria for your next move', body: 'Define your target role, scope, market, compensation and conditions.' },

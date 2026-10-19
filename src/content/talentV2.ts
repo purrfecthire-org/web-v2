@@ -51,9 +51,9 @@ export const talentV2En: TalentV2Content = {
         name: '1:1 Strategic Session',
         body: 'For one active process, a negotiation or a specific career decision.',
         price: 'USD 300',
-        cta: 'Email to request a session',
+        cta: 'Request a session on WhatsApp',
         href: SESSION_1_1,
-        note: 'Opens your email app. Include your role, LinkedIn and decision.',
+        note: 'Include your role, LinkedIn and the question you want to work on.',
       },
     ],
     free: {

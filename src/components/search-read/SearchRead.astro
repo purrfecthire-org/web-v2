@@ -96,7 +96,7 @@ const endpoint = import.meta.env.PUBLIC_B2B_LEAD_ENDPOINT || '';
         for (const key of ['utm_source', 'utm_medium', 'utm_campaign']) { const v = attribution[key]; if (v) booking.searchParams.set(key, v); }
         frame.addEventListener('load', () => emit('calendar_viewed'), { once: true });
         frame.src = booking.href;
-        calendar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        calendar.scrollIntoView({ behavior: 'auto', block: 'start' });
       } catch (err) {
         error.textContent = err instanceof SearchReadError && err.code === 'validation' ? 'Please check your details and try again. Your request has not been confirmed.' : 'We could not confirm receipt. Please try again or use the founders calendar below.';
         error.hidden = false;

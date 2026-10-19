@@ -61,7 +61,10 @@ existing Markdown utilities without changing URLs or code literals.
 - Internal team mental health benefit: one-on-one sessions every two weeks with
   an experienced psychologist from Universidad de los Andes, fully covered by
   Purrfect. This is not a benefit for advisory clients.
-- Strategic session: USD 300, requested by email.
+- Strategic session: USD 300, requested via the confirmed WhatsApp number.
+- Career Compounding and strategic-session enquiries can use WhatsApp
+  +1 (831) 224-5188, confirmed by Kate on 19 October 2026. Email remains
+  an alternative; a WhatsApp click does not mean a message was sent or received.
 - B2B has no public numeric prices or fee percentages.
 - Contact: go@purrfecthire.com.
 - Advisory provides no preference in client searches. Participation and private

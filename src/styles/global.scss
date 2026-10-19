@@ -143,6 +143,7 @@ picture {
 .reveal-delay-3 { transition-delay: 0.3s; }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   .reveal {
     opacity: 1;
     transform: none;

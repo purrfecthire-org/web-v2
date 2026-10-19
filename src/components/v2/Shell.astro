@@ -69,6 +69,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
 
 <Layout title={title} description={description} canonicalUrl={canonicalUrl} lang={lang} legacyFonts={false} noindex={Astro.url.pathname.replace(/\/$/, '') === '/search-read'}>
   <div class:list={['h3', `h3--${theme}`]} data-journey={journey}>
+    <a class="h3-skip" href="#main-content">Skip to content</a>
     <header class="h3-nav">
       <div class="h3-nav__in">
         <a href="/" class="h3-nav__logo" aria-label="Purrfect Hire">
@@ -103,7 +104,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
       </div>
     </header>
 
-    <main><slot /></main>
+    <main id="main-content" tabindex="-1"><slot /></main>
 
     <footer class="h3-footer">
       <div class="h3-wrap h3-footer__in">
@@ -119,6 +120,27 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     </footer>
   </div>
 </Layout>
+
+<script>
+  for (const menu of document.querySelectorAll<HTMLDetailsElement>('.h3-menu')) {
+    const summary = menu.querySelector('summary')!;
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !menu.open) return;
+      menu.open = false;
+      summary.focus();
+      event.preventDefault();
+    });
+    document.addEventListener('click', (event) => {
+      if (menu.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+    });
+    menu.addEventListener('click', (event) => {
+      if (event.target instanceof Element && event.target.closest('a[href]')) menu.open = false;
+    });
+    matchMedia('(min-width: 72rem)').addEventListener('change', (event) => {
+      if (event.matches) menu.open = false;
+    });
+  }
+</script>
 
 <style lang="scss" is:global>
   .h3 {
@@ -180,6 +202,8 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   .h3 :where(h3, h4, blockquote, button, input, select, textarea) { font-family: var(--h-sans); }
   .h3 :where(h3, h4) { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .h3 :where(a, summary, button, input, select, textarea):focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; }
+  .h3-skip { position: absolute; top: var(--space-2); left: var(--space-3); z-index: 100; padding: var(--space-1) var(--space-2); border-radius: var(--radius-input); background: var(--sand); color: var(--text); font-size: var(--type-ui); transform: translateY(calc(-100% - var(--space-4))); }
+  .h3-skip:focus { transform: none; }
   /* Purple sits at 3.1:1 on Midnight, which is thin for a focus ring. */
   .h3--dark .h3-nav a:focus-visible,
   .h3--dark .h3-nav summary:focus-visible,

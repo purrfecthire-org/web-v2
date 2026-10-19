@@ -1,13 +1,11 @@
 import type { Lang } from './index';
+import { WHATSAPP_CAREER_COMPOUNDING } from './links';
 
 // Commercial scope explicitly confirmed by Kate on 19 October 2026.
 // CC and Offer Accelerator are independent products for different career decisions.
 export const CAREER_COMPOUNDING_HREF = '/career-compounding';
 export const CAREER_COMPOUNDING_EMAIL = 'go@purrfecthire.com';
-export const DISCUSS_CAREER_COMPOUNDING =
-  `mailto:${CAREER_COMPOUNDING_EMAIL}?subject=${encodeURIComponent('Career Compounding enquiry')}&body=${encodeURIComponent(
-    'Hi Kate,\n\nI would like to discuss the six-month Career Compounding program.\n\nMy current role and company:\nThe business challenge I want to take on:\nWhat progress would look like:\n\nThanks,\n',
-  )}`;
+export const DISCUSS_CAREER_COMPOUNDING = WHATSAPP_CAREER_COMPOUNDING;
 
 export interface CareerCompoundingV2Content {
   meta: { title: string; description: string };
@@ -29,7 +27,7 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
     headline: 'Become the person trusted with bigger problems.',
     body: 'Six months of private, hands-on advisory to develop the judgment, ownership, influence and execution required to operate at a higher level.',
     audience: 'For experienced professionals with a role to grow in and a real business challenge to work on.',
-    cta: 'Discuss your challenge',
+    cta: 'Message us on WhatsApp',
     note: 'USD 5,000 for the program. Offer Accelerator is not a prerequisite.',
     facts: [
       { value: '6 months', label: 'Working on real business challenges' },
@@ -41,7 +39,7 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
   work: {
     eyebrow: 'The work',
     headline: 'Build capability through real decisions.',
-    intro: 'Your work sets the agenda: real decisions, real stakeholders and real consequences. You execute inside your organization; Purrfect brings judgment, constructive challenge and follow-through.',
+    intro: 'Your work sets the agenda: the problem, the stakeholders and the consequences. You execute inside your organization; Purrfect brings judgment, constructive challenge and follow-through.',
     areas: [
       { id: '01', title: 'Ownership and execution', body: 'Define the problem, establish a baseline and decide where your contribution can change the outcome.', outputLabel: 'Evidence to build', output: 'A clear outcome, decisions you owned, experiments you ran and a record of what changed.' },
       { id: '02', title: 'Organizational influence', body: 'Understand the stakeholders, authority and competing priorities behind a decision. Build a recommendation people can act on.', outputLabel: 'Evidence to build', output: 'A stakeholder map, a reasoned recommendation and evidence of how you moved the work forward.' },
@@ -84,8 +82,8 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
     eyebrow: 'Your next step',
     headline: 'Which problem would stretch how you operate?',
     body: 'Share your role and the challenge in front of you. We will discuss whether Career Compounding is the right fit.',
-    cta: 'Discuss your challenge',
-    note: 'Opens your email app to contact Kate about the program.',
+    cta: 'Message us on WhatsApp',
+    note: 'Opens a WhatsApp conversation. Your message is sent only when you choose to send it.',
     emailLabel: 'Or email',
   },
 };
