@@ -61,9 +61,8 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
 
   <!-- ── Loading skeleton ─────────────────────────────────────────────
        Hidden by default (no-JS / static fallback shows the real content
-       below immediately). The client script un-hides this the moment it
-       starts the fetch-on-load refresh, then hides it again once the
-       fetch settles (success, 404, or network failure). -->
+       below immediately). The snapshot remains readable during refresh;
+       this reserved skeleton never replaces content that is already available. -->
   <div class="rv2__skeleton" id="rv2-skeleton" hidden aria-hidden="true">
     <div class="rv2__skeleton-layout">
       <div class="rv2__skeleton-rail">
@@ -217,7 +216,8 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
 
 <script>
   // ── Client refresh (primary data path) ──────────────────────────────────
-  // On load: show the skeleton, fetch GET /public/roles/{slug}, then render
+  // On load: preserve the readable snapshot while fetching the current role.
+  // Fetch GET /public/roles/{slug}, then render
   // fresh data into #rv2-rail-inner / #rv2-readonly (same renderers used at
   // build time, so markup never drifts — see src/lib/roles.ts).
   //   • success        → swap in fresh content, hide skeleton.
@@ -236,6 +236,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     const root = document.getElementById('rv2-root') as HTMLElement | null;
     const slug = root?.dataset.slug;
     if (!root || !slug) return;
+    root.dataset.refreshing = 'true';
 
     const skeleton = document.getElementById('rv2-skeleton');
     const layout = document.getElementById('rv2-layout');
@@ -243,8 +244,9 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     const railInner = document.getElementById('rv2-rail-inner');
     const readonly = document.getElementById('rv2-readonly');
 
-    skeleton?.removeAttribute('hidden');
-    layout?.setAttribute('hidden', '');
+    // The build already supplies a complete, readable brief. Do not blank it
+    // during a slow refresh; only an explicit 404 replaces it with closed.
+    readonly?.setAttribute('aria-busy', 'true');
 
     try {
       const fresh = await fetchRole(slug);
@@ -264,6 +266,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
       layout?.removeAttribute('hidden');
     } catch (err) {
       if (err instanceof FetchRoleError && err.status === 404) {
+        layout?.setAttribute('hidden', '');
         closed?.removeAttribute('hidden');
         reportClientError('role detail refresh: role no longer open (HTTP 404)', {
           stage: 'role_detail_refresh',
@@ -280,6 +283,12 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
         });
       }
     } finally {
+      delete root.dataset.refreshing;
+      const submit = document.getElementById('rv2-submit') as HTMLButtonElement | null;
+      if (submit) submit.disabled = closed?.hidden === false;
+      const note = document.getElementById('rv2-formnote');
+      if (note?.textContent === 'Checking current availability…') note.textContent = '';
+      readonly?.removeAttribute('aria-busy');
       skeleton?.setAttribute('hidden', '');
     }
   })();
@@ -294,8 +303,12 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     const submitBtn = document.getElementById('rv2-submit') as HTMLButtonElement;
     // Keep the static form disabled so a no-JavaScript browser never submits
     // candidate information as a GET query string to this public page.
-    submitBtn.disabled = false;
+    // Applicants can read and fill the snapshot while it refreshes. Wait for
+    // that check before posting so a late GET cannot hide an accepted receipt.
+    const checkingAvailability = document.getElementById('rv2-root')?.dataset.refreshing === 'true';
+    submitBtn.disabled = checkingAvailability;
     const note = document.getElementById('rv2-formnote') as HTMLElement;
+    if (checkingAvailability) note.textContent = 'Checking current availability…';
     const okCard = document.getElementById('rv2-ok') as HTMLElement;
     const failCard = document.getElementById('rv2-fail') as HTMLElement;
     const failTitle = document.getElementById('rv2-fail-title') as HTMLElement;
