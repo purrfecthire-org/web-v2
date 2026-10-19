@@ -1,5 +1,6 @@
 ---
 import Shell from '../v2/Shell.astro';
+import TeamGallery from './TeamGallery.astro';
 import { workWithUs as t } from '../../content/workWithUs';
 ---
 
@@ -23,6 +24,10 @@ import { workWithUs as t } from '../../content/workWithUs';
         <p class="wwu-client-path">{t.hero.secondary} <a href={t.hero.secondaryHref} data-cta="careers-client-searches">{t.hero.secondaryCta} <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
+
+    <div class="wwu-team h3-wrap">
+      <TeamGallery />
+    </div>
 
     <section class="wwu-section" aria-labelledby="wwu-work-title">
       <div class="h3-wrap">
@@ -91,46 +96,46 @@ import { workWithUs as t } from '../../content/workWithUs';
 </Shell>
 
 <style>
-  .wwu-hero { padding-block: 8rem 4rem; }
+  .wwu-hero { padding-block: var(--space-hero-top) var(--space-section); }
   .wwu-hero__title {
-    max-width: 17ch; margin-top: 1.3rem; font-family: var(--h-serif);
+    max-width: 17ch; margin-top: 1rem; font-family: var(--h-serif);
     font-size: var(--type-display); font-weight: 400;
-    line-height: 1.07; letter-spacing: -.025em; text-wrap: balance;
-    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
+    line-height: 1.08; letter-spacing: -.02em; text-wrap: balance;
+    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
   }
-  .wwu-hero__body { max-width: 44rem; margin-top: 1.6rem; color: var(--muted); font-size: 1.125rem; line-height: 1.7; }
-  .wwu-hero__standard { margin-block: 1.5rem 1.8rem; font-size: 1rem; font-weight: 500; }
-  .wwu-client-path { max-width: 42rem; margin-top: 1.5rem; color: var(--muted); font-size: .875rem; line-height: 1.6; }
+  .wwu-hero__body { max-width: 38rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-lead); line-height: 1.65; }
+  .wwu-hero__standard { margin-block: var(--space-stack); font-size: var(--type-body); font-weight: 500; }
+  .wwu-client-path { max-width: 38rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
   .wwu-client-path a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
-  .wwu-section { padding-block: 3.75rem; border-top: 1px solid var(--line); }
+  .wwu-team { padding-bottom: var(--space-section); }
+  .wwu-section { padding-block: var(--space-section); border-top: 1px solid var(--line); }
   .wwu-heading { max-width: 23ch; font-size: var(--type-section); line-height: 1.12; }
-  .wwu-three { display: grid; gap: 1.75rem; margin-top: 2.5rem; }
-  .wwu-three dt, .wwu-values dt, .wwu-apply__details h3 { font-size: 1.0625rem; font-weight: 500; line-height: 1.4; }
-  .wwu-three dd, .wwu-values dd { margin: .65rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.7; }
+  .wwu-three { display: grid; gap: var(--space-grid); margin-top: var(--space-grid); }
+  .wwu-three dt, .wwu-values dt, .wwu-apply__details h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .wwu-three dd, .wwu-values dd { margin: .75rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
   .wwu-three--support > div { border-left: 2px solid var(--signal); padding-left: 1rem; }
-  .wwu-values { background: var(--white); }
-  .wwu-split { display: grid; gap: 2.5rem; }
-  .wwu-values__list { display: grid; gap: 1.4rem; }
-  .wwu-values__list > div + div { border-top: 1px solid var(--line); padding-top: 1.4rem; }
-  .wwu-name { padding-block: 3.5rem; background: var(--stone); }
-  .wwu-name__grid { display: grid; gap: 1.5rem; align-items: center; }
+  .wwu-values { background: var(--sand); }
+  .wwu-split { display: grid; gap: var(--space-grid); }
+  .wwu-values__list { display: grid; gap: var(--space-stack); }
+  .wwu-values__list > div + div { border-top: 1px solid var(--line); padding-top: var(--space-stack); }
+  .wwu-name { padding-block: var(--space-section); background: var(--sand); }
+  .wwu-name__grid { display: grid; gap: var(--space-grid); align-items: center; }
   .wwu-name img { width: 6rem; height: 6rem; object-fit: contain; }
-  .wwu-name p:not(.h3-eyebrow) { max-width: 42rem; margin-top: 1.2rem; font-size: 1rem; line-height: 1.7; color: var(--muted); }
+  .wwu-name p:not(.h3-eyebrow) { max-width: 38rem; margin-top: var(--space-stack); font-size: var(--type-body); line-height: 1.65; color: var(--muted); }
   .wwu-apply { scroll-margin-top: 2rem; }
-  .wwu-apply__body { margin-block: 1.5rem; max-width: 34rem; color: var(--muted); font-size: 1.0625rem; line-height: 1.7; }
-  .wwu-apply__note { max-width: 34rem; margin-top: 1.1rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.65; }
-  .wwu-apply__details { border: 1px solid var(--line); border-radius: 1rem; padding: 1.5rem; align-self: start; }
-  .wwu-apply__details ul { margin-top: 1rem; padding-left: 1.2rem; list-style: disc; }
-  .wwu-apply__details li, .wwu-apply__details p { color: var(--muted); font-size: .9375rem; line-height: 1.7; }
+  .wwu-apply__body { margin-block: var(--space-stack); max-width: 34rem; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
+  .wwu-apply__note { max-width: 34rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.65; }
+  .wwu-apply__details { border: 1px solid var(--line); border-radius: var(--radius-card); padding: var(--space-stack); align-self: start; background: var(--white); }
+  .wwu-apply__details ul { margin-top: 1rem; padding-left: 1.25rem; list-style: disc; }
+  .wwu-apply__details li, .wwu-apply__details p { color: var(--muted); font-size: var(--type-ui); line-height: 1.65; }
   .wwu-apply__details li + li { margin-top: .5rem; }
-  .wwu-apply__details p { margin-top: 1.5rem; }
-  .wwu-apply__details a { margin-top: 1.25rem; font-size: .875rem; }
+  .wwu-apply__details p { margin-top: var(--space-stack); }
+  .wwu-apply__details a { margin-top: var(--space-stack); font-size: var(--type-caption); }
   @media (min-width: 48rem) {
-    .wwu-three { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
-    .wwu-split { grid-template-columns: 1fr 1.2fr; gap: 4rem; }
-    .wwu-name__grid { grid-template-columns: 10rem minmax(0, 1fr); gap: 3rem; }
+    .wwu-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .wwu-split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .wwu-name__grid { grid-template-columns: 10rem minmax(0, 1fr); }
     .wwu-name img { width: 10rem; height: 10rem; }
-    .wwu-section { padding-block: 4.5rem; }
   }
   @media (prefers-reduced-motion: reduce) { .wwu * { scroll-behavior: auto; } }
 </style>

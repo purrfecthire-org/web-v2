@@ -2,12 +2,15 @@
 import Shell from '../v2/Shell.astro';
 import type { Lang } from '../../content/index';
 import { getCompaniesV2 } from '../../content/companiesV2';
-import { CLIENT_BRANDS as clients } from '../../content/clientBrands';
-import { BOOKING_B2B as BOOKING_URL, WHATSAPP_B2B, KATE } from '../../content/links';
+import ClientLogoReel from '../v2/ClientLogoReel.astro';
+import { BOOKING_B2B as BOOKING_URL } from '../../content/links';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getCompaniesV2(lang);
+const situations = t.situations.items.filter(({ title }) => ['The role keeps changing', 'The people you want are not applying', 'The hire has to outgrow the role'].includes(title));
+const searches = t.selectedSearches.items.filter((search) => search.outcome).slice(0, 2);
+const voices = t.proof.voices.filter(({ name }) => ['Fabián Torres', 'Chen Atlas'].includes(name)).slice(0, 2);
 
 ---
 
@@ -29,7 +32,7 @@ const t = getCompaniesV2(lang);
         <div class="fc-hero__actions"><a href={BOOKING_URL} data-cta="companies-hero-booking" class="h3-btn h3-btn--ink h3-hero__cta fc-hero__cta">
           {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
-        <a href={WHATSAPP_B2B} data-cta="companies-hero-whatsapp" class="h3-link fc-hero__secondary">{t.hero.whatsappCta} <span aria-hidden="true">↗</span></a></div>
+        </div>
         <p class="fc-microcopy">{t.hero.microcopy}</p>
       </div>
       <figure class="h3-hero__media fc-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
@@ -43,29 +46,12 @@ const t = getCompaniesV2(lang);
     </div>
   </section>
 
-  <section class="fc-client-strip" aria-label="Selected clients"><div class="h3-wrap">
-      <div class="fc-logos">
-        <p class="h3-eyebrow">{t.proof.logosLabel}</p>
-        <ul>
-          {clients.map((client) => (
-            <li>
-              <a href={client.href} target="_blank" rel="noopener noreferrer" aria-label={`${client.name}, official website (opens in a new tab)`} data-cta={`companies-client-${client.id}`}>
-                <img src={client.logo} alt={client.name} width={client.width} height={client.height} loading="lazy" decoding="async" />
-              </a>
-            </li>
-          ))}
-        </ul>
-        <p class="fc-logos__markets">{t.proof.markets}</p>
-        <a href="#selected-searches" data-cta="companies-selected-searches" class="h3-link fc-hero__secondary">See selected searches <span aria-hidden="true">→</span></a>
-      </div>
-  </div></section>
-
   <section class="fc-situations" aria-labelledby="fc-situations-title">
     <div class="h3-wrap">
       <p class="h3-eyebrow">{t.situations.eyebrow}</p>
       <h2 class="h3-h2 fc-situations__h2" id="fc-situations-title">{t.situations.headline}</h2>
       <ul class="fc-situations__list">
-        {t.situations.items.map((situation) => (
+        {situations.map((situation) => (
           <li class="fc-situation">
             <h3>{situation.title}</h3>
             <p>{situation.body}</p>
@@ -74,77 +60,6 @@ const t = getCompaniesV2(lang);
       </ul>
     </div>
   </section>
-
-  <section class="fc-read" aria-labelledby="fc-read-title">
-    <div class="h3-wrap fc-read__grid">
-      <div>
-        <p class="h3-eyebrow">{t.read.eyebrow}</p>
-        <h2 class="h3-h2 fc-read__h2" id="fc-read-title">{t.read.headline}</h2>
-        <p class="h3-body fc-read__body">{t.read.body}</p>
-        <a href={BOOKING_URL} data-cta="companies-search-read-booking" class="h3-btn h3-btn--ink fc-read__cta">
-          {t.read.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-        </a>
-        <a href="/search-calibration" data-cta="companies-calibration-example" class="h3-link fc-hero__secondary">See how we calibrate a search →</a>
-        <p class="fc-microcopy">{t.read.microcopy}</p>
-      </div>
-      <ul class="fc-read__list">
-        {t.read.items.map((item) => <li><span class="fc-signal" aria-hidden="true"></span>{item}</li>)}
-      </ul>
-    </div>
-  </section>
-
-  <section class="fc-evidence" id="candidate-brief" aria-labelledby="fc-evidence-title">
-    <div class="h3-wrap fc-evidence__grid">
-      <div>
-        <p class="h3-eyebrow h3-eyebrow--on-dark">{t.evidence.eyebrow}</p>
-        <h2 class="h3-h2 h3-h2--on-dark" id="fc-evidence-title">{t.evidence.headline}</h2>
-        <p class="h3-body h3-body--on-dark fc-evidence__sub">{t.evidence.body}</p>
-        <a href="/candidate-brief-sample" data-cta="companies-candidate-brief-sample" class="h3-link h3-link--on-dark fc-evidence__cta">
-          {t.evidence.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-      <!-- This is a structural explanation, not a fictional candidate or case. -->
-      <div class="fc-brief">
-        <p class="fc-brief__label">{t.evidence.label}</p>
-        <dl class="fc-brief__fields">
-          {t.evidence.items.map((item) => (
-            <div>
-              <dt>{item.title}</dt>
-              <dd>{item.body}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <!-- Publish only complete, sourced search cases. The content file records
-       the missing evidence; an empty collection never creates a public stub. -->
-  {t.selectedSearches.items.length > 0 && (
-    <section class="fc-searches" id="selected-searches" aria-labelledby="fc-searches-title">
-      <div class="h3-wrap">
-        <p class="h3-eyebrow">{t.selectedSearches.eyebrow}</p>
-        <h2 class="h3-h2 fc-searches__h2" id="fc-searches-title">{t.selectedSearches.headline}</h2>
-        <div class="fc-searches__list">
-          {t.selectedSearches.items.map((search) => (
-            <article class="fc-search">
-              <p class="h3-eyebrow">{[search.company, search.stage, search.role].filter(Boolean).join(' · ')}</p>
-              <h3>{search.title}</h3>
-              <p class="fc-search__problem">{search.problem}</p>
-              <details class="fc-search__detail">
-                <summary>Read the search <span aria-hidden="true">+</span></summary>
-                <dl>
-                  <div><dt>{t.selectedSearches.interventionLabel}</dt><dd>{search.intervention}</dd></div>
-                  {search.evidence && <div><dt>Evidence to examine</dt><dd>{search.evidence}</dd></div>}
-                  {search.outcome && <div><dt>{t.selectedSearches.outcomeLabel}</dt><dd>{search.outcome}</dd></div>}
-                </dl>
-              </details>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
 
   <section class="fc-method" aria-labelledby="fc-method-title">
     <div class="h3-wrap">
@@ -159,22 +74,64 @@ const t = getCompaniesV2(lang);
           </li>
         ))}
       </ol>
+      <div class="fc-method__links" id="candidate-brief">
+        <a href="/search-calibration" data-cta="companies-calibration-example" class="h3-link">{t.read.headline}<span class="h3-arrow" aria-hidden="true">→</span></a>
+        <a href="/candidate-brief-sample" data-cta="companies-candidate-brief-sample" class="h3-link">{t.evidence.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
+
+  <!-- Publish only complete, sourced search cases. The content file records
+       the missing evidence; an empty collection never creates a public stub. -->
+  {searches.length > 0 && (
+    <section class="fc-searches" id="selected-searches" aria-labelledby="fc-searches-title">
+      <div class="h3-wrap">
+        <p class="h3-eyebrow">{t.selectedSearches.eyebrow}</p>
+        <h2 class="h3-h2 fc-searches__h2" id="fc-searches-title">{t.selectedSearches.headline}</h2>
+        <div class="fc-searches__list">
+          {searches.map((search) => (
+            <article class="fc-search">
+              <div class="fc-search__narrative">
+                <p class="h3-eyebrow">{[search.company, search.stage, search.role].filter(Boolean).join(' · ')}</p>
+                <h3>{search.title}</h3>
+                <p class="fc-search__problem">{search.problem}</p>
+                <details class="fc-search__detail">
+                  <summary>Read the search <span aria-hidden="true">+</span></summary>
+                  <dl>
+                    <div><dt>{t.selectedSearches.interventionLabel}</dt><dd>{search.intervention}</dd></div>
+                    {search.evidence && <div><dt>Evidence to examine</dt><dd>{search.evidence}</dd></div>}
+                  </dl>
+                </details>
+              </div>
+              {search.outcome && <div class="fc-search__result">
+                <span class="fc-search__signal" aria-hidden="true"></span>
+                <p class="fc-search__outcome"><span>{t.selectedSearches.outcomeLabel}</span>{search.outcome}</p>
+              </div>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <section class="fc-proof" aria-labelledby="fc-proof-title">
     <div class="h3-wrap">
       <p class="h3-eyebrow">{t.proof.eyebrow}</p>
       <h2 class="h3-h2 fc-proof__h2" id="fc-proof-title">{t.proof.headline}</h2>
-      {t.proof.voices.map((voice) => (
+      <div class="fc-proof__logos">
+        <p class="h3-eyebrow">{t.proof.logosLabel}</p>
+        <ClientLogoReel id="companies-clients" />
+      </div>
+      <div class="fc-proof__voices">
+      {voices.map((voice) => (
         <figure class:list={['fc-quote', { 'fc-quote--text': !voice.photo }]}>
-          {voice.photo && <div class="fc-quote__portrait">
+          {voice.photo ? <div class="fc-quote__portrait">
             <picture>
               {voice.photoWebp && <source srcset={voice.photoWebp} type="image/webp" />}
               <img src={voice.photo} alt={voice.name} width="480" height="480" loading="lazy" decoding="async" />
             </picture>
-          </div>}
-          <div>
+          </div> : <div class="fc-quote__brand" aria-hidden="true"><img src="/clients/optery.png" alt="" width="666" height="158" loading="lazy" decoding="async" /></div>}
+          <div class="fc-quote__body">
             <blockquote>“{voice.quote}”</blockquote>
             <figcaption>
               <span class="fc-quote__name">{voice.name}</span>
@@ -184,7 +141,7 @@ const t = getCompaniesV2(lang);
           </div>
         </figure>
       ))}
-
+      </div>
     </div>
   </section>
 
@@ -201,152 +158,68 @@ const t = getCompaniesV2(lang);
         ))}
       </ul>
       <p class="fc-models__recommendation">{t.models.recommendation}</p>
-      <a href={BOOKING_URL} data-cta="companies-models-booking" class="h3-link fc-models__cta">
-        {t.models.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-  </section>
-
-  <section class="fc-kate" aria-labelledby="fc-kate-title">
-    <div class="h3-wrap fc-kate__grid">
-      <figure class="fc-kate__portrait">
-        <picture>
-          <source srcset="/brand/kate.webp" type="image/webp" />
-          <img src="/brand/kate.jpg" alt={t.photo.kateAlt} width="900" height="1124" loading="lazy" decoding="async" />
-        </picture>
-      </figure>
-      <div>
-        <p class="h3-eyebrow">{t.kate.eyebrow}</p>
-        <h2 class="h3-h2" id="fc-kate-title">{t.kate.headline}</h2>
-        {t.kate.body.map((paragraph) => <p class="h3-body">{paragraph}</p>)}
-        <a href={KATE} data-cta="companies-meet-kate" class="h3-link fc-kate__cta">
-          {t.kate.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-        </a>
+      <div class="fc-models__close">
+        <p class="h3-body">{t.close.body}</p>
+        <a href={BOOKING_URL} data-cta="companies-close-booking" class="h3-btn h3-btn--ink">{t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+        <p class="fc-microcopy">{t.close.howNote}</p>
       </div>
-    </div>
-  </section>
-
-  <section class="fc-close" aria-labelledby="fc-close-title">
-    <div class="h3-wrap">
-      <h2 class="h3-h2 fc-close__h2" id="fc-close-title">{t.close.headline}</h2>
-      <p class="h3-body fc-close__body">{t.close.body}</p>
-      <a href={BOOKING_URL} data-cta="companies-close-booking" class="h3-btn h3-btn--ink fc-close__cta">
-        {t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span>
-      </a>
-      <p class="fc-microcopy">{t.close.howNote}</p>
-      <a href={WHATSAPP_B2B} data-cta="companies-close-whatsapp" class="h3-link fc-hero__secondary">{t.hero.whatsappCta} <span aria-hidden="true">↗</span></a>
-      <p class="fc-close__mail">{t.close.emailLabel} <a href={`mailto:${t.close.email}`} data-cta="companies-secondary-email">{t.close.email}</a>.</p>
     </div>
   </section>
 </Shell>
 
 <style lang="scss">
-  .fc-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; margin-top: 1.75rem; }
+  .fc-hero { padding-block: var(--space-section); }
+  .fc-hero__actions { display: flex; margin-top: var(--space-stack); }
   .fc-hero__actions .h3-hero__cta { margin-top: 0; }
-  .fc-hero__secondary { margin-top: 1.25rem; font-size: var(--type-ui); }
+  .fc-hero__media { margin: 0; border-radius: 12px; overflow: hidden; }
   .fc-hero__media img { object-position: 42% 42%; }
-  .fc-credential { margin-top: 1.5rem; font-size: var(--type-ui); color: var(--muted); max-width: 30rem; }
-  .fc-hero__cta, .fc-read__cta, .fc-close__cta { margin-top: 2rem; max-width: 100%; text-align: center; line-height: 1.35; }
-  .fc-microcopy { margin-top: 1rem; max-width: 32rem; font-size: var(--type-caption); line-height: 1.65; color: var(--muted); }
-  .fc-situations, .fc-method, .fc-searches, .fc-kate { padding-block: clamp(3.5rem, 6vw, 6.5rem); background: var(--sand); border-top: 1px solid var(--line); }
-  .fc-situations__h2 { max-width: 25ch; }
-  .fc-situations__list { display: grid; gap: 0 3.5rem; margin-top: 2.5rem; }
-  .fc-situation { padding: 1.5rem 0; border-top: 1px solid var(--line); }
-  .fc-situation h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .fc-situation p { margin-top: 0.7rem; max-width: 34rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .fc-read { padding-block: clamp(3.5rem, 6vw, 6.5rem); background: var(--stone); }
-  .fc-read__grid, .fc-evidence__grid { display: grid; gap: 2.5rem; align-items: start; }
-  .fc-read__h2 { max-width: 18ch; }
-  .fc-read__body { margin-top: 1.5rem; }
-  .fc-read__list { border-top: 1px solid var(--line); }
-  .fc-read__list li { display: flex; align-items: baseline; gap: 1rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line); font-size: var(--type-body); line-height: 1.6; }
-  .fc-signal { flex: 0 0 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--signal); }
-  .fc-evidence { scroll-margin-top: 2rem; background: var(--midnight); color: var(--on-dark); padding-block: clamp(3.5rem, 6vw, 7rem); }
-  .fc-evidence__sub { margin-top: 1.5rem; }
-  .fc-evidence__cta { margin-top: 2rem; }
-  .fc-evidence a:focus-visible { outline-color: var(--on-dark); }
-  .fc-brief { padding: clamp(1.5rem, 3vw, 2.5rem); background: var(--sand); color: var(--text); border-radius: 14px; }
-  .fc-brief__label { margin-bottom: 1.25rem; font-size: var(--type-eyebrow); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
-  .fc-brief__fields { margin: 0; }
-  .fc-brief__fields > div { padding-block: 1.15rem; border-top: 1px solid var(--line); }
-  .fc-brief__fields dt { font-size: var(--type-body); font-weight: 500; line-height: 1.4; }
-  .fc-brief__fields dd { margin: 0.6rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
-  .fc-searches__h2 { max-width: 26ch; }
-  .fc-searches__list { display: grid; gap: 2rem; margin-top: 2.5rem; }
-  .fc-search { padding-top: 1.5rem; border-top: 1px solid var(--line); }
-  .fc-search h3 { margin-top: 1rem; font-size: var(--type-subheading); font-weight: 500; line-height: 1.4; }
-  .fc-search__problem { margin-top: 1rem; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
-  .fc-search__detail { margin-top: 1.25rem; }
+  .fc-credential, .fc-microcopy { margin-top: 1rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.6; max-width: 34rem; }
+  .fc-situations, .fc-method, .fc-searches, .fc-proof, .fc-models { padding-block: var(--space-section); background: var(--sand); }
+  .fc-situations__h2, .fc-method__h2, .fc-searches__h2, .fc-proof__h2, .fc-models__h2 { max-width: 26ch; }
+  .fc-situations__list, .fc-steps, .fc-searches__list, .fc-proof__voices, .fc-models__list { display: grid; gap: var(--space-grid); margin-top: var(--space-stack); }
+  .fc-situation, .fc-step, .fc-search, .fc-quote, .fc-model { min-width: 0; }
+  .fc-situation, .fc-step { padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
+  .fc-situation h3, .fc-step__title, .fc-search h3, .fc-model__name { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .fc-situation p, .fc-step__body, .fc-search__problem, .fc-model__note { margin-top: .75rem; max-width: 40rem; font-size: var(--type-body); line-height: 1.65; color: var(--muted); }
+  .fc-step__id { display: block; margin-bottom: 1rem; font-size: var(--type-caption); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .fc-method__links { margin-top: var(--space-stack); display: flex; flex-wrap: wrap; column-gap: var(--space-grid); row-gap: 1rem; }
+  .fc-method__links a { max-width: 100%; }
+  .fc-search { display: grid; gap: var(--space-grid); padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
+  .fc-search__narrative, .fc-search__result { min-width: 0; }
+  .fc-search__result { display: flex; flex-direction: column; justify-content: center; padding: var(--space-stack); border-radius: 12px; background: var(--stone); }
+  .fc-search__signal { display: block; width: .5rem; height: .5rem; border-radius: 50%; background: var(--text); }
+  .fc-search h3 { margin-top: 1rem; }
+  .fc-search__outcome { margin-top: var(--space-stack); font-size: var(--type-body); line-height: 1.65; color: var(--muted); max-width: 40rem; }
+  .fc-search__outcome span { display: block; margin-bottom: .5rem; font-size: var(--type-caption); font-weight: 500; color: var(--text); }
+  .fc-search__detail { margin-top: var(--space-stack); }
   .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; padding-block: .5rem; font-size: var(--type-ui); font-weight: 500; list-style: none; }
   .fc-search__detail summary::-webkit-details-marker { display: none; }
   .fc-search__detail[open] summary span { transform: rotate(45deg); }
-  .fc-search dl { margin-top: 1.5rem; }
-  .fc-search dl > div + div { margin-top: 1.25rem; }
-  .fc-search dt { font-size: var(--type-caption); font-weight: 500; }
-  .fc-search dd { margin: 0.5rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .fc-method__h2 { max-width: 25ch; }
-  .fc-steps { margin-top: 2.5rem; display: grid; gap: 2rem; }
-  .fc-step { min-width: 0; padding-top: 1.25rem; border-top: 1px solid var(--line); }
-  .fc-step__id { font-size: var(--type-caption); color: var(--muted); font-variant-numeric: tabular-nums; }
-  .fc-step__title { margin-top: 1rem; font-size: var(--type-subheading); font-weight: 500; line-height: 1.4; }
-  .fc-step__body { margin-top: 0.7rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .fc-proof { background: var(--sand); padding-block: clamp(3.5rem, 6vw, 6.5rem); border-top: 1px solid var(--line); }
-  .fc-proof__h2 { max-width: 26ch; }
-  .fc-quote { margin-top: 2.5rem; display: grid; gap: 1.5rem; align-items: center; max-width: 58rem; }
-  .fc-quote + .fc-quote { padding-top: 2.5rem; border-top: 1px solid var(--line); }
-  .fc-quote__portrait { max-width: 9rem; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 14px; }
-  .fc-quote__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .fc-quote blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.55; }
-  .fc-quote figcaption { margin-top: 1rem; display: flex; flex-direction: column; font-size: var(--type-caption); }
+  .fc-search dl { margin-top: var(--space-stack); display: grid; gap: var(--space-stack); }
+  .fc-search dt { font-size: var(--type-caption); font-weight: 500; line-height: 1.4; }
+  .fc-search dd { margin: .5rem 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
+  .fc-proof__logos { margin-top: var(--space-stack); }
+  .fc-proof__logos > .h3-eyebrow { margin-bottom: 1rem; }
+  .fc-quote { margin: 0; display: flex; flex-direction: column; padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
+  .fc-quote__body { display: flex; flex-direction: column; flex: 1; }
+  .fc-quote blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.5; }
+  .fc-quote figcaption { padding-top: var(--space-stack); margin-top: auto; display: flex; flex-direction: column; font-size: var(--type-caption); line-height: 1.6; }
   .fc-quote__name { font-weight: 500; }
-  .fc-quote__role { color: var(--muted); }
-  .fc-quote__context { margin-top: .5rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
-  .fc-client-strip { padding: 2rem 0 2.5rem; background: var(--sand); border-top: 1px solid var(--line); }
-  .fc-logos { margin: 0; }
-  .fc-logos ul { margin-top: 1.5rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; align-items: center; }
-  .fc-logos li { min-width: 0; }
-  .fc-logos a { display: flex; align-items: center; justify-content: center; min-height: 64px; padding: 0.75rem; border-radius: 6px; }
-  .fc-logos img { display: block; width: auto; height: auto; max-width: min(100%, 132px); max-height: 36px; object-fit: contain; filter: none; opacity: 1; }
-  /* Match visual weight while preserving the proportions of the supplied artwork. */
-  .fc-logos img[alt='Addi'] { width: 100px; max-height: 50px; }
-  .fc-logos img[alt='Hera'] { width: 112px; max-height: 39px; }
-  .fc-logos img[alt='Nue'] { width: 92px; }
-  .fc-logos a:hover { background: var(--white); }
-  @media (min-width: 40rem) { .fc-logos ul { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  @media (min-width: 64rem) { .fc-logos ul { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
-  .fc-logos__markets { margin-top: 1.5rem; color: var(--muted); font-size: var(--type-ui); }
-  .fc-models { background: var(--stone); padding-block: clamp(3.5rem, 6vw, 6rem); }
-  .fc-models__h2 { max-width: 26ch; }
-  .fc-models__list { margin-top: 2.5rem; display: grid; gap: 1.5rem; }
-  .fc-model { padding: 1.75rem; border: 1px solid var(--line); border-radius: 14px; background: var(--sand); }
-  .fc-model__name { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .fc-model__note { margin-top: 0.75rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .fc-models__recommendation { margin-top: 1.75rem; max-width: 40rem; font-size: var(--type-body); line-height: 1.7; }
-  .fc-models__cta { margin-top: 1.25rem; }
-  .fc-kate__grid { display: grid; gap: 2.5rem; align-items: center; }
-  .fc-kate__portrait { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 14px; max-width: 20rem; }
-  .fc-kate__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
-  .fc-kate__cta { margin-top: 1.75rem; }
-  .fc-close { background: var(--sand); border-top: 1px solid var(--line); padding: clamp(3.5rem, 6vw, 6.5rem) 0 clamp(4rem, 7vw, 7.5rem); }
-  .fc-close__h2 { max-width: 24ch; }
-  .fc-close__body { margin-top: 1.25rem; }
-  .fc-close__mail { margin-top: 1rem; color: var(--muted); font-size: var(--type-ui); overflow-wrap: anywhere; }
-  .fc-close__mail a { color: var(--text); border-bottom: 1px solid var(--line); }
-  @media (min-width: 40rem) {
-    .fc-quote { grid-template-columns: 9rem 1fr; gap: 2.25rem; }
-    .fc-quote--text { grid-template-columns: 1fr; max-width: 48rem; }
-  }
+  .fc-quote__role, .fc-quote__context { color: var(--muted); }
+  .fc-quote__context { margin-top: .5rem; }
+  .fc-quote__portrait, .fc-quote__brand { display: flex; align-items: center; margin-bottom: var(--space-stack); height: 64px; }
+  .fc-quote__portrait { width: 64px; overflow: hidden; border-radius: 50%; }
+  .fc-quote__portrait picture { display: block; width: 100%; height: 100%; }
+  .fc-quote__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
+  .fc-quote__brand img { display: block; width: auto; max-width: 112px; max-height: 32px; object-fit: contain; filter: grayscale(1); opacity: .75; }
+  .fc-model { padding: var(--space-stack); border: 1px solid var(--line); border-radius: 12px; }
+  .fc-models__recommendation { margin-top: var(--space-stack); max-width: 40rem; color: var(--muted); font-size: var(--type-body); line-height: 1.65; }
+  .fc-models__close { margin-top: var(--space-stack); }
+  .fc-models__close > .h3-body { margin: 0 0 var(--space-stack); }
   @media (min-width: 56rem) {
-    .fc-situations__list, .fc-models__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .fc-read__grid, .fc-evidence__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5rem; }
-    .fc-read__list { margin-top: 1.9rem; }
-    .fc-steps, .fc-searches__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; }
-    .fc-kate__grid { grid-template-columns: minmax(0, 0.5fr) minmax(0, 1.5fr); gap: 4rem; }
-  }
-  @media (max-width: 55.99rem) {
-    .fc-hero { padding: 5.5rem 0 2.5rem; }
-    .fc-hero__media { margin-top: 1.5rem; }
-    .fc-credential { margin-top: 1.1rem; }
-    .fc-kate__portrait { max-width: 14rem; }
+    .fc-situations__list, .fc-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .fc-proof__voices, .fc-models__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fc-searches__list { grid-template-columns: minmax(0, 1fr); }
+    .fc-search { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   }
 </style>

@@ -53,19 +53,19 @@ export const searchCalibrationEn = {
     },
     compensation: {
       label: 'A compensation assumption to test',
-      range: 'USD 150,000–250,000 annual base + equity',
+      range: 'USD 150,000 to 250,000 annual base + equity',
       body: 'An initial planning range for this fictional role, subject to the final scope, working model and equity terms. It is informed by the public advertisements below. These are advertised reference points, not a market-wide benchmark or a compensation commitment.',
       date: 'Public advertisements reviewed 17 October 2026. Advertisements can change.',
       sources: [
         {
           label: 'Paradigm · Founding Engineer · Y Combinator Jobs',
           href: 'https://www.ycombinator.com/companies/paradigm/jobs/nFNWweP-founding-engineer',
-          note: 'San Francisco. The posting states a USD 150,000–250,000 base range and describes equity separately.',
+          note: 'San Francisco. The posting states a USD 150,000 to 250,000 base range and describes equity separately.',
         },
         {
           label: 'Ploy · Founding Engineer · Y Combinator Jobs',
           href: 'https://www.ycombinator.com/companies/ploy/jobs/XsX0ycv-founding-engineer',
-          note: 'San Francisco. The posting lists USD 150,000–250,000; its headline does not specify the base/equity split.',
+          note: 'San Francisco. The posting lists USD 150,000 to 250,000; its headline does not specify the base/equity split.',
         },
       ],
       relationship: 'The links are public research references. They do not imply a client relationship or endorsement.',

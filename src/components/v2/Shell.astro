@@ -139,33 +139,48 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
        its web files and license are in. */
     --h-serif: 'Fraunces Variable', Georgia, serif;
     --h-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
-    --type-display: clamp(2.5rem, 4.5vw, 4.25rem);
-    --type-section: clamp(1.875rem, 3vw, 2.75rem);
-    --type-quote: clamp(1.125rem, 1.7vw, 1.5rem);
+    --type-display: 2.5rem;
+    --type-section: 1.875rem;
+    --type-quote: 1.25rem;
     --type-subheading: 1.25rem;
     --type-body: 1.0625rem;
     --type-lead: 1.125rem;
     --type-ui: 0.9375rem;
     --type-caption: 0.875rem;
     --type-eyebrow: 0.75rem;
+    --space-1: .5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2rem;
+    --space-6: 3rem;
+    --space-8: 4rem;
+    --space-section: var(--space-6);
+    --space-grid: var(--space-4);
+    --space-stack: var(--space-3);
+    --space-hero-top: 6rem;
+    --radius-card: 12px;
+    --radius-input: 8px;
     background: var(--sand); color: var(--text);
     font-family: var(--h-sans); font-size: var(--type-body); line-height: 1.6; -webkit-font-smoothing: antialiased;
     /* Only bites when a word genuinely cannot fit, which at 200% zoom is the
        email address and the longest headline words. */
     overflow-wrap: break-word;
   }
+  @media (min-width: 56rem) {
+    .h3 { --type-display: 3.5rem; --type-section: 2.5rem; --type-quote: 1.5rem; --space-section: var(--space-8); --space-grid: var(--space-6); --space-hero-top: 7rem; }
+  }
+  @media (min-width: 90rem) { .h3 { --type-display: 4rem; } }
   body:has(.h3) { background: #0A0B14; }
   :where(.h3) a { color: inherit; text-decoration: none; }
   :where(.h3) :where(p, h1, h2, h3, ul, ol, figure, blockquote) { margin: 0; padding: 0; }
   :where(.h3) :where(ul, ol) { list-style: none; }
   .h3 :where(h3, h4, blockquote, button, input, select, textarea) { font-family: var(--h-sans); }
   .h3 :where(h3, h4) { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .h3 a:focus-visible,
-  .h3 summary:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; border-radius: 3px; }
+  .h3 :where(a, summary, button, input, select, textarea):focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; }
   /* Purple sits at 3.1:1 on Midnight, which is thin for a focus ring. */
   .h3--dark .h3-nav a:focus-visible,
   .h3--dark .h3-nav summary:focus-visible,
-  .h3--dark .h3-hero a:focus-visible { outline-color: var(--on-dark); }
+  .h3--dark .h3-hero :where(a, summary, button, input, select, textarea):focus-visible { outline-color: var(--on-dark); }
 
   .h3-wrap { max-width: 80rem; margin-inline: auto; padding-inline: 1.5rem; }
   @media (min-width: 64rem) { .h3-wrap { padding-inline: 3rem; } }
@@ -182,13 +197,15 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
 
   .h3-btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    padding: 0.9rem 1.6rem; border-radius: 999px;
+    min-height: 3rem; box-sizing: border-box; padding: .75rem 1.5rem; border: 1px solid transparent; border-radius: 999px; text-align: center; cursor: pointer;
     background: var(--purple); color: #fff !important;
-    font-size: var(--type-ui); font-weight: 500; line-height: 1;
-    transition: background-color 0.2s ease;
+    font-size: var(--type-ui); font-weight: 500; line-height: 1.4;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
   }
   .h3-btn:hover { background: var(--purple-deep); }
-  .h3-btn--sm { padding: 0.6rem 1.1rem; font-size: var(--type-caption); }
+  .h3-btn:active { opacity: .8; }
+  .h3-btn:disabled, .h3-btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+  .h3-btn--sm { min-height: 2.75rem; padding: .5rem 1rem; font-size: var(--type-caption); }
   .h3-btn--ink { background: var(--midnight); }
   .h3-btn--ink:hover { background: #1b1d2b; }
   /* Midnight on a Midnight hero: the nav button sits over the photograph,
@@ -207,19 +224,19 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     font-family: var(--h-serif); font-weight: 400;
     font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
     font-size: var(--type-section); line-height: 1.12;
-    letter-spacing: -0.014em; margin-top: 0.9rem; text-wrap: balance;
+    letter-spacing: -0.014em; margin-top: var(--space-2); text-wrap: balance;
   }
   .h3-h2--on-dark { color: var(--on-dark); }
   .h3-body { font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 34rem; }
   .h3-body--on-dark { color: var(--on-dark-muted); }
-  .h3-body + .h3-body { margin-top: 1.1rem; }
+  .h3-body + .h3-body { margin-top: var(--space-2); }
   .h3-h2 + .h3-body { margin-top: 1.5rem; }
   .h3-lead {
     margin-top: 1.5rem; max-width: 34rem;
     font-size: var(--type-lead); line-height: 1.6; color: var(--text);
   }
   .h3-lead--on-dark { color: var(--on-dark); }
-  .h3-lead + .h3-body { margin-top: 1.1rem; }
+  .h3-lead + .h3-body { margin-top: var(--space-2); }
 
   /* ── Nav ──────────────────────────────────────────────────────────── */
   .h3-nav {
@@ -227,12 +244,12 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     background: transparent;
   }
   .h3-nav__in {
-    max-width: 80rem; margin-inline: auto; padding: 0.9rem 1.5rem;
+    max-width: 80rem; margin-inline: auto; padding: 1rem 1.5rem;
     display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
   }
   @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
   .h3-nav__logo img { height: 1.6rem; width: auto; display: block; }
-  .h3-nav__links { display: none; gap: 1.35rem; font-size: var(--type-ui); }
+  .h3-nav__links { display: none; gap: 1.5rem; font-size: var(--type-ui); }
   @media (min-width: 72rem) { .h3-nav__links { display: flex; } }
   .h3--dark .h3-nav__links { color: var(--on-dark-muted); }
   .h3--dark .h3-nav__links a:hover { color: var(--on-dark); }
@@ -247,7 +264,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   @media (min-width: 72rem) { .h3-menu { display: none; } }
   .h3-menu > summary {
     list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.55rem 0.9rem; border-radius: 999px; font-size: var(--type-caption); font-weight: 500;
+    min-height: 2.75rem; padding: .5rem 1rem; border-radius: 999px; font-size: var(--type-caption); font-weight: 500;
   }
   .h3-menu > summary::-webkit-details-marker { display: none; }
   .h3--dark .h3-menu > summary { color: var(--on-dark); border: 1px solid var(--line-dark); }
@@ -257,67 +274,43 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   .h3-menu__panel {
     position: absolute; right: 0; top: calc(100% + 0.5rem); z-index: 40;
     min-width: min(13rem, calc(100vw - 2rem)); max-width: calc(100vw - 2rem); padding: 0.75rem;
-    background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+    background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card);
     box-shadow: 0 18px 40px rgba(10, 11, 20, 0.22);
     display: grid; gap: 0.25rem;
   }
   .h3-menu__panel nav { display: grid; }
   .h3-menu__panel nav a {
-    padding: 0.6rem 0.65rem; border-radius: 9px; font-size: var(--type-ui); color: var(--text);
+    padding: 0.6rem 0.65rem; border-radius: var(--radius-input); font-size: var(--type-ui); color: var(--text);
   }
   .h3-menu__panel nav a:hover { background: var(--sand); }
   .h3-menu__cta { margin-top: 0.4rem; width: 100%; padding: 0.75rem 1rem; font-size: var(--type-caption); }
 
   /* ── Hero primitives ──────────────────────────────────────────────── */
-  .h3-hero { position: relative; overflow: hidden; padding: 6rem 0 3.5rem; }
-  @media (min-width: 56rem) { .h3-hero { padding: 7rem 0 7.5rem; } }
+  .h3-hero { position: relative; overflow: hidden; padding: var(--space-hero-top) 0 var(--space-section); }
   .h3--dark .h3-hero { background: var(--midnight); color: var(--on-dark); }
   .h3--light .h3-hero { background: var(--sand); color: var(--text); }
-  .h3-hero__grid { display: grid; gap: 0; align-items: center; }
-  @media (min-width: 56rem) { .h3-hero__grid { grid-template-columns: minmax(0, 36rem) 1fr; gap: 4rem; } }
+  .h3-hero__grid { display: grid; gap: var(--space-grid); align-items: center; }
+  @media (min-width: 56rem) { .h3-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-grid); } }
   .h3-hero__copy { position: relative; z-index: 2; min-width: 0; }
   .h3-hero__h1 {
     font-family: var(--h-serif); font-weight: 400;
     font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
     font-size: var(--type-display); line-height: 1.08;
-    letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance; margin-top: 0.85rem;
+    letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance; margin-top: var(--space-2);
   }
   .h3-hero__sub { margin-top: 1.5rem; max-width: 34rem; font-size: var(--type-lead); line-height: 1.65; }
   @media (min-width: 56rem) { .h3-hero__sub { margin-top: 2rem; } }
   .h3--dark .h3-hero__sub { color: var(--on-dark-muted); }
   .h3--light .h3-hero__sub { color: var(--muted); }
-  .h3-hero__cta { margin-top: 1.75rem; }
-  @media (min-width: 56rem) { .h3-hero__cta { margin-top: 2.25rem; } }
+  .h3-hero__cta { margin-top: var(--space-4); }
 
   .h3-hero__media { position: relative; margin: 0; }
   .h3-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
   @media (max-width: 56rem) {
-    .h3-hero__media { margin-top: 2rem; border-radius: 14px; overflow: hidden; }
+    .h3-hero__media { margin-top: 0; border-radius: var(--radius-card); overflow: hidden; }
   }
-  /* Dark heroes: the photograph reaches the right edge and melts into
-     Midnight on its left, while keeping the aspect ratio it was cropped to.
-     A full-bleed half-screen slot would crop these frames vertically and cut
-     a person out of the conversation. */
-  @media (min-width: 56rem) {
-    .h3--dark .h3-hero__media {
-      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-      width: 50%; z-index: 0;
-      border-radius: 14px 0 0 14px; overflow: hidden;
-    }
-    .h3--light .h3-hero__media { border-radius: 14px; overflow: hidden; }
-  }
-  .h3-hero__scrim { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
-  @media (min-width: 56rem) {
-    .h3--dark .h3-hero__scrim {
-      background: linear-gradient(90deg, var(--midnight) 0%, rgba(10, 11, 20, 0.55) 22%, rgba(10, 11, 20, 0) 60%);
-    }
-  }
-  @media (max-width: 56rem) {
-    .h3--dark .h3-hero__scrim {
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(10, 11, 20, 0.4) 0%, rgba(10, 11, 20, 0) 45%);
-    }
-  }
+  .h3-hero__media { position: relative; inset: auto; transform: none; width: 100%; min-width: 0; border-radius: var(--radius-card); overflow: hidden; }
+  .h3-hero__scrim { display: none; }
 
   /* Each hero declares the ratio of the file it was given, so nothing is
      re-cropped in the browser. */

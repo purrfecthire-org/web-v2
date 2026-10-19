@@ -67,9 +67,9 @@ jobs:
         # a repo Actions variable, these all fall back to their empty/offline
         # states and every production build silently ships with no roles.
         # Settings → Secrets and variables → Actions → Variables →
-        # PUBLIC_API_ENDPOINT = https://ats-backend-snowy.vercel.app
+        # Current ATS owner: katerineforerosandoval; API verified 19 October 2026.
         env:
-          PUBLIC_API_ENDPOINT: ${{ vars.PUBLIC_API_ENDPOINT || 'https://ats-backend-snowy.vercel.app' }}
+          PUBLIC_API_ENDPOINT: https://ats-backend-mu.vercel.app
           PUBLIC_LOG_ENDPOINT: ${{ vars.PUBLIC_LOG_ENDPOINT }}
           PUBLIC_B2B_LEAD_ENDPOINT: ${{ vars.PUBLIC_B2B_LEAD_ENDPOINT }}
           PUBLIC_ANALYTICS_SRC: ${{ vars.PUBLIC_ANALYTICS_SRC }}

@@ -1,0 +1,55 @@
+---
+import { team } from '../../content/team';
+---
+
+<div class="team-gallery" role="group" aria-label={team.label}>
+  {team.people.map((person) => (
+    <figure class="team-gallery__person">
+      <div class="team-gallery__portrait">
+        <img
+          src={person.src}
+          alt={person.name}
+          width={person.width}
+          height={person.height}
+          loading="lazy"
+          decoding="async"
+          style={{ objectPosition: person.position }}
+        />
+      </div>
+      <figcaption>{person.name}</figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .team-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-stack);
+  }
+  .team-gallery__person { min-width: 0; }
+  .team-gallery__portrait {
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-card);
+    background: var(--stone);
+  }
+  .team-gallery__portrait img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .team-gallery figcaption {
+    margin-top: .75rem;
+    font-size: var(--type-ui);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  @media (min-width: 40rem) {
+    .team-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (min-width: 64rem) {
+    .team-gallery { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  }
+</style>

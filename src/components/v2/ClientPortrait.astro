@@ -2,12 +2,13 @@
 import { Image } from 'astro:assets';
 import daniel from '../../assets/daniel-contreras.png';
 
-interface Props { alt?: string }
-const { alt = 'Daniel Contreras' } = Astro.props;
+interface Props { alt?: string; shape?: 'landscape' | 'circle' }
+const { alt = 'Daniel Contreras', shape = 'landscape' } = Astro.props;
 ---
 
-<Image src={daniel} alt={alt} width={768} format="webp" quality={85} loading="lazy" decoding="async" class="client-portrait" />
+<Image src={daniel} alt={alt} width={768} format="webp" quality={85} loading="lazy" decoding="async" class:list={["client-portrait", {"client-portrait--circle": shape === "circle"}]} />
 
 <style>
-  .client-portrait { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; }
+  .client-portrait { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius-card); }
+  .client-portrait--circle { width: 8rem; height: 8rem; aspect-ratio: 1; object-position: center 35%; border-radius: 50%; }
 </style>

@@ -10,6 +10,26 @@
 // **bold**, *italic* / _italic_, `code`, [text](url) links, blank-line paragraphs.
 // ─────────────────────────────────────────────────────────────────────────────
 
+/** Normalize punctuation for public presentation only. Source records stay intact. */
+export function normalizePublicText(value: string): string {
+  return String(value)
+    .replace(/&(?:amp;)?(?:mdash|ndash|#0*821[12]|#x0*201[34]);/gi, '\u2014')
+    .replace(/(\d[\d,.]*)[ \t]*[\u2013\u2014][ \t]*(?=\d)/g, '$1 to ')
+    .replace(/[ \t]*[\u2013\u2014][ \t]*/g, ', ');
+}
+
+// Keep link targets and code literal. Normalize only the prose and link labels,
+// before escaping HTML; no arbitrary HTML entities are decoded.
+function normalizeMarkdownPresentation(src: string): string {
+  return src.split(/(\[[^\]]*\]\([^\s)]+\)|`[^`\n]*`|(?:https?:\/\/|mailto:)[^\s<>]+)/g)
+    .map((part) => {
+      const link = part.match(/^\[([^\]]*)\]\(([^\s)]+)\)$/);
+      if (link) return `[${normalizePublicText(link[1])}](${link[2]})`;
+      if (/^(?:`|https?:\/\/|mailto:)/.test(part)) return part;
+      return normalizePublicText(part);
+    }).join('');
+}
+
 function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')
@@ -43,7 +63,7 @@ function inline(text: string): string {
 
 export function renderMarkdown(src: string | null | undefined): string {
   if (!src) return '';
-  const lines = escapeHtml(src.replace(/\r\n/g, '\n')).split('\n');
+  const lines = escapeHtml(normalizeMarkdownPresentation(src).replace(/\r\n/g, '\n')).split('\n');
   const out: string[] = [];
   let listType: 'ul' | 'ol' | null = null;
   let para: string[] = [];

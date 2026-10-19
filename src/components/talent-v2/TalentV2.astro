@@ -5,10 +5,9 @@
 // actions; the founder journey uses its own conversion in the shared shell.
 import Shell from '../v2/Shell.astro';
 import ClientPortrait from '../v2/ClientPortrait.astro';
-import ParticipantVoices from '../v2/ParticipantVoices.astro';
+import { talentTestimonials } from '../../content/talentTestimonials';
 import type { Lang } from '../../content/index';
 import { getTalentV2 } from '../../content/talentV2';
-import { PAGE_OFFER } from '../../content/links';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
@@ -35,11 +34,9 @@ const t = getTalentV2(lang);
             <a href={t.hero.href} data-cta="talent-hero-offer" class="h3-btn tv-hero__cta">
               {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
             </a>
-            <a href={t.hero.secondary.href} data-cta="talent-hero-compounding" class="h3-link tv-hero__secondary">{t.hero.secondary.label} <span aria-hidden="true">→</span></a>
-            <a href={t.paths.free.href} class="tv-hero__free" data-cta="talent-hero-roles">{t.paths.free.cta} <span aria-hidden="true">→</span></a>
           </div>
           <figure class="h3-hero__media" style={{ "--photo-desktop": "4 / 3", "--photo-mobile": "4 / 3" }}>
-<picture>
+            <picture>
               <source media="(max-width: 55.99rem)" type="image/webp" srcset="/photos/web/talent-mobile.webp" />
               <source media="(max-width: 55.99rem)" srcset="/photos/web/talent-mobile.png" />
               <source type="image/webp" srcset="/photos/web/talent-desktop.webp" />
@@ -82,62 +79,27 @@ const t = getTalentV2(lang);
             <div class="tv-problem__head">
               <p class="h3-eyebrow">{t.problem.eyebrow}</p>
               <h2 class="h3-h2">
-                {t.problem.headline}<span class="h3-dot h3-dot--end" aria-hidden="true"></span>
+                {t.problem.headline}
               </h2>
             </div>
             <p class="h3-body tv-problem__body">{t.problem.body}</p>
           </div>
 
-          <div class="tv-work">
-            <p class="h3-eyebrow">{t.work.eyebrow}</p>
-            <h2 class="h3-h2 tv-work__h2">{t.work.headline}</h2>
-            <ol class="tv-work__list">
-              {t.work.items.map((i) => (
-                <li>
-                  <span class="h3-dot" aria-hidden="true"></span>
-                  <div>
-                    <h3 class="tv-work__title">{i.title}</h3>
-                    <p class="tv-work__body">{i.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <p class="tv-work__note">{t.work.note}</p>
-            <a href={PAGE_OFFER} class="h3-link tv-work__cta">{t.work.cta} <span class="h3-arrow" aria-hidden="true">→</span></a>
-
-            <aside class="tv-exercise" aria-labelledby="tv-exercise-title">
-              <p class="h3-eyebrow">{t.work.example.label}</p>
-              <h3 id="tv-exercise-title">{t.work.example.headline}</h3>
-              <dl>
-                {t.work.example.steps.map((step) => (
-                  <div><dt>{step.title}</dt><dd>{step.body}</dd></div>
-                ))}
-              </dl>
-            </aside>
-          </div>
-
-          <!-- Firewall, right after Create access -->
-          <aside class="fw" aria-labelledby="tv-firewall-h">
-            <h2 class="fw__h" id="tv-firewall-h">{t.firewall.headline}</h2>
-            <p class="fw__lead">{t.firewall.lead}</p>
-            <details class="fw__more">
-              <summary>{t.firewall.more}</summary>
-              <div>{t.firewall.body.map((b) => <p>{b}</p>)}</div>
-            </details>
+          <aside class="tv-confidentiality" aria-labelledby="tv-firewall-h">
+            <h3 id="tv-firewall-h">{t.firewall.headline}</h3>
+            <p>{t.firewall.lead}</p>
           </aside>
         </div>
       </section>
 
-      <!-- Proof, the weighted dark moment. Daniel's words carry it on their
-           own: the three outcome cases are out of this release until the
-           facts and the written permissions are in. -->
+      <!-- One shared proof surface, with the existing participant words. -->
       <section class="tv-proof">
         <div class="h3-wrap">
           <p class="h3-eyebrow h3-eyebrow--on-dark">{t.proof.eyebrow}</p>
           <h2 class="h3-h2 h3-h2--on-dark tv-proof__h2">{t.proof.headline}</h2>
 
           <figure class="tv-voice tv-voice--solo">
-            <ClientPortrait alt={t.proof.voice.name} />
+            <ClientPortrait alt={t.proof.voice.name} shape="circle" />
             <div class="tv-voice__copy">
             <blockquote>“{t.proof.voice.quote}”</blockquote>
             <figcaption>
@@ -147,7 +109,18 @@ const t = getTalentV2(lang);
             </figcaption>
             </div>
           </figure>
-          <ParticipantVoices />
+          <div class="tv-voices">
+            {talentTestimonials.map((voice) => (
+              <figure class="tv-voice-card">
+                <blockquote>“{voice.quote}”</blockquote>
+                <figcaption>
+                  <strong>{voice.name}</strong>
+                  <span>{voice.context}</span>
+                  <span>Translated from Spanish</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -156,126 +129,94 @@ const t = getTalentV2(lang);
         <div class="h3-wrap">
           <h2 class="h3-h2 tv-close__h2">{t.close.headline}</h2>
           <p class="h3-body tv-close__body">{t.close.body}</p>
-          <a href={t.close.href} data-cta="talent-close-offer" class="h3-btn tv-close__cta">{t.close.cta}</a>
+          <a href="#ways-in" data-cta="talent-close-paths" class="h3-btn tv-close__cta">{t.paths.eyebrow}<span class="h3-arrow" aria-hidden="true">→</span></a>
         </div>
       </section>
 
     </Shell>
 
 <style lang="scss" is:global>
-  /* ── Page-specific ───────────────────────────────────────────────── */
   .tv-h1 { margin-top: 1rem; }
   .tv-audience {
-    margin-top: 1.5rem; font-size: var(--type-ui); color: var(--muted);
-    max-width: 30rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+    margin-top: 1.5rem;
+    max-width: 34rem;
+    font-size: var(--type-ui);
+    line-height: 1.6;
+    color: var(--muted);
   }
   .tv-hero__cta { margin-top: 2rem; }
-  .tv-hero__secondary { margin-top: 1.25rem; font-size: var(--type-caption); max-width: 31rem; line-height: 1.6; }
-  .tv-path__price { margin-top: 0.75rem; font-size: var(--type-body); font-weight: 500; color: var(--text); }
 
-  /* One ivory surface carries problem, the four things, and the firewall. */
-  .tv-main { background: var(--sand); padding: 5rem 0 6rem; }
-  @media (min-width: 56rem) { .tv-main { padding: 6rem 0 7.5rem; } }
-  .tv-problem { display: grid; gap: 1.75rem; align-items: start; }
-  @media (min-width: 56rem) { .tv-problem { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
-  .tv-problem__head { min-width: 0; }
-  .tv-problem__head .h3-h2 { max-width: 16ch; }
-  .tv-problem__body { max-width: 34rem; font-size: var(--type-lead); color: var(--text); }
-  @media (min-width: 56rem) { .tv-problem__body { padding-top: 1.9rem; } }
-
-  .tv-work { margin-top: 5rem; }
-  @media (min-width: 56rem) { .tv-work { margin-top: 7rem; } }
-  .tv-work__h2 { max-width: 34ch; }
-  .tv-work__list {
-    margin-top: 2.5rem; display: grid; gap: 0 3.5rem;
-    border-top: 1px solid var(--line);
-  }
-  @media (min-width: 56rem) { .tv-work__list { grid-template-columns: 1fr 1fr; } }
-  .tv-work__list li {
-    display: flex; gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line);
-  }
-  .tv-work__title { font-size: var(--type-subheading); font-weight: 500; line-height: 1.3; }
-  .tv-work__body { margin-top: 0.4rem; color: var(--muted); max-width: 36rem; }
-  .tv-work__note { margin-top: 1.75rem; font-size: var(--type-ui); color: var(--muted); }
-  .tv-work__cta { display: inline-block; margin-top: 1.5rem; }
-  .tv-exercise { margin-top: 2.5rem; padding: 1.75rem; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
-  .tv-exercise h3 { margin-top: 0.75rem; font-family: var(--h-sans); font-weight: 500; font-size: var(--type-subheading); line-height: 1.35; }
-  .tv-exercise dl { margin: 1.5rem 0 0; display: grid; gap: 1.25rem; }
-  .tv-exercise dl > div { padding-top: 1rem; border-top: 1px solid var(--line); min-width: 0; }
-  .tv-exercise dt { font-size: var(--type-caption); font-weight: 500; }
-  .tv-exercise dd { margin: 0.5rem 0 0; font-size: var(--type-body); line-height: 1.65; color: var(--muted); }
-  @media (min-width: 56rem) { .tv-exercise dl { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; } }
-
-  /* Easy to find, short to read, with the detail one click away. */
-  .fw { margin-top: 4rem; max-width: 44rem; padding-top: 2rem; border-top: 1px solid var(--line); }
-  .fw__h { font-size: var(--type-subheading); font-weight: 500; letter-spacing: -0.005em; color: var(--text); font-family: var(--h-sans); }
-  .fw__lead { margin-top: 0.75rem; font-size: var(--type-body); line-height: 1.6; color: var(--text); }
-  .fw__more { margin-top: 1rem; }
-  .fw__more > summary {
-    list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem;
-    font-size: var(--type-ui); font-weight: 500; color: var(--text);
-    border-bottom: 1px solid var(--line); padding-bottom: 2px;
-  }
-  .fw__more > summary::-webkit-details-marker { display: none; }
-  .fw__more > summary::after { content: '+'; font-size: var(--type-body); line-height: 1; color: var(--purple); }
-  .fw__more[open] > summary::after { content: '–'; }
-  .fw__more > summary:hover { border-color: var(--text); }
-  .fw__more > div { margin-top: 1rem; display: grid; gap: 0.85rem; }
-  .fw__more p { font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-
-  .tv-proof { background: var(--midnight); color: var(--on-dark); padding: 5rem 0; }
-  @media (min-width: 56rem) { .tv-proof { padding: 7rem 0; } }
-  .tv-proof__h2 { max-width: 32ch; }
-  .tv-voice { margin-top: 3rem; max-width: 44rem; }
-  .tv-voice--solo {
-    margin-top: 2.5rem; padding-top: 2.25rem; max-width: 46rem;
-    border-top: 1px solid var(--line-dark);
-  }
-  .tv-voice--solo .client-portrait { margin-bottom: 1.5rem; max-width: 32rem; }
-  @media (min-width: 56rem) {
-    .tv-voice--solo { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); align-items: center; gap: 3rem; max-width: none; }
-    .tv-voice--solo .client-portrait { margin-bottom: 0; }
-    .tv-voice__copy { min-width: 0; }
-  }
-  .tv-voice--solo blockquote { font-size: var(--type-quote); line-height: 1.55; font-family: var(--h-sans); }
-  .tv-voice blockquote {
-    margin-top: 0.85rem; font-family: var(--h-sans);
-    font-size: var(--type-quote); line-height: 1.55; color: var(--on-dark);
-  }
-  .tv-voice figcaption { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.15rem; font-size: var(--type-caption); }
-  .tv-voice__name { font-weight: 500; color: var(--on-dark); }
-  .tv-voice__role { color: var(--on-dark-muted); }
-
-  .tv-hero__free { display: block; width: fit-content; margin-top: 1rem; font-size: var(--type-caption); color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 3px; }
-  .tv-paths { background: var(--stone); padding: 4.5rem 0 5rem; scroll-margin-top: 5rem; }
-  @media (min-width: 56rem) { .tv-paths { padding: 6.5rem 0 7rem; } }
-  .tv-paths__h2 { max-width: 32ch; }
-  .tv-paths__list { margin-top: 2.5rem; display: grid; gap: 1.25rem; }
-  @media (min-width: 56rem) { .tv-paths__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; align-items: stretch; } }
+  /* Shared section rhythm and a single Ivory canvas outside proof. */
+  .tv-paths, .tv-main, .tv-close { background: var(--sand); padding-block: var(--space-section); }
+  .tv-paths { scroll-margin-top: 5rem; }
+  .tv-paths__h2, .tv-close__h2 { max-width: 28ch; }
+  .tv-paths__list { margin-top: 2rem; display: grid; gap: var(--space-grid); }
   .tv-path {
-    display: flex; flex-direction: column; height: 100%;
-    background: var(--sand); border: 1px solid var(--line); border-radius: 14px;
-    padding: 1.75rem; min-width: 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 2rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card, 12px);
   }
-  .tv-path--flagship { background: var(--white); border-color: rgba(99, 102, 241, 0.4); }
-  .tv-path__name { font-size: var(--type-subheading); font-weight: 500; line-height: 1.3; letter-spacing: -0.005em; }
-  .tv-path__body { margin-top: 0.75rem; font-size: var(--type-body); line-height: 1.6; color: var(--muted); }
-  .tv-path__body { flex: 1; }
-  .tv-path__cta { align-self: flex-start; margin-top: 1.75rem; font-size: var(--type-ui); }
-  .tv-path__note { margin-top: 0.9rem; font-size: var(--type-caption); line-height: 1.55; color: var(--muted); }
+  .tv-path--flagship { border-color: var(--purple); }
+  .tv-path__name { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .tv-path__price { margin-top: 1rem; font-size: var(--type-body); font-weight: 500; color: var(--text); }
+  .tv-path__body { flex: 1; margin-top: 1rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .tv-path__cta { align-self: flex-start; margin-top: 2rem; font-size: var(--type-ui); line-height: 1.5; }
+  .tv-path__note { margin-top: 1rem; font-size: var(--type-caption); line-height: 1.6; color: var(--muted); overflow-wrap: anywhere; }
+  .tv-free { margin-top: 2rem; max-width: 44rem; }
+  .tv-free p { font-size: var(--type-ui); line-height: 1.6; color: var(--muted); }
+  .tv-free__cta { margin-top: 1rem; font-size: var(--type-ui); }
 
-  .tv-close { background: var(--sand); padding: 5rem 0 6rem; }
-  @media (min-width: 56rem) { .tv-close { padding: 7rem 0 8rem; } }
-  .tv-close__h2 { max-width: 34ch; }
-  .tv-close__body { margin-top: 1.25rem; font-size: var(--type-lead); }
+  .tv-problem { display: grid; gap: var(--space-grid); align-items: start; }
+  .tv-problem__head { min-width: 0; }
+  .tv-problem__head .h3-h2 { max-width: 20ch; }
+  .tv-problem__body { max-width: 34rem; font-size: var(--type-lead); color: var(--text); }
+  .tv-confidentiality { margin-top: 2rem; max-width: 44rem; }
+  .tv-confidentiality h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .tv-confidentiality p { margin-top: 1rem; font-size: var(--type-ui); line-height: 1.6; color: var(--muted); }
+
+  .tv-proof { background: var(--midnight); color: var(--on-dark); padding-block: var(--space-section); }
+  .tv-proof__h2 { max-width: 28ch; }
+  .tv-voice--solo {
+    margin-top: 2rem;
+    display: grid;
+    gap: var(--space-grid);
+    align-items: center;
+    padding: 2rem;
+    border-radius: var(--radius-card, 12px);
+    background: var(--sand);
+    color: var(--text);
+  }
+  .tv-voice__copy { min-width: 0; }
+  .tv-voice blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.5; color: var(--text); }
+  .tv-voice figcaption { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: var(--type-caption); line-height: 1.5; }
+  .tv-voice__name { font-weight: 500; color: var(--text); }
+  .tv-voice__role { color: var(--muted); }
+  .tv-voices { display: grid; gap: var(--space-grid); margin-top: 2rem; }
+  .tv-voice-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 2rem;
+    border-radius: var(--radius-card, 12px);
+    background: var(--sand);
+    color: var(--text);
+  }
+  .tv-voice-card blockquote { flex: 1; font-size: var(--type-body); line-height: 1.7; }
+  .tv-voice-card figcaption { display: grid; gap: 0.5rem; margin-top: 1.5rem; font-size: var(--type-caption); line-height: 1.5; }
+  .tv-voice-card strong { font-weight: 500; }
+  .tv-voice-card figcaption span { color: var(--muted); }
+
+  .tv-close__body { margin-top: 1.5rem; font-size: var(--type-lead); }
   .tv-close__cta { margin-top: 2rem; }
 
-  @media (prefers-reduced-motion: reduce) { .h3 *, .tv-main * { transition: none !important; } }
-
-  .tv-path__note, .tv-path__note a { overflow-wrap: anywhere; }
-
-  /* Free applications have their own destination, independent of advisory. */
-  .tv-free { margin-top: 2rem; max-width: 44rem; }
-  .tv-free p { font-size: var(--type-ui); line-height: 1.7; color: var(--muted); }
-  .tv-free__cta { margin-top: 0.9rem; font-size: var(--type-ui); color: var(--text); }
+  @media (min-width: 56rem) {
+    .tv-paths__list { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
+    .tv-problem { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tv-problem__body { padding-top: 2rem; }
+    .tv-voice--solo { grid-template-columns: 8rem minmax(0, 1fr); }
+    .tv-voices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
 </style>

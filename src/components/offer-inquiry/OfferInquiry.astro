@@ -121,16 +121,16 @@ const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry
 </script>
 
 <style>
-  .oi { padding: 8rem 0 6rem; }
+  .oi { padding: var(--space-hero-top) 0 var(--space-section); }
   .oi [hidden] { display: none !important; }
   .oi__grid { display: grid; gap: 2.75rem; align-items: start; }
   .oi__title { max-width: 12ch; }
-  .oi__back { margin-top: 1.75rem; }
-  .oi__note { margin-top: 1.75rem; max-width: 34rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.7; }
-  .oi__form, .oi__unavailable, .oi__received { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 1.5rem; }
-  .oi__form { display: grid; gap: 1.25rem; }
-  .oi__form label { display: grid; gap: .5rem; font-size: var(--type-ui); font-weight: 500; }
-  .oi__form input, .oi__form select { width: 100%; min-width: 0; box-sizing: border-box; padding: .8rem; border: 1px solid #8a8d99; border-radius: 6px; background: var(--white); color: var(--text); font: inherit; }
+  .oi__back { margin-top: 2rem; }
+  .oi__note { margin-top: 2rem; max-width: 34rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.7; }
+  .oi__form, .oi__unavailable, .oi__received { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 1.4rem; }
+  .oi__form { display: grid; gap: 1.4rem; }
+  .oi__form label { display: grid; gap: .4rem; font-size: var(--type-ui); font-weight: 500; }
+  .oi__form input, .oi__form select { width: 100%; min-width: 0; box-sizing: border-box; padding: .8rem; border: 1px solid #8a8d99; border-radius: var(--radius-input); background: var(--white); color: var(--text); font: inherit; }
   .oi__form input:focus-visible, .oi__form select:focus-visible, .oi__received h2:focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
   .oi__form .h3-btn { min-height: 48px; border: 0; cursor: pointer; font-family: inherit; }
   .oi__form .h3-btn:disabled { opacity: .65; cursor: wait; }
@@ -140,11 +140,11 @@ const emailHref = `mailto:${CONTACT_EMAIL}?subject=Offer%20Accelerator%20inquiry
   .oi__trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .oi__error { color: #9f1c15; font-size: var(--type-ui); }
   .oi__fallback { color: var(--muted); font-size: var(--type-caption); line-height: 1.7; }
-  .oi__fallback p + p { margin-top: .5rem; }
+  .oi__fallback p + p { margin-top: .4rem; }
   .oi__unavailable .h3-h2 { margin-top: 0; }
-  .oi__received .h3-body { margin-top: 1.5rem; }
+  .oi__received .h3-body { margin-top: 1.4rem; }
   @media (min-width: 64rem) {
-    .oi__grid { grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .oi__grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
     .oi__form, .oi__unavailable, .oi__received { padding: 2rem; }
   }
   @media (prefers-reduced-motion: reduce) { .oi { scroll-behavior: auto; } }
