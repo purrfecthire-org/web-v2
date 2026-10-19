@@ -37,7 +37,14 @@ const applyUrl = apiBase() ? `${apiBase()}${role.apply_path}` : '';
 const railHtml = roleRailHTML(role);
 const readonlyHtml = roleReadOnlyContentHTML(role);
 
-const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
+const englishOptions = [
+  ['A1', 'A1 · Beginner'], ['A2', 'A2 · Elementary'],
+  ['B1', 'B1 · Intermediate'], ['B2', 'B2 · Upper intermediate'],
+  ['C1', 'C1 · Advanced'], ['C2', 'C2 · Proficient'], ['Native', 'Native'],
+];
+const locationContext = [role.location, role.work_model ? ({ remote: 'Remote', hybrid: 'Hybrid', 'on-site': 'On-site' }[role.work_model]) : null].filter(Boolean).join(' · ');
+const englishHint = role.english_level ? `Published English requirement: ${role.english_level}.` : 'Select the level that best describes your English.';
+const internationalIntake = Boolean(role.country_code && role.country_code !== 'US' && role.salary?.currency !== 'USD');
 ---
 
 <div class="rv2" id="rv2-root" data-slug={role.slug}>
@@ -112,6 +119,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
         <span class="rv2__eyebrow">Apply</span>
         <h2 class="rv2__apply-title">Apply for this role</h2>
         <p class="rv2__apply-sub">Applying is free. Offer Accelerator is never required and does not change how you are assessed.</p>
+        <p class="rv2__application-context" id="rv2-application-location" hidden={!locationContext}>Role location: {locationContext}</p>
         <noscript><p class="rv2__apply-sub">Enable JavaScript to use the form, or send your profile and this role title to <a href="mailto:go@purrfecthire.com">go@purrfecthire.com</a>.</p></noscript>
 
         <form class="rv2__form" id="rv2-form" data-apply-url={applyUrl} novalidate>
@@ -138,16 +146,18 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
               <span class="rv2__f-err" id="rv2-linkedin-error" data-err-for="rv2-linkedin"></span>
             </div>
             <div class="rv2__f">
-              <label for="rv2-english">English level *</label>
-              <select id="rv2-english" name="english_level" aria-describedby="rv2-english-error" required>
+              <label for="rv2-english">Self-assessed English level *</label>
+              <select id="rv2-english" name="english_level" aria-describedby="rv2-english-hint rv2-english-error" required>
                 <option value="">Select…</option>
-                {englishOptions.map((o) => <option value={o}>{o}</option>)}
+                {englishOptions.map(([value, label]) => <option value={value}>{label}</option>)}
               </select>
+              <span class="rv2__f-hint" id="rv2-english-hint">{englishHint}</span>
               <span class="rv2__f-err" id="rv2-english-error" data-err-for="rv2-english"></span>
             </div>
             <div class="rv2__f">
               <label for="rv2-des">Expected compensation (USD / year) *</label>
-              <input type="number" id="rv2-des" name="desired_salary_usd" min="1" step="1" inputmode="numeric" aria-describedby="rv2-des-error" required />
+              <input type="number" id="rv2-des" name="desired_salary_usd" min="1" step="1" inputmode="numeric" aria-describedby="rv2-des-hint rv2-des-error" required />
+              <span class="rv2__f-hint" id="rv2-des-hint" hidden={!internationalIntake}>The application system currently records expectations in USD per year.</span>
               <span class="rv2__f-err" id="rv2-des-error" data-err-for="rv2-des"></span>
             </div>
             <div class="rv2__f rv2__f--full">
@@ -219,7 +229,7 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
   // script, so its own listeners (registered later in this same file) keep
   // working after any swap.
   import { fetchRole, roleRailHTML, roleReadOnlyContentHTML, reportClientError, FetchRoleError } from '../../lib/roles';
-  import { createRoleApplicationAttempts, receivedRoleApplicationId } from '../../lib/roleApplication';
+  import { createRoleApplicationAttempts, receivedRoleApplicationId, roleApplicationFieldErrors } from '../../lib/roleApplication';
   import { lockSubmissionFields } from '../../lib/submissionState';
 
   (async () => {
@@ -240,6 +250,17 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
       const fresh = await fetchRole(slug);
       if (railInner) railInner.innerHTML = roleRailHTML(fresh);
       if (readonly) readonly.innerHTML = roleReadOnlyContentHTML(fresh);
+      // Keep application context current without replacing the candidate's inputs.
+      const context = document.getElementById('rv2-application-location');
+      const workLabels = { remote: 'Remote', hybrid: 'Hybrid', 'on-site': 'On-site' };
+      const location = [fresh.location, fresh.work_model ? workLabels[fresh.work_model] : null].filter(Boolean).join(' · ');
+      if (context) { context.textContent = `Role location: ${location}`; context.hidden = !location; }
+      const englishHint = document.getElementById('rv2-english-hint');
+      if (englishHint) englishHint.textContent = fresh.english_level
+        ? `Published English requirement: ${fresh.english_level}.`
+        : 'Select the level that best describes your English.';
+      const salaryHint = document.getElementById('rv2-des-hint');
+      if (salaryHint) salaryHint.hidden = !(fresh.country_code && fresh.country_code !== 'US' && fresh.salary?.currency !== 'USD');
       layout?.removeAttribute('hidden');
     } catch (err) {
       if (err instanceof FetchRoleError && err.status === 404) {
@@ -424,10 +445,18 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
           return;
         }
 
+        // Restore controls before moving focus to a rejected field.
+        restoreFields();
         // Keep answers visible after a rejection or an unconfirmed receipt.
         showFailure(res.status === 400 || res.status === 422
           ? `Please check your details and try again. Receipt has not been confirmed. Reference ${respId}.`
           : `We could not confirm receipt. Your answers are still here. Try again or email us below. Reference ${respId}.`);
+        if (res.status === 422) {
+          const errors = roleApplicationFieldErrors(json);
+          for (const [id, message] of Object.entries(errors)) setErr(id, message);
+          const firstInvalid = fieldIds.find((id) => id in errors);
+          if (firstInvalid) { summary.hidden = false; $(firstInvalid).focus(); }
+        }
         reportClientError(`role application submit failed (HTTP ${res.status})`, {
           stage: 'role_application_submit',
           status: res.status,
@@ -492,6 +521,8 @@ const englishOptions = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Native'];
     @media (min-width: 64rem) { padding-inline: 3rem; }
   }
   .rv2 [hidden] { display: none !important; }
+  .rv2__application-context { margin-block: var(--space-stack) var(--space-2) !important; color: $muted; font-size: var(--type-caption); line-height: 1.5; }
+  .rv2__f-hint { display: block; font-size: var(--type-caption); line-height: 1.5; color: $muted; }
 
   // ── Back crumb ───────────────────────────────────────────────────
   .rv2__crumb { margin-bottom: 1.5rem; }

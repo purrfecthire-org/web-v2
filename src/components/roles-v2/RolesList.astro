@@ -19,7 +19,10 @@ const { roles, unavailable } = await getRolesSnapshot();
       <h2 class="rl__list-title">{t.count}<span id="rl-count" hidden={unavailable}> · {roles.length}</span></h2>
       <p>{t.confidentiality}</p>
     </div>
-    <p class="rl__notice" id="rl-refresh-error" role="status" hidden>{t.refreshError}</p>
+    <div class="rl__notice" id="rl-refresh-error" hidden>
+      <p id="rl-refresh-message" role="status">{t.refreshError}</p>
+      <button class="h3-btn h3-btn--sm h3-btn--ink" id="rl-refresh-retry" type="button" aria-describedby="rl-refresh-message" aria-controls="rl-grid rl-empty rl-error">{t.retry}</button>
+    </div>
     <div class="rl__grid" id="rl-grid" hidden={roles.length === 0} set:html={roles.map(roleCardHTML).join('')}></div>
 
     <div class="rl__state" id="rl-empty" hidden={unavailable || roles.length > 0}>
@@ -58,6 +61,7 @@ const { roles, unavailable } = await getRolesSnapshot();
     const notice = document.getElementById('rl-refresh-error')!;
     const count = document.getElementById('rl-count')!;
     const retry = document.getElementById('rl-retry') as HTMLButtonElement;
+    const refreshRetry = document.getElementById('rl-refresh-retry') as HTMLButtonElement;
     let refreshing = false;
 
     function preserveAttribution() {
@@ -85,8 +89,9 @@ const { roles, unavailable } = await getRolesSnapshot();
       if (refreshing) return;
       refreshing = true;
       retry.disabled = true;
+      refreshRetry.disabled = true;
       grid.setAttribute('aria-busy', 'true');
-      notice.hidden = true;
+      notice.setAttribute('aria-busy', 'true');
       try {
         const current = await fetchRoles();
         // GitHub Pages cannot render a new dynamic slug at request time.
@@ -95,6 +100,7 @@ const { roles, unavailable } = await getRolesSnapshot();
         const available = current.filter((role) => built.has(role.slug));
         grid.innerHTML = available.map(roleCardHTML).join('');
         preserveAttribution();
+        notice.hidden = true;
         grid.hidden = available.length === 0;
         count.textContent = ` · ${available.length}`;
         count.hidden = false;
@@ -114,10 +120,13 @@ const { roles, unavailable } = await getRolesSnapshot();
       } finally {
         refreshing = false;
         retry.disabled = false;
+        refreshRetry.disabled = false;
         grid.removeAttribute('aria-busy');
+        notice.removeAttribute('aria-busy');
       }
     }
     retry.addEventListener('click', refresh);
+    refreshRetry.addEventListener('click', refresh);
     if (root.dataset.configured === 'true') refresh();
   }
 </script>
@@ -155,7 +164,9 @@ const { roles, unavailable } = await getRolesSnapshot();
   .rl__state p { margin: 1rem 0 var(--space-stack); color: var(--muted); max-width: 36rem; }
   .rl__state-actions { display: flex; flex-wrap: wrap; gap: var(--space-stack); align-items: center; }
   .rl__state button { cursor: pointer; border: 0; font-family: inherit; }
-  .rl__notice { color: var(--muted); margin-bottom: var(--space-stack) !important; }
+  .rl__notice { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-stack); color: var(--muted); margin-bottom: var(--space-stack) !important; }
+  .rl__notice p { flex: 1 1 auto; }
+  .rl__notice button { flex: none; }
   .rl__profile { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-grid); border-top: 1px solid var(--line); margin-top: var(--space-section); padding-top: var(--space-section); }
   .rl__profile .h3-h2 { max-width: 22ch; }
   @media (max-width: 47.99rem) { .rl__grid { grid-template-columns: 1fr; } }
