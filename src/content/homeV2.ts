@@ -17,7 +17,7 @@ export const homeV2En = {
     choose: 'Choose your path',
     bookingCta: 'Book a founders call',
     whatsappCta: 'WhatsApp',
-    photoAlt: 'Illustrative scene of people walking through a sunlit city courtyard.',
+    photoAlt: 'Illustrative scene of four people walking through a contemporary timber courtyard with greenery.',
   },
   proof: { eyebrow: 'Trusted by founders at' },
   kate: {
