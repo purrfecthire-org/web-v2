@@ -104,7 +104,7 @@ export const offerV2En: OfferV2Content = {
   },
   includes: {
     eyebrow: 'What is included',
-    headline: 'Eight sessions, and a team with you until you land.',
+    headline: 'Eight sessions. Support as you put the plan to work.',
     items: [
       'Eight 1:1 sessions in total, one diagnostic and seven with Kate',
       'Personalized materials and agreed next actions in your private Career Journal',
