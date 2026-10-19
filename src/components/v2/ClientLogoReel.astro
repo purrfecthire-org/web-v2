@@ -9,11 +9,13 @@ const { id } = Astro.props;
       {[0, 1].map(() => <div class="client-reel__set">{CLIENT_BRANDS.map(client => <a class="client-reel__tile" href={client.href} target="_blank" rel="noopener noreferrer" tabindex="-1" data-cta={`client-${client.id}`}><img src={`/clients/neutral/${client.id}.png`} width="480" height="192" alt="" loading="eager" decoding="async" /></a>)}</div>)}
     </div>
   </div>
-  <button class="client-reel__pause" type="button" aria-pressed="false" aria-label="Pause client logos">Pause logos</button>
-  <details class="client-reel__all">
+  <div class="client-reel__controls">
+    <button class="client-reel__pause" type="button" aria-pressed="false" aria-label="Pause client logos">Pause logos</button>
+    <details class="client-reel__all">
     <summary>View all clients <span aria-hidden="true">+</span></summary>
     <ul>{CLIENT_BRANDS.map(client => <li><a href={client.href} target="_blank" rel="noopener noreferrer" data-cta={`client-${client.id}`}>{client.name} <span aria-hidden="true">↗</span></a></li>)}</ul>
-  </details>
+    </details>
+  </div>
 </div>
 <script>
   for (const reel of document.querySelectorAll<HTMLElement>('.client-reel')) {
@@ -27,21 +29,28 @@ const { id } = Astro.props;
   }
 </script>
 <style>
-  .client-reel { width: 100%; max-width: 28rem; color: var(--text); }
-  .client-reel__window { height: 10rem; overflow: hidden; mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent); }
-  .client-reel__track { animation: clients-vertical 60s linear infinite; }
-  .client-reel__set { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .client-reel__tile { height: 4rem; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .client-reel { width: 100%; min-width: 0; color: var(--text); }
+  .client-reel__window { overflow: hidden; mask-image: linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
+  .client-reel__track { display: flex; width: max-content; animation: clients-horizontal 120s linear infinite; }
+  .client-reel__set { display: flex; flex: none; align-items: center; gap: var(--space-stack); padding-right: var(--space-stack); }
+  .client-reel__tile { width: 8rem; height: var(--space-8); flex: none; display: flex; align-items: center; justify-content: center; padding: 0; }
   .client-reel__tile img { display: block; width: 10rem; height: 4rem; max-width: 100%; object-fit: contain; }
+  .client-reel__controls { display: flex; justify-content: space-between; align-items: start; gap: var(--space-stack); margin-top: var(--space-2); }
   .client-reel__pause, .client-reel__all summary { font: 500 var(--type-caption)/1.5 var(--h-sans); color: var(--muted); background: none; border: 0; padding: .5rem 0; cursor: pointer; }
-  .client-reel__pause { min-height: 2.75rem; text-decoration: underline; text-underline-offset: .25rem; }
-  .client-reel__all summary { display: flex; justify-content: space-between; gap: 1rem; list-style: none; }
+  .client-reel__pause { flex: none; min-height: 2.75rem; text-decoration: underline; text-underline-offset: .25rem; }
+  .client-reel__all { min-width: 0; width: 24rem; max-width: 100%; }
+  .client-reel__all summary { display: flex; align-items: center; justify-content: end; min-height: 2.75rem; gap: var(--space-2); list-style: none; }
   .client-reel__all summary::-webkit-details-marker { display: none; }
   .client-reel__all[open] summary span { transform: rotate(45deg); }
   .client-reel__all ul { display: grid; gap: .5rem; padding-top: .5rem; }
   .client-reel__all a { display: flex; justify-content: space-between; gap: .5rem; padding-block: .5rem; font-size: var(--type-caption); }
   .client-reel__all a:hover { text-decoration: underline; }
   .is-paused .client-reel__track, .client-reel:hover .client-reel__track, .client-reel:focus-within .client-reel__track { animation-play-state: paused; }
-  @keyframes clients-vertical { to { transform: translateY(-50%); } }
+  @keyframes clients-horizontal { to { transform: translateX(-50%); } }
+  @media (min-width: 56rem) {
+    .client-reel__set { gap: var(--space-4); padding-right: var(--space-4); }
+    .client-reel__tile { width: 10rem; }
+    .client-reel__all ul { grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: var(--space-stack); }
+  }
   @media (prefers-reduced-motion: reduce) { .client-reel__track { animation: none; } .client-reel__pause { display: none; } }
 </style>

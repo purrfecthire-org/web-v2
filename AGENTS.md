@@ -35,7 +35,8 @@ card grids. Do not introduce ad hoc font or spacing values. Display sizes are
 
 Keep the original black Kate portrait once in Home, at most 160px wide, without
 retouching its files. The full linked client collection lives in Home, in neutral
-ink, moving vertically with pause and reduced-motion support. Client history
+ink, in one horizontal row moving from right to left, with pause and
+reduced-motion support. Client history
 does not mean that every company is hiring now.
 
 Never invent clients, outcomes, salary uplifts, endorsements or testimonials.
