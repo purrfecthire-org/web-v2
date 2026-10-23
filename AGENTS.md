@@ -47,7 +47,9 @@ existing Markdown utilities without changing URLs or code literals.
 
 ## Conditions and intake
 
-- OA: USD 2,000, one diagnostic and seven sessions with Kate; follow-up per
+- OA: from USD 2,000. Final investment depends on seniority and location and
+  is confirmed before enrollment (Kate, 23 October 2026). No unapproved tiers.
+  One diagnostic and seven sessions with Kate; follow-up per
   process while actively executing the agreed plan. No job, salary, unlimited-call
   or 24/7 guarantee.
 - Career Compounding: USD 5,000 over six months; nine private sessions with Kate:

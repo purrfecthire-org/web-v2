@@ -5,14 +5,13 @@ import { getCompaniesV2 } from '../../content/companiesV2';
 import { CLIENT_BRANDS } from '../../content/clientBrands';
 import { BOOKING_B2B as BOOKING_URL } from '../../content/links';
 import CompaniesIcon from './CompaniesIcon.astro';
-import SearchMethodVisual from './SearchMethodVisual.astro';
+import CompanyTestimonial from './CompanyTestimonial.astro';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getCompaniesV2(lang);
 const situations = t.situations.items.filter(({ title }) => ['The role keeps changing', 'The people you want are not applying', 'The hire has to outgrow the role'].includes(title));
 const situationIcons = ['role', 'market', 'growth'] as const;
-const searches = t.selectedSearches.items.filter((search) => search.outcome).slice(0, 2);
 const chen = t.proof.voices.find(({ name }) => name === 'Chen Atlas')!;
 const fabian = t.proof.voices.find(({ name }) => name === 'Fabián Torres')!;
 const optery = CLIENT_BRANDS.find(({ id }) => id === 'optery')!;
@@ -59,7 +58,6 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
       <div>
         <p class="h3-eyebrow">{t.method.eyebrow}</p>
         <h2 class="h3-h2 fc-heading" id="fc-method-title">{t.method.headline}</h2>
-        <div class="fc-method__visual"><SearchMethodVisual /></div>
       </div>
       <ol class="fc-steps">
         {t.method.steps.map((step, index) => <li class="fc-step" id={index === 2 ? 'candidate-brief' : undefined}>
@@ -79,11 +77,13 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
     <div class="h3-wrap">
       <p class="h3-eyebrow">{t.proof.eyebrow}</p>
       <h2 class="h3-h2 fc-heading" id="fc-proof-title">{t.proof.headline}</h2>
-      <article class="fc-product-hire" id="optery-case" aria-labelledby="fc-product-hire-title">
-        <div class="fc-product-hire__story">
-          <a class="fc-brand" href={optery.href} target="_blank" rel="noopener noreferrer" aria-label={optery.name}><img src="/clients/neutral/optery.png" alt={optery.name} width="480" height="192" loading="lazy" decoding="async" /></a>
+      <article class="fc-product-hire fc-editorial" id="selected-searches" aria-labelledby="fc-product-hire-title">
+        <div class="fc-product-hire__story" id="optery-case">
+          <p class="h3-eyebrow">{optery.name}</p>
           <h3 class="fc-product-hire__title" id="fc-product-hire-title">{t.productHire.headline}</h3>
           <p class="fc-product-hire__brief">{t.productHire.brief}</p>
+        </div>
+        <div class="fc-product-hire__progress">
           <p class="fc-product-hire__name">{t.productHire.name}</p>
           <dl class="fc-progression">
             <div><dt>Hired as</dt><dd>{t.productHire.atHire}</dd></div>
@@ -91,49 +91,11 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
           </dl>
           <p class="fc-product-hire__progression">{t.productHire.progression}</p>
         </div>
-        <figure class="fc-chen">
-          <blockquote>“{chen.quote}”</blockquote>
-          <figcaption class="fc-attribution">
-            {(chen.photoWebp || chen.photo) && <img class="fc-portrait" src={chen.photoWebp || chen.photo} alt={chen.name} width="480" height="480" loading="lazy" decoding="async" />}
-            <div>
-              <span class="fc-attribution__name">{chen.name}</span>
-              <span>{chen.role}</span>
-              <span class="fc-attribution__context">On Guido’s integration and performance · February 2025</span>
-              {chen.excerptLabel && <span class="fc-attribution__context">{chen.excerptLabel}</span>}
-            </div>
-          </figcaption>
-        </figure>
       </article>
-
-      <figure class="fc-fabian fc-editorial">
-        <figcaption class="fc-fabian__identity">
-          <a class="fc-brand" href={trebol.href} target="_blank" rel="noopener noreferrer" aria-label={trebol.name}><img src="/clients/neutral/trebol.png" alt={trebol.name} width="480" height="192" loading="lazy" decoding="async" /></a>
-          <span class="fc-attribution">
-            {(fabian.photoWebp || fabian.photo) && <img class="fc-portrait" src={fabian.photoWebp || fabian.photo} alt={fabian.name} width="480" height="480" loading="lazy" decoding="async" />}
-            <span><span class="fc-attribution__name">{fabian.name}</span><span>{fabian.role}</span></span>
-          </span>
-        </figcaption>
-        <blockquote>“{fabian.quote}”</blockquote>
-      </figure>
-
-      <!-- The backend search is a separate anonymous case, never Guido's
-           product search or an additional named testimonial. -->
-      {searches.length > 0 && <details class="fc-searches" id="selected-searches">
-        <summary>Read an anonymized backend engineer search<span aria-hidden="true">+</span></summary>
-        {searches.map(search => <article class="fc-search fc-editorial">
-          <div>
-            <p class="h3-eyebrow">{t.selectedSearches.eyebrow}</p>
-            <p class="fc-search__context">{[search.company, search.stage, search.role].filter(Boolean).join(' · ')}</p>
-            <h3>{search.title}</h3>
-            <p>{search.problem}</p>
-          </div>
-          <dl>
-            <div><dt>{t.selectedSearches.interventionLabel}</dt><dd>{search.intervention}</dd></div>
-            {search.evidence && <div><dt>Evidence to examine</dt><dd>{search.evidence}</dd></div>}
-            {search.outcome && <div><dt>{t.selectedSearches.outcomeLabel}</dt><dd>{search.outcome}</dd></div>}
-          </dl>
-        </article>)}
-      </details>}
+      <div class="fc-testimonials">
+        <CompanyTestimonial voice={chen} brand={optery} portraitWidth={326} portraitHeight={314} />
+        <CompanyTestimonial voice={fabian} brand={trebol} />
+      </div>
     </div>
   </section>
 
@@ -165,18 +127,17 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
   .fc-situations__list, .fc-steps, .fc-models__list { display: grid; gap: var(--space-stack); }
   .fc-situation, .fc-step { min-width: 0; display: grid; grid-template-columns: var(--space-stack) minmax(0, 1fr); gap: var(--space-stack); padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .fc-situation__icon { display: flex; color: var(--muted); }
-  .fc-situation h3, .fc-step h3, .fc-search h3, .fc-model h3 { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .fc-situation p, .fc-step p, .fc-product-hire__brief, .fc-search p:not(.h3-eyebrow), .fc-search dd, .fc-model p { margin-top: var(--space-2); max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .fc-situation h3, .fc-step h3, .fc-model h3 { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .fc-situation p, .fc-step p, .fc-product-hire__brief, .fc-model p { margin-top: var(--space-2); max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .fc-step { scroll-margin-top: var(--space-stack); }
   .fc-step__id { font-size: var(--type-caption); font-variant-numeric: tabular-nums; line-height: 1.5; color: var(--muted); }
   .fc-step__link { margin-top: var(--space-2); max-width: 100%; font-size: var(--type-ui); }
-  .fc-method__visual { max-width: 100%; margin-top: var(--space-grid); }
-  .fc-product-hire { display: grid; gap: var(--space-grid); margin-top: var(--space-grid); padding: var(--space-stack); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); }
-  .fc-product-hire__story, .fc-chen { min-width: 0; }
-  .fc-brand { display: block; width: 10rem; max-width: 100%; }
-  .fc-brand img { display: block; width: 100%; height: auto; }
+  .fc-product-hire { margin-top: var(--space-grid); padding-block: var(--space-grid); border-bottom: 1px solid var(--line); scroll-margin-top: var(--space-stack); }
+  .fc-product-hire__story, .fc-product-hire__progress { min-width: 0; }
+  .fc-product-hire__story { scroll-margin-top: var(--space-stack); }
+  .fc-testimonials { display: grid; grid-template-columns: minmax(0, 1fr); margin-top: var(--space-grid); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; background: var(--white); }
   .fc-product-hire__title { margin-top: var(--space-2); font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.35; max-width: 26ch; text-wrap: balance; }
-  .fc-product-hire__name { margin-top: var(--space-stack); font-size: var(--type-body); font-weight: 500; line-height: 1.5; }
+  .fc-product-hire__name { margin: 0; font-size: var(--type-body); font-weight: 500; line-height: 1.5; }
   .fc-progression { display: grid; gap: var(--space-stack); margin-top: var(--space-2); }
   .fc-progression > div { position: relative; padding-left: var(--space-stack); }
   .fc-progression > div::before { content: ''; position: absolute; left: 0; top: .5em; width: .5rem; height: .5rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--white); }
@@ -185,26 +146,6 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
   .fc-progression dt { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .fc-progression dd { margin: var(--space-1) 0 0; font-size: var(--type-body); font-weight: 500; line-height: 1.5; }
   .fc-product-hire__progression { margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .fc-chen { display: flex; flex-direction: column; justify-content: center; margin: 0; padding-top: var(--space-stack); border-top: 1px solid var(--line); }
-  .fc-chen blockquote, .fc-fabian blockquote { max-width: 54ch; font-size: var(--type-quote); line-height: 1.5; }
-  .fc-attribution { display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .fc-attribution > div, .fc-attribution > span { min-width: 0; }
-  .fc-attribution > div > span, .fc-attribution > span > span { display: block; }
-  .fc-attribution__name { color: var(--text); font-weight: 500; }
-  .fc-attribution__context { margin-top: var(--space-1); }
-  .fc-portrait { display: block; width: var(--space-8); height: var(--space-8); flex: 0 0 auto; border-radius: 50%; object-fit: cover; object-position: 50% 35%; }
-  .fc-fabian { margin: var(--space-grid) 0 0; padding-block: var(--space-grid); border-bottom: 1px solid var(--line); align-items: center; }
-  .fc-fabian__identity { min-width: 0; }
-  .fc-searches { margin-top: var(--space-stack); scroll-margin-top: var(--space-stack); }
-  .fc-searches summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-stack); min-height: var(--space-6); cursor: pointer; list-style: none; font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
-  .fc-searches summary::-webkit-details-marker { display: none; }
-  .fc-searches[open] summary > span { transform: rotate(45deg); }
-  .fc-search { padding-block: var(--space-stack); }
-  .fc-search .fc-search__context { font-size: var(--type-caption); }
-  .fc-search h3 { margin-top: var(--space-2); }
-  .fc-search dl { display: grid; gap: var(--space-stack); }
-  .fc-search dt { font-size: var(--type-caption); font-weight: 500; line-height: 1.5; }
-  .fc-search dd { margin: var(--space-1) 0 0; }
   .fc-models { border-top: 1px solid var(--line); }
   .fc-model { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .fc-close { display: grid; gap: var(--space-stack); align-items: center; margin-top: var(--space-section); padding-top: var(--space-grid); border-top: 1px solid var(--line); }
@@ -213,8 +154,7 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
   @media (min-width: 56rem) {
     .fc-hero__media img { object-position: 50% 0%; }
     .fc-editorial { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
-    .fc-product-hire { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: var(--space-4); }
-    .fc-chen { padding-top: 0; padding-left: var(--space-grid); border-top: 0; border-left: 1px solid var(--line); }
+    .fc-testimonials { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .fc-close { grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-grid); }
     .fc-close .h3-btn { justify-self: end; }
   }

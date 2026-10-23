@@ -4,26 +4,14 @@ import type { Lang } from './index';
 // Evidence gaps for PR review:
 // - The brief's Head of Engineering example is illustrative, not a real case.
 //   The page shows only the structure until a sourced, anonymized brief exists.
-// - Selected searches contain only the documented brief, assessment feedback
-//   or post-hire feedback. Missing outcomes and candidate-level evidence are omitted.
-//   The requested fintech/product case had no matching source; the sourced
-//   technical product example is Series A energy infrastructure.
+// - The Optery product hire is owner-confirmed and distinct from the Backend
+//   Engineer follow-up. The latter is not published as a selected search: its
+//   recommendation criteria are undocumented and its feedback permission is pending.
 // - Keep the existing Fabian testimonial. Additional testimonials need a
 //   verified author and source before joining proof.voices.
 // - No ADDI headcount figure, fee percentage or performance metric is asserted.
 //   The approved initial read is a free 20-minute introductory call.
 //   The booking destination is managed in content/links.ts.
-
-export interface CompanySearchCase {
-  title: string;
-  company: string;
-  stage: string;
-  role: string;
-  problem: string;
-  intervention: string;
-  outcome?: string;
-  evidence?: string;
-}
 
 export interface CompaniesV2Content {
   meta: { title: string; description: string };
@@ -31,7 +19,6 @@ export interface CompaniesV2Content {
   situations: { eyebrow: string; headline: string; items: { title: string; body: string }[] };
   read: { eyebrow: string; headline: string; sampleLabel: string; body: string; items: string[]; cta: string; microcopy: string };
   evidence: { eyebrow: string; headline: string; body: string; label: string; items: { title: string; body: string }[]; cta: string };
-  selectedSearches: { eyebrow: string; headline: string; problemLabel: string; interventionLabel: string; outcomeLabel: string; items: CompanySearchCase[] };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
   proof: { eyebrow: string; headline: string; voices: { quote: string; name: string; role: string; excerptLabel?: string; context?: string; photo?: string; photoWebp?: string }[]; logosLabel: string; markets: string };
   productHire: { headline: string; name: string; brief: string; atHire: string; grewInto: string; progression: string };
@@ -95,36 +82,6 @@ export const companiesV2En: CompaniesV2Content = {
     ],
     cta: 'See a sample candidate brief',
   },
-  selectedSearches: {
-    eyebrow: 'Real searches · anonymized',
-    headline: 'What the search looked like from the inside.',
-    problemLabel: 'The problem',
-    interventionLabel: 'Search approach',
-    outcomeLabel: 'Outcome',
-    items: [
-      {
-        title: 'The technical requirement behind a product title.',
-        company: 'Energy infrastructure', stage: 'Series A', role: 'Technical Product Manager',
-        problem: 'The role combined data centre requirements, power-system specifications and a technical roadmap. Software PM experience alone was insufficient.',
-        intervention: 'The brief required power systems, data centre infrastructure and technical product ownership.',
-        evidence: 'Electrical systems, customer requirements, product decisions and field deployments.',
-      },
-      {
-        title: 'Checking the hire after joining.',
-        company: 'Consumer privacy technology', stage: '', role: 'Backend Engineer',
-        problem: 'A senior engineering search for a product working with personal data.',
-        intervention: 'A backend hire was followed by client feedback, kept separate from evidence gathered during selection.',
-        outcome: 'The client reported positive performance after joining. It was a point-in-time assessment.',
-      },
-      {
-        title: 'Backend strength, frontend gaps.',
-        company: 'Early-stage startup', stage: '', role: 'Founding Full-Stack Engineer',
-        problem: 'Technical assessments showed backend strength. The role also required strong frontend delivery and interface quality.',
-        intervention: 'Assessment feedback specified React, TypeScript, frontend architecture, performance and interface quality.',
-        evidence: 'Backend logic, API integration and UI delivery, with independent contribution made explicit.',
-      },
-    ],
-  },
   method: {
     eyebrow: 'How we work',
     headline: 'From role definition to recommendation.',
@@ -163,13 +120,13 @@ export const companiesV2En: CompaniesV2Content = {
         photo: '/brand/chen-atlas.webp',
         photoWebp: '/brand/chen-atlas.webp',
         excerptLabel: 'Excerpt from client feedback',
-        context: 'After a Purrfect hire joined the team · February 2025',
+        context: 'On Guido’s integration and performance · February 2025',
       },
     ],
     logosLabel: 'Trusted by founders at',
     markets: 'Searches across the US, Europe and Latin America.',
   },
-  // Guido is a PRODUCT hire, not the anonymous Backend Engineer above.
+  // Guido is a PRODUCT hire, distinct from the withdrawn Backend Engineer case.
   // Sources: Notion case 32c88cc78f9680d199cbd12a6540f14b (21 Apr 2026),
   // C03 3f988cc78f9681d0a515d6bc9d2a6610 (still interviewing 28 Oct 2024),
   // P03 3f988cc78f968139b5f8cf9784bac87e (approved post-hire quote).

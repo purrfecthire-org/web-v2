@@ -1,0 +1,48 @@
+---
+import type { CompaniesV2Content } from '../../content/companiesV2';
+import type { ClientBrand } from '../../content/clientBrands';
+
+interface Props {
+  voice: CompaniesV2Content['proof']['voices'][number];
+  brand: ClientBrand;
+  portraitWidth?: number;
+  portraitHeight?: number;
+}
+const { voice, brand, portraitWidth = 480, portraitHeight = 480 } = Astro.props;
+---
+
+<figure class="company-testimonial">
+  <a class="company-testimonial__brand" href={brand.href} target="_blank" rel="noopener noreferrer" aria-label={brand.name}>
+    <img src={`/clients/neutral/${brand.id}.png`} alt={brand.name} width="480" height="192" loading="lazy" decoding="async" />
+  </a>
+  <blockquote>“{voice.quote}”</blockquote>
+  <figcaption>
+    <div class="company-testimonial__identity">
+      {(voice.photoWebp || voice.photo) && <img class="company-testimonial__portrait" src={voice.photoWebp || voice.photo} alt={voice.name} width={portraitWidth} height={portraitHeight} loading="lazy" decoding="async" />}
+      <div><span class="company-testimonial__name">{voice.name}</span><span>{voice.role}</span></div>
+    </div>
+    {(voice.context || voice.excerptLabel) && <p class="company-testimonial__context">
+      {voice.context && <span>{voice.context}</span>}
+      {voice.excerptLabel && <span>{voice.excerptLabel}</span>}
+    </p>}
+  </figcaption>
+</figure>
+
+<style>
+  .company-testimonial { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: var(--space-stack); min-width: 0; margin: 0; padding: var(--space-stack); }
+  .company-testimonial + .company-testimonial { border-top: 1px solid var(--line); }
+  .company-testimonial__brand { display: block; width: calc(var(--space-8) * 2.5); height: var(--space-8); max-width: 100%; }
+  .company-testimonial__brand img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .company-testimonial blockquote { max-width: 40ch; font-size: var(--type-quote); line-height: 1.5; }
+  .company-testimonial figcaption { align-self: start; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .company-testimonial__identity { display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
+  .company-testimonial__identity > div { min-width: 0; }
+  .company-testimonial__identity span, .company-testimonial__context span { display: block; }
+  .company-testimonial__name { color: var(--text); font-weight: 500; }
+  .company-testimonial__portrait { display: block; width: var(--space-8); height: var(--space-8); flex: 0 0 auto; border-radius: 50%; object-fit: cover; object-position: 50% 35%; }
+  .company-testimonial__context { margin-top: var(--space-2); }
+  @media (min-width: 56rem) {
+    .company-testimonial { padding: var(--space-4); }
+    .company-testimonial + .company-testimonial { border-top: 0; border-left: 1px solid var(--line); }
+  }
+</style>

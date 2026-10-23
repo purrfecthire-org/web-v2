@@ -59,24 +59,20 @@ const t = getCareerCompoundingV2(lang);
     </section>
 
     <section class="cc-scope" aria-labelledby="cc-scope-title">
-      <div class="h3-wrap cc-scope__grid">
-        <div>
-          <p class="h3-eyebrow">{t.scope.eyebrow}</p>
-          <h2 class="h3-h2" id="cc-scope-title">{t.scope.headline}</h2>
-          <p class="cc-scope__price">{t.scope.price}</p>
-          <p class="h3-body cc-scope__terms">{t.scope.summary}</p>
-          <p class="cc-scope__privacy">{t.scope.privacy}</p>
-        </div>
-        <div>
-          <ol class="cc-inclusions">{t.scope.items.map((item) => <li><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
-          <div class="cc-questions">
-          {t.questions.items.map((item) => (
-            <details class="cc-question">
-              <summary>{item.question}<span aria-hidden="true">+</span></summary>
-              <p>{item.answer}</p>
-            </details>
-          ))}
+      <div class="h3-wrap">
+        <p class="h3-eyebrow">{t.scope.eyebrow}</p>
+        <h2 class="h3-h2" id="cc-scope-title">{t.scope.headline}</h2>
+        <div class="cc-scope__grid">
+          <div class="cc-investment">
+            <p class="cc-scope__price">{t.scope.price}</p>
+            <p class="h3-body cc-scope__terms">{t.scope.summary}</p>
+            <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-investment-whatsapp" class="h3-btn cc-investment__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+            <p class="cc-scope__privacy">{t.scope.privacy}</p>
           </div>
+          <ol class="cc-inclusions">{t.scope.items.map(item => <li><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
+        </div>
+        <div class="cc-questions cc-scope__questions">
+          {t.questions.items.map(item => <details class="cc-question"><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}
         </div>
       </div>
     </section>
@@ -103,10 +99,10 @@ const t = getCareerCompoundingV2(lang);
   .cc-hero__cta, .cc-close__cta { margin-top: var(--space-4); max-width: 100%; text-align: center; line-height: 1.4; }
   .cc-hero__note, .cc-close__note, .cc-close__email { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 34rem; }
   .cc-hero__audience { margin-top: var(--space-3); max-width: 34rem; color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
-  .cc-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); margin: 0; padding-block: var(--space-4); border-block: 1px solid var(--line); }
-  .cc-facts > div { min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+  .cc-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-grid) var(--space-stack); margin: 0; }
+  .cc-facts > div { min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .cc-facts dt { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
-  .cc-facts dd { order: -1; margin: 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .cc-facts dd { order: -1; margin: 0; font-size: var(--type-quote); font-weight: 500; line-height: 1.35; }
   .cc-work, .cc-scope, .cc-close { padding-block: var(--space-section); background: var(--sand); border-top: 1px solid var(--line); }
   .cc-work .h3-h2, .cc-scope .h3-h2, .cc-close .h3-h2 { max-width: 28ch; }
   .cc-work__intro { margin-top: var(--space-3); max-width: 44rem; }
@@ -122,13 +118,16 @@ const t = getCareerCompoundingV2(lang);
   .cc-progress dl { display: grid; gap: var(--space-3); margin-top: var(--space-3); }
   .cc-progress dt { color: var(--text); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
   .cc-progress dd { margin: var(--space-1) 0 0; }
-  .cc-inclusions { display: grid; gap: var(--space-3); padding-bottom: var(--space-4); }
-  .cc-inclusions li { padding-top: var(--space-3); border-top: 1px solid var(--line); }
-  .cc-inclusions li:first-child { padding-top: 0; border-top: 0; }
+  .cc-inclusions { display: grid; }
+  .cc-inclusions li { min-width: 0; padding-block: var(--space-stack); border-top: 1px solid var(--line); }
   .cc-inclusions h3 { font-size: var(--type-subheading); line-height: 1.35; }
-  .cc-inclusions p { margin-top: var(--space-1); color: var(--muted); }
-  .cc-scope__price { margin-top: var(--space-3); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .cc-scope__grid { display: grid; gap: var(--space-grid); align-items: start; }
+  .cc-inclusions p { margin-top: var(--space-1); max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.6; }
+  .cc-scope__price { margin: 0; font-family: var(--h-sans); font-size: var(--type-section); font-weight: 500; line-height: 1.12; letter-spacing: -.014em; font-variant-numeric: tabular-nums; }
+  .cc-scope__grid { display: grid; gap: var(--space-grid); align-items: start; margin-top: var(--space-grid); }
+  .cc-scope__grid > * { min-width: 0; }
+  .cc-investment { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .cc-investment__cta { margin-top: var(--space-stack); max-width: 100%; }
+  .cc-scope__questions { margin-top: var(--space-grid); }
   .cc-scope__terms { margin-top: var(--space-3); }
   .cc-scope__privacy { margin-top: var(--space-3); max-width: 34rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .cc-questions { border-top: 1px solid var(--line); min-width: 0; }
@@ -147,6 +146,6 @@ const t = getCareerCompoundingV2(lang);
     .cc-close__layout { grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--space-8) * 4)); }
     .cc-hero__grid { grid-template-columns: 1.25fr 1fr; }
     .cc-area { grid-template-columns: minmax(0, .8fr) minmax(0, 1.1fr) minmax(0, 1.1fr); gap: var(--space-grid); }
-    .cc-scope__grid { grid-template-columns: 1fr 1fr; }
+    .cc-scope__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
   }
 </style>
