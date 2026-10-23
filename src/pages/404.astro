@@ -1,5 +1,6 @@
 ---
 import Shell from '../components/v2/Shell.astro';
+import CatIllustration from '../components/v2/CatIllustration.astro';
 ---
 
 <Shell
@@ -10,7 +11,8 @@ import Shell from '../components/v2/Shell.astro';
   noindex
 >
   <section class="h3-hero not-found" aria-labelledby="not-found-title">
-    <div class="h3-wrap">
+    <div class="h3-wrap not-found__layout">
+      <div class="not-found__copy">
       <p class="h3-eyebrow">404</p>
       <h1 class="h3-hero__h1" id="not-found-title">Page not available.</h1>
       <p class="h3-hero__sub">This page may have moved or is no longer available. Find current openings or choose the right path below.</p>
@@ -19,11 +21,18 @@ import Shell from '../components/v2/Shell.astro';
         <a class="h3-link" href="/for-companies/">For companies<span aria-hidden="true">→</span></a>
         <a class="h3-link" href="/for-talent/">For talent<span aria-hidden="true">→</span></a>
       </nav>
+      </div>
+      <CatIllustration pose="rest" />
     </div>
   </section>
 </Shell>
 
 <style>
   .not-found { min-height: calc(100svh - var(--space-section)); box-sizing: border-box; }
+  .not-found__layout { display: grid; gap: var(--space-grid); align-items: center; }
+  .not-found__copy { min-width: 0; }
   .not-found__paths { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-stack); }
+  @media (min-width: 56rem) {
+    .not-found__layout { grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--space-8) * 4)); }
+  }
 </style>

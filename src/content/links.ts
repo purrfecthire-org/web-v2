@@ -9,6 +9,14 @@ export const WHATSAPP_CAREER_COMPOUNDING = `https://wa.me/18312245188?text=${enc
 /** Single inbox for the whole site. */
 export const CONTACT_EMAIL = 'go@purrfecthire.com';
 
+/** Public company accounts, verified against onboarding and public profiles. */
+export const SOCIAL_LINKS = [
+  { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/purrfecthirehr/' },
+  { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/purrfecthirehr' },
+  { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/purrfect-hire/' },
+  { id: 'x', label: 'X', href: 'https://x.com/purrfecthire' },
+] as const;
+
 /**
  * Offer Accelerator inquiry. Its public OA intake stores a receipt;
  * receipt is not acceptance or a promise of review timing.

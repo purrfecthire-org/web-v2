@@ -1,5 +1,6 @@
 ---
 import Shell from '../v2/Shell.astro';
+import CatIllustration from '../v2/CatIllustration.astro';
 import CompaniesIcon from '../companies-v2/CompaniesIcon.astro';
 import type { Lang } from '../../content/index';
 import { getSearchCalibration, SEARCH_CALIBRATION_CTA } from '../../content/searchCalibration';
@@ -107,7 +108,8 @@ const framing = [
     </section>
 
     <section class="sc-close" aria-labelledby="sc-close-title">
-      <div class="h3-wrap">
+      <div class="h3-wrap sc-close__layout">
+        <div class="sc-close__copy">
         <h2 class="h3-h2 sc-wide-title" id="sc-close-title">{t.next.headline}</h2>
         <a href={SEARCH_CALIBRATION_CTA} data-cta="search-calibration-close-search-read" class="h3-btn h3-btn--ink sc-close__cta">
           {t.next.cta}<span class="h3-arrow" aria-hidden="true">→</span>
@@ -115,6 +117,8 @@ const framing = [
         <a href={t.next.secondaryHref} data-cta="search-calibration-candidate-brief" class="h3-link sc-close__secondary">
           {t.next.secondary}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
+        </div>
+        <CatIllustration pose="observe" />
       </div>
     </section>
   </div>
@@ -166,6 +170,8 @@ const framing = [
   .sc-recommendation p:not(.h3-eyebrow) { margin-top: var(--space-2); max-width: 55ch; font-size: var(--type-body); line-height: 1.7; }
   .sc-recommendation .sc-recommendation__limit { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .sc-close { border-top: 1px solid var(--line); }
+  .sc-close__layout { display: grid; gap: var(--space-grid); align-items: center; }
+  .sc-close__copy { min-width: 0; }
   .sc-close__secondary { display: flex; width: fit-content; max-width: 100%; margin-top: var(--space-stack); line-height: 1.6; }
   @media (min-width: 48rem) {
     .sc-entry { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: var(--space-grid); }
@@ -174,6 +180,9 @@ const framing = [
     .sc-entry > p:first-of-type, .sc-entry > ul, .sc-entry > ol { margin-top: 0; }
     .sc-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .sc-recommendation { padding: var(--space-grid); }
+  }
+  @media (min-width: 56rem) {
+    .sc-close__layout { grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--space-8) * 4)); }
   }
   @media print {
     .sc-hero, .sc-close { display: none; }
