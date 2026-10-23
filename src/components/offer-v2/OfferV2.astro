@@ -2,7 +2,7 @@
 import Shell from '../v2/Shell.astro';
 import CatIllustration from '../v2/CatIllustration.astro';
 import ClientPortrait from '../v2/ClientPortrait.astro';
-import ParticipantVoices from '../v2/ParticipantVoices.astro';
+import { talentTestimonials } from '../../content/talentTestimonials';
 import type { Lang } from '../../content/index';
 import { getOfferV2 } from '../../content/offerV2';
 import { APPLY_OFFER } from '../../content/links';
@@ -22,11 +22,11 @@ const t = getOfferV2(lang);
         <p class="h3-hero__sub">{t.hero.sub}</p>
       </div>
       <div class="oa-hero__offer">
+        <p class="h3-eyebrow">{t.investment.eyebrow}</p>
+        <p class="oa-hero__price">{t.investment.price}</p>
+        <p class="oa-investment__note">{t.investment.note}</p>
+        <p class="oa-hero__package">{t.hero.package}</p>
         <p class="oa-hero__fit">{t.fit.body}</p>
-        <div class="oa-hero__package">
-          <p class="oa-hero__price">{t.investment.price}</p>
-          <p>{t.hero.package}</p>
-        </div>
         <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -71,20 +71,28 @@ const t = getOfferV2(lang);
           </figcaption>
         </div>
       </figure>
-      <ParticipantVoices />
+      {talentTestimonials.map(voice => <figure class="oa-quote">
+        <img class="oa-quote__portrait" src={voice.photo} alt={voice.name} width="480" height="480" loading="lazy" decoding="async" />
+        <div class="oa-quote__copy"><blockquote>“{voice.quote}”</blockquote><figcaption><strong>{voice.name}</strong><span>{voice.context}</span><span>{voice.translation}</span></figcaption></div>
+      </figure>)}
     </div>
   </section>
 
   <section class="oa-scope" aria-labelledby="oa-scope-title">
     <div class="h3-wrap">
+      <p class="h3-eyebrow">{t.includes.eyebrow}</p>
+      <h2 class="h3-h2" id="oa-scope-title">{t.includes.headline}</h2>
       <div class="oa-scope__grid">
-        <div>
-          <p class="h3-eyebrow">{t.includes.eyebrow}</p>
-          <h2 class="h3-h2" id="oa-scope-title">{t.includes.headline}</h2>
+        <div class="oa-investment">
+          <p class="h3-eyebrow">{t.investment.eyebrow}</p>
           <p class="oa-price">{t.investment.price}</p>
+          <p class="oa-investment__note">{t.investment.note}</p>
+          <a href={APPLY_OFFER} data-cta="offer-investment-apply" class="h3-btn oa-investment__cta">{t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
         </div>
+        <ul class="oa-inclusions">{t.includes.items.map(item => <li><span>{item}</span></li>)}</ul>
+      </div>
+      <div class="oa-scope__details">
         <div>
-          <ul class="oa-inclusions">{t.includes.items.map((item) => <li>{item}</li>)}</ul>
           <div class="oa-commitment">
             <h3>{t.fit.commitmentTitle}</h3>
             <p class="h3-body">{t.fit.commitment}</p>
@@ -94,19 +102,14 @@ const t = getOfferV2(lang);
             <p class="h3-body">{t.firewall.lead}</p>
             <details class="oa-detail">
               <summary>{t.firewall.more}</summary>
-              <div>{t.firewall.body.map((paragraph) => <p>{paragraph}</p>)}</div>
+              <div>{t.firewall.body.map(paragraph => <p>{paragraph}</p>)}</div>
             </details>
           </aside>
-          <div class="oa-questions">
-            <p class="h3-eyebrow">{t.faq.eyebrow}</p>
-            <div class="oa-questions__list">
-              {t.faq.items.map((item) => (
-                <details class="oa-detail">
-                  <summary>{item.question}</summary>
-                  <p>{item.answer}</p>
-                </details>
-              ))}
-            </div>
+        </div>
+        <div class="oa-questions">
+          <p class="h3-eyebrow">{t.faq.eyebrow}</p>
+          <div class="oa-questions__list">
+            {t.faq.items.map(item => <details class="oa-detail"><summary>{item.question}</summary><p>{item.answer}</p></details>)}
           </div>
         </div>
       </div>
@@ -127,12 +130,12 @@ const t = getOfferV2(lang);
 </Shell>
 
 <style lang="scss" is:global>
-  .oa-hero__offer { padding-block: var(--space-4); border-block: 1px solid var(--line); }
-  .oa-hero__fit { max-width: 34rem; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
-  .oa-hero__package { margin-top: var(--space-4); max-width: 34rem; display: grid; gap: var(--space-1); }
-  .oa-hero__package > p { font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
-  .oa-hero__package > .oa-hero__price { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; color: var(--text); }
-  .oa-hero__cta { margin-top: var(--space-3); }
+  .oa-hero__offer { min-width: 0; padding-block: var(--space-4); border-block: 1px solid var(--line); }
+  .oa-hero__price, .oa-price { font-family: var(--h-sans); font-size: var(--type-section); line-height: 1.12; font-weight: 500; letter-spacing: -.014em; color: var(--text); font-variant-numeric: tabular-nums; }
+  .oa-hero__price { margin-top: var(--space-2); }
+  .oa-hero__package { margin-top: var(--space-stack); max-width: 54ch; font-size: var(--type-body); line-height: 1.6; color: var(--text); }
+  .oa-hero__fit { margin-top: var(--space-stack); max-width: 54ch; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .oa-hero__cta { margin-top: var(--space-stack); max-width: 100%; }
   .oa-work, .oa-proof, .oa-scope, .oa-apply { padding-block: var(--space-section); background: var(--sand); }
   .oa-work, .oa-scope, .oa-apply { border-top: 1px solid var(--line); }
   .oa-work .h3-h2, .oa-proof .h3-h2, .oa-scope .h3-h2, .oa-apply .h3-h2 { max-width: 28ch; }
@@ -151,15 +154,23 @@ const t = getOfferV2(lang);
   .oa-quote figcaption { margin-top: var(--space-3); display: grid; gap: var(--space-1); font-size: var(--type-caption); line-height: 1.5; }
   .oa-quote figcaption strong { font-weight: 500; }
   .oa-quote figcaption span { color: var(--muted); }
-  .oa-scope__grid { display: grid; gap: var(--space-grid); align-items: start; }
-  .oa-price { margin-top: var(--space-4); font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; }
-  .oa-inclusions li { padding-block: var(--space-2); border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; }
-  .oa-commitment { margin-top: var(--space-4); }
+  .oa-quote + .oa-quote { padding-top: var(--space-grid); border-top: 1px solid var(--line); }
+  .oa-quote__portrait { display: block; width: calc(var(--space-8) * 2); height: calc(var(--space-8) * 2); border-radius: 50%; object-fit: cover; object-position: 50% 30%; }
+  .oa-scope__grid, .oa-scope__details { display: grid; gap: var(--space-grid); align-items: start; margin-top: var(--space-grid); }
+  .oa-scope__grid > *, .oa-scope__details > * { min-width: 0; }
+  .oa-investment { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .oa-price { margin-top: var(--space-2); }
+  .oa-investment__cta { margin-top: var(--space-stack); max-width: 100%; }
+  .oa-investment__note { margin-top: var(--space-2); max-width: 54ch; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
+  .oa-scope__details { padding-top: var(--space-grid); border-top: 1px solid var(--line); }
+  .oa-inclusions li { padding-block: var(--space-stack); border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.6; }
+  .oa-inclusions li span { display: block; max-width: 54ch; }
+  .oa-commitment { margin-top: 0; }
   .oa-commitment .h3-body { margin-top: var(--space-2); }
   .oa-firewall { margin-top: var(--space-6); max-width: 44rem; }
   .oa-firewall > .h3-body { margin-top: var(--space-2); }
   .oa-firewall .oa-detail { margin-top: var(--space-2); }
-  .oa-questions { margin-top: var(--space-6); }
+  .oa-questions { margin-top: 0; }
   .oa-questions > .h3-eyebrow { margin-bottom: var(--space-2); }
   .oa-detail { border-bottom: 1px solid var(--line); }
   .oa-detail summary { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); padding-block: var(--space-3); cursor: pointer; list-style: none; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
@@ -177,6 +188,7 @@ const t = getOfferV2(lang);
     .oa-apply__layout { grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--space-8) * 4)); }
     .oa-output { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: var(--space-grid); }
     .oa-quote { grid-template-columns: 8rem minmax(0, 1fr); }
-    .oa-scope__grid { grid-template-columns: 1fr 1.25fr; }
+    .oa-scope__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+    .oa-scope__details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 </style>

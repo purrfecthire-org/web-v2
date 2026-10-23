@@ -11,6 +11,6 @@ export const team = {
     { name: 'Juanca', src: '/team/hoodie/juanca.webp', width: 600, height: 750, position: '50% 50%' },
     { name: 'Nico', src: '/team/hoodie/nico.webp', width: 600, height: 750, position: '50% 50%' },
     { name: 'Ana', src: '/team/hoodie/ana.webp', width: 600, height: 750, position: '50% 50%' },
-    { name: 'Dave', src: '/team/hoodie/dave.webp', width: 600, height: 750, position: '50% 50%' },
+    { name: 'Dave', src: '/team/hoodie/dave-v2.webp', width: 600, height: 750, position: '50% 50%' },
   ],
 };

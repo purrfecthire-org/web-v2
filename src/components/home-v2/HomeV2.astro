@@ -15,6 +15,7 @@ const t = getHomeV2(lang);
       <source media="(max-width: 55.99rem)" srcset="/photos/editorial/timber-courtyard-mobile.webp" type="image/webp" />
       <img src="/photos/editorial/timber-courtyard-desktop.webp" alt={t.hero.photoAlt} width="1536" height="1024" decoding="async" fetchpriority="high" />
     </picture>
+    <video class="home-entry__motion" muted playsinline loop preload="none" aria-hidden="true" tabindex="-1" data-desktop-src="/motion/timber-courtyard-desktop.mp4" data-mobile-src="/motion/timber-courtyard-mobile.mp4"></video>
     <div class="h3-wrap">
       <div class="home-entry__intro h3-hero__copy">
           <h1 class="h3-hero__h1" id="home-title">{t.hero.headline}</h1>
@@ -31,6 +32,11 @@ const t = getHomeV2(lang);
         </nav>
       </div>
     </div>
+    <button class="home-entry__motion-control" type="button" aria-label="Pause background motion" aria-pressed="false" hidden>
+      <svg class="home-entry__pause-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M7 5h3v14H7zm7 0h3v14h-3z" /></svg>
+      <svg class="home-entry__play-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m8 5 11 7-11 7z" /></svg>
+      <span>Pause motion</span>
+    </button>
   </section>
 
   <section class="home-proof" id="clients" aria-labelledby="home-proof-label">
@@ -63,10 +69,138 @@ const t = getHomeV2(lang);
   </section>
 </Shell>
 
+<script>
+  // The photograph remains the LCP and no-JavaScript fallback. This loop only
+  // animates camera framing over that same illustrative still image.
+  const hero = document.querySelector<HTMLElement>('.home-entry');
+  const video = hero?.querySelector<HTMLVideoElement>('.home-entry__motion');
+  const control = hero?.querySelector<HTMLButtonElement>('.home-entry__motion-control');
+  const poster = hero?.querySelector<HTMLImageElement>('.home-entry__background img');
+  if (hero && video && control && poster && 'IntersectionObserver' in window) {
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    const mobile = matchMedia('(max-width: 55.99rem)');
+    const connection = (navigator as Navigator & {
+      connection?: EventTarget & { saveData?: boolean };
+    }).connection;
+    let pageReady = false;
+    let inView = false;
+    let userPaused = false;
+    let failed = false;
+    let currentSource = '';
+    let playPending = false;
+
+    const updateControl = () => {
+      control.setAttribute('aria-pressed', String(userPaused));
+      control.setAttribute('aria-label', userPaused ? 'Play background motion' : 'Pause background motion');
+      control.querySelector('span')!.textContent = userPaused ? 'Play motion' : 'Pause motion';
+    };
+    const usePoster = () => {
+      video.pause();
+      video.classList.remove('is-ready');
+      control.hidden = true;
+      if (currentSource) {
+        currentSource = '';
+        video.removeAttribute('src');
+        video.load();
+      }
+    };
+    const syncPlayback = () => {
+      if (!pageReady || reducedMotion.matches || connection?.saveData || failed) {
+        usePoster();
+        return;
+      }
+      const source = mobile.matches ? video.dataset.mobileSrc! : video.dataset.desktopSrc!;
+      if (currentSource && currentSource !== source) {
+        video.pause();
+        video.classList.remove('is-ready');
+        currentSource = '';
+        video.removeAttribute('src');
+        video.load();
+      }
+      if (!inView || document.hidden || userPaused) {
+        video.pause();
+        return;
+      }
+      if (currentSource !== source) {
+        video.classList.remove('is-ready');
+        control.hidden = true;
+        currentSource = source;
+        video.src = source;
+        video.load();
+      }
+      if (video.paused && !playPending) {
+        playPending = true;
+        video.play().catch(() => {
+          // Autoplay restrictions must leave a usable poster and manual control.
+          if (currentSource === source && inView && !document.hidden && !reducedMotion.matches && !connection?.saveData && !failed) {
+            userPaused = true;
+            control.hidden = false;
+            updateControl();
+          }
+        }).finally(() => {
+          playPending = false;
+          // A viewport or visibility change may have interrupted the request.
+          if (!video.paused || userPaused) return;
+          syncPlayback();
+        });
+      }
+    };
+    video.muted = true;
+    video.addEventListener('playing', () => {
+      if (reducedMotion.matches || connection?.saveData || !inView || document.hidden || userPaused) {
+        video.pause();
+        return;
+      }
+      video.classList.add('is-ready');
+      control.hidden = false;
+      updateControl();
+    });
+    video.addEventListener('error', () => {
+      if (currentSource) {
+        failed = true;
+        usePoster();
+      }
+    });
+    control.addEventListener('click', () => {
+      userPaused = !userPaused;
+      updateControl();
+      syncPlayback();
+    });
+    reducedMotion.addEventListener('change', syncPlayback);
+    mobile.addEventListener('change', syncPlayback);
+    connection?.addEventListener('change', syncPlayback);
+    document.addEventListener('visibilitychange', syncPlayback);
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      syncPlayback();
+    }, { threshold: 0.1 }).observe(hero);
+    const start = () => {
+      const ready = () => {
+        pageReady = true;
+        syncPlayback();
+      };
+      // Finish the poster and page before requesting either video variant.
+      if (poster.complete) ready();
+      else poster.addEventListener('load', ready, { once: true });
+    };
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
+  }
+</script>
+
 <style>
   .home-entry { isolation: isolate; min-height: 56rem; padding-top: var(--space-hero-top); }
   .home-entry__background { display: block; position: absolute; inset: 0; z-index: -3; }
   .home-entry__background img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+  .home-entry__motion { display: block; position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; opacity: 0; pointer-events: none; }
+  .home-entry__motion.is-ready { opacity: 1; }
+  .home-entry__motion-control { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); position: absolute; right: var(--space-3); bottom: var(--space-3); z-index: 3; min-height: 2.75rem; padding: var(--space-1) var(--space-2); border: 1px solid var(--line); border-radius: 999px; background: rgba(247,246,243,.94); color: var(--text); font: 500 var(--type-caption)/1.5 var(--h-sans); cursor: pointer; }
+  .home-entry__motion-control[hidden] { display: none; }
+  .home-entry__motion-control:hover { background: var(--white); }
+  .home-entry__motion-control:active { background: var(--stone); }
+  .home-entry__motion-control svg { flex: none; }
+  .home-entry__play-icon, .home-entry__motion-control[aria-pressed="true"] .home-entry__pause-icon { display: none; }
+  .home-entry__motion-control[aria-pressed="true"] .home-entry__play-icon { display: block; }
   .home-entry::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(rgba(247,246,243,.65),rgba(247,246,243,.5) 48%,transparent 72%); }
   .home-entry::after { content: ''; position: absolute; inset: 0 0 auto; height: 9rem; z-index: -1; background: linear-gradient(rgba(247,246,243,.96),rgba(247,246,243,.76) 50%,transparent); }
   .home-entry__intro { max-width: 40rem; }
@@ -92,10 +226,11 @@ const t = getHomeV2(lang);
   @media (min-width: 56rem) {
     .home-entry { min-height: 54rem; padding-top: calc(var(--space-hero-top) + var(--space-8)); }
     .home-entry::before { background: linear-gradient(90deg,rgba(247,246,243,.9),rgba(247,246,243,.82) 42%,rgba(247,246,243,.55) 50%,transparent 62%); }
+    .home-entry__motion-control { right: var(--space-6); bottom: var(--space-4); }
     .home-kate__grid { grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); }
     .home-kate__portrait { justify-self: center; }
   }
   @media (min-width: 90rem) { .home-entry__intro { max-width: 42.5rem; } }
   @media (min-width: 112rem) { .home-entry { min-height: 60rem; } }
-  @media (prefers-reduced-motion: reduce) { .home-path { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .home-path { transition: none; } .home-entry__motion, .home-entry__motion-control { display: none; } }
 </style>

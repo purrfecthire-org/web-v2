@@ -23,8 +23,8 @@ export const talentV2En: TalentV2Content = {
   hero: {
     eyebrow: 'For talent',
     headline: 'Make your next career decision with clarity.',
-    sub: 'Compare support for a career move, growth in your current role or one specific decision.',
-    audience: 'For senior professionals across the US, Europe and Latin America.',
+    sub: 'Choose by the work you need to do: compete for your next opportunity, grow in your current role, or work through one decision.',
+    audience: 'Career advice informed by our work on both sides of hiring: founders defining the role and senior professionals competing for it.',
     cta: 'Compare options',
     href: '#ways-in',
   },
@@ -34,22 +34,23 @@ export const talentV2En: TalentV2Content = {
     items: [
       {
         name: 'Offer Accelerator',
-        body: 'For your next career move. Assess your level, choose your market and work through interviews and offers. Eight sessions, then process support while you execute the agreed plan.',
-        price: 'USD 2,000',
+        body: 'Choose this when you are changing company, market or scope. Build your positioning and work through outreach, interviews, offers and negotiation. Eight sessions, then process support while you execute the agreed plan.',
+        price: 'From USD 2,000',
+        note: 'Final investment depends on seniority and location.',
         cta: 'Explore Offer Accelerator',
         href: '/offer-acceleration',
         proof: { label: 'Read participant experiences', href: '/offer-acceleration/#voices' },
       },
       {
         name: 'Career Compounding',
-        body: 'Six months and nine sessions with Kate, focused on real business challenges in your current role. Offer Accelerator is optional.',
+        body: 'Choose this when you have a role and a real business challenge. Work on decisions, stakeholders and execution inside your company. Six months, nine sessions with Kate and eight asynchronous checkpoints. Offer Accelerator is optional.',
         price: 'USD 5,000',
         cta: 'Explore Career Compounding',
         href: '/career-compounding',
       },
       {
         name: '1:1 Strategic Session',
-        body: 'For one active process, a negotiation or a specific career decision.',
+        body: 'Choose this for one interview, offer, negotiation or career decision. A focused conversation with Kate to examine it and agree your next steps.',
         price: 'USD 300',
         cta: 'Request a session on WhatsApp',
         href: SESSION_1_1,

@@ -2,18 +2,13 @@
 import Shell from '../v2/Shell.astro';
 import TeamGallery from './TeamGallery.astro';
 import { workWithUs as t } from '../../content/workWithUs';
+const valueCats = ['focus', 'observe', 'leap', 'walk', 'rest'];
 ---
 
-<Shell
-  title={t.meta.title}
-  description={t.meta.description}
-  theme="light"
-  journey="careers"
-  navCta={{ label: t.applicationCta, href: t.applicationHref }}
->
-  <div class="wwu">
-    <section class="wwu-hero" aria-labelledby="wwu-title">
-      <div class="h3-wrap wwu-hero__grid">
+<Shell title={t.meta.title} description={t.meta.description} theme="light" journey="careers" navCta={{ label: t.applicationCta, href: t.applicationHref }}>
+  <section class="wwu-hero" aria-labelledby="wwu-title">
+    <div class="h3-wrap">
+      <div class="wwu-editorial">
         <div>
           <p class="h3-eyebrow">{t.hero.eyebrow}</p>
           <h1 class="wwu-hero__title" id="wwu-title">{t.hero.headline}</h1>
@@ -21,122 +16,125 @@ import { workWithUs as t } from '../../content/workWithUs';
         <div class="wwu-hero__intro">
           <p class="wwu-hero__body">{t.hero.body}</p>
           <p class="wwu-hero__standard">{t.hero.standard}</p>
-          <a class="h3-btn h3-btn--ink wwu-hero__cta" href={t.applicationHref} data-cta="careers-hero-introduce">
-            {t.applicationCta}<span aria-hidden="true">→</span>
-          </a>
+          <a class="h3-btn h3-btn--ink wwu-hero__cta" href={t.applicationHref} data-cta="careers-hero-introduce">{t.applicationCta}<span aria-hidden="true">→</span></a>
+          <p class="wwu-hero__note">{t.hero.note}</p>
         </div>
       </div>
-    </section>
-
-    <section class="wwu-section wwu-team" aria-labelledby="wwu-team-title">
-      <div class="h3-wrap">
-        <h2 class="h3-h2 wwu-heading" id="wwu-team-title">The people behind the work.</h2>
-        <div class="wwu-team__gallery"><TeamGallery /></div>
+      <div class="wwu-team" aria-labelledby="wwu-team-title">
+        <h2 id="wwu-team-title">{t.teamHeadline}</h2>
+        <TeamGallery />
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="wwu-section wwu-culture" aria-labelledby="wwu-values-title">
-      <div class="h3-wrap wwu-split">
-        <div class="wwu-culture__intro">
+  <section class="wwu-section" aria-labelledby="wwu-values-title">
+    <div class="h3-wrap">
+      <div class="wwu-editorial" data-purrfect-values>
+        <header>
           <p class="h3-eyebrow">{t.values.eyebrow}</p>
           <h2 class="h3-h2 wwu-heading" id="wwu-values-title">{t.values.headline}</h2>
-          <div class="wwu-culture__name">
-            <img src="/brand/illustrations/cat-focus-ink.webp" width="1080" height="720" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-            <div>
-              <p class="h3-eyebrow">{t.name.eyebrow}</p>
-              <p>{t.name.body}</p>
-            </div>
+          <div class="wwu-values-art" aria-hidden="true">
+            {valueCats.map((pose, index) => <img data-value-cat={pose} src={`/brand/illustrations/cat-${pose}-ink.webp`} width={pose === 'rest' ? 960 : 1080} height={pose === 'rest' ? 640 : 720} alt="" hidden={index !== 0} loading="lazy" decoding="async" />)}
           </div>
+        </header>
+        <div class="wwu-values">
+          {t.values.items.map((item, index) => <details name="purrfect-values" open={index === 0} data-value-pose={valueCats[index]}><summary>{item.title}<span aria-hidden="true"></span></summary><p>{item.body}</p></details>)}
         </div>
-        <dl class="wwu-values__list">
-          {t.values.items.map((item) => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
-        </dl>
       </div>
-    </section>
+      <aside class="wwu-name" aria-labelledby="wwu-name-label">
+        <div><p class="h3-eyebrow" id="wwu-name-label">{t.name.eyebrow}</p><p>{t.name.body}</p></div>
+      </aside>
+    </div>
+  </section>
 
-    <section class="wwu-section" aria-labelledby="wwu-support-title">
-      <div class="h3-wrap">
-        <div class="wwu-support__heading"><p class="h3-eyebrow">{t.support.eyebrow}</p>
-        <h2 class="h3-h2 wwu-heading" id="wwu-support-title">{t.support.headline}</h2></div>
-        <dl class="wwu-benefits">
-          {t.support.items.map((item) => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
-        </dl>
-      </div>
-    </section>
+  <section class="wwu-section" aria-labelledby="wwu-support-title">
+    <div class="h3-wrap wwu-editorial">
+      <header>
+        <p class="h3-eyebrow">{t.support.eyebrow}</p>
+        <h2 class="h3-h2 wwu-heading" id="wwu-support-title">{t.support.headline}</h2>
+      </header>
+      <dl class="wwu-rows">
+        {t.support.items.map(item => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
+      </dl>
+    </div>
+  </section>
 
-    <section class="wwu-section wwu-apply" id="introduce-yourself" aria-labelledby="wwu-apply-title">
-      <div class="h3-wrap wwu-split">
-        <div>
-          <p class="h3-eyebrow">{t.application.eyebrow}</p>
-          <h2 class="h3-h2 wwu-heading" id="wwu-apply-title">{t.application.headline}</h2>
-          <p class="wwu-apply__body">{t.application.body}</p>
-          <a class="h3-btn h3-btn--ink" href={t.applicationHref} data-cta="careers-spontaneous-application">
-            {t.applicationCta}<span aria-hidden="true">→</span>
-          </a>
-          <p class="wwu-apply__email-note">{t.application.emailNote}</p>
-          <p class="wwu-apply__note">{t.application.note}</p>
-        </div>
-        <div class="wwu-apply__details">
-          <h3>{t.application.detailsTitle}</h3>
-          <ul>{t.application.details.map((detail) => <li>{detail}</li>)}</ul>
-          <p>{t.application.next}</p>
-          <a class="h3-link" href={t.application.privacyHref} data-cta="careers-privacy">{t.application.privacyLabel}<span aria-hidden="true">→</span></a>
-          <p class="wwu-client-path">{t.hero.secondary} <a href={t.hero.secondaryHref} data-cta="careers-client-searches">{t.hero.secondaryCta} <span aria-hidden="true">→</span></a></p>
-        </div>
+  <section class="wwu-section wwu-apply" id="introduce-yourself" aria-labelledby="wwu-apply-title">
+    <div class="h3-wrap wwu-editorial">
+      <div>
+        <p class="h3-eyebrow">{t.application.eyebrow}</p>
+        <h2 class="h3-h2 wwu-heading" id="wwu-apply-title">{t.application.headline}</h2>
+        <p class="wwu-apply__body">{t.application.body}</p>
+        <a class="h3-btn h3-btn--ink" href={t.applicationHref} data-cta="careers-spontaneous-application">{t.applicationCta}<span aria-hidden="true">→</span></a>
+        <p class="wwu-apply__email-note">{t.application.emailNote}</p>
+        <p class="wwu-apply__note">{t.application.note}</p>
       </div>
-    </section>
-  </div>
+      <div class="wwu-apply__details">
+        <h3>{t.application.detailsTitle}</h3>
+        <ul>{t.application.details.map(detail => <li>{detail}</li>)}</ul>
+        <p>{t.application.next}</p>
+        <a class="h3-link" href={t.application.privacyHref} data-cta="careers-privacy">{t.application.privacyLabel}<span aria-hidden="true">→</span></a>
+        <p class="wwu-client-path">{t.hero.secondary} <a href={t.hero.secondaryHref} data-cta="careers-client-searches">{t.hero.secondaryCta}<span aria-hidden="true"> →</span></a></p>
+      </div>
+    </div>
+  </section>
 </Shell>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-purrfect-values]').forEach(group => {
+    const details = group.querySelectorAll<HTMLDetailsElement>('details[data-value-pose]');
+    const images = group.querySelectorAll<HTMLImageElement>('[data-value-cat]');
+    details.forEach(detail => detail.addEventListener('toggle', () => {
+      if (!detail.open) return;
+      details.forEach(other => { if (other !== detail) other.open = false; });
+      images.forEach(image => { image.hidden = image.dataset.valueCat !== detail.dataset.valuePose; });
+    }));
+  });
+</script>
 
 <style>
   .wwu-hero { padding-block: var(--space-hero-top) var(--space-section); }
-  .wwu-hero__grid, .wwu-split { display: grid; gap: var(--space-grid); }
-  .wwu-hero__grid { align-items: end; }
-  .wwu-hero__title {
-    max-width: 17ch; margin-top: var(--space-2); font-family: var(--h-serif);
-    font-size: var(--type-display); font-weight: 400;
-    line-height: 1.08; letter-spacing: -.02em; text-wrap: balance;
-    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
-  }
-  .wwu-hero__intro { min-width: 0; }
-  .wwu-hero__body { max-width: 42ch; color: var(--muted); font-size: var(--type-lead); line-height: 1.6; }
-  .wwu-hero__standard { max-width: 42ch; margin-top: var(--space-stack); color: var(--text); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
+  .wwu-editorial { display: grid; gap: var(--space-grid); }
+  .wwu-editorial > * { min-width: 0; }
+  .wwu-hero__title { max-width: 17ch; margin-top: var(--space-2); font-family: var(--h-serif); font-size: var(--type-display); font-weight: 400; line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0; }
+  .wwu-hero__body { max-width: 48ch; color: var(--muted); font-size: var(--type-lead); line-height: 1.6; }
+  .wwu-hero__standard { margin-top: var(--space-2); color: var(--text); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
   .wwu-hero__cta { margin-top: var(--space-stack); }
-  .wwu-section { padding-block: var(--space-section); }
-  .wwu-heading { max-width: 23ch; font-size: var(--type-section); line-height: 1.12; }
-  .wwu-team { padding-top: 0; }
-  .wwu-team .wwu-heading { margin-top: 0; }
-  .wwu-team__gallery { margin-top: var(--space-grid); }
-  .wwu-culture, .wwu-apply { border-top: 1px solid var(--line); }
-  .wwu-benefits { display: grid; gap: var(--space-grid); margin-top: var(--space-grid); }
-  .wwu-benefits > div { min-width: 0; padding-top: var(--space-stack); border-top: 1px solid var(--line); }
-  .wwu-benefits dt, .wwu-values__list dt, .wwu-apply__details h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .wwu-benefits dd, .wwu-values__list dd { margin: var(--space-1) 0 0; max-width: 48ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .wwu-values__list { display: grid; gap: var(--space-stack); }
-  .wwu-values__list > div { min-width: 0; }
-  .wwu-values__list > div + div { border-top: 1px solid var(--line); padding-top: var(--space-stack); }
-  .wwu-culture__name { margin-top: var(--space-stack); max-width: 42ch; }
-  .wwu-culture__name img { display: block; width: 100%; max-width: calc(var(--space-8) * 5); height: auto; margin-bottom: var(--space-2); }
-  .wwu-culture__name p:not(.h3-eyebrow) { margin-top: var(--space-1); color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
+  .wwu-hero__note { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 48ch; }
+  .wwu-team { margin-top: var(--space-grid); }
+  .wwu-team h2 { margin: 0 0 var(--space-stack); font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .wwu-section { padding-block: var(--space-section); border-top: 1px solid var(--line); }
+  .wwu-heading { max-width: 23ch; }
+  .wwu-rows { display: grid; gap: var(--space-stack); }
+  .wwu-rows > div + div { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .wwu-rows dt, .wwu-apply__details h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .wwu-rows dd { margin: var(--space-1) 0 0; max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.6; }
+  .wwu-values-art { width: calc(var(--space-8) * 2); max-width: 100%; aspect-ratio: 3 / 2; margin-top: var(--space-stack); }
+  .wwu-values-art img { display: block; width: 100%; height: 100%; object-fit: contain; animation: value-cat-enter .24s ease-out; }
+  .wwu-values-art img[hidden] { display: none; }
+  .wwu-values details { border-top: 1px solid var(--line); }
+  .wwu-values details:last-child { border-bottom: 1px solid var(--line); }
+  .wwu-values summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: var(--space-8); padding-block: var(--space-2); list-style: none; cursor: pointer; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .wwu-values summary::-webkit-details-marker { display: none; }
+  .wwu-values summary:hover { color: var(--purple); }
+  .wwu-values summary span::before { content: '+'; }
+  .wwu-values details[open] summary span::before { content: '−'; }
+  .wwu-values details p { padding-bottom: var(--space-stack); max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.6; }
+  .wwu-name { margin-top: var(--space-grid); padding-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .wwu-name p:not(.h3-eyebrow) { margin-top: var(--space-1); max-width: 66ch; color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
   .wwu-apply { scroll-margin-top: var(--space-4); }
-  .wwu-apply__body { margin-block: var(--space-stack); max-width: 42ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .wwu-apply__note { max-width: 48ch; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .wwu-apply__email-note { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; overflow-wrap: anywhere; }
-  .wwu-apply__details { min-width: 0; align-self: start; }
-  .wwu-apply__details ul { margin-top: var(--space-stack); display: grid; gap: var(--space-2); }
-  .wwu-apply__details li { padding-left: var(--space-stack); position: relative; }
+  .wwu-apply__body { margin-block: var(--space-stack); max-width: 48ch; color: var(--muted); font-size: var(--type-body); line-height: 1.6; }
+  .wwu-apply__email-note, .wwu-apply__note { max-width: 54ch; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .wwu-apply__email-note { margin-top: var(--space-2); overflow-wrap: anywhere; }
+  .wwu-apply__note { margin-top: var(--space-stack); }
+  .wwu-apply__details ul { display: grid; gap: var(--space-2); margin-top: var(--space-stack); }
+  .wwu-apply__details li { position: relative; padding-left: var(--space-stack); }
   .wwu-apply__details li::before { content: ''; position: absolute; left: 0; top: .65em; width: .25em; height: .25em; border-radius: 50%; background: var(--muted); }
-  .wwu-apply__details li, .wwu-apply__details p { max-width: 48ch; color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
-  .wwu-apply__details p { margin-top: var(--space-stack); }
-  .wwu-apply__details > .h3-link { margin-top: var(--space-stack); font-size: var(--type-caption); }
+  .wwu-apply__details li, .wwu-apply__details p { max-width: 54ch; color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
+  .wwu-apply__details p, .wwu-apply__details > .h3-link { margin-top: var(--space-stack); }
+  .wwu-apply__details > .h3-link { font-size: var(--type-caption); }
   .wwu-client-path a { color: var(--text); text-decoration: underline; text-underline-offset: .2em; }
-  @media (min-width: 48rem) {
-    .wwu-benefits { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-1); }
-    .wwu-benefits > div { display: grid; grid-template-rows: subgrid; grid-row: span 2; }
-    .wwu-benefits dd { margin-top: 0; }
-  }
-  @media (min-width: 56rem) {
-    .wwu-hero__grid, .wwu-split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (prefers-reduced-motion: reduce) { .wwu * { scroll-behavior: auto; } }
+  @keyframes value-cat-enter { from { opacity: 0; transform: translateY(var(--space-1)); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .wwu-values-art img { animation: none; } }
+  @media (min-width: 56rem) { .wwu-editorial { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); } .wwu-values-art { width: calc(var(--space-8) * 4); } }
 </style>

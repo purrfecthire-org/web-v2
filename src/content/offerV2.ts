@@ -4,10 +4,12 @@
 // team works, what is included and for how long, what it costs, how to
 // apply.
 //
-// Commercial terms confirmed by Kate, 14 October 2026: USD 2,000 flat,
+// Investment updated by Kate, 23 October 2026: from USD 2,000, with the
+// final fee depending on seniority and location, agreed before enrolment.
+// The confirmed scope remains
 // eight sessions in total, and support through each new hiring process
 // afterwards until the person is placed, while they actively carry out the
-// agreed plan. Never "from", never a month limit, never eight new sessions
+// agreed plan. Never a month limit, never eight new sessions
 // per process, unlimited calls, a guaranteed hire or 24/7 availability.
 // Response times and an inactivity policy are not defined, so neither is
 // published. No internal review notes on the page: pendings live in the
@@ -32,7 +34,7 @@ export interface OfferV2Content {
   includes: { eyebrow: string; headline: string; items: string[]; closing: string };
   behind: { eyebrow: string; headline: string; body: string[] };
   proof: { eyebrow: string; headline: string; quote: string; name: string; role: string };
-  investment: { eyebrow: string; headline: string; price: string; next: string };
+  investment: { eyebrow: string; headline: string; price: string; note: string; next: string };
   faq: { eyebrow: string; headline: string; items: { question: string; answer: string }[] };
   apply: { headline: string; body: string; cta: string; howNote: string; steps: { title: string; body: string }[] };
   editorial: string;
@@ -133,7 +135,8 @@ export const offerV2En: OfferV2Content = {
   investment: {
     eyebrow: 'Investment',
     headline: 'A considered investment in your next move.',
-    price: 'USD 2,000',
+    price: 'From USD 2,000',
+    note: 'Final investment depends on seniority and location. We confirm it with you before enrollment.',
     next: 'Eight sessions, followed by support through each new hiring process until you secure your next role, while you actively carry out the agreed plan.',
   },
   faq: {
@@ -153,7 +156,7 @@ export const offerV2En: OfferV2Content = {
     howNote: 'Send your context through the short form. No payment is taken when you apply.',
     steps: [
       { title: 'We review the fit', body: 'The team reviews your situation and asks for the context needed to assess whether Offer Accelerator fits your next move.' },
-      { title: 'Agree how to begin', body: 'If there is a fit, we confirm the scope, USD 2,000 fixed fee and next steps with you before payment and scheduling.' },
+      { title: 'Agree how to begin', body: 'If there is a fit, we confirm the scope, final investment and next steps with you before payment and scheduling.' },
     ],
   },
   editorial: 'Your career has advisors too.',

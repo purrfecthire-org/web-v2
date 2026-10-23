@@ -119,8 +119,8 @@ export const investorsV2En: InvestorsV2Content = {
         ctaId: 'investors-search-calibration',
       },
       {
-        title: 'A search example',
-        body: 'An anonymized backend search and its documented follow-up.',
+        title: 'An Optery product hire',
+        body: 'From Senior Technical Product Manager to Director of Product.',
         label: 'See the search example',
         href: '/for-companies#selected-searches',
         ctaId: 'investors-selected-searches',

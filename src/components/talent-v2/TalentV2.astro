@@ -24,10 +24,8 @@ const t = getTalentV2(lang);
         <ul class="tv-paths__list">
           {t.paths.items.map((item, index) => (
             <li class="tv-path">
-              <div>
-                <h3 class="tv-path__name">{item.name}</h3>
-                <p class="tv-path__price">{item.price}</p>
-              </div>
+              <h3 class="tv-path__name">{item.name}</h3>
+              <p class="tv-path__price">{item.price}</p>
               <p class="tv-path__body">{item.body}</p>
               <div class="tv-path__action">
                 <a href={item.href} data-cta={"talent-path-" + index} class="h3-link">{item.cta}<span aria-hidden="true">→</span></a>
@@ -59,12 +57,12 @@ const t = getTalentV2(lang);
   .tv-paths { scroll-margin-top: var(--space-hero-top); }
   .tv-audience { margin-top: var(--space-3); max-width: 34rem; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
   .tv-paths__list { margin-top: var(--space-3); }
-  .tv-path { display: grid; align-items: start; gap: var(--space-3); min-width: 0; padding-block: var(--space-3); border-top: 1px solid var(--line); }
+  .tv-path { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--space-stack); row-gap: var(--space-2); min-width: 0; padding-block: var(--space-stack); border-top: 1px solid var(--line); }
   .tv-path:last-child { border-bottom: 1px solid var(--line); }
-  .tv-path__name { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .tv-path__price { margin-top: var(--space-1); font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
-  .tv-path__body { font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 34rem; }
-  .tv-path__action { min-width: 0; }
+  .tv-path__name { min-width: 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .tv-path__price { margin: 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; color: var(--text); font-variant-numeric: tabular-nums; }
+  .tv-path__body { grid-column: 1 / -1; min-width: 0; font-size: var(--type-body); line-height: 1.7; color: var(--muted); max-width: 34rem; }
+  .tv-path__action { grid-column: 1 / -1; min-width: 0; }
   .tv-path__action .h3-link { font-size: var(--type-ui); line-height: 1.5; }
   .tv-path__proof { display: inline-flex; align-items: baseline; gap: var(--space-1); margin-top: var(--space-2); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .tv-path__proof:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -75,7 +73,9 @@ const t = getTalentV2(lang);
   .tv-principle { padding-block: var(--space-4); border-top: 1px solid var(--line); background: var(--sand); }
   .tv-principle p { max-width: 64rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .tv-principle strong { font-weight: 500; color: var(--text); }
+  @media (max-width: 55.99rem) { .tv-path__action .h3-link { min-height: var(--space-6); align-items: center; } }
   @media (min-width: 56rem) {
-    .tv-path { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr) minmax(0, .8fr); gap: var(--space-grid); }
+    .tv-path { grid-template-columns: minmax(0, 1fr) minmax(0, .6fr) minmax(0, 1.4fr) minmax(0, 1fr); column-gap: var(--space-stack); }
+    .tv-path__body, .tv-path__action { grid-column: auto; }
   }
 </style>
