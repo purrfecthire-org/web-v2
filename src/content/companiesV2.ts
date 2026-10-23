@@ -142,11 +142,11 @@ export const companiesV2En: CompaniesV2Content = {
     progression: 'Promoted in under two years.',
   },
   models: {
-    eyebrow: 'Working together',
-    headline: 'The model follows your hiring plan.',
+    eyebrow: 'Search engagements',
+    headline: 'Two ways to work with Purrfect.',
     items: [
-      { name: 'Success fee', note: 'For a specific search. No upfront fee. You pay only when you hire.' },
-      { name: 'Dedicated hiring partnership', note: 'A dedicated team for several roles, paid monthly.' },
+      { name: 'A specific search', note: 'Role definition, targeted search and candidate assessment for one critical hire. Success fee. No upfront fee. You pay only when you hire.' },
+      { name: 'A dedicated hiring team', note: 'A dedicated team working across several roles in your hiring plan. Monthly engagement.' },
     ],
     cta: 'Book a 20-minute founders call',
   },

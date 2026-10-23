@@ -2,6 +2,7 @@
 import Shell from '../v2/Shell.astro';
 import CatIllustration from '../v2/CatIllustration.astro';
 import ClientPortrait from '../v2/ClientPortrait.astro';
+import SocialIcon from '../v2/SocialIcon.astro';
 import { talentTestimonials } from '../../content/talentTestimonials';
 import type { Lang } from '../../content/index';
 import { getOfferV2 } from '../../content/offerV2';
@@ -68,12 +69,13 @@ const t = getOfferV2(lang);
             <strong>{t.proof.name}</strong>
             <span>{t.proof.role}</span>
             <span>Translated from Spanish</span>
+            <a class="oa-quote__linkedin" href={t.proof.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`View ${t.proof.name} on LinkedIn`}><SocialIcon name="linkedin" />View LinkedIn<span aria-hidden="true">↗</span></a>
           </figcaption>
         </div>
       </figure>
       {talentTestimonials.map(voice => <figure class="oa-quote">
         <img class="oa-quote__portrait" src={voice.photo} alt={voice.name} width="480" height="480" loading="lazy" decoding="async" />
-        <div class="oa-quote__copy"><blockquote>“{voice.quote}”</blockquote><figcaption><strong>{voice.name}</strong><span>{voice.context}</span><span>{voice.translation}</span></figcaption></div>
+        <div class="oa-quote__copy"><blockquote>“{voice.quote}”</blockquote><figcaption><strong>{voice.name}</strong><span>{voice.context}</span><span>{voice.translation}</span><a class="oa-quote__linkedin" href={voice.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`View ${voice.name} on LinkedIn`}><SocialIcon name="linkedin" />View LinkedIn<span aria-hidden="true">↗</span></a></figcaption></div>
       </figure>)}
     </div>
   </section>
@@ -156,6 +158,8 @@ const t = getOfferV2(lang);
   .oa-quote figcaption span { color: var(--muted); }
   .oa-quote + .oa-quote { padding-top: var(--space-grid); border-top: 1px solid var(--line); }
   .oa-quote__portrait { display: block; width: calc(var(--space-8) * 2); height: calc(var(--space-8) * 2); border-radius: 50%; object-fit: cover; object-position: 50% 30%; }
+  .oa-quote__linkedin { display: inline-flex; align-items: center; gap: var(--space-1); justify-self: start; min-height: var(--space-6); color: var(--text); text-decoration: underline; text-underline-offset: .2em; }
+  .oa-quote__linkedin:hover { color: var(--purple); }
   .oa-scope__grid, .oa-scope__details { display: grid; gap: var(--space-grid); align-items: start; margin-top: var(--space-grid); }
   .oa-scope__grid > *, .oa-scope__details > * { min-width: 0; }
   .oa-investment { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
