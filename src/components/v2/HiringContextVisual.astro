@@ -1,0 +1,66 @@
+---
+interface Props {
+  kind: 'portfolio' | 'founding-engineer' | 'head-of-engineering' | 'forward-deployed-engineer';
+}
+const { kind } = Astro.props;
+---
+
+<!-- Conceptual role relationships, not a dashboard, candidate assessment or measured result. -->
+<svg class="hiring-context" viewBox="0 0 360 240" width="360" height="240" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  {kind === 'portfolio' && <Fragment>
+    <path class="hiring-context__connector" d="M76 120H154M154 120V48H258M154 120H258M154 120V192H258" />
+    <rect class="hiring-context__paper" x="24" y="91" width="58" height="58" rx="12" />
+    <path class="hiring-context__ink" d="M41 109H65V132H41V109ZM47 109V104H59V109M48 117V124M58 117V124" />
+    {[24, 96, 168].map((y) => <Fragment>
+      <rect class="hiring-context__paper" x="258" y={y} width="78" height="48" rx="12" />
+      <circle class="hiring-context__accent" cx="282" cy={y + 24} r="4" />
+      <path class="hiring-context__ink" d={`M297 ${y + 19}H318M297 ${y + 29}H310`} />
+    </Fragment>)}
+    <circle class="hiring-context__junction" cx="154" cy="120" r="6" />
+  </Fragment>}
+
+  {kind === 'founding-engineer' && <Fragment>
+    <path class="hiring-context__connector" d="M103 119H143M217 119H257M180 81V48H76V81M284 157V192H180V157" />
+    <rect class="hiring-context__paper" x="26" y="81" width="77" height="76" rx="12" />
+    <path class="hiring-context__ink" d="M55 106L43 119L55 132M75 106L87 119L75 132" />
+    <rect class="hiring-context__paper" x="143" y="81" width="74" height="76" rx="12" />
+    <path class="hiring-context__ink" d="M161 104H199V134H161V104ZM161 113H199M168 108H169M175 108H176" />
+    <rect class="hiring-context__paper" x="257" y="81" width="77" height="76" rx="12" />
+    <path class="hiring-context__accent-stroke" d="M279 117L290 128L313 105" />
+    <circle class="hiring-context__junction" cx="180" cy="48" r="5" />
+  </Fragment>}
+
+  {kind === 'head-of-engineering' && <Fragment>
+    <path class="hiring-context__connector" d="M180 91V117M64 154V117H296V154M180 117V154" />
+    <rect class="hiring-context__paper" x="143" y="25" width="74" height="66" rx="12" />
+    <circle class="hiring-context__accent-stroke" cx="180" cy="49" r="8" />
+    <path class="hiring-context__accent-stroke" d="M164 75V72C164 63 171 59 180 59C189 59 196 63 196 72V75" />
+    {[27, 143, 259].map((x) => <Fragment>
+      <rect class="hiring-context__paper" x={x} y="154" width="74" height="61" rx="12" />
+      <circle class="hiring-context__ink" cx={x + 37} cy="176" r="6" />
+      <path class="hiring-context__ink" d={`M${x + 24} 199V197C${x + 24} 190 ${x + 30} 185 ${x + 37} 185C${x + 44} 185 ${x + 50} 190 ${x + 50} 197V199`} />
+    </Fragment>)}
+    <circle class="hiring-context__junction" cx="180" cy="117" r="5" />
+  </Fragment>}
+
+  {kind === 'forward-deployed-engineer' && <Fragment>
+    <rect class="hiring-context__paper" x="24" y="73" width="92" height="94" rx="12" />
+    <path class="hiring-context__ink" d="M42 94H98V146H42V94ZM42 105H98M50 99H51M58 99H59M54 118L49 125L54 132M86 118L91 125L86 132" />
+    <rect class="hiring-context__paper" x="244" y="73" width="92" height="94" rx="12" />
+    <path class="hiring-context__ink" d="M263 145V111L290 95L317 111V145H263ZM283 145V129H297V145" />
+    <path class="hiring-context__accent-stroke" d="M116 105H224M215 97L224 105L215 113" />
+    <path class="hiring-context__connector" d="M244 135H136M145 127L136 135L145 143" />
+    <circle class="hiring-context__junction" cx="180" cy="105" r="5" />
+  </Fragment>}
+</svg>
+
+<style>
+  .hiring-context { display: block; width: 100%; height: auto; overflow: visible; }
+  .hiring-context :is(rect, path, circle) { vector-effect: non-scaling-stroke; }
+  .hiring-context__paper { fill: var(--white); stroke: var(--line); stroke-width: 1.5; }
+  .hiring-context__ink { stroke: var(--text); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .hiring-context__connector { stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .hiring-context__accent { fill: var(--purple); }
+  .hiring-context__accent-stroke { stroke: var(--purple); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .hiring-context__junction { fill: var(--sand); stroke: var(--purple); stroke-width: 1.5; }
+</style>

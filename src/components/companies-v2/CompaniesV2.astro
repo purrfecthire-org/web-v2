@@ -4,25 +4,22 @@ import type { Lang } from '../../content/index';
 import { getCompaniesV2 } from '../../content/companiesV2';
 import { CLIENT_BRANDS } from '../../content/clientBrands';
 import { BOOKING_B2B as BOOKING_URL } from '../../content/links';
+import CompaniesIcon from './CompaniesIcon.astro';
+import SearchMethodVisual from './SearchMethodVisual.astro';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getCompaniesV2(lang);
 const situations = t.situations.items.filter(({ title }) => ['The role keeps changing', 'The people you want are not applying', 'The hire has to outgrow the role'].includes(title));
+const situationIcons = ['role', 'market', 'growth'] as const;
 const searches = t.selectedSearches.items.filter((search) => search.outcome).slice(0, 2);
-const voices = t.proof.voices.filter(({ name }) => ['Fabián Torres', 'Chen Atlas'].includes(name)).slice(0, 2);
-const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name === 'Fabián Torres' ? 'trebol' : 'optery'))!;
-
+const chen = t.proof.voices.find(({ name }) => name === 'Chen Atlas')!;
+const fabian = t.proof.voices.find(({ name }) => name === 'Fabián Torres')!;
+const optery = CLIENT_BRANDS.find(({ id }) => id === 'optery')!;
+const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
 ---
 
-<Shell
-  lang={lang}
-  title={t.meta.title}
-  description={t.meta.description}
-  theme="light"
-  navCta={{ label: t.hero.cta, href: BOOKING_URL }}
-  journey="companies"
->
+<Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light" navCta={{ label: t.hero.cta, href: BOOKING_URL }} journey="companies">
   <section class="h3-hero fc-hero" aria-labelledby="fc-title">
     <div class="h3-wrap h3-hero__grid">
       <div class="h3-hero__copy">
@@ -36,119 +33,121 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
         </div>
         <p class="fc-microcopy">{t.hero.microcopy}</p>
       </div>
-      <figure class="h3-hero__media fc-hero__media" style={{ "--photo-desktop": "8 / 5", "--photo-mobile": "4 / 3" }}>
-        <img src="/photos/editorial/walking-conversation.webp" alt="Illustrative scene of three people in conversation while walking through the city." width="1200" height="800" decoding="async" fetchpriority="high" />
+      <figure class="h3-hero__media fc-hero__media" style={{ '--photo-desktop': '8 / 5', '--photo-mobile': '4 / 3' }}>
+        <img src="/photos/editorial/founders-conversation-v2.webp" alt="Illustrative scene of three people in a working conversation in an urban courtyard." width="1440" height="960" decoding="async" fetchpriority="high" />
       </figure>
     </div>
   </section>
 
   <section class="fc-situations" aria-labelledby="fc-situations-title">
-    <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.situations.eyebrow}</p>
-      <h2 class="h3-h2 fc-situations__h2" id="fc-situations-title">{t.situations.headline}</h2>
+    <div class="h3-wrap fc-editorial">
+      <header>
+        <p class="h3-eyebrow">{t.situations.eyebrow}</p>
+        <h2 class="h3-h2 fc-heading" id="fc-situations-title">{t.situations.headline}</h2>
+      </header>
       <ul class="fc-situations__list">
-        {situations.map((situation) => (
-          <li class="fc-situation">
-            <h3>{situation.title}</h3>
-            <p>{situation.body}</p>
-          </li>
-        ))}
+        {situations.map((situation, index) => <li class="fc-situation">
+          <span class="fc-situation__icon"><CompaniesIcon name={situationIcons[index]} /></span>
+          <div><h3>{situation.title}</h3><p>{situation.body}</p></div>
+        </li>)}
       </ul>
     </div>
   </section>
 
   <section class="fc-method" aria-labelledby="fc-method-title">
-    <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.method.eyebrow}</p>
-      <h2 class="h3-h2 fc-method__h2" id="fc-method-title">{t.method.headline}</h2>
-      <ol class="fc-steps">
-        {t.method.steps.map((step) => (
-          <li class="fc-step">
-            <span class="fc-step__id" aria-hidden="true">{step.id}</span>
-            <h3 class="fc-step__title">{step.title}</h3>
-            <p class="fc-step__body">{step.body}</p>
-          </li>
-        ))}
-      </ol>
-      <div class="fc-method__links" id="candidate-brief">
-        <a href="/search-calibration" data-cta="companies-calibration-example" class="h3-link">{t.read.sampleLabel}<span class="h3-arrow" aria-hidden="true">→</span></a>
-        <a href="/candidate-brief-sample" data-cta="companies-candidate-brief-sample" class="h3-link">{t.evidence.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+    <div class="h3-wrap fc-editorial">
+      <div>
+        <p class="h3-eyebrow">{t.method.eyebrow}</p>
+        <h2 class="h3-h2 fc-heading" id="fc-method-title">{t.method.headline}</h2>
+        <div class="fc-method__visual"><SearchMethodVisual /></div>
       </div>
+      <ol class="fc-steps">
+        {t.method.steps.map((step, index) => <li class="fc-step" id={index === 2 ? 'candidate-brief' : undefined}>
+          <span class="fc-step__id" aria-hidden="true">{step.id}</span>
+          <div>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+            {index === 0 && <a href="/search-calibration" data-cta="companies-calibration-example" class="h3-link fc-step__link">{t.read.sampleLabel}<span aria-hidden="true">→</span></a>}
+            {index === 2 && <a href="/candidate-brief-sample" data-cta="companies-candidate-brief-sample" class="h3-link fc-step__link">{t.evidence.cta}<span aria-hidden="true">→</span></a>}
+          </div>
+        </li>)}
+      </ol>
     </div>
   </section>
 
   <section class="fc-proof" aria-labelledby="fc-proof-title">
     <div class="h3-wrap">
       <p class="h3-eyebrow">{t.proof.eyebrow}</p>
-      <h2 class="h3-h2 fc-proof__h2" id="fc-proof-title">{t.proof.headline}</h2>
-      <!-- Keep the anonymous search separate from named feedback. It is not
-           attributed to either speaker or counted as an additional outcome. -->
-      {searches.length > 0 && <div class="fc-searches" id="selected-searches">
-        <p class="h3-eyebrow">{t.selectedSearches.eyebrow}</p>
-        <div class="fc-searches__list">
-          {searches.map((search) => (
-            <article class="fc-search">
-              <div class="fc-search__narrative">
-                <p class="h3-eyebrow">{[search.company, search.stage, search.role].filter(Boolean).join(' · ')}</p>
-                <h3>{search.title}</h3>
-                <p class="fc-search__problem">{search.problem}</p>
-                {search.outcome && <dl><div><dt>{t.selectedSearches.outcomeLabel}</dt><dd>{search.outcome}</dd></div></dl>}
-                <details class="fc-search__detail">
-                  <summary>Read the search approach <span aria-hidden="true">+</span></summary>
-                  <dl>
-                    <div><dt>{t.selectedSearches.interventionLabel}</dt><dd>{search.intervention}</dd></div>
-                    {search.evidence && <div><dt>Evidence to examine</dt><dd>{search.evidence}</dd></div>}
-                  </dl>
-                </details>
-              </div>
-            </article>
-          ))}
+      <h2 class="h3-h2 fc-heading" id="fc-proof-title">{t.proof.headline}</h2>
+      <article class="fc-product-hire" id="optery-case" aria-labelledby="fc-product-hire-title">
+        <div class="fc-product-hire__story">
+          <a class="fc-brand" href={optery.href} target="_blank" rel="noopener noreferrer" aria-label={optery.name}><img src="/clients/neutral/optery.png" alt={optery.name} width="480" height="192" loading="lazy" decoding="async" /></a>
+          <h3 class="fc-product-hire__title" id="fc-product-hire-title">{t.productHire.headline}</h3>
+          <p class="fc-product-hire__brief">{t.productHire.brief}</p>
+          <p class="fc-product-hire__name">{t.productHire.name}</p>
+          <dl class="fc-progression">
+            <div><dt>Hired as</dt><dd>{t.productHire.atHire}</dd></div>
+            <div><dt>Grew into</dt><dd>{t.productHire.grewInto}</dd></div>
+          </dl>
+          <p class="fc-product-hire__progression">{t.productHire.progression}</p>
         </div>
-      </div>}
-      <div class="fc-proof__voices">
-      {voices.map((voice) => (
-        <figure class="fc-quote">
-          <div class="fc-quote__identity">
-          {voice.photo && <div class="fc-quote__portrait">
-            <picture>
-              {voice.photoWebp && <source srcset={voice.photoWebp} type="image/webp" />}
-              <img src={voice.photo} alt={voice.name} width="480" height="480" loading="lazy" decoding="async" />
-            </picture>
-          </div>}
-          <a class="fc-quote__brand" href={voiceBrand(voice.name).href} target="_blank" rel="noopener noreferrer" aria-label={voiceBrand(voice.name).name}>
-            <img src={`/clients/neutral/${voiceBrand(voice.name).id}.png`} alt={voiceBrand(voice.name).name} width="480" height="192" loading="lazy" decoding="async" />
-          </a>
-          </div>
-          <div class="fc-quote__body">
-            {voice.excerptLabel && <p class="h3-eyebrow fc-quote__excerpt">{voice.excerptLabel}</p>}
-            <blockquote>“{voice.quote}”</blockquote>
-            <figcaption>
-              <span class="fc-quote__name">{voice.name}</span>
-              <span class="fc-quote__role">{voice.role}</span>
-              {voice.context && <span class="fc-quote__context">{voice.context}</span>}
-            </figcaption>
-          </div>
+        <figure class="fc-chen">
+          <blockquote>“{chen.quote}”</blockquote>
+          <figcaption class="fc-attribution">
+            {(chen.photoWebp || chen.photo) && <img class="fc-portrait" src={chen.photoWebp || chen.photo} alt={chen.name} width="480" height="480" loading="lazy" decoding="async" />}
+            <div>
+              <span class="fc-attribution__name">{chen.name}</span>
+              <span>{chen.role}</span>
+              <span class="fc-attribution__context">On Guido’s integration and performance · February 2025</span>
+              {chen.excerptLabel && <span class="fc-attribution__context">{chen.excerptLabel}</span>}
+            </div>
+          </figcaption>
         </figure>
-      ))}
-      </div>
+      </article>
+
+      <figure class="fc-fabian fc-editorial">
+        <figcaption class="fc-fabian__identity">
+          <a class="fc-brand" href={trebol.href} target="_blank" rel="noopener noreferrer" aria-label={trebol.name}><img src="/clients/neutral/trebol.png" alt={trebol.name} width="480" height="192" loading="lazy" decoding="async" /></a>
+          <span class="fc-attribution">
+            {(fabian.photoWebp || fabian.photo) && <img class="fc-portrait" src={fabian.photoWebp || fabian.photo} alt={fabian.name} width="480" height="480" loading="lazy" decoding="async" />}
+            <span><span class="fc-attribution__name">{fabian.name}</span><span>{fabian.role}</span></span>
+          </span>
+        </figcaption>
+        <blockquote>“{fabian.quote}”</blockquote>
+      </figure>
+
+      <!-- The backend search is a separate anonymous case, never Guido's
+           product search or an additional named testimonial. -->
+      {searches.length > 0 && <details class="fc-searches" id="selected-searches">
+        <summary>Read an anonymized backend engineer search<span aria-hidden="true">+</span></summary>
+        {searches.map(search => <article class="fc-search fc-editorial">
+          <div>
+            <p class="h3-eyebrow">{t.selectedSearches.eyebrow}</p>
+            <p class="fc-search__context">{[search.company, search.stage, search.role].filter(Boolean).join(' · ')}</p>
+            <h3>{search.title}</h3>
+            <p>{search.problem}</p>
+          </div>
+          <dl>
+            <div><dt>{t.selectedSearches.interventionLabel}</dt><dd>{search.intervention}</dd></div>
+            {search.evidence && <div><dt>Evidence to examine</dt><dd>{search.evidence}</dd></div>}
+            {search.outcome && <div><dt>{t.selectedSearches.outcomeLabel}</dt><dd>{search.outcome}</dd></div>}
+          </dl>
+        </article>)}
+      </details>}
     </div>
   </section>
 
   <section class="fc-models" aria-labelledby="fc-models-title">
     <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.models.eyebrow}</p>
-      <h2 class="h3-h2 fc-models__h2" id="fc-models-title">{t.models.headline}</h2>
-      <ul class="fc-models__list">
-        {t.models.items.map((model) => (
-          <li class="fc-model">
-            <h3 class="fc-model__name">{model.name}</h3>
-            <p class="fc-model__note">{model.note}</p>
-          </li>
-        ))}
-      </ul>
-      <div class="fc-models__close">
+      <div class="fc-editorial">
+        <header><p class="h3-eyebrow">{t.models.eyebrow}</p><h2 class="h3-h2 fc-heading" id="fc-models-title">{t.models.headline}</h2></header>
+        <ul class="fc-models__list">
+          {t.models.items.map(model => <li class="fc-model"><h3>{model.name}</h3><p>{model.note}</p></li>)}
+        </ul>
+      </div>
+      <div class="fc-close">
         <p class="h3-body">{t.close.body}</p>
-        <a href={BOOKING_URL} data-cta="companies-close-booking" class="h3-btn h3-btn--ink">{t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+        <a href={BOOKING_URL} data-cta="companies-close-booking" class="h3-btn h3-btn--ink">{t.close.cta}<span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -158,50 +157,65 @@ const voiceBrand = (name: string) => CLIENT_BRANDS.find(({ id }) => id === (name
   .fc-hero__actions { display: flex; margin-top: var(--space-stack); }
   .fc-hero__actions .h3-hero__cta { margin-top: 0; }
   .fc-hero__media { margin: 0; border-radius: var(--radius-card); overflow: hidden; }
-  .fc-hero__media img { object-position: 42% 42%; }
-  .fc-credential, .fc-microcopy { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 34rem; }
+  .fc-hero__media img { object-position: 50% 50%; }
+  .fc-credential, .fc-microcopy { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 54ch; }
   .fc-situations, .fc-method, .fc-proof, .fc-models { padding-block: var(--space-section); }
-  .fc-situations__h2, .fc-method__h2, .fc-proof__h2, .fc-models__h2 { max-width: 26ch; }
-  .fc-situations__list, .fc-steps, .fc-proof__voices, .fc-models__list { display: grid; gap: var(--space-grid); margin-top: var(--space-stack); }
-  .fc-situation, .fc-step, .fc-search, .fc-quote, .fc-model { min-width: 0; }
-  .fc-situation, .fc-step, .fc-model { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
-  .fc-situation h3, .fc-step__title, .fc-search h3, .fc-model__name { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .fc-situation p, .fc-step__body, .fc-search__problem, .fc-model__note { margin-top: var(--space-2); max-width: 40rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .fc-step__id { display: block; margin-bottom: var(--space-2); font-size: var(--type-caption); color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
-  .fc-method__links { margin-top: var(--space-stack); display: flex; flex-wrap: wrap; column-gap: var(--space-grid); row-gap: var(--space-2); }
-  .fc-method__links a { max-width: 100%; }
-  .fc-searches { margin-top: var(--space-grid); }
-  .fc-searches__list { margin-top: var(--space-stack); }
-  .fc-search { padding-block: var(--space-stack); border-block: 1px solid var(--line); }
-  .fc-search__narrative { min-width: 0; }
+  .fc-heading { max-width: 26ch; }
+  .fc-editorial { display: grid; gap: var(--space-grid); }
+  .fc-situations__list, .fc-steps, .fc-models__list { display: grid; gap: var(--space-stack); }
+  .fc-situation, .fc-step { min-width: 0; display: grid; grid-template-columns: var(--space-stack) minmax(0, 1fr); gap: var(--space-stack); padding-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .fc-situation__icon { display: flex; color: var(--muted); }
+  .fc-situation h3, .fc-step h3, .fc-search h3, .fc-model h3 { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .fc-situation p, .fc-step p, .fc-product-hire__brief, .fc-search p:not(.h3-eyebrow), .fc-search dd, .fc-model p { margin-top: var(--space-2); max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .fc-step { scroll-margin-top: var(--space-stack); }
+  .fc-step__id { font-size: var(--type-caption); font-variant-numeric: tabular-nums; line-height: 1.5; color: var(--muted); }
+  .fc-step__link { margin-top: var(--space-2); max-width: 100%; font-size: var(--type-ui); }
+  .fc-method__visual { max-width: 100%; margin-top: var(--space-grid); }
+  .fc-product-hire { display: grid; gap: var(--space-grid); margin-top: var(--space-grid); padding: var(--space-stack); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); }
+  .fc-product-hire__story, .fc-chen { min-width: 0; }
+  .fc-brand { display: block; width: 10rem; max-width: 100%; }
+  .fc-brand img { display: block; width: 100%; height: auto; }
+  .fc-product-hire__title { margin-top: var(--space-2); font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.35; max-width: 26ch; text-wrap: balance; }
+  .fc-product-hire__name { margin-top: var(--space-stack); font-size: var(--type-body); font-weight: 500; line-height: 1.5; }
+  .fc-progression { display: grid; gap: var(--space-stack); margin-top: var(--space-2); }
+  .fc-progression > div { position: relative; padding-left: var(--space-stack); }
+  .fc-progression > div::before { content: ''; position: absolute; left: 0; top: .5em; width: .5rem; height: .5rem; border-radius: 50%; border: 1px solid var(--muted); background: var(--white); }
+  .fc-progression > div:first-child::after { content: ''; position: absolute; left: .25rem; top: calc(.5em + .5rem); width: 1px; height: calc(100% + var(--space-stack) - .5rem); background: var(--line); }
+  .fc-progression > div:last-child::before { border-color: var(--purple); background: var(--purple); }
+  .fc-progression dt { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .fc-progression dd { margin: var(--space-1) 0 0; font-size: var(--type-body); font-weight: 500; line-height: 1.5; }
+  .fc-product-hire__progression { margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .fc-chen { display: flex; flex-direction: column; justify-content: center; margin: 0; padding-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .fc-chen blockquote, .fc-fabian blockquote { max-width: 54ch; font-size: var(--type-quote); line-height: 1.5; }
+  .fc-attribution { display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .fc-attribution > div, .fc-attribution > span { min-width: 0; }
+  .fc-attribution > div > span, .fc-attribution > span > span { display: block; }
+  .fc-attribution__name { color: var(--text); font-weight: 500; }
+  .fc-attribution__context { margin-top: var(--space-1); }
+  .fc-portrait { display: block; width: var(--space-8); height: var(--space-8); flex: 0 0 auto; border-radius: 50%; object-fit: cover; object-position: 50% 35%; }
+  .fc-fabian { margin: var(--space-grid) 0 0; padding-block: var(--space-grid); border-bottom: 1px solid var(--line); align-items: center; }
+  .fc-fabian__identity { min-width: 0; }
+  .fc-searches { margin-top: var(--space-stack); scroll-margin-top: var(--space-stack); }
+  .fc-searches summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-stack); min-height: var(--space-6); cursor: pointer; list-style: none; font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
+  .fc-searches summary::-webkit-details-marker { display: none; }
+  .fc-searches[open] summary > span { transform: rotate(45deg); }
+  .fc-search { padding-block: var(--space-stack); }
+  .fc-search .fc-search__context { font-size: var(--type-caption); }
   .fc-search h3 { margin-top: var(--space-2); }
-  .fc-search__detail { margin-top: var(--space-stack); }
-  .fc-search__detail summary { cursor: pointer; display: flex; justify-content: space-between; gap: var(--space-2); padding-block: var(--space-1); font-size: var(--type-ui); font-weight: 500; list-style: none; line-height: 1.5; }
-  .fc-search__detail summary::-webkit-details-marker { display: none; }
-  .fc-search__detail[open] summary span { transform: rotate(45deg); }
-  .fc-search dl { margin-top: var(--space-stack); display: grid; gap: var(--space-stack); }
+  .fc-search dl { display: grid; gap: var(--space-stack); }
   .fc-search dt { font-size: var(--type-caption); font-weight: 500; line-height: 1.5; }
-  .fc-search dd { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .fc-proof__voices { margin-top: var(--space-grid); }
-  .fc-quote { margin: 0; display: flex; flex-direction: column; padding-top: var(--space-stack); }
-  .fc-quote__identity { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-stack); }
-  .fc-quote__body { display: flex; flex-direction: column; flex: 1; }
-  .fc-quote__excerpt { margin-bottom: var(--space-2); }
-  .fc-quote blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.5; }
-  .fc-quote figcaption { padding-top: var(--space-stack); margin-top: auto; display: flex; flex-direction: column; font-size: var(--type-caption); line-height: 1.5; }
-  .fc-quote__name { font-weight: 500; }
-  .fc-quote__role, .fc-quote__context { color: var(--muted); }
-  .fc-quote__context { margin-top: var(--space-1); }
-  .fc-quote__portrait { width: var(--space-8); height: var(--space-8); overflow: hidden; border-radius: 50%; flex: 0 0 auto; }
-  .fc-quote__portrait picture, .fc-quote__portrait img { display: block; width: 100%; height: 100%; }
-  .fc-quote__portrait img { object-fit: cover; object-position: 50% 35%; }
-  .fc-quote__brand { display: flex; width: 10rem; min-height: var(--space-8); align-items: center; }
-  .fc-quote__brand img { display: block; width: 100%; height: auto; }
+  .fc-search dd { margin: var(--space-1) 0 0; }
   .fc-models { border-top: 1px solid var(--line); }
-  .fc-models__close { margin-top: var(--space-grid); }
-  .fc-models__close > .h3-body { margin: 0 0 var(--space-stack); }
+  .fc-model { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .fc-close { display: grid; gap: var(--space-stack); align-items: center; margin-top: var(--space-section); padding-top: var(--space-grid); border-top: 1px solid var(--line); }
+  .fc-close .h3-body { max-width: 54ch; }
+  .fc-close .h3-btn { justify-self: start; }
   @media (min-width: 56rem) {
-    .fc-situations__list, .fc-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .fc-proof__voices, .fc-models__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fc-hero__media img { object-position: 50% 0%; }
+    .fc-editorial { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+    .fc-product-hire { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: var(--space-4); }
+    .fc-chen { padding-top: 0; padding-left: var(--space-grid); border-top: 0; border-left: 1px solid var(--line); }
+    .fc-close { grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-grid); }
+    .fc-close .h3-btn { justify-self: end; }
   }
 </style>

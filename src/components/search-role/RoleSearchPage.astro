@@ -1,10 +1,13 @@
 ---
 import Shell from '../v2/Shell.astro';
+import HiringContextVisual from '../v2/HiringContextVisual.astro';
+import CompaniesIcon from '../companies-v2/CompaniesIcon.astro';
 import { getRoleSearchHref, searchRoleShared as t, type SearchRoleContent } from '../../content/searchRoles';
 
 interface Props { role: SearchRoleContent }
 const { role } = Astro.props;
 const bookingHref = getRoleSearchHref(role.slug);
+const evidenceIcons = ['role', 'market', 'growth'] as const;
 ---
 
 <Shell
@@ -27,6 +30,8 @@ const bookingHref = getRoleSearchHref(role.slug);
         <p class="rs-cta-note">{t.ctaNote}</p>
       </div>
       <aside class="rs-context" aria-labelledby="rs-context-title">
+        <div class="rs-context__visual"><HiringContextVisual kind={role.slug} /></div>
+        <div class="rs-context__copy">
         <h2 id="rs-context-title">{role.problem.headline}</h2>
         <p class="rs-context__body">{role.problem.body}</p>
         <details>
@@ -37,6 +42,7 @@ const bookingHref = getRoleSearchHref(role.slug);
             <div><dt>{t.decisionLabel}</dt><dd>{role.context.decision}</dd></div>
           </dl>
         </details>
+        </div>
       </aside>
     </div>
   </section>
@@ -49,8 +55,10 @@ const bookingHref = getRoleSearchHref(role.slug);
       <ol class="rs-assessment__list">
         {role.evidence.map((item, index) => (
           <li class="rs-assessment__row">
-            <span class="rs-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            <div><h3>{item.title}</h3><p>{item.body}</p></div>
+            <div class="rs-assessment__evidence">
+              <div class="rs-assessment__marker"><CompaniesIcon name={evidenceIcons[index]} /><span class="rs-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span></div>
+              <div><h3>{item.title}</h3><p>{item.body}</p></div>
+            </div>
             <details class="rs-question">
               <summary>{role.questions[index].question}<span aria-hidden="true">+</span></summary>
               <p>{role.questions[index].reason}</p>
@@ -96,12 +104,14 @@ const bookingHref = getRoleSearchHref(role.slug);
   .rs-hero__grid, .rs-section__grid { display: grid; gap: var(--space-grid); align-items: start; }
   .rs-role { margin-top: var(--space-stack); font-size: var(--type-ui); line-height: 1.5; font-weight: 500; }
   .rs-hero h1 { margin-top: var(--space-2); font-family: var(--h-serif); font-weight: 400; font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0; font-size: var(--type-display); line-height: 1.08; letter-spacing: -0.02em; max-width: 20ch; text-wrap: balance; }
-  .rs-hero__body { margin-top: var(--space-stack); font-size: var(--type-lead); line-height: 1.6; color: var(--muted); max-width: 38rem; }
+  .rs-hero__body { margin-top: var(--space-stack); font-size: var(--type-lead); line-height: 1.6; color: var(--muted); max-width: 55ch; }
   .rs-hero__cta { margin-top: var(--space-stack); }
-  .rs-cta-note { margin-top: var(--space-2); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); max-width: 31rem; }
-  .rs-context { padding-top: var(--space-stack); border-top: 1px solid var(--line); min-width: 0; }
+  .rs-cta-note { margin-top: var(--space-2); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); max-width: 55ch; }
+  .rs-context { border: 1px solid var(--line); border-radius: var(--radius-card); min-width: 0; overflow: hidden; }
+  .rs-context__visual { width: 100%; max-width: calc(var(--space-8) * 4); padding: var(--space-stack); margin-inline: auto; }
+  .rs-context__copy { padding: var(--space-stack); background: var(--white); border-top: 1px solid var(--line); }
   .rs-context h2, .rs-assessment h3, .rs-risks h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; font-family: var(--h-sans); }
-  .rs-context__body, .rs-assessment__row p, .rs-risks__list p { margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .rs-context__body, .rs-assessment__row p, .rs-risks__list p { margin-top: var(--space-2); max-width: 55ch; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .rs-context details { margin-top: var(--space-stack); }
   .rs-context summary, .rs-question summary { display: flex; justify-content: space-between; gap: var(--space-2); padding-block: var(--space-1); cursor: pointer; list-style: none; font-size: var(--type-ui); line-height: 1.5; font-weight: 500; }
   .rs-question summary { font-size: var(--type-body); line-height: 1.7; padding-top: 0; }
@@ -114,15 +124,23 @@ const bookingHref = getRoleSearchHref(role.slug);
   .rs-context dd { margin: var(--space-1) 0 0; font-size: var(--type-body); line-height: 1.7; }
   .rs-section { padding-block: var(--space-section); }
   .rs-section__title { max-width: 26ch; }
-  .rs-section__intro { margin-top: var(--space-stack); max-width: 42rem; }
+  .rs-section__intro { margin-top: var(--space-stack); max-width: 55ch; }
   .rs-assessment__list { margin-top: var(--space-grid); border-top: 1px solid var(--line); }
-  .rs-assessment__row { display: grid; gap: var(--space-stack); padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
+  .rs-assessment__row { display: grid; gap: var(--space-stack); padding-block: var(--space-grid); border-bottom: 1px solid var(--line); }
   .rs-assessment__row > div, .rs-question { min-width: 0; }
+  .rs-assessment__evidence { display: flex; gap: var(--space-stack); align-items: start; }
+  .rs-assessment__evidence > div { min-width: 0; }
+  .rs-assessment__marker { display: grid; gap: var(--space-2); justify-items: start; flex: 0 0 var(--space-grid); color: var(--purple); }
+  .rs-question { padding: var(--space-stack); background: var(--white); border-radius: var(--radius-card); }
+  .rs-question summary { padding-bottom: 0; }
   .rs-number { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .rs-risks__list { border-top: 1px solid var(--line); }
+  .rs-risks__list { border-left: 1px solid var(--line); padding-left: var(--space-stack); }
   .rs-risks__list li { padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
+  .rs-risks__list li:first-child { padding-top: 0; }
+  .rs-risks__list li:last-child { border-bottom: 0; padding-bottom: 0; }
   .rs-preparation { margin-top: var(--space-stack); }
-  .rs-preparation li { padding-block: var(--space-2); border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .rs-preparation li { display: flex; gap: var(--space-2); padding-block: var(--space-2); border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .rs-preparation li::before { content: ''; display: block; flex: 0 0 var(--space-1); width: var(--space-1); height: var(--space-1); margin-top: var(--space-1); background: var(--purple); border-radius: 50%; }
   .rs-close { border-top: 1px solid var(--line); }
   .rs-close__action { display: flex; flex-direction: column; align-items: start; gap: var(--space-stack); padding-top: var(--space-stack); }
   .rs-close__action .h3-btn { max-width: 100%; }
@@ -130,9 +148,10 @@ const bookingHref = getRoleSearchHref(role.slug);
   .rs-page-note { margin-top: var(--space-stack); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .rs-page-note a { text-decoration: underline; text-underline-offset: 3px; }
   @media (min-width: 56rem) {
-    .rs-hero__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: center; }
+    .rs-hero__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; }
+    .rs-context__copy { padding: var(--space-grid); }
     .rs-section__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .rs-assessment__row { grid-template-columns: var(--space-4) minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-grid); }
+    .rs-assessment__row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-grid); align-items: start; }
     .rs-preparation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-grid); }
   }
 </style>

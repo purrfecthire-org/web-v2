@@ -14,7 +14,7 @@ import '@fontsource-variable/fraunces/opsz.css';
 import '@fontsource-variable/inter/wght.css';
 import Layout from '../../layouts/Layout.astro';
 import type { Lang } from '../../content/index';
-import { PAGE_COMPANIES, PAGE_TALENT, PAGE_ROLES, PAGE_CAREER_COMPOUNDING, KATE, PRIVACY, CONTACT_EMAIL } from '../../content/links';
+import { PAGE_COMPANIES, PAGE_TALENT, PAGE_ROLES, PAGE_CAREER_COMPOUNDING, PRIVACY, CONTACT_EMAIL } from '../../content/links';
 
 interface Props {
   lang?: Lang;
@@ -41,7 +41,7 @@ const links = [
   { label: 'For companies', href: PAGE_COMPANIES },
   { label: 'For talent', href: PAGE_TALENT },
   { label: 'Open roles', href: PAGE_ROLES },
-  { label: 'Kate', href: KATE },
+  { label: 'Work with Purrfect', href: '/work-with-us' },
 ];
 
 const footerLinks = journey === 'companies' ? [
@@ -113,7 +113,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
         <span>© 2026 Purrfect Hire OÜ</span>
         <nav aria-label="Footer">
           {footerLinks.map((link) => <a href={link.href} data-cta={`${journey}-footer-${link.label.toLowerCase().replace(/\s+/g, '-')}`}>{link.label}</a>)}
-          <a href="/work-with-us" data-cta={`${journey}-footer-work-with-us`}>Work with us</a>
+          <a href="/work-with-us" data-cta={`${journey}-footer-work-with-us`}>Work with Purrfect</a>
           <a href={PRIVACY}>Privacy</a>
           <a href="https://www.linkedin.com/company/purrfect-hire" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>

@@ -1,11 +1,14 @@
 ---
 import Shell from '../v2/Shell.astro';
+import HiringContextVisual from '../v2/HiringContextVisual.astro';
+import CompaniesIcon from '../companies-v2/CompaniesIcon.astro';
 import type { Lang } from '../../content/index';
 import { getInvestorsV2, INVESTORS_SEARCH_READ } from '../../content/investorsV2';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getInvestorsV2(lang);
+const areaIcons = ['role', 'market', 'growth'] as const;
 ---
 
 <Shell
@@ -18,7 +21,8 @@ const t = getInvestorsV2(lang);
 >
   <div class="iv-page" data-audience="investors">
     <section class="h3-hero iv-hero" aria-labelledby="iv-title">
-      <div class="h3-wrap">
+      <div class="h3-wrap iv-hero__grid">
+        <div class="iv-hero__copy">
         <p class="h3-eyebrow">{t.hero.eyebrow}</p>
         <h1 class="h3-hero__h1 iv-hero__title" id="iv-title">{t.hero.headline}</h1>
         <p class="h3-hero__sub iv-hero__body">{t.hero.body}</p>
@@ -26,6 +30,8 @@ const t = getInvestorsV2(lang);
           {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <p class="iv-note">{t.hero.note}</p>
+        </div>
+        <div class="iv-hero__visual"><HiringContextVisual kind="portfolio" /></div>
       </div>
     </section>
 
@@ -34,10 +40,12 @@ const t = getInvestorsV2(lang);
         <p class="h3-eyebrow">{t.support.eyebrow}</p>
         <h2 class="h3-h2 iv-wide-title" id="iv-support-title">{t.support.headline}</h2>
         <ol class="iv-support__list">
-          {t.support.areas.map((area) => (
+          {t.support.areas.map((area, index) => (
             <li class="iv-area">
-              <span class="iv-area__id" aria-hidden="true">{area.id}</span>
-              <h3>{area.title}</h3>
+              <div class="iv-area__heading">
+                <div class="iv-area__marker"><CompaniesIcon name={areaIcons[index]} /><span class="iv-area__id" aria-hidden="true">{area.id}</span></div>
+                <h3>{area.title}</h3>
+              </div>
               <div class="iv-area__body">
                 <p>{area.body}</p>
                 {area.id === '03' && <details class="iv-format">
@@ -77,8 +85,9 @@ const t = getInvestorsV2(lang);
           <h2 class="h3-h2 iv-wide-title" id="iv-evidence-title">{t.evidence.headline}</h2>
         </div>
         <div class="iv-evidence__links">
-          {t.evidence.links.map((link) => (
+          {t.evidence.links.map((link, index) => (
             <a href={link.href} data-cta={link.ctaId} class="iv-evidence__link">
+              <span class="iv-evidence__icon"><CompaniesIcon name={index === 0 ? 'role' : 'growth'} /></span>
               <span><span class="iv-evidence__label">{link.title}</span><span class="iv-evidence__body">{link.body}</span></span>
               <span class="h3-arrow" aria-hidden="true">→</span>
             </a>
@@ -101,18 +110,23 @@ const t = getInvestorsV2(lang);
 
 <style lang="scss">
   .iv-section { padding-block: var(--space-section); }
-  .iv-hero__title { max-width: 23ch; }
-  .iv-hero__body { max-width: 43rem; }
+  .iv-hero__grid { display: grid; gap: var(--space-grid); align-items: center; }
+  .iv-hero__copy { min-width: 0; }
+  .iv-hero__title { max-width: 20ch; }
+  .iv-hero__body { max-width: 55ch; }
+  .iv-hero__visual { width: 100%; max-width: calc(var(--space-8) * 6); margin-inline: auto; }
   .iv-hero__cta, .iv-close__cta { margin-top: var(--space-stack); max-width: 100%; text-align: center; line-height: 1.4; }
-  .iv-note { margin-top: var(--space-2); max-width: 34rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .iv-note { margin-top: var(--space-2); max-width: 55ch; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .iv-wide-title { max-width: 26ch; }
-  .iv-section__body { margin-top: var(--space-stack); max-width: 42rem; }
+  .iv-section__body { margin-top: var(--space-stack); max-width: 55ch; }
   .iv-support__list { margin-top: var(--space-grid); border-top: 1px solid var(--line); }
-  .iv-area { display: grid; gap: var(--space-stack); padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
+  .iv-area { display: grid; gap: var(--space-stack); padding-block: var(--space-grid); border-bottom: 1px solid var(--line); }
   .iv-area > div { min-width: 0; }
+  .iv-area__heading { display: flex; gap: var(--space-stack); align-items: start; }
+  .iv-area__marker { flex: 0 0 var(--space-grid); display: grid; gap: var(--space-2); justify-items: start; color: var(--purple); }
   .iv-area__id { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .iv-area h3 { min-width: 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .iv-area__body > p, .iv-format li { max-width: 40rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .iv-area h3 { min-width: 0; max-width: 22ch; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .iv-area__body > p, .iv-format li { max-width: 55ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .iv-format li + li { margin-top: var(--space-1); }
   .iv-format { margin-top: var(--space-stack); }
   .iv-format summary { display: flex; justify-content: space-between; gap: var(--space-2); padding-block: var(--space-1); font-size: var(--type-ui); line-height: 1.5; cursor: pointer; list-style: none; }
@@ -120,21 +134,28 @@ const t = getInvestorsV2(lang);
   .iv-format ul { margin-top: var(--space-2); padding-left: var(--space-stack); list-style: disc; }
   .iv-format .iv-note { font-size: var(--type-caption); line-height: 1.5; }
   .iv-split { display: grid; gap: var(--space-grid); align-items: start; }
-  .iv-questions__list { min-width: 0; border-top: 1px solid var(--line); }
+  .iv-agreement .iv-split { padding-block: var(--space-grid); }
+  .iv-agreement { padding-block: 0; }
+  .iv-questions__list { padding: var(--space-stack); border-radius: var(--radius-card); background: var(--white); }
+  .iv-questions__list { min-width: 0; }
   .iv-question { border-bottom: 1px solid var(--line); }
+  .iv-question:last-child { border-bottom: 0; }
   .iv-question summary { display: flex; justify-content: space-between; gap: var(--space-2); align-items: baseline; padding-block: var(--space-stack); list-style: none; cursor: pointer; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
   .iv-question summary::-webkit-details-marker { display: none; }
   .iv-question summary span { flex-shrink: 0; }
   .iv-question[open] summary span, .iv-format[open] summary span { transform: rotate(45deg); }
-  .iv-question p { padding-bottom: var(--space-stack); max-width: 36rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .iv-question p { padding-bottom: var(--space-stack); max-width: 55ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .iv-evidence__links { border-top: 1px solid var(--line); }
-  .iv-evidence__link { display: flex; justify-content: space-between; gap: var(--space-stack); padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
+  .iv-evidence__link { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: var(--space-stack); padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
+  .iv-evidence__icon { display: block; color: var(--purple); }
   .iv-evidence__label { display: block; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .iv-evidence__body { display: block; margin-top: var(--space-1); color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .iv-evidence__body { display: block; margin-top: var(--space-1); max-width: 55ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .iv-evidence__link:hover .iv-evidence__label { text-decoration: underline; text-underline-offset: 4px; }
   .iv-close { border-top: 1px solid var(--line); }
   @media (min-width: 56rem) {
-    .iv-area { grid-template-columns: var(--space-4) minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-grid); }
-    .iv-split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .iv-hero__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+    .iv-area { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: var(--space-grid); }
+    .iv-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
+    .iv-questions__list { padding-inline: var(--space-grid); }
   }
 </style>

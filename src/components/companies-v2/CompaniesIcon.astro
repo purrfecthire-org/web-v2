@@ -1,0 +1,21 @@
+---
+interface Props { name: 'role' | 'market' | 'growth' }
+const { name } = Astro.props;
+---
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {name === 'role' && <Fragment>
+    <rect x="4" y="3" width="16" height="18" rx="2" />
+    <path d="M8 8H16M8 12H14M8 16H12" />
+  </Fragment>}
+  {name === 'market' && <Fragment>
+    <circle cx="7.5" cy="7" r="2.5" />
+    <circle cx="16.5" cy="7" r="2.5" />
+    <path d="M3 18V16.5C3 14 5 12 7.5 12C8.9 12 10.2 12.6 11 13.6" />
+    <circle cx="16.5" cy="15.5" r="3.5" />
+    <path d="M19 18L21 20" />
+  </Fragment>}
+  {name === 'growth' && <Fragment>
+    <rect x="4" y="11" width="9" height="9" rx="1.5" />
+    <path d="M11 4H20V13M20 4L10 14" />
+  </Fragment>}
+</svg>

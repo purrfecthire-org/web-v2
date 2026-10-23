@@ -12,7 +12,7 @@ import { PAGE_ROLES } from './links';
 
 export const workWithUs = {
   meta: {
-    title: 'Work with us | Purrfect Hire',
+    title: 'Work with Purrfect | Purrfect Hire',
     description: 'Join the team behind Purrfect Hire. Discover our values, how we work, and how to introduce yourself for future opportunities.',
   },
   applicationHref: 'mailto:go@purrfecthire.com?subject=Working%20at%20Purrfect&body=Hi%20Purrfect%20team%2C%0A%0AI%27d%20like%20to%20introduce%20myself%20for%20future%20opportunities%20at%20Purrfect%20Hire.%0A%0AName%3A%0ALinkedIn%20or%20portfolio%3A%0AWhere%20I%27d%20contribute%3A%0AOne%20example%20of%20work%20I%27m%20proud%20of%3A%0A',
