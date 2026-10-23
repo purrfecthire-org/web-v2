@@ -25,7 +25,9 @@ const schema = {
   inLanguage: 'en',
   articleSection: audience,
   image: new URL(article.cover.src, 'https://purrfecthire.com').href,
-  author: { '@type': 'Organization', '@id': 'https://purrfecthire.com/#organization', name: 'Purrfect Hire' },
+  author: article.author.name === 'Purrfect Hire'
+    ? { '@type': 'Organization', '@id': 'https://purrfecthire.com/#organization', name: article.author.name }
+    : { '@type': 'Person', name: article.author.name },
   publisher: { '@id': 'https://purrfecthire.com/#organization' },
 };
 ---
@@ -51,7 +53,7 @@ const schema = {
       <p class="h3-eyebrow ia-audience">{audience}</p>
       <h1 class="h3-hero__h1 ia-title" id="article-title">{article.title}</h1>
       <p class="ia-description">{article.description}</p>
-      <p class="ia-date"><time datetime={article.published}>{displayDate}</time> · Purrfect Hire</p>
+      <p class="ia-date"><time datetime={article.published}>{displayDate}</time> · {article.author.name}</p>
     </header>
 
     <figure class="h3-wrap ia-cover">
@@ -65,11 +67,19 @@ const schema = {
       {article.sections.map((section, index) => (
         <section class="ia-section" aria-labelledby={`article-section-${index}`}>
           <h2 class="h3-h2" id={`article-section-${index}`}>{section.heading}</h2>
+          {section.example && <aside class="ia-example" aria-label={section.example.label}><p class="ia-example__label">{section.example.label}</p><p>{section.example.text}</p></aside>}
           {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
           {!!section.bullets?.length && <ul>{section.bullets!.map((bullet) => <li>{bullet}</li>)}</ul>}
-          {section.example && <aside class="ia-example" aria-label={section.example.label}><p class="ia-example__label">{section.example.label}</p><p>{section.example.text}</p></aside>}
         </section>
       ))}
+
+      <section class="ia-worksheet" aria-labelledby="worksheet-title">
+        <p class="h3-eyebrow">Try this</p>
+        <h2 class="h3-h2" id="worksheet-title">{article.worksheet.title}</h2>
+        <p class="ia-worksheet__instructions">{article.worksheet.instructions}</p>
+        <ol>{article.worksheet.lines.map((line) => <li>{line}</li>)}</ol>
+        <a class="ia-worksheet__download" href={`/insights/${article.slug}/worksheet.txt`} download={`${article.slug}-worksheet.txt`}>Download worksheet<span aria-hidden="true">↓</span></a>
+      </section>
 
       <aside class="ia-reference" aria-labelledby="reference-title">
         <h2 class="h3-eyebrow" id="reference-title">{article.reference.kind === 'Book' ? 'Further reading' : 'Further listening'}</h2>
@@ -119,6 +129,11 @@ const schema = {
   .ia-section li + li { margin-top: var(--space-1); }
   .ia-example { margin-top: var(--space-3); padding: var(--space-3); border-left: 2px solid var(--signal); background: var(--stone); }
   .ia-example .ia-example__label { margin-top: 0; font-size: var(--type-ui); font-weight: 500; line-height: 1.5; color: var(--text); }
+  .ia-worksheet { margin-top: var(--space-grid); }
+  .ia-worksheet__instructions { margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .ia-worksheet ol { margin-top: var(--space-3); padding-left: var(--space-3); list-style: decimal; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .ia-worksheet li + li { margin-top: var(--space-2); }
+  .ia-worksheet__download { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--space-6); margin-top: var(--space-2); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; text-decoration: underline; text-underline-offset: .2em; }
   .ia-reference { margin-top: var(--space-grid); padding-block: var(--space-4); border-top: 1px solid var(--line); }
   .ia-reference blockquote { margin-top: var(--space-3); }
   .ia-reference blockquote p { font-size: var(--type-quote); line-height: 1.5; color: var(--text); }

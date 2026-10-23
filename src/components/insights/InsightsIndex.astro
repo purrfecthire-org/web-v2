@@ -6,6 +6,8 @@ const tracks = [
   { id: 'founders', label: 'For founders' },
   { id: 'talent', label: 'For talent' },
 ] as const;
+const publicationDate = new Intl.DateTimeFormat('en', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const formatPublicationDate = (date: string) => publicationDate.format(new Date(`${date}T00:00:00Z`));
 ---
 
 <Shell
@@ -38,6 +40,7 @@ const tracks = [
                 </span>
                 <div>
                   <h3>{article.title}</h3>
+                  <p class="in-story__meta"><time datetime={article.published}>{formatPublicationDate(article.published)}</time> · {article.author.name}</p>
                   <p>{article.description}</p>
                 </div>
                 <span class="in-story__arrow" aria-hidden="true">→</span>
@@ -66,6 +69,7 @@ const tracks = [
   .in-story__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .in-story h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .in-story p { max-width: 46rem; margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .in-story .in-story__meta { font-size: var(--type-ui); line-height: 1.5; }
   .in-story__arrow { font-size: var(--type-subheading); line-height: 1.35; transition: transform .2s ease; }
   .in-story:hover h3 { text-decoration: underline; text-underline-offset: .2em; }
   .in-story:hover .in-story__arrow { transform: translateX(var(--space-1)); }
