@@ -11,6 +11,7 @@ export type InsightArticle = {
   title: string;
   description: string;
   published: string;
+  topic: string;
   author: { name: string };
   worksheet: { title: string; instructions: string; lines: string[] };
   cover: {
@@ -22,7 +23,7 @@ export type InsightArticle = {
     photographer: string;
     sourceUrl: string;
   };
-  reference: {
+  reference?: {
     kind: 'Book' | 'Podcast';
     title: string;
     creator: string;
@@ -32,7 +33,6 @@ export type InsightArticle = {
     quoteAttribution?: string;
   };
   sections: InsightSection[];
-  takeaway: string;
 };
 
 export const articles: InsightArticle[] = [
@@ -56,9 +56,7 @@ export const articles: InsightArticle[] = [
       "title": "High Output Management",
       "creator": "Andrew S. Grove",
       "url": "https://penguinrandomhousehighereducation.com/book/?isbn=9780679762881",
-      "quote": "A manager’s output = the output of his organization + the output of the neighboring organizations under his influence.",
-      "quoteAttribution": "Andrew S. Grove, as quoted in Ben Horowitz’s foreword",
-      "note": "Our application: define the responsibility and contribution a hire should own before choosing the title."
+      "note": "An operating lens for connecting a role to the output it should affect. The requirement test above is our application."
     },
     "sections": [
       {
@@ -82,12 +80,11 @@ export const articles: InsightArticle[] = [
       {
         "heading": "Keep the bar explicit when you change the filter.",
         "paragraphs": [
-          "Before removing a requirement, write the capability you still insist on and how you will examine it. This makes flexibility a decision you can defend. It also stops the team from lowering the bar simply because a candidate is impressive or the search is taking longer than expected.",
+          "Waive exact-tool experience only when the candidate demonstrates the underlying capability and the team can support a defined ramp. If neither condition holds, keep the requirement or change the mandate. Do not waive both tool experience and problem knowledge simply to keep an impressive profile in the search.",
           "Try the same discipline when rejecting a profile. “Not senior enough” becomes useful only when you can name the decision they have not shown they can make. If the reason keeps changing, revisit the brief before scaling outreach."
         ]
       }
     ],
-    "takeaway": "For each must-have, name the failure it prevents, the capability underneath it and the alternative experience you would accept.",
     "author": {
       "name": "Juanca"
     },
@@ -101,7 +98,8 @@ export const articles: InsightArticle[] = [
         "Different experience that could demonstrate that capability:",
         "The question or work sample that would change our view:"
       ]
-    }
+    },
+    "topic": "Search requirements"
   },
   {
     "slug": "test-ownership-with-an-unfinished-problem",
@@ -140,19 +138,18 @@ export const articles: InsightArticle[] = [
           "Keep the exercise bounded and explain what will be assessed. Use fictional or safely prepared material. The purpose is to examine thinking relevant to the job, rather than collect unpaid solutions to an open company project."
         ],
         "example": {
-          "label": "Illustrative comparison",
-          "text": "Suppose a role depends on researching and prioritizing potential accounts. A general aptitude test and a small, messy account-selection exercise may both be difficult. Only the second directly exposes how the person chooses what to investigate, ranks incomplete information and explains a recommendation."
+          "label": "Anonymized intake note: a proposed interview approach",
+          "text": "A client questioned whether an assessment used for a different job was relevant to a new search. We proposed a situational interview. The team then considered asking candidates how they would approach a task from the actual role."
         }
       },
       {
         "heading": "Agree on what would change your recommendation.",
         "paragraphs": [
           "Decide the dimensions before seeing the answers: diagnosis, prioritization, assumptions, follow-through. Describe strong and weak behavior in terms of the work. Leave room for a defensible approach you did not anticipate.",
-          "After the exercise, ask what changed in your assessment of the person. If the team cannot identify a useful change, more stages may be adding effort without resolving the hiring risk. One sample still has limits. Use interviews and references to test the uncertainties it leaves open."
+          "Keep a stage only when you can name the hiring risk it addresses, the behavior you will assess and an answer that would change your recommendation. If it supplies only another score, redesign or remove it. One interview still has limits; use other conversations and references to examine the uncertainties it leaves open."
         ]
       }
     ],
-    "takeaway": "Make the assessment earn its place in the process. It should change what you can responsibly conclude about the work this person could own.",
     "author": {
       "name": "Rich"
     },
@@ -166,7 +163,8 @@ export const articles: InsightArticle[] = [
         "The behaviors we will assess consistently:",
         "What result would change our recommendation, and what would still remain unknown:"
       ]
-    }
+    },
+    "topic": "Candidate assessment"
   },
   {
     "slug": "explain-the-decision-behind-the-result",
@@ -219,7 +217,6 @@ export const articles: InsightArticle[] = [
         ]
       }
     ],
-    "takeaway": "Lead with the achievement whose reasoning you can defend and whose scope matches the work you want to be trusted with next.",
     "author": {
       "name": "Kate Forero"
     },
@@ -233,7 +230,8 @@ export const articles: InsightArticle[] = [
         "My contribution, and the work owned by other people:",
         "What changed, how we checked it and what I would do differently:"
       ]
-    }
+    },
+    "topic": "Interview preparation"
   },
   {
     "slug": "choose-the-problem-before-the-company",
@@ -249,13 +247,6 @@ export const articles: InsightArticle[] = [
       "position": "50% 50%",
       "photographer": "Ken’s Vision",
       "sourceUrl": "https://unsplash.com/photos/person-walking-in-the-street-with-a-bag-ukLBZrlyolw"
-    },
-    "reference": {
-      "kind": "Podcast",
-      "title": "April Dunford on product positioning, segmentation, and optimizing your sales process",
-      "creator": "April Dunford with Lenny Rachitsky · Lenny’s Podcast",
-      "url": "https://www.lennysnewsletter.com/p/april-dunford-on-product-positioning",
-      "note": "Dunford discusses product positioning. Our career application is to examine where your particular experience becomes useful and why."
     },
     "sections": [
       {
@@ -284,7 +275,6 @@ export const articles: InsightArticle[] = [
         ]
       }
     ],
-    "takeaway": "A company’s reputation is part of the offer. Investigate the responsibility as carefully as the name.",
     "author": {
       "name": "Kate Forero"
     },
@@ -298,6 +288,7 @@ export const articles: InsightArticle[] = [
         "The manager and support I would have when the work gets difficult:",
         "What I would learn or gain, and the limitation I would be choosing deliberately:"
       ]
-    }
+    },
+    "topic": "Role selection"
   }
 ];

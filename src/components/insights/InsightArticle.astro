@@ -53,7 +53,8 @@ const schema = {
       <p class="h3-eyebrow ia-audience">{audience}</p>
       <h1 class="h3-hero__h1 ia-title" id="article-title">{article.title}</h1>
       <p class="ia-description">{article.description}</p>
-      <p class="ia-date"><time datetime={article.published}>{displayDate}</time> · {article.author.name}</p>
+      <p class="ia-byline">By {article.author.name} · Purrfect Hire</p>
+      <p class="ia-date">Published <time datetime={article.published}>{displayDate}</time></p>
     </header>
 
     <figure class="h3-wrap ia-cover">
@@ -81,7 +82,7 @@ const schema = {
         <a class="ia-worksheet__download" href={`/insights/${article.slug}/worksheet.txt`} download={`${article.slug}-worksheet.txt`}>Download worksheet<span aria-hidden="true">↓</span></a>
       </section>
 
-      <aside class="ia-reference" aria-labelledby="reference-title">
+      {article.reference && <aside class="ia-reference" aria-labelledby="reference-title">
         <h2 class="h3-eyebrow" id="reference-title">{article.reference.kind === 'Book' ? 'Further reading' : 'Further listening'}</h2>
         {article.reference.quote && <blockquote>
           <p>“{article.reference.quote}”</p>
@@ -90,12 +91,7 @@ const schema = {
         <a class="ia-reference__link" href={article.reference.url} target="_blank" rel="noopener noreferrer">{article.reference.title}<span aria-hidden="true">↗</span></a>
         <p class="ia-reference__creator">{article.reference.creator}</p>
         <p class="ia-reference__note">{article.reference.note}</p>
-      </aside>
-
-      <section class="ia-takeaway" aria-labelledby="takeaway-title">
-        <h2 class="h3-eyebrow" id="takeaway-title">The takeaway</h2>
-        <p>{article.takeaway}</p>
-      </section>
+      </aside>}
 
       <div class="ia-action">
         <a href={action.href} target={action.external ? '_blank' : undefined} rel={action.external ? 'noopener noreferrer' : undefined} data-cta={`insight-${article.slug}-next`} class:list={['h3-btn', forFounders && 'h3-btn--ink']}>
@@ -115,7 +111,8 @@ const schema = {
   .ia-audience { margin-top: var(--space-4); }
   .ia-title { max-width: none; }
   .ia-description { margin-top: var(--space-3); font-size: var(--type-lead); line-height: 1.6; color: var(--muted); }
-  .ia-date { margin-top: var(--space-3); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
+  .ia-byline { margin-top: var(--space-3); font-size: var(--type-ui); line-height: 1.5; color: var(--text); }
+  .ia-date { margin-top: var(--space-1); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .ia-cover { margin-block: var(--space-grid) 0; }
   .ia-cover__frame { aspect-ratio: 3 / 2; overflow: hidden; }
   .ia-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -136,13 +133,11 @@ const schema = {
   .ia-worksheet__download { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--space-6); margin-top: var(--space-2); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; text-decoration: underline; text-underline-offset: .2em; }
   .ia-reference { margin-top: var(--space-grid); padding-block: var(--space-4); border-top: 1px solid var(--line); }
   .ia-reference blockquote { margin-top: var(--space-3); }
-  .ia-reference blockquote p { font-size: var(--type-quote); line-height: 1.5; color: var(--text); }
+  .ia-reference blockquote p { font-size: var(--type-body); line-height: 1.7; color: var(--text); }
   .ia-reference cite { display: block; margin-top: var(--space-2); font-size: var(--type-caption); font-style: normal; line-height: 1.5; color: var(--muted); }
   .ia-reference__link { display: inline-flex; align-items: baseline; gap: var(--space-1); margin-top: var(--space-3); font-size: var(--type-body); font-weight: 500; line-height: 1.7; text-decoration: underline; text-underline-offset: .2em; }
   .ia-reference__creator { margin-top: var(--space-1); font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
   .ia-reference__note { margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .ia-takeaway { margin-top: var(--space-grid); padding-top: var(--space-4); border-top: 1px solid var(--line); }
-  .ia-takeaway p { margin-top: var(--space-2); font-size: var(--type-lead); line-height: 1.6; color: var(--text); }
   .ia-action { margin-top: var(--space-4); }
   .ia-read-next { margin-top: var(--space-grid); padding-top: var(--space-4); border-top: 1px solid var(--line); }
   .ia-read-next .h3-link { margin-top: var(--space-2); }

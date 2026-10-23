@@ -23,8 +23,11 @@ visual reference. Follow the user's current instructions over older references.
 - Work with us receives expressions of interest by email, not an ATS form.
 - Insights contains short educational articles with separate founder and talent
   paths. Keep private source provenance outside the website repository. Public
-  examples are explicitly illustrative; do not turn private conversations into
-  identifiable cases or publish source links, quotes or unverified outcomes.
+  examples are explicitly illustrative. Source-backed intake observations may be
+  anonymized, but retain the distinction between a proposed approach and an
+  implemented assessment or outcome. Never publish identifiable cases, private
+  source links or unverified results. Keep actual publication dates in article
+  metadata; the index is a topical collection, not an invented publication history.
 
 The product name is Offer Accelerator. Preserve /offer-acceleration and the
 legacy redirects in astro.config.mjs. Keep B2B and B2C narratives separate.
@@ -89,6 +92,13 @@ pages are generated. Do not publish an empty snapshot after an API failure.
 Run the existing tests in tests/*.test.ts. Check internal links, anchors,
 redirects and assets. Inspect complete pages at 375, 768, 1280 and 1920px.
 Respect reduced motion, keyboard focus and the original portrait assets.
+Quick answers use approved product facts and keep company, talent and candidate
+journeys separate. The WhatsApp handoff creates a draft, never sends it or
+confirms receipt. Do not add fake AI replies, secret-bearing client APIs, message
+storage or automatic transmission. Forms, legal and internal team pages keep
+their existing contact paths. Use the official vector mark at icon size, not
+the old traced cat silhouettes.
+
 Both intake forms require a valid UUID and received status before confirmation.
 Capture and lock the draft while sending, restore its original editable state on
 failure, and retain request ID and timing for an unchanged retry. These client

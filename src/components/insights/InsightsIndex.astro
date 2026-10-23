@@ -6,13 +6,11 @@ const tracks = [
   { id: 'founders', label: 'For founders' },
   { id: 'talent', label: 'For talent' },
 ] as const;
-const publicationDate = new Intl.DateTimeFormat('en', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
-const formatPublicationDate = (date: string) => publicationDate.format(new Date(`${date}T00:00:00Z`));
 ---
 
 <Shell
   title="Insights | Purrfect Hire"
-  description="How we think about hiring and careers. Practical observations for founders and experienced professionals."
+  description="Practical notes on who to hire, what to test, and which role to choose."
   canonicalUrl="https://purrfecthire.com/insights/"
   theme="light"
   journey="insights"
@@ -20,7 +18,7 @@ const formatPublicationDate = (date: string) => publicationDate.format(new Date(
   <section class="h3-hero in-hero" aria-labelledby="insights-title">
     <div class="h3-wrap">
       <h1 class="h3-hero__h1" id="insights-title">Insights</h1>
-      <p class="h3-hero__sub">How we think about hiring and careers.</p>
+      <p class="h3-hero__sub">Practical notes on who to hire, what to test, and which role to choose.</p>
       <nav class="in-tracks" aria-label="Choose what to read">
         {tracks.map((track) => <a href={`#${track.id}`} class="h3-link">{track.label}<span aria-hidden="true">↓</span></a>)}
       </nav>
@@ -40,7 +38,7 @@ const formatPublicationDate = (date: string) => publicationDate.format(new Date(
                 </span>
                 <div>
                   <h3>{article.title}</h3>
-                  <p class="in-story__meta"><time datetime={article.published}>{formatPublicationDate(article.published)}</time> · {article.author.name}</p>
+                  <p class="in-story__meta">{article.topic} · By {article.author.name}</p>
                   <p>{article.description}</p>
                 </div>
                 <span class="in-story__arrow" aria-hidden="true">→</span>
