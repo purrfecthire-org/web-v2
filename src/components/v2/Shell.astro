@@ -14,6 +14,7 @@ import '@fontsource-variable/fraunces/opsz.css';
 import '@fontsource-variable/inter/wght.css';
 import Layout from '../../layouts/Layout.astro';
 import SocialIcon from './SocialIcon.astro';
+import PurrfectHelp from '../help/PurrfectHelp.astro';
 import type { Lang } from '../../content/index';
 import { PAGE_COMPANIES, PAGE_TALENT, PAGE_ROLES, PAGE_CAREER_COMPOUNDING, PRIVACY, CONTACT_EMAIL, SOCIAL_LINKS } from '../../content/links';
 
@@ -71,11 +72,13 @@ const ctaRel = navCta?.external && !navCta.href.startsWith('/') && !navCta.href.
 // its own purple on both surfaces.
 const isB2B = journey === 'home' || journey === 'companies' || journey === 'careers';
 const ctaTone = isB2B ? 'h3-btn--ink' : '';
+const helpAudience = journey === 'roles' ? 'candidates' : journey === 'companies' ? 'companies' : journey === 'talent' || journey === 'offer' ? 'talent' : 'all';
+const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/search-read', '/offer-acceleration/apply'].includes(Astro.url.pathname.replace(/\/$/, ''));
 ---
 
 <Layout title={title} description={description} canonicalUrl={canonicalUrl} lang={lang} legacyFonts={false} ogType={ogType} ogImage={ogImage} noindex={noindex || Astro.url.pathname.replace(/\/$/, '') === '/search-read'}>
   <Fragment slot="head"><slot name="head" /></Fragment>
-  <div class:list={['h3', `h3--${theme}`]} data-journey={journey}>
+  <div class:list={['h3', `h3--${theme}`, showHelp && 'h3--help']} data-journey={journey}>
     <a class="h3-skip" href="#main-content">Skip to content</a>
     <header class="h3-nav">
       <div class="h3-nav__in">
@@ -130,6 +133,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
         </div>
       </div>
     </footer>
+    {showHelp && <PurrfectHelp audience={helpAudience} />}
   </div>
 </Layout>
 
@@ -365,6 +369,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     background: var(--midnight); color: var(--on-dark-muted);
     border-top: 1px solid var(--line-dark); padding-block: var(--space-4); font-size: var(--type-caption); line-height: 1.5;
   }
+  .h3--help .h3-footer { padding-bottom: calc(var(--space-8) + var(--space-3)); }
   .h3-footer__in { display: grid; gap: var(--space-stack); min-width: 0; }
   .h3-footer nav { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-stack); min-width: 0; }
   .h3-footer__bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }

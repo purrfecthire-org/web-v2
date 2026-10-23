@@ -29,8 +29,8 @@ const { voice, brand, portraitWidth = 480, portraitHeight = 480 } = Astro.props;
 </figure>
 
 <style>
-  .company-testimonial { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: var(--space-stack); min-width: 0; margin: 0; padding: var(--space-stack); }
-  .company-testimonial + .company-testimonial { border-top: 1px solid var(--line); }
+  .company-testimonial { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: var(--space-stack); min-width: 0; margin: 0; padding: 0; }
+  .company-testimonial + .company-testimonial { padding-top: var(--space-grid); border-top: 1px solid var(--line); }
   .company-testimonial__brand { display: block; width: calc(var(--space-8) * 2.5); height: var(--space-8); max-width: 100%; }
   .company-testimonial__brand img { display: block; width: 100%; height: 100%; object-fit: contain; }
   .company-testimonial blockquote { max-width: 40ch; font-size: var(--type-quote); line-height: 1.5; }
@@ -42,7 +42,6 @@ const { voice, brand, portraitWidth = 480, portraitHeight = 480 } = Astro.props;
   .company-testimonial__portrait { display: block; width: var(--space-8); height: var(--space-8); flex: 0 0 auto; border-radius: 50%; object-fit: cover; object-position: 50% 35%; }
   .company-testimonial__context { margin-top: var(--space-2); }
   @media (min-width: 56rem) {
-    .company-testimonial { padding: var(--space-4); }
-    .company-testimonial + .company-testimonial { border-top: 0; border-left: 1px solid var(--line); }
+    .company-testimonial + .company-testimonial { padding-top: 0; border-top: 0; }
   }
 </style>

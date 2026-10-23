@@ -1,0 +1,159 @@
+---
+import { getHelpTopics, HELP_MESSAGE_LIMIT, helpWhatsAppUrl, type HelpAudience } from '../../lib/purrfectHelp';
+interface Props { audience?: HelpAudience; }
+const { audience = 'all' } = Astro.props;
+const topics = getHelpTopics(audience);
+const hasMultipleTopics = topics.length > 1;
+const sourcePath = Astro.url.pathname;
+---
+
+<div class="ph-help" data-purrfect-help data-source-path={sourcePath}>
+  <button class="ph-help__launcher" type="button" aria-haspopup="dialog" aria-controls="purrfect-help-dialog" aria-expanded="false" hidden>
+    <img src="/brand/logo/symbol-midnight.svg" width="32" height="32" alt="" aria-hidden="true" />
+    <span>Ask Purrfect</span>
+  </button>
+  <dialog class="ph-help__dialog" id="purrfect-help-dialog" aria-labelledby="purrfect-help-title" aria-describedby="purrfect-help-intro">
+    <div class="ph-help__head">
+      <div>
+        <span class="ph-help__eyebrow">Quick answers</span>
+        <h2 id="purrfect-help-title">Ask Purrfect</h2>
+      </div>
+      <button class="ph-help__close" type="button" aria-label="Close quick answers" autofocus>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+      </button>
+    </div>
+    <div class="ph-help__body">
+      <p class="ph-help__intro" id="purrfect-help-intro">Choose a topic for a quick answer, then continue with our team on WhatsApp.</p>
+      <div class="ph-help__topics" aria-label="What would you like help with?">
+        {topics.map((topic) => <button type="button" class="ph-help__topic" data-help-topic={topic.id} aria-controls={`purrfect-help-${topic.id}`}><span>{topic.label}</span><span aria-hidden="true">→</span></button>)}
+      </div>
+      {topics.map((topic) => <section class="ph-help__answer" id={`purrfect-help-${topic.id}`} data-help-answer={topic.id} aria-labelledby={`purrfect-help-heading-${topic.id}`} hidden>
+        {hasMultipleTopics && <button type="button" class="ph-help__back">← All topics</button>}
+        <h3 id={`purrfect-help-heading-${topic.id}`} tabindex="-1">{topic.heading}</h3>
+        {topic.answer.map((paragraph) => <p>{paragraph}</p>)}
+        <a class="ph-help__action" href={topic.action.href} target={topic.action.external ? '_blank' : undefined} rel={topic.action.external ? 'noopener noreferrer' : undefined} data-cta={`help-${topic.id}-destination`}>{topic.action.label}<span aria-hidden="true">{topic.action.external ? '↗' : '→'}</span></a>
+        <details class="ph-help__faq"><summary>{topic.question}</summary><p>{topic.detail}</p></details>
+      </section>)}
+      <div class="ph-help__contact" hidden>
+        <label for="purrfect-help-message">Your question <span>(optional)</span></label>
+        <textarea id="purrfect-help-message" rows="3" maxlength={HELP_MESSAGE_LIMIT} autocomplete="off" aria-describedby="purrfect-help-handoff"></textarea>
+        <a class="h3-btn h3-btn--ink ph-help__whatsapp" href={helpWhatsAppUrl(topics[0].id, '', sourcePath)} target="_blank" rel="noopener noreferrer" data-cta="help-whatsapp">Continue on WhatsApp <span aria-hidden="true">↗</span></a>
+        <p id="purrfect-help-handoff">Opens WhatsApp. Send your message there to reach our team.</p>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  import { helpWhatsAppUrl, type HelpTopicId } from '../../lib/purrfectHelp';
+  for (const root of document.querySelectorAll<HTMLElement>('[data-purrfect-help]')) {
+    const launcher = root.querySelector<HTMLButtonElement>('.ph-help__launcher')!;
+    const dialog = root.querySelector<HTMLDialogElement>('dialog')!;
+    const topicList = root.querySelector<HTMLElement>('.ph-help__topics')!;
+    const intro = root.querySelector<HTMLElement>('.ph-help__intro')!;
+    const answers = [...root.querySelectorAll<HTMLElement>('[data-help-answer]')];
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-help-topic]')];
+    const contact = root.querySelector<HTMLElement>('.ph-help__contact')!;
+    const message = root.querySelector<HTMLTextAreaElement>('textarea')!;
+    const whatsapp = root.querySelector<HTMLAnchorElement>('.ph-help__whatsapp')!;
+    let selected: HelpTopicId | undefined;
+    let previousOverflow = '';
+
+    const updateDraft = () => {
+      if (selected) whatsapp.href = helpWhatsAppUrl(selected, message.value, root.dataset.sourcePath || '/');
+    };
+    const chooseTopic = (topic: HelpTopicId, focus = true) => {
+      selected = topic;
+      topicList.hidden = true;
+      intro.hidden = true;
+      for (const answer of answers) answer.hidden = answer.dataset.helpAnswer !== topic;
+      contact.hidden = false;
+      updateDraft();
+      if (focus) root.querySelector<HTMLElement>(`#purrfect-help-heading-${topic}`)?.focus();
+    };
+    const reset = () => {
+      for (const answer of answers) answer.hidden = true;
+      contact.hidden = true;
+      topicList.hidden = false;
+      intro.hidden = false;
+      root.querySelectorAll<HTMLDetailsElement>('details').forEach((detail) => { detail.open = false; });
+      buttons.find((button) => button.dataset.helpTopic === selected)?.focus();
+    };
+    launcher.addEventListener('click', () => {
+      previousOverflow = document.body.style.overflow;
+      dialog.showModal();
+      document.body.style.overflow = 'hidden';
+      launcher.setAttribute('aria-expanded', 'true');
+      if (buttons.length === 1) chooseTopic(buttons[0].dataset.helpTopic as HelpTopicId, false);
+    });
+    root.querySelector('.ph-help__close')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => {
+      document.body.style.overflow = previousOverflow;
+      launcher.setAttribute('aria-expanded', 'false');
+      launcher.focus();
+    });
+    // Keep Tab inside the panel, including browser integrations that move focus
+    // to the document after the last native-dialog control. Escape stays native.
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key !== 'Tab') return;
+      const controls = [...dialog.querySelectorAll<HTMLElement>('button, a[href], summary, input, select, textarea, [tabindex]')]
+        .filter((control) => control.tabIndex >= 0 && !control.hasAttribute('disabled') && control.getClientRects().length > 0);
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    });
+    dialog.addEventListener('click', (event) => {
+      if (event.target !== dialog) return;
+      const rect = dialog.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+    });
+    buttons.forEach((button) => button.addEventListener('click', () => chooseTopic(button.dataset.helpTopic as HelpTopicId)));
+    root.querySelectorAll('.ph-help__back').forEach((button) => button.addEventListener('click', reset));
+    message.addEventListener('input', updateDraft);
+    launcher.hidden = false;
+  }
+</script>
+
+<style>
+  .ph-help [hidden] { display: none !important; }
+  .ph-help__launcher { position: fixed; z-index: 35; right: var(--space-3); bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px)); display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--space-6); padding: var(--space-1) var(--space-2); border: 1px solid var(--line); border-radius: 999px; background: var(--sand); color: var(--text); box-shadow: 0 var(--space-1) var(--space-3) var(--line); font: 500 var(--type-ui)/1.4 var(--h-sans); cursor: pointer; }
+  .ph-help__launcher img { width: var(--space-4); height: var(--space-4); object-fit: contain; }
+  .ph-help__launcher:hover { background: var(--white); border-color: var(--muted); }
+  .ph-help__launcher:active { background: var(--stone); }
+  .ph-help__dialog { position: fixed; inset: auto var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom, 0px)) auto; box-sizing: border-box; width: calc(100% - var(--space-6)); max-width: calc(var(--space-8) * 6); max-height: calc(100dvh - var(--space-6) - env(safe-area-inset-bottom, 0px)); margin: 0; padding: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--sand); color: var(--text); font: 400 var(--type-ui)/1.6 var(--h-sans); box-shadow: 0 var(--space-2) var(--space-8) var(--line); }
+  .ph-help__dialog:not([open]) { display: none; }
+  .ph-help__dialog::backdrop { background: rgba(10, 11, 20, .24); }
+  .ph-help__head { position: sticky; top: 0; z-index: 1; background: var(--sand); display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); padding: var(--space-3); border-bottom: 1px solid var(--line); }
+  .ph-help__eyebrow { display: block; color: var(--muted); font-size: var(--type-caption); }
+  .ph-help__head h2 { margin: 0; font: 500 var(--type-subheading)/1.35 var(--h-sans); }
+  .ph-help__close { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-width: var(--space-6); min-height: var(--space-6); margin: 0; padding: var(--space-1); border: 1px solid var(--line); border-radius: 999px; color: var(--text); background: transparent; cursor: pointer; }
+  .ph-help__close:hover { background: var(--stone); }
+  .ph-help__body { padding: var(--space-3); }
+  .ph-help__intro { color: var(--muted); }
+  .ph-help__topics { display: grid; margin-top: var(--space-2); }
+  .ph-help__topic { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); min-height: var(--space-6); padding: var(--space-2) 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--text); font: 500 var(--type-ui)/1.5 var(--h-sans); text-align: left; cursor: pointer; }
+  .ph-help__topic:hover { color: var(--purple); }
+  .ph-help__topic:active { color: var(--purple-deep); }
+  .ph-help__back { min-height: var(--space-6); margin: 0 0 var(--space-1); padding: var(--space-1) 0; border: 0; background: transparent; color: var(--muted); font: 400 var(--type-caption)/1.5 var(--h-sans); cursor: pointer; }
+  .ph-help__back:hover { color: var(--text); }
+  .ph-help__answer h3 { margin: 0 0 var(--space-2); font-size: var(--type-subheading); line-height: 1.35; }
+  .ph-help__answer p + p { margin-top: var(--space-2); }
+  .ph-help__action { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: var(--space-6); margin-top: var(--space-2); color: var(--purple); font-weight: 500; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: .2em; }
+  .ph-help__action:hover { text-decoration-color: currentColor; }
+  .ph-help__faq { margin-top: var(--space-1); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .ph-help__faq summary { min-height: var(--space-6); padding: var(--space-2) 0; font-weight: 500; cursor: pointer; }
+  .ph-help__faq p { padding-bottom: var(--space-2); color: var(--muted); }
+  .ph-help__contact { display: grid; gap: var(--space-1); margin-top: var(--space-3); }
+  .ph-help__contact label { font-weight: 500; }
+  .ph-help__contact label span { color: var(--muted); font-weight: 400; }
+  .ph-help__contact textarea { box-sizing: border-box; width: 100%; min-height: var(--space-8); resize: vertical; padding: var(--space-1) var(--space-2); border: 1px solid var(--muted); border-radius: var(--radius-input); background: var(--white); color: var(--text); font: 400 var(--type-body)/1.5 var(--h-sans); }
+  .ph-help__whatsapp { margin-top: var(--space-1); }
+  .ph-help__contact p { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  @media (prefers-reduced-motion: reduce) { .ph-help :where(button, a) { transition: none; } }
+</style>
