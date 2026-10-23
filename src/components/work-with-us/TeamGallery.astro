@@ -13,7 +13,7 @@ import { team } from '../../content/team';
           height={person.height}
           loading="lazy"
           decoding="async"
-          style={{ objectPosition: person.position, transform: `scale(${person.scale ?? 1})`, transformOrigin: person.position }}
+          style={{ objectPosition: person.position }}
         />
       </div>
       <figcaption>{person.name}</figcaption>
@@ -25,9 +25,10 @@ import { team } from '../../content/team';
   .team-gallery {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-stack);
+    column-gap: var(--space-stack);
+    row-gap: var(--space-grid);
   }
-  .team-gallery__person { min-width: 0; }
+  .team-gallery__person { min-width: 0; margin: 0; }
   .team-gallery__portrait {
     overflow: hidden;
     aspect-ratio: 4 / 5;
@@ -46,10 +47,10 @@ import { team } from '../../content/team';
     font-weight: 500;
     line-height: 1.5;
   }
-  @media (min-width: 40rem) {
+  @media (min-width: 48rem) {
     .team-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
-  @media (min-width: 64rem) {
-    .team-gallery { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  @media (min-width: 56rem) {
+    .team-gallery { column-gap: var(--space-grid); }
   }
 </style>

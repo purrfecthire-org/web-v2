@@ -1,0 +1,34 @@
+---
+// Decorative conceptual brief. The adjacent methodology and sample link carry
+// the accessible explanation; no candidate, score or measured result is implied.
+---
+<svg class="search-method-visual" viewBox="0 0 360 220" width="360" height="220" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <rect class="search-method-visual__canvas" x="0.5" y="0.5" width="359" height="219" rx="12" />
+  <rect class="search-method-visual__paper" x="16" y="8" width="328" height="204" rx="12" />
+  <path class="search-method-visual__rule" d="M40 78H320M40 140H320" />
+
+  <circle class="search-method-visual__signal" cx="40" cy="36" r="3" />
+  <text class="search-method-visual__label" x="52" y="42">Evidence observed</text>
+  <path class="search-method-visual__evidence" d="M52 56H280M52 65H208" />
+
+  <circle class="search-method-visual__context" cx="40" cy="98" r="3" />
+  <text class="search-method-visual__label" x="52" y="104">Why this company</text>
+  <path class="search-method-visual__placeholder" d="M52 118H296M52 127H232" />
+
+  <circle class="search-method-visual__open" cx="40" cy="160" r="3" />
+  <text class="search-method-visual__label" x="52" y="166">Still to validate</text>
+  <path class="search-method-visual__placeholder" d="M52 180H264M52 189H184" />
+</svg>
+<style>
+  .search-method-visual { display: block; width: 100%; max-width: 100%; height: auto; overflow: visible; }
+  .search-method-visual :is(rect, path, circle) { vector-effect: non-scaling-stroke; }
+  .search-method-visual__canvas { fill: var(--sand); stroke: var(--line); }
+  .search-method-visual__paper { fill: var(--white); stroke: var(--line); }
+  .search-method-visual__rule { stroke: var(--line); }
+  .search-method-visual__label { fill: var(--text); font-family: var(--h-sans); font-size: var(--type-body); font-weight: 500; }
+  .search-method-visual__signal { fill: var(--purple); }
+  .search-method-visual__context { fill: var(--muted); }
+  .search-method-visual__open { fill: var(--white); stroke: var(--muted); }
+  .search-method-visual__evidence { stroke: var(--purple); stroke-opacity: .25; stroke-width: 3; stroke-linecap: round; }
+  .search-method-visual__placeholder { stroke: var(--line); stroke-width: 3; stroke-linecap: round; }
+</style>

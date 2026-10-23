@@ -13,14 +13,25 @@ import { workWithUs as t } from '../../content/workWithUs';
 >
   <div class="wwu">
     <section class="wwu-hero" aria-labelledby="wwu-title">
+      <div class="h3-wrap wwu-hero__grid">
+        <div>
+          <p class="h3-eyebrow">{t.hero.eyebrow}</p>
+          <h1 class="wwu-hero__title" id="wwu-title">{t.hero.headline}</h1>
+        </div>
+        <div class="wwu-hero__intro">
+          <p class="wwu-hero__body">{t.hero.body}</p>
+          <p class="wwu-hero__standard">{t.hero.standard}</p>
+          <a class="h3-btn h3-btn--ink wwu-hero__cta" href={t.applicationHref} data-cta="careers-hero-introduce">
+            {t.applicationCta}<span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="wwu-section wwu-team" aria-labelledby="wwu-team-title">
       <div class="h3-wrap">
-        <p class="h3-eyebrow">{t.hero.eyebrow}</p>
-        <h1 class="wwu-hero__title" id="wwu-title">{t.hero.headline}</h1>
-        <p class="wwu-hero__body">{t.hero.body}</p>
-        <a class="h3-btn h3-btn--ink wwu-hero__cta" href={t.applicationHref} data-cta="careers-hero-introduce">
-          {t.applicationCta}<span aria-hidden="true">→</span>
-        </a>
-        <div class="wwu-team"><TeamGallery /></div>
+        <h2 class="h3-h2 wwu-heading" id="wwu-team-title">The people behind the work.</h2>
+        <div class="wwu-team__gallery"><TeamGallery /></div>
       </div>
     </section>
 
@@ -29,9 +40,8 @@ import { workWithUs as t } from '../../content/workWithUs';
         <div class="wwu-culture__intro">
           <p class="h3-eyebrow">{t.values.eyebrow}</p>
           <h2 class="h3-h2 wwu-heading" id="wwu-values-title">{t.values.headline}</h2>
-          <p class="wwu-culture__standard">{t.hero.standard}</p>
           <div class="wwu-culture__name">
-            <img src="/brand/logo/cat-observe.svg" width="64" height="64" alt="" aria-hidden="true" loading="lazy" />
+            <img src="/brand/illustrations/cat-focus-ink.webp" width="1080" height="720" alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <div>
               <p class="h3-eyebrow">{t.name.eyebrow}</p>
               <p>{t.name.body}</p>
@@ -46,8 +56,8 @@ import { workWithUs as t } from '../../content/workWithUs';
 
     <section class="wwu-section" aria-labelledby="wwu-support-title">
       <div class="h3-wrap">
-        <p class="h3-eyebrow">{t.support.eyebrow}</p>
-        <h2 class="h3-h2 wwu-heading" id="wwu-support-title">{t.support.headline}</h2>
+        <div class="wwu-support__heading"><p class="h3-eyebrow">{t.support.eyebrow}</p>
+        <h2 class="h3-h2 wwu-heading" id="wwu-support-title">{t.support.headline}</h2></div>
         <dl class="wwu-benefits">
           {t.support.items.map((item) => <div><dt>{item.title}</dt><dd>{item.body}</dd></div>)}
         </dl>
@@ -80,41 +90,53 @@ import { workWithUs as t } from '../../content/workWithUs';
 
 <style>
   .wwu-hero { padding-block: var(--space-hero-top) var(--space-section); }
+  .wwu-hero__grid, .wwu-split { display: grid; gap: var(--space-grid); }
+  .wwu-hero__grid { align-items: end; }
   .wwu-hero__title {
     max-width: 17ch; margin-top: var(--space-2); font-family: var(--h-serif);
     font-size: var(--type-display); font-weight: 400;
     line-height: 1.08; letter-spacing: -.02em; text-wrap: balance;
     font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
   }
-  .wwu-hero__body { max-width: 38rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-lead); line-height: 1.6; }
+  .wwu-hero__intro { min-width: 0; }
+  .wwu-hero__body { max-width: 42ch; color: var(--muted); font-size: var(--type-lead); line-height: 1.6; }
+  .wwu-hero__standard { max-width: 42ch; margin-top: var(--space-stack); color: var(--text); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
   .wwu-hero__cta { margin-top: var(--space-stack); }
-  .wwu-client-path { max-width: 38rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .wwu-client-path a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
-  .wwu-team { margin-top: var(--space-grid); }
-  .wwu-section { padding-block: var(--space-section); border-top: 1px solid var(--line); }
+  .wwu-section { padding-block: var(--space-section); }
   .wwu-heading { max-width: 23ch; font-size: var(--type-section); line-height: 1.12; }
+  .wwu-team { padding-top: 0; }
+  .wwu-team .wwu-heading { margin-top: 0; }
+  .wwu-team__gallery { margin-top: var(--space-grid); }
+  .wwu-culture, .wwu-apply { border-top: 1px solid var(--line); }
   .wwu-benefits { display: grid; gap: var(--space-grid); margin-top: var(--space-grid); }
+  .wwu-benefits > div { min-width: 0; padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .wwu-benefits dt, .wwu-values__list dt, .wwu-apply__details h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .wwu-benefits dd, .wwu-values__list dd { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .wwu-split { display: grid; gap: var(--space-grid); }
+  .wwu-benefits dd, .wwu-values__list dd { margin: var(--space-1) 0 0; max-width: 48ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .wwu-values__list { display: grid; gap: var(--space-stack); }
+  .wwu-values__list > div { min-width: 0; }
   .wwu-values__list > div + div { border-top: 1px solid var(--line); padding-top: var(--space-stack); }
-  .wwu-culture__standard { margin-top: var(--space-stack); margin-bottom: var(--space-1); max-width: 34rem; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
-  .wwu-culture__name { margin-top: var(--space-grid); display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: var(--space-stack); align-items: start; max-width: 34rem; }
-  .wwu-culture__name img { display: block; width: 4rem; height: 4rem; object-fit: contain; }
+  .wwu-culture__name { margin-top: var(--space-stack); max-width: 42ch; }
+  .wwu-culture__name img { display: block; width: 100%; max-width: calc(var(--space-8) * 5); height: auto; margin-bottom: var(--space-2); }
   .wwu-culture__name p:not(.h3-eyebrow) { margin-top: var(--space-1); color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
   .wwu-apply { scroll-margin-top: var(--space-4); }
-  .wwu-apply__body { margin-block: var(--space-stack); max-width: 34rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .wwu-apply__note { max-width: 34rem; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .wwu-apply__email-note { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .wwu-apply__details { align-self: start; }
-  .wwu-apply__details ul { margin-top: var(--space-2); display: grid; gap: var(--space-2); }
-  .wwu-apply__details li, .wwu-apply__details p { color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
+  .wwu-apply__body { margin-block: var(--space-stack); max-width: 42ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .wwu-apply__note { max-width: 48ch; margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .wwu-apply__email-note { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; overflow-wrap: anywhere; }
+  .wwu-apply__details { min-width: 0; align-self: start; }
+  .wwu-apply__details ul { margin-top: var(--space-stack); display: grid; gap: var(--space-2); }
+  .wwu-apply__details li { padding-left: var(--space-stack); position: relative; }
+  .wwu-apply__details li::before { content: ''; position: absolute; left: 0; top: .65em; width: .25em; height: .25em; border-radius: 50%; background: var(--muted); }
+  .wwu-apply__details li, .wwu-apply__details p { max-width: 48ch; color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
   .wwu-apply__details p { margin-top: var(--space-stack); }
-  .wwu-apply__details a { margin-top: var(--space-stack); font-size: var(--type-caption); }
+  .wwu-apply__details > .h3-link { margin-top: var(--space-stack); font-size: var(--type-caption); }
+  .wwu-client-path a { color: var(--text); text-decoration: underline; text-underline-offset: .2em; }
   @media (min-width: 48rem) {
-    .wwu-benefits { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .wwu-split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .wwu-benefits { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-1); }
+    .wwu-benefits > div { display: grid; grid-template-rows: subgrid; grid-row: span 2; }
+    .wwu-benefits dd { margin-top: 0; }
+  }
+  @media (min-width: 56rem) {
+    .wwu-hero__grid, .wwu-split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (prefers-reduced-motion: reduce) { .wwu * { scroll-behavior: auto; } }
 </style>

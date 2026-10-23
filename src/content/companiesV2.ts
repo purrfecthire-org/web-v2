@@ -34,6 +34,7 @@ export interface CompaniesV2Content {
   selectedSearches: { eyebrow: string; headline: string; problemLabel: string; interventionLabel: string; outcomeLabel: string; items: CompanySearchCase[] };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
   proof: { eyebrow: string; headline: string; voices: { quote: string; name: string; role: string; excerptLabel?: string; context?: string; photo?: string; photoWebp?: string }[]; logosLabel: string; markets: string };
+  productHire: { headline: string; name: string; brief: string; atHire: string; grewInto: string; progression: string };
   models: { eyebrow: string; headline: string; items: { name: string; note: string }[]; cta: string };
   kate: { eyebrow: string; headline: string; body: string[]; cta: string };
   close: { headline: string; body: string; cta: string; email: string; emailLabel: string };
@@ -129,7 +130,7 @@ export const companiesV2En: CompaniesV2Content = {
     headline: 'From role definition to recommendation.',
     steps: [
       { id: '01', title: 'Define the real bar', body: 'Define what must change, success six months in and the role’s constraints.' },
-      { id: '02', title: 'Reach and assess', body: 'Approach the relevant market. Ask what they would build here, how they would work within your constraints and why they would choose to join.' },
+      { id: '02', title: 'Reach and assess', body: 'Ask what people would build here, how they would handle your constraints and why they would join.' },
       { id: '03', title: 'Calibrate until the evidence is clear', body: 'Each assessment informs the search. You see what we learn and recommend changing.' },
     ],
   },
@@ -158,12 +159,30 @@ export const companiesV2En: CompaniesV2Content = {
         quote: 'integrated to the team and is productive, we’re pleased with him',
         name: 'Chen Atlas',
         role: 'Co-founder & CTO, Optery',
+        // Official portrait, named on https://www.optery.com/about-us/.
+        photo: '/brand/chen-atlas.webp',
+        photoWebp: '/brand/chen-atlas.webp',
         excerptLabel: 'Excerpt from client feedback',
         context: 'After a Purrfect hire joined the team · February 2025',
       },
     ],
     logosLabel: 'Trusted by founders at',
     markets: 'Searches across the US, Europe and Latin America.',
+  },
+  // Guido is a PRODUCT hire, not the anonymous Backend Engineer above.
+  // Sources: Notion case 32c88cc78f9680d199cbd12a6540f14b (21 Apr 2026),
+  // C03 3f988cc78f9681d0a515d6bc9d2a6610 (still interviewing 28 Oct 2024),
+  // P03 3f988cc78f968139b5f8cf9784bac87e (approved post-hire quote).
+  // Kate requested this named progression on 23 Oct 2026. Use the conservative
+  // <2-year interval she supplied; do not use the older draft's <1-year claim,
+  // infer exact promotion dates, claim we caused it or call him a cultural pillar.
+  productHire: {
+    headline: 'A hire who grew with the company.',
+    name: 'Guido Guerberg',
+    brief: 'Optery needed someone to connect product strategy, engineering and user experience, and help build its product function.',
+    atHire: 'Senior Technical Product Manager',
+    grewInto: 'Director of Product',
+    progression: 'Promoted in under two years.',
   },
   models: {
     eyebrow: 'Working together',

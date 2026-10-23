@@ -1,5 +1,6 @@
 ---
 import Shell from '../v2/Shell.astro';
+import CompaniesIcon from '../companies-v2/CompaniesIcon.astro';
 import type { Lang } from '../../content/index';
 import { getSearchCalibration, SEARCH_CALIBRATION_CTA } from '../../content/searchCalibration';
 
@@ -7,6 +8,11 @@ interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getSearchCalibration(lang);
 const sample = t.sample;
+const framing = [
+  { id: 'problem', icon: 'role', ...sample.problem },
+  { id: 'role', icon: 'growth', ...sample.role },
+  { id: 'market', icon: 'market', ...sample.market },
+] as const;
 ---
 
 <Shell
@@ -38,26 +44,27 @@ const sample = t.sample;
 
         <article class="sc-document" aria-labelledby="sc-document-title">
           <header class="sc-document__header">
+            <div class="sc-document__heading">
+            <span class="sc-document__icon"><CompaniesIcon name="role" /></span>
+            <div>
             <h3 id="sc-document-title">{sample.title}</h3>
             <p>{sample.context}</p>
+            </div>
+            </div>
             <dl class="sc-facts">
               {sample.facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
             </dl>
           </header>
 
           <div class="sc-document__body">
-            <section class="sc-entry" aria-labelledby="sc-problem-title">
-              <h4 id="sc-problem-title">{sample.problem.label}</h4>
-              <p>{sample.problem.body}</p>
-            </section>
-            <section class="sc-entry" aria-labelledby="sc-role-title">
-              <h4 id="sc-role-title">{sample.role.label}</h4>
-              <p>{sample.role.body}</p>
-            </section>
-            <section class="sc-entry" aria-labelledby="sc-market-title">
-              <h4 id="sc-market-title">{sample.market.label}</h4>
-              <p>{sample.market.body}</p>
-            </section>
+            <div class="sc-definition">
+              {framing.map((entry) => (
+                <section class="sc-entry sc-framing" aria-labelledby={`sc-${entry.id}-title`}>
+                  <div class="sc-entry__heading"><span class="sc-entry__icon"><CompaniesIcon name={entry.icon} /></span><h4 id={`sc-${entry.id}-title`}>{entry.label}</h4></div>
+                  <p>{entry.body}</p>
+                </section>
+              ))}
+            </div>
             <section class="sc-entry sc-compensation" aria-labelledby="sc-compensation-title">
               <h4 id="sc-compensation-title">{sample.compensation.label}</h4>
               <p class="sc-compensation__range">{sample.compensation.range}</p>
@@ -86,10 +93,13 @@ const sample = t.sample;
               <ul class="sc-bullets">{sample.risks.items.map((risk) => <li>{risk}</li>)}</ul>
             </section>
             <section class="sc-recommendation" aria-labelledby="sc-recommendation-title">
+              <span class="sc-recommendation__icon"><CompaniesIcon name="growth" /></span>
+              <div>
               <p class="h3-eyebrow">{sample.recommendation.label}</p>
               <h4 id="sc-recommendation-title">{sample.recommendation.title}</h4>
               <p>{sample.recommendation.body}</p>
               <p class="sc-recommendation__limit">{sample.recommendation.limit}</p>
+              </div>
             </section>
           </div>
         </article>
@@ -112,50 +122,58 @@ const sample = t.sample;
 
 <style lang="scss">
   .sc-hero__title { max-width: 18ch; }
-  .sc-hero__body { max-width: 43rem; }
-  .sc-hero__cta, .sc-close__cta { margin-top: 2rem; max-width: 100%; line-height: 1.4; text-align: center; }
-  .sc-note { margin-top: 1rem; max-width: 36rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
+  .sc-hero__body { max-width: 55ch; }
+  .sc-hero__cta, .sc-close__cta { margin-top: var(--space-4); max-width: 100%; line-height: 1.4; text-align: center; }
+  .sc-note { margin-top: var(--space-2); max-width: 55ch; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .sc-example, .sc-close { padding-block: var(--space-section); }
   .sc-wide-title { max-width: 25ch; }
   .sc-example { background: var(--sand); }
-  .sc-disclosure { margin-top: var(--space-stack); max-width: 50rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .sc-document { margin-top: 2rem; max-width: 64rem; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); overflow: hidden; }
+  .sc-disclosure { margin-top: var(--space-stack); max-width: 55ch; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .sc-document { margin-top: var(--space-grid); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
   .sc-document__header, .sc-document__body { padding: var(--space-grid); }
-  .sc-document__header { border-bottom: 1px solid var(--line); }
+  .sc-document__header { border-bottom: 1px solid var(--line); background: var(--white); }
+  .sc-document__heading { display: flex; align-items: start; gap: var(--space-stack); }
+  .sc-document__heading > div { min-width: 0; }
+  .sc-document__icon, .sc-entry__icon, .sc-recommendation__icon { display: block; flex: 0 0 var(--space-stack); color: var(--purple); }
   .sc-document__header h3 { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; letter-spacing: -0.015em; }
-  .sc-document__header > p { margin-top: 1rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; max-width: 45rem; }
-  .sc-facts { display: grid; gap: 1.5rem 2rem; margin: 2rem 0 0; }
+  .sc-document__heading p { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-body); line-height: 1.7; max-width: 55ch; }
+  .sc-facts { display: grid; gap: var(--space-stack) var(--space-grid); margin: var(--space-grid) 0 0; padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .sc-facts dt { font-size: var(--type-caption); line-height: 1.5; font-weight: 500; color: var(--muted); }
-  .sc-facts dd { margin: 0.5rem 0 0; font-size: var(--type-ui); line-height: 1.5; }
+  .sc-facts dd { margin: var(--space-1) 0 0; font-size: var(--type-ui); line-height: 1.5; }
   .sc-document__body { padding-top: 0; }
-  .sc-entry { padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--line); }
-  .sc-entry:first-child { border-top: 0; margin-top: 0; }
+  .sc-entry { padding-top: var(--space-stack); margin-top: var(--space-stack); border-top: 1px solid var(--line); }
+  .sc-framing { margin-top: 0; padding-block: var(--space-stack); }
+  .sc-framing:first-child { border-top: 0; }
+  .sc-framing:last-child { padding-bottom: 0; }
+  .sc-entry__heading { display: flex; align-items: start; gap: var(--space-stack); }
   .sc-entry h4 { margin: 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .sc-entry > p { margin-top: 1rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .sc-entry > p { margin-top: var(--space-2); max-width: 55ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .sc-entry .sc-compensation__range { font-size: var(--type-subheading); color: var(--text); font-weight: 500; line-height: 1.35; }
   .sc-entry .sc-compensation__date, .sc-entry .sc-compensation__relationship { font-size: var(--type-caption); line-height: 1.5; }
-  .sc-sources { display: grid; gap: 1rem; margin-top: 1.5rem; }
-  .sc-sources li { padding-left: 1rem; border-left: 2px solid var(--line); }
+  .sc-sources { display: grid; gap: var(--space-2); margin-top: var(--space-stack); }
+  .sc-sources li { padding-left: var(--space-2); border-left: 2px solid var(--line); }
   .sc-sources a { font-size: var(--type-caption); line-height: 1.5; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
-  .sc-sources p { margin-top: 0.5rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .sc-bullets { margin-top: 1rem; list-style: disc; padding-left: 1.5rem; }
-  .sc-bullets li { padding-left: 0.25rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-  .sc-bullets li + li { margin-top: 0.5rem; }
-  .sc-questions { margin-top: 1rem; list-style: decimal; padding-left: 1.5rem; }
-  .sc-questions li { padding-left: 0.5rem; font-size: var(--type-body); line-height: 1.7; }
-  .sc-questions li + li { margin-top: 1rem; }
-  .sc-recommendation { margin-top: 2rem; padding: 1.5rem; border-radius: var(--radius-card); background: var(--sand); }
-  .sc-recommendation h4 { margin: 0.5rem 0 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .sc-recommendation > p:not(.h3-eyebrow) { margin-top: 1rem; font-size: var(--type-body); line-height: 1.7; }
-  .sc-recommendation .sc-recommendation__limit { color: var(--muted); font-size: var(--type-caption) !important; line-height: 1.5; }
+  .sc-sources p { margin-top: var(--space-1); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .sc-bullets { margin-top: var(--space-2); max-width: 55ch; list-style: disc; padding-left: var(--space-stack); }
+  .sc-bullets li { color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
+  .sc-bullets li + li { margin-top: var(--space-1); }
+  .sc-questions { margin-top: var(--space-2); max-width: 55ch; list-style: decimal; padding-left: var(--space-stack); }
+  .sc-questions li { padding-left: var(--space-1); font-size: var(--type-body); line-height: 1.7; }
+  .sc-questions li + li { margin-top: var(--space-2); }
+  .sc-recommendation { display: flex; align-items: start; gap: var(--space-stack); margin-top: var(--space-grid); padding: var(--space-stack); border-radius: var(--radius-card); background: var(--white); }
+  .sc-recommendation > div { min-width: 0; }
+  .sc-recommendation h4 { margin: var(--space-1) 0 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .sc-recommendation p:not(.h3-eyebrow) { margin-top: var(--space-2); max-width: 55ch; font-size: var(--type-body); line-height: 1.7; }
+  .sc-recommendation .sc-recommendation__limit { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .sc-close { border-top: 1px solid var(--line); }
-  .sc-close__secondary { display: flex; width: fit-content; max-width: 100%; margin-top: 1.5rem; line-height: 1.6; }
+  .sc-close__secondary { display: flex; width: fit-content; max-width: 100%; margin-top: var(--space-stack); line-height: 1.6; }
   @media (min-width: 48rem) {
     .sc-entry { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: var(--space-grid); }
-    .sc-entry > h4 { grid-column: 1; grid-row: 1; }
-    .sc-entry > :not(h4) { grid-column: 2; }
+    .sc-entry > h4, .sc-entry__heading { grid-column: 1; grid-row: 1; }
+    .sc-entry > :not(h4):not(.sc-entry__heading) { grid-column: 2; }
     .sc-entry > p:first-of-type, .sc-entry > ul, .sc-entry > ol { margin-top: 0; }
     .sc-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .sc-recommendation { padding: var(--space-grid); }
   }
   @media print {
     .sc-hero, .sc-close { display: none; }
