@@ -1,0 +1,14 @@
+---
+import InsightArticle from '../../components/insights/InsightArticle.astro';
+import { articles } from '../../content/insights';
+import type { InsightArticle as InsightArticleContent } from '../../content/insights';
+
+export function getStaticPaths() {
+  return articles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+interface Props { article: InsightArticleContent }
+const { article } = Astro.props;
+---
+
+<InsightArticle article={article} />

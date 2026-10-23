@@ -67,6 +67,7 @@ export default defineConfig({
         /\/(for-companies|for-talent|offer-acceleration(?:\/apply)?|career-compounding|for-investors|search-calibration|candidate-brief-sample|privacy-policy|work-with-us)\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/search\/(founding-engineer|head-of-engineering|forward-deployed-engineer)\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/roles(?:\/[^/]+)?\/?$/.test(page) ||
+        /^https:\/\/purrfecthire\.com\/insights(?:\/[^/]+)?\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/$/.test(page),
     }),
     legacyDocumentCanonicals,
