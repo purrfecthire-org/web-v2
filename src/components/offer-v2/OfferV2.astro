@@ -75,7 +75,12 @@ const t = getOfferV2(lang);
       </figure>
       {talentTestimonials.map(voice => <figure class="oa-quote">
         <img class="oa-quote__portrait" src={voice.photo} alt={voice.name} width="480" height="480" loading="lazy" decoding="async" />
-        <div class="oa-quote__copy"><blockquote>“{voice.quote}”</blockquote><figcaption><strong>{voice.name}</strong><span>{voice.context}</span><span>{voice.translation}</span><a class="oa-quote__linkedin" href={voice.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`View ${voice.name} on LinkedIn`}><SocialIcon name="linkedin" />View LinkedIn<span aria-hidden="true">↗</span></a></figcaption></div>
+        <div class="oa-quote__copy">
+          <blockquote>“{voice.quote}”</blockquote>
+          {voice.reflection && <p class="oa-quote__reflection">“{voice.reflection}”</p>}
+          <figcaption><strong>{voice.name}</strong><span>{voice.context}</span><span>{voice.translation}</span><a class="oa-quote__linkedin" href={voice.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`View ${voice.name} on LinkedIn`}><SocialIcon name="linkedin" />View LinkedIn<span aria-hidden="true">↗</span></a></figcaption>
+          {voice.story && <details class="oa-detail oa-quote__story"><summary>Read {voice.name.split(' ')[0]}’s full story</summary><div>{voice.story.map(paragraph => <p>{paragraph}</p>)}</div></details>}
+        </div>
       </figure>)}
     </div>
   </section>
@@ -160,6 +165,8 @@ const t = getOfferV2(lang);
   .oa-quote__portrait { display: block; width: calc(var(--space-8) * 2); height: calc(var(--space-8) * 2); border-radius: 50%; object-fit: cover; object-position: 50% 30%; }
   .oa-quote__linkedin { display: inline-flex; align-items: center; gap: var(--space-1); justify-self: start; min-height: var(--space-6); color: var(--text); text-decoration: underline; text-underline-offset: .2em; }
   .oa-quote__linkedin:hover { color: var(--purple); }
+  .oa-quote__reflection { margin-top: var(--space-2); max-width: 54ch; font-size: var(--type-body); line-height: 1.6; color: var(--muted); }
+  .oa-quote__story { margin-top: var(--space-2); max-width: 54ch; }
   .oa-scope__grid, .oa-scope__details { display: grid; gap: var(--space-grid); align-items: start; margin-top: var(--space-grid); }
   .oa-scope__grid > *, .oa-scope__details > * { min-width: 0; }
   .oa-investment { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
