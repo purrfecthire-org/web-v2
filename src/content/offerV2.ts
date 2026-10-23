@@ -33,7 +33,7 @@ export interface OfferV2Content {
   firewall: { headline: string; lead: string; body: string[]; more: string };
   includes: { eyebrow: string; headline: string; items: string[]; closing: string };
   behind: { eyebrow: string; headline: string; body: string[] };
-  proof: { eyebrow: string; headline: string; quote: string; name: string; role: string };
+  proof: { eyebrow: string; headline: string; quote: string; name: string; role: string; linkedin: string };
   investment: { eyebrow: string; headline: string; price: string; note: string; next: string };
   faq: { eyebrow: string; headline: string; items: { question: string; answer: string }[] };
   apply: { headline: string; body: string; cta: string; howNote: string; steps: { title: string; body: string }[] };
@@ -128,9 +128,10 @@ export const offerV2En: OfferV2Content = {
     eyebrow: 'Proof',
     headline: 'In their words.',
     quote:
-      'I did not join because I was struggling to find work. I joined because this time I wanted the job I took to be the one I chose, not the one the market chose for me.',
+      'I joined because this time I wanted the job I took to be the one I chose, not the one the market chose for me.',
     name: 'Daniel Contreras',
     role: 'Product Designer, 10 years in technology and product',
+    linkedin: 'https://www.linkedin.com/in/strategic-designer/',
   },
   investment: {
     eyebrow: 'Investment',
