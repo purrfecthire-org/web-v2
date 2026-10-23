@@ -24,6 +24,8 @@ interface Props {
   canonicalUrl?: string;
   /** Error and non-public utility pages stay out of search results. */
   noindex?: boolean;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
   theme?: 'dark' | 'light';
   /** Opens in a new tab: the nav CTA leaves the site (a calendar, an email). */
   navCta?: { label: string; href: string; external?: boolean };
@@ -33,15 +35,16 @@ interface Props {
    * Talent and Offer can be counted separately the day an analytics tool is
    * chosen. Nothing is loaded and nothing is sent from here.
    */
-  journey?: 'home' | 'companies' | 'talent' | 'offer' | 'careers' | 'roles';
+  journey?: 'home' | 'companies' | 'talent' | 'offer' | 'careers' | 'roles' | 'insights';
 }
 
-const { lang = 'en', title, description, canonicalUrl, noindex = false, theme = 'dark', navCta, journey = 'home' } = Astro.props;
+const { lang = 'en', title, description, canonicalUrl, noindex = false, ogType = 'website', ogImage, theme = 'dark', navCta, journey = 'home' } = Astro.props;
 
 const links = [
   { label: 'For companies', href: PAGE_COMPANIES },
   { label: 'For talent', href: PAGE_TALENT },
   { label: 'Open roles', href: PAGE_ROLES },
+  { label: 'Insights', href: '/insights' },
   { label: 'Work with Purrfect', href: '/work-with-us' },
 ];
 
@@ -70,7 +73,8 @@ const isB2B = journey === 'home' || journey === 'companies' || journey === 'care
 const ctaTone = isB2B ? 'h3-btn--ink' : '';
 ---
 
-<Layout title={title} description={description} canonicalUrl={canonicalUrl} lang={lang} legacyFonts={false} noindex={noindex || Astro.url.pathname.replace(/\/$/, '') === '/search-read'}>
+<Layout title={title} description={description} canonicalUrl={canonicalUrl} lang={lang} legacyFonts={false} ogType={ogType} ogImage={ogImage} noindex={noindex || Astro.url.pathname.replace(/\/$/, '') === '/search-read'}>
+  <Fragment slot="head"><slot name="head" /></Fragment>
   <div class:list={['h3', `h3--${theme}`]} data-journey={journey}>
     <a class="h3-skip" href="#main-content">Skip to content</a>
     <header class="h3-nav">
@@ -113,6 +117,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
       <div class="h3-wrap h3-footer__in">
         <nav aria-label="Footer">
           {footerLinks.map((link) => <a href={link.href} data-cta={`${journey}-footer-${link.label.toLowerCase().replace(/\s+/g, '-')}`}>{link.label}</a>)}
+          <a href="/insights" data-cta={`${journey}-footer-insights`}>Insights</a>
           <a href="/work-with-us" data-cta={`${journey}-footer-work-with-us`}>Work with Purrfect</a>
           <a href={PRIVACY}>Privacy</a>
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
@@ -143,7 +148,7 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
     menu.addEventListener('click', (event) => {
       if (event.target instanceof Element && event.target.closest('a[href]')) menu.open = false;
     });
-    matchMedia('(min-width: 72rem)').addEventListener('change', (event) => {
+    matchMedia('(min-width: 80rem)').addEventListener('change', (event) => {
       if (event.matches) menu.open = false;
     });
   }
@@ -284,21 +289,21 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   @media (min-width: 64rem) { .h3-nav__in { padding-inline: 3rem; } }
   .h3-nav__logo img { height: var(--space-4); width: auto; display: block; }
   .h3-nav__links { display: none; gap: 1.5rem; font-size: var(--type-ui); line-height: 1.5; }
-  @media (min-width: 72rem) { .h3-nav__links { display: flex; } }
+  @media (min-width: 80rem) { .h3-nav__links { display: flex; } }
   .h3--dark .h3-nav__links { color: var(--on-dark-muted); }
   .h3--dark .h3-nav__links a:hover { color: var(--on-dark); }
   .h3--light .h3-nav__links { color: var(--muted); }
   .h3--light .h3-nav__links a:hover { color: var(--text); }
   .h3-nav__links a[aria-current="page"] { color: var(--text); text-decoration: underline; text-underline-offset: .3em; }
   .h3[data-journey="home"] .h3-nav__links { margin-left: auto; color: var(--text); }
-  @media (min-width: 72rem) { .h3[data-journey="home"] .h3-nav__right { display: none; } }
+  @media (min-width: 80rem) { .h3[data-journey="home"] .h3-nav__right { display: none; } }
   .h3-nav__right { display: flex; align-items: center; gap: 0.75rem; }
   .h3-nav__cta { display: none; }
   @media (min-width: 48rem) { .h3-nav__cta { display: inline-flex; } }
 
   /* Small-screen menu */
   .h3-menu { position: relative; }
-  @media (min-width: 72rem) { .h3-menu { display: none; } }
+  @media (min-width: 80rem) { .h3-menu { display: none; } }
   .h3-menu > summary {
     list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
     min-height: 2.75rem; padding: 0.5rem 1rem; border-radius: 999px; font-size: var(--type-caption); line-height: 1.5; font-weight: 500;

@@ -21,6 +21,10 @@ visual reference. Follow the user's current instructions over older references.
 - /search/* describes hiring criteria; /roles/* contains actual vacancies.
 - Applications are free; Roles does not promote paid advisory in its footer.
 - Work with us receives expressions of interest by email, not an ATS form.
+- Insights contains short educational articles with separate founder and talent
+  paths. Keep private source provenance outside the website repository. Public
+  examples are explicitly illustrative; do not turn private conversations into
+  identifiable cases or publish source links, quotes or unverified outcomes.
 
 The product name is Offer Accelerator. Preserve /offer-acceleration and the
 legacy redirects in astro.config.mjs. Keep B2B and B2C narratives separate.

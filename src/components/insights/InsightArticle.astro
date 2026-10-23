@@ -1,0 +1,136 @@
+---
+import Shell from '../v2/Shell.astro';
+import { BOOKING_B2B, PAGE_TALENT } from '../../content/links';
+import { articles } from '../../content/insights';
+import type { InsightArticle } from '../../content/insights';
+
+interface Props { article: InsightArticle }
+const { article } = Astro.props;
+const forFounders = article.audience === 'founders';
+const audience = forFounders ? 'For founders' : 'For talent';
+const readNext = articles.find((item) => item.audience === article.audience && item.slug !== article.slug);
+const canonical = `https://purrfecthire.com/insights/${article.slug}/`;
+const displayDate = new Intl.DateTimeFormat('en', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${article.published}T00:00:00Z`));
+const action = forFounders
+  ? { label: 'Discuss a critical hire', href: BOOKING_B2B, external: true }
+  : { label: 'Find the right support', href: `${PAGE_TALENT}/#ways-in`, external: false };
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  description: article.description,
+  datePublished: article.published,
+  mainEntityOfPage: canonical,
+  url: canonical,
+  inLanguage: 'en',
+  articleSection: audience,
+  image: new URL(article.cover.src, 'https://purrfecthire.com').href,
+  author: { '@type': 'Organization', '@id': 'https://purrfecthire.com/#organization', name: 'Purrfect Hire' },
+  publisher: { '@id': 'https://purrfecthire.com/#organization' },
+};
+---
+
+<Shell
+  title={`${article.title} | Purrfect Hire`}
+  description={article.description}
+  canonicalUrl={canonical}
+  ogType="article"
+  ogImage={new URL(article.cover.src, 'https://purrfecthire.com').href}
+  theme="light"
+  journey={forFounders ? 'companies' : 'talent'}
+>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={article.published} />
+    <meta property="article:section" content={audience} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
+  </Fragment>
+
+  <article class="ia-page" aria-labelledby="article-title">
+    <header class="ia-header ia-reading">
+      <a href={`/insights/#${article.audience}`} class="ia-back"><span aria-hidden="true">←</span> Insights</a>
+      <p class="h3-eyebrow ia-audience">{audience}</p>
+      <h1 class="h3-hero__h1 ia-title" id="article-title">{article.title}</h1>
+      <p class="ia-description">{article.description}</p>
+      <p class="ia-date"><time datetime={article.published}>{displayDate}</time> · Purrfect Hire</p>
+    </header>
+
+    <figure class="h3-wrap ia-cover">
+      <div class="ia-cover__frame">
+        <img src={article.cover.src} alt={article.cover.alt} width={article.cover.width} height={article.cover.height} decoding="async" fetchpriority="high" style={{ 'object-position': article.cover.position || 'center' }} />
+      </div>
+      <figcaption>Photo by <a href={article.cover.sourceUrl} target="_blank" rel="noopener noreferrer">{article.cover.photographer}</a></figcaption>
+    </figure>
+
+    <div class="ia-body ia-reading">
+      {article.sections.map((section, index) => (
+        <section class="ia-section" aria-labelledby={`article-section-${index}`}>
+          <h2 class="h3-h2" id={`article-section-${index}`}>{section.heading}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          {!!section.bullets?.length && <ul>{section.bullets!.map((bullet) => <li>{bullet}</li>)}</ul>}
+          {section.example && <aside class="ia-example" aria-label={section.example.label}><p class="ia-example__label">{section.example.label}</p><p>{section.example.text}</p></aside>}
+        </section>
+      ))}
+
+      <aside class="ia-reference" aria-labelledby="reference-title">
+        <h2 class="h3-eyebrow" id="reference-title">{article.reference.kind === 'Book' ? 'Further reading' : 'Further listening'}</h2>
+        {article.reference.quote && <blockquote>
+          <p>“{article.reference.quote}”</p>
+          {article.reference.quoteAttribution && <cite>{article.reference.quoteAttribution}</cite>}
+        </blockquote>}
+        <a class="ia-reference__link" href={article.reference.url} target="_blank" rel="noopener noreferrer">{article.reference.title}<span aria-hidden="true">↗</span></a>
+        <p class="ia-reference__creator">{article.reference.creator}</p>
+        <p class="ia-reference__note">{article.reference.note}</p>
+      </aside>
+
+      <section class="ia-takeaway" aria-labelledby="takeaway-title">
+        <h2 class="h3-eyebrow" id="takeaway-title">The takeaway</h2>
+        <p>{article.takeaway}</p>
+      </section>
+
+      <div class="ia-action">
+        <a href={action.href} target={action.external ? '_blank' : undefined} rel={action.external ? 'noopener noreferrer' : undefined} data-cta={`insight-${article.slug}-next`} class:list={['h3-btn', forFounders && 'h3-btn--ink']}>
+          {action.label}<span aria-hidden="true">→</span>
+        </a>
+      </div>
+      {readNext && <nav class="ia-read-next" aria-label="Continue reading"><p class="h3-eyebrow">Read next</p><a href={`/insights/${readNext.slug}/`} class="h3-link">{readNext.title}<span aria-hidden="true">→</span></a></nav>}
+    </div>
+  </article>
+</Shell>
+
+<style lang="scss">
+  .ia-page { padding-block: var(--space-hero-top) var(--space-section); }
+  .ia-reading { max-width: 46rem; margin-inline: auto; padding-inline: var(--space-3); }
+  .ia-back { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--space-6); font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .ia-back:hover { text-decoration: underline; text-underline-offset: .2em; }
+  .ia-audience { margin-top: var(--space-4); }
+  .ia-title { max-width: none; }
+  .ia-description { margin-top: var(--space-3); font-size: var(--type-lead); line-height: 1.6; color: var(--muted); }
+  .ia-date { margin-top: var(--space-3); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
+  .ia-cover { margin-block: var(--space-grid) 0; }
+  .ia-cover__frame { aspect-ratio: 3 / 2; overflow: hidden; }
+  .ia-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .ia-cover figcaption { margin-top: var(--space-1); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
+  .ia-cover figcaption a { text-decoration: underline; text-underline-offset: .2em; }
+  .ia-body { margin-top: var(--space-grid); }
+  .ia-section + .ia-section { margin-top: var(--space-grid); }
+  .ia-section .h3-h2 { margin-top: 0; }
+  .ia-section p, .ia-section ul { margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .ia-section ul { padding-left: var(--space-3); list-style: disc; }
+  .ia-section li + li { margin-top: var(--space-1); }
+  .ia-example { margin-top: var(--space-3); padding: var(--space-3); border-left: 2px solid var(--signal); background: var(--stone); }
+  .ia-example .ia-example__label { margin-top: 0; font-size: var(--type-ui); font-weight: 500; line-height: 1.5; color: var(--text); }
+  .ia-reference { margin-top: var(--space-grid); padding-block: var(--space-4); border-top: 1px solid var(--line); }
+  .ia-reference blockquote { margin-top: var(--space-3); }
+  .ia-reference blockquote p { font-size: var(--type-quote); line-height: 1.5; color: var(--text); }
+  .ia-reference cite { display: block; margin-top: var(--space-2); font-size: var(--type-caption); font-style: normal; line-height: 1.5; color: var(--muted); }
+  .ia-reference__link { display: inline-flex; align-items: baseline; gap: var(--space-1); margin-top: var(--space-3); font-size: var(--type-body); font-weight: 500; line-height: 1.7; text-decoration: underline; text-underline-offset: .2em; }
+  .ia-reference__creator { margin-top: var(--space-1); font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
+  .ia-reference__note { margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .ia-takeaway { margin-top: var(--space-grid); padding-top: var(--space-4); border-top: 1px solid var(--line); }
+  .ia-takeaway p { margin-top: var(--space-2); font-size: var(--type-lead); line-height: 1.6; color: var(--text); }
+  .ia-action { margin-top: var(--space-4); }
+  .ia-read-next { margin-top: var(--space-grid); padding-top: var(--space-4); border-top: 1px solid var(--line); }
+  .ia-read-next .h3-link { margin-top: var(--space-2); }
+  @media (min-width: 56rem) { .ia-cover__frame { aspect-ratio: 16 / 9; } }
+  @media (min-width: 64rem) { .ia-reading { padding-inline: var(--space-4); } }
+</style>
