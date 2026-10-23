@@ -1,5 +1,6 @@
 ---
 import Shell from '../v2/Shell.astro';
+import CatIllustration from '../v2/CatIllustration.astro';
 import ClientPortrait from '../v2/ClientPortrait.astro';
 import ParticipantVoices from '../v2/ParticipantVoices.astro';
 import type { Lang } from '../../content/index';
@@ -113,11 +114,14 @@ const t = getOfferV2(lang);
   </section>
 
   <section class="oa-apply" aria-labelledby="oa-apply-title">
-    <div class="h3-wrap">
+    <div class="h3-wrap oa-apply__layout">
+      <div class="oa-apply__copy">
       <h2 class="h3-h2" id="oa-apply-title">{t.apply.headline}</h2>
       <p class="h3-body">{t.apply.body}</p>
       <a href={APPLY_OFFER} data-cta="offer-close-apply" class="h3-btn oa-apply__cta">{t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
       <p class="oa-apply__how">{t.apply.howNote}</p>
+      </div>
+      <CatIllustration pose="walk" />
     </div>
   </section>
 </Shell>
@@ -165,9 +169,12 @@ const t = getOfferV2(lang);
   .oa-detail > p, .oa-detail > div { padding-bottom: var(--space-3); max-width: 44rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .oa-detail > div { display: grid; gap: var(--space-2); }
   .oa-apply .h3-body { margin-top: var(--space-3); }
+  .oa-apply__layout { display: grid; gap: var(--space-grid); align-items: center; }
+  .oa-apply__copy { min-width: 0; }
   .oa-apply__cta { margin-top: var(--space-4); }
   .oa-apply__how { margin-top: var(--space-2); max-width: 34rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   @media (min-width: 56rem) {
+    .oa-apply__layout { grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--space-8) * 4)); }
     .oa-output { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: var(--space-grid); }
     .oa-quote { grid-template-columns: 8rem minmax(0, 1fr); }
     .oa-scope__grid { grid-template-columns: 1fr 1.25fr; }

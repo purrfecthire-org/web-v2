@@ -1,5 +1,6 @@
 ---
 import Shell from '../v2/Shell.astro';
+import CatIllustration from '../v2/CatIllustration.astro';
 import type { Lang } from '../../content/index';
 import { CAREER_COMPOUNDING_EMAIL, DISCUSS_CAREER_COMPOUNDING, getCareerCompoundingV2 } from '../../content/careerCompoundingV2';
 
@@ -81,13 +82,16 @@ const t = getCareerCompoundingV2(lang);
     </section>
 
     <section class="cc-close" aria-labelledby="cc-close-title">
-      <div class="h3-wrap">
+      <div class="h3-wrap cc-close__layout">
+        <div class="cc-close__copy">
         <p class="h3-eyebrow">{t.close.eyebrow}</p>
         <h2 class="h3-h2" id="cc-close-title">{t.close.headline}</h2>
         <p class="h3-body">{t.close.body}</p>
         <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-close-whatsapp" class="h3-btn cc-close__cta">{t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
         <p class="cc-close__note">{t.close.note}</p>
         <p class="cc-close__email">{t.close.emailLabel} <a href={"mailto:" + CAREER_COMPOUNDING_EMAIL} data-cta="career-compounding-direct-email">{CAREER_COMPOUNDING_EMAIL}</a>.</p>
+        </div>
+        <CatIllustration pose="leap" />
       </div>
     </section>
   </div>
@@ -135,9 +139,12 @@ const t = getCareerCompoundingV2(lang);
   .cc-question[open] summary span { transform: rotate(45deg); }
   .cc-question > p { padding-bottom: var(--space-3); max-width: 36rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .cc-close .h3-body { margin-top: var(--space-3); }
+  .cc-close__layout { display: grid; gap: var(--space-grid); align-items: center; }
+  .cc-close__copy { min-width: 0; }
   .cc-close__email { margin-top: var(--space-1); overflow-wrap: anywhere; }
   .cc-close__email a { text-decoration: underline; text-underline-offset: 3px; color: var(--purple); }
   @media (min-width: 56rem) {
+    .cc-close__layout { grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--space-8) * 4)); }
     .cc-hero__grid { grid-template-columns: 1.25fr 1fr; }
     .cc-area { grid-template-columns: minmax(0, .8fr) minmax(0, 1.1fr) minmax(0, 1.1fr); gap: var(--space-grid); }
     .cc-scope__grid { grid-template-columns: 1fr 1fr; }

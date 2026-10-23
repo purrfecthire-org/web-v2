@@ -13,8 +13,9 @@
 import '@fontsource-variable/fraunces/opsz.css';
 import '@fontsource-variable/inter/wght.css';
 import Layout from '../../layouts/Layout.astro';
+import SocialIcon from './SocialIcon.astro';
 import type { Lang } from '../../content/index';
-import { PAGE_COMPANIES, PAGE_TALENT, PAGE_ROLES, PAGE_CAREER_COMPOUNDING, PRIVACY, CONTACT_EMAIL } from '../../content/links';
+import { PAGE_COMPANIES, PAGE_TALENT, PAGE_ROLES, PAGE_CAREER_COMPOUNDING, PRIVACY, CONTACT_EMAIL, SOCIAL_LINKS } from '../../content/links';
 
 interface Props {
   lang?: Lang;
@@ -110,14 +111,18 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
 
     <footer class="h3-footer">
       <div class="h3-wrap h3-footer__in">
-        <span>© 2026 Purrfect Hire OÜ</span>
         <nav aria-label="Footer">
           {footerLinks.map((link) => <a href={link.href} data-cta={`${journey}-footer-${link.label.toLowerCase().replace(/\s+/g, '-')}`}>{link.label}</a>)}
           <a href="/work-with-us" data-cta={`${journey}-footer-work-with-us`}>Work with Purrfect</a>
           <a href={PRIVACY}>Privacy</a>
-          <a href="https://www.linkedin.com/company/purrfect-hire" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </nav>
+        <div class="h3-footer__bottom">
+          <span>© 2026 Purrfect Hire OÜ</span>
+          <nav class="h3-footer__socials" aria-label="Social media">
+            {SOCIAL_LINKS.map((social) => <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={`Purrfect Hire on ${social.label}`} title={social.label} data-cta={`${journey}-social-${social.id}`}><SocialIcon name={social.id} /></a>)}
+          </nav>
+        </div>
       </div>
     </footer>
   </div>
@@ -353,14 +358,19 @@ const ctaTone = isB2B ? 'h3-btn--ink' : '';
   /* ── Footer ───────────────────────────────────────────────────────── */
   .h3-footer {
     background: var(--midnight); color: var(--on-dark-muted);
-    border-top: 1px solid var(--line-dark); padding: 2rem 0 2rem; font-size: var(--type-caption); line-height: 1.5;
+    border-top: 1px solid var(--line-dark); padding-block: var(--space-4); font-size: var(--type-caption); line-height: 1.5;
   }
-  .h3-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; min-width: 0; }
-  .h3-footer nav { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; min-width: 0; }
+  .h3-footer__in { display: grid; gap: var(--space-stack); min-width: 0; }
+  .h3-footer nav { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-stack); min-width: 0; }
+  .h3-footer__bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+  .h3-footer .h3-footer__socials { gap: var(--space-1); }
+  .h3-footer__socials a { display: inline-flex; align-items: center; justify-content: center; width: var(--space-6); height: var(--space-6); border: 1px solid var(--line-dark); border-radius: var(--radius-input); }
+  .h3-footer__socials a:hover { background: var(--line-dark); }
   /* The address is the longest string on the page: let it wrap at 200% zoom
      instead of pushing the layout sideways. */
   .h3-footer a { overflow-wrap: anywhere; }
   .h3-footer a:hover { color: var(--on-dark); }
+  .h3-footer a:focus-visible { outline-color: var(--on-dark); }
 
   @media (prefers-reduced-motion: reduce) { .h3 * { transition: none !important; } }
 </style>

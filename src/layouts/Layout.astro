@@ -1,6 +1,7 @@
 ---
 import '../styles/tailwind.css';
 import '../styles/global.scss';
+import { SOCIAL_LINKS } from '../content/links';
 
 interface Props {
   title?: string;
@@ -42,7 +43,7 @@ const alternateLang = lang === 'en' ? 'es' : 'en';
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Purrfect Hire', legalName: 'Purrfect Hire OÜ', url: siteUrl, email: 'go@purrfecthire.com', logo: `${siteUrl}/brand/logo/logo-horizontal-midnight.svg`, sameAs: ['https://www.linkedin.com/company/purrfect-hire'] },
+    { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Purrfect Hire', legalName: 'Purrfect Hire OÜ', url: siteUrl, email: 'go@purrfecthire.com', logo: `${siteUrl}/brand/logo/logo-horizontal-midnight.svg`, sameAs: SOCIAL_LINKS.map((social) => social.href) },
     { '@type': 'ProfessionalService', '@id': `${siteUrl}/#search-service`, name: 'Purrfect Hire Search', url: `${siteUrl}/for-companies`, parentOrganization: { '@id': `${siteUrl}/#organization` }, description: 'Senior and executive search for venture-backed companies.', areaServed: ['United States', 'Europe', 'Latin America'] },
   ],
 };
