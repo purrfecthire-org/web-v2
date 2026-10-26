@@ -34,8 +34,8 @@ export const talentV2En: TalentV2Content = {
     items: [
       {
         name: 'Offer Accelerator',
-        body: 'Choose this when you are changing company, market or scope. Build your positioning and work through outreach, interviews, offers and negotiation. Eight sessions, then process support while you execute the agreed plan.',
-        price: 'From USD 2,000',
+        body: 'Choose this when you are changing company, market or scope. Build your positioning and work through outreach, interviews, offers and negotiation. One diagnostic and seven sessions with a senior consultant, followed by process support while you execute the agreed plan.',
+        price: 'USD 2,000 to 8,000',
         note: 'Final investment depends on seniority and location.',
         cta: 'Explore Offer Accelerator',
         href: '/offer-acceleration',
