@@ -35,7 +35,6 @@ const t = getHomeV2(lang);
     <button class="home-entry__motion-control" type="button" aria-label="Pause background motion" aria-pressed="false" hidden>
       <svg class="home-entry__pause-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M7 5h3v14H7zm7 0h3v14h-3z" /></svg>
       <svg class="home-entry__play-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m8 5 11 7-11 7z" /></svg>
-      <span>Pause motion</span>
     </button>
   </section>
 
@@ -92,7 +91,6 @@ const t = getHomeV2(lang);
     const updateControl = () => {
       control.setAttribute('aria-pressed', String(userPaused));
       control.setAttribute('aria-label', userPaused ? 'Play background motion' : 'Pause background motion');
-      control.querySelector('span')!.textContent = userPaused ? 'Play motion' : 'Pause motion';
     };
     const usePoster = () => {
       video.pause();
@@ -194,7 +192,7 @@ const t = getHomeV2(lang);
   .home-entry__background img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
   .home-entry__motion { display: block; position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; opacity: 0; pointer-events: none; }
   .home-entry__motion.is-ready { opacity: 1; }
-  .home-entry__motion-control { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); position: absolute; right: var(--space-3); bottom: var(--space-3); z-index: 3; min-height: 2.75rem; padding: var(--space-1) var(--space-2); border: 1px solid var(--line); border-radius: 999px; background: rgba(247,246,243,.94); color: var(--text); font: 500 var(--type-caption)/1.5 var(--h-sans); cursor: pointer; }
+  .home-entry__motion-control { display: inline-flex; align-items: center; justify-content: center; position: absolute; left: var(--space-3); bottom: var(--space-3); z-index: 3; box-sizing: border-box; width: var(--space-6); height: var(--space-6); padding: 0; border: 1px solid var(--line); border-radius: 999px; background: rgba(247,246,243,.94); color: var(--text); font: 500 var(--type-caption)/1.5 var(--h-sans); cursor: pointer; }
   .home-entry__motion-control[hidden] { display: none; }
   .home-entry__motion-control:hover { background: var(--white); }
   .home-entry__motion-control:active { background: var(--stone); }
@@ -226,7 +224,7 @@ const t = getHomeV2(lang);
   @media (min-width: 56rem) {
     .home-entry { min-height: 54rem; padding-top: calc(var(--space-hero-top) + var(--space-8)); }
     .home-entry::before { background: linear-gradient(90deg,rgba(247,246,243,.9),rgba(247,246,243,.82) 42%,rgba(247,246,243,.55) 50%,transparent 62%); }
-    .home-entry__motion-control { right: var(--space-6); bottom: var(--space-4); }
+    .home-entry__motion-control { left: var(--space-6); bottom: var(--space-4); }
     .home-kate__grid { grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); }
     .home-kate__portrait { justify-self: center; }
   }
