@@ -15,7 +15,9 @@ test('the general guide routes each approved journey to its own next step', () =
   assert.deepEqual(topics.map((topic) => topic.id), ['hiring', 'next-move', 'current-role', 'application']);
   assert.equal(topics[0].action.href, 'https://cal.com/purrfect-hire/founders-call');
   assert.equal(topics[1].action.href, '/offer-acceleration/apply');
-  assert.match(topics[1].answer.join(' '), /USD 2,000/);
+  assert.match(topics[1].answer.join(' '), /USD 2,000 to 8,000/);
+  assert.match(topics[1].answer.join(' '), /one diagnostic session and seven private sessions with a senior consultant/);
+  assert.ok(!topics[1].answer.join(' ').includes('with Kate'));
   assert.match(topics[2].answer.join(' '), /USD 5,000/);
   assert.match(topics[2].answer.join(' '), /six months, nine private sessions/);
   assert.match(topics[2].answer.join(' '), /eight asynchronous checkpoints/);

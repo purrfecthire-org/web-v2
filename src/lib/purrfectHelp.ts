@@ -30,8 +30,8 @@ const topics: readonly HelpTopic[] = [
     label: 'My next career move',
     heading: 'Compete for the right next opportunity.',
     answer: [
-      'Offer Accelerator is private career advisory for senior professionals preparing a move. It includes eight private sessions with Kate, starting with a diagnostic, plus process support while you actively execute the agreed plan.',
-      'Investment starts at USD 2,000 and varies by seniority and location. We confirm it before enrollment. A job or salary increase is not guaranteed.',
+      'Offer Accelerator is private career advisory for senior professionals preparing a move. It includes one diagnostic session and seven private sessions with a senior consultant, plus process support while you actively execute the agreed plan.',
+      'Investment ranges from USD 2,000 to 8,000, depending on seniority and location. We confirm it before enrollment. A job or salary increase is not guaranteed.',
     ],
     action: { label: 'Apply for Offer Accelerator', href: APPLY_OFFER },
     question: 'Does this give me priority in client searches?',

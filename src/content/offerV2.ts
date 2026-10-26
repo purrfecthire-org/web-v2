@@ -4,8 +4,9 @@
 // team works, what is included and for how long, what it costs, how to
 // apply.
 //
-// Investment updated by Kate, 23 October 2026: from USD 2,000, with the
-// final fee depending on seniority and location, agreed before enrolment.
+// Investment and delivery updated by Kate, 26 October 2026: USD 2,000 to
+// 8,000 depending on seniority and location, agreed before enrolment.
+// One diagnostic session and seven sessions with a senior consultant.
 // The confirmed scope remains
 // eight sessions in total, and support through each new hiring process
 // afterwards until the person is placed, while they actively carry out the
@@ -51,7 +52,7 @@ export const offerV2En: OfferV2Content = {
     headline: 'Make your signal impossible to miss.',
     sub: 'Private career advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
     cta: 'Apply to Offer Accelerator',
-    package: 'Eight 1:1 sessions: one diagnostic and seven with Kate. Continued process support while you execute the agreed plan.',
+    package: 'Eight private sessions: one diagnostic session and seven with a senior consultant. Continued process support while you execute the agreed plan.',
   },
   question: {
     eyebrow: 'The real question',
@@ -108,7 +109,7 @@ export const offerV2En: OfferV2Content = {
     eyebrow: 'What is included',
     headline: 'Eight sessions. Support as you put the plan to work.',
     items: [
-      'Eight 1:1 sessions in total, one diagnostic and seven with Kate',
+      'One diagnostic session and seven private sessions with a senior consultant',
       'Personalized materials and agreed next actions in your private Career Journal',
       'A weekly check-in with the team',
       'Direct support over WhatsApp and email',
@@ -136,7 +137,7 @@ export const offerV2En: OfferV2Content = {
   investment: {
     eyebrow: 'Investment',
     headline: 'A considered investment in your next move.',
-    price: 'From USD 2,000',
+    price: 'USD 2,000 to 8,000',
     note: 'Final investment depends on seniority and location. We confirm it with you before enrollment.',
     next: 'Eight sessions, followed by support through each new hiring process until you secure your next role, while you actively carry out the agreed plan.',
   },
