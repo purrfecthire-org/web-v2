@@ -2,6 +2,7 @@
 import Shell from '../v2/Shell.astro';
 import type { Lang } from '../../content/index';
 import { getTalentV2 } from '../../content/talentV2';
+import { APPLY_OFFER } from '../../content/links';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
@@ -62,7 +63,7 @@ const images = [
   <section class="tv-finish" aria-labelledby="tv-finish-title">
     <div class="h3-wrap tv-finish__inner">
       <h2 id="tv-finish-title">Get started fast. And never stop moving.</h2>
-      <a href={t.paths.items[0].href} data-cta="talent-final-offer" class="tv-finish__action">Explore Offer Accelerator <span aria-hidden="true">→</span></a>
+      <a href={APPLY_OFFER} data-cta="talent-final-apply" class="tv-finish__action">Apply now <span aria-hidden="true">→</span></a>
       <p class="tv-finish__legal"><strong>{t.firewall.headline}</strong><br />{t.firewall.lead}</p>
     </div>
   </section>
@@ -71,7 +72,7 @@ const images = [
 <style lang="scss" is:global>
   .h3[data-journey="talent"] { --tv-ivory: var(--sand); }
   .tv-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-  .tv-hero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: clamp(43rem, 59vw, 57rem); background: var(--sand); overflow: hidden; }
+  .tv-hero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: clamp(43rem, 52vw, 53rem); background: var(--sand); overflow: hidden; }
   .tv-hero__photo { position: absolute; z-index: -1; inset: 0; background-image: linear-gradient(to bottom, rgba(247,246,243,0) 78%, var(--sand) 100%), url('/images/talent-v2/talent-hero.png'); background-size: cover; background-position: center center; }
   .tv-hero__inner { width: 100%; padding-block: calc(var(--space-hero-top) + var(--space-3)) var(--space-8); }
   .tv-hero__copy { max-width: 34rem; position: relative; }
@@ -91,15 +92,15 @@ const images = [
   .tv-service__note { margin-top: var(--space-1); max-width: 34rem; font-size: var(--type-caption); line-height: 1.6; color: var(--muted); }
   .tv-service__cta { margin-top: var(--space-3); font-size: var(--type-ui); }
   .tv-service__proof { display: flex; width: fit-content; align-items: center; gap: var(--space-1); margin-top: var(--space-2); font-size: var(--type-caption); color: var(--muted); text-decoration: underline !important; text-underline-offset: .25rem; }
-  .tv-service__media { margin: 0; min-width: 0; width: min(100%, 29rem); justify-self: end; border-radius: var(--radius-card); overflow: hidden; }
+  .tv-service__media { margin: 0; min-width: 0; width: min(100%, 27rem); justify-self: end; border-radius: var(--radius-card); overflow: hidden; }
   .tv-service__media img { display: block; width: 100%; height: auto; aspect-ratio: 941 / 1217; object-fit: contain; }
   .tv-service--reverse .tv-service__media { grid-column: 1; grid-row: 1; justify-self: start; }
   .tv-service--reverse .tv-service__copy { grid-column: 2; grid-row: 1; justify-self: end; }
   .tv-free { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); padding-block: var(--space-6); border-bottom: 1px solid var(--line); }
   .tv-free p { max-width: 40rem; font-size: var(--type-ui); color: var(--muted); }
   .tv-free .h3-link { font-size: var(--type-ui); }
-  .tv-finish { isolation: isolate; position: relative; min-height: 32rem; background: linear-gradient(180deg, var(--sand) 0%, #e6e4e2 14%, #a5a5a8 38%, #3e3f47 69%, var(--midnight) 100%); overflow: hidden; }
-  .tv-finish::before { content: ''; pointer-events: none; position: absolute; inset: 0; opacity: .11; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.56' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
+  .tv-finish { isolation: isolate; position: relative; min-height: 32rem; background: linear-gradient(180deg, var(--sand) 0%, #f0eeeb 12%, #dedbd9 27%, #b4b2b1 45%, #77777b 62%, #383941 79%, var(--midnight) 100%); overflow: hidden; }
+  .tv-finish::before { content: ''; pointer-events: none; position: absolute; inset: 0; opacity: .035; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.56' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
   .tv-finish__inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; min-height: inherit; padding-block: var(--space-8) var(--space-6); }
   .tv-finish h2 { font-family: var(--h-serif); font-size: var(--type-section); font-weight: 400; line-height: 1.15; letter-spacing: -.014em; max-width: 19ch; text-wrap: balance; color: var(--text); }
   .tv-finish__action { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); background: var(--white); color: var(--midnight) !important; border: 1px solid var(--midnight); border-radius: 999px; padding: .6rem 1.75rem; min-height: 3rem; font-size: var(--type-ui); font-weight: 500; margin-top: var(--space-3); }
