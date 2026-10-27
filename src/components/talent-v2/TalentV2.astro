@@ -2,7 +2,6 @@
 import Shell from '../v2/Shell.astro';
 import type { Lang } from '../../content/index';
 import { getTalentV2 } from '../../content/talentV2';
-import { APPLY_OFFER } from '../../content/links';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
@@ -53,17 +52,15 @@ const images = [
           </li>
         ))}
       </ol>
-      <div class="tv-free">
-        <p>{t.paths.free.body}</p>
-        <a href={t.paths.free.href} data-cta="talent-free" class="h3-link">{t.paths.free.cta}<span aria-hidden="true">↗</span></a>
-      </div>
     </div>
   </section>
 
   <section class="tv-finish" aria-labelledby="tv-finish-title">
     <div class="h3-wrap tv-finish__inner">
-      <h2 id="tv-finish-title">Get started fast. And never stop moving.</h2>
-      <a href={APPLY_OFFER} data-cta="talent-final-apply" class="tv-finish__action">Apply now <span aria-hidden="true">→</span></a>
+      <p class="tv-finish__eyebrow">OPEN ROLES</p>
+      <h2 id="tv-finish-title">Your next opportunity starts here.</h2>
+      <p class="tv-finish__description">{t.paths.free.body}</p>
+      <a href={t.paths.free.href} data-cta="talent-free" class="tv-finish__action">{t.paths.free.cta} <span aria-hidden="true">↗</span></a>
       <p class="tv-finish__legal"><strong>{t.firewall.headline}</strong><br />{t.firewall.lead}</p>
     </div>
   </section>
@@ -96,12 +93,11 @@ const images = [
   .tv-service__media img { display: block; width: 100%; height: auto; aspect-ratio: 941 / 1217; object-fit: contain; }
   .tv-service--reverse .tv-service__media { grid-column: 1; grid-row: 1; justify-self: start; }
   .tv-service--reverse .tv-service__copy { grid-column: 2; grid-row: 1; justify-self: end; }
-  .tv-free { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); padding-block: var(--space-6); border-bottom: 1px solid var(--line); }
-  .tv-free p { max-width: 40rem; font-size: var(--type-ui); color: var(--muted); }
-  .tv-free .h3-link { font-size: var(--type-ui); }
   .tv-finish { isolation: isolate; position: relative; min-height: 32rem; background: linear-gradient(180deg, var(--sand) 0%, #f0eeeb 12%, #dedbd9 27%, #b4b2b1 45%, #77777b 62%, #383941 79%, var(--midnight) 100%); overflow: hidden; }
   .tv-finish::before { content: ''; pointer-events: none; position: absolute; inset: 0; opacity: .035; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.56' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
   .tv-finish__inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; min-height: inherit; padding-block: var(--space-8) var(--space-6); }
+  .tv-finish__eyebrow { font-size: var(--type-eyebrow); font-weight: 600; letter-spacing: .1em; color: var(--muted); margin-bottom: var(--space-2); }
+  .tv-finish__description { max-width: 36rem; margin-top: var(--space-3); font-size: var(--type-ui); color: var(--text); line-height: 1.6; }
   .tv-finish h2 { font-family: var(--h-serif); font-size: var(--type-section); font-weight: 400; line-height: 1.15; letter-spacing: -.014em; max-width: 19ch; text-wrap: balance; color: var(--text); }
   .tv-finish__action { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); background: var(--white); color: var(--midnight) !important; border: 1px solid var(--midnight); border-radius: 999px; padding: .6rem 1.75rem; min-height: 3rem; font-size: var(--type-ui); font-weight: 500; margin-top: var(--space-3); }
   .tv-finish__action:hover { background: var(--sand); }
