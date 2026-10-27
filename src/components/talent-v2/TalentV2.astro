@@ -61,7 +61,7 @@ const images = [
       <h2 id="tv-finish-title">Your next opportunity starts here.</h2>
       <p class="tv-finish__description">{t.paths.free.body}</p>
       <a href={t.paths.free.href} data-cta="talent-free" class="tv-finish__action">{t.paths.free.cta} <span aria-hidden="true">↗</span></a>
-      <p class="tv-finish__legal"><strong>{t.firewall.headline}</strong><br />{t.firewall.lead}</p>
+      <p class="tv-finish__legal"><strong>{t.firewall.headline}</strong> {t.firewall.lead}</p>
     </div>
   </section>
 </Shell>
@@ -115,7 +115,7 @@ const images = [
   .tv-finish h2 { font-family: var(--h-serif); font-size: var(--type-section); font-weight: 400; line-height: 1.15; letter-spacing: -.014em; max-width: 19ch; text-wrap: balance; color: var(--text); }
   .tv-finish__action { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); background: var(--white); color: var(--midnight) !important; border: 1px solid var(--midnight); border-radius: 999px; padding: .6rem 1.75rem; min-height: 3rem; font-size: var(--type-ui); font-weight: 500; margin-top: var(--space-3); }
   .tv-finish__action:hover { background: var(--sand); }
-  .tv-finish__legal { margin-top: auto; padding-top: var(--space-8); color: var(--on-dark-muted); font-size: var(--type-caption); line-height: 1.6; max-width: 43rem; }
+  .tv-finish__legal { align-self: stretch; width: 100%; margin-top: auto; padding-top: var(--space-8); color: var(--on-dark-muted); font-size: var(--type-caption); line-height: 1.6; max-width: none; text-align: left; }
   .tv-finish__legal strong { color: var(--on-dark); font-weight: 600; }
   .tv-finish .tv-finish__action:focus-visible { outline-color: var(--midnight); }
   @media (max-width: 55.99rem) {
