@@ -15,189 +15,334 @@ const t = getOfferV2(lang);
 
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light"
   navCta={{ label: t.hero.cta, href: APPLY_OFFER }} journey="offer">
-  <section class="h3-hero">
-    <div class="h3-wrap h3-hero__grid">
-      <div class="h3-hero__copy">
-        <p class="h3-eyebrow">{t.hero.eyebrow}</p>
-        <h1 class="h3-hero__h1">{t.hero.headline}</h1>
-        <p class="h3-hero__sub">{t.hero.sub}</p>
-      </div>
-      <div class="oa-hero__offer">
-        <p class="h3-eyebrow">{t.investment.eyebrow}</p>
-        <p class="oa-hero__price">{t.investment.price}</p>
-        <p class="oa-investment__note">{t.investment.note}</p>
-        <p class="oa-hero__package">{t.hero.package}</p>
-        <p class="oa-hero__fit">{t.fit.body}</p>
-        <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="oa-work" aria-labelledby="oa-work-title">
-    <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.deliverables.eyebrow}</p>
-      <h2 class="h3-h2" id="oa-work-title">{t.deliverables.headline}</h2>
-      <div class="oa-work__intro">
-        <p class="h3-body">{t.deliverables.body}</p>
-      </div>
-      <ol class="oa-outputs">
-        {t.deliverables.items.map((item, index) => (
-          <li class="oa-output">
-            <div class="oa-output__heading">
-              <span class="oa-output__id" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <h3>{item.title}</h3>
-            </div>
-            <div class="oa-output__body">
-              <p>{item.body}</p>
-              {item.note && <p class="oa-output__note">{item.note}</p>}
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <section class="oa-proof" id="voices" aria-labelledby="oa-proof-title">
-    <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.proof.eyebrow}</p>
-      <h2 class="h3-h2" id="oa-proof-title">{t.proof.headline}</h2>
-      <figure class="oa-quote">
-        <ClientPortrait alt={t.proof.name} shape="circle" />
-        <div class="oa-quote__copy">
-          <blockquote>“{t.proof.quote}”</blockquote>
-          <figcaption>
-            <strong>{t.proof.name}</strong>
-            <span>{t.proof.role}</span>
-            <span>Translated from Spanish</span>
-            <a class="oa-quote__linkedin" href={t.proof.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`View ${t.proof.name} on LinkedIn`}><SocialIcon name="linkedin" />View LinkedIn<span aria-hidden="true">↗</span></a>
-          </figcaption>
+  <link slot="head" rel="stylesheet" href="/styles/offer-v2.css?v=mobile-20261028" />
+  <div class="oa-editorial-intro">
+    <section class="oa-new-hero" aria-labelledby="oa-hero-title">
+      <div class="h3-wrap oa-new-hero__grid">
+        <div class="oa-new-hero__copy">
+          <p class="h3-eyebrow">Offer Accelerator · Private career advisory</p>
+          <h1 id="oa-hero-title">The market may be reading you a level below your real one.</h1>
+          <p class="oa-new-hero__sub">{t.hero.sub}</p>
+          <ul class="oa-new-hero__signals" aria-label="Career situations">
+            <li>Promotion</li><li>Role with P&amp;L</li><li>Transition</li>
+          </ul>
+          <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-new-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
         </div>
-      </figure>
-      {talentTestimonials.map(voice => <figure class="oa-quote">
-        <img class="oa-quote__portrait" src={voice.photo} alt={voice.name} width="480" height="480" loading="lazy" decoding="async" />
-        <div class="oa-quote__copy">
-          <blockquote>“{voice.quote}”</blockquote>
-          {voice.reflection && <p class="oa-quote__reflection">“{voice.reflection}”</p>}
-          <figcaption><strong>{voice.name}</strong><span>{voice.context}</span><span>{voice.translation}</span><a class="oa-quote__linkedin" href={voice.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`View ${voice.name} on LinkedIn`}><SocialIcon name="linkedin" />View LinkedIn<span aria-hidden="true">↗</span></a></figcaption>
-        </div>
-      </figure>)}
-    </div>
-  </section>
-
-  <section class="oa-scope" aria-labelledby="oa-scope-title">
-    <div class="h3-wrap">
-      <p class="h3-eyebrow">{t.includes.eyebrow}</p>
-      <h2 class="h3-h2" id="oa-scope-title">{t.includes.headline}</h2>
-      <div class="oa-scope__grid">
-        <div class="oa-investment">
-          <p class="h3-eyebrow">{t.investment.eyebrow}</p>
-          <p class="oa-price">{t.investment.price}</p>
-          <p class="oa-investment__note">{t.investment.note}</p>
-          <a href={APPLY_OFFER} data-cta="offer-investment-apply" class="h3-btn oa-investment__cta">{t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
-        </div>
-        <ul class="oa-inclusions">{t.includes.items.map(item => <li><span>{item}</span></li>)}</ul>
+        <div class="oa-new-hero__art" aria-hidden="true"></div>
       </div>
-      <div class="oa-scope__details">
-        <div>
-          <div class="oa-commitment">
-            <h3>{t.fit.commitmentTitle}</h3>
-            <p class="h3-body">{t.fit.commitment}</p>
+    </section>
+
+    <section class="oa-familiar" aria-labelledby="oa-familiar-title">
+      <div class="h3-wrap">
+        <div class="oa-familiar__grid">
+          <div class="oa-familiar__heading">
+            <p class="h3-eyebrow">Recognise this?</p>
+            <h2 id="oa-familiar-title">Does this sound familiar?</h2>
+            <p>You can have ten years of experience and still:</p>
           </div>
-          <aside class="oa-firewall" aria-labelledby="oa-firewall-title">
-            <h3 id="oa-firewall-title">{t.firewall.headline}</h3>
-            <p class="h3-body">{t.firewall.lead}</p>
-            <details class="oa-detail">
-              <summary>{t.firewall.more}</summary>
-              <div>{t.firewall.body.map(paragraph => <p>{paragraph}</p>)}</div>
-            </details>
+          <p class="oa-bubble oa-bubble--one">Not get interviews for the roles you actually want.</p>
+          <p class="oa-bubble oa-bubble--two">Be read as less senior than you are.</p>
+          <p class="oa-bubble oa-bubble--three">Reach the final rounds and lose to another candidate.</p>
+          <p class="oa-bubble oa-bubble--four">Hear about roles only once they are posted.</p>
+          <p class="oa-bubble oa-bubble--five">Struggle to show the impact you had in an interview.</p>
+        </div>
+        <aside class="oa-why" aria-labelledby="oa-why-title">
+          <div>
+            <p class="h3-eyebrow">Why it happens</p>
+            <h3 id="oa-why-title">Hiring decisions are made on partial information.</h3>
+          </div>
+          <div class="oa-why__body">
+            <p>A decision gets made from a title, a CV, a LinkedIn page and a few conversations.</p>
+            <p>Often the evidence of what you did and how much of it was yours never reaches the person deciding.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <section class="oa-work oa-stages" aria-labelledby="oa-work-title" data-stages>
+    <div class="h3-wrap">
+      <p class="h3-eyebrow">How we work</p>
+      <h2 class="h3-h2" id="oa-work-title">Three stages, one private workspace.</h2>
+      <p class="h3-body oa-stages__lead">{t.deliverables.body}</p>
+      <div class="oa-stages__tabs" aria-label="Explore three stages">
+        {['Understand how you are read', 'Build your approach', 'Win the process'].map((name, i) => (
+          <button class="oa-stages__tab" type="button" data-stage-tab={i} aria-controls={`oa-stage-panel-${i}`} aria-current={i === 0 ? 'step' : undefined}>
+            <span class="oa-stages__number">0{i + 1}</span><span class="oa-stages__tab-title">{name}</span>
+          </button>
+        ))}
+      </div>
+      <div class="oa-stages__panels">
+        {[
+          {name:'Understand how you are read', description:'Examine how your experience is understood and define the scope of your next move.', outcomes:['Clear criteria for the next move you want to make','Specific evidence of your contribution, scope and results']},
+          {name:'Build your approach', description:'Research relevant companies and organize the work behind each real opportunity.', outcomes:['A focused map of relevant companies and decision makers','A working system for research, outreach and live processes']},
+          {name:'Win the process', description:'Prepare for real interviews, evaluate offers and decide how to negotiate.', outcomes:['Interview preparation grounded in feedback','A framework for evaluating offers and negotiation decisions']}
+        ].map((stage, i) => (
+          <article class="oa-stage" id={`oa-stage-panel-${i}`} data-stage-panel={i} aria-labelledby={`oa-stage-title-${i}`}>
+            <div class="oa-stage__intro">
+              <p class="h3-eyebrow">Stage 0{i + 1}</p>
+              <h3 id={`oa-stage-title-${i}`}>{stage.name}</h3>
+              <p>{stage.description}</p>
+            </div>
+            <div class="oa-stage__deliverables">
+              {t.deliverables.items.slice(i * 2, i * 2 + 2).map((item, j) => (
+                <div class="oa-stage__deliverable">
+                  <span class="oa-stage__glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      {(i * 2 + j) === 0 && <><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></>}
+                      {(i * 2 + j) === 1 && <><path d="M4 20V13h4v7M10 20V9h4v11M16 20V4h4v16M3 20h18"/></>}
+                      {(i * 2 + j) === 2 && <><circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="18" r="2"/><path d="M8 8.5l3 7M16 8.5l-3 7M8 7h8"/></>}
+                      {(i * 2 + j) === 3 && <><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></>}
+                      {(i * 2 + j) === 4 && <><path d="M5 8h14v9H9l-4 3V8Z"/><path d="M9 12h6"/></>}
+                      {(i * 2 + j) === 5 && <><path d="m4 12 5 5L20 6"/><path d="M4 5h7M4 9h4"/></>}
+                    </svg>
+                  </span>
+                  <div><h4>{item.title}</h4><p>{item.body}</p>{item.note && <p class="oa-stage__note">{item.note}</p>}</div>
+                </div>
+              ))}
+            </div>
+            <div class="oa-stage__outcomes">
+              <p class="h3-eyebrow">What you walk away with</p>
+              <ul>{stage.outcomes.map(outcome => <li>{outcome}</li>)}</ul>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="oa-stages__controls" data-stage-controls>
+        <button type="button" data-stage-prev aria-label="Previous stage">←</button>
+        <span class="oa-stages__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <button type="button" data-stage-next aria-label="Next stage">→</button>
+        <span class="oa-stages__counter" data-stage-counter>Stage 1 of 3</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="oa-proof oa-testimonials" id="voices" aria-labelledby="oa-proof-title" data-testimonials>
+    <div class="h3-wrap oa-testimonials__layout">
+      <div class="oa-testimonials__intro">
+        <p class="h3-eyebrow">{t.proof.eyebrow}</p>
+        <h2 class="h3-h2" id="oa-proof-title">{t.proof.headline}</h2>
+        <span class="oa-testimonials__quote-mark" aria-hidden="true">“</span>
+        <p class="oa-testimonials__aside">What participants are saying</p>
+        <div class="oa-testimonials__controls" hidden>
+          <button type="button" data-voice-prev aria-label="Previous testimonial">←</button>
+          <span data-voice-position aria-live="polite">1–3 of 3</span>
+          <button type="button" data-voice-next aria-label="Next testimonial">→</button>
+        </div>
+      </div>
+      <div class="oa-testimonials__viewport" data-voice-viewport tabindex="0" role="region" aria-label="Participant testimonials">
+        <div class="oa-testimonials__track">
+          <figure class="oa-testimonial">
+            <div class="oa-testimonial__person"><ClientPortrait alt={t.proof.name} shape="circle" />
+              <figcaption><strong>{t.proof.name}</strong><span>{t.proof.role}</span><small>Translated from Spanish</small></figcaption>
+            </div>
+            <blockquote>“{t.proof.quote}”</blockquote>
+            <a href={t.proof.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`View ${t.proof.name} on LinkedIn`}>View LinkedIn ↗</a>
+          </figure>
+          {talentTestimonials.map(voice => (
+            <figure class="oa-testimonial">
+              <div class="oa-testimonial__person">
+                <img src={voice.photo} alt={voice.name} width="128" height="128" loading="lazy" decoding="async" />
+                <figcaption><strong>{voice.name}</strong><span>{voice.context}</span><small>{voice.translation}</small></figcaption>
+              </div>
+              <blockquote>“{voice.quote}”</blockquote>
+              {voice.reflection && <p class="oa-testimonial__reflection">“{voice.reflection}”</p>}
+              <a href={voice.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`View ${voice.name} on LinkedIn`}>View LinkedIn ↗</a>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="oa-advisors" aria-labelledby="oa-advisors-title">
+    <div class="h3-wrap oa-advisors__grid">
+      <div class="oa-advisors__media">
+        <img class="oa-advisors__portrait" src="/images/offer-v2/kate.webp.webp" alt="Kate, founder of Purrfect Hire" width="900" height="1124" loading="lazy" decoding="async" />
+      </div>
+      <div class="oa-advisors__copy">
+        <p class="h3-eyebrow">Who you will work with</p>
+        <h2 id="oa-advisors-title">Work with people who know how hiring decisions are made.</h2>
+        <p class="oa-advisors__lead">Kate brings the perspective of a former operator and founder who works directly with companies and senior professionals. Your sessions are led by Kate or a senior Purrfect advisor, depending on your engagement.</p>
+        <p class="oa-advisors__note">Your advisor is confirmed before enrollment.</p>
+        <ul class="oa-advisors__credentials">
+          <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Experience across tech and product</h3><p>Perspective shaped by operating roles and founder experience.</p></div></li>
+          <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Senior talent advisory</h3><p>Support for professionals navigating company, market and scope changes.</p></div></li>
+          <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Direct view of hiring decisions</h3><p>Grounded in real searches, interviews and offer conversations.</p></div></li>
+          <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Pragmatic, candid and involved</h3><p>Clear feedback, thoughtful strategy and genuine support throughout the process.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="oa-close-wrap">
+    <section class="oa-fit-close" aria-labelledby="oa-fit-close-title">
+      <div class="h3-wrap oa-close-grid">
+        <div class="oa-fit-close__intro">
+          <p class="h3-eyebrow">Is this for you?</p>
+          <h2 id="oa-fit-close-title">Better to know before you apply.</h2>
+          <p>This program is designed for senior professionals who are serious about their next move. Take a moment to see if it is the right fit.</p>
+        </div>
+        <div class="oa-fit-card oa-fit-card--yes">
+          <h3><span aria-hidden="true">✓</span> This is for you if</h3>
+          <ul>
+            <li>You are a senior IC, leader or former founder changing company, market or scope.</li>
+            <li>You are in an active process, or ready to start one.</li>
+            <li>You want to do more between sessions: research, outreach, applications and interviews.</li>
+          </ul>
+        </div>
+        <div class="oa-fit-card oa-fit-card--no">
+          <h3><span aria-hidden="true">×</span> This is not for you if</h3>
+          <ul>
+            <li>You want a guaranteed job or pay increase.</li>
+            <li>You want someone to apply on your behalf.</li>
+            <li>You want to grow in your current role without changing company.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="oa-scope oa-included" aria-labelledby="oa-scope-title">
+      <div class="h3-wrap">
+        <div class="oa-included__top">
+          <div class="oa-included__intro">
+            <p class="h3-eyebrow">Offer Accelerator</p>
+            <h2 id="oa-scope-title">What is included.</h2>
+            <p class="oa-included__lead">{t.includes.closing}</p>
+          </div>
+          <div class="oa-included__price">
+            <p>{t.investment.price}</p>
+            <span>{t.investment.note}</span>
+          </div>
+          <aside class="oa-included__quote">
+            <div class="oa-included__quote-context"><h3>{t.fit.commitmentTitle}</h3><p>{t.fit.commitment}</p></div>
           </aside>
         </div>
-        <div class="oa-questions">
-          <p class="h3-eyebrow">{t.faq.eyebrow}</p>
-          <div class="oa-questions__list">
-            {t.faq.items.map(item => <details class="oa-detail"><summary>{item.question}</summary><p>{item.answer}</p></details>)}
-          </div>
-        </div>
+        <ul class="oa-included__items">
+          {[
+            {title:'Eight 1:1 sessions in total', description:'One diagnostic session and seven private sessions with a senior Purrfect advisor. Your advisor is confirmed before enrollment.'},
+            {title:'Personalized materials', description:t.includes.items[1]},
+            {title:'A weekly check-in with the team', description:'Support and progress reviews between sessions.'},
+            {title:'Direct support over WhatsApp and email', description:'Questions, updates and feedback on active processes, without 24/7 availability.'},
+            {title:'Support through active hiring processes', description:t.includes.items[4]}
+          ].map((item,i)=>(
+            <li>
+              <span class="oa-included__icon" aria-hidden="true">{String(i+1).padStart(2,'0')}</span>
+              <div><h3>{item.title}</h3><p>{item.description}</p></div>
+            </li>
+          ))}
+        </ul>
+        <aside class="oa-confidentiality" aria-labelledby="oa-firewall-title">
+          <h3 id="oa-firewall-title">{t.firewall.headline}</h3>
+          <p>Advisory engagements are confidential. Participation in Offer Accelerator does not give you preferential treatment in Purrfect client searches. Applying to open roles is free, and no hiring outcome or salary increase is guaranteed.</p>
+          <details class="oa-confidentiality__details">
+            <summary>How confidentiality works <span aria-hidden="true">↗</span></summary>
+            <div>{t.firewall.body.map(paragraph => <p>{paragraph}</p>)}</div>
+          </details>
+        </aside>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <section class="oa-apply" aria-labelledby="oa-apply-title">
+  <section class="oa-apply oa-apply--granite" aria-labelledby="oa-apply-title">
     <div class="h3-wrap oa-apply__layout">
       <div class="oa-apply__copy">
-      <h2 class="h3-h2" id="oa-apply-title">{t.apply.headline}</h2>
-      <p class="h3-body">{t.apply.body}</p>
-      <a href={APPLY_OFFER} data-cta="offer-close-apply" class="h3-btn oa-apply__cta">{t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
-      <p class="oa-apply__how">{t.apply.howNote}</p>
+        <h2 class="h3-h2" id="oa-apply-title">{t.apply.headline}</h2>
+        <p class="h3-body">{t.apply.body}</p>
+        <a href={APPLY_OFFER} data-cta="offer-close-apply" class="h3-btn oa-apply__cta">{t.apply.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+        <p class="oa-apply__how">{t.apply.howNote}</p>
       </div>
-      <CatIllustration pose="walk" />
+      <div class="oa-apply__scene" aria-hidden="true"></div>
     </div>
   </section>
 </Shell>
 
-<style lang="scss" is:global>
-  .oa-hero__offer { min-width: 0; padding-block: var(--space-4); border-block: 1px solid var(--line); }
-  .oa-hero__price, .oa-price { font-family: var(--h-sans); font-size: var(--type-section); line-height: 1.12; font-weight: 500; letter-spacing: -.014em; color: var(--text); font-variant-numeric: tabular-nums; }
-  .oa-hero__price { margin-top: var(--space-2); }
-  .oa-hero__package { margin-top: var(--space-stack); max-width: 54ch; font-size: var(--type-body); line-height: 1.6; color: var(--text); }
-  .oa-hero__fit { margin-top: var(--space-stack); max-width: 54ch; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
-  .oa-hero__cta { margin-top: var(--space-stack); max-width: 100%; }
-  .oa-work, .oa-proof, .oa-scope, .oa-apply { padding-block: var(--space-section); background: var(--sand); }
-  .oa-work, .oa-scope, .oa-apply { border-top: 1px solid var(--line); }
-  .oa-work .h3-h2, .oa-proof .h3-h2, .oa-scope .h3-h2, .oa-apply .h3-h2 { max-width: 28ch; }
-  .oa-work__intro { margin-top: var(--space-3); max-width: 44rem; }
-  .oa-outputs { margin-top: var(--space-4); }
-  .oa-output { display: grid; align-items: baseline; min-width: 0; gap: var(--space-2); padding-block: var(--space-3); border-top: 1px solid var(--line); }
-  .oa-output__heading { display: flex; align-items: baseline; gap: var(--space-2); min-width: 0; }
-  .oa-output__id { flex-shrink: 0; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; font-variant-numeric: tabular-nums; }
-  .oa-output h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
-  .oa-output__body > p { max-width: 34rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .oa-output__body > .oa-output__note { margin-top: var(--space-2); font-size: var(--type-ui); line-height: 1.5; }
-  .oa-proof { scroll-margin-top: var(--space-hero-top); }
-  .oa-quote { margin-top: var(--space-4); display: grid; gap: var(--space-grid); align-items: start; }
-  .oa-quote__copy { min-width: 0; }
-  .oa-quote blockquote { font-family: var(--h-sans); font-size: var(--type-quote); line-height: 1.5; max-width: 46ch; font-weight: 400; }
-  .oa-quote figcaption { margin-top: var(--space-3); display: grid; gap: var(--space-1); font-size: var(--type-caption); line-height: 1.5; }
-  .oa-quote figcaption strong { font-weight: 500; }
-  .oa-quote figcaption span { color: var(--muted); }
-  .oa-quote + .oa-quote { padding-top: var(--space-grid); border-top: 1px solid var(--line); }
-  .oa-quote__portrait { display: block; width: calc(var(--space-8) * 2); height: calc(var(--space-8) * 2); border-radius: 50%; object-fit: cover; object-position: 50% 30%; }
-  .oa-quote__linkedin { display: inline-flex; align-items: center; gap: var(--space-1); justify-self: start; min-height: var(--space-6); color: var(--text); text-decoration: underline; text-underline-offset: .2em; }
-  .oa-quote__linkedin:hover { color: var(--purple); }
-  .oa-quote__reflection { margin-top: var(--space-2); max-width: 54ch; font-size: var(--type-body); line-height: 1.6; color: var(--muted); }
-  .oa-scope__grid, .oa-scope__details { display: grid; gap: var(--space-grid); align-items: start; margin-top: var(--space-grid); }
-  .oa-scope__grid > *, .oa-scope__details > * { min-width: 0; }
-  .oa-investment { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
-  .oa-price { margin-top: var(--space-2); }
-  .oa-investment__cta { margin-top: var(--space-stack); max-width: 100%; }
-  .oa-investment__note { margin-top: var(--space-2); max-width: 54ch; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
-  .oa-scope__details { padding-top: var(--space-grid); border-top: 1px solid var(--line); }
-  .oa-inclusions li { padding-block: var(--space-stack); border-top: 1px solid var(--line); font-size: var(--type-body); line-height: 1.6; }
-  .oa-inclusions li span { display: block; max-width: 54ch; }
-  .oa-commitment { margin-top: 0; }
-  .oa-commitment .h3-body { margin-top: var(--space-2); }
-  .oa-firewall { margin-top: var(--space-6); max-width: 44rem; }
-  .oa-firewall > .h3-body { margin-top: var(--space-2); }
-  .oa-firewall .oa-detail { margin-top: var(--space-2); }
-  .oa-questions { margin-top: 0; }
-  .oa-questions > .h3-eyebrow { margin-bottom: var(--space-2); }
-  .oa-detail { border-bottom: 1px solid var(--line); }
-  .oa-detail summary { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); padding-block: var(--space-3); cursor: pointer; list-style: none; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
-  .oa-detail summary::-webkit-details-marker { display: none; }
-  .oa-detail summary::after { content: '+'; flex-shrink: 0; color: var(--purple); }
-  .oa-detail[open] summary::after { content: '×'; }
-  .oa-detail > p, .oa-detail > div { padding-bottom: var(--space-3); max-width: 44rem; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
-  .oa-detail > div { display: grid; gap: var(--space-2); }
-  .oa-apply .h3-body { margin-top: var(--space-3); }
-  .oa-apply__layout { display: grid; gap: var(--space-grid); align-items: center; }
-  .oa-apply__copy { min-width: 0; }
-  .oa-apply__cta { margin-top: var(--space-4); }
-  .oa-apply__how { margin-top: var(--space-2); max-width: 34rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
-  @media (min-width: 56rem) {
-    .oa-apply__layout { grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--space-8) * 4)); }
-    .oa-output { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: var(--space-grid); }
-    .oa-quote { grid-template-columns: 8rem minmax(0, 1fr); }
-    .oa-scope__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
-    .oa-scope__details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+
+
+<script>
+  // Observe only elements below the current viewport. Content remains visible without JS.
+  const offerReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!offerReduced && 'IntersectionObserver' in window) {
+    const targets = document.querySelectorAll<HTMLElement>(
+      '.oa-familiar__heading, .oa-why, .oa-stages__tabs, .oa-stages__panels, .oa-testimonials__intro, .oa-testimonials__viewport, .oa-advisors__media, .oa-advisors__copy, .oa-fit-close__intro, .oa-fit-card, .oa-included__intro, .oa-included__price, .oa-included__quote, .oa-included__items, .oa-confidentiality, .oa-apply__copy'
+    );
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('oa-reveal-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.08, rootMargin:'0px 0px -35px 0px' });
+    targets.forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight * .95) return;
+      el.classList.add('oa-reveal-ready');
+      observer.observe(el);
+    });
   }
-</style>
+
+  const stages = document.querySelector<HTMLElement>('[data-stages]');
+  if (stages) {
+    const tabs = Array.from(stages.querySelectorAll<HTMLButtonElement>('[data-stage-tab]'));
+    const panels = Array.from(stages.querySelectorAll<HTMLElement>('[data-stage-panel]'));
+    const prev = stages.querySelector<HTMLButtonElement>('[data-stage-prev]')!;
+    const next = stages.querySelector<HTMLButtonElement>('[data-stage-next]')!;
+    const counter = stages.querySelector<HTMLElement>('[data-stage-counter]')!;
+    const dots = Array.from(stages.querySelectorAll<HTMLElement>('.oa-stages__dots i'));
+    let active = 0;
+    const show = (index: number) => {
+      active = Math.max(0, Math.min(index, panels.length - 1));
+      panels.forEach((panel,i) => {
+        panel.hidden = i !== active;
+        panel.classList.remove('oa-stage--entering');
+        if(i === active && stages.classList.contains('oa-stages--enhanced') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          void panel.offsetWidth;
+          panel.classList.add('oa-stage--entering');
+        }
+      });
+      tabs.forEach((tab,i) => { if(i === active) tab.setAttribute('aria-current','step'); else tab.removeAttribute('aria-current'); });
+      prev.disabled = active === 0; next.disabled = active === panels.length - 1;
+      counter.textContent = `Stage ${active + 1} of ${panels.length}`;
+      dots.forEach((dot,i)=>dot.classList.toggle('active',i === active));
+    };
+    tabs.forEach((tab,i) => {
+      tab.addEventListener('click',()=>show(i));
+      tab.addEventListener('keydown',(event)=>{
+        if(event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'Home' || event.key === 'End') {
+          event.preventDefault();
+          const target = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length-1 : (i + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+          show(target);tabs[target].focus();
+        }
+      });
+    });
+    prev.addEventListener('click',()=>show(active-1));next.addEventListener('click',()=>show(active+1));
+    show(0);stages.classList.add('oa-stages--enhanced');
+  }
+  const testimonials = document.querySelector<HTMLElement>('[data-testimonials]');
+  if(testimonials) {
+    const viewport = testimonials.querySelector<HTMLElement>('[data-voice-viewport]')!;
+    const cards = Array.from(viewport.querySelectorAll<HTMLElement>('.oa-testimonial'));
+    const prev = testimonials.querySelector<HTMLButtonElement>('[data-voice-prev]')!;
+    const next = testimonials.querySelector<HTMLButtonElement>('[data-voice-next]')!;
+    const position = testimonials.querySelector<HTMLElement>('[data-voice-position]')!;
+    const controls = testimonials.querySelector<HTMLElement>('.oa-testimonials__controls')!;
+    const update = () => {
+      const max = viewport.scrollWidth-viewport.clientWidth;
+      controls.hidden = max <= 3;
+      const first = cards.reduce((best,card,i)=>Math.abs(card.offsetLeft - cards[0].offsetLeft - viewport.scrollLeft)<Math.abs(cards[best].offsetLeft - cards[0].offsetLeft - viewport.scrollLeft)?i:best,0);
+      const visible = cards.filter(card=>card.offsetLeft - cards[0].offsetLeft >= viewport.scrollLeft - 2 && card.offsetLeft-cards[0].offsetLeft+card.offsetWidth <= viewport.scrollLeft+viewport.clientWidth+2).length;
+      position.textContent = `${first+1}–${Math.min(cards.length,first+Math.max(1,visible))} of ${cards.length}`;
+      prev.disabled = viewport.scrollLeft<=2;next.disabled = viewport.scrollLeft>=max-2;
+    };
+    const move = (direction:number) => {
+      const offset = cards[1]?.offsetLeft-cards[0]?.offsetLeft || cards[0]?.offsetWidth || 0;
+      viewport.scrollBy({left:direction*offset,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+    };
+    prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));
+    viewport.addEventListener('scroll',update,{passive:true});
+    viewport.addEventListener('keydown',e=>{if(e.target===viewport && (e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();move(e.key==='ArrowRight'?1:-1);}});
+    window.addEventListener('resize',update);
+    update();
+  }
+</script>
