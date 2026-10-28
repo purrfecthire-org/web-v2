@@ -174,3 +174,25 @@
   }
 
   .oa-testimonials__controls[hidden] { display:none !important; }
+
+/* Exact grid alignment across the stage and proof sections. */
+.oa-stage { align-items:stretch; }
+.oa-stage__intro, .oa-stage__deliverables, .oa-stage__outcomes { min-width:0; }
+.oa-stage__deliverables { grid-template-rows:repeat(2,minmax(0,1fr)); }
+.oa-stage__deliverable { align-items:center; height:100%; box-sizing:border-box; }
+.oa-stage__glyph svg { display:block; }
+.oa-stage__outcomes { height:100%; box-sizing:border-box; }
+.oa-testimonials__track { align-items:stretch; }
+.oa-testimonial { height:100%; box-sizing:border-box; }
+.oa-testimonial__person { display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2); }
+.oa-testimonial__person img { width:5rem; height:5rem; flex:none; }
+.oa-testimonial__person figcaption { display:contents; }
+.oa-testimonial__person strong { display:block; min-height:1.65rem; }
+.oa-testimonial__person span { display:block; min-height:3.9rem; }
+.oa-testimonial__person small { display:block; width:100%; box-sizing:border-box; min-height:3.1rem; }
+.oa-testimonial blockquote { margin-top:var(--space-3); }
+@media(max-width:55.99rem) {
+  .oa-stage__deliverables { grid-template-rows:auto; }
+  .oa-testimonial__person span { min-height:0; }
+  .oa-testimonial__person small { min-height:0; }
+}
