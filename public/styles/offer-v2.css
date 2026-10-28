@@ -561,3 +561,35 @@
     padding-top:var(--space-4);
   }
 }
+
+/* Approved inclusions reference: only price and David remain cards. */
+@media (min-width:75rem) {
+  .oa-included > .h3-wrap > .oa-included__items { grid-template-columns:repeat(5,minmax(0,1fr)); }
+}
+.oa-included > .h3-wrap > .oa-included__items {
+  gap:0;
+  margin-top:var(--space-5);
+  padding-top:var(--space-4);
+}
+.oa-included > .h3-wrap > .oa-included__items li,
+.oa-included > .h3-wrap > .oa-included__items li:first-child {
+  border:0;
+  border-radius:0;
+  background:transparent;
+  padding:var(--space-2) clamp(.75rem,1.6vw,1.5rem);
+  gap:var(--space-2);
+}
+.oa-included > .h3-wrap > .oa-included__items li + li {
+  border-left:1px solid var(--line);
+}
+.oa-included__items h3 { font-family:var(--h-serif); font-weight:400; }
+@media (min-width:48rem) and (max-width:74.99rem) {
+  .oa-included > .h3-wrap > .oa-included__items { grid-template-columns:repeat(3,minmax(0,1fr)); row-gap:var(--space-4); }
+  .oa-included > .h3-wrap > .oa-included__items li:nth-child(4) { border-left:0; }
+}
+@media (max-width:47.99rem) {
+  .oa-included > .h3-wrap > .oa-included__items { grid-template-columns:minmax(0,1fr); }
+  .oa-included > .h3-wrap > .oa-included__items li,
+  .oa-included > .h3-wrap > .oa-included__items li:first-child { padding:var(--space-3) 0; }
+  .oa-included > .h3-wrap > .oa-included__items li + li { border-left:0; border-top:1px solid var(--line); }
+}
