@@ -273,7 +273,14 @@ const t = getOfferV2(lang);
     let active = 0;
     const show = (index: number) => {
       active = Math.max(0, Math.min(index, panels.length - 1));
-      panels.forEach((panel,i) => { panel.hidden = i !== active; });
+      panels.forEach((panel,i) => {
+        panel.hidden = i !== active;
+        panel.classList.remove('oa-stage--entering');
+        if(i === active && stages.classList.contains('oa-stages--enhanced') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          void panel.offsetWidth;
+          panel.classList.add('oa-stage--entering');
+        }
+      });
       tabs.forEach((tab,i) => { if(i === active) tab.setAttribute('aria-current','step'); else tab.removeAttribute('aria-current'); });
       prev.disabled = active === 0; next.disabled = active === panels.length - 1;
       counter.textContent = `Stage ${active + 1} of ${panels.length}`;
