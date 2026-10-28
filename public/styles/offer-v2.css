@@ -762,3 +762,36 @@
     background-position:center,65% center;
   }
 }
+
+
+/* Hero: translucent Ivory pill fills keep labels readable over architectural image. */
+.oa-new-hero__signals li {
+  background:rgba(247,246,243,.78);
+  border-color:rgba(20,22,31,.18);
+  color:var(--midnight);
+  -webkit-backdrop-filter:blur(5px);
+  backdrop-filter:blur(5px);
+}
+
+/* Advisors: a shared top/bottom axis, with quieter typography and tighter row rhythm. */
+@media (min-width:64rem) {
+  .oa-advisors__grid { align-items:stretch; }
+  .oa-advisors__media { align-self:stretch; }
+  .oa-advisors__portrait {
+    height:100%;
+    min-height:0;
+    aspect-ratio:auto;
+    object-fit:cover;
+    object-position:center 32%;
+  }
+  .oa-advisors__copy { padding-block:0; }
+  .oa-advisors h2 { font-size:clamp(2.25rem,2.8vw,3rem); line-height:1.14; }
+  .oa-advisors__lead { font-size:var(--type-ui); line-height:1.6; margin-top:var(--space-3); }
+  .oa-advisors__note { font-size:var(--type-caption); }
+  .oa-advisors__credentials { margin-top:var(--space-3); }
+  .oa-advisors__credentials li { padding-block:clamp(.7rem,1vw,1rem); }
+  .oa-advisors__credentials p { margin-top:.15rem; font-size:var(--type-caption); }
+}
+@media (max-width:63.99rem) {
+  .oa-advisors__portrait { width:100%; height:auto; aspect-ratio:900/1124; }
+}
