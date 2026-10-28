@@ -196,3 +196,39 @@
   .oa-testimonial__person span { min-height:0; }
   .oa-testimonial__person small { min-height:0; }
 }
+
+/* Testimonial alignment: every portrait and metadata row shares the same baseline. */
+.oa-testimonials .oa-testimonial__person {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 6rem 2rem 4.5rem 3.25rem;
+  row-gap: .75rem;
+  align-items: start;
+}
+.oa-testimonials .oa-testimonial__person figcaption { display: contents; }
+.oa-testimonials .oa-testimonial__person > img,
+.oa-testimonials .oa-testimonial__person > .client-portrait,
+.oa-testimonials .oa-testimonial__person > .client-portrait--circle {
+  display: block;
+  width: 6rem !important;
+  height: 6rem !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover;
+  border-radius: 50%;
+  max-width: none;
+}
+.oa-testimonials .oa-testimonial__person strong,
+.oa-testimonials .oa-testimonial__person span,
+.oa-testimonials .oa-testimonial__person small {
+  min-height: 0;
+  margin: 0;
+}
+.oa-testimonials .oa-testimonial__person small {
+  padding-top: .75rem;
+  border-top: 1px solid var(--line);
+  align-self: stretch;
+}
+.oa-testimonials .oa-testimonial blockquote { margin-top: var(--space-3); }
+@media (max-width: 35rem) {
+  .oa-testimonials .oa-testimonial__person { grid-template-rows: 6rem 2rem minmax(4.5rem,auto) 3.25rem; }
+}
