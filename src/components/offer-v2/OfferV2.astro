@@ -262,6 +262,27 @@ const t = getOfferV2(lang);
 
 
 <script>
+  // Observe only elements below the current viewport. Content remains visible without JS.
+  const offerReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!offerReduced && 'IntersectionObserver' in window) {
+    const targets = document.querySelectorAll<HTMLElement>(
+      '.oa-familiar__heading, .oa-why, .oa-stages__tabs, .oa-stages__panels, .oa-testimonials__intro, .oa-testimonials__viewport, .oa-advisors__media, .oa-advisors__copy, .oa-fit-close__intro, .oa-fit-card, .oa-included__intro, .oa-included__price, .oa-included__quote, .oa-included__items, .oa-confidentiality, .oa-apply__copy'
+    );
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('oa-reveal-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.08, rootMargin:'0px 0px -35px 0px' });
+    targets.forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight * .95) return;
+      el.classList.add('oa-reveal-ready');
+      observer.observe(el);
+    });
+  }
+
   const stages = document.querySelector<HTMLElement>('[data-stages]');
   if (stages) {
     const tabs = Array.from(stages.querySelectorAll<HTMLButtonElement>('[data-stage-tab]'));
