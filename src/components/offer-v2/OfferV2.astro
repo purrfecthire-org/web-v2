@@ -124,7 +124,7 @@ const t = getOfferV2(lang);
         <h2 class="h3-h2" id="oa-proof-title">{t.proof.headline}</h2>
         <span class="oa-testimonials__quote-mark" aria-hidden="true">“</span>
         <p class="oa-testimonials__aside">What participants are saying</p>
-        <div class="oa-testimonials__controls" hidden={talentTestimonials.length + 1 <= 3}>
+        <div class="oa-testimonials__controls" hidden>
           <button type="button" data-voice-prev aria-label="Previous testimonial">←</button>
           <span data-voice-position aria-live="polite">1–3 of 3</span>
           <button type="button" data-voice-next aria-label="Next testimonial">→</button>
@@ -326,8 +326,10 @@ const t = getOfferV2(lang);
     const prev = testimonials.querySelector<HTMLButtonElement>('[data-voice-prev]')!;
     const next = testimonials.querySelector<HTMLButtonElement>('[data-voice-next]')!;
     const position = testimonials.querySelector<HTMLElement>('[data-voice-position]')!;
+    const controls = testimonials.querySelector<HTMLElement>('.oa-testimonials__controls')!;
     const update = () => {
       const max = viewport.scrollWidth-viewport.clientWidth;
+      controls.hidden = max <= 3;
       const first = cards.reduce((best,card,i)=>Math.abs(card.offsetLeft - cards[0].offsetLeft - viewport.scrollLeft)<Math.abs(cards[best].offsetLeft - cards[0].offsetLeft - viewport.scrollLeft)?i:best,0);
       const visible = cards.filter(card=>card.offsetLeft - cards[0].offsetLeft >= viewport.scrollLeft - 2 && card.offsetLeft-cards[0].offsetLeft+card.offsetWidth <= viewport.scrollLeft+viewport.clientWidth+2).length;
       position.textContent = `${first+1}–${Math.min(cards.length,first+Math.max(1,visible))} of ${cards.length}`;
