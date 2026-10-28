@@ -796,10 +796,3 @@
   .oa-advisors__portrait { width:100%; height:auto; aspect-ratio:900/1124; }
 }
 
-
-/* Shift the approved hero artwork right so the headline retains more clear space. */
-@media (min-width:56rem) {
-  .oa-new-hero {
-    background-position:center bottom, calc(50% + 5vw) center;
-  }
-}
