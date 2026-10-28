@@ -232,3 +232,87 @@
 @media (max-width: 35rem) {
   .oa-testimonials .oa-testimonial__person { grid-template-rows: 6rem 2rem minmax(4.5rem,auto) 3.25rem; }
 }
+
+/* Offer-specific advisors block; keeps existing Shell and all adjacent sections untouched. */
+.oa-advisors {
+  padding-block: clamp(4rem, 7vw, 7rem);
+  background: var(--sand);
+}
+.oa-advisors__grid {
+  display:grid;
+  grid-template-columns: minmax(0, .94fr) minmax(0, 1.26fr);
+  align-items:center;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+.oa-advisors__media, .oa-advisors__copy { min-width:0; }
+.oa-advisors__photo-placeholder {
+  width:100%;
+  aspect-ratio: 4 / 5;
+  background: linear-gradient(145deg, #eae8e5, #dbd9d5);
+  border-radius:var(--radius-card);
+}
+.oa-advisors .h3-eyebrow { color:var(--signal); }
+.oa-advisors h2 {
+  margin-top:var(--space-2);
+  font:400 clamp(2.5rem,4vw,4rem)/1.09 var(--h-serif);
+  letter-spacing:-.02em;
+  color:var(--midnight);
+  text-wrap:balance;
+}
+.oa-advisors__lead {
+  margin-top:var(--space-3);
+  font-size:var(--type-body);
+  line-height:1.65;
+  color:var(--muted);
+}
+.oa-advisors__note {
+  margin-top:var(--space-1);
+  font-size:var(--type-ui);
+  line-height:1.6;
+  color:var(--muted);
+}
+.oa-advisors__credentials {
+  display:grid;
+  gap:.6rem;
+  margin-top:var(--space-4);
+  padding:0;
+  list-style:none;
+}
+.oa-advisors__credentials li {
+  display:grid;
+  grid-template-columns: 2.2rem minmax(0,1fr);
+  align-items:center;
+  column-gap:var(--space-2);
+  min-width:0;
+  padding:.85rem 1rem;
+  border:1px solid var(--line);
+  border-radius:var(--radius-input);
+  background:rgba(255,255,255,.78);
+}
+.oa-advisors__dot {
+  display:block;
+  width:.8rem;
+  height:.8rem;
+  border-radius:50%;
+  background:var(--signal);
+  justify-self:center;
+}
+.oa-advisors__credentials h3 {
+  color:var(--text);
+  font:600 var(--type-ui)/1.4 var(--h-sans);
+}
+.oa-advisors__credentials p {
+  margin-top:.15rem;
+  color:var(--muted);
+  font-size:var(--type-caption);
+  line-height:1.5;
+}
+@media (max-width: 63.99rem) {
+  .oa-advisors__grid { grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:var(--space-4); align-items:start; }
+  .oa-advisors h2 { font-size:var(--type-section); }
+}
+@media (max-width: 47.99rem) {
+  .oa-advisors__grid { grid-template-columns:minmax(0,1fr); }
+  .oa-advisors__photo-placeholder { max-width:36rem; margin-inline:auto; aspect-ratio:5 / 4; }
+  .oa-advisors__credentials { margin-top:var(--space-3); }
+}
