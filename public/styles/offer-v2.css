@@ -697,3 +697,42 @@
   .oa-advisors__grid,.oa-close-grid,.oa-included__top { grid-template-columns:minmax(0,1fr); gap:var(--space-4); }
   .oa-advisors h2,.oa-fit-close__intro h2,.oa-included__intro h2 { font-size:clamp(2.35rem,9vw,3.25rem); }
 }
+
+/* Subtle progressive scroll entrances; unsupported browsers retain fully visible content. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .oa-familiar__heading, .oa-why,
+    .oa-stages > .h3-wrap > .h3-eyebrow,
+    .oa-stages > .h3-wrap > .h3-h2,
+    .oa-stages__tabs, .oa-stages__panels,
+    .oa-testimonials__intro, .oa-testimonials__viewport,
+    .oa-advisors__media, .oa-advisors__copy,
+    .oa-fit-close__intro, .oa-fit-card,
+    .oa-included__intro, .oa-included__price,
+    .oa-included__quote, .oa-included__items, .oa-confidentiality,
+    .oa-apply__copy {
+      animation: oa-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+@keyframes oa-enter {
+  from { opacity:.5; transform:translateY(12px); }
+  to { opacity:1; transform:translateY(0); }
+}
+/* A quick, restrained response to selecting a sprint. */
+@media (prefers-reduced-motion: no-preference) {
+  .oa-stages--enhanced .oa-stage.oa-stage--entering {
+    animation: oa-stage-enter 260ms ease-out both;
+  }
+  .oa-stages__tab { transition:color 180ms ease, border-color 180ms ease; }
+  .oa-stages__dots i { transition:background-color 180ms ease; }
+}
+@keyframes oa-stage-enter {
+  from { opacity:.65; transform:translateY(6px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .oa-stage, .oa-stages__tab, .oa-stages__dots i { animation:none !important; transition:none !important; }
+}
