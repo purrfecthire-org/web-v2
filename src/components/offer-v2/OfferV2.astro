@@ -414,8 +414,8 @@ const t = getOfferV2(lang);
     const position = testimonials.querySelector<HTMLElement>('[data-voice-position]')!;
     const update = () => {
       const max = viewport.scrollWidth-viewport.clientWidth;
-      const first = cards.reduce((best,card,i)=>Math.abs(card.offsetLeft - viewport.offsetLeft - viewport.scrollLeft)<Math.abs(cards[best].offsetLeft - viewport.offsetLeft - viewport.scrollLeft)?i:best,0);
-      const visible = cards.filter(card=>card.offsetLeft >= viewport.offsetLeft + viewport.scrollLeft - 2 && card.offsetLeft+card.offsetWidth <= viewport.offsetLeft+viewport.scrollLeft+viewport.clientWidth+2).length;
+      const first = cards.reduce((best,card,i)=>Math.abs(card.offsetLeft - cards[0].offsetLeft - viewport.scrollLeft)<Math.abs(cards[best].offsetLeft - cards[0].offsetLeft - viewport.scrollLeft)?i:best,0);
+      const visible = cards.filter(card=>card.offsetLeft - cards[0].offsetLeft >= viewport.scrollLeft - 2 && card.offsetLeft-cards[0].offsetLeft+card.offsetWidth <= viewport.scrollLeft+viewport.clientWidth+2).length;
       position.textContent = `${first+1}–${Math.min(cards.length,first+Math.max(1,visible))} of ${cards.length}`;
       prev.disabled = viewport.scrollLeft<=2;next.disabled = viewport.scrollLeft>=max-2;
     };
