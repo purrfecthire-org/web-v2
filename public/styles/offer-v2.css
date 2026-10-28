@@ -365,3 +365,69 @@
 .oa-apply__scene {min-height:12rem;}
 @media(max-width:70rem) {.oa-close-grid {grid-template-columns:repeat(2,minmax(0,1fr));}.oa-fit-close__intro,.oa-included__intro {grid-column:1/-1;}.oa-included__commitment {grid-column:2;}.oa-included__items {grid-column:1;}.oa-included__policies {grid-template-columns:1fr 1fr;}}
 @media(max-width:47.99rem) {.oa-close-grid,.oa-included__policies {grid-template-columns:minmax(0,1fr);}.oa-fit-close__intro,.oa-included__intro,.oa-included__commitment,.oa-included__items {grid-column:auto;}.oa-apply--granite .oa-apply__layout {grid-template-columns:minmax(0,1fr);}.oa-apply--granite {padding-top:var(--space-8);}.oa-apply__scene {display:none;}}
+
+
+/* Editorial rhythm and shared axes for the advisor, fit and inclusion sections. */
+.oa-advisors,
+.oa-fit-close,
+.oa-included { box-sizing:border-box; }
+.oa-advisors__grid,
+.oa-close-grid {
+  column-gap:clamp(1.5rem,3.5vw,3.5rem);
+}
+.oa-advisors__grid { align-items:start; }
+.oa-advisors__photo-placeholder { aspect-ratio:4 / 5; }
+.oa-advisors__copy { padding-block:var(--space-2); }
+.oa-advisors h2 { font-size:clamp(2.5rem,3.5vw,3.5rem); line-height:1.13; }
+.oa-advisors__credentials { gap:.75rem; margin-top:var(--space-4); }
+.oa-advisors__credentials li { padding:1rem 1.1rem; }
+.oa-fit-close { padding-block:clamp(4rem,6vw,6rem) clamp(3rem,5vw,5rem); }
+.oa-close-grid { grid-template-columns:minmax(0,1.08fr) minmax(0,1.08fr) minmax(0,1fr); align-items:start; }
+.oa-close-grid > * { min-width:0; }
+.oa-fit-close__intro h2,
+.oa-included__intro h2 { font-size:clamp(2.5rem,3.7vw,3.75rem); line-height:1.12; }
+.oa-fit-close__intro > p:last-child,
+.oa-included__lead { max-width:36ch; }
+.oa-fit-card {
+  height:100%;
+  padding:clamp(1.25rem,2vw,2rem);
+  display:flex;
+  flex-direction:column;
+}
+.oa-fit-card h3 { min-height:2.5rem; font-size:clamp(1.2rem,1.6vw,1.5rem); }
+.oa-fit-card ul { flex:1; display:grid; grid-template-rows:repeat(3,minmax(0,1fr)); }
+.oa-fit-card li { display:flex; align-items:center; min-height:4.6rem; }
+.oa-fit-card li::before { top:50%; transform:translateY(-50%); }
+.oa-included { padding-block:0 clamp(4rem,7vw,7rem); }
+.oa-included > .h3-wrap { padding-top:clamp(3rem,5vw,5rem); }
+.oa-included__items li { padding-block:1rem; }
+.oa-included__items li:first-child { padding-top:0; }
+.oa-included__price { margin-top:var(--space-5); padding:clamp(1.25rem,2vw,2rem); }
+.oa-included__commitment { padding:clamp(1.25rem,2vw,2rem); }
+.oa-included__commitment blockquote { margin-top:var(--space-5); }
+.oa-included__policies { margin-top:clamp(3rem,5vw,5rem); }
+
+/* At intermediate widths, two comfortable columns are better than three narrow ones. */
+@media (min-width:48rem) and (max-width:74.99rem) {
+  .oa-close-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .oa-fit-close__intro,
+  .oa-included__intro { grid-column:1 / -1; max-width:42rem; }
+  .oa-fit-card--yes { grid-column:1; }
+  .oa-fit-card--no { grid-column:2; }
+  .oa-included__items { grid-column:1; }
+  .oa-included__commitment { grid-column:2; }
+  .oa-advisors__grid { grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); }
+}
+@media (max-width:47.99rem) {
+  .oa-close-grid { grid-template-columns:minmax(0,1fr); gap:var(--space-4); }
+  .oa-close-grid > * { grid-column:1 !important; }
+  .oa-fit-close { padding-block:var(--space-7) var(--space-6); }
+  .oa-fit-card { height:auto; }
+  .oa-fit-card ul { display:block; }
+  .oa-fit-card li { min-height:0; padding-block:var(--space-3); }
+  .oa-included > .h3-wrap { padding-top:var(--space-6); }
+  .oa-included__price { margin-top:var(--space-4); }
+  .oa-advisors__copy { padding-block:0; }
+  .oa-advisors h2 { font-size:clamp(2.35rem,9vw,3.25rem); }
+  .oa-included__policies { grid-template-columns:1fr; }
+}
