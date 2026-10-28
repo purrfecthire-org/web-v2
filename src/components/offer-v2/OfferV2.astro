@@ -205,33 +205,17 @@ const t = getOfferV2(lang);
 
     <section class="oa-scope oa-included" aria-labelledby="oa-scope-title">
       <div class="h3-wrap">
-        <div class="oa-close-grid oa-included__grid">
+        <div class="oa-included__top">
           <div class="oa-included__intro">
             <p class="h3-eyebrow">Offer Accelerator</p>
             <h2 id="oa-scope-title">What is included.</h2>
             <p class="oa-included__lead">{t.includes.closing}</p>
-            <div class="oa-included__price">
-              <p>{t.investment.price}</p>
-              <span>{t.investment.note}</span>
-            </div>
           </div>
-          <ul class="oa-included__items">
-            {[
-              {title:'Eight 1:1 sessions in total', description:'One diagnostic session and seven private sessions with a senior Purrfect advisor. Your advisor is confirmed before enrollment.'},
-              {title:'Personalized materials', description:t.includes.items[1]},
-              {title:'A weekly check-in with the team', description:'Support and progress reviews between sessions.'},
-              {title:'Direct support over WhatsApp and email', description:'Questions, updates and feedback on active processes, without 24/7 availability.'},
-              {title:'Support through active hiring processes', description:t.includes.items[4]}
-            ].map((item,i)=>(
-              <li>
-                <span class="oa-included__icon" aria-hidden="true">{String(i+1).padStart(2,'0')}</span>
-                <div><h3>{item.title}</h3><p>{item.description}</p></div>
-              </li>
-            ))}
-          </ul>
-          <aside class="oa-included__commitment">
-            <h3>{t.fit.commitmentTitle}</h3>
-            <p>{t.fit.commitment}</p>
+          <div class="oa-included__price">
+            <p>{t.investment.price}</p>
+            <span>{t.investment.note}</span>
+          </div>
+          <aside class="oa-included__quote">
             <blockquote>“You do have to put in the work.”</blockquote>
             <div class="oa-included__attribution">
               <img src={talentTestimonials[1].photo} alt="David Donado" width="88" height="88" loading="lazy" decoding="async" />
@@ -239,6 +223,24 @@ const t = getOfferV2(lang);
                 <a href={talentTestimonials[1].linkedin} target="_blank" rel="noopener noreferrer">View on LinkedIn ↗</a></div>
             </div>
           </aside>
+        </div>
+        <ul class="oa-included__items">
+          {[
+            {title:'Eight 1:1 sessions in total', description:'One diagnostic session and seven private sessions with a senior Purrfect advisor. Your advisor is confirmed before enrollment.'},
+            {title:'Personalized materials', description:t.includes.items[1]},
+            {title:'A weekly check-in with the team', description:'Support and progress reviews between sessions.'},
+            {title:'Direct support over WhatsApp and email', description:'Questions, updates and feedback on active processes, without 24/7 availability.'},
+            {title:'Support through active hiring processes', description:t.includes.items[4]}
+          ].map((item,i)=>(
+            <li>
+              <span class="oa-included__icon" aria-hidden="true">{String(i+1).padStart(2,'0')}</span>
+              <div><h3>{item.title}</h3><p>{item.description}</p></div>
+            </li>
+          ))}
+        </ul>
+        <div class="oa-included__responsibility">
+          <strong>{t.fit.commitmentTitle}</strong>
+          <p>{t.fit.commitment}</p>
         </div>
         <div class="oa-included__policies">
           <aside class="oa-firewall" aria-labelledby="oa-firewall-title">
