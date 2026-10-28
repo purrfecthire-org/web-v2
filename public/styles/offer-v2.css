@@ -463,3 +463,19 @@
   .oa-included > .h3-wrap > .oa-included__items { grid-template-columns:minmax(0,1fr); }
   .oa-included__responsibility { flex-direction:column; gap:var(--space-1); }
 }
+
+/* Breathing room in the inclusion grid; responsibility belongs with David's quote. */
+.oa-included__top { gap:clamp(2rem,3.6vw,3.75rem); }
+.oa-included__quote { gap:var(--space-3); }
+.oa-included__quote-context { padding-bottom:var(--space-3); border-bottom:1px solid var(--line); }
+.oa-included__quote-context h3 { color:var(--text); font-size:var(--type-ui); font-weight:600; line-height:1.45; }
+.oa-included__quote-context p { margin-top:var(--space-2); color:var(--muted); font-size:var(--type-caption); line-height:1.65; }
+.oa-included__quote blockquote { margin-top:var(--space-2); }
+.oa-included > .h3-wrap > .oa-included__items { gap:clamp(1rem,1.8vw,1.75rem); margin-top:clamp(3rem,5vw,5rem); padding-top:clamp(3rem,5vw,5rem); }
+.oa-included > .h3-wrap > .oa-included__items li { gap:var(--space-3); padding:clamp(1.4rem,2vw,2rem); }
+.oa-included > .h3-wrap > .oa-included__items li:first-child { padding-top:clamp(1.4rem,2vw,2rem); }
+.oa-included__items p { margin-top:var(--space-3); }
+@media(max-width:47.99rem) {
+  .oa-included__top { gap:var(--space-4); }
+  .oa-included > .h3-wrap > .oa-included__items { margin-top:var(--space-6); padding-top:var(--space-6); }
+}
