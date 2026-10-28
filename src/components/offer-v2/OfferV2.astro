@@ -15,23 +15,49 @@ const t = getOfferV2(lang);
 
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light"
   navCta={{ label: t.hero.cta, href: APPLY_OFFER }} journey="offer">
-  <section class="h3-hero">
-    <div class="h3-wrap h3-hero__grid">
-      <div class="h3-hero__copy">
-        <p class="h3-eyebrow">{t.hero.eyebrow}</p>
-        <h1 class="h3-hero__h1">{t.hero.headline}</h1>
-        <p class="h3-hero__sub">{t.hero.sub}</p>
+  <div class="oa-editorial-intro">
+    <section class="oa-new-hero" aria-labelledby="oa-hero-title">
+      <div class="h3-wrap oa-new-hero__grid">
+        <div class="oa-new-hero__copy">
+          <p class="h3-eyebrow">Offer Accelerator · Private career advisory</p>
+          <h1 id="oa-hero-title">The market may be reading you a level below your real one.</h1>
+          <p class="oa-new-hero__sub">{t.hero.sub}</p>
+          <ul class="oa-new-hero__signals" aria-label="Career situations">
+            <li>Promotion</li><li>Role with P&amp;L</li><li>Transition</li>
+          </ul>
+          <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-new-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="oa-new-hero__art" aria-hidden="true"></div>
       </div>
-      <div class="oa-hero__offer">
-        <p class="h3-eyebrow">{t.investment.eyebrow}</p>
-        <p class="oa-hero__price">{t.investment.price}</p>
-        <p class="oa-investment__note">{t.investment.note}</p>
-        <p class="oa-hero__package">{t.hero.package}</p>
-        <p class="oa-hero__fit">{t.fit.body}</p>
-        <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="oa-familiar" aria-labelledby="oa-familiar-title">
+      <div class="h3-wrap">
+        <div class="oa-familiar__grid">
+          <div class="oa-familiar__heading">
+            <p class="h3-eyebrow">Recognise this?</p>
+            <h2 id="oa-familiar-title">Does this sound familiar?</h2>
+            <p>You can have ten years of experience and still:</p>
+          </div>
+          <p class="oa-bubble oa-bubble--one">Not get interviews for the roles you actually want.</p>
+          <p class="oa-bubble oa-bubble--two">Be read as less senior than you are.</p>
+          <p class="oa-bubble oa-bubble--three">Reach the final rounds and lose to another candidate.</p>
+          <p class="oa-bubble oa-bubble--four">Hear about roles only once they are posted.</p>
+          <p class="oa-bubble oa-bubble--five">Struggle to show the impact you had in an interview.</p>
+        </div>
+        <aside class="oa-why" aria-labelledby="oa-why-title">
+          <div>
+            <p class="h3-eyebrow">Why it happens</p>
+            <h3 id="oa-why-title">Hiring decisions are made on partial information.</h3>
+          </div>
+          <div class="oa-why__body">
+            <p>A decision gets made from a title, a CV, a LinkedIn page and a few conversations.</p>
+            <p>Often the evidence of what you did and how much of it was yours never reaches the person deciding.</p>
+          </div>
+        </aside>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section class="oa-work" aria-labelledby="oa-work-title">
     <div class="h3-wrap">
@@ -136,6 +162,58 @@ const t = getOfferV2(lang);
 </Shell>
 
 <style lang="scss" is:global>
+  /* Offer-only editorial opening; Shell navigation and the remainder of the page stay shared. */
+  .oa-editorial-intro { --oa-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' opacity='.32' filter='url(%23g)'/%3E%3C/svg%3E"); background: var(--midnight); }
+  .oa-new-hero, .oa-familiar { position: relative; isolation: isolate; }
+  .oa-new-hero { min-height: 46rem; padding-block: calc(var(--space-hero-top) + var(--space-2)) 11rem; overflow: hidden; background: linear-gradient(180deg, var(--sand) 0%, var(--sand) 62%, #b9b7b6 78%, #45454b 91%, var(--midnight) 100%); }
+  .oa-new-hero::before, .oa-familiar::before { content:''; position:absolute; inset:0; background-image:var(--oa-grain); background-size:180px 180px; opacity:.075; mix-blend-mode:multiply; pointer-events:none; z-index:0; }
+  .oa-new-hero__grid { position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:var(--space-grid); align-items:start; }
+  .oa-new-hero__copy { max-width:42rem; min-width:0; }
+  .oa-new-hero .h3-eyebrow { color:var(--purple); }
+  .oa-new-hero h1 { max-width:15ch; margin-top:var(--space-2); font-family:var(--h-serif); font-size:var(--type-display); font-weight:400; line-height:1.08; letter-spacing:-.02em; text-wrap:balance; }
+  .oa-new-hero__sub { max-width:42ch; margin-top:var(--space-3); font-size:var(--type-body); line-height:1.65; color:var(--text); }
+  .oa-new-hero__signals { display:flex; flex-wrap:wrap; gap:var(--space-1); margin-top:var(--space-2) !important; list-style:none; }
+  .oa-new-hero__signals li { padding:.4rem 1rem; font-size:var(--type-caption); line-height:1.4; border:1px solid rgba(20,22,31,.22); border-radius:999px; }
+  .oa-new-hero__cta { margin-top:var(--space-2); }
+  .oa-new-hero__art { min-height:23rem; }
+  .oa-familiar { margin-top:-1px; padding-block:var(--space-6) 10rem; color:var(--on-dark); background:linear-gradient(180deg,var(--midnight) 0%,var(--midnight) 73%,#48484d 84%,#bab8b6 94%,var(--sand) 100%); }
+  .oa-familiar > .h3-wrap { position:relative; z-index:1; }
+  .oa-familiar__grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,1fr); grid-template-rows:auto auto auto; align-items:center; gap:var(--space-4) var(--space-grid); padding-block:var(--space-6); }
+  .oa-familiar__heading { grid-column:2; grid-row:1 / span 2; text-align:center; align-self:center; }
+  .oa-familiar__heading .h3-eyebrow, .oa-why .h3-eyebrow { color:#aaa4ff; }
+  .oa-familiar__heading h2 { font-family:var(--h-serif); font-size:var(--type-section); font-weight:400; line-height:1.12; margin-top:var(--space-2); }
+  .oa-familiar__heading > p:last-child { color:var(--on-dark-muted); font-size:var(--type-body); line-height:1.5; margin-top:var(--space-2); }
+  .oa-bubble { position:relative; width:min(100%,16rem); padding:var(--space-2); border-radius:var(--radius-card); background:var(--sand); color:var(--text); font-size:var(--type-ui); line-height:1.5; }
+  .oa-bubble::before { content:''; position:absolute; top:-.45rem; left:-.45rem; width:.6rem; height:.6rem; border-radius:50%; background:var(--signal); box-shadow:0 0 8px rgba(137,110,255,.5); }
+  .oa-bubble::after { content:''; position:absolute; right:1rem; bottom:-.8rem; border-style:solid; border-width:.9rem 0 0 1.1rem; border-color:transparent transparent transparent var(--sand); }
+  .oa-bubble--one { grid-area:1 / 1; justify-self:center; }
+  .oa-bubble--two { grid-area:2 / 1; justify-self:start; }
+  .oa-bubble--three { grid-area:1 / 3; justify-self:center; }
+  .oa-bubble--four { grid-area:2 / 3; justify-self:end; }
+  .oa-bubble--five { grid-area:3 / 2; justify-self:center; }
+  .oa-why { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-grid); align-items:center; padding:var(--space-grid); border:1px solid rgba(232,231,227,.16); border-radius:var(--radius-card); background:rgba(255,255,255,.045); }
+  .oa-why h3 { margin-top:var(--space-2); max-width:18ch; font-family:var(--h-serif); font-size:var(--type-section); font-weight:400; line-height:1.15; color:var(--on-dark); }
+  .oa-why__body { border-left:1px solid rgba(232,231,227,.2); padding-left:var(--space-grid); }
+  .oa-why__body p { color:var(--on-dark-muted); font-size:var(--type-ui); line-height:1.6; }
+  .oa-why__body p + p { margin-top:var(--space-2); }
+  .h3[data-journey="offer"] .oa-work { border-top:0; padding-top:var(--space-8); }
+  @media(max-width:55.99rem) {
+    .oa-new-hero { padding-bottom:8rem; }
+    .oa-new-hero__grid { grid-template-columns:minmax(0,1fr); }
+    .oa-new-hero__art { display:none; }
+    .oa-familiar__grid { grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:auto; gap:var(--space-3); }
+    .oa-familiar__heading { grid-column:1 / -1; grid-row:1; }
+    .oa-bubble--one,.oa-bubble--two,.oa-bubble--three,.oa-bubble--four,.oa-bubble--five { grid-area:auto; justify-self:stretch; width:100%; }
+    .oa-bubble--five { grid-column:1 / -1; max-width:18rem; justify-self:center; }
+    .oa-why { grid-template-columns:1fr; }
+    .oa-why__body { border-left:0; border-top:1px solid rgba(232,231,227,.2); padding-left:0; padding-top:var(--space-3); }
+  }
+  @media(max-width:36rem) {
+    .oa-new-hero { padding-top:calc(var(--space-hero-top) + var(--space-3)); }
+    .oa-familiar__grid { grid-template-columns:minmax(0,1fr); }
+    .oa-bubble--five { grid-column:1; justify-self:stretch; max-width:none; }
+  }
+
   .oa-hero__offer { min-width: 0; padding-block: var(--space-4); border-block: 1px solid var(--line); }
   .oa-hero__price, .oa-price { font-family: var(--h-sans); font-size: var(--type-section); line-height: 1.12; font-weight: 500; letter-spacing: -.014em; color: var(--text); font-variant-numeric: tabular-nums; }
   .oa-hero__price { margin-top: var(--space-2); }
