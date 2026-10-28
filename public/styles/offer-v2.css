@@ -34,7 +34,7 @@
   .oa-testimonials__layout { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,3fr); gap:var(--space-grid); }
   .oa-testimonials__intro { min-width:0; }
   .oa-testimonials__intro .h3-h2 { max-width:9ch; }
-  .oa-testimonials__quote-mark { display:block; color:#c7b7f6; font:400 7rem/.9 var(--h-serif); margin-top:var(--space-4); }
+  .oa-testimonials__quote-mark { display:block; color:#c7b7f6; font:400 10rem/.8 var(--h-serif); margin-top:var(--space-4); }
   .oa-testimonials__aside { font:400 1.25rem/1.3 var(--h-serif); max-width:14ch; }
   .oa-testimonials__controls { display:flex; align-items:center; gap:var(--space-2); margin-top:var(--space-6); }
   .oa-testimonials__controls span { color:var(--muted); font-size:var(--type-caption); white-space:nowrap; }
@@ -172,3 +172,5 @@
     .oa-scope__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
     .oa-scope__details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
+
+  .oa-testimonials__controls[hidden] { display:none !important; }
