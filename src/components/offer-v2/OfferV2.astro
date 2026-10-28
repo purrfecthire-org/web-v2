@@ -239,19 +239,14 @@ const t = getOfferV2(lang);
             </li>
           ))}
         </ul>
-        <div class="oa-included__policies">
-          <aside class="oa-firewall" aria-labelledby="oa-firewall-title">
-            <h3 id="oa-firewall-title">{t.firewall.headline}</h3>
-            <p class="h3-body">{t.firewall.lead}</p>
-            <details class="oa-detail"><summary>{t.firewall.more}</summary>
-              <div>{t.firewall.body.map(paragraph => <p>{paragraph}</p>)}</div>
-            </details>
-          </aside>
-          <div class="oa-questions">
-            <p class="h3-eyebrow">{t.faq.eyebrow}</p>
-            <div class="oa-questions__list">{t.faq.items.map(item => <details class="oa-detail"><summary>{item.question}</summary><p>{item.answer}</p></details>)}</div>
-          </div>
-        </div>
+        <aside class="oa-confidentiality" aria-labelledby="oa-firewall-title">
+          <h3 id="oa-firewall-title">{t.firewall.headline}</h3>
+          <p>Advisory engagements are confidential. Participation in Offer Accelerator does not give you preferential treatment in Purrfect client searches. Applying to open roles is free, and no hiring outcome or salary increase is guaranteed.</p>
+          <details class="oa-confidentiality__details">
+            <summary>How confidentiality works <span aria-hidden="true">↗</span></summary>
+            <div>{t.firewall.body.map(paragraph => <p>{paragraph}</p>)}</div>
+          </details>
+        </aside>
       </div>
     </section>
   </div>
