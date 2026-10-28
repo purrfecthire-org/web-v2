@@ -796,3 +796,12 @@
   .oa-advisors__portrait { width:100%; height:auto; aspect-ratio:900/1124; }
 }
 
+
+
+/* Tighten the handoff from confidentiality to the closing CTA. */
+.oa-included { padding-bottom:clamp(1.5rem,3vw,3rem); }
+.oa-apply--granite { padding-top:clamp(6rem,9vw,9rem); }
+@media(max-width:47.99rem) {
+  .oa-included { padding-bottom:var(--space-4); }
+  .oa-apply--granite { padding-top:var(--space-7); }
+}
