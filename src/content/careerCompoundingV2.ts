@@ -26,8 +26,8 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
   hero: {
     eyebrow: 'Career Compounding · Private career advisory',
     headline: 'Work through the decisions your role demands.',
-    body: 'Private advisory with Kate around a real challenge in your current role. Examine the decision, prepare your next move and review what happened as you put it into practice.',
-    audience: 'For experienced professionals who want an independent perspective on the work they are responsible for.',
+    body: 'Private advisory with Kate around a real challenge in your current role. Clarify your options, prepare your next move and review what changes.',
+    audience: 'For experienced professionals facing a decision, stakeholder challenge or execution problem.',
     cta: 'Discuss your challenge',
     note: 'USD 5,000 for the program. Offer Accelerator is not a prerequisite.',
     facts: [
@@ -40,11 +40,11 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
   work: {
     eyebrow: 'The work',
     headline: 'Bring the work you are accountable for.',
-    intro: 'Your current challenge sets the agenda. We examine the problem, your assumptions, the people involved and the trade-offs. You act inside your organization; together we review the evidence and decide what to adjust.',
+    intro: 'Examine the problem, assumptions and trade-offs. Agree what to try, then review the evidence and adjust.',
     areas: [
-      { id: '01', title: 'Ownership and execution', body: 'Define the problem, establish a baseline and decide where your contribution can change the outcome.', outputLabel: 'Evidence to build', output: 'A clear outcome, decisions you owned, experiments you ran and a record of what changed.' },
-      { id: '02', title: 'Organizational influence', body: 'Understand the stakeholders, authority and competing priorities behind a decision. Build a recommendation people can act on.', outputLabel: 'Evidence to build', output: 'A stakeholder map, a reasoned recommendation and evidence of how you moved the work forward.' },
-      { id: '03', title: 'Judgment under pressure', body: 'Examine trade-offs, test assumptions and decide what to do with incomplete information.', outputLabel: 'Evidence to build', output: 'A decision brief, feedback on your reasoning and a review of what you would repeat or change.' },
+      { id: '01', title: 'Ownership and execution', body: 'Define the problem, establish a baseline and decide where to act.', outputLabel: 'Your output', output: 'A clear outcome, decisions you owned, experiments and a record of what changed.' },
+      { id: '02', title: 'Organizational influence', body: 'Map stakeholders, authority and competing priorities. Build a recommendation people can act on.', outputLabel: 'Your output', output: 'A stakeholder map, a reasoned recommendation and evidence of your contribution to progress.' },
+      { id: '03', title: 'Judgment under pressure', body: 'Test assumptions, examine trade-offs and decide with incomplete information.', outputLabel: 'Your output', output: 'A decision brief, feedback on your reasoning and what you would repeat or change.' },
     ],
   },
   progress: {
@@ -74,9 +74,9 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
   },
   questions: {
     items: [
-      { question: 'I already have an MBA or leadership training. What would we work on?', answer: 'Bring a challenge from your current role. We examine the decision, assumptions, stakeholders and trade-offs, agree what you will try, and review the evidence at the next session or checkpoint. The focus is how you apply your judgment in that situation. Your existing knowledge is part of the work.' },
-      { question: 'How do we check whether Kate is the right advisor for my challenge?', answer: 'Share your role, the problem and what you need help with before joining. We discuss whether Kate’s experience and the program fit that challenge. A specialist problem may need a specialist advisor; the fit conversation should establish the support you actually need.' },
-      { question: 'Do I need to complete Offer Accelerator first?', answer: 'No. The products are independent. Offer Accelerator helps you compete for your next opportunity through market strategy, interviews, offers and negotiation. Career Compounding develops how you operate inside your current role. You can enter either product directly, or use both at different moments.' },
+      { question: 'I already have an MBA or leadership training. What would we work on?', answer: 'Bring a challenge from your current role. We examine the decision, stakeholders and trade-offs, agree what to try, then review the evidence. Your existing knowledge is the starting point.' },
+      { question: 'How do we check whether Kate is the right advisor for my challenge?', answer: 'Share your role, challenge and the help you need before joining. We check whether Kate’s experience fits. A specialist problem may need a specialist advisor.' },
+      { question: 'Do I need to complete Offer Accelerator first?', answer: 'No. The products are independent. Offer Accelerator supports your next career move. Career Compounding works on challenges in your current role.' },
       { question: 'Does the program guarantee a promotion or pay increase?', answer: 'No. We assess progress through better-grounded decisions, observable business results, influence and autonomy. Promotions, salary increases and outcomes controlled by third parties are not guaranteed.' },
       { question: 'What should I bring to the first conversation?', answer: 'Your current role, a business challenge you can act on and what a meaningful improvement would look like. You carry out the work inside your organization.' },
     ],

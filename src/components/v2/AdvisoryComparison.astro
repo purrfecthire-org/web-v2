@@ -1,53 +1,50 @@
 ---
 import { SESSION_1_1 } from '../../content/links';
 const programs = [
-  { name: '1:1 Strategic Session', focus: 'One interview, offer, negotiation or career decision.', price: 'USD 300', sessions: '1 × 60 minutes', advisor: 'Kate', support: 'One focused conversation and agreed next steps.', rhythm: 'One session', href: SESSION_1_1, cta: 'Discuss your question', external: true },
-  { name: 'Offer Accelerator', focus: 'Your next opportunity: positioning, outreach, interviews, offers and negotiation.', price: 'USD 2,000 to 8,000', sessions: '8 × 60 minutes', advisor: 'Kate or a senior Purrfect advisor, confirmed before enrollment', support: 'Career Journal, weekly team check-in, WhatsApp and email. Continued process support while you actively execute the agreed plan.', rhythm: 'One diagnostic + seven private sessions; follow-up through active hiring processes', href: '/offer-acceleration', cta: 'Explore Offer Accelerator', external: false },
-  { name: 'Career Compounding', focus: 'Greater judgment, influence and execution in the role you already have.', price: 'USD 5,000', sessions: '9 × 60 minutes', advisor: 'Kate', support: '8 asynchronous checkpoints, feedback within two business days for each checkpoint, and a private personalized hub.', rhythm: 'Six months, with approximately three weeks between sessions', href: '/career-compounding', cta: 'Explore Career Compounding', external: false },
+  { name: '1:1 Strategic Session', focus: 'One interview, offer, negotiation or career decision.', price: 'USD 300', sessions: '1 × 60 minutes', advisor: 'Kate', support: 'A focused conversation and agreed next steps.', rhythm: 'One session', href: SESSION_1_1, cta: 'Discuss your question', external: true },
+  { name: 'Offer Accelerator', focus: 'A move to a new company, market or scope.', price: 'USD 2,000 to 8,000', sessions: '8 × 60 minutes', advisor: 'Kate or a senior Purrfect advisor, confirmed before enrollment', support: 'Career Journal, weekly team check-in, WhatsApp and email; follow-up while you actively execute the agreed plan.', rhythm: 'One diagnostic and seven private sessions', href: '/offer-acceleration', cta: 'Explore Offer Accelerator', external: false },
+  { name: 'Career Compounding', focus: 'A real challenge in the role you already have.', price: 'USD 5,000', sessions: '9 × 60 minutes', advisor: 'Kate', support: 'Eight asynchronous checkpoints, each with feedback within two business days, and a private personalized hub.', rhythm: 'Six months, around three weeks between sessions', href: '/career-compounding', cta: 'Explore Career Compounding', external: false },
 ];
 ---
 <section class="ap h3-surface" id="compare-programs" aria-labelledby="ap-title">
   <div class="h3-wrap">
-    <div class="ap__intro">
-      <p class="h3-eyebrow">Before you invest</p>
-      <h2 class="h3-h2" id="ap-title">Compare the commitment.</h2>
-      <p class="h3-body">Choose around the decision and the work it needs. Every private session lasts one hour. The programs add preparation, a private workspace and feedback between conversations.</p>
-    </div>
-    <div class="ap__programs">
-      {programs.map(program => <article class="ap__program">
-        <h3>{program.name}</h3>
-        <p class="ap__focus">{program.focus}</p>
-        <p class="ap__price">{program.price}</p>
-        <dl>
-          <div><dt>Private time</dt><dd>{program.sessions}</dd></div>
-          <div><dt>Who you work with</dt><dd>{program.advisor}</dd></div>
-          <div><dt>Format</dt><dd>{program.rhythm}</dd></div>
-          <div><dt>Support included</dt><dd>{program.support}</dd></div>
-        </dl>
-        <a href={program.href} class="h3-link" data-cta={'compare-' + (program.external ? 'session' : program.href.slice(1))}>{program.cta}<span aria-hidden="true">{program.external ? '↗' : '→'}</span></a>
-      </article>)}
-    </div>
-    <p class="ap__terms">Offer Accelerator investment depends on seniority and location and is confirmed before enrollment. Career Compounding is independent of Offer Accelerator; you can enter either directly.</p>
-    <div class="ap__commitment" aria-labelledby="ap-guarantee-title">
-      <div>
-        <p class="h3-eyebrow">The guarantee question</p>
-        <h3 id="ap-guarantee-title">What can you count on?</h3>
+    <p class="h3-eyebrow">Program details</p>
+    <p class="ap__note" id="ap-guarantee-title">Every private session lasts one hour. We commit to agreed preparation, feedback and follow-up. A job, promotion or salary increase is not guaranteed.</p>
+    <details class="ap__details">
+      <summary id="ap-title"><span>Compare sessions, support and investment</span><span class="ap__indicator" aria-hidden="true">+</span></summary>
+      <div class="ap__content">
+        <div class="ap__programs">
+          {programs.map(program => <article class="ap__program">
+            <h3>{program.name}</h3>
+            <p class="ap__focus">{program.focus}</p>
+            <p class="ap__price">{program.price}</p>
+            <dl>
+              <div><dt>Private time</dt><dd>{program.sessions}</dd></div>
+              <div><dt>Advisor</dt><dd>{program.advisor}</dd></div>
+              <div><dt>Format</dt><dd>{program.rhythm}</dd></div>
+              <div><dt>Support</dt><dd>{program.support}</dd></div>
+            </dl>
+            <a href={program.href} class="h3-link" data-cta={'compare-' + (program.external ? 'session' : program.href.slice(1))}>{program.cta}<span aria-hidden="true">{program.external ? '↗' : '→'}</span></a>
+          </article>)}
+        </div>
+        <p class="ap__terms">Offer Accelerator investment depends on seniority and location, confirmed before enrollment. Career Compounding is independent; Offer Accelerator is optional.</p>
       </div>
-      <div>
-        <p>We commit to the agreed preparation, feedback and follow-up. You bring accurate evidence, make decisions and carry out the plan.</p>
-        <p>We do not guarantee a job, promotion or salary increase. Employer decisions and market opportunities remain outside our control. Paid advisory gives no preference in Purrfect client searches.</p>
-      </div>
-    </div>
+    </details>
   </div>
 </section>
 <style>
-  .ap { padding-block: var(--space-section); border-top: 1px solid var(--line); }
-  .ap__intro { display: grid; gap: var(--space-3); max-width: 48rem; }
-  .ap__intro .h3-h2 { margin-top: 0; }
-  .ap__intro .h3-body { max-width: 45rem; }
-  .ap__programs { display: grid; gap: var(--space-grid); margin-top: var(--space-4); }
+  .ap { padding-block: var(--space-4); border-top: 1px solid var(--line); }
+  .ap > .h3-wrap > .h3-eyebrow { color: var(--purple); }
+  .ap__note { max-width: 55rem; margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
+  .ap__details { margin-top: var(--space-3); }
+  .ap__details > summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: var(--space-6); padding-block: var(--space-2); border-block: 1px solid var(--line); font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.35; cursor: pointer; list-style: none; }
+  .ap__details > summary::-webkit-details-marker { display: none; }
+  .ap__details > summary > span:first-child { min-width: 0; }
+  .ap__indicator { flex: 0 0 auto; color: var(--purple); font-family: var(--h-sans); transition: transform .2s ease; }
+  .ap__details[open] .ap__indicator { transform: rotate(45deg); }
+  .ap__programs { display: grid; gap: var(--space-grid); margin-top: var(--space-3); }
   .ap__program { min-width: 0; padding-top: var(--space-3); border-top: 1px solid var(--line); display: flex; flex-direction: column; }
-  .ap__program h3, .ap__commitment h3 { font-family: var(--h-serif); font-size: var(--type-quote); line-height: 1.2; font-weight: 400; }
+  .ap__program h3 { font-family: var(--h-serif); font-size: var(--type-quote); line-height: 1.2; font-weight: 400; }
   .ap__focus { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-ui); line-height: 1.6; }
   .ap__price { margin-top: var(--space-3); font-size: var(--type-subheading); font-weight: 600; }
   .ap dl { margin: var(--space-3) 0; display: grid; gap: var(--space-2); }
@@ -55,14 +52,10 @@ const programs = [
   .ap dt { font-size: var(--type-eyebrow); font-weight: 600; color: var(--purple); }
   .ap dd { margin: 0; font-size: var(--type-caption); color: var(--muted); line-height: 1.6; }
   .ap__program .h3-link { margin-top: auto; width: fit-content; font-size: var(--type-caption); }
-  .ap__terms { margin-top: var(--space-4); max-width: 55rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
-  .ap__commitment { display: grid; gap: var(--space-3); margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--line); }
-  .ap__commitment h3 { margin-top: var(--space-2); }
-  .ap__commitment p:not(.h3-eyebrow) { color: var(--muted); font-size: var(--type-ui); line-height: 1.7; }
-  .ap__commitment p + p { margin-top: var(--space-2); }
+  .ap__terms { margin-top: var(--space-3); max-width: 55rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
   @media (min-width: 56rem) {
     .ap__programs { grid-template-columns: repeat(3,minmax(0,1fr)); }
-    .ap__focus { min-height: 5rem; }
-    .ap__commitment { grid-template-columns: minmax(0,1fr) minmax(0,2fr); gap: var(--space-grid); }
+    .ap__focus { min-height: var(--space-6); }
   }
+  @media (prefers-reduced-motion: reduce) { .ap__indicator { transition: none; } }
 </style>

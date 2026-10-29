@@ -34,7 +34,7 @@ export const talentV2En: TalentV2Content = {
     items: [
       {
         name: 'Offer Accelerator',
-        body: 'Choose this when you are changing company, market or scope. Build your positioning and work through outreach, interviews, offers and negotiation. One diagnostic and seven sessions with a senior consultant, followed by process support while you execute the agreed plan.',
+        body: 'Compete for your next opportunity with sharper positioning, targeted outreach and preparation for interviews, offers and negotiation. Work with a senior advisor, with process support while you actively execute the agreed plan.',
         price: 'USD 2,000 to 8,000',
         note: 'Eight one-hour sessions. Final investment depends on seniority and location.',
         cta: 'Explore Offer Accelerator',
@@ -43,19 +43,19 @@ export const talentV2En: TalentV2Content = {
       },
       {
         name: 'Career Compounding',
-        body: 'Choose this when you have a role and a real business challenge. Work on decisions, stakeholders and execution inside your company. Six months, nine sessions with Kate and eight asynchronous checkpoints. Offer Accelerator is optional.',
+        body: 'Make stronger decisions in the role you have. Work with Kate on a real business challenge, with preparation and feedback as you put the plan into practice.',
         price: 'USD 5,000',
-        note: 'Nine one-hour sessions and eight asynchronous checkpoints over six months.',
+        note: 'Nine one-hour sessions and eight asynchronous checkpoints over six months. Offer Accelerator is optional.',
         cta: 'Explore Career Compounding',
         href: '/career-compounding',
       },
       {
         name: '1:1 Strategic Session',
-        body: 'Choose this for one interview, offer, negotiation or career decision. One focused hour with Kate to examine it and agree your next steps.',
+        body: 'Work through one interview, offer, negotiation or career decision with Kate. Leave with agreed next steps.',
         price: 'USD 300',
         cta: 'Request a session on WhatsApp',
         href: SESSION_1_1,
-        note: 'Include your role, LinkedIn and the question you want to work on.',
+        note: 'One private hour with Kate.',
       },
     ],
     free: {

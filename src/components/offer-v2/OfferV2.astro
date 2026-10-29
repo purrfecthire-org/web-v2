@@ -11,6 +11,13 @@ import { APPLY_OFFER } from '../../content/links';
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getOfferV2(lang);
+const includedItems = [
+  {title:'Eight one-hour sessions', description:'One diagnostic session and seven private sessions with a senior Purrfect advisor. Your advisor is confirmed before enrollment.'},
+  {title:'A private Career Journal', description:t.includes.items[1]},
+  {title:'A weekly team check-in', description:'Support and progress reviews between sessions.'},
+  {title:'WhatsApp and email support', description:'Questions, updates and feedback on active processes, without 24/7 availability.'},
+  {title:'Active process follow-up', description:t.includes.items[4]},
+];
 ---
 
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light"
@@ -47,21 +54,12 @@ const t = getOfferV2(lang);
           <p class="oa-bubble oa-bubble--four">Hear about roles only once they are posted.</p>
           <p class="oa-bubble oa-bubble--five">Struggle to show the impact you had in an interview.</p>
         </div>
-        <aside class="oa-why" aria-labelledby="oa-why-title">
-          <div>
-            <p class="h3-eyebrow">Why it happens</p>
-            <h3 id="oa-why-title">Hiring decisions are made on partial information.</h3>
-          </div>
-          <div class="oa-why__body">
-            <p>A decision gets made from a title, a CV, a LinkedIn page and a few conversations.</p>
-            <p>Often the evidence of what you did and how much of it was yours never reaches the person deciding.</p>
-            <p>{t.question.body}</p>
-          </div>
-        </aside>
       </div>
     </section>
   </div>
 
+  <details class="oa-method-disclosure h3-surface">
+    <summary class="h3-wrap">See the work behind the program <span aria-hidden="true">+</span></summary>
   <section class="oa-work oa-stages" aria-labelledby="oa-work-title" data-stages>
     <div class="h3-wrap">
       <p class="h3-eyebrow">How we work</p>
@@ -118,6 +116,7 @@ const t = getOfferV2(lang);
       </div>
     </div>
   </section>
+  </details>
 
   <section class="oa-proof oa-testimonials" id="voices" aria-labelledby="oa-proof-title" data-testimonials>
     <div class="h3-wrap oa-testimonials__layout">
@@ -164,22 +163,26 @@ const t = getOfferV2(lang);
       </div>
       <div class="oa-advisors__copy">
         <p class="h3-eyebrow">Who you will work with</p>
-        <h2 id="oa-advisors-title">Work with people who know how hiring decisions are made.</h2>
-        <p class="oa-advisors__lead">Kate brings the perspective of a former operator and founder who works directly with companies and senior professionals. Your sessions are led by Kate or a senior Purrfect advisor, depending on your engagement.</p>
+        <h2 id="oa-advisors-title">Know who you will work with.</h2>
+        <p class="oa-advisors__lead">Kate led recruiting at Addi and founded Purrfect Hire. Your sessions are led by Kate or a senior Purrfect advisor.</p>
         <p class="oa-advisors__note">Your advisor is confirmed before enrollment.</p>
+        <details class="oa-advisors__more"><summary>Advisor background <span aria-hidden="true">+</span></summary>
         <ul class="oa-advisors__credentials">
           <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Experience across tech and product</h3><p>Perspective shaped by operating roles and founder experience.</p></div></li>
           <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Senior talent advisory</h3><p>Support for professionals navigating company, market and scope changes.</p></div></li>
           <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Direct view of hiring decisions</h3><p>Grounded in real searches, interviews and offer conversations.</p></div></li>
           <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Pragmatic, candid and involved</h3><p>Clear feedback, thoughtful strategy and genuine support throughout the process.</p></div></li>
         </ul>
+        </details>
       </div>
     </div>
   </section>
 
   <div class="oa-close-wrap">
-    <section class="oa-fit-close" aria-labelledby="oa-fit-close-title">
-      <div class="h3-wrap oa-close-grid">
+    <section class="oa-fit-check h3-surface">
+      <div class="h3-wrap"><details class="oa-purchase-details">
+        <summary>Is Offer Accelerator right for you? <span aria-hidden="true">+</span></summary>
+      <div class="oa-close-grid">
         <div class="oa-fit-close__intro">
           <p class="h3-eyebrow">Is this for you?</p>
           <h2 id="oa-fit-close-title">Better to know before you apply.</h2>
@@ -202,6 +205,7 @@ const t = getOfferV2(lang);
           </ul>
         </div>
       </div>
+      </details></div>
     </section>
 
     <section class="oa-scope oa-included" id="investment" aria-labelledby="oa-scope-title">
@@ -210,33 +214,32 @@ const t = getOfferV2(lang);
           <div class="oa-included__intro">
             <p class="h3-eyebrow">Offer Accelerator</p>
             <h2 id="oa-scope-title">What is included.</h2>
-            <p class="oa-included__lead">{t.includes.closing}</p>
+            <p class="oa-included__lead">Eight private hours, personalized work and support as you pursue your next role.</p>
           </div>
           <div class="oa-included__price">
             <p>{t.investment.price}</p>
             <span>{t.investment.note}</span>
+            <a href={APPLY_OFFER} data-cta="offer-investment-apply" class="h3-btn oa-investment__cta">{t.apply.cta}<span aria-hidden="true">→</span></a>
           </div>
           <aside class="oa-included__quote">
-            <div class="oa-included__quote-context"><h3>{t.fit.commitmentTitle}</h3><p>{t.fit.commitment}</p></div>
+            <div class="oa-included__quote-context"><h3>{t.fit.commitmentTitle}</h3><p>Bring accurate evidence and carry out the agreed plan between sessions.</p></div>
           </aside>
         </div>
+        <ul class="oa-included__highlights">{includedItems.map(item => <li>{item.title}</li>)}</ul>
+        <details class="oa-scope-full oa-purchase-details"><summary>Full scope and support terms <span aria-hidden="true">+</span></summary>
         <ul class="oa-included__items">
-          {[
-            {title:'Eight one-hour sessions', description:'One diagnostic session and seven private sessions with a senior Purrfect advisor. Your advisor is confirmed before enrollment.'},
-            {title:'Personalized materials', description:t.includes.items[1]},
-            {title:'A weekly check-in with the team', description:'Support and progress reviews between sessions.'},
-            {title:'Direct support over WhatsApp and email', description:'Questions, updates and feedback on active processes, without 24/7 availability.'},
-            {title:'Support through active hiring processes', description:t.includes.items[4]}
-          ].map((item,i)=>(
+          {includedItems.map((item,i)=>(
             <li>
               <span class="oa-included__icon" aria-hidden="true">{String(i+1).padStart(2,'0')}</span>
               <div><h3>{item.title}</h3><p>{item.description}</p></div>
             </li>
           ))}
         </ul>
+        <p class="oa-scope-full__commitment">{t.fit.commitment}</p>
+        </details>
         <aside class="oa-confidentiality" aria-labelledby="oa-firewall-title">
           <h3 id="oa-firewall-title">{t.firewall.headline}</h3>
-          <p>Advisory engagements are confidential. Participation in Offer Accelerator does not give you preferential treatment in Purrfect client searches. Applying to open roles is free, and no hiring outcome or salary increase is guaranteed.</p>
+          <p>Advisory is confidential and gives no preference in client searches. Applying to open roles is free.</p>
           <details class="oa-confidentiality__details">
             <summary>How confidentiality works <span aria-hidden="true">↗</span></summary>
             <div>{t.firewall.body.map(paragraph => <p>{paragraph}</p>)}</div>
@@ -250,18 +253,20 @@ const t = getOfferV2(lang);
     <div class="h3-wrap oa-decide__grid">
       <div>
         <p class="h3-eyebrow">{t.faq.eyebrow}</p>
-        <h2 class="h3-h2" id="oa-decide-title">Is a job or salary increase guaranteed?</h2>
-        <p class="h3-body">{t.faq.items[2].answer}</p>
+        <h2 class="h3-h2" id="oa-decide-title">Clear commitments before you pay.</h2>
+        <p class="h3-body">We agree your advisor, scope and fee before payment. We commit to the preparation, feedback and follow-up described in your program.</p>
+        <p class="oa-decide__limit">A job or salary increase is not guaranteed.</p>
         <a class="h3-link" href="/for-talent/#compare-programs">Compare all three options <span aria-hidden="true">→</span></a>
       </div>
       <div class="oa-decide__questions">
         <details><summary>Why does investment range from USD 2,000 to 8,000?</summary><p>{t.investment.note} Your advisor, scope and next steps are agreed before payment and scheduling.</p></details>
         <details><summary>How much private time is included?</summary><p>Eight one-hour sessions: one diagnostic and seven private sessions with a senior consultant. {t.includes.items[4]}</p></details>
         {t.faq.items.filter((_, index) => index !== 2).map(item => <details><summary>{item.question}</summary><p>{item.answer}</p></details>)}
+        <details><summary>What if the evidence does not support the move?</summary><p>{t.question.body}</p></details>
+        <details><summary>What happens after I apply?</summary>
+          <ol class="oa-decide__steps">{t.apply.steps.map((step,index) => <li><span aria-hidden="true">0{index + 1}</span><div><h3>{step.title}</h3><p>{step.body}</p></div></li>)}</ol>
+        </details>
       </div>
-      <ol class="oa-decide__steps">
-        {t.apply.steps.map((step,index) => <li><span aria-hidden="true">0{index + 1}</span><div><h3>{step.title}</h3><p>{step.body}</p></div></li>)}
-      </ol>
     </div>
   </section>
 
