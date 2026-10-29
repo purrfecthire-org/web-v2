@@ -1,0 +1,62 @@
+---
+import { SESSION_1_1 } from '../../content/links';
+import { CAREER_COMPOUNDING, DIAGNOSTIC_ENTRY, OFFER_ACCELERATOR, STRATEGIC_SESSION } from '../../content/advisoryOffers';
+const programs = [
+  { name: STRATEGIC_SESSION.name, focus: 'One interview, offer, negotiation or career decision.', price: STRATEGIC_SESSION.priceLabel, sessions: `${STRATEGIC_SESSION.sessionCount} × ${STRATEGIC_SESSION.sessionMinutes} minutes`, advisor: STRATEGIC_SESSION.advisor, support: STRATEGIC_SESSION.writtenBrief, rhythm: 'One session; can become the diagnostic for the same challenge', href: SESSION_1_1, cta: 'Discuss your question', external: true },
+  { name: OFFER_ACCELERATOR.name, focus: 'A move to a new company, market or scope.', price: OFFER_ACCELERATOR.priceLabel, sessions: `${OFFER_ACCELERATOR.sessionCount} × ${OFFER_ACCELERATOR.sessionMinutes} minutes, including the diagnostic`, advisor: OFFER_ACCELERATOR.advisor, support: `Career Journal. ${OFFER_ACCELERATOR.supportSummary}`, rhythm: `Diagnostic, then ${OFFER_ACCELERATOR.remainingSessionCount} core sessions scheduled within ${OFFER_ACCELERATOR.coreSessionWindowLabel} from the agreed continuation date`, href: '/offer-acceleration', cta: 'Explore Offer Accelerator', external: false },
+  { name: CAREER_COMPOUNDING.name, focus: 'A real challenge in the role you already have.', price: CAREER_COMPOUNDING.priceLabel, sessions: `${CAREER_COMPOUNDING.sessionCount} × ${CAREER_COMPOUNDING.sessionMinutes} minutes, including the diagnostic`, advisor: CAREER_COMPOUNDING.advisor, support: `${CAREER_COMPOUNDING.checkpointCount} asynchronous checkpoints, each with feedback within ${CAREER_COMPOUNDING.checkpointFeedbackBusinessDays} business days, and a private personalized hub.`, rhythm: `Diagnostic, then ${CAREER_COMPOUNDING.remainingSessionCount} sessions over ${CAREER_COMPOUNDING.durationLabel} from the agreed continuation date`, href: '/career-compounding', cta: 'Explore Career Compounding', external: false },
+];
+---
+<section class="ap h3-surface" id="compare-programs" aria-labelledby="ap-title">
+  <div class="h3-wrap">
+    <p class="h3-eyebrow">Program details</p>
+    <p class="ap__note" id="ap-guarantee-title">Every private session lasts one hour. We commit to agreed preparation, feedback and follow-up. A job, promotion or salary increase is not guaranteed.</p>
+    <details class="ap__details">
+      <summary id="ap-title"><span>Compare sessions, support and investment</span><span class="ap__indicator" aria-hidden="true">+</span></summary>
+      <div class="ap__content">
+        <div class="ap__programs">
+          {programs.map(program => <article class="ap__program">
+            <h3>{program.name}</h3>
+            <p class="ap__focus">{program.focus}</p>
+            <p class="ap__price">{program.price}</p>
+            <dl>
+              <div><dt>Private time</dt><dd>{program.sessions}</dd></div>
+              <div><dt>Advisor</dt><dd>{program.advisor}</dd></div>
+              <div><dt>Format</dt><dd>{program.rhythm}</dd></div>
+              <div><dt>Support</dt><dd>{program.support}</dd></div>
+            </dl>
+            <a href={program.href} class="h3-link" data-cta={'compare-' + (program.external ? 'session' : program.href.slice(1))}>{program.cta}<span aria-hidden="true">{program.external ? '↗' : '→'}</span></a>
+          </article>)}
+        </div>
+        <p class="ap__terms">Start with a {DIAGNOSTIC_ENTRY.priceLabel} diagnostic. Continue on the same challenge within {DIAGNOSTIC_ENTRY.creditWindowDays} days after it: that hour and payment count once toward your program, leaving {OFFER_ACCELERATOR.remainingBalanceLabel} for Offer Accelerator or {CAREER_COMPOUNDING.remainingBalanceLabel} for Career Compounding. No obligation to continue or automatic balance charge. The programs are independent. New terms apply to new engagements; existing agreements keep their terms.</p>
+      </div>
+    </details>
+  </div>
+</section>
+<style>
+  .ap { padding-block: var(--space-4); border-top: 1px solid var(--line); }
+  .ap > .h3-wrap > .h3-eyebrow { color: var(--purple); }
+  .ap__note { max-width: 55rem; margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
+  .ap__details { margin-top: var(--space-3); }
+  .ap__details > summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: var(--space-6); padding-block: var(--space-2); border-block: 1px solid var(--line); font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.35; cursor: pointer; list-style: none; }
+  .ap__details > summary::-webkit-details-marker { display: none; }
+  .ap__details > summary > span:first-child { min-width: 0; }
+  .ap__indicator { flex: 0 0 auto; color: var(--purple); font-family: var(--h-sans); transition: transform .2s ease; }
+  .ap__details[open] .ap__indicator { transform: rotate(45deg); }
+  .ap__programs { display: grid; gap: var(--space-grid); margin-top: var(--space-3); }
+  .ap__program { min-width: 0; padding-top: var(--space-3); border-top: 1px solid var(--line); display: flex; flex-direction: column; }
+  .ap__program h3 { font-family: var(--h-serif); font-size: var(--type-quote); line-height: 1.2; font-weight: 400; }
+  .ap__focus { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-ui); line-height: 1.6; }
+  .ap__price { margin-top: var(--space-3); font-size: var(--type-subheading); font-weight: 600; }
+  .ap dl { margin: var(--space-3) 0; display: grid; gap: var(--space-2); }
+  .ap dl > div { display: grid; gap: var(--space-1); }
+  .ap dt { font-size: var(--type-eyebrow); font-weight: 600; color: var(--purple); }
+  .ap dd { margin: 0; font-size: var(--type-caption); color: var(--muted); line-height: 1.6; }
+  .ap__program .h3-link { margin-top: auto; width: fit-content; font-size: var(--type-caption); }
+  .ap__terms { margin-top: var(--space-3); max-width: 55rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
+  @media (min-width: 56rem) {
+    .ap__programs { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .ap__focus { min-height: var(--space-6); }
+  }
+  @media (prefers-reduced-motion: reduce) { .ap__indicator { transition: none; } }
+</style>

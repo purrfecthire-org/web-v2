@@ -20,14 +20,14 @@ const areaIcons = ['role', 'market', 'growth'] as const;
   journey="companies"
 >
   <div class="iv-page" data-audience="investors">
-    <section class="h3-hero iv-hero" aria-labelledby="iv-title">
+    <section class="h3-hero h3-surface h3-editorial-hero iv-hero" aria-labelledby="iv-title">
       <div class="h3-wrap iv-hero__grid">
         <div class="iv-hero__copy">
         <p class="h3-eyebrow">{t.hero.eyebrow}</p>
         <h1 class="h3-hero__h1 iv-hero__title" id="iv-title">{t.hero.headline}</h1>
         <p class="h3-hero__sub iv-hero__body">{t.hero.body}</p>
-        <a href={INVESTORS_SEARCH_READ} data-cta="investors-hero-search-read" class="h3-btn h3-btn--ink iv-hero__cta">
-          {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        <a href={INVESTORS_SEARCH_READ} data-cta="investors-hero-search-read" class="h3-btn iv-hero__cta">
+          {t.hero.cta}<span class="h3-arrow" aria-hidden="true">↗</span>
         </a>
         <p class="iv-note">{t.hero.note}</p>
         </div>
@@ -35,7 +35,7 @@ const areaIcons = ['role', 'market', 'growth'] as const;
       </div>
     </section>
 
-    <section class="iv-section iv-support" aria-labelledby="iv-support-title">
+    <section class="iv-section iv-support h3-surface" aria-labelledby="iv-support-title">
       <div class="h3-wrap">
         <p class="h3-eyebrow">{t.support.eyebrow}</p>
         <h2 class="h3-h2 iv-wide-title" id="iv-support-title">{t.support.headline}</h2>
@@ -60,7 +60,7 @@ const areaIcons = ['role', 'market', 'growth'] as const;
       </div>
     </section>
 
-    <section class="iv-section iv-agreement" aria-labelledby="iv-agreement-title">
+    <section class="iv-section iv-agreement h3-surface" aria-labelledby="iv-agreement-title">
       <div class="h3-wrap iv-split">
         <div>
           <p class="h3-eyebrow">{t.approach.eyebrow}</p>
@@ -78,7 +78,7 @@ const areaIcons = ['role', 'market', 'growth'] as const;
       </div>
     </section>
 
-    <section class="iv-section iv-evidence" aria-labelledby="iv-evidence-title">
+    <section class="iv-section iv-evidence h3-surface" aria-labelledby="iv-evidence-title">
       <div class="h3-wrap iv-split">
         <div>
           <p class="h3-eyebrow">{t.evidence.eyebrow}</p>
@@ -96,12 +96,12 @@ const areaIcons = ['role', 'market', 'growth'] as const;
       </div>
     </section>
 
-    <section class="iv-section iv-close" aria-labelledby="iv-close-title">
+    <section class="iv-section iv-close h3-surface" aria-labelledby="iv-close-title">
       <div class="h3-wrap">
         <h2 class="h3-h2 iv-wide-title" id="iv-close-title">{t.close.headline}</h2>
         <p class="h3-body iv-section__body">{t.close.body}</p>
-        <a href={INVESTORS_SEARCH_READ} data-cta="investors-close-search-read" class="h3-btn h3-btn--ink iv-close__cta">
-          {t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span>
+        <a href={INVESTORS_SEARCH_READ} data-cta="investors-close-search-read" class="h3-btn iv-close__cta">
+          {t.close.cta}<span class="h3-arrow" aria-hidden="true">↗</span>
         </a>
       </div>
     </section>
@@ -110,11 +110,14 @@ const areaIcons = ['role', 'market', 'growth'] as const;
 
 <style lang="scss">
   .iv-section { padding-block: var(--space-section); }
+  .iv-page .h3-eyebrow { color: var(--purple); }
   .iv-hero__grid { display: grid; gap: var(--space-grid); align-items: center; }
-  .iv-hero__copy { min-width: 0; }
-  .iv-hero__title { max-width: 20ch; }
-  .iv-hero__body { max-width: 55ch; }
-  .iv-hero__visual { width: 100%; max-width: calc(var(--space-8) * 6); margin-inline: auto; }
+  .iv-hero__copy { min-width: 0; max-width: 34rem; }
+  .iv-hero__title { max-width: 15ch; }
+  .iv-hero__body { max-width: 38ch; }
+  .iv-hero__visual { position: relative; isolation: isolate; display: grid; place-items: center; width: min(100%, 22rem); aspect-ratio: 4 / 5; padding: var(--space-3); margin-inline: auto; overflow: hidden; border-radius: var(--radius-card); background: linear-gradient(145deg, var(--sand), var(--stone)); }
+  .iv-hero__visual::before { content: ''; position: absolute; inset: var(--space-4) var(--space-4) 0; z-index: -1; border: 1px solid var(--line); border-bottom: 0; border-radius: 50% 50% 0 0; background: linear-gradient(145deg, color-mix(in srgb, var(--white) 65%, transparent), transparent); }
+  .iv-hero__visual :global(.hiring-context) { position: relative; }
   .iv-hero__cta, .iv-close__cta { margin-top: var(--space-stack); max-width: 100%; text-align: center; line-height: 1.4; }
   .iv-note { margin-top: var(--space-2); max-width: 55ch; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .iv-wide-title { max-width: 26ch; }
@@ -124,8 +127,8 @@ const areaIcons = ['role', 'market', 'growth'] as const;
   .iv-area > div { min-width: 0; }
   .iv-area__heading { display: flex; gap: var(--space-stack); align-items: start; }
   .iv-area__marker { flex: 0 0 var(--space-grid); display: grid; gap: var(--space-2); justify-items: start; color: var(--purple); }
-  .iv-area__id { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .iv-area h3 { min-width: 0; max-width: 22ch; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .iv-area__id { font-size: var(--type-eyebrow); line-height: 1.5; color: var(--purple); font-variant-numeric: tabular-nums; }
+  .iv-area h3 { min-width: 0; max-width: 22ch; font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.2; }
   .iv-area__body > p, .iv-format li { max-width: 55ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .iv-format li + li { margin-top: var(--space-1); }
   .iv-format { margin-top: var(--space-stack); }
@@ -136,10 +139,8 @@ const areaIcons = ['role', 'market', 'growth'] as const;
   .iv-split { display: grid; gap: var(--space-grid); align-items: start; }
   .iv-agreement .iv-split { padding-block: var(--space-grid); }
   .iv-agreement { padding-block: 0; }
-  .iv-questions__list { padding: var(--space-stack); border-radius: var(--radius-card); background: var(--white); }
-  .iv-questions__list { min-width: 0; }
+  .iv-questions__list { min-width: 0; border-top: 1px solid var(--line); }
   .iv-question { border-bottom: 1px solid var(--line); }
-  .iv-question:last-child { border-bottom: 0; }
   .iv-question summary { display: flex; justify-content: space-between; gap: var(--space-2); align-items: baseline; padding-block: var(--space-stack); list-style: none; cursor: pointer; font-size: var(--type-body); font-weight: 500; line-height: 1.7; }
   .iv-question summary::-webkit-details-marker { display: none; }
   .iv-question summary span { flex-shrink: 0; }
@@ -148,14 +149,17 @@ const areaIcons = ['role', 'market', 'growth'] as const;
   .iv-evidence__links { border-top: 1px solid var(--line); }
   .iv-evidence__link { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: var(--space-stack); padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
   .iv-evidence__icon { display: block; color: var(--purple); }
-  .iv-evidence__label { display: block; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .iv-evidence__label { display: block; font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.2; }
   .iv-evidence__body { display: block; margin-top: var(--space-1); max-width: 55ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .iv-evidence__link:hover .iv-evidence__label { text-decoration: underline; text-underline-offset: 4px; }
-  .iv-close { border-top: 1px solid var(--line); }
+  .iv-close { border-top: 1px solid var(--line); background: linear-gradient(180deg, var(--sand), var(--stone)); }
+  .iv-close > .h3-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; }
   @media (min-width: 56rem) {
-    .iv-hero__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+    .iv-hero__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .iv-hero__visual { margin-inline: auto 0; }
     .iv-area { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: var(--space-grid); }
     .iv-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
-    .iv-questions__list { padding-inline: var(--space-grid); }
   }
+  @media (max-width: 55.99rem) { .iv-hero__visual { width: min(100%, 18rem); } }
+  @media (max-width: 30rem) { .iv-hero__visual { width: min(100%, 15rem); } }
 </style>

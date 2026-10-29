@@ -15,7 +15,7 @@ const tracks = [
   theme="light"
   journey="insights"
 >
-  <section class="h3-hero in-hero" aria-labelledby="insights-title">
+  <section class="h3-hero h3-surface h3-editorial-hero in-hero" aria-labelledby="insights-title">
     <div class="h3-wrap">
       <h1 class="h3-hero__h1" id="insights-title">Insights</h1>
       <p class="h3-hero__sub">Practical notes on who to hire, what to test, and which role to choose.</p>
@@ -26,22 +26,23 @@ const tracks = [
   </section>
 
   {tracks.map((track) => (
-    <section class="in-track" id={track.id} aria-labelledby={`${track.id}-title`}>
+    <section class="in-track h3-surface" id={track.id} aria-labelledby={`${track.id}-title`}>
       <div class="h3-wrap in-track__grid">
-        <h2 class="h3-h2 in-track__title" id={`${track.id}-title`}>{track.label}</h2>
+        <h2 class="h3-eyebrow in-track__title" id={`${track.id}-title`}>{track.label}</h2>
         <ul class="in-list">
-          {articles.filter((article) => article.audience === track.id).map((article) => (
+          {articles.filter((article) => article.audience === track.id).map((article, index) => (
             <li>
-              <a class="in-story" href={`/insights/${article.slug}/`} data-cta={`insights-${article.slug}`}>
+              <a class:list={['in-story', index % 2 === 1 && 'in-story--reverse']} href={`/insights/${article.slug}/`} data-cta={`insights-${article.slug}`}>
+                <div class="in-story__copy">
+                  <p class="in-story__topic">{article.topic}</p>
+                  <h3>{article.title}</h3>
+                  <p class="in-story__meta">By {article.author.name}</p>
+                  <p>{article.description}</p>
+                  <span class="in-story__arrow" aria-hidden="true">→</span>
+                </div>
                 <span class="in-story__photo">
                   <img src={article.cover.src} alt={article.cover.alt} width={article.cover.width} height={article.cover.height} loading="lazy" decoding="async" style={{ 'object-position': article.cover.position || 'center' }} />
                 </span>
-                <div>
-                  <h3>{article.title}</h3>
-                  <p class="in-story__meta">{article.topic} · By {article.author.name}</p>
-                  <p>{article.description}</p>
-                </div>
-                <span class="in-story__arrow" aria-hidden="true">→</span>
               </a>
             </li>
           ))}
@@ -52,29 +53,32 @@ const tracks = [
 </Shell>
 
 <style lang="scss">
-  .in-hero { padding-bottom: var(--space-grid); }
+  .in-hero { padding-top: calc(var(--space-hero-top) + var(--space-3)); padding-bottom: var(--space-grid); }
   .in-tracks { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin-top: var(--space-4); }
   .in-tracks a { min-height: var(--space-6); align-items: center; }
   .in-track { padding-block: var(--space-section); scroll-margin-top: var(--space-4); }
   .in-track + .in-track { border-top: 1px solid var(--line); }
-  .in-track__grid { display: grid; gap: var(--space-grid); }
-  .in-track__title { margin-top: 0; }
+  .in-track__grid { display: grid; gap: var(--space-4); }
+  .in-track__title { margin-top: 0; color: var(--purple); }
   .in-list { min-width: 0; }
   .in-list li + li { border-top: 1px solid var(--line); }
-  .in-story { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-stack); padding-block: var(--space-4); }
+  .in-story { display: grid; gap: var(--space-4); padding-block: var(--space-6); }
   .in-list li:first-child .in-story { padding-top: 0; }
-  .in-story__photo { display: block; grid-column: 1 / -1; aspect-ratio: 3 / 2; overflow: hidden; }
+  .in-story__copy { min-width: 0; max-width: 36rem; align-self: center; }
+  .in-story__photo { display: block; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--radius-card); }
   .in-story__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .in-story h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .in-story h3 { margin-top: var(--space-2); font-family: var(--h-serif); font-size: var(--type-section); font-weight: 400; line-height: 1.12; letter-spacing: -.014em; text-wrap: balance; }
   .in-story p { max-width: 46rem; margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
+  .in-story .in-story__topic { margin-top: 0; font-size: var(--type-eyebrow); font-weight: 600; letter-spacing: .1em; color: var(--purple); text-transform: uppercase; }
   .in-story .in-story__meta { font-size: var(--type-ui); line-height: 1.5; }
-  .in-story__arrow { font-size: var(--type-subheading); line-height: 1.35; transition: transform .2s ease; }
+  .in-story__arrow { display: inline-flex; align-items: center; min-height: var(--space-6); margin-top: var(--space-2); color: var(--purple); font-size: var(--type-subheading); line-height: 1.35; transition: transform .2s ease; }
   .in-story:hover h3 { text-decoration: underline; text-underline-offset: .2em; }
   .in-story:hover .in-story__arrow { transform: translateX(var(--space-1)); }
   @media (min-width: 56rem) {
-    .in-track__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
-    .in-story { grid-template-columns: calc(var(--space-8) + var(--space-8) + var(--space-4)) minmax(0, 1fr) auto; align-items: start; }
-    .in-story__photo { grid-column: auto; }
+    .in-story { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-grid); align-items: center; }
+    .in-story__photo { max-width: 22rem; justify-self: end; }
+    .in-story--reverse .in-story__photo { grid-column: 1; grid-row: 1; justify-self: start; }
+    .in-story--reverse .in-story__copy { grid-column: 2; grid-row: 1; justify-self: end; }
   }
   @media (prefers-reduced-motion: reduce) { .in-story__arrow { transition: none; } .in-story:hover .in-story__arrow { transform: none; } }
 </style>

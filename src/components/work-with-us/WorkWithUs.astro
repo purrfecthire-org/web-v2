@@ -6,7 +6,7 @@ const valueCats = ['focus', 'observe', 'leap', 'walk', 'rest'];
 ---
 
 <Shell title={t.meta.title} description={t.meta.description} theme="light" journey="careers" navCta={{ label: t.applicationCta, href: t.applicationHref }}>
-  <section class="wwu-hero" aria-labelledby="wwu-title">
+  <section class="wwu-hero h3-surface h3-editorial-hero" aria-labelledby="wwu-title">
     <div class="h3-wrap">
       <div class="wwu-editorial">
         <div>
@@ -16,7 +16,7 @@ const valueCats = ['focus', 'observe', 'leap', 'walk', 'rest'];
         <div class="wwu-hero__intro">
           <p class="wwu-hero__body">{t.hero.body}</p>
           <p class="wwu-hero__standard">{t.hero.standard}</p>
-          <a class="h3-btn h3-btn--ink wwu-hero__cta" href={t.applicationHref} data-cta="careers-hero-introduce">{t.applicationCta}<span aria-hidden="true">→</span></a>
+          <a class="h3-btn wwu-hero__cta" href={t.applicationHref} data-cta="careers-hero-introduce">{t.applicationCta}<span aria-hidden="true">↗</span></a>
           <p class="wwu-hero__note">{t.hero.note}</p>
         </div>
       </div>
@@ -27,7 +27,7 @@ const valueCats = ['focus', 'observe', 'leap', 'walk', 'rest'];
     </div>
   </section>
 
-  <section class="wwu-section" aria-labelledby="wwu-values-title">
+  <section class="wwu-section h3-surface" aria-labelledby="wwu-values-title">
     <div class="h3-wrap">
       <div class="wwu-editorial" data-purrfect-values>
         <header>
@@ -47,7 +47,7 @@ const valueCats = ['focus', 'observe', 'leap', 'walk', 'rest'];
     </div>
   </section>
 
-  <section class="wwu-section" aria-labelledby="wwu-support-title">
+  <section class="wwu-section h3-surface" aria-labelledby="wwu-support-title">
     <div class="h3-wrap wwu-editorial">
       <header>
         <p class="h3-eyebrow">{t.support.eyebrow}</p>
@@ -59,13 +59,13 @@ const valueCats = ['focus', 'observe', 'leap', 'walk', 'rest'];
     </div>
   </section>
 
-  <section class="wwu-section wwu-apply" id="introduce-yourself" aria-labelledby="wwu-apply-title">
+  <section class="wwu-section wwu-apply h3-surface" id="introduce-yourself" aria-labelledby="wwu-apply-title">
     <div class="h3-wrap wwu-editorial">
       <div>
         <p class="h3-eyebrow">{t.application.eyebrow}</p>
         <h2 class="h3-h2 wwu-heading" id="wwu-apply-title">{t.application.headline}</h2>
         <p class="wwu-apply__body">{t.application.body}</p>
-        <a class="h3-btn h3-btn--ink" href={t.applicationHref} data-cta="careers-spontaneous-application">{t.applicationCta}<span aria-hidden="true">→</span></a>
+        <a class="h3-btn" href={t.applicationHref} data-cta="careers-spontaneous-application">{t.applicationCta}<span aria-hidden="true">↗</span></a>
         <p class="wwu-apply__email-note">{t.application.emailNote}</p>
         <p class="wwu-apply__note">{t.application.note}</p>
       </div>
@@ -93,41 +93,45 @@ const valueCats = ['focus', 'observe', 'leap', 'walk', 'rest'];
 </script>
 
 <style>
-  .wwu-hero { padding-block: var(--space-hero-top) var(--space-section); }
+  .wwu-hero { padding-block: calc(var(--space-hero-top) + var(--space-3)) var(--space-section); }
+  .wwu-hero .h3-eyebrow, .wwu-section .h3-eyebrow { color: var(--purple); }
   .wwu-editorial { display: grid; gap: var(--space-grid); }
   .wwu-editorial > * { min-width: 0; }
-  .wwu-hero__title { max-width: 17ch; margin-top: var(--space-2); font-family: var(--h-serif); font-size: var(--type-display); font-weight: 400; line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0; }
+  .wwu-hero__title { max-width: 14ch; margin-top: var(--space-2); font-family: var(--h-serif); font-size: var(--type-display); font-weight: 400; line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0; }
+  .wwu-hero__intro { align-self: center; }
   .wwu-hero__body { max-width: 48ch; color: var(--muted); font-size: var(--type-lead); line-height: 1.6; }
   .wwu-hero__standard { margin-top: var(--space-2); color: var(--text); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
   .wwu-hero__cta { margin-top: var(--space-stack); }
   .wwu-hero__note { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 48ch; }
-  .wwu-team { margin-top: var(--space-grid); }
-  .wwu-team h2 { margin: 0 0 var(--space-stack); font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .wwu-team { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--line); }
+  .wwu-team h2 { margin: 0 0 var(--space-stack); font-family: var(--h-sans); font-size: var(--type-eyebrow); font-weight: 500; line-height: 1.5; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
   .wwu-section { padding-block: var(--space-section); border-top: 1px solid var(--line); }
   .wwu-heading { max-width: 23ch; }
   .wwu-rows { display: grid; gap: var(--space-stack); }
   .wwu-rows > div + div { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
-  .wwu-rows dt, .wwu-apply__details h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .wwu-rows dt, .wwu-apply__details h3 { font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.2; }
   .wwu-rows dd { margin: var(--space-1) 0 0; max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.6; }
   .wwu-values-art { width: calc(var(--space-8) * 2); max-width: 100%; aspect-ratio: 3 / 2; margin-top: var(--space-stack); }
   .wwu-values-art img { display: block; width: 100%; height: 100%; object-fit: contain; animation: value-cat-enter .24s ease-out; }
   .wwu-values-art img[hidden] { display: none; }
   .wwu-values details { border-top: 1px solid var(--line); }
   .wwu-values details:last-child { border-bottom: 1px solid var(--line); }
-  .wwu-values summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: var(--space-8); padding-block: var(--space-2); list-style: none; cursor: pointer; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .wwu-values summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: var(--space-8); padding-block: var(--space-2); list-style: none; cursor: pointer; font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.2; }
   .wwu-values summary::-webkit-details-marker { display: none; }
   .wwu-values summary:hover { color: var(--purple); }
+  .wwu-values summary span { color: var(--purple); }
   .wwu-values summary span::before { content: '+'; }
   .wwu-values details[open] summary span::before { content: '−'; }
   .wwu-values details p { padding-bottom: var(--space-stack); max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.6; }
   .wwu-name { margin-top: var(--space-grid); padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .wwu-name p:not(.h3-eyebrow) { margin-top: var(--space-1); max-width: 66ch; color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
-  .wwu-apply { scroll-margin-top: var(--space-4); }
+  .wwu-apply { scroll-margin-top: var(--space-4); background: linear-gradient(180deg, var(--sand), var(--stone)); }
   .wwu-apply__body { margin-block: var(--space-stack); max-width: 48ch; color: var(--muted); font-size: var(--type-body); line-height: 1.6; }
   .wwu-apply__email-note, .wwu-apply__note { max-width: 54ch; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .wwu-apply__email-note { margin-top: var(--space-2); overflow-wrap: anywhere; }
   .wwu-apply__note { margin-top: var(--space-stack); }
   .wwu-apply__details ul { display: grid; gap: var(--space-2); margin-top: var(--space-stack); }
+  .wwu-apply__details { border-top: 1px solid var(--line); padding-top: var(--space-stack); }
   .wwu-apply__details li { position: relative; padding-left: var(--space-stack); }
   .wwu-apply__details li::before { content: ''; position: absolute; left: 0; top: .65em; width: .25em; height: .25em; border-radius: 50%; background: var(--muted); }
   .wwu-apply__details li, .wwu-apply__details p { max-width: 54ch; color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
@@ -136,5 +140,5 @@ const valueCats = ['focus', 'observe', 'leap', 'walk', 'rest'];
   .wwu-client-path a { color: var(--text); text-decoration: underline; text-underline-offset: .2em; }
   @keyframes value-cat-enter { from { opacity: 0; transform: translateY(var(--space-1)); } to { opacity: 1; transform: translateY(0); } }
   @media (prefers-reduced-motion: reduce) { .wwu-values-art img { animation: none; } }
-  @media (min-width: 56rem) { .wwu-editorial { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); } .wwu-values-art { width: calc(var(--space-8) * 4); } }
+  @media (min-width: 56rem) { .wwu-editorial { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .wwu-values-art { width: calc(var(--space-8) * 4); } }
 </style>

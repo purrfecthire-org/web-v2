@@ -1,3 +1,20 @@
+# Current visual system · 29 October 2026
+
+For Talent is the visual reference for all active pages. Use Fraunces and Inter,
+Ivory `#F7F6F3`, Midnight `#0A0B14`, Stone `#E9EBF0`, and contained purple
+`#4F46E5` actions. Use the shared Shell tokens for type, spacing, containers,
+focus and motion. Light atmospheric heroes, warm integrated imagery, fine
+mineral surfaces and editorial rows form one family across journeys.
+
+The shared `.h3-surface` and `.h3-editorial-hero` classes provide decorative
+texture without affecting forms or keyboard input. Keep samples printable and
+articles readable. Preserve each page's responsibility, evidence and contacts.
+
+The material below describes the earlier Schibsted/navy direction. It is kept
+for history and does not govern active pages.
+
+---
+
 # Design System — Purrfect Hire 2026 (Kate's system)
 
 ## 1. Visual Theme

@@ -1,6 +1,5 @@
 ---
 import Shell from '../v2/Shell.astro';
-import CatIllustration from '../v2/CatIllustration.astro';
 import type { Lang } from '../../content/index';
 import { CAREER_COMPOUNDING_EMAIL, DISCUSS_CAREER_COMPOUNDING, getCareerCompoundingV2 } from '../../content/careerCompoundingV2';
 
@@ -12,27 +11,33 @@ const t = getCareerCompoundingV2(lang);
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light"
   navCta={{ label: t.hero.cta, href: DISCUSS_CAREER_COMPOUNDING }} journey="talent">
   <div class="cc-page" data-product="career-compounding">
-    <section class="h3-hero cc-hero" aria-labelledby="cc-title">
+    <section class="h3-hero h3-surface h3-editorial-hero cc-hero" aria-labelledby="cc-title">
       <div class="h3-wrap cc-hero__grid">
-        <div>
+        <div class="cc-hero__copy">
           <p class="h3-eyebrow">{t.hero.eyebrow}</p>
           <h1 class="h3-hero__h1 cc-hero__title" id="cc-title">{t.hero.headline}</h1>
           <p class="h3-hero__sub">{t.hero.body}</p>
           <p class="cc-hero__audience">{t.hero.audience}</p>
-          <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-hero-whatsapp" class="h3-btn cc-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+          <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-hero-whatsapp" class="h3-btn cc-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">↗</span></a>
           <p class="cc-hero__note">{t.hero.note}</p>
         </div>
+        <figure class="cc-hero__media">
+          <img src="/images/talent-v2/02-career-compounding.png" alt="Illustration of a black cat ascending pale stone steps towards a violet sphere." width="941" height="1217" loading="eager" decoding="async" />
+        </figure>
         <dl class="cc-facts" aria-label="Program at a glance">
           {t.hero.facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
         </dl>
       </div>
     </section>
 
-    <section class="cc-work" aria-labelledby="cc-work-title">
+    <section class="cc-work h3-surface" aria-labelledby="cc-work-title">
       <div class="h3-wrap">
         <p class="h3-eyebrow">{t.work.eyebrow}</p>
         <h2 class="h3-h2" id="cc-work-title">{t.work.headline}</h2>
         <p class="h3-body cc-work__intro">{t.work.intro}</p>
+        <aside class="cc-perspective" aria-label="Kate’s perspective">
+          <p>Kate led recruiting at Addi, working closely with its CTO, and founded Purrfect Hire. <a href="https://www.linkedin.com/in/kathforero/" target="_blank" rel="noopener noreferrer">Meet Kate <span aria-hidden="true">↗</span></a></p>
+        </aside>
         <ol class="cc-work__list">
           {t.work.areas.map((area) => (
             <li class="cc-area" id={"cc-area-" + area.id}>
@@ -58,7 +63,7 @@ const t = getCareerCompoundingV2(lang);
       </div>
     </section>
 
-    <section class="cc-scope" aria-labelledby="cc-scope-title">
+    <section class="cc-scope h3-surface" aria-labelledby="cc-scope-title">
       <div class="h3-wrap">
         <p class="h3-eyebrow">{t.scope.eyebrow}</p>
         <h2 class="h3-h2" id="cc-scope-title">{t.scope.headline}</h2>
@@ -66,10 +71,13 @@ const t = getCareerCompoundingV2(lang);
           <div class="cc-investment">
             <p class="cc-scope__price">{t.scope.price}</p>
             <p class="h3-body cc-scope__terms">{t.scope.summary}</p>
-            <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-investment-whatsapp" class="h3-btn cc-investment__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+            <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-investment-whatsapp" class="h3-btn cc-investment__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">↗</span></a>
             <p class="cc-scope__privacy">{t.scope.privacy}</p>
           </div>
-          <ol class="cc-inclusions">{t.scope.items.map(item => <li><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
+          <details class="cc-program cc-question">
+            <summary>What the program includes<span aria-hidden="true">+</span></summary>
+            <ol class="cc-inclusions">{t.scope.items.map(item => <li><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
+          </details>
         </div>
         <div class="cc-questions cc-scope__questions">
           {t.questions.items.map(item => <details class="cc-question"><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}
@@ -77,40 +85,48 @@ const t = getCareerCompoundingV2(lang);
       </div>
     </section>
 
-    <section class="cc-close" aria-labelledby="cc-close-title">
+    <section class="cc-close h3-surface" aria-labelledby="cc-close-title">
       <div class="h3-wrap cc-close__layout">
         <div class="cc-close__copy">
         <p class="h3-eyebrow">{t.close.eyebrow}</p>
         <h2 class="h3-h2" id="cc-close-title">{t.close.headline}</h2>
         <p class="h3-body">{t.close.body}</p>
-        <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-close-whatsapp" class="h3-btn cc-close__cta">{t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+        <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-close-whatsapp" class="h3-btn cc-close__cta">{t.close.cta}<span class="h3-arrow" aria-hidden="true">↗</span></a>
         <p class="cc-close__note">{t.close.note}</p>
         <p class="cc-close__email">{t.close.emailLabel} <a href={"mailto:" + CAREER_COMPOUNDING_EMAIL} data-cta="career-compounding-direct-email">{CAREER_COMPOUNDING_EMAIL}</a>.</p>
         </div>
-        <CatIllustration pose="leap" />
+        <div class="cc-close__orbit" aria-hidden="true"><span></span></div>
       </div>
     </section>
   </div>
 </Shell>
 
 <style lang="scss">
+  .cc-hero { overflow: hidden; }
   .cc-hero__grid { display: grid; align-items: center; gap: var(--space-grid); }
-  .cc-hero__title { max-width: 15ch; }
+  .cc-hero__copy { min-width: 0; max-width: 34rem; }
+  .cc-hero__title { max-width: 14ch; }
+  .cc-hero .h3-eyebrow, .cc-work .h3-eyebrow, .cc-scope .h3-eyebrow, .cc-close .h3-eyebrow { color: var(--purple); }
+  .cc-hero__media { width: min(100%, 22rem); margin: 0; justify-self: center; overflow: hidden; border-radius: var(--radius-card); }
+  .cc-hero__media img { display: block; width: 100%; height: auto; aspect-ratio: 941 / 1217; object-fit: contain; }
   .cc-hero__cta, .cc-close__cta { margin-top: var(--space-4); max-width: 100%; text-align: center; line-height: 1.4; }
   .cc-hero__note, .cc-close__note, .cc-close__email { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 34rem; }
   .cc-hero__audience { margin-top: var(--space-3); max-width: 34rem; color: var(--muted); font-size: var(--type-ui); line-height: 1.5; }
-  .cc-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-grid) var(--space-stack); margin: 0; }
+  .cc-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-stack); margin: 0; }
   .cc-facts > div { min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .cc-facts dt { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
-  .cc-facts dd { order: -1; margin: 0; font-size: var(--type-quote); font-weight: 500; line-height: 1.35; }
+  .cc-facts dd { order: -1; margin: 0; font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.35; }
   .cc-work, .cc-scope, .cc-close { padding-block: var(--space-section); background: var(--sand); border-top: 1px solid var(--line); }
   .cc-work .h3-h2, .cc-scope .h3-h2, .cc-close .h3-h2 { max-width: 28ch; }
   .cc-work__intro { margin-top: var(--space-3); max-width: 44rem; }
+  .cc-perspective { margin-top: var(--space-3); max-width: 44rem; }
+  .cc-perspective p { color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
+  .cc-perspective a { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--text); text-decoration: underline; text-underline-offset: .2em; white-space: nowrap; }
   .cc-work__list { margin-top: var(--space-4); }
   .cc-area { display: grid; align-items: baseline; gap: var(--space-3); min-width: 0; padding-block: var(--space-3); scroll-margin-top: var(--space-hero-top); border-top: 1px solid var(--line); }
   .cc-area__heading { display: flex; align-items: baseline; gap: var(--space-2); min-width: 0; }
-  .cc-area__id { flex-shrink: 0; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; font-variant-numeric: tabular-nums; }
-  .cc-area h3 { margin-top: 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .cc-area__id { flex-shrink: 0; color: var(--purple); font-size: var(--type-eyebrow); line-height: 1.5; font-variant-numeric: tabular-nums; }
+  .cc-area h3 { margin-top: 0; font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.2; }
   .cc-area > p, .cc-area__output p { font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .cc-area__output .cc-area__output-label { margin-bottom: var(--space-1); color: var(--text); font-size: var(--type-ui); line-height: 1.5; font-weight: 500; }
   .cc-method { margin-top: 0; }
@@ -119,6 +135,9 @@ const t = getCareerCompoundingV2(lang);
   .cc-progress dt { color: var(--text); font-size: var(--type-ui); font-weight: 500; line-height: 1.5; }
   .cc-progress dd { margin: var(--space-1) 0 0; }
   .cc-inclusions { display: grid; }
+  .cc-program { border-top: 1px solid var(--line); }
+  .cc-program > summary { padding-top: var(--space-stack); }
+  .cc-program .cc-inclusions { padding-bottom: var(--space-stack); }
   .cc-inclusions li { min-width: 0; padding-block: var(--space-stack); border-top: 1px solid var(--line); }
   .cc-inclusions h3 { font-size: var(--type-subheading); line-height: 1.35; }
   .cc-inclusions p { margin-top: var(--space-1); max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.6; }
@@ -138,14 +157,22 @@ const t = getCareerCompoundingV2(lang);
   .cc-question[open] summary span { transform: rotate(45deg); }
   .cc-question > p { padding-bottom: var(--space-3); max-width: 36rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .cc-close .h3-body { margin-top: var(--space-3); }
+  .cc-close { background: linear-gradient(180deg, var(--sand), var(--stone)); }
   .cc-close__layout { display: grid; gap: var(--space-grid); align-items: center; }
   .cc-close__copy { min-width: 0; }
+  .cc-close__orbit { position: relative; width: min(100%, calc(var(--space-8) * 4)); aspect-ratio: 1; justify-self: center; border: 1px solid var(--signal); border-radius: 50%; opacity: .7; }
+  .cc-close__orbit::after { content: ''; position: absolute; inset: var(--space-4); border: 1px solid var(--line); border-radius: 50%; }
+  .cc-close__orbit span { position: absolute; top: var(--space-4); right: var(--space-4); width: var(--space-4); aspect-ratio: 1; border-radius: 50%; background: var(--purple); box-shadow: inset -.25rem -.25rem .5rem rgba(10,11,20,.2); }
   .cc-close__email { margin-top: var(--space-1); overflow-wrap: anywhere; }
   .cc-close__email a { text-decoration: underline; text-underline-offset: 3px; color: var(--purple); }
   @media (min-width: 56rem) {
     .cc-close__layout { grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--space-8) * 4)); }
-    .cc-hero__grid { grid-template-columns: 1.25fr 1fr; }
+    .cc-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .cc-hero__media { justify-self: end; }
+    .cc-facts { grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .cc-area { grid-template-columns: minmax(0, .8fr) minmax(0, 1.1fr) minmax(0, 1.1fr); gap: var(--space-grid); }
     .cc-scope__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
   }
+  @media (max-width: 55.99rem) { .cc-hero__media { width: min(100%, 18rem); } .cc-close__orbit { display: none; } }
+  @media (max-width: 30rem) { .cc-hero__media { width: min(100%, 15rem); } }
 </style>

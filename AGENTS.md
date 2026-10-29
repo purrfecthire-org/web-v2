@@ -59,9 +59,11 @@ existing Markdown utilities without changing URLs or code literals.
   One diagnostic session and seven sessions with a senior consultant; follow-up per
   process while actively executing the agreed plan. No job, salary, unlimited-call
   or 24/7 guarantee.
+- All private advisory sessions are one hour (Kate, 29 October 2026), including
+  the USD 300 strategic session, all eight Offer sessions and all nine CC sessions.
 - Career Compounding: USD 5,000 over six months; nine private sessions with Kate:
-  one 90-minute diagnostic, seven 75-minute execution sessions approximately
-  three weeks apart, one 90-minute final review. Eight asynchronous checkpoints,
+  one one-hour diagnostic, seven one-hour execution sessions approximately
+  three weeks apart, one one-hour final review. Eight asynchronous checkpoints,
   one between each pair of sessions, receive feedback within two business days.
   Includes a private personalized hub and real work inside the participant's
   organization. Independent entry; Offer Accelerator is not a prerequisite.
@@ -75,6 +77,10 @@ existing Markdown utilities without changing URLs or code literals.
   +1 (831) 224-5188, confirmed by Kate on 19 October 2026. Email remains
   an alternative; a WhatsApp click does not mean a message was sent or received.
 - B2B has no public numeric prices or fee percentages.
+- Explain delivery commitments and participant responsibilities before payment.
+  No refund, cancellation or money-back policy has been confirmed. Do not invent
+  one or turn participant testimonials into a guaranteed outcome. The OA range
+  remains USD 2,000 to 8,000; a new tier or pricing formula requires a decision.
 - Contact: go@purrfecthire.com.
 - Advisory provides no preference in client searches. Participation and private
   notes remain confidential. Applying to vacancies is free.

@@ -1,5 +1,6 @@
 import type { Lang } from './index';
 import { SESSION_1_1, CONSIDERED_FREE } from './links';
+import { STRATEGIC_SESSION, OFFER_ACCELERATOR, CAREER_COMPOUNDING, DIAGNOSTIC_ENTRY } from './advisoryOffers';
 
 export { SESSION_1_1 as SESSION_MAILTO, CONSIDERED_FREE } from './links';
 
@@ -34,27 +35,28 @@ export const talentV2En: TalentV2Content = {
     items: [
       {
         name: 'Offer Accelerator',
-        body: 'Choose this when you are changing company, market or scope. Build your positioning and work through outreach, interviews, offers and negotiation. One diagnostic and seven sessions with a senior consultant, followed by process support while you execute the agreed plan.',
-        price: 'USD 2,000 to 8,000',
-        note: 'Final investment depends on seniority and location.',
+        body: 'Plan your next move with focused positioning, outreach, interview preparation and negotiation. Start with Kate; continue with your confirmed senior advisor.',
+        price: OFFER_ACCELERATOR.priceLabel,
+        note: `${OFFER_ACCELERATOR.sessionCount} one-hour sessions total. Active-process follow-up until you start your next role, while you execute the agreed plan.`,
         cta: 'Explore Offer Accelerator',
         href: '/offer-acceleration',
         proof: { label: 'Read participant experiences', href: '/offer-acceleration/#voices' },
       },
       {
         name: 'Career Compounding',
-        body: 'Choose this when you have a role and a real business challenge. Work on decisions, stakeholders and execution inside your company. Six months, nine sessions with Kate and eight asynchronous checkpoints. Offer Accelerator is optional.',
-        price: 'USD 5,000',
+        body: 'Work with Kate on people, influence and execution in your current role. Test your decisions on a challenge you can act on.',
+        price: CAREER_COMPOUNDING.priceLabel,
+        note: `${CAREER_COMPOUNDING.sessionCount} one-hour sessions total. ${CAREER_COMPOUNDING.durationLabel} and ${CAREER_COMPOUNDING.checkpointCount} checkpoints after continuation. Offer Accelerator is optional.`,
         cta: 'Explore Career Compounding',
         href: '/career-compounding',
       },
       {
         name: '1:1 Strategic Session',
-        body: 'Choose this for one interview, offer, negotiation or career decision. A focused conversation with Kate to examine it and agree your next steps.',
-        price: 'USD 300',
+        body: 'Work through one interview, offer, negotiation or career decision with Kate. Leave with a short written decision and next steps.',
+        price: STRATEGIC_SESSION.priceLabel,
         cta: 'Request a session on WhatsApp',
         href: SESSION_1_1,
-        note: 'Include your role, LinkedIn and the question you want to work on.',
+        note: `One private hour. Program credit for the same challenge within ${DIAGNOSTIC_ENTRY.creditWindowDays} days after this session.`,
       },
     ],
     free: {

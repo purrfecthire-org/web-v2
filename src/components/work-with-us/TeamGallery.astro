@@ -35,7 +35,8 @@ import { team } from '../../content/team';
   }
   .team-gallery__person { position: relative; min-width: 0; margin: 0; text-align: center; }
   .team-gallery__person::after { content: ''; position: absolute; z-index: -1; top: calc(var(--avatar-size) / 2); left: 50%; width: calc(100% + var(--gallery-gap)); height: 1px; background: var(--purple); opacity: .16; pointer-events: none; }
-  .team-gallery__person:nth-child(3n)::after { display: none; }
+  .team-gallery__person:nth-child(3n)::after,
+  .team-gallery__person:last-child::after { display: none; }
   .team-gallery__portrait {
     width: var(--avatar-size);
     max-width: 100%;
@@ -58,7 +59,7 @@ import { team } from '../../content/team';
     line-height: 1.5;
   }
   @media (min-width: 48rem) {
-    .team-gallery { --avatar-size: calc(var(--space-6) * 2); grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .team-gallery { --avatar-size: calc(var(--space-6) * 2); grid-template-columns: repeat(5, minmax(0, 1fr)); }
     .team-gallery__person:nth-child(3)::after { display: block; }
   }
   @media (min-width: 56rem) {
