@@ -936,3 +936,22 @@
   }
   .oa-testimonials__controls { display:flex; margin-top:var(--space-3); }
 }
+/* Shared editorial investment and guarantee questions, 29 October 2026. */
+.oa-new-hero__terms{margin-top:var(--space-2);color:var(--muted);font-size:var(--type-caption);line-height:1.6}
+.oa-new-hero__terms a{display:inline-flex;align-items:center;gap:var(--space-1);min-height:2.75rem;text-decoration:underline;text-underline-offset:.25rem}
+.oa-fit-card--no a{color:var(--purple);text-decoration:underline;text-underline-offset:.2rem}
+.oa-included{scroll-margin-top:var(--space-3)}
+.oa-decide{padding-block:var(--space-section);border-top:1px solid var(--line)}
+.oa-decide__grid{display:grid;gap:var(--space-grid)}
+.oa-decide .h3-h2{max-width:20ch}
+.oa-decide .h3-body{margin-top:var(--space-3)}
+.oa-decide .h3-link{margin-top:var(--space-3);font-size:var(--type-ui)}
+.oa-decide__questions details{padding-block:var(--space-3);border-top:1px solid var(--line)}
+.oa-decide__questions summary{font-size:var(--type-ui);font-weight:500;cursor:pointer;padding-right:var(--space-2)}
+.oa-decide__questions p{margin-top:var(--space-2);font-size:var(--type-ui);line-height:1.7;color:var(--muted)}
+.oa-decide__steps{display:grid;gap:var(--space-3);list-style:none;margin:0;padding:0}
+.oa-decide__steps li{display:flex;gap:var(--space-2);border-top:1px solid var(--line);padding-top:var(--space-3)}
+.oa-decide__steps li>span{color:var(--purple);font-size:var(--type-eyebrow);padding-top:.25rem}
+.oa-decide__steps h3{font-family:var(--h-serif);font-size:var(--type-quote);font-weight:400;line-height:1.2}
+.oa-decide__steps p{margin-top:var(--space-1);color:var(--muted);font-size:var(--type-ui);line-height:1.7;max-width:36rem}
+@media(min-width:56rem){.oa-decide__grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.oa-decide__steps{grid-column:1/-1;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--space-grid)}}

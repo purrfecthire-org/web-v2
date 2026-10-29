@@ -17,14 +17,14 @@ const evidenceIcons = ['role', 'market', 'growth'] as const;
   journey="companies"
   navCta={{ label: t.cta, href: bookingHref }}
 >
-  <section class="rs-hero" aria-labelledby="rs-title">
+  <section class="rs-hero h3-surface h3-editorial-hero" aria-labelledby="rs-title">
     <div class="h3-wrap rs-hero__grid">
       <div>
         <p class="h3-eyebrow">{t.eyebrow}</p>
         <p class="rs-role">{role.role}</p>
         <h1 id="rs-title">{role.hero.headline}</h1>
         <p class="rs-hero__body">{role.hero.body}</p>
-        <a class="h3-btn h3-btn--ink rs-hero__cta" href={bookingHref} data-cta={`search-${role.slug}-hero`}>
+        <a class="h3-btn rs-hero__cta" href={bookingHref} data-cta={`search-${role.slug}-hero`}>
           {t.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <p class="rs-cta-note">{t.ctaNote}</p>
@@ -47,7 +47,7 @@ const evidenceIcons = ['role', 'market', 'growth'] as const;
     </div>
   </section>
 
-  <section class="rs-section rs-assessment" aria-labelledby="rs-assessment-title">
+  <section class="rs-section rs-assessment h3-surface" aria-labelledby="rs-assessment-title">
     <div class="h3-wrap">
       <p class="h3-eyebrow">{t.evidenceEyebrow}</p>
       <h2 class="h3-h2 rs-section__title" id="rs-assessment-title">{t.evidenceHeadline}</h2>
@@ -69,7 +69,7 @@ const evidenceIcons = ['role', 'market', 'growth'] as const;
     </div>
   </section>
 
-  <section class="rs-section rs-risks" aria-labelledby="rs-risks-title">
+  <section class="rs-section rs-risks h3-surface" aria-labelledby="rs-risks-title">
     <div class="h3-wrap rs-section__grid">
       <div>
         <p class="h3-eyebrow">{t.risksEyebrow}</p>
@@ -81,7 +81,7 @@ const evidenceIcons = ['role', 'market', 'growth'] as const;
     </div>
   </section>
 
-  <section class="rs-section rs-close" aria-labelledby="rs-close-title">
+  <section class="rs-section rs-close h3-surface" aria-labelledby="rs-close-title">
     <div class="h3-wrap">
       <p class="h3-eyebrow">{t.preparationEyebrow}</p>
       <h2 class="h3-h2 rs-section__title" id="rs-close-title">{role.close.headline}</h2>
@@ -89,7 +89,7 @@ const evidenceIcons = ['role', 'market', 'growth'] as const;
         {role.preparation.map((item) => <li>{item}</li>)}
       </ul>
       <div class="rs-close__action">
-        <a class="h3-btn h3-btn--ink" href={bookingHref} data-cta={`search-${role.slug}-close`}>
+        <a class="h3-btn" href={bookingHref} data-cta={`search-${role.slug}-close`}>
           {t.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <a class="h3-link" href={t.sampleHref}>{t.sampleLabel}<span aria-hidden="true">→</span></a>
@@ -100,16 +100,17 @@ const evidenceIcons = ['role', 'market', 'growth'] as const;
 </Shell>
 
 <style lang="scss">
-  .rs-hero { padding: var(--space-hero-top) 0 var(--space-section); }
+  .rs-hero { padding: calc(var(--space-hero-top) + var(--space-3)) 0 var(--space-section); }
+  .rs-hero .h3-eyebrow, .rs-section .h3-eyebrow { color: var(--purple); }
   .rs-hero__grid, .rs-section__grid { display: grid; gap: var(--space-grid); align-items: start; }
-  .rs-role { margin-top: var(--space-stack); font-size: var(--type-ui); line-height: 1.5; font-weight: 500; }
+  .rs-role { margin-top: var(--space-stack); font-size: var(--type-ui); line-height: 1.5; font-weight: 500; color: var(--muted); }
   .rs-hero h1 { margin-top: var(--space-2); font-family: var(--h-serif); font-weight: 400; font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0; font-size: var(--type-display); line-height: 1.08; letter-spacing: -0.02em; max-width: 20ch; text-wrap: balance; }
   .rs-hero__body { margin-top: var(--space-stack); font-size: var(--type-lead); line-height: 1.6; color: var(--muted); max-width: 55ch; }
   .rs-hero__cta { margin-top: var(--space-stack); }
   .rs-cta-note { margin-top: var(--space-2); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); max-width: 55ch; }
-  .rs-context { border: 1px solid var(--line); border-radius: var(--radius-card); min-width: 0; overflow: hidden; }
+  .rs-context { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); min-width: 0; overflow: hidden; }
   .rs-context__visual { width: 100%; max-width: calc(var(--space-8) * 4); padding: var(--space-stack); margin-inline: auto; }
-  .rs-context__copy { padding: var(--space-stack); background: var(--white); border-top: 1px solid var(--line); }
+  .rs-context__copy { padding: var(--space-stack); background: transparent; border-top: 1px solid var(--line); }
   .rs-context h2, .rs-assessment h3, .rs-risks h3 { font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; font-family: var(--h-sans); }
   .rs-context__body, .rs-assessment__row p, .rs-risks__list p { margin-top: var(--space-2); max-width: 55ch; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .rs-context details { margin-top: var(--space-stack); }
@@ -131,9 +132,9 @@ const evidenceIcons = ['role', 'market', 'growth'] as const;
   .rs-assessment__evidence { display: flex; gap: var(--space-stack); align-items: start; }
   .rs-assessment__evidence > div { min-width: 0; }
   .rs-assessment__marker { display: grid; gap: var(--space-2); justify-items: start; flex: 0 0 var(--space-grid); color: var(--purple); }
-  .rs-question { padding: var(--space-stack); background: var(--white); border-radius: var(--radius-card); }
+  .rs-question { padding: var(--space-stack); background: var(--white); border-left: 2px solid var(--signal); border-radius: 0 var(--radius-card) var(--radius-card) 0; }
   .rs-question summary { padding-bottom: 0; }
-  .rs-number { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .rs-number { font-size: var(--type-eyebrow); line-height: 1.5; letter-spacing: .1em; color: var(--purple); font-variant-numeric: tabular-nums; }
   .rs-risks__list { border-left: 1px solid var(--line); padding-left: var(--space-stack); }
   .rs-risks__list li { padding-block: var(--space-stack); border-bottom: 1px solid var(--line); }
   .rs-risks__list li:first-child { padding-top: 0; }

@@ -30,7 +30,7 @@ const topics: readonly HelpTopic[] = [
     label: 'My next career move',
     heading: 'Compete for the right next opportunity.',
     answer: [
-      'Offer Accelerator is private career advisory for senior professionals preparing a move. It includes one diagnostic session and seven private sessions with a senior consultant, plus process support while you actively execute the agreed plan.',
+      'Offer Accelerator is private career advisory for senior professionals preparing a move. It includes one diagnostic session and seven private sessions with a senior consultant, plus process support while you actively execute the agreed plan. Each private session lasts one hour.',
       'Investment ranges from USD 2,000 to 8,000, depending on seniority and location. We confirm it before enrollment. A job or salary increase is not guaranteed.',
     ],
     action: { label: 'Apply for Offer Accelerator', href: APPLY_OFFER },
@@ -42,12 +42,12 @@ const topics: readonly HelpTopic[] = [
     label: 'Growing in my current role',
     heading: 'Work on bigger problems in the role you have.',
     answer: [
-      'Career Compounding works on real challenges inside your company. USD 5,000 includes six months, nine private sessions with Kate, eight asynchronous checkpoints and a personalized private workspace.',
+      'Career Compounding works on real challenges inside your company. USD 5,000 includes six months, nine private sessions with Kate, eight asynchronous checkpoints and a personalized private workspace. Each private session lasts one hour.',
       'You can join directly without taking Offer Accelerator. The aim is stronger judgment, ownership, influence and execution. Promotions and pay increases are not guaranteed.',
     ],
     action: { label: 'Explore Career Compounding', href: '/career-compounding' },
     question: 'What if I need help with one decision?',
-    detail: 'A strategic 1:1 session is USD 300. Ask our team about the question you want to work through so we can help you choose the appropriate format.',
+    detail: 'A strategic 1:1 session is USD 300 for one hour with Kate. Ask our team about the question you want to work through so we can help you choose the appropriate format.',
   },
   {
     id: 'application',

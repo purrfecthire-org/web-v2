@@ -15,8 +15,8 @@ const sectionGroups = [[0, 3], [1], [2], [4], [5, 6], [7]].map((indexes) => inde
   navCta={{ label: t.close.cta, href: SEARCH_CALIBRATION_CTA }}
   journey="companies"
 >
-  <div class="cb-page" data-product="candidate-brief-sample">
-    <section class="h3-hero cb-hero" aria-labelledby="cb-title">
+  <div class="cb-page h3-surface" data-product="candidate-brief-sample">
+    <section class="h3-hero h3-editorial-hero cb-hero" aria-labelledby="cb-title">
       <div class="h3-wrap">
         <p class="h3-eyebrow">{t.hero.eyebrow}</p>
         <h1 class="h3-hero__h1 cb-hero__title" id="cb-title">{t.hero.headline}</h1>
@@ -49,7 +49,7 @@ const sectionGroups = [[0, 3], [1], [2], [4], [5, 6], [7]].map((indexes) => inde
       <div class="h3-wrap">
         <h2 class="h3-h2 cb-close__title" id="cb-close-title">{t.close.headline}</h2>
         <p class="h3-body cb-close__body">{t.close.body}</p>
-        <a href={SEARCH_CALIBRATION_CTA} data-cta="candidate-brief-search-read" class="h3-btn h3-btn--ink cb-close__cta">
+        <a href={SEARCH_CALIBRATION_CTA} data-cta="candidate-brief-search-read" class="h3-btn cb-close__cta">
           {t.close.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <a href={t.close.backHref} data-cta="candidate-brief-search-calibration" class="h3-link cb-close__back">
@@ -61,24 +61,27 @@ const sectionGroups = [[0, 3], [1], [2], [4], [5, 6], [7]].map((indexes) => inde
 </Shell>
 
 <style lang="scss">
+  .cb-page { background: var(--sand); }
+  .cb-page .h3-eyebrow { color: var(--purple); }
+  .cb-hero { padding-top: calc(var(--space-hero-top) + var(--space-3)); }
   .cb-hero__title { max-width: 18ch; }
   .cb-hero__body { max-width: 43rem; }
-  .cb-disclosure { margin-top: var(--space-stack); max-width: 48rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .cb-disclosure { margin-top: var(--space-stack); max-width: 48rem; padding-left: var(--space-2); border-left: 2px solid var(--signal); color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
   .cb-example { padding: 0 0 var(--space-section); }
   .cb-document { max-width: 64rem; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
   .cb-document__header { padding: var(--space-grid); border-bottom: 1px solid var(--line); }
   .cb-document__header h2 { margin: 1rem 0 0; font-family: var(--h-serif); font-size: var(--type-section); font-weight: 400; line-height: 1.12; letter-spacing: -0.015em; }
-  .cb-facts { display: grid; gap: 1.5rem 2rem; margin: 2rem 0 0; }
+  .cb-facts { display: grid; gap: var(--space-3) var(--space-4); margin: var(--space-4) 0 0; }
   .cb-facts dt { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); font-weight: 500; }
-  .cb-facts dd { margin: 0.5rem 0 0; font-size: var(--type-ui); line-height: 1.5; }
-  .cb-document__sections { display: grid; gap: 2rem; padding: var(--space-grid); }
+  .cb-facts dd { margin: var(--space-1) 0 0; font-size: var(--type-ui); line-height: 1.5; }
+  .cb-document__sections { display: grid; gap: var(--space-4); padding: var(--space-grid); }
   .cb-document__group { min-width: 0; padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .cb-document__group section + section { margin-top: var(--space-stack); }
   .cb-document__sections h3 { margin: 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .cb-document__sections p { margin-top: 0.5rem; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .cb-document__group:last-child { grid-column: 1 / -1; padding: var(--space-stack); border-top: 0; border-radius: var(--radius-card); background: var(--sand); }
-  .cb-document__footer { padding: 0 var(--space-grid) 2rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .cb-close { padding-block: var(--space-section); border-top: 1px solid var(--line); background: var(--sand); }
+  .cb-document__footer { padding: 0 var(--space-grid) var(--space-4); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .cb-close { padding-block: var(--space-section); border-top: 1px solid var(--line); background: transparent; }
   .cb-close__title { max-width: 27ch; }
   .cb-close__body { margin-top: 1.5rem; max-width: 40rem; }
   .cb-close__cta { margin-top: 2rem; max-width: 100%; text-align: center; line-height: 1.4; }

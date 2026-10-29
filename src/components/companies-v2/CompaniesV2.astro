@@ -16,26 +16,26 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
 ---
 
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light" navCta={{ label: t.hero.cta, href: BOOKING_URL }} journey="companies">
-  <section class="h3-hero fc-hero" aria-labelledby="fc-title">
+  <section class="h3-hero fc-hero h3-editorial-hero" aria-labelledby="fc-title">
+    <figure class="fc-hero__media">
+      <img src="/photos/editorial/founders-conversation-v2.webp" alt="Illustrative scene of three people in a working conversation in an urban courtyard." width="1440" height="960" decoding="async" fetchpriority="high" />
+    </figure>
     <div class="h3-wrap h3-hero__grid">
       <div class="h3-hero__copy">
         <p class="h3-eyebrow">{t.hero.eyebrow}</p>
         <h1 class="h3-hero__h1" id="fc-title">{t.hero.headline}</h1>
         <p class="h3-hero__sub">{t.hero.sub}</p>
         <p class="fc-credential">{t.hero.credential}</p>
-        <div class="fc-hero__actions"><a href={BOOKING_URL} data-cta="companies-hero-booking" class="h3-btn h3-btn--ink h3-hero__cta fc-hero__cta">
+        <div class="fc-hero__actions"><a href={BOOKING_URL} data-cta="companies-hero-booking" class="h3-btn h3-hero__cta fc-hero__cta">
           {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         </div>
         <p class="fc-microcopy">{t.hero.microcopy}</p>
       </div>
-      <figure class="h3-hero__media fc-hero__media" style={{ '--photo-desktop': '8 / 5', '--photo-mobile': '4 / 3' }}>
-        <img src="/photos/editorial/founders-conversation-v2.webp" alt="Illustrative scene of three people in a working conversation in an urban courtyard." width="1440" height="960" decoding="async" fetchpriority="high" />
-      </figure>
     </div>
   </section>
 
-  <section class="fc-proof" aria-labelledby="fc-proof-title">
+  <section class="fc-proof h3-surface" aria-labelledby="fc-proof-title">
     <div class="h3-wrap">
       <p class="h3-eyebrow">{t.proof.eyebrow}</p>
       <h2 class="h3-h2 fc-heading" id="fc-proof-title">Selected work and client feedback.</h2>
@@ -61,7 +61,7 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
     </div>
   </section>
 
-  <section class="fc-method" aria-labelledby="fc-method-title">
+  <section class="fc-method h3-surface" aria-labelledby="fc-method-title">
     <div class="h3-wrap fc-editorial">
       <div>
         <p class="h3-eyebrow">{t.method.eyebrow}</p>
@@ -81,7 +81,7 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
     </div>
   </section>
 
-  <section class="fc-models" aria-labelledby="fc-models-title">
+  <section class="fc-models h3-surface" aria-labelledby="fc-models-title">
     <div class="h3-wrap">
       <div class="fc-editorial">
         <header><p class="h3-eyebrow">{t.models.eyebrow}</p><h2 class="h3-h2 fc-heading" id="fc-models-title">{t.models.headline}</h2></header>
@@ -89,30 +89,41 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
           {t.models.items.map(model => <li class="fc-model"><h3>{model.name}</h3><p>{model.note}</p></li>)}
         </ul>
       </div>
-      <div class="fc-close">
-        <p class="h3-body">{t.close.body}</p>
-        <a href={BOOKING_URL} data-cta="companies-close-booking" class="h3-btn h3-btn--ink">{t.close.cta}<span aria-hidden="true">→</span></a>
-      </div>
+    </div>
+  </section>
+
+  <section class="fc-close h3-mineral-close" aria-labelledby="fc-close-title">
+    <div class="h3-wrap fc-close__inner">
+      <h2 class="h3-h2" id="fc-close-title">{t.close.headline}</h2>
+      <p class="h3-body">{t.close.body}</p>
+      <a href={BOOKING_URL} data-cta="companies-close-booking" class="h3-btn fc-close__cta">{t.close.cta}<span aria-hidden="true">→</span></a>
     </div>
   </section>
 </Shell>
 
 <style lang="scss">
-  .fc-hero .h3-hero__grid { align-items: start; }
-  .fc-hero__actions { display: flex; margin-top: var(--space-stack); }
+  .fc-hero { isolation: isolate; display: flex; align-items: center; min-height: clamp(43rem, 52vw, 53rem); padding-block: 0; }
+  .fc-hero::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(247,246,243,.98) 0%, rgba(247,246,243,.94) 34%, rgba(247,246,243,.75) 49%, rgba(247,246,243,.08) 77%), linear-gradient(180deg, rgba(247,246,243,.92), rgba(247,246,243,0) 26%, rgba(247,246,243,0) 76%, var(--sand)); }
+  .fc-hero .h3-hero__grid { width: 100%; grid-template-columns: minmax(0, 1fr); padding-block: calc(var(--space-hero-top) + var(--space-3)) var(--space-8); }
+  .fc-hero .h3-hero__copy { max-width: 34rem; }
+  .fc-hero .h3-hero__h1 { max-width: 13ch; }
+  .fc-hero .h3-hero__sub { max-width: 36ch; margin-top: var(--space-3); }
+  .fc-hero .h3-eyebrow, .fc-proof .h3-eyebrow, .fc-method .h3-eyebrow, .fc-models .h3-eyebrow { color: var(--purple); }
+  .fc-hero__actions { display: flex; margin-top: var(--space-3); }
   .fc-hero__actions .h3-hero__cta { margin-top: 0; }
-  .fc-hero__media { margin: 0; border-radius: var(--radius-card); overflow: hidden; }
-  .fc-hero__media img { object-position: 50% 50%; }
+  .fc-hero__media { position: absolute; inset: 0; z-index: -2; margin: 0; overflow: hidden; }
+  .fc-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 58% 0%; }
   .fc-credential, .fc-microcopy { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 54ch; }
-  .fc-method, .fc-proof, .fc-models { padding-block: var(--space-section); }
+  .fc-method, .fc-proof, .fc-models { padding-block: var(--space-section); background: var(--sand); }
+  .fc-method { border-block: 1px solid var(--line); }
   .fc-heading { max-width: 26ch; }
   .fc-editorial { display: grid; gap: var(--space-grid); }
   .fc-steps, .fc-models__list { display: grid; gap: var(--space-stack); }
   .fc-step { min-width: 0; display: grid; grid-template-columns: var(--space-stack) minmax(0, 1fr); gap: var(--space-stack); padding-top: var(--space-stack); border-top: 1px solid var(--line); }
-  .fc-step h3, .fc-model h3 { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
+  .fc-step h3, .fc-model h3 { font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.2; letter-spacing: -.014em; text-wrap: balance; }
   .fc-step p, .fc-product-hire__brief, .fc-model p { margin-top: var(--space-2); max-width: 54ch; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
   .fc-step { scroll-margin-top: var(--space-stack); }
-  .fc-step__id { font-size: var(--type-caption); font-variant-numeric: tabular-nums; line-height: 1.5; color: var(--muted); }
+  .fc-step__id { font-size: var(--type-eyebrow); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: .1em; line-height: 1.5; color: var(--purple); }
   .fc-step__link { margin-top: var(--space-2); max-width: 100%; font-size: var(--type-ui); }
   .fc-product-hire { margin-top: var(--space-grid); scroll-margin-top: var(--space-stack); }
   .fc-product-hire__story, .fc-product-hire__progress { min-width: 0; }
@@ -128,17 +139,28 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
   .fc-progression dt { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .fc-progression dd { margin: var(--space-1) 0 0; font-size: var(--type-body); font-weight: 500; line-height: 1.5; }
   .fc-product-hire__progression { margin-top: var(--space-stack); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .fc-models { border-top: 1px solid var(--line); }
   .fc-model { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
-  .fc-close { display: grid; gap: var(--space-stack); align-items: center; margin-top: var(--space-section); padding-top: var(--space-grid); border-top: 1px solid var(--line); }
-  .fc-close .h3-body { max-width: 54ch; }
-  .fc-close .h3-btn { justify-self: start; }
+  .fc-close { padding-block: var(--space-section); }
+  .fc-close__inner { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); text-align: center; }
+  .fc-close .h3-h2 { max-width: 20ch; margin-top: 0; }
+  .fc-close .h3-body { max-width: 42ch; }
+  .fc-close__cta { max-width: 100%; }
   @media (min-width: 56rem) {
-    .fc-hero .h3-hero__grid { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
-    .fc-hero__media img { object-position: 50% 0%; }
-    .fc-editorial { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
-    .fc-testimonials { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
-    .fc-close { grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-grid); }
-    .fc-close .h3-btn { justify-self: end; }
+    .fc-editorial, .fc-testimonials { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .fc-product-hire__progress { padding-inline-start: var(--space-grid); border-inline-start: 1px solid var(--line); }
+    .fc-method .fc-editorial > div { grid-column: 2; grid-row: 1; padding-inline-start: var(--space-grid); }
+    .fc-method .fc-steps { grid-column: 1; grid-row: 1; }
+  }
+  @media (max-width: 55.99rem) {
+    .fc-hero { min-height: 38rem; }
+    .fc-hero__media { opacity: .25; }
+    .fc-hero::after { background: linear-gradient(90deg, rgba(247,246,243,.9), rgba(247,246,243,.56)), linear-gradient(0deg, var(--sand), rgba(247,246,243,0) 40%); }
+    .fc-hero .h3-hero__copy { max-width: 29rem; }
+  }
+  @media (max-width: 30rem) {
+    .fc-hero { min-height: 35rem; }
+    .fc-hero__media { opacity: .18; }
+    .fc-hero .h3-hero__h1 { max-width: 13ch; }
+    .fc-hero__cta { width: 100%; }
   }
 </style>

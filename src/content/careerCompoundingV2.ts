@@ -1,7 +1,8 @@
 import type { Lang } from './index';
 import { WHATSAPP_CAREER_COMPOUNDING } from './links';
 
-// Commercial scope explicitly confirmed by Kate on 19 October 2026.
+// Program confirmed 19 October 2026; all sessions are one hour per Kate,
+// 29 October 2026. This supersedes the earlier 90/75-minute schedule.
 // CC and Offer Accelerator are independent products for different career decisions.
 export const CAREER_COMPOUNDING_HREF = '/career-compounding';
 export const CAREER_COMPOUNDING_EMAIL = 'go@purrfecthire.com';
@@ -31,7 +32,7 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
     note: 'USD 5,000 for the program. Offer Accelerator is not a prerequisite.',
     facts: [
       { value: '6 months', label: 'Working on real business challenges' },
-      { value: '9 sessions', label: 'Private 1:1 conversations with Kate' },
+      { value: '9 × 1 hour', label: 'Private 1:1 conversations with Kate' },
       { value: '8 checkpoints', label: 'Asynchronous feedback between sessions' },
       { value: 'About 3 weeks', label: 'Between conversations' },
     ],
@@ -60,11 +61,11 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
     eyebrow: 'The program',
     headline: 'Six months. One continuous body of work.',
     price: 'USD 5,000',
-    summary: 'Nine private sessions with Kate, with approximately three weeks between conversations. Eight asynchronous checkpoints connect the work between sessions.',
+    summary: 'Nine one-hour private sessions with Kate, with approximately three weeks between conversations. Eight asynchronous checkpoints connect the work between sessions.',
     items: [
-      { title: 'One 90-minute diagnostic', body: 'Examine how you operate today, your strengths and constraints. Select a real, high-impact challenge and establish development priorities.' },
-      { title: 'Seven 75-minute execution sessions', body: 'Work through actual decisions, trade-offs, stakeholders, blockers, results and feedback, approximately every three weeks.' },
-      { title: 'One 90-minute final review', body: 'Review evidence of impact, capabilities developed and your next professional challenge.' },
+      { title: 'One one-hour diagnostic', body: 'Examine how you operate today, your strengths and constraints. Select a real, high-impact challenge and establish development priorities.' },
+      { title: 'Seven one-hour execution sessions', body: 'Work through actual decisions, trade-offs, stakeholders, blockers, results and feedback, approximately every three weeks.' },
+      { title: 'One one-hour final review', body: 'Review evidence of impact, capabilities developed and your next professional challenge.' },
       { title: 'Eight asynchronous checkpoints', body: 'One between each pair of sessions. Bring a decision, situation or relevant deliverable to unblock the next action. Checkpoint feedback arrives within two business days.' },
       { title: 'A private, personalized hub', body: 'Keep a living record of the problem, decisions, experiments, feedback, progress and evidence of impact.' },
       { title: 'A real professional challenge', body: 'The program follows work inside your organization. If you resolve the challenge before the program ends, we choose the next one.' },

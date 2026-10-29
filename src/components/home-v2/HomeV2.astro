@@ -10,7 +10,7 @@ const t = getHomeV2(lang);
 ---
 
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light" journey="home">
-  <section class="h3-hero home-entry" aria-labelledby="home-title">
+  <section class="h3-hero home-entry h3-editorial-hero" aria-labelledby="home-title">
     <picture class="home-entry__background">
       <source media="(max-width: 55.99rem)" srcset="/photos/editorial/timber-courtyard-mobile.webp" type="image/webp" />
       <img src="/photos/editorial/timber-courtyard-desktop.webp" alt={t.hero.photoAlt} width="1536" height="1024" decoding="async" fetchpriority="high" />
@@ -21,11 +21,11 @@ const t = getHomeV2(lang);
           <h1 class="h3-hero__h1" id="home-title">{t.hero.headline}</h1>
           <p class="h3-hero__sub">{t.hero.sub}</p>
         <nav class="home-paths" id="choose-your-path" aria-label={t.hero.choose}>
-          <a class="home-path" href={PAGE_COMPANIES} data-cta="home-choose-companies">
+          <a class="h3-btn home-path" href={PAGE_COMPANIES} data-cta="home-choose-companies">
             <span>{t.hero.companies.label}</span>
             <span class="home-path__arrow" aria-hidden="true">→</span>
           </a>
-          <a class="home-path" href={PAGE_TALENT} data-cta="home-choose-talent">
+          <a class="h3-btn home-path" href={PAGE_TALENT} data-cta="home-choose-talent">
             <span>{t.hero.talent.label}</span>
             <span class="home-path__arrow" aria-hidden="true">→</span>
           </a>
@@ -38,7 +38,7 @@ const t = getHomeV2(lang);
     </button>
   </section>
 
-  <section class="home-proof" id="clients" aria-labelledby="home-proof-label">
+  <section class="home-proof h3-surface" id="clients" aria-labelledby="home-proof-label">
     <div class="h3-wrap home-proof__grid">
       <div>
         <h2 class="h3-h2" id="home-proof-label">{t.proof.eyebrow}</h2>
@@ -48,7 +48,7 @@ const t = getHomeV2(lang);
     </div>
   </section>
 
-  <section class="home-kate" id="kate" aria-labelledby="kate-title">
+  <section class="home-kate h3-surface" id="kate" aria-labelledby="kate-title">
     <div class="h3-wrap">
       <div class="home-kate__grid">
         <figure class="home-kate__portrait">
@@ -187,7 +187,8 @@ const t = getHomeV2(lang);
 </script>
 
 <style>
-  .home-entry { isolation: isolate; min-height: 56rem; padding-top: var(--space-hero-top); }
+  .home-entry { isolation: isolate; display: flex; align-items: center; min-height: clamp(43rem, 52vw, 53rem); padding-block: calc(var(--space-hero-top) + var(--space-3)) var(--space-8); }
+  .home-entry > .h3-wrap { width: 100%; }
   .home-entry__background { display: block; position: absolute; inset: 0; z-index: -3; }
   .home-entry__background img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
   .home-entry__motion { display: block; position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; opacity: 0; pointer-events: none; }
@@ -199,15 +200,15 @@ const t = getHomeV2(lang);
   .home-entry__motion-control svg { flex: none; }
   .home-entry__play-icon, .home-entry__motion-control[aria-pressed="true"] .home-entry__pause-icon { display: none; }
   .home-entry__motion-control[aria-pressed="true"] .home-entry__play-icon { display: block; }
-  .home-entry::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(rgba(247,246,243,.65),rgba(247,246,243,.5) 48%,transparent 72%); }
-  .home-entry::after { content: ''; position: absolute; inset: 0 0 auto; height: 9rem; z-index: -1; background: linear-gradient(rgba(247,246,243,.96),rgba(247,246,243,.76) 50%,transparent); }
-  .home-entry__intro { max-width: 40rem; }
+  .home-entry::before { content: ''; position: absolute; inset: 0; z-index: -2; opacity: 1; mix-blend-mode: normal; pointer-events: none; background: linear-gradient(90deg, rgba(247,246,243,.97) 0%, rgba(247,246,243,.91) 35%, rgba(247,246,243,.54) 53%, rgba(247,246,243,.03) 78%), linear-gradient(0deg, var(--sand), rgba(247,246,243,0) 28%); }
+  .home-entry::after { content: ''; position: absolute; inset: 0 0 auto; height: calc(var(--space-hero-top) + var(--space-4)); z-index: -1; background: linear-gradient(rgba(247,246,243,.96),rgba(247,246,243,.7) 45%,transparent); }
+  .home-entry__intro { max-width: 34rem; }
   .home-entry .h3-hero__h1 { max-width: 15ch; margin-top: 0; }
-  .home-entry .h3-hero__sub { max-width: 43ch; margin-top: var(--space-stack); color: var(--text); }
-  .home-entry .h3-eyebrow { color: var(--text); }
+  .home-entry .h3-hero__sub { max-width: 36ch; margin-top: var(--space-3); color: var(--muted); }
+  .home-entry .h3-eyebrow { color: var(--purple); }
   .home-paths { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); scroll-margin-top: var(--space-stack); }
-  .home-path { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--space-stack); min-height: 3rem; padding: .75rem var(--space-stack); border: 1px solid rgba(20,22,31,.55); border-radius: 999px; background: rgba(247,246,243,.94); font-size: var(--type-ui); font-weight: 500; line-height: 1.4; transition: color .2s ease, background-color .2s ease; }
-  .home-path:hover { background: var(--midnight); color: var(--sand); }
+  .home-path { justify-content: space-between; gap: var(--space-3); min-height: var(--space-6); padding-inline: var(--space-3); }
+  .home-path:hover { background: var(--purple-deep); }
   .home-path:active { opacity: .8; }
   .home-path__arrow { font-size: var(--type-subheading); line-height: 1; }
   @media (max-width: 37.49rem) { .home-path { width: 100%; } }
@@ -215,6 +216,8 @@ const t = getHomeV2(lang);
   .home-proof__grid { display: grid; gap: var(--space-grid); }
   .home-proof .h3-h2 { max-width: none; }
   .home-proof__geography { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
+  .home-kate { border-top: 1px solid var(--line); }
+  .home-kate .h3-eyebrow { color: var(--purple); }
   .home-kate__grid { display: grid; gap: var(--space-grid); align-items: center; }
   .home-kate__portrait { width: 100%; max-width: 10rem; margin: 0; border-radius: var(--radius-card); overflow: hidden; }
   .home-kate__portrait img { display: block; width: 100%; height: auto; }
@@ -222,13 +225,19 @@ const t = getHomeV2(lang);
   .home-kate__copy .h3-body { max-width: 52ch; }
   .home-kate__meet { margin-top: var(--space-stack); }
   @media (min-width: 56rem) {
-    .home-entry { min-height: 54rem; padding-top: calc(var(--space-hero-top) + var(--space-8)); }
-    .home-entry::before { background: linear-gradient(90deg,rgba(247,246,243,.9),rgba(247,246,243,.82) 42%,rgba(247,246,243,.55) 50%,transparent 62%); }
     .home-entry__motion-control { left: var(--space-6); bottom: var(--space-4); }
-    .home-kate__grid { grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); }
+    .home-kate__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
     .home-kate__portrait { justify-self: center; }
   }
-  @media (min-width: 90rem) { .home-entry__intro { max-width: 42.5rem; } }
-  @media (min-width: 112rem) { .home-entry { min-height: 60rem; } }
+  @media (max-width: 55.99rem) {
+    .home-entry { min-height: 38rem; }
+    .home-entry::before { background: linear-gradient(90deg, rgba(247,246,243,.97), rgba(247,246,243,.85) 58%, rgba(247,246,243,.6)), linear-gradient(0deg, var(--sand), rgba(247,246,243,0) 35%); }
+    .home-entry__intro { max-width: 29rem; }
+  }
+  @media (max-width: 30rem) {
+    .home-entry { min-height: 35rem; }
+    .home-entry::before { background: linear-gradient(rgba(247,246,243,.88), rgba(247,246,243,.86) 60%, var(--sand)); }
+    .home-entry__motion-control { bottom: var(--space-1); }
+  }
   @media (prefers-reduced-motion: reduce) { .home-path { transition: none; } .home-entry__motion, .home-entry__motion-control { display: none; } }
 </style>
