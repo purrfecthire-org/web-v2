@@ -939,6 +939,7 @@
 /* Shared editorial investment and guarantee questions, 29 October 2026. */
 .oa-new-hero__terms{margin-top:var(--space-2);color:var(--muted);font-size:var(--type-caption);line-height:1.6}
 .oa-new-hero__terms a{display:inline-flex;align-items:center;gap:var(--space-1);min-height:2.75rem;text-decoration:underline;text-underline-offset:.25rem}
+@media(max-width:55.99rem){.oa-new-hero__terms{width:fit-content;max-width:100%;padding:var(--space-1) var(--space-2);border:1px solid var(--line);border-radius:var(--radius-input);background:var(--sand);color:var(--text)}}
 .oa-fit-card--no a{color:var(--purple);text-decoration:underline;text-underline-offset:.2rem}
 .oa-included{scroll-margin-top:var(--space-3)}
 .oa-decide{padding-block:var(--space-section);border-top:1px solid var(--line)}

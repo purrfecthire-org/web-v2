@@ -109,7 +109,7 @@ export const offerV2En: OfferV2Content = {
     eyebrow: 'What is included',
     headline: 'Eight sessions. Support as you put the plan to work.',
     items: [
-      'One one-hour diagnostic session and seven one-hour private sessions with a senior consultant',
+      'A one-hour diagnostic session and seven one-hour private sessions with a senior consultant',
       'Personalized materials and agreed next actions in your private Career Journal',
       'A weekly check-in with the team',
       'Direct support over WhatsApp and email',
