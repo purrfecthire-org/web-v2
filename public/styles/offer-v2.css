@@ -938,6 +938,13 @@
   }
   .oa-testimonials__controls { display:flex; margin-top:var(--space-3); }
 }
+/* Kate's portrait appears once, in Home. Offer keeps a compact editorial text row. */
+.oa-advisors { padding-block:var(--space-5); border-top:1px solid var(--line); }
+.oa-advisors__text-only { display:grid; align-items:start; gap:var(--space-grid); }
+.oa-advisors__text-only h2 { max-width:18ch; }
+.oa-advisors__text-only .oa-advisors__lead { margin-top:0; }
+@media(min-width:56rem) { .oa-advisors__text-only { grid-template-columns:minmax(0,1fr) minmax(0,2fr); } }
+
 /* Shared editorial investment and guarantee questions, 29 October 2026. */
 .oa-method-disclosure > summary{display:flex;justify-content:space-between;gap:var(--space-2);padding-block:var(--space-3);border-block:1px solid var(--line);font-family:var(--h-serif);font-size:var(--type-quote);cursor:pointer;list-style:none}
 .oa-method-disclosure > summary::-webkit-details-marker{display:none}
