@@ -7,16 +7,17 @@ import { talentTestimonials } from '../../content/talentTestimonials';
 import type { Lang } from '../../content/index';
 import { getOfferV2 } from '../../content/offerV2';
 import { APPLY_OFFER } from '../../content/links';
+import { DIAGNOSTIC_ENTRY, OFFER_ACCELERATOR } from '../../content/advisoryOffers';
 
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getOfferV2(lang);
 const includedItems = [
-  {title:'Eight one-hour sessions', description:'One diagnostic session and seven private sessions with a senior Purrfect advisor. Your advisor is confirmed before enrollment.'},
+  {title:`${OFFER_ACCELERATOR.sessionCount} one-hour sessions`, description:'A diagnostic with Kate, then seven sessions with a named senior Purrfect advisor. Your advisor is confirmed before you pay the balance.'},
   {title:'A private Career Journal', description:t.includes.items[1]},
-  {title:'A weekly team check-in', description:'Support and progress reviews between sessions.'},
-  {title:'WhatsApp and email support', description:'Questions, updates and feedback on active processes, without 24/7 availability.'},
-  {title:'Active process follow-up', description:t.includes.items[4]},
+  {title:'Written team check-ins during the core', description:'A weekly written check-in on progress, blockers and your next priority during the core-session window. It is not an additional private call.'},
+  {title:'Priority feedback on active processes', description:'One consolidated priority review per week across active hiring processes: a question or short document excerpt, with brief clarifications on the same decision. Extra live sessions and new research are separately agreed.'},
+  {title:'Follow-up until your next role', description:t.includes.items[4]},
 ];
 ---
 
@@ -34,7 +35,7 @@ const includedItems = [
             <li>New company</li><li>Market change</li><li>Offer negotiation</li>
           </ul>
           <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-new-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
-          <p class="oa-new-hero__terms">{t.investment.price} · Eight one-hour sessions<br /><a href="#investment">Scope and investment <span aria-hidden="true">↓</span></a></p>
+          <p class="oa-new-hero__terms">{t.investment.price} total · {OFFER_ACCELERATOR.sessionCount} one-hour sessions<br />Support through active processes until you start your next role<br /><a href="#investment">Scope and investment <span aria-hidden="true">↓</span></a></p>
         </div>
         <div class="oa-new-hero__art" aria-hidden="true"></div>
       </div>
@@ -164,8 +165,8 @@ const includedItems = [
       <div class="oa-advisors__copy">
         <p class="h3-eyebrow">Who you will work with</p>
         <h2 id="oa-advisors-title">Know who you will work with.</h2>
-        <p class="oa-advisors__lead">Kate led recruiting at Addi and founded Purrfect Hire. Your sessions are led by Kate or a senior Purrfect advisor.</p>
-        <p class="oa-advisors__note">Your advisor is confirmed before enrollment.</p>
+        <p class="oa-advisors__lead">Kate led recruiting at Addi and founded Purrfect Hire. Start with Kate, then continue with a named senior Purrfect advisor.</p>
+        <p class="oa-advisors__note">Your advisor is confirmed before you pay the balance.</p>
         <details class="oa-advisors__more"><summary>Advisor background <span aria-hidden="true">+</span></summary>
         <ul class="oa-advisors__credentials">
           <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Experience across tech and product</h3><p>Perspective shaped by operating roles and founder experience.</p></div></li>
@@ -214,7 +215,7 @@ const includedItems = [
           <div class="oa-included__intro">
             <p class="h3-eyebrow">Offer Accelerator</p>
             <h2 id="oa-scope-title">What is included.</h2>
-            <p class="oa-included__lead">Eight private hours, personalized work and support as you pursue your next role.</p>
+            <p class="oa-included__lead">Your search, interviews and offers, with support as new processes open.</p>
           </div>
           <div class="oa-included__price">
             <p>{t.investment.price}</p>
@@ -253,14 +254,13 @@ const includedItems = [
     <div class="h3-wrap oa-decide__grid">
       <div>
         <p class="h3-eyebrow">{t.faq.eyebrow}</p>
-        <h2 class="h3-h2" id="oa-decide-title">Clear commitments before you pay.</h2>
-        <p class="h3-body">We agree your advisor, scope and fee before payment. We commit to the preparation, feedback and follow-up described in your program.</p>
+        <h2 class="h3-h2" id="oa-decide-title">Start with one hour. Decide what comes next.</h2>
+        <p class="h3-body">Begin with a {DIAGNOSTIC_ENTRY.priceLabel} diagnostic with Kate. Continue on the same challenge within {DIAGNOSTIC_ENTRY.creditWindowDays} days after that session, and its hour and payment count toward the program total.</p>
         <p class="oa-decide__limit">A job or salary increase is not guaranteed.</p>
         <a class="h3-link" href="/for-talent/#compare-programs">Compare all three options <span aria-hidden="true">→</span></a>
       </div>
       <div class="oa-decide__questions">
-        <details><summary>Why does investment range from USD 2,000 to 8,000?</summary><p>{t.investment.note} Your advisor, scope and next steps are agreed before payment and scheduling.</p></details>
-        <details><summary>How much private time is included?</summary><p>Eight one-hour sessions: one diagnostic and seven private sessions with a senior consultant. {t.includes.items[4]}</p></details>
+        <details><summary>How much private time is included?</summary><p>Eight one-hour sessions: a diagnostic with Kate and seven sessions with your named senior Purrfect advisor. {t.includes.items[4]}</p></details>
         {t.faq.items.filter((_, index) => index !== 2).map(item => <details><summary>{item.question}</summary><p>{item.answer}</p></details>)}
         <details><summary>What if the evidence does not support the move?</summary><p>{t.question.body}</p></details>
         <details><summary>What happens after I apply?</summary>

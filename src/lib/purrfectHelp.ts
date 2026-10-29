@@ -1,4 +1,5 @@
 import { APPLY_OFFER, FOUNDERS_CALENDAR } from '../content/links.ts';
+import { CAREER_COMPOUNDING, DIAGNOSTIC_ENTRY, OFFER_ACCELERATOR, STRATEGIC_SESSION, diagnosticCreditCopy } from '../content/advisoryOffers.ts';
 
 export type HelpAudience = 'all' | 'companies' | 'talent' | 'candidates';
 export type HelpTopicId = 'hiring' | 'next-move' | 'current-role' | 'application';
@@ -30,8 +31,8 @@ const topics: readonly HelpTopic[] = [
     label: 'My next career move',
     heading: 'Compete for the right next opportunity.',
     answer: [
-      'Offer Accelerator is private career advisory for senior professionals preparing a move. It includes one diagnostic session and seven private sessions with a senior consultant, plus process support while you actively execute the agreed plan. Each private session lasts one hour.',
-      'Investment ranges from USD 2,000 to 8,000, depending on seniority and location. We confirm it before enrollment. A job or salary increase is not guaranteed.',
+      `${OFFER_ACCELERATOR.priceLabel} covers eight one-hour sessions: a diagnostic with Kate, then seven with your named senior Purrfect advisor, scheduled within a core window of ${OFFER_ACCELERATOR.coreSessionWindowLabel}. Your private Career Journal supports the work. ${OFFER_ACCELERATOR.supportSummary}`,
+      `${diagnosticCreditCopy(OFFER_ACCELERATOR)} We agree your advisor, fit, dates, scope and written payment and rescheduling terms before the balance. A job or salary increase is not guaranteed.`,
     ],
     action: { label: 'Apply for Offer Accelerator', href: APPLY_OFFER },
     question: 'Does this give me priority in client searches?',
@@ -42,12 +43,12 @@ const topics: readonly HelpTopic[] = [
     label: 'Growing in my current role',
     heading: 'Work on bigger problems in the role you have.',
     answer: [
-      'Career Compounding works on real challenges inside your company. USD 5,000 includes six months, nine private sessions with Kate, eight asynchronous checkpoints and a personalized private workspace. Each private session lasts one hour.',
-      'You can join directly without taking Offer Accelerator. The aim is stronger judgment, ownership, influence and execution. Promotions and pay increases are not guaranteed.',
+      `Career Compounding works on real challenges inside your company. ${CAREER_COMPOUNDING.priceLabel} includes six months, nine private sessions with Kate, eight asynchronous checkpoints and a personalized private workspace. Each private session lasts one hour. Checkpoint feedback arrives within two business days.`,
+      `${diagnosticCreditCopy(CAREER_COMPOUNDING)} We agree fit, dates, scope and written payment and rescheduling terms before the balance. Offer Accelerator is not a prerequisite. Promotions and pay increases are not guaranteed.`,
     ],
     action: { label: 'Explore Career Compounding', href: '/career-compounding' },
     question: 'What if I need help with one decision?',
-    detail: 'A strategic 1:1 session is USD 300 for one hour with Kate. Ask our team about the question you want to work through so we can help you choose the appropriate format.',
+    detail: `A strategic 1:1 session is ${STRATEGIC_SESSION.priceLabel} for one hour with Kate, including a short written decision and next-step brief. Continue on the same challenge within ${DIAGNOSTIC_ENTRY.creditWindowDays} days after that diagnostic: the hour counts as session one and the fee is credited once toward either program. The program period begins on the start date agreed if you continue. Continuing is optional; no balance is charged automatically.`,
   },
   {
     id: 'application',
