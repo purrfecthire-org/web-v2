@@ -200,7 +200,7 @@ const t = getHomeV2(lang);
   .home-entry__motion-control svg { flex: none; }
   .home-entry__play-icon, .home-entry__motion-control[aria-pressed="true"] .home-entry__pause-icon { display: none; }
   .home-entry__motion-control[aria-pressed="true"] .home-entry__play-icon { display: block; }
-  .home-entry::before { content: ''; position: absolute; inset: 0; z-index: -2; opacity: 1; mix-blend-mode: normal; pointer-events: none; background: linear-gradient(90deg, rgba(247,246,243,.97) 0%, rgba(247,246,243,.91) 35%, rgba(247,246,243,.54) 53%, rgba(247,246,243,.03) 78%), linear-gradient(0deg, var(--sand), rgba(247,246,243,0) 28%); }
+  .home-entry.h3-editorial-hero::before { content: ''; position: absolute; inset: 0; z-index: -2; opacity: 1; mix-blend-mode: normal; pointer-events: none; background: linear-gradient(90deg, rgba(247,246,243,.97) 0%, rgba(247,246,243,.91) 35%, rgba(247,246,243,.54) 53%, rgba(247,246,243,.03) 78%), linear-gradient(0deg, var(--sand), rgba(247,246,243,0) 28%); }
   .home-entry::after { content: ''; position: absolute; inset: 0 0 auto; height: calc(var(--space-hero-top) + var(--space-4)); z-index: -1; background: linear-gradient(rgba(247,246,243,.96),rgba(247,246,243,.7) 45%,transparent); }
   .home-entry__intro { max-width: 34rem; }
   .home-entry .h3-hero__h1 { max-width: 15ch; margin-top: 0; }
@@ -231,12 +231,12 @@ const t = getHomeV2(lang);
   }
   @media (max-width: 55.99rem) {
     .home-entry { min-height: 38rem; }
-    .home-entry::before { background: linear-gradient(90deg, rgba(247,246,243,.97), rgba(247,246,243,.85) 58%, rgba(247,246,243,.6)), linear-gradient(0deg, var(--sand), rgba(247,246,243,0) 35%); }
+    .home-entry.h3-editorial-hero::before { background: linear-gradient(90deg, rgba(247,246,243,.97), rgba(247,246,243,.85) 58%, rgba(247,246,243,.6)), linear-gradient(0deg, var(--sand), rgba(247,246,243,0) 35%); }
     .home-entry__intro { max-width: 29rem; }
   }
   @media (max-width: 30rem) {
     .home-entry { min-height: 35rem; }
-    .home-entry::before { background: linear-gradient(rgba(247,246,243,.88), rgba(247,246,243,.86) 60%, var(--sand)); }
+    .home-entry.h3-editorial-hero::before { background: linear-gradient(rgba(247,246,243,.88), rgba(247,246,243,.86) 60%, var(--sand)); }
     .home-entry__motion-control { bottom: var(--space-1); }
   }
   @media (prefers-reduced-motion: reduce) { .home-path { transition: none; } .home-entry__motion, .home-entry__motion-control { display: none; } }
