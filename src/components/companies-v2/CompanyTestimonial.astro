@@ -33,7 +33,7 @@ const { voice, brand, portraitWidth = 480, portraitHeight = 480 } = Astro.props;
   .company-testimonial + .company-testimonial { padding-top: var(--space-grid); border-top: 1px solid var(--line); }
   .company-testimonial__brand { display: block; width: calc(var(--space-8) * 2.5); height: var(--space-8); max-width: 100%; }
   .company-testimonial__brand img { display: block; width: 100%; height: 100%; object-fit: contain; }
-  .company-testimonial blockquote { max-width: 40ch; font-size: var(--type-quote); line-height: 1.5; }
+  .company-testimonial blockquote { max-width: 40ch; font-family: var(--h-serif); font-size: var(--type-quote); font-weight: 400; line-height: 1.4; letter-spacing: -.014em; }
   .company-testimonial figcaption { align-self: start; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .company-testimonial__identity { display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
   .company-testimonial__identity > div { min-width: 0; }

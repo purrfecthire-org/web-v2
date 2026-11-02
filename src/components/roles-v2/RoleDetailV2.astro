@@ -47,7 +47,7 @@ const englishHint = role.english_level ? `Published English requirement: ${role.
 const internationalIntake = Boolean(role.country_code && role.country_code !== 'US' && role.salary?.currency !== 'USD');
 ---
 
-<div class="rv2" id="rv2-root" data-slug={role.slug}>
+<div class="rv2 h3-surface" id="rv2-root" data-slug={role.slug}>
   <!-- Back link to the list -->
   <div class="rv2__crumb">
     <a href="/roles" class="rv2__back">
@@ -531,7 +531,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     color: $text;
     max-width: 80rem;
     margin-inline: auto;
-    padding: var(--space-hero-top) 1.5rem var(--space-section);
+    padding: calc(var(--space-hero-top) + var(--space-3)) 1.5rem var(--space-section);
 
     @media (min-width: 64rem) { padding-inline: 3rem; }
   }
@@ -578,7 +578,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
   .rv2__rail-inner {
     background: $surface;
     border: 1px solid $line;
-    border-top: 4px solid $ink;
+    border-top: 2px solid var(--purple);
     border-radius: var(--radius);
     padding: var(--space-stack);
     display: flex;
@@ -665,7 +665,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: $ink;
+    background: var(--purple);
     color: #fff;
     border: none;
     cursor: pointer;
@@ -679,9 +679,9 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     text-decoration: none;
     transition: background-color 0.2s ease;
     svg { transition: transform 0.2s ease; }
-    &:hover { background: #1b1d2b; }
+    &:hover { background: var(--purple-deep); }
     &:hover svg { transform: translateX(3px); }
-    &:focus-visible { outline: 2px solid $ink; outline-offset: 2px; }
+    &:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; }
     &:disabled { opacity: 0.55; cursor: default; }
     &--submit { align-self: flex-start; }
   }

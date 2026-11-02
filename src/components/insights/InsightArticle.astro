@@ -47,7 +47,7 @@ const schema = {
     <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
   </Fragment>
 
-  <article class="ia-page" aria-labelledby="article-title">
+  <article class="ia-page h3-surface" aria-labelledby="article-title">
     <header class="ia-header ia-reading">
       <a href={`/insights/#${article.audience}`} class="ia-back"><span aria-hidden="true">←</span> Insights</a>
       <p class="h3-eyebrow ia-audience">{audience}</p>
@@ -94,7 +94,7 @@ const schema = {
       </aside>}
 
       <div class="ia-action">
-        <a href={action.href} target={action.external ? '_blank' : undefined} rel={action.external ? 'noopener noreferrer' : undefined} data-cta={`insight-${article.slug}-next`} class:list={['h3-btn', forFounders && 'h3-btn--ink']}>
+        <a href={action.href} target={action.external ? '_blank' : undefined} rel={action.external ? 'noopener noreferrer' : undefined} data-cta={`insight-${article.slug}-next`} class="h3-btn">
           {action.label}<span aria-hidden="true">→</span>
         </a>
       </div>
@@ -104,17 +104,17 @@ const schema = {
 </Shell>
 
 <style lang="scss">
-  .ia-page { padding-block: var(--space-hero-top) var(--space-section); }
+  .ia-page { padding-block: calc(var(--space-hero-top) + var(--space-3)) var(--space-section); background: var(--sand); }
   .ia-reading { max-width: 46rem; margin-inline: auto; padding-inline: var(--space-3); }
   .ia-back { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--space-6); font-size: var(--type-ui); line-height: 1.5; color: var(--muted); }
   .ia-back:hover { text-decoration: underline; text-underline-offset: .2em; }
-  .ia-audience { margin-top: var(--space-4); }
+  .ia-audience { margin-top: var(--space-4); color: var(--purple); }
   .ia-title { max-width: none; }
   .ia-description { margin-top: var(--space-3); font-size: var(--type-lead); line-height: 1.6; color: var(--muted); }
   .ia-byline { margin-top: var(--space-3); font-size: var(--type-ui); line-height: 1.5; color: var(--text); }
   .ia-date { margin-top: var(--space-1); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .ia-cover { margin-block: var(--space-grid) 0; }
-  .ia-cover__frame { aspect-ratio: 3 / 2; overflow: hidden; }
+  .ia-cover__frame { aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--radius-card); }
   .ia-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .ia-cover figcaption { margin-top: var(--space-1); font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .ia-cover figcaption a { text-decoration: underline; text-underline-offset: .2em; }
@@ -124,9 +124,10 @@ const schema = {
   .ia-section p, .ia-section ul { margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .ia-section ul { padding-left: var(--space-3); list-style: disc; }
   .ia-section li + li { margin-top: var(--space-1); }
-  .ia-example { margin-top: var(--space-3); padding: var(--space-3); border-left: 2px solid var(--signal); background: var(--stone); }
+  .ia-example { margin-top: var(--space-3); padding: var(--space-3); border-left: 2px solid var(--signal); background: var(--white); border-radius: 0 var(--radius-card) var(--radius-card) 0; }
   .ia-example .ia-example__label { margin-top: 0; font-size: var(--type-ui); font-weight: 500; line-height: 1.5; color: var(--text); }
-  .ia-worksheet { margin-top: var(--space-grid); }
+  .ia-worksheet { margin-top: var(--space-grid); padding-block: var(--space-4); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .ia-worksheet > .h3-eyebrow { color: var(--purple); }
   .ia-worksheet__instructions { margin-top: var(--space-2); font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .ia-worksheet ol { margin-top: var(--space-3); padding-left: var(--space-3); list-style: decimal; font-size: var(--type-body); line-height: 1.7; color: var(--muted); }
   .ia-worksheet li + li { margin-top: var(--space-2); }

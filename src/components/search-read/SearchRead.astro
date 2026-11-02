@@ -4,7 +4,7 @@ import { FOUNDERS_CALENDAR, CONTACT_EMAIL } from '../../content/links';
 const endpoint = import.meta.env.PUBLIC_B2B_LEAD_ENDPOINT || '';
 ---
 <Shell title="Get a read on your search | Purrfect Hire" description="Tell us the role and the problem behind it. Book a 20-minute founders call to discuss what the search requires." theme="light" journey="companies">
-  <section class="sr" data-endpoint={endpoint} data-calendar={FOUNDERS_CALENDAR}>
+  <section class="sr h3-surface h3-editorial-hero" data-endpoint={endpoint} data-calendar={FOUNDERS_CALENDAR}>
     <div class="h3-wrap sr__grid">
       <div class="sr__intro">
         <p class="h3-eyebrow">Before the search</p>
@@ -25,7 +25,7 @@ const endpoint = import.meta.env.PUBLIC_B2B_LEAD_ENDPOINT || '';
             <label for="sr-needed">When do you need this person in seat? <span class="sr__optional">Optional</span><input id="sr-needed" name="needed_by" maxlength="200" /></label>
             <div class="sr__trap" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off" /></label></div>
             <p class="sr__privacy">We use this context to assess your request and prepare the conversation. <a href="/privacy-policy">Privacy</a></p>
-            <button class="h3-btn h3-btn--ink" id="sr-submit" type="submit" disabled>Continue to scheduling →</button>
+            <button class="h3-btn" id="sr-submit" type="submit" disabled>Continue to scheduling →</button>
             <p id="sr-error" class="sr__error" role="alert" hidden></p>
             <a id="sr-error-calendar" class="h3-link" href={FOUNDERS_CALENDAR} data-cta="search-read-error-calendar" hidden>Continue directly to the founders calendar →</a>
             <noscript><p>Please enable JavaScript to send this form, or use the calendar below. Nothing has been submitted.</p><a href={FOUNDERS_CALENDAR}>Open the founders calendar →</a></noscript>
@@ -34,7 +34,7 @@ const endpoint = import.meta.env.PUBLIC_B2B_LEAD_ENDPOINT || '';
           <div class="sr__direct">
             <h2 class="h3-h2">Choose a time to talk.</h2>
             <p class="h3-body">Bring the company, the role and the problem behind it. We’ll work through that context on the call.</p>
-            <a class="h3-btn h3-btn--ink" href={FOUNDERS_CALENDAR} data-cta="search-read-direct-calendar">Continue to scheduling →</a>
+            <a class="h3-btn" href={FOUNDERS_CALENDAR} data-cta="search-read-direct-calendar">Continue to scheduling →</a>
           </div>
         )}
         <div id="sr-calendar" hidden>
@@ -108,7 +108,7 @@ const endpoint = import.meta.env.PUBLIC_B2B_LEAD_ENDPOINT || '';
   }
 </script>
 <style>
-  .sr { padding: var(--space-hero-top) 0 var(--space-section); }
+  .sr { padding: calc(var(--space-hero-top) + var(--space-3)) 0 var(--space-section); }
   .sr [hidden] { display: none !important; }
   .sr__grid { display: grid; gap: 3rem; align-items: start; }
   .sr__title { max-width: 13ch; }

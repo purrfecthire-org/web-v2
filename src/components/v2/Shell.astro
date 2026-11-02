@@ -68,10 +68,6 @@ const footerLinks = journey === 'companies' ? [
 
 const ctaRel = navCta?.external && !navCta.href.startsWith('/') && !navCta.href.startsWith('#')
   ? { target: '_blank', rel: 'noopener noreferrer' } : {};
-// B2B buttons are Midnight, or white when they sit on Midnight. Offer keeps
-// its own purple on both surfaces.
-const isB2B = journey === 'home' || journey === 'companies' || journey === 'careers';
-const ctaTone = isB2B ? 'h3-btn--ink' : '';
 const helpAudience = journey === 'roles' ? 'candidates' : journey === 'companies' ? 'companies' : journey === 'talent' || journey === 'offer' ? 'talent' : 'all';
 const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/search-read', '/offer-acceleration/apply'].includes(Astro.url.pathname.replace(/\/$/, ''));
 ---
@@ -96,7 +92,7 @@ const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/sea
         </nav>
 
         <div class="h3-nav__right">
-          {navCta && <a href={navCta.href} {...ctaRel} data-cta={`${journey}-nav`} class:list={['h3-btn', 'h3-btn--sm', 'h3-nav__cta', ctaTone]}>{navCta.label}</a>}
+          {navCta && <a href={navCta.href} {...ctaRel} data-cta={`${journey}-nav`} class="h3-btn h3-btn--sm h3-nav__cta">{navCta.label}</a>}
 
           <details class="h3-menu">
             <summary aria-label="Menu">
@@ -107,7 +103,7 @@ const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/sea
               <nav aria-label="Main, small screens">
                 {links.map((l) => <a href={l.href} aria-current={Astro.url.pathname.replace(/\/$/, '') === l.href.replace(/\/$/, '') ? 'page' : undefined}>{l.label}</a>)}
               </nav>
-              {navCta && <a href={navCta.href} {...ctaRel} data-cta={`${journey}-menu`} class:list={['h3-btn', 'h3-menu__cta', ctaTone]}>{navCta.label}</a>}
+              {navCta && <a href={navCta.href} {...ctaRel} data-cta={`${journey}-menu`} class="h3-btn h3-menu__cta">{navCta.label}</a>}
             </div>
           </details>
         </div>
@@ -165,8 +161,8 @@ const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/sea
     --sand: #F7F6F3;
     --stone: #E9EBF0;
     --white: #FFFFFF;
-    --text: #14161f;
-    --muted: #5a5c66;
+    --text: #1c1c1c;
+    --muted: #625f65;
     --on-dark: #e8e7e3;
     /* Lifted for contrast against Midnight: this grey is ~7:1 on #0A0B14. */
     --on-dark-muted: #b2b3bb;
@@ -176,8 +172,7 @@ const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/sea
     --purple: #4F46E5;        /* actions and links on Ivory: AA with white text */
     --purple-deep: #4338CA;
     --charcoal: #1F2430;
-    /* Fraunces is what actually loads. Canela stays out of the chain until
-       its web files and license are in. */
+    /* Fraunces and Inter are the shared active brand, including Talent. */
     --h-serif: 'Fraunces Variable', Georgia, serif;
     --h-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
     --type-display: 2.5rem;
@@ -230,7 +225,7 @@ const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/sea
 
   .h3-eyebrow {
     font-size: var(--type-eyebrow); font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--muted);
+    text-transform: uppercase; color: var(--purple);
   }
   .h3-eyebrow--on-dark { color: var(--on-dark-muted); }
   .h3-dot--end {
@@ -358,6 +353,30 @@ const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/sea
   }
   .h3-hero__media { position: relative; inset: auto; transform: none; width: 100%; min-width: 0; border-radius: var(--radius-card); overflow: hidden; }
   .h3-hero__scrim { display: none; }
+
+  /* Talent's warm mineral canvas is shared explicitly by commercial,
+     document and utility pages. The decorative grain cannot receive input. */
+  .h3-surface, .h3-editorial-hero, .h3-mineral-close {
+    position: relative; isolation: isolate; background-color: var(--sand);
+  }
+  .h3-surface::before, .h3-editorial-hero::before, .h3-mineral-close::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='2' seed='8' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='192' height='192' filter='url(%23g)' opacity='.32'/%3E%3C/svg%3E");
+    background-size: 192px 192px; opacity: .075; mix-blend-mode: multiply;
+  }
+  .h3-editorial-hero {
+    padding-top: calc(var(--space-hero-top) + var(--space-3));
+    background-image: radial-gradient(ellipse at 85% 20%, rgba(222, 213, 197, .36), transparent 65%);
+  }
+  .h3-mineral-close {
+    background-image: linear-gradient(180deg, var(--sand), #e7e4df);
+    padding-bottom: calc(var(--space-section) + var(--space-4));
+  }
+  .h3-mineral-close .h3-body { color: var(--muted); }
+  @media print {
+    .h3-surface::before, .h3-editorial-hero::before, .h3-mineral-close::before { display: none; }
+  }
 
   /* Each hero declares the ratio of the file it was given, so nothing is
      re-cropped in the browser. */

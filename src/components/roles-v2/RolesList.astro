@@ -6,7 +6,7 @@ import { rolesCopy as t } from './copy';
 const { roles, unavailable } = await getRolesSnapshot();
 ---
 
-<section class="rl" data-built-slugs={JSON.stringify(roles.map((role) => role.slug))} data-configured={Boolean(apiBase())}>
+<section class="rl h3-surface h3-editorial-hero" data-built-slugs={JSON.stringify(roles.map((role) => role.slug))} data-configured={Boolean(apiBase())}>
   <div class="h3-wrap">
     <header class="rl__header">
       <p class="h3-eyebrow">{t.eyebrow}</p>
@@ -143,21 +143,21 @@ const { roles, unavailable } = await getRolesSnapshot();
 </script>
 
 <style is:global>
-  .rl { padding: var(--space-hero-top) 0 var(--space-section); }
+  .rl { padding: calc(var(--space-hero-top) + var(--space-3)) 0 var(--space-section); }
   .rl [hidden] { display: none !important; }
   .rl__header { padding-bottom: var(--space-section); max-width: 58rem; }
   .rl__title { max-width: 16ch; }
   .rl__free { margin-top: var(--space-stack) !important; font-size: var(--type-ui); line-height: 1.5; color: var(--muted); max-width: 38rem; }
   .rl__list-head { border-top: 1px solid var(--line); padding: var(--space-stack) 0; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem var(--space-grid); }
-  .rl__list-title { font-size: var(--type-subheading); line-height: 1.35; font-weight: 500; font-family: var(--h-sans); }
+  .rl__list-title { font-size: var(--type-quote); line-height: 1.35; font-weight: 400; font-family: var(--h-serif); }
   .rl__list-head p { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 29rem; }
   .rl__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-stack); }
-  .rl__card { display: flex; flex-direction: column; position: relative; min-width: 0; padding: var(--space-stack); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--white); transition: border-color .2s; }
+  .rl__card { display: flex; flex-direction: column; position: relative; min-width: 0; padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-card); background: rgba(255,255,255,.54); transition: border-color .2s, background-color .2s; }
   .rl__card:hover, .rl__card:focus-within { border-color: var(--muted); }
   .rl__card-top { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .rl__card-company { font-weight: 500; }
   .rl__card-posted { white-space: nowrap; }
-  .rl__card-title { font-size: var(--type-subheading); font-weight: 500; letter-spacing: -.02em; line-height: 1.35; margin-top: 1rem !important; font-family: var(--h-sans); }
+  .rl__card-title { font-size: var(--type-quote); font-weight: 400; letter-spacing: -.014em; line-height: 1.2; margin-top: var(--space-2) !important; font-family: var(--h-serif); }
   .rl__card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: 1rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .rl__meta { display: inline-flex; align-items: center; gap: 0.5rem; }
   .rl__meta svg { flex-shrink: 0; }
@@ -180,5 +180,5 @@ const { roles, unavailable } = await getRolesSnapshot();
   .rl__notice button { flex: none; }
   .rl__profile { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-grid); border-top: 1px solid var(--line); margin-top: var(--space-section); padding-top: var(--space-section); }
   .rl__profile .h3-h2 { max-width: 22ch; }
-  @media (max-width: 47.99rem) { .rl__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 47.99rem) { .rl__grid { grid-template-columns: 1fr; } .rl__card { padding: var(--space-3); } }
 </style>

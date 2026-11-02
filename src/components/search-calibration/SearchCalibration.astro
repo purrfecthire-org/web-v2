@@ -1,6 +1,5 @@
 ---
 import Shell from '../v2/Shell.astro';
-import CatIllustration from '../v2/CatIllustration.astro';
 import CompaniesIcon from '../companies-v2/CompaniesIcon.astro';
 import type { Lang } from '../../content/index';
 import { getSearchCalibration, SEARCH_CALIBRATION_CTA } from '../../content/searchCalibration';
@@ -24,13 +23,13 @@ const framing = [
   navCta={{ label: t.hero.cta, href: SEARCH_CALIBRATION_CTA }}
   journey="companies"
 >
-  <div class="sc-page" data-product="search-calibration">
-    <section class="h3-hero sc-hero" aria-labelledby="sc-title">
+  <div class="sc-page h3-surface" data-product="search-calibration">
+    <section class="h3-hero h3-editorial-hero sc-hero" aria-labelledby="sc-title">
       <div class="h3-wrap">
         <p class="h3-eyebrow">{t.hero.eyebrow}</p>
         <h1 class="h3-hero__h1 sc-hero__title" id="sc-title">{t.hero.headline}</h1>
         <p class="h3-hero__sub sc-hero__body">{t.hero.body}</p>
-        <a href={SEARCH_CALIBRATION_CTA} data-cta="search-calibration-hero-search-read" class="h3-btn h3-btn--ink sc-hero__cta">
+        <a href={SEARCH_CALIBRATION_CTA} data-cta="search-calibration-hero-search-read" class="h3-btn sc-hero__cta">
           {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <p class="sc-note">{t.hero.note}</p>
@@ -111,35 +110,37 @@ const framing = [
       <div class="h3-wrap sc-close__layout">
         <div class="sc-close__copy">
         <h2 class="h3-h2 sc-wide-title" id="sc-close-title">{t.next.headline}</h2>
-        <a href={SEARCH_CALIBRATION_CTA} data-cta="search-calibration-close-search-read" class="h3-btn h3-btn--ink sc-close__cta">
+        <a href={SEARCH_CALIBRATION_CTA} data-cta="search-calibration-close-search-read" class="h3-btn sc-close__cta">
           {t.next.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <a href={t.next.secondaryHref} data-cta="search-calibration-candidate-brief" class="h3-link sc-close__secondary">
           {t.next.secondary}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         </div>
-        <CatIllustration pose="observe" />
       </div>
     </section>
   </div>
 </Shell>
 
 <style lang="scss">
+  .sc-page { background: var(--sand); }
+  .sc-page .h3-eyebrow { color: var(--purple); }
+  .sc-hero { padding-top: calc(var(--space-hero-top) + var(--space-3)); }
   .sc-hero__title { max-width: 18ch; }
   .sc-hero__body { max-width: 55ch; }
   .sc-hero__cta, .sc-close__cta { margin-top: var(--space-4); max-width: 100%; line-height: 1.4; text-align: center; }
   .sc-note { margin-top: var(--space-2); max-width: 55ch; font-size: var(--type-caption); line-height: 1.5; color: var(--muted); }
   .sc-example, .sc-close { padding-block: var(--space-section); }
   .sc-wide-title { max-width: 25ch; }
-  .sc-example { background: var(--sand); }
-  .sc-disclosure { margin-top: var(--space-stack); max-width: 55ch; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
-  .sc-document { margin-top: var(--space-grid); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
+  .sc-example { background: transparent; }
+  .sc-disclosure { margin-top: var(--space-stack); max-width: 55ch; padding-left: var(--space-2); border-left: 2px solid var(--signal); color: var(--muted); font-size: var(--type-caption); line-height: 1.6; }
+  .sc-document { margin-top: var(--space-grid); background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
   .sc-document__header, .sc-document__body { padding: var(--space-grid); }
   .sc-document__header { border-bottom: 1px solid var(--line); background: var(--white); }
   .sc-document__heading { display: flex; align-items: start; gap: var(--space-stack); }
   .sc-document__heading > div { min-width: 0; }
   .sc-document__icon, .sc-entry__icon, .sc-recommendation__icon { display: block; flex: 0 0 var(--space-stack); color: var(--purple); }
-  .sc-document__header h3 { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; letter-spacing: -0.015em; }
+  .sc-document__header h3 { font-family: var(--h-serif); font-size: var(--type-section); font-weight: 400; line-height: 1.12; letter-spacing: -0.014em; text-wrap: balance; }
   .sc-document__heading p { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-body); line-height: 1.7; max-width: 55ch; }
   .sc-facts { display: grid; gap: var(--space-stack) var(--space-grid); margin: var(--space-grid) 0 0; padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .sc-facts dt { font-size: var(--type-caption); line-height: 1.5; font-weight: 500; color: var(--muted); }
@@ -164,14 +165,14 @@ const framing = [
   .sc-questions { margin-top: var(--space-2); max-width: 55ch; list-style: decimal; padding-left: var(--space-stack); }
   .sc-questions li { padding-left: var(--space-1); font-size: var(--type-body); line-height: 1.7; }
   .sc-questions li + li { margin-top: var(--space-2); }
-  .sc-recommendation { display: flex; align-items: start; gap: var(--space-stack); margin-top: var(--space-grid); padding: var(--space-stack); border-radius: var(--radius-card); background: var(--white); }
+  .sc-recommendation { display: flex; align-items: start; gap: var(--space-stack); margin-top: var(--space-grid); padding: var(--space-stack); border-radius: var(--radius-card); background: var(--sand); }
   .sc-recommendation > div { min-width: 0; }
   .sc-recommendation h4 { margin: var(--space-1) 0 0; font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; }
   .sc-recommendation p:not(.h3-eyebrow) { margin-top: var(--space-2); max-width: 55ch; font-size: var(--type-body); line-height: 1.7; }
   .sc-recommendation .sc-recommendation__limit { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .sc-close { border-top: 1px solid var(--line); }
   .sc-close__layout { display: grid; gap: var(--space-grid); align-items: center; }
-  .sc-close__copy { min-width: 0; }
+  .sc-close__copy { min-width: 0; max-width: 44rem; }
   .sc-close__secondary { display: flex; width: fit-content; max-width: 100%; margin-top: var(--space-stack); line-height: 1.6; }
   @media (min-width: 48rem) {
     .sc-entry { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: var(--space-grid); }
@@ -180,9 +181,6 @@ const framing = [
     .sc-entry > p:first-of-type, .sc-entry > ul, .sc-entry > ol { margin-top: 0; }
     .sc-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .sc-recommendation { padding: var(--space-grid); }
-  }
-  @media (min-width: 56rem) {
-    .sc-close__layout { grid-template-columns: minmax(0, 1fr) minmax(0, calc(var(--space-8) * 4)); }
   }
   @media print {
     .sc-hero, .sc-close { display: none; }

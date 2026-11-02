@@ -1,27 +1,12 @@
-// ─────────────────────────────────────────────────────────────────────────
-// Offer Accelerator. Launch copy, 14 October 2026 brief.
-// The product page: who it is for, what decisions it helps with, how the
-// team works, what is included and for how long, what it costs, how to
-// apply.
-//
-// Investment and delivery updated by Kate, 26 October 2026: USD 2,000 to
-// 8,000 depending on seniority and location, agreed before enrolment.
-// One diagnostic session and seven sessions with a senior consultant.
-// The confirmed scope remains
-// eight sessions in total, and support through each new hiring process
-// afterwards until the person is placed, while they actively carry out the
-// agreed plan. Never a month limit, never eight new sessions
-// per process, unlimited calls, a guaranteed hire or 24/7 availability.
-// Response times and an inactivity policy are not defined, so neither is
-// published. No internal review notes on the page: pendings live in the
-// team doc.
-//
-// Applications use the confirmed go@purrfecthire.com inbox. The shared
-// APPLY_OFFER in links.ts opens the public OA inquiry form.
-// Release verification: preserve Daniel's existing quote; confirm its
-// original source, English wording, attribution and written permission.
-// ─────────────────────────────────────────────────────────────────────────
+// Prospective offer selected 29 October 2026. Existing agreements retain
+// their terms. Eight one-hour sessions total: an independent diagnostic with
+// Kate, then seven with the advisor named before continuation, scheduled
+// within twelve weeks of the agreed continuation date. Weekly team check-ins
+// apply to that core window. Active-process follow-up continues until the
+// client starts the next role, subject to the agreed plan and weekly scope.
+// No new set of sessions per process, unlimited calls or employment guarantee.
 import type { Lang } from './index';
+import { DIAGNOSTIC_ENTRY, OFFER_ACCELERATOR, diagnosticCreditCopy } from './advisoryOffers';
 
 export interface OfferV2Content {
   meta: { title: string; description: string };
@@ -45,14 +30,14 @@ export const offerV2En: OfferV2Content = {
   meta: {
     title: 'Offer Accelerator · Private career advisory | Purrfect Hire',
     description:
-      'Private career advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
+      `Private advisory for your next career move. ${OFFER_ACCELERATOR.sessionCount} one-hour sessions total, with active-process support until you start your next role. ${OFFER_ACCELERATOR.priceLabel}.`,
   },
   hero: {
     eyebrow: 'Offer Accelerator · Private career advisory',
     headline: 'Make your signal impossible to miss.',
-    sub: 'Private career advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
+    sub: 'Private advisory for senior professionals changing company, market or scope. Sharpen your positioning, prepare for interviews and work through offer decisions.',
     cta: 'Apply to Offer Accelerator',
-    package: 'Eight private sessions: one diagnostic session and seven with a senior consultant. Continued process support while you execute the agreed plan.',
+    package: `${OFFER_ACCELERATOR.sessionCount} one-hour sessions total: a diagnostic with Kate, then seven with your confirmed advisor. Core sessions run over ${OFFER_ACCELERATOR.coreSessionWindowLabel}; active-process follow-up continues until your next role starts.`,
   },
   question: {
     eyebrow: 'The real question',
@@ -107,15 +92,15 @@ export const offerV2En: OfferV2Content = {
   },
   includes: {
     eyebrow: 'What is included',
-    headline: 'Eight sessions. Support as you put the plan to work.',
+    headline: `${OFFER_ACCELERATOR.sessionCount} sessions. Support through your next move.`,
     items: [
-      'One diagnostic session and seven private sessions with a senior consultant',
+      'A one-hour diagnostic with Kate and seven one-hour sessions with the senior Purrfect advisor named before continuation',
       'Personalized materials and agreed next actions in your private Career Journal',
-      'A weekly check-in with the team',
-      'Direct support over WhatsApp and email',
-      'After the eight sessions, support through each new hiring process until you secure your next role, while you actively carry out the agreed plan. This follow-up does not add another set of eight sessions or unlimited calls.',
+      OFFER_ACCELERATOR.coreSupportSummary,
+      OFFER_ACCELERATOR.prioritySupportSummary,
+      `${OFFER_ACCELERATOR.ongoingProcessSupportSummary} The remaining ${OFFER_ACCELERATOR.remainingSessionCount} core sessions are scheduled within ${OFFER_ACCELERATOR.coreSessionWindowLabel} from the agreed continuation date. Follow-up does not restart the sessions or include unlimited calls or 24/7 availability.`,
     ],
-    closing: 'The sessions establish the strategy and prepare you to act. Support continues as real opportunities develop, from reviewing a role to interpreting feedback and deciding on an offer.',
+    closing: 'The core sessions build your approach. Ongoing feedback helps you apply it to active interviews and offers.',
   },
   behind: {
     eyebrow: 'Where our read comes from',
@@ -137,9 +122,9 @@ export const offerV2En: OfferV2Content = {
   investment: {
     eyebrow: 'Investment',
     headline: 'A considered investment in your next move.',
-    price: 'USD 2,000 to 8,000',
-    note: 'Final investment depends on seniority and location. We confirm it with you before enrollment.',
-    next: 'Eight sessions, followed by support through each new hiring process until you secure your next role, while you actively carry out the agreed plan.',
+    price: OFFER_ACCELERATOR.priceLabel,
+    note: `Start with a ${DIAGNOSTIC_ENTRY.priceLabel} diagnostic. Continue on the same challenge within ${DIAGNOSTIC_ENTRY.creditWindowDays} days after it and it counts toward your program.`,
+    next: `${OFFER_ACCELERATOR.sessionCount} one-hour sessions total, a private Career Journal and active-process follow-up until you start your next role, while you execute the agreed plan.`,
   },
   faq: {
     eyebrow: 'Before you decide',
@@ -148,7 +133,9 @@ export const offerV2En: OfferV2Content = {
       { question: 'Can I take part while working full-time?', answer: 'Yes. We plan the work around your situation. You need time between sessions to research companies, contact people, prepare materials and carry out the actions we agree.' },
       { question: 'Can I join if I already have an interview or offer?', answer: 'Yes. We review whether the engagement fits the decision you need to make before confirming how to proceed.' },
       { question: 'Is a job or salary increase guaranteed?', answer: 'No. We commit to the agreed preparation, feedback and follow-up. Hiring decisions rest with companies, and progress also depends on your execution and the opportunities available in the market.' },
-      { question: 'How do I get support between sessions?', answer: 'Use WhatsApp and email to share updates, questions and materials, alongside the weekly team check-in. We agree priorities around the processes you are working on. Support does not mean 24/7 availability.' },
+      { question: 'How do I get support between sessions?', answer: OFFER_ACCELERATOR.supportSummary },
+      { question: 'Can I start with one session?', answer: `${diagnosticCreditCopy(OFFER_ACCELERATOR)} The diagnostic includes a short written decision and next-step brief. We agree your advisor, scope, schedule, payment and rescheduling terms in writing before you pay the balance.` },
+      { question: 'What happens after the core sessions?', answer: `${OFFER_ACCELERATOR.ongoingProcessSupportSummary} ${OFFER_ACCELERATOR.prioritySupportSummary} This does not add another set of eight sessions. New full research or CV rewrites are outside post-core follow-up; extra live sessions and work outside the scope are agreed separately.` },
     ],
   },
   apply: {
@@ -158,7 +145,8 @@ export const offerV2En: OfferV2Content = {
     howNote: 'Send your context through the short form. No payment is taken when you apply.',
     steps: [
       { title: 'We review the fit', body: 'The team reviews your situation and asks for the context needed to assess whether Offer Accelerator fits your next move.' },
-      { title: 'Agree how to begin', body: 'If there is a fit, we confirm the scope, final investment and next steps with you before payment and scheduling.' },
+      { title: 'Start with Kate', body: `Begin with a one-hour diagnostic for ${DIAGNOSTIC_ENTRY.priceLabel}, with a short written decision and next-step brief. There is no obligation to buy the program.` },
+      { title: 'Choose whether to continue', body: `If we continue on the same challenge within ${DIAGNOSTIC_ENTRY.creditWindowDays} days after the diagnostic, it counts as session one and is credited once. We agree the advisor and written terms before you separately authorize the ${OFFER_ACCELERATOR.remainingBalanceLabel} balance.` },
     ],
   },
   editorial: 'Your career has advisors too.',
