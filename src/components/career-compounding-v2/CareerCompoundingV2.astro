@@ -69,10 +69,13 @@ const t = getCareerCompoundingV2(lang);
             <a href={DISCUSS_CAREER_COMPOUNDING} data-cta="career-compounding-investment-whatsapp" class="h3-btn cc-investment__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
             <p class="cc-scope__privacy">{t.scope.privacy}</p>
           </div>
-          <ol class="cc-inclusions">{t.scope.items.map(item => <li><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
-        </div>
-        <div class="cc-questions cc-scope__questions">
-          {t.questions.items.map(item => <details class="cc-question"><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}
+          <div class="cc-questions">
+            <details class="cc-question">
+              <summary>{t.scope.detailsTitle}<span aria-hidden="true">+</span></summary>
+              <ol class="cc-inclusions">{t.scope.items.map(item => <li><h3>{item.title}</h3><p>{item.body}</p></li>)}</ol>
+            </details>
+            {t.questions.items.map(item => <details class="cc-question"><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}
+          </div>
         </div>
       </div>
     </section>
@@ -127,7 +130,6 @@ const t = getCareerCompoundingV2(lang);
   .cc-scope__grid > * { min-width: 0; }
   .cc-investment { padding-top: var(--space-stack); border-top: 1px solid var(--line); }
   .cc-investment__cta { margin-top: var(--space-stack); max-width: 100%; }
-  .cc-scope__questions { margin-top: var(--space-grid); }
   .cc-scope__terms { margin-top: var(--space-3); }
   .cc-scope__privacy { margin-top: var(--space-3); max-width: 34rem; color: var(--muted); font-size: var(--type-caption); line-height: 1.5; }
   .cc-questions { border-top: 1px solid var(--line); min-width: 0; }
