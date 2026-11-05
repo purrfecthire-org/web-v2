@@ -596,9 +596,10 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
 
   .rv2__title {
     font-family: var(--h-serif);
-    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
+    font-optical-sizing: auto;
+    font-variation-settings: var(--type-heading-axes);
     font-size: var(--type-section);
-    font-weight: 400;
+    font-weight: var(--type-heading-weight);
     line-height: 1.12;
     letter-spacing: -0.025em;
     margin: -0.5rem 0 0;
@@ -804,7 +805,9 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
   .rv2__apply-title {
     font-family: var(--h-serif);
     font-size: var(--type-section);
-    font-weight: 400;
+    font-weight: var(--type-heading-weight);
+    font-optical-sizing: auto;
+    font-variation-settings: var(--type-heading-axes);
     line-height: 1.12;
     letter-spacing: -0.02em;
     color: $ink;
