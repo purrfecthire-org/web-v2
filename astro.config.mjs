@@ -21,9 +21,11 @@ const legacyRedirects = {
     '/momentum': '/career-compounding/',
     // Offer Accelerator
     '/oa': '/offer-acceleration/',
+    // Keep the existing public application link for both advisory products.
+    '/offer-acceleration/apply': 'https://purrfect-hire-apply.lovable.app/apply/offer-accelerator',
     // The former long form lands on the current short application; other
     // campaign entry pages land on the product instead of reviving old copy.
-    '/offer-acceleration/preguntas': '/offer-acceleration/apply/',
+    '/offer-acceleration/preguntas': 'https://purrfect-hire-apply.lovable.app/apply/offer-accelerator',
     '/offer-acceleration/te-suena': '/offer-acceleration/',
     '/offer-acceleration/espejo': '/offer-acceleration/',
     // Spanish: the site is English only.
@@ -64,7 +66,7 @@ export default defineConfig({
     sitemap({
       // Commercial pages and live role details. Redirect stubs stay out.
       filter: (page) =>
-        /\/(for-companies|for-talent|offer-acceleration(?:\/apply)?|career-compounding|for-investors|search-calibration|candidate-brief-sample|privacy-policy|work-with-us)\/?$/.test(page) ||
+        /\/(for-companies|for-talent|offer-acceleration|career-compounding|for-investors|search-calibration|candidate-brief-sample|privacy-policy|work-with-us)\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/search\/(founding-engineer|head-of-engineering|forward-deployed-engineer)\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/roles(?:\/[^/]+)?\/?$/.test(page) ||
         /^https:\/\/purrfecthire\.com\/insights(?:\/[^/]+)?\/?$/.test(page) ||

@@ -1,11 +1,11 @@
 import type { Lang } from './index';
-import { WHATSAPP_CAREER_COMPOUNDING } from './links';
+import { APPLY_OFFER } from './links';
 
 // Commercial scope explicitly confirmed by Kate on 19 October 2026.
 // CC and Offer Accelerator are independent products for different career decisions.
 export const CAREER_COMPOUNDING_HREF = '/career-compounding';
 export const CAREER_COMPOUNDING_EMAIL = 'go@purrfecthire.com';
-export const DISCUSS_CAREER_COMPOUNDING = WHATSAPP_CAREER_COMPOUNDING;
+export const DISCUSS_CAREER_COMPOUNDING = APPLY_OFFER;
 
 export interface CareerCompoundingV2Content {
   meta: { title: string; description: string };
@@ -27,7 +27,7 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
     headline: 'Become the person trusted with bigger problems.',
     body: 'Private, hands-on advisory to develop the judgment, ownership, influence and execution required to operate at a higher level.',
     audience: 'For experienced professionals with a role to grow in and a real business challenge to work on.',
-    cta: 'Message us on WhatsApp',
+    cta: 'Apply to Career Compounding',
     note: 'USD 5,000 for the program. Offer Accelerator is not a prerequisite.',
     facts: [
       { value: '6 months', label: 'Working on real business challenges' },
@@ -83,8 +83,8 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
     eyebrow: 'Your next step',
     headline: 'Which problem would stretch how you operate?',
     body: 'Share your role and the challenge in front of you. We will discuss whether Career Compounding is the right fit.',
-    cta: 'Message us on WhatsApp',
-    note: 'Opens a WhatsApp conversation. Your message is sent only when you choose to send it.',
+    cta: 'Apply to Career Compounding',
+    note: 'Choose the program and share your context in the application. No payment is taken when you apply.',
     emailLabel: 'Or email',
   },
 };
