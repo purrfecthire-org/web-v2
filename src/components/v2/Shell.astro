@@ -180,6 +180,8 @@ const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/sea
        its web files and license are in. */
     --h-serif: 'Fraunces Variable', Georgia, serif;
     --h-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
+    --type-heading-weight: 500;
+    --type-heading-axes: 'SOFT' 0, 'WONK' 0;
     --type-display: 2.5rem;
     --type-section: 1.875rem;
     --type-quote: 1.25rem;
@@ -264,8 +266,9 @@ const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/sea
   .h3-link--on-dark { color: var(--on-dark); border-color: var(--line-dark); }
 
   .h3-h2 {
-    font-family: var(--h-serif); font-weight: 400;
-    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
+    font-family: var(--h-serif); font-weight: var(--type-heading-weight);
+    font-optical-sizing: auto;
+    font-variation-settings: var(--type-heading-axes);
     font-size: var(--type-section); line-height: 1.12;
     letter-spacing: -0.014em; margin-top: var(--space-2); text-wrap: balance;
   }
@@ -340,8 +343,9 @@ const showHelp = !noindex && journey !== 'careers' && !['/privacy-policy', '/sea
   @media (min-width: 56rem) { .h3-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-grid); } }
   .h3-hero__copy { position: relative; z-index: 2; min-width: 0; }
   .h3-hero__h1 {
-    font-family: var(--h-serif); font-weight: 400;
-    font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
+    font-family: var(--h-serif); font-weight: var(--type-heading-weight);
+    font-optical-sizing: auto;
+    font-variation-settings: var(--type-heading-axes);
     font-size: var(--type-display); line-height: 1.08;
     letter-spacing: -0.02em; max-width: 15ch; text-wrap: balance; margin-top: var(--space-2);
   }

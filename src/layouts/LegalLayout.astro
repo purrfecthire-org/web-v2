@@ -32,8 +32,9 @@ const { title, description, lang, pageUrl, heading, lastUpdated, lastUpdatedLabe
   .legal__updated { font-size: var(--type-caption); line-height: 1.5; color: var(--muted); margin-bottom: var(--space-grid); }
 
   :global(.legal__doc h2) {
-    font-family: var(--h-serif); font-size: var(--type-section); font-weight: 400;
-    font-variation-settings: 'opsz' 110, 'SOFT' 0, 'WONK' 0;
+    font-family: var(--h-serif); font-size: var(--type-section); font-weight: var(--type-heading-weight);
+    font-optical-sizing: auto;
+    font-variation-settings: var(--type-heading-axes);
     line-height: 1.12; letter-spacing: -0.014em; margin: var(--space-grid) 0 1rem;
   }
   :global(.legal__doc h3) { font-family: var(--h-sans); font-size: var(--type-subheading); font-weight: 500; line-height: 1.35; margin: var(--space-stack) 0 0.75rem; }
