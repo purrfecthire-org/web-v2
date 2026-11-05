@@ -12,7 +12,7 @@ export interface CareerCompoundingV2Content {
   hero: { eyebrow: string; headline: string; body: string; audience: string; cta: string; note: string; facts: { value: string; label: string }[] };
   work: { eyebrow: string; headline: string; intro: string; areas: { id: string; title: string; body: string; outputLabel: string; output: string }[] };
   progress: { title: string; body: string; dimensions: { title: string; body: string }[] };
-  scope: { eyebrow: string; headline: string; price: string; summary: string; items: { title: string; body: string }[]; privacy: string };
+  scope: { eyebrow: string; headline: string; price: string; summary: string; detailsTitle: string; items: { title: string; body: string }[]; privacy: string };
   questions: { items: { question: string; answer: string }[] };
   close: { eyebrow: string; headline: string; body: string; cta: string; note: string; emailLabel: string };
 }
@@ -25,7 +25,7 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
   hero: {
     eyebrow: 'Career Compounding · Private career advisory',
     headline: 'Become the person trusted with bigger problems.',
-    body: 'Six months of private, hands-on advisory to develop the judgment, ownership, influence and execution required to operate at a higher level.',
+    body: 'Private, hands-on advisory to develop the judgment, ownership, influence and execution required to operate at a higher level.',
     audience: 'For experienced professionals with a role to grow in and a real business challenge to work on.',
     cta: 'Message us on WhatsApp',
     note: 'USD 5,000 for the program. Offer Accelerator is not a prerequisite.',
@@ -58,9 +58,10 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
   },
   scope: {
     eyebrow: 'The program',
-    headline: 'Six months. One continuous body of work.',
+    headline: 'One continuous body of work.',
     price: 'USD 5,000',
-    summary: 'Nine private sessions with Kate, with approximately three weeks between conversations. Eight asynchronous checkpoints connect the work between sessions.',
+    summary: 'Private advisory built around work inside your company, with a personalized hub for decisions, experiments and progress.',
+    detailsTitle: 'Sessions, checkpoints and what is included',
     items: [
       { title: 'One 90-minute diagnostic', body: 'Examine how you operate today, your strengths and constraints. Select a real, high-impact challenge and establish development priorities.' },
       { title: 'Seven 75-minute execution sessions', body: 'Work through actual decisions, trade-offs, stakeholders, blockers, results and feedback, approximately every three weeks.' },
@@ -73,7 +74,7 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
   },
   questions: {
     items: [
-      { question: 'Do I need to complete Offer Accelerator first?', answer: 'No. The products are independent. Offer Accelerator helps you compete for your next opportunity through market strategy, interviews, offers and negotiation. Career Compounding develops how you operate inside your current role. You can enter either product directly, or use both at different moments.' },
+      { question: 'Do I need to complete Offer Accelerator first?', answer: 'No. You can enter Career Compounding directly. Offer Accelerator helps you compete for your next opportunity; Career Compounding develops how you operate in your current role.' },
       { question: 'Does the program guarantee a promotion or pay increase?', answer: 'No. We assess progress through better-grounded decisions, observable business results, influence and autonomy. Promotions, salary increases and outcomes controlled by third parties are not guaranteed.' },
       { question: 'What should I bring to the first conversation?', answer: 'Your current role, a business challenge you can act on and what a meaningful improvement would look like. You carry out the work inside your organization.' },
     ],

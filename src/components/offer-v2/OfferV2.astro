@@ -15,7 +15,7 @@ const t = getOfferV2(lang);
 
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light"
   navCta={{ label: t.hero.cta, href: APPLY_OFFER }} journey="offer">
-  <link slot="head" rel="stylesheet" href="/styles/offer-v2.css?v=mobile-20261028" />
+  <link slot="head" rel="stylesheet" href="/styles/offer-v2.css?v=product-focus-20261105" />
   <div class="oa-editorial-intro">
     <section class="oa-new-hero" aria-labelledby="oa-hero-title">
       <div class="h3-wrap oa-new-hero__grid">
@@ -23,10 +23,8 @@ const t = getOfferV2(lang);
           <p class="h3-eyebrow">Offer Accelerator · Private career advisory</p>
           <h1 id="oa-hero-title">The market may be reading you a level below your real one.</h1>
           <p class="oa-new-hero__sub">{t.hero.sub}</p>
-          <ul class="oa-new-hero__signals" aria-label="Career situations">
-            <li>Promotion</li><li>Role with P&amp;L</li><li>Transition</li>
-          </ul>
           <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-new-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
+          <p class="oa-new-hero__terms"><strong>{t.investment.price}</strong>{t.investment.note}</p>
         </div>
         <div class="oa-new-hero__art" aria-hidden="true"></div>
       </div>
@@ -74,9 +72,9 @@ const t = getOfferV2(lang);
       </div>
       <div class="oa-stages__panels">
         {[
-          {name:'Understand how you are read', description:'Examine how your experience is understood and define the scope of your next move.', outcomes:['Clear criteria for the next move you want to make','Specific evidence of your contribution, scope and results']},
-          {name:'Build your approach', description:'Research relevant companies and organize the work behind each real opportunity.', outcomes:['A focused map of relevant companies and decision makers','A working system for research, outreach and live processes']},
-          {name:'Win the process', description:'Prepare for real interviews, evaluate offers and decide how to negotiate.', outcomes:['Interview preparation grounded in feedback','A framework for evaluating offers and negotiation decisions']}
+          {name:'Understand how you are read', description:'Examine how your experience is understood and define the scope of your next move.'},
+          {name:'Build your approach', description:'Research relevant companies and organize the work behind each real opportunity.'},
+          {name:'Win the process', description:'Prepare for real interviews, evaluate offers and decide how to negotiate.'}
         ].map((stage, i) => (
           <article class="oa-stage" id={`oa-stage-panel-${i}`} data-stage-panel={i} aria-labelledby={`oa-stage-title-${i}`}>
             <div class="oa-stage__intro">
@@ -100,10 +98,6 @@ const t = getOfferV2(lang);
                   <div><h4>{item.title}</h4><p>{item.body}</p>{item.note && <p class="oa-stage__note">{item.note}</p>}</div>
                 </div>
               ))}
-            </div>
-            <div class="oa-stage__outcomes">
-              <p class="h3-eyebrow">What you walk away with</p>
-              <ul>{stage.outcomes.map(outcome => <li>{outcome}</li>)}</ul>
             </div>
           </article>
         ))}
@@ -163,14 +157,8 @@ const t = getOfferV2(lang);
       <div class="oa-advisors__copy">
         <p class="h3-eyebrow">Who you will work with</p>
         <h2 id="oa-advisors-title">Work with people who know how hiring decisions are made.</h2>
-        <p class="oa-advisors__lead">Kate brings the perspective of a former operator and founder who works directly with companies and senior professionals. Your sessions are led by Kate or a senior Purrfect advisor, depending on your engagement.</p>
-        <p class="oa-advisors__note">Your advisor is confirmed before enrollment.</p>
-        <ul class="oa-advisors__credentials">
-          <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Experience across tech and product</h3><p>Perspective shaped by operating roles and founder experience.</p></div></li>
-          <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Senior talent advisory</h3><p>Support for professionals navigating company, market and scope changes.</p></div></li>
-          <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Direct view of hiring decisions</h3><p>Grounded in real searches, interviews and offer conversations.</p></div></li>
-          <li><span aria-hidden="true" class="oa-advisors__dot"></span><div><h3>Pragmatic, candid and involved</h3><p>Clear feedback, thoughtful strategy and genuine support throughout the process.</p></div></li>
-        </ul>
+        <p class="oa-advisors__lead">Kate brings the perspective of a former operator and founder. Purrfect's advisory draws on current searches, interviews and offer conversations with companies and senior professionals.</p>
+        <p class="oa-advisors__note">Your sessions are led by Kate or a senior Purrfect advisor, depending on your engagement. Your advisor is confirmed before enrollment.</p>
       </div>
     </div>
   </section>
@@ -181,14 +169,12 @@ const t = getOfferV2(lang);
         <div class="oa-fit-close__intro">
           <p class="h3-eyebrow">Is this for you?</p>
           <h2 id="oa-fit-close-title">Better to know before you apply.</h2>
-          <p>This program is designed for senior professionals who are serious about their next move. Take a moment to see if it is the right fit.</p>
         </div>
         <div class="oa-fit-card oa-fit-card--yes">
           <h3><span aria-hidden="true">✓</span> This is for you if</h3>
           <ul>
             <li>You are a senior IC, leader or former founder changing company, market or scope.</li>
             <li>You are in an active process, or ready to start one.</li>
-            <li>You want to do more between sessions: research, outreach, applications and interviews.</li>
           </ul>
         </div>
         <div class="oa-fit-card oa-fit-card--no">
@@ -208,7 +194,6 @@ const t = getOfferV2(lang);
           <div class="oa-included__intro">
             <p class="h3-eyebrow">Offer Accelerator</p>
             <h2 id="oa-scope-title">What is included.</h2>
-            <p class="oa-included__lead">{t.includes.closing}</p>
           </div>
           <div class="oa-included__price">
             <p>{t.investment.price}</p>
@@ -220,7 +205,7 @@ const t = getOfferV2(lang);
         </div>
         <ul class="oa-included__items">
           {[
-            {title:'Eight 1:1 sessions in total', description:'One diagnostic session and seven private sessions with a senior Purrfect advisor. Your advisor is confirmed before enrollment.'},
+            {title:'Eight 1:1 sessions in total', description:t.includes.items[0]},
             {title:'Personalized materials', description:t.includes.items[1]},
             {title:'A weekly check-in with the team', description:'Support and progress reviews between sessions.'},
             {title:'Direct support over WhatsApp and email', description:'Questions, updates and feedback on active processes, without 24/7 availability.'},

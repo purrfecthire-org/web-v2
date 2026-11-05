@@ -50,7 +50,7 @@ export const offerV2En: OfferV2Content = {
   hero: {
     eyebrow: 'Offer Accelerator · Private career advisory',
     headline: 'Make your signal impossible to miss.',
-    sub: 'Private career advisory for senior professionals making high-stakes career moves. Understand how the market reads your experience, where the evidence supports your level, and where your next move has the highest leverage.',
+    sub: 'Private career advisory for senior professionals changing company, market or scope. Build your positioning, reach relevant decision makers and prepare for interviews and offers.',
     cta: 'Apply to Offer Accelerator',
     package: 'Eight private sessions: one diagnostic session and seven with a senior consultant. Continued process support while you execute the agreed plan.',
   },
@@ -102,7 +102,6 @@ export const offerV2En: OfferV2Content = {
     body: [
       'You can be considered for a real vacancy if you meet its requirements. The recommendation rests on the same role requirements and evidence standards that apply to everyone else.',
       'We protect both sides: no private rubrics, no interview answers, no confidential client information and no private advisory notes are shared.',
-      'Being considered in a Purrfect search is free. Offer Accelerator is never required.',
     ],
   },
   includes: {

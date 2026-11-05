@@ -9,7 +9,7 @@ export interface TalentV2Content {
   paths: {
     eyebrow: string; headline: string;
     items: { name: string; body: string; price: string; cta: string; href: string; note?: string; proof?: { label: string; href: string } }[];
-    free: { body: string; cta: string; href: string };
+    free: { cta: string; href: string };
   };
   firewall: { headline: string; lead: string };
   proof: { headline: string };
@@ -34,17 +34,18 @@ export const talentV2En: TalentV2Content = {
     items: [
       {
         name: 'Offer Accelerator',
-        body: 'Choose this when you are changing company, market or scope. Build your positioning and work through outreach, interviews, offers and negotiation. One diagnostic and seven sessions with a senior consultant, followed by process support while you execute the agreed plan.',
+        body: 'For your next role: positioning, outreach, interviews, offers and negotiation. One diagnostic and seven sessions with a senior consultant, followed by process support while you execute the agreed plan.',
         price: 'USD 2,000 to 8,000',
-        note: 'Final investment depends on seniority and location.',
+        note: 'Final investment depends on seniority and location, confirmed before enrollment.',
         cta: 'Explore Offer Accelerator',
         href: '/offer-acceleration',
         proof: { label: 'Read participant experiences', href: '/offer-acceleration/#voices' },
       },
       {
         name: 'Career Compounding',
-        body: 'Choose this when you have a role and a real business challenge. Work on decisions, stakeholders and execution inside your company. Six months, nine sessions with Kate and eight asynchronous checkpoints. Offer Accelerator is optional.',
+        body: 'For growth inside your current role. Six months working on a real business challenge, with nine sessions with Kate and eight asynchronous checkpoints.',
         price: 'USD 5,000',
+        note: 'Independent entry. Offer Accelerator is not a prerequisite.',
         cta: 'Explore Career Compounding',
         href: '/career-compounding',
       },
@@ -58,14 +59,13 @@ export const talentV2En: TalentV2Content = {
       },
     ],
     free: {
-      body: 'Apply to open roles for free. Paid advisory is never required and does not change how you are assessed.',
       cta: 'Browse open roles',
       href: '/roles',
     },
   },
   firewall: {
     headline: 'Confidential advisory. Consistent evaluation.',
-    lead: 'Advisory engagements are confidential. Participation in Offer Accelerator does not change how candidates are assessed in Purrfect client searches.',
+    lead: 'Advisory engagements are confidential. Applying to open roles is free and never requires paid advisory. Advisory clients receive no preferential treatment in Purrfect searches.',
   },
   proof: { headline: 'In their own words.' },
 };
