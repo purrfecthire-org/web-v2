@@ -14,8 +14,7 @@
     "juanca": "Juanca",
     "nico": "Nico",
     "ana": "Ana",
-    "rich": "Rich",
-    "dave": "Dave"
+    "rich": "Rich"
   },
   "editorialScenes": "Las escenas son material ilustrativo; no atribuirlas a clientes, equipo o sesiones reales.",
   "files": [
@@ -105,16 +104,6 @@
       "height": 800,
       "bytes": 934628,
       "sha256": "957f5c16c55f3fa2207cf0a0caff3d4491618608d82108abf8f637080cc79f5d",
-      "category": "team_portrait",
-      "optionalUseOnly": false,
-      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
-    },
-    {
-      "file": "library/team-dave-master.png",
-      "width": 1666,
-      "height": 1316,
-      "bytes": 2056091,
-      "sha256": "f40cf4b8e1d2ec18c8bfd1ddd919f377b014a75ba872e0d41d51f201b3eb0db4",
       "category": "team_portrait",
       "optionalUseOnly": false,
       "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
@@ -315,46 +304,6 @@
       "height": 640,
       "bytes": 44182,
       "sha256": "80a0da2bf1ad4391188c4c60d29d38abc8d6533692a3d5cf245961c02b9b7a1c",
-      "category": "team_portrait",
-      "optionalUseOnly": false,
-      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
-    },
-    {
-      "file": "team/dave-320.png",
-      "width": 320,
-      "height": 320,
-      "bytes": 136043,
-      "sha256": "66f7ff4f2e14b9d34a6a6dc4184b81228b1dabb8e6089e8be466bf8f422e7d06",
-      "category": "team_portrait",
-      "optionalUseOnly": false,
-      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
-    },
-    {
-      "file": "team/dave-320.webp",
-      "width": 320,
-      "height": 320,
-      "bytes": 10180,
-      "sha256": "2899ccfbf831b43b980aa7f4163ab585ef72531996840fc33c282f9a89ae2d50",
-      "category": "team_portrait",
-      "optionalUseOnly": false,
-      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
-    },
-    {
-      "file": "team/dave.png",
-      "width": 640,
-      "height": 640,
-      "bytes": 420211,
-      "sha256": "d34bbc99629bada49d2f0de2048f4873966226d4cce4b488a4cd2e1e51643dd4",
-      "category": "team_portrait",
-      "optionalUseOnly": false,
-      "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
-    },
-    {
-      "file": "team/dave.webp",
-      "width": 640,
-      "height": 640,
-      "bytes": 21510,
-      "sha256": "14bce441aa10bb947a5267611fe19abff4dca37943044620ec0bb72f5101cf42",
       "category": "team_portrait",
       "optionalUseOnly": false,
       "provenance": "Imagen suministrada por la usuaria; edición de Adobe. Identidades del equipo asociadas solo a sus retratos expresamente nombrados."
