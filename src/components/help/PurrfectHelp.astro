@@ -37,7 +37,7 @@ const sourcePath = Astro.url.pathname;
       <div class="ph-help__contact" hidden>
         <label for="purrfect-help-message">Your question <span>(optional)</span></label>
         <textarea id="purrfect-help-message" rows="3" maxlength={HELP_MESSAGE_LIMIT} autocomplete="off" aria-describedby="purrfect-help-handoff"></textarea>
-        <a class="h3-btn h3-btn--ink ph-help__whatsapp" href={helpWhatsAppUrl(topics[0].id, '', sourcePath)} target="_blank" rel="noopener noreferrer" data-cta="help-whatsapp">Continue on WhatsApp <span aria-hidden="true">↗</span></a>
+        <a class="h3-btn ph-help__whatsapp" href={helpWhatsAppUrl(topics[0].id, '', sourcePath)} target="_blank" rel="noopener noreferrer" data-cta="help-whatsapp">Continue on WhatsApp <span aria-hidden="true">↗</span></a>
         <p id="purrfect-help-handoff">Opens WhatsApp. Send your message there to reach our team.</p>
       </div>
     </div>

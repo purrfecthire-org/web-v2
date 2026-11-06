@@ -21,7 +21,7 @@ const { roles, unavailable } = await getRolesSnapshot();
     </div>
     <div class="rl__notice" id="rl-refresh-error" hidden>
       <p id="rl-refresh-message" role="status"></p>
-      <button class="h3-btn h3-btn--sm h3-btn--ink" id="rl-refresh-retry" type="button" aria-describedby="rl-refresh-message" aria-controls="rl-grid rl-empty rl-error">{t.retry}</button>
+      <button class="h3-btn h3-btn--sm" id="rl-refresh-retry" type="button" aria-describedby="rl-refresh-message" aria-controls="rl-grid rl-empty rl-error">{t.retry}</button>
     </div>
     <div class="rl__grid" id="rl-grid" hidden={roles.length === 0} set:html={roles.map(roleCardHTML).join('')}></div>
 
@@ -34,7 +34,7 @@ const { roles, unavailable } = await getRolesSnapshot();
       <h3 id="rl-error-title">{unavailable ? t.errorTitle : ''}</h3>
       <p id="rl-error-body">{unavailable ? t.errorBody : ''}</p>
       <div class="rl__state-actions">
-        <button class="h3-btn h3-btn--ink" id="rl-retry" type="button">{t.retry}</button>
+        <button class="h3-btn" id="rl-retry" type="button">{t.retry}</button>
         <a class="h3-link" href={`mailto:${t.email}`}>{t.email}</a>
       </div>
     </div>
@@ -44,7 +44,7 @@ const { roles, unavailable } = await getRolesSnapshot();
         <h2 class="h3-h2">{t.profileTitle}</h2>
         <p class="h3-body">{t.profileBody}</p>
       </div>
-      <a class="h3-btn h3-btn--ink" href={t.profileHref} data-cta="roles-profile">{t.profileCta} →</a>
+      <a class="h3-btn" href={t.profileHref} data-cta="roles-profile">{t.profileCta} →</a>
     </aside>
   </div>
 </section>

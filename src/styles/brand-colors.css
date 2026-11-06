@@ -1,0 +1,35 @@
+/* One palette for every public journey. For Talent is the approved canvas. */
+:root {
+  --brand-canvas: #F7F6F3;
+  --brand-ink: #0A0B14;
+  --brand-text: #14161F;
+  --brand-muted: #5A5C66;
+  --brand-surface: #FFFFFF;
+  --brand-stone: #E9EBF0;
+  --brand-charcoal: #1F2430;
+  --brand-action: #4F46E5;
+  --brand-action-hover: #4338CA;
+  --brand-signal: #6366F1;
+  --brand-on-dark: #E8E7E3;
+  --brand-on-dark-muted: #B2B3BB;
+}
+.h3 {
+  --sand: var(--brand-canvas);
+  --midnight: var(--brand-ink);
+  --text: var(--brand-text);
+  --muted: var(--brand-muted);
+  --white: var(--brand-surface);
+  --stone: var(--brand-stone);
+  --charcoal: var(--brand-charcoal);
+  --purple: var(--brand-action);
+  --purple-deep: var(--brand-action-hover);
+  --signal: var(--brand-signal);
+  --on-dark: var(--brand-on-dark);
+  --on-dark-muted: var(--brand-on-dark-muted);
+  --line: rgb(20 22 31 / 10%);
+  --line-strong: rgb(20 22 31 / 22%);
+  --line-dark: rgb(232 231 227 / 16%);
+  --surface-muted: color-mix(in srgb, var(--sand) 94%, var(--midnight));
+  --accent-soft: color-mix(in srgb, var(--sand) 93%, var(--purple));
+}
+body:has(.h3) { background: var(--brand-canvas); }

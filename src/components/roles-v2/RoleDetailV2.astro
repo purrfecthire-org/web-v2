@@ -666,8 +666,8 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: $ink;
-    color: #fff;
+    background: var(--purple);
+    color: var(--white);
     border: none;
     cursor: pointer;
     font-family: var(--h-sans);
@@ -680,9 +680,9 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     text-decoration: none;
     transition: background-color 0.2s ease;
     svg { transition: transform 0.2s ease; }
-    &:hover { background: #1b1d2b; }
+    &:hover { background: var(--purple-deep); }
     &:hover svg { transform: translateX(3px); }
-    &:focus-visible { outline: 2px solid $ink; outline-offset: 2px; }
+    &:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
     &:disabled { opacity: 0.55; cursor: default; }
     &--submit { align-self: flex-start; }
   }
@@ -720,7 +720,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     padding: 0.25rem 0.75rem;
     font-size: var(--type-caption); line-height: 1.5;
     font-weight: 500;
-    svg { color: #F59E0B; }
+    svg { color: var(--purple); }
   }
 
   .rv2__strengths { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
@@ -755,7 +755,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
   .rv2__prose {
     font-size: var(--type-body);
     line-height: 1.7;
-    color: #374151;
+    color: var(--text);
 
     h1, h2, h3 {
       color: $ink;
