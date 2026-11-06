@@ -24,7 +24,7 @@ const evidenceIcons = ['role', 'market', 'growth'] as const;
         <p class="rs-role">{role.role}</p>
         <h1 id="rs-title">{role.hero.headline}</h1>
         <p class="rs-hero__body">{role.hero.body}</p>
-        <a class="h3-btn h3-btn--ink rs-hero__cta" href={bookingHref} data-cta={`search-${role.slug}-hero`}>
+        <a class="h3-btn rs-hero__cta" href={bookingHref} data-cta={`search-${role.slug}-hero`}>
           {t.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <p class="rs-cta-note">{t.ctaNote}</p>
@@ -89,7 +89,7 @@ const evidenceIcons = ['role', 'market', 'growth'] as const;
         {role.preparation.map((item) => <li>{item}</li>)}
       </ul>
       <div class="rs-close__action">
-        <a class="h3-btn h3-btn--ink" href={bookingHref} data-cta={`search-${role.slug}-close`}>
+        <a class="h3-btn" href={bookingHref} data-cta={`search-${role.slug}-close`}>
           {t.cta}<span class="h3-arrow" aria-hidden="true">→</span>
         </a>
         <a class="h3-link" href={t.sampleHref}>{t.sampleLabel}<span aria-hidden="true">→</span></a>
