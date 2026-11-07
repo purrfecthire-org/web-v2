@@ -5,13 +5,16 @@
   --brand-text: #14161F;
   --brand-muted: #5A5C66;
   --brand-surface: #FFFFFF;
-  --brand-stone: #E9EBF0;
+  --brand-stone: #E8E5DF;
   --brand-charcoal: #1F2430;
   --brand-action: #4F46E5;
   --brand-action-hover: #4338CA;
   --brand-signal: #6366F1;
   --brand-on-dark: #E8E7E3;
   --brand-on-dark-muted: #B2B3BB;
+  --brand-paper-grain: url('/brand/textures/paper-grain.svg');
+  --brand-grain-size: 192px 192px;
+  --brand-editorial-grade: sepia(.1) saturate(.96);
 }
 .h3 {
   --sand: var(--brand-canvas);
@@ -29,7 +32,23 @@
   --line: rgb(20 22 31 / 10%);
   --line-strong: rgb(20 22 31 / 22%);
   --line-dark: rgb(232 231 227 / 16%);
-  --surface-muted: color-mix(in srgb, var(--sand) 94%, var(--midnight));
+  --surface-muted: color-mix(in srgb, var(--sand) 55%, var(--stone));
   --accent-soft: color-mix(in srgb, var(--sand) 93%, var(--purple));
 }
 body:has(.h3) { background: var(--brand-canvas); }
+
+/* The same matte canvas behind every journey. This stays behind content,
+   so portraits, client logos, controls and text never receive a grain overlay. */
+.h3 main.h3-paper,
+.h3 main .h3-paper {
+  background-color: var(--sand);
+  background-image: var(--brand-paper-grain);
+  background-size: var(--brand-grain-size);
+  background-blend-mode: multiply;
+}
+
+/* Editorial photography only. Keep warm full-bleed hero art, evidence
+   portraits, original team photos and neutral client logos untouched. */
+.h3 :where(.fc-hero__media img, .in-story__photo img, .ia-cover img) {
+  filter: var(--brand-editorial-grade);
+}
