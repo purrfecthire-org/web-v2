@@ -1,11 +1,11 @@
-/* One palette for every public journey. For Talent is the approved canvas. */
+/* Shared cream sampled from the clear wall behind the Talent hero copy. */
 :root {
-  --brand-canvas: #F7F6F3;
+  --brand-canvas: #F8F0E7;
   --brand-ink: #0A0B14;
   --brand-text: #14161F;
   --brand-muted: #5A5C66;
   --brand-surface: #FFFFFF;
-  --brand-stone: #E8E5DF;
+  --brand-stone: #EADFD2;
   --brand-charcoal: #1F2430;
   --brand-action: #4F46E5;
   --brand-action-hover: #4338CA;
@@ -35,7 +35,7 @@
   --surface-muted: color-mix(in srgb, var(--sand) 55%, var(--stone));
   --accent-soft: color-mix(in srgb, var(--sand) 93%, var(--purple));
 }
-body:has(.h3) { background: var(--brand-canvas); }
+html:has(.h3), body:has(.h3) { background: var(--brand-canvas); }
 
 /* The same matte canvas behind every journey. This stays behind content,
    so portraits, client logos, controls and text never receive a grain overlay. */
