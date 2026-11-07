@@ -15,7 +15,7 @@ const tracks = [
   theme="light"
   journey="insights"
 >
-  <section class="h3-hero in-hero" aria-labelledby="insights-title">
+  <section class="h3-hero in-hero h3-paper" aria-labelledby="insights-title">
     <div class="h3-wrap">
       <h1 class="h3-hero__h1" id="insights-title">Insights</h1>
       <p class="h3-hero__sub">Practical notes on who to hire, what to test, and which role to choose.</p>
@@ -26,7 +26,7 @@ const tracks = [
   </section>
 
   {tracks.map((track) => (
-    <section class="in-track" id={track.id} aria-labelledby={`${track.id}-title`}>
+    <section class="in-track h3-paper" id={track.id} aria-labelledby={`${track.id}-title`}>
       <div class="h3-wrap in-track__grid">
         <h2 class="h3-h2 in-track__title" id={`${track.id}-title`}>{track.label}</h2>
         <ul class="in-list">
