@@ -25,7 +25,7 @@ export const careerCompoundingV2En: CareerCompoundingV2Content = {
   hero: {
     eyebrow: 'Career Compounding · Private career advisory',
     headline: 'Become the person trusted with bigger problems.',
-    body: 'Private, hands-on advisory to develop the judgment, ownership, influence and execution required to operate at a higher level.',
+    body: 'Work with Kate for six months on a real business challenge inside your company.',
     audience: 'For experienced professionals with a role to grow in and a real business challenge to work on.',
     cta: 'Apply to Career Compounding',
     note: 'USD 5,000 for the program. Offer Accelerator is not a prerequisite.',
