@@ -27,9 +27,13 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
           <a href={BOOKING_URL} data-cta="companies-hero-booking" class="h3-btn h3-hero__cta fc-hero__cta">
             {t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span>
           </a>
-          <a href="/candidate-brief-sample" id="candidate-brief" data-cta="companies-candidate-brief-sample" class="h3-link fc-hero__sample">{t.evidence.cta}<span aria-hidden="true">→</span></a>
+          <div class="fc-hero__details">
+            <p class="fc-microcopy">{t.hero.microcopy}</p>
+            <a href="/candidate-brief-sample" id="candidate-brief" data-cta="companies-candidate-brief-sample" class="fc-hero__sample">
+              <span>{t.evidence.cta}</span><span aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
-        <p class="fc-microcopy">{t.hero.microcopy}</p>
       </div>
     </div>
     <figure class="fc-hero__media">
@@ -105,9 +109,11 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
   .fc-hero__copy { max-width: 29rem; }
   .fc-hero .h3-eyebrow { color: var(--purple); }
   .fc-hero .h3-hero__sub { max-width: 34ch; }
-  .fc-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-stack); margin-top: var(--space-stack); }
+  .fc-hero__actions { margin-top: var(--space-stack); }
   .fc-hero__actions .h3-hero__cta { margin-top: 0; }
-  .fc-hero__sample { min-height: 2.75rem; max-width: 100%; scroll-margin-top: var(--space-hero-top); font-size: var(--type-ui); }
+  .fc-hero__details { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-2); margin-top: var(--space-1); }
+  .fc-hero__sample { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 2.75rem; max-width: 100%; scroll-margin-top: var(--space-hero-top); font-size: var(--type-ui); font-weight: 600; }
+  .fc-hero__sample span:first-child { text-decoration: underline; text-underline-offset: .25em; }
   .fc-hero__media { position: relative; margin: 0; aspect-ratio: 16 / 9; mask-image: linear-gradient(to bottom, #000 94%, transparent); }
   .fc-hero__media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 5%; }
   @media (max-width: 30rem) {
@@ -132,7 +138,8 @@ const trebol = CLIENT_BRANDS.find(({ id }) => id === 'trebol')!;
         linear-gradient(to bottom, var(--sand), transparent var(--space-6));
     }
   }
-  .fc-credential, .fc-microcopy { margin-top: var(--space-2); color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 54ch; }
+  .fc-credential, .fc-microcopy { color: var(--muted); font-size: var(--type-caption); line-height: 1.5; max-width: 54ch; }
+  .fc-credential { margin-top: var(--space-2); }
   .fc-method, .fc-proof, .fc-models { padding-block: var(--space-section); }
   .fc-heading { max-width: 26ch; }
   .fc-editorial { display: grid; gap: var(--space-grid); }
