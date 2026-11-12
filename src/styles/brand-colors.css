@@ -1,6 +1,7 @@
 /* The shared canvas matches the warm ivory visible behind the Talent hero copy. */
 :root {
-  --brand-canvas: #F3E8DD;
+  --brand-canvas: #F2E7DC;
+  /* Keep the photographic veil at its original opacity and color. */
   --brand-photo-ivory: #F8F0E7;
   --brand-ink: #0A0B14;
   --brand-text: #14161F;
