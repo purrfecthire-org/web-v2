@@ -15,7 +15,7 @@ const t = getOfferV2(lang);
 
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light"
   navCta={{ label: t.hero.cta, href: APPLY_OFFER }} journey="offer">
-  <link slot="head" rel="stylesheet" href="/styles/offer-v2.css?v=warm-canvas-20261107" />
+  <link slot="head" rel="stylesheet" href="/styles/offer-v2.css?v=20261112-price-type" />
   <div class="oa-editorial-intro">
     <section class="oa-new-hero" aria-labelledby="oa-hero-title">
       <div class="h3-wrap oa-new-hero__grid">
@@ -24,7 +24,7 @@ const t = getOfferV2(lang);
           <h1 id="oa-hero-title">The market may be reading you a level below your real one.</h1>
           <p class="oa-new-hero__sub">{t.hero.sub}</p>
           <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-new-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
-          <p class="oa-new-hero__terms"><strong>{t.investment.price}</strong>{t.investment.note}</p>
+          <p class="oa-new-hero__terms"><strong>{t.investment.price}</strong>{' '}{t.investment.note}</p>
         </div>
         <div class="oa-new-hero__art" aria-hidden="true"></div>
       </div>
