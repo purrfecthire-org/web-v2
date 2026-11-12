@@ -1,6 +1,7 @@
-/* Shared cream sampled from the clear wall behind the Talent hero copy. */
+/* The shared canvas matches the warm ivory visible behind the Talent hero copy. */
 :root {
-  --brand-canvas: #F8F0E7;
+  --brand-canvas: #F3E8DD;
+  --brand-photo-ivory: #F8F0E7;
   --brand-ink: #0A0B14;
   --brand-text: #14161F;
   --brand-muted: #5A5C66;
@@ -12,8 +13,6 @@
   --brand-signal: #6366F1;
   --brand-on-dark: #E8E7E3;
   --brand-on-dark-muted: #B2B3BB;
-  --brand-paper-grain: url('/brand/textures/paper-grain.svg');
-  --brand-grain-size: 192px 192px;
   --brand-editorial-grade: sepia(.1) saturate(.96);
 }
 .h3 {
@@ -37,14 +36,10 @@
 }
 html:has(.h3), body:has(.h3) { background: var(--brand-canvas); }
 
-/* The same matte canvas behind every journey. This stays behind content,
-   so portraits, client logos, controls and text never receive a grain overlay. */
+/* Match the flat Talent canvas across all public reading surfaces. */
 .h3 main.h3-paper,
 .h3 main .h3-paper {
   background-color: var(--sand);
-  background-image: var(--brand-paper-grain);
-  background-size: var(--brand-grain-size);
-  background-blend-mode: multiply;
 }
 
 /* Editorial photography only. Keep warm full-bleed hero art, evidence
