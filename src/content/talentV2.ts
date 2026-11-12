@@ -24,7 +24,7 @@ export const talentV2En: TalentV2Content = {
     eyebrow: 'For talent',
     headline: 'Make your next career decision with clarity.',
     sub: 'Choose by the work you need to do: compete for your next opportunity, grow in your current role, or work through one decision.',
-    audience: 'Career advice informed by our work on both sides of hiring: founders defining the role and senior professionals competing for it.',
+    audience: 'Our advisory draws on the senior searches we run. We help you choose which roles to pursue and show the decisions and results you’ve owned.',
     cta: 'Compare options',
     href: '#ways-in',
   },
