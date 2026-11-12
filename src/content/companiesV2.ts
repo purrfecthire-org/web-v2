@@ -21,7 +21,7 @@ export interface CompaniesV2Content {
   evidence: { eyebrow: string; headline: string; body: string; label: string; items: { title: string; body: string }[]; cta: string };
   method: { eyebrow: string; headline: string; steps: { id: string; title: string; body: string }[] };
   proof: { eyebrow: string; headline: string; voices: { quote: string; name: string; role: string; excerptLabel?: string; context?: string; photo?: string; photoWebp?: string }[]; logosLabel: string; markets: string };
-  productHire: { headline: string; name: string; brief: string; atHire: string; grewInto: string; progression: string };
+  productHire: { headline: string; name: string; brief: string; evidence: string; atHire: string; grewInto: string; progression: string };
   models: { eyebrow: string; headline: string; items: { name: string; note: string }[]; cta: string };
   kate: { eyebrow: string; headline: string; body: string[]; cta: string };
   close: { headline: string; body: string; cta: string; email: string; emailLabel: string };
@@ -36,11 +36,11 @@ export const companiesV2En: CompaniesV2Content = {
   hero: {
     eyebrow: 'For founders',
     headline: 'Hire someone who chooses to build with you.',
-    sub: 'Senior and executive search for venture-backed companies. We assess what people can build, why they choose your company and the evidence for both.',
+    sub: 'We help venture-backed founders define what their next hire needs to change. Then we assess what candidates have owned and why they’d choose to build here.',
     credential: 'Searches across the US, Europe and Latin America.',
     whatsappCta: 'Message us on WhatsApp',
     cta: 'Book a 20-minute founders call',
-    microcopy: 'A free 20-minute introductory call. No commitment.',
+    microcopy: 'Free introductory call.',
   },
   situations: {
     eyebrow: 'When founders bring us in',
@@ -88,7 +88,7 @@ export const companiesV2En: CompaniesV2Content = {
     steps: [
       { id: '01', title: 'Define the real bar', body: 'Define what must change, success six months in and the role’s constraints.' },
       { id: '02', title: 'Reach and assess', body: 'Ask what people would build here, how they would handle your constraints and why they would join.' },
-      { id: '03', title: 'Calibrate until the evidence is clear', body: 'Each assessment informs the search. You see what we learn and recommend changing.' },
+      { id: '03', title: 'Make the recommendation testable', body: 'See what the candidate owned, what we observed and what to test before you decide.' },
     ],
   },
   proof: {
@@ -137,6 +137,7 @@ export const companiesV2En: CompaniesV2Content = {
     headline: 'A hire who grew with the company.',
     name: 'Guido Guerberg',
     brief: 'Optery needed someone to connect product strategy, engineering and user experience, and help build its product function.',
+    evidence: 'In our recommendation, we highlighted his experience leading a product team as it expanded into UX.',
     atHire: 'Senior Technical Product Manager',
     grewInto: 'Director of Product',
     progression: 'Promoted in under two years.',
