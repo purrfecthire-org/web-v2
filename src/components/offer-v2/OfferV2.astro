@@ -11,6 +11,19 @@ import { APPLY_OFFER } from '../../content/links';
 interface Props { lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = getOfferV2(lang);
+const voices = [
+  talentTestimonials[0],
+  {
+    name: t.proof.name,
+    context: t.proof.role,
+    quote: t.proof.quote,
+    linkedin: t.proof.linkedin,
+    translation: 'Translated from Spanish',
+    photo: undefined,
+    reflection: undefined,
+  },
+  ...talentTestimonials.slice(1),
+];
 ---
 
 <Shell lang={lang} title={t.meta.title} description={t.meta.description} theme="light"
@@ -24,7 +37,7 @@ const t = getOfferV2(lang);
           <h1 id="oa-hero-title">The market may be reading you a level below your real one.</h1>
           <p class="oa-new-hero__sub">{t.hero.sub}</p>
           <a href={APPLY_OFFER} data-cta="offer-hero-apply" class="h3-btn oa-new-hero__cta">{t.hero.cta}<span class="h3-arrow" aria-hidden="true">→</span></a>
-          <p class="oa-new-hero__terms"><strong>{t.investment.price}</strong>{' '}{t.investment.note}</p>
+          <p class="oa-new-hero__terms"><strong>{t.investment.price}</strong>{' '}{t.includes.items[0]}. {t.investment.note}</p>
         </div>
         <div class="oa-new-hero__art" aria-hidden="true"></div>
       </div>
@@ -64,7 +77,7 @@ const t = getOfferV2(lang);
       <h2 class="h3-h2" id="oa-work-title">Three stages, one private workspace.</h2>
       <p class="h3-body oa-stages__lead">{t.deliverables.body}</p>
       <div class="oa-stages__tabs" aria-label="Explore three stages">
-        {['Understand how you are read', 'Build your approach', 'Win the process'].map((name, i) => (
+        {['Understand how you are read', 'Build your approach', 'Prepare for interviews and offers'].map((name, i) => (
           <button class="oa-stages__tab" type="button" data-stage-tab={i} aria-controls={`oa-stage-panel-${i}`} aria-current={i === 0 ? 'step' : undefined}>
             <span class="oa-stages__number">0{i + 1}</span><span class="oa-stages__tab-title">{name}</span>
           </button>
@@ -74,7 +87,7 @@ const t = getOfferV2(lang);
         {[
           {name:'Understand how you are read', description:'Examine how your experience is understood and define the scope of your next move.'},
           {name:'Build your approach', description:'Research relevant companies and organize the work behind each real opportunity.'},
-          {name:'Win the process', description:'Prepare for real interviews, evaluate offers and decide how to negotiate.'}
+          {name:'Prepare for interviews and offers', description:'Prepare for real interviews, evaluate offers and decide how to negotiate.'}
         ].map((stage, i) => (
           <article class="oa-stage" id={`oa-stage-panel-${i}`} data-stage-panel={i} aria-labelledby={`oa-stage-title-${i}`}>
             <div class="oa-stage__intro">
@@ -126,17 +139,12 @@ const t = getOfferV2(lang);
       </div>
       <div class="oa-testimonials__viewport" data-voice-viewport tabindex="0" role="region" aria-label="Participant testimonials">
         <div class="oa-testimonials__track">
-          <figure class="oa-testimonial">
-            <div class="oa-testimonial__person"><ClientPortrait alt={t.proof.name} shape="circle" />
-              <figcaption><strong>{t.proof.name}</strong><span>{t.proof.role}</span><small>Translated from Spanish</small></figcaption>
-            </div>
-            <blockquote>“{t.proof.quote}”</blockquote>
-            <a href={t.proof.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`View ${t.proof.name} on LinkedIn`}>View LinkedIn ↗</a>
-          </figure>
-          {talentTestimonials.map(voice => (
+          {voices.map(voice => (
             <figure class="oa-testimonial">
               <div class="oa-testimonial__person">
-                <img src={voice.photo} alt={voice.name} width="128" height="128" loading="lazy" decoding="async" />
+                {voice.photo
+                  ? <img src={voice.photo} alt={voice.name} width="128" height="128" loading="lazy" decoding="async" />
+                  : <ClientPortrait alt={voice.name} shape="circle" />}
                 <figcaption><strong>{voice.name}</strong><span>{voice.context}</span><small>{voice.translation}</small></figcaption>
               </div>
               <blockquote>“{voice.quote}”</blockquote>
@@ -158,7 +166,7 @@ const t = getOfferV2(lang);
         <p class="h3-eyebrow">Who you will work with</p>
         <h2 id="oa-advisors-title">Work with people who know how hiring decisions are made.</h2>
         <p class="oa-advisors__lead">Kate brings the perspective of a former operator and founder. Purrfect's advisory draws on current searches, interviews and offer conversations with companies and senior professionals.</p>
-        <p class="oa-advisors__note">Your sessions are led by Kate or a senior Purrfect advisor, depending on your engagement. Your advisor is confirmed before enrollment.</p>
+        <p class="oa-advisors__note">We confirm your senior consultant before enrollment.</p>
       </div>
     </div>
   </section>
