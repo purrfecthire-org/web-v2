@@ -23,7 +23,7 @@ const images = [
         <h1 id="tv-hero-title" class="h3-hero__h1">{t.hero.headline}</h1>
         <p class="h3-hero__sub">{t.hero.sub}</p>
         <p class="tv-hero__audience">{t.hero.audience}</p>
-        <a href={t.hero.href} class="tv-hero__jump" data-cta="talent-hero-compare">{t.paths.eyebrow}<span aria-hidden="true">↓</span></a>
+        <a href={t.hero.href} class="tv-hero__jump" data-cta="talent-hero-compare"><span>{t.hero.cta}</span><span aria-hidden="true">↓</span></a>
       </div>
     </div>
     <div class="tv-hero__photo" aria-hidden="true">
@@ -104,7 +104,8 @@ const images = [
   .tv-hero .h3-hero__h1 { max-width: 12ch; }
   .tv-hero .h3-hero__sub { max-width: 34ch; }
   .tv-hero__audience { max-width: 38ch; margin-top: var(--space-3); color: var(--muted); font-size: var(--type-ui); line-height: 1.6; }
-  .tv-hero__jump { display: inline-flex; gap: var(--space-2); align-items: center; margin-top: var(--space-4); font-size: var(--type-eyebrow); letter-spacing: .1em; font-weight: 600; text-transform: uppercase; border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
+  .tv-hero__jump { display: inline-flex; gap: var(--space-2); align-items: center; min-height: 2.75rem; margin-top: var(--space-3); font-size: var(--type-ui); font-weight: 600; }
+  .tv-hero__jump span:first-child { text-decoration: underline; text-underline-offset: .25em; }
   .tv-services { scroll-margin-top: var(--space-4); background: var(--sand); }
   .tv-services__list { margin: 0; padding: 0; list-style: none; }
   .tv-service { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: center; gap: var(--space-grid); padding-block: var(--space-6); border-bottom: 1px solid var(--line); }

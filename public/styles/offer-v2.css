@@ -333,7 +333,7 @@
 .oa-included > .h3-wrap {padding-top:var(--space-5); border-top:1px solid var(--line);}
 .oa-included__intro,.oa-included__commitment {min-width:0;}
 .oa-included__price {margin-top:var(--space-4); border:1px solid var(--line); background:var(--white); border-radius:var(--radius-card); padding:var(--space-3);}
-.oa-included__price p {font:400 var(--type-section)/1.2 var(--h-serif); color:var(--text);}
+.oa-included__price p {font:600 var(--type-section)/1.2 var(--h-sans); font-variant-numeric:tabular-nums; color:var(--text);}
 .oa-included__price span {display:block; margin-top:var(--space-2); font-size:var(--type-caption); line-height:1.55; color:var(--muted);}
 .oa-included__items {padding:0; margin:0; list-style:none;}
 .oa-included__items li {display:grid; grid-template-columns:2.5rem minmax(0,1fr); gap:var(--space-2); padding-block:var(--space-2); border-bottom:1px solid var(--line); align-items:start;}
