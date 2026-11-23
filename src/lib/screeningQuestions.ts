@@ -156,3 +156,28 @@ export function roleQuestionsHTML(questions: PublicQuestion[] | null | undefined
   return questions.map(questionHTML).join('');
 }
 
+
+/** Build the `screening_answers` object the backend expects.
+ *  single_choice → one option-key string; multi_choice → array of keys;
+ *  text/url → trimmed string. Empty optional answers are omitted.
+ *  `readValue` returns the raw control state: text, or the checked keys. */
+export function buildScreeningAnswers(
+  questions: PublicQuestion[],
+  readValue: (q: PublicQuestion) => string | string[],
+): Record<string, string | string[]> {
+  const answers: Record<string, string | string[]> = {};
+  for (const q of questions) {
+    const raw = readValue(q);
+    if (q.type === 'multi_choice') {
+      const keys = Array.isArray(raw) ? raw : raw ? [raw] : [];
+      if (keys.length > 0) answers[q.id] = keys;
+    } else if (q.type === 'single_choice') {
+      const key = Array.isArray(raw) ? (raw[0] ?? '') : raw;
+      if (key) answers[q.id] = key;
+    } else {
+      const text = (Array.isArray(raw) ? raw.join('') : raw).trim();
+      if (text) answers[q.id] = text;
+    }
+  }
+  return answers;
+}

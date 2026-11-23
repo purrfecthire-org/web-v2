@@ -225,7 +225,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
   // working after any swap.
   import {
     fetchRole, roleRailHTML, roleReadOnlyContentHTML, roleQuestionsHTML, reportClientError, FetchRoleError,
-    screeningAnswerError, counterText, questionLimit, questionDomId, type PublicQuestion,
+    screeningAnswerError, buildScreeningAnswers, counterText, questionLimit, questionDomId, type PublicQuestion,
   } from '../../lib/roles';
   import { createRoleApplicationAttempts, receivedRoleApplicationId, roleApplicationFieldErrors } from '../../lib/roleApplication';
   import { lockSubmissionFields } from '../../lib/submissionState';
@@ -485,11 +485,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
       // the list is now empty, so the backend's version check passes.
       const version = currentVersion();
       if (version > 0) {
-        const answers: Record<string, string | string[]> = {};
-        for (const q of currentQuestions()) {
-          const v = readAnswer(q);
-          if (Array.isArray(v) ? v.length > 0 : v !== '') answers[q.id] = v;
-        }
+        const answers = buildScreeningAnswers(currentQuestions(), readAnswer);
         fd.append('screening_answers', JSON.stringify(answers));
         fd.append('questions_version', String(version));
       }

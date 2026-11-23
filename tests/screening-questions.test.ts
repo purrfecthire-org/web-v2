@@ -100,3 +100,18 @@ test('choices accept only listed keys, one for single, distinct for multi', () =
   assert.equal(screeningAnswerError(choice('multi_choice'), ['o_aaaaaa', 'o_bbbbbb']), null);
   assert.ok(screeningAnswerError(choice('multi_choice'), ['o_aaaaaa', 'o_aaaaaa']));
 });
+
+test('answers are serialised per type: single → string, multi → array, text trimmed, empty optional omitted', async () => {
+  const { buildScreeningAnswers } = await import('../src/lib/screeningQuestions.ts');
+  const qs = [
+    q({ id: 'q_t' }), q({ id: 'q_u', type: 'url', max_length: null, required: false }),
+    choice('single_choice', { id: 'q_s' }), choice('multi_choice', { id: 'q_m' }),
+    choice('multi_choice', { id: 'q_m2', required: false }),
+  ];
+  const raw: Record<string, string | string[]> = {
+    q_t: '  hello  ', q_u: '   ', q_s: ['o_aaaaaa'], q_m: ['o_aaaaaa', 'o_bbbbbb'], q_m2: [],
+  };
+  assert.deepEqual(buildScreeningAnswers(qs, (x) => raw[x.id]), {
+    q_t: 'hello', q_s: 'o_aaaaaa', q_m: ['o_aaaaaa', 'o_bbbbbb'],
+  });
+});
