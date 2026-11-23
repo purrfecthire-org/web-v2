@@ -14,6 +14,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { normalizePublicText, renderMarkdown } from './markdown';
+import type { PublicQuestion } from './screeningQuestions';
 import { readPublicRoleJson, readPublicRolePages } from './publicRoleRead';
 
 export interface PublicSalary {
@@ -54,10 +55,17 @@ export interface PublicRoleListItem {
   posted_at: string;
 }
 
+// Screening-question types and the single escaping renderer live in
+// screeningQuestions.ts (Node-test-loadable); re-exported here as the public entry.
+export * from './screeningQuestions';
+
 export interface PublicRoleDetail extends PublicRoleListItem {
   public_description: string;
   company_profile: PublicCompanyProfile | null;
   apply_path: string;
+  /** Absent on an older backend; treat as no questions. */
+  questions?: PublicQuestion[];
+  questions_version?: number;
 }
 
 // ── Config ───────────────────────────────────────────────────────────────────

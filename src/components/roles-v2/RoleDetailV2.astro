@@ -18,6 +18,7 @@ import {
   apiBase,
   roleRailHTML,
   roleReadOnlyContentHTML,
+  roleQuestionsHTML,
   type PublicRoleDetail,
 } from '../../lib/roles';
 
@@ -36,6 +37,8 @@ const applyUrl = apiBase() ? `${apiBase()}${role.apply_path}` : '';
 // the list page).
 const railHtml = roleRailHTML(role);
 const readonlyHtml = roleReadOnlyContentHTML(role);
+const questionsHtml = roleQuestionsHTML(role.questions);
+const questionsVersion = role.questions_version ?? 0;
 
 const englishOptions = [
   ['A1', 'A1 · Beginner'], ['A2', 'A2 · Elementary'],
@@ -139,7 +142,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
               <span class="rv2__f-err" id="rv2-linkedin-error" data-err-for="rv2-linkedin"></span>
             </div>
             <div class="rv2__f">
-              <label for="rv2-english">Self-assessed English level *</label>
+              <label for="rv2-english">English level *</label>
               <select id="rv2-english" name="english_level" aria-describedby="rv2-english-hint rv2-english-error" required>
                 <option value="">Select…</option>
                 {englishOptions.map(([value, label]) => <option value={value}>{label}</option>)}
@@ -158,6 +161,8 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
               <input type="file" id="rv2-cv" name="cv" accept="application/pdf,.pdf" aria-describedby="rv2-cv-error" required />
               <span class="rv2__f-err" id="rv2-cv-error" data-err-for="rv2-cv"></span>
             </div>
+            <!-- Screening questions: same escaping renderer as the client refresh. -->
+            <div class="rv2__qs" id="rv2-questions" data-version={questionsVersion} data-questions={JSON.stringify(role.questions ?? [])} set:html={questionsHtml}></div>
           </div>
 
           <!-- Declares the unit of the expected compensation field above.
@@ -218,7 +223,10 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
   // The apply form (further below in the DOM) is never touched by this
   // script, so its own listeners (registered later in this same file) keep
   // working after any swap.
-  import { fetchRole, roleRailHTML, roleReadOnlyContentHTML, reportClientError, FetchRoleError } from '../../lib/roles';
+  import {
+    fetchRole, roleRailHTML, roleReadOnlyContentHTML, roleQuestionsHTML, reportClientError, FetchRoleError,
+    screeningAnswerError, counterText, questionLimit, questionDomId, type PublicQuestion,
+  } from '../../lib/roles';
   import { createRoleApplicationAttempts, receivedRoleApplicationId, roleApplicationFieldErrors } from '../../lib/roleApplication';
   import { lockSubmissionFields } from '../../lib/submissionState';
 
@@ -256,6 +264,15 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
       const fresh = await fetchRole(slug);
       if (railInner) railInner.innerHTML = roleRailHTML(fresh);
       if (readonly) readonly.innerHTML = roleReadOnlyContentHTML(fresh);
+      // Questions: re-render only while the applicant has not typed or chosen
+      // anything in the block; otherwise keep their input and let the server's
+      // 409 (questions_changed) tell them to reload.
+      const qBlock = document.getElementById('rv2-questions');
+      if (qBlock && qBlock.dataset.touched !== 'true') {
+        qBlock.innerHTML = roleQuestionsHTML(fresh.questions);
+        qBlock.dataset.version = String(fresh.questions_version ?? 0);
+        qBlock.dataset.questions = JSON.stringify(fresh.questions ?? []);
+      }
       // Keep application context current without replacing the candidate's inputs.
       const context = document.getElementById('rv2-application-location');
       const workLabels = { remote: 'Remote', hybrid: 'Hybrid', 'on-site': 'On-site' };
@@ -327,6 +344,37 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
 
     const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
 
+    // ── Screening questions ──
+    const qBlock = document.getElementById('rv2-questions') as HTMLElement | null;
+    const currentQuestions = (): PublicQuestion[] => {
+      try { return JSON.parse(qBlock?.dataset.questions || '[]') as PublicQuestion[]; } catch { return []; }
+    };
+    const currentVersion = () => Number(qBlock?.dataset.version || 0) || 0;
+    const questionIds = () => currentQuestions().map((q) => questionDomId(q.id));
+    function readAnswer(q: PublicQuestion): string | string[] {
+      const dom = questionDomId(q.id);
+      if (q.type === 'single_choice' || q.type === 'multi_choice') {
+        const boxes = Array.from(document.querySelectorAll<HTMLInputElement>(`#${dom} input:checked`));
+        return boxes.map((b) => b.value);
+      }
+      return ($(dom)?.value ?? '').trim();
+    }
+    function updateCounter(input: HTMLTextAreaElement) {
+      const block = input.closest<HTMLElement>('.rv2__q');
+      const count = block?.querySelector('[data-q-count]');
+      const q = currentQuestions().find((x) => questionDomId(x.id) === input.id);
+      if (count && q) count.textContent = counterText(input.value, questionLimit(q));
+    }
+    // Event delegation on the wrapper survives innerHTML re-renders.
+    qBlock?.addEventListener('input', (e) => {
+      qBlock.dataset.touched = 'true';
+      const t = e.target as HTMLElement;
+      if (t instanceof HTMLTextAreaElement) updateCounter(t);
+      const q = currentQuestions().find((x) => questionDomId(x.id) === (t.closest('.rv2__q')?.id || t.id));
+      if (q) setErr(questionDomId(q.id), '');
+    });
+    qBlock?.addEventListener('change', () => { qBlock.dataset.touched = 'true'; });
+
     function setErr(id: string, msg: string) {
       const el = document.querySelector(`[data-err-for="${id}"]`);
       if (el) el.textContent = msg;
@@ -335,13 +383,13 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     }
 
     function clearErrors() {
-      fieldIds.forEach((id) => setErr(id, ''));
+      [...fieldIds, ...questionIds()].forEach((id) => setErr(id, ''));
       summary.hidden = true;
       failCard.hidden = true;
     }
 
-    function showFailure(message: string, canRetry = true) {
-      failTitle.textContent = 'We could not confirm receipt';
+    function showFailure(message: string, canRetry = true, title = 'We could not confirm receipt') {
+      failTitle.textContent = title;
       failBody.textContent = message;
       retryBtn.hidden = !canRetry;
       form!.hidden = false;
@@ -385,13 +433,24 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
         if (!isPdf) { setErr('rv2-cv', 'CV must be a PDF file.'); ok = false; }
         else if (cv.size > MAX_BYTES) { setErr('rv2-cv', 'CV must be 3 MB or smaller.'); ok = false; }
       }
+      for (const q of currentQuestions()) {
+        const message = screeningAnswerError(q, readAnswer(q));
+        if (message) { setErr(questionDomId(q.id), message); ok = false; }
+      }
       if (!ok) {
         summary.textContent = 'Please check the highlighted fields.';
         summary.hidden = false;
-        const firstInvalid = fieldIds.find((id) => $(id)?.getAttribute('aria-invalid') === 'true');
-        if (firstInvalid) $(firstInvalid).focus();
+        const firstInvalid = [...fieldIds, ...questionIds()].find((id) => $(id)?.getAttribute('aria-invalid') === 'true');
+        const target = firstInvalid ? $(firstInvalid) : null;
+        if (target) (target.tagName === 'FIELDSET' ? target.querySelector('input') ?? target : target).focus();
       }
       return ok;
+    }
+
+    let questionsStale = false;
+    function isQuestionsChanged(body: unknown): boolean {
+      const b = body as { code?: unknown; detail?: { code?: unknown }; error?: { code?: unknown; details?: { code?: unknown } } } | null;
+      return [b?.code, b?.detail?.code, b?.error?.code, b?.error?.details?.code].includes('questions_changed');
     }
 
     async function submit() {
@@ -422,6 +481,18 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
       fd.append('fill_time_ms', String(attempt.fillTimeMs));
       const cv = $('rv2-cv').files?.[0];
       if (cv) fd.append('cv', cv, cv.name);
+      // Sent whenever the role has ever had questions (version > 0), even if
+      // the list is now empty, so the backend's version check passes.
+      const version = currentVersion();
+      if (version > 0) {
+        const answers: Record<string, string | string[]> = {};
+        for (const q of currentQuestions()) {
+          const v = readAnswer(q);
+          if (Array.isArray(v) ? v.length > 0 : v !== '') answers[q.id] = v;
+        }
+        fd.append('screening_answers', JSON.stringify(answers));
+        fd.append('questions_version', String(version));
+      }
 
       const requestId = attempt.requestId;
       const restoreFields = lockSubmissionFields(form!);
@@ -455,6 +526,21 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
           reportClientError('role application: role no longer open (HTTP 404)', {
             stage: 'role_application_submit',
             status: 404,
+            request_id: requestId,
+          });
+          return;
+        }
+
+        // The questions changed after this page loaded: nothing was stored.
+        // Ask for a reload (the retry button reloads) rather than guessing.
+        if (res.status === 409 && isQuestionsChanged(json)) {
+          restoreFields();
+          questionsStale = true;
+          showFailure('Please reload the page to see the current questions.', true, 'This form was updated');
+          retryBtn.textContent = 'Reload page';
+          reportClientError('role application: questions changed (HTTP 409)', {
+            stage: 'role_application_submit',
+            status: 409,
             request_id: requestId,
           });
           return;
@@ -497,6 +583,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     form.addEventListener('input', () => { if (!submitBtn.disabled) attempts.invalidate(); });
     form.addEventListener('change', () => { if (!submitBtn.disabled) attempts.invalidate(); });
     retryBtn?.addEventListener('click', () => {
+      if (questionsStale) { location.reload(); return; }
       failCard.hidden = true;
       form!.hidden = false;
       const firstInvalid = fieldIds.find((id) => $(id)?.getAttribute('aria-invalid') === 'true');
@@ -851,7 +938,30 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     }
 
     input[type='file'] { padding: 0.75rem 1rem; }
+    textarea {
+      font-family: var(--h-sans);
+      font-size: var(--type-body); line-height: 1.7;
+      color: $text;
+      background: #fff;
+      border: 1px solid #8a8d99;
+      border-radius: var(--radius-input);
+      padding: 0.75rem 1rem;
+      width: 100%;
+      resize: vertical;
+      &:focus-visible { border-color: var(--purple); }
+      &.is-invalid { border-color: #d14343; box-shadow: 0 0 0 3px rgba(209, 67, 67, 0.1); }
+    }
   }
+
+  // Screening questions: wrapper joins the form grid; choice groups are fieldsets.
+  .rv2__qs { display: contents; }
+  fieldset.rv2__q { border: 0; padding: 0; margin: 0; min-width: 0; }
+  fieldset.rv2__q legend { padding: 0; margin-bottom: 0.5rem; font-size: var(--type-caption); line-height: 1.5; font-weight: 500; color: $text; }
+  .rv2__opts { display: flex; flex-direction: column; gap: 0.5rem; }
+  .rv2__opt { display: flex; align-items: flex-start; gap: 0.625rem; }
+  .rv2__f .rv2__opt input { width: auto; flex: none; margin-top: 0.4rem; padding: 0; }
+  .rv2__f .rv2__opt label { font-weight: 400; font-size: var(--type-body); line-height: 1.6; }
+  .rv2__f-count { font-size: var(--type-caption); line-height: 1.5; color: $muted; text-align: right; }
 
   .rv2__f-err { font-size: var(--type-caption); line-height: 1.5; color: #9f1c15; min-height: 1em; }
   .rv2__form-summary { margin-bottom: var(--space-2); font-size: var(--type-ui); line-height: 1.5; color: #9f1c15; }
