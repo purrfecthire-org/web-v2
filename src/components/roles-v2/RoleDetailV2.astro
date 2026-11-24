@@ -133,7 +133,8 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
             </div>
             <div class="rv2__f">
               <label for="rv2-phone">Phone *</label>
-              <input type="tel" id="rv2-phone" name="phone" autocomplete="tel" maxlength="50" aria-describedby="rv2-phone-error" required />
+              <input type="tel" id="rv2-phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="50" placeholder="+1 214 555 0123" aria-describedby="rv2-phone-hint rv2-phone-error" required />
+              <span class="rv2__f-hint" id="rv2-phone-hint">Include your country code, starting with +.</span>
               <span class="rv2__f-err" id="rv2-phone-error" data-err-for="rv2-phone"></span>
             </div>
             <div class="rv2__f">
@@ -227,7 +228,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
     fetchRole, roleRailHTML, roleReadOnlyContentHTML, roleQuestionsHTML, reportClientError, FetchRoleError,
     screeningAnswerError, buildScreeningAnswers, counterState, questionLimit, questionDomId, type PublicQuestion,
   } from '../../lib/roles';
-  import { createRoleApplicationAttempts, receivedRoleApplicationId, roleApplicationFieldErrors } from '../../lib/roleApplication';
+  import { createRoleApplicationAttempts, isInternationalPhone, receivedRoleApplicationId, roleApplicationFieldErrors } from '../../lib/roleApplication';
   import { lockSubmissionFields } from '../../lib/submissionState';
 
   // A closed search has no application form in the document. Inactive state
@@ -409,9 +410,9 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
       let ok = true;
       const name = $('rv2-name').value.trim();
       const email = $('rv2-email').value.trim();
-      // Presence only, deliberately not format-checked — a phone or LinkedIn
-      // regex rejects real people (dial codes, bare handles, country
-      // subdomains). The backend enforces the same rule; see
+      // LinkedIn: presence only, deliberately not format-checked (bare handles,
+      // country subdomains). Phone: must carry a country code since 2026-11-24
+      // (isInternationalPhone). The backend enforces the same rules; see
       // ats-backend source/external_applications/adapters/http/public_router.py.
       const phone = $('rv2-phone').value.trim();
       const linkedin = $('rv2-linkedin').value.trim();
@@ -424,6 +425,9 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
         setErr('rv2-email', 'Please enter a valid email.'); ok = false;
       }
       if (!phone) { setErr('rv2-phone', 'Please enter a phone number.'); ok = false; }
+      else if (!isInternationalPhone(phone)) {
+        setErr('rv2-phone', 'Please include your country code, e.g. +1 214 555 0123.'); ok = false;
+      }
       if (!linkedin) { setErr('rv2-linkedin', 'Please add your LinkedIn profile.'); ok = false; }
       if (!english) { setErr('rv2-english', 'Please select your English level.'); ok = false; }
       if (!desired || !Number.isFinite(Number(desired)) || Number(desired) <= 0) {

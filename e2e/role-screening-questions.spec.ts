@@ -35,7 +35,7 @@ async function open(page: Page, role: Role) {
 async function fillBaseFields(page: Page) {
   await page.locator('#rv2-name').fill('Ada Lovelace');
   await page.locator('#rv2-email').fill('ada@example.com');
-  await page.locator('#rv2-phone').fill('+1 555 0100');
+  await page.locator('#rv2-phone').fill('+1 214 555 0100');
   await page.locator('#rv2-linkedin').fill('https://www.linkedin.com/in/ada');
   await page.locator('#rv2-english').selectOption({ index: 1 });
   await page.locator('#rv2-des').fill('110000');
@@ -93,6 +93,20 @@ test('a required question left empty shows its error and sends no request', asyn
   await page.locator('#rv2-submit').click();
   await expect(page.locator('[data-err-for="rv2-q-q_a0000001"]')).not.toBeEmpty();
   await expect(answer(page, 'q_a0000001')).toHaveAttribute('aria-invalid', 'true');
+  await page.waitForTimeout(500);
+  expect(posts).toHaveLength(0);
+});
+
+test('a phone without a country code shows its error and sends no request', async ({ page }) => {
+  const posts = await mockApi(page, FOUR, { status: 201, body: {} });
+  await open(page, FOUR);
+  await fillBaseFields(page);
+  await expect(page.locator('#rv2-phone-hint')).toContainText('country code');
+  await expect(page.locator('#rv2-phone')).toHaveAttribute('placeholder', /^\+/);
+  await page.locator('#rv2-phone').fill('2145550123'); // the real 2026-11-24 case: a US number with no +1
+  await page.locator('#rv2-submit').click();
+  await expect(page.locator('[data-err-for="rv2-phone"]')).toContainText('country code');
+  await expect(page.locator('#rv2-phone')).toHaveAttribute('aria-invalid', 'true');
   await page.waitForTimeout(500);
   expect(posts).toHaveLength(0);
 });

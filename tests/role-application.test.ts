@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createRoleApplicationAttempts, receivedRoleApplicationId, roleApplicationFieldErrors } from '../src/lib/roleApplication.ts';
+import { createRoleApplicationAttempts, isInternationalPhone, receivedRoleApplicationId, roleApplicationFieldErrors } from '../src/lib/roleApplication.ts';
 
 const receiptId = '32c78a7c-3bd5-4b66-9591-478579293bc6';
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -65,4 +65,23 @@ test('validation feedback ignores unknown fields and never reflects server or ca
   for (const malformed of [null, {}, { detail: 'error' }, { detail: [42, false, {}] }]) {
     assert.deepEqual(roleApplicationFieldErrors(malformed), {});
   }
+});
+
+test('a phone without a valid country code is refused', () => {
+  for (const phone of ['2145550123', '(214) 555-0123', '+0 214 555 0123', '+1 234', '+1 2345 6789 0123 4567',
+    '+1 214 555 0123 ext 2', 'call me later', '', '   ']) {
+    assert.equal(isInternationalPhone(phone), false, phone);
+  }
+});
+
+test('an international phone is accepted with common separators or a leading 00', () => {
+  for (const phone of ['+1 (214) 555-0123', '0057 300 123 4567', '+44.20.7946.0958', '  +34600123456  ']) {
+    assert.equal(isInternationalPhone(phone), true, phone);
+  }
+});
+
+test('the ATS envelope phone error lands on the phone field without echoing the value', () => {
+  const errors = roleApplicationFieldErrors({ error: { code: 'VALIDATION_ERROR', details: [{ field: 'phone', message: 'x' }] } });
+  assert.deepEqual(Object.keys(errors), ['rv2-phone']);
+  assert.match(errors['rv2-phone'], /country code/);
 });

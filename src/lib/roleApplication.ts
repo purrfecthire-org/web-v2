@@ -8,6 +8,17 @@ export function receivedRoleApplicationId(body: unknown): string | null {
     : null;
 }
 
+/**
+ * A phone must carry its country code (fix/apply-phone-country-code, 2026-11-24): a real applicant sent
+ * "2145550123" and nobody could tell which country to dial. Same rule as the ATS backend: strip spaces,
+ * dashes, dots and parentheses, turn a leading 00 into +, then + and 8-15 digits, the first not 0 (E.164).
+ */
+export function isInternationalPhone(raw: string): boolean {
+  let cleaned = raw.trim().replace(/[\s\-.()]/g, '');
+  if (cleaned.startsWith('00')) cleaned = '+' + cleaned.slice(2);
+  return /^\+[1-9]\d{7,14}$/.test(cleaned);
+}
+
 /** Map the documented FastAPI 422 field locations, never echo submitted values. */
 export function roleApplicationFieldErrors(body: unknown): Record<string, string> {
   const messages: Record<string, [string, string]> = {
@@ -19,12 +30,17 @@ export function roleApplicationFieldErrors(body: unknown): Record<string, string
     desired_salary_usd: ['rv2-des', 'Please enter your expected annual compensation in USD.'],
     cv: ['rv2-cv', 'Please check your CV. Use a PDF no larger than 3 MB.'],
   };
-  const detail = (body as { detail?: unknown } | null)?.detail;
-  if (!Array.isArray(detail)) return {};
+  // Two shapes: FastAPI's raw {detail:[{loc:['body',field]}]} and the ATS envelope {error:{details:[{field}]}}.
+  const raw = body as { detail?: unknown; error?: { details?: unknown } } | null;
   const errors: Record<string, string> = {};
-  for (const issue of detail) {
-    if (!Array.isArray(issue?.loc) || issue.loc[0] !== 'body') continue;
-    const field = issue.loc[1];
+  const fields: unknown[] = [];
+  if (Array.isArray(raw?.detail)) {
+    for (const issue of raw.detail) if (Array.isArray(issue?.loc) && issue.loc[0] === 'body') fields.push(issue.loc[1]);
+  }
+  if (Array.isArray(raw?.error?.details)) {
+    for (const issue of raw.error.details) fields.push((issue as { field?: unknown } | null)?.field);
+  }
+  for (const field of fields) {
     if (typeof field !== 'string' || !Object.hasOwn(messages, field)) continue;
     const [id, message] = messages[field];
     errors[id] = message;
