@@ -54,6 +54,13 @@ export function counterText(value: string, limit: number): string {
   return `${codePointLength(value)} / ${limit}`;
 }
 
+/** Live counter state: the text ("712 / 700") and whether it is over the
+ *  limit (counted in code points, like the backend). Untrimmed on purpose:
+ *  it mirrors exactly what the applicant sees while typing. */
+export function counterState(value: string, limit: number): { text: string; over: boolean } {
+  return { text: counterText(value, limit), over: codePointLength(value) > limit };
+}
+
 /** Client mirror of the backend rules. Returns an error message or null.
  *  `value` is the trimmed text, or the chosen option keys for choice types. */
 export function screeningAnswerError(q: PublicQuestion, value: string | string[]): string | null {

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  roleQuestionsHTML, screeningAnswerError, codePointLength, counterText,
+  roleQuestionsHTML, screeningAnswerError, codePointLength, counterText, counterState,
   type PublicQuestion,
 } from '../src/lib/screeningQuestions.ts';
 
@@ -68,6 +68,17 @@ test('hint and error are wired for assistive tech', () => {
 test('the counter counts an emoji as one character', () => {
   assert.equal(codePointLength('a\u{1F600}b'), 3);
   assert.equal(counterText('\u{1F600}\u{1F600}', 500), '2 / 500');
+});
+
+test('the live counter turns over only past the limit, in code points', () => {
+  assert.deepEqual(counterState('a'.repeat(700), 700), { text: '700 / 700', over: false });
+  assert.deepEqual(counterState('a'.repeat(712), 700), { text: '712 / 700', over: true });
+  assert.deepEqual(counterState('', 300), { text: '0 / 300', over: false });
+  // 300 emoji are 300 code points (600 UTF-16 units): still at the limit.
+  assert.deepEqual(counterState('\u{1F600}'.repeat(300), 300), { text: '300 / 300', over: false });
+  assert.equal(counterState('\u{1F600}'.repeat(301), 300).over, true);
+  // Back under the limit returns to normal.
+  assert.equal(counterState('a'.repeat(699), 700).over, false);
 });
 
 test('text limit is enforced in code points, with the boundary exact', () => {

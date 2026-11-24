@@ -225,7 +225,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
   // working after any swap.
   import {
     fetchRole, roleRailHTML, roleReadOnlyContentHTML, roleQuestionsHTML, reportClientError, FetchRoleError,
-    screeningAnswerError, buildScreeningAnswers, counterText, questionLimit, questionDomId, type PublicQuestion,
+    screeningAnswerError, buildScreeningAnswers, counterState, questionLimit, questionDomId, type PublicQuestion,
   } from '../../lib/roles';
   import { createRoleApplicationAttempts, receivedRoleApplicationId, roleApplicationFieldErrors } from '../../lib/roleApplication';
   import { lockSubmissionFields } from '../../lib/submissionState';
@@ -363,7 +363,10 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
       const block = input.closest<HTMLElement>('.rv2__q');
       const count = block?.querySelector('[data-q-count]');
       const q = currentQuestions().find((x) => questionDomId(x.id) === input.id);
-      if (count && q) count.textContent = counterText(input.value, questionLimit(q));
+      if (!count || !q) return;
+      const state = counterState(input.value, questionLimit(q));
+      count.textContent = state.text;
+      count.classList.toggle('is-over', state.over);
     }
     // Event delegation on the wrapper survives innerHTML re-renders.
     qBlock?.addEventListener('input', (e) => {
@@ -958,6 +961,7 @@ const internationalIntake = Boolean(role.country_code && role.country_code !== '
   .rv2__f .rv2__opt input { width: auto; flex: none; margin-top: 0.4rem; padding: 0; }
   .rv2__f .rv2__opt label { font-weight: 400; font-size: var(--type-body); line-height: 1.6; }
   .rv2__f-count { font-size: var(--type-caption); line-height: 1.5; color: $muted; text-align: right; }
+  .rv2__f-count.is-over { color: #9f1c15; font-weight: 600; } /* same colour as .rv2__f-err */
 
   .rv2__f-err { font-size: var(--type-caption); line-height: 1.5; color: #9f1c15; min-height: 1em; }
   .rv2__form-summary { margin-bottom: var(--space-2); font-size: var(--type-ui); line-height: 1.5; color: #9f1c15; }
