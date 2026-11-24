@@ -69,7 +69,7 @@ test('validation feedback ignores unknown fields and never reflects server or ca
 
 test('a phone without a valid country code is refused', () => {
   for (const phone of ['2145550123', '(214) 555-0123', '+0 214 555 0123', '+1 234', '+1 2345 6789 0123 4567',
-    '+1 214 555 0123 ext 2', 'call me later', '', '   ']) {
+    '+1 214 555 0123 ext 2', 'call me later', '+\u0661\u0662\u0661\u0664\u0665\u0665\u0665\u0660\u0661\u0662\u0663', '+١٢١٤٥٥٥٠١٢٣', '', '   ']) {
     assert.equal(isInternationalPhone(phone), false, phone);
   }
 });
