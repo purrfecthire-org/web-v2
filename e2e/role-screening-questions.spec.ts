@@ -50,7 +50,8 @@ async function multipart(req: Request): Promise<FormData> {
 test('shows the English level field and every custom question with its counter', async ({ page }) => {
   await mockApi(page, FOUR, { status: 500, body: {} });
   await open(page, FOUR);
-  await expect(page.getByLabel(/English level/)).toBeVisible();
+  await expect(page.getByLabel(/^English level/)).toBeVisible();
+  await expect(page.getByText(/Self-assessed English level/i)).toHaveCount(0);
   for (const q of FOUR.questions) {
     await expect(answer(page, q.id)).toBeVisible();
     await expect(counter(page, q.id)).toHaveText(`0 / ${q.max_length}`);
